@@ -6,6 +6,20 @@ from core.projection.canonical_ids import SAME_AS
 from schemas.claims import Claim, ClaimKind, DefaultNote, EntityType, Source
 
 
+def with_holder_names(organizations: list[dict], holder_names: dict[str, list[str]]) -> list[dict]:
+    """Each post with who holds or held it: a held post cannot be deleted outright."""
+    return [
+        {
+            **organization,
+            "posts": [
+                {**post, "holder_names": holder_names.get(post["id"], [])}
+                for post in organization["posts"]
+            ],
+        }
+        for organization in organizations
+    ]
+
+
 def merge_refusal(post: Post, into: Post) -> str | None:
     """Why `into` cannot take this post's memberships, or None if it can. The fold re-reads the
     post's records by organization alone, so only the same office elsewhere can take them."""

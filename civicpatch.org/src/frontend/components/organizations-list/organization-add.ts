@@ -1,5 +1,4 @@
 import "../posts-list/posts-list.css";
-import "../basic/modal.js";
 import { html } from "lit-html";
 import { inputValue } from "../fields/field-controls.js";
 import { component, useState } from "haunted";
@@ -71,12 +70,10 @@ function OrganizationAdd(host: OrganizationAddHost) {
   `;
 
   return html`
-    <civ-modal
-      .title=${"Add organization"}
-      .content=${fields}
-      .footer=${footer}
-      .modalProps=${{ open: true, onClose: handleCancel }}
-    ></civ-modal>
+    <div class="organizations-list__form">
+      ${fields}
+      <div class="post-edit__actions">${footer}</div>
+    </div>
   `;
 }
 

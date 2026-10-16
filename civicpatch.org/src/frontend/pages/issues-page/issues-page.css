@@ -361,9 +361,6 @@
     overflow-wrap: anywhere;
     word-break: break-word;
 }
-dialog[open]:has(.issues-page__resolve-content) {
-    max-width: min(95vw, 56rem);
-}
 .issues-page__resolve-role-form {
     display: flex;
     flex-direction: column;

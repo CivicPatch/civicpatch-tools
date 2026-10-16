@@ -1,6 +1,6 @@
 import { component, useState, useEffect } from "haunted";
 import "../../components/organizations-list/organizations-list.js";
-import "../../components/basic/modal.js";
+import { MODAL_SIZE_WIDE } from "../../components/basic/modal.js";
 import { html, nothing } from "lit-html";
 import { useWebSocket } from "../../hooks/use-websocket.js";
 import { useAuth } from "../../hooks/useAuth.js";
@@ -280,7 +280,11 @@ function JurisdictionPage({
           .jurisdictionOcdid=${jurisdiction_ocdid}
           .canManage=${!!permissions.can_manage_organizations}
         ></civ-organizations-list>`}
-        .modalProps=${{ open: manageOrgsOpen, onClose: () => setManageOrgsOpen(false) }}
+        .modalProps=${{
+          open: manageOrgsOpen,
+          onClose: () => setManageOrgsOpen(false),
+          size: MODAL_SIZE_WIDE,
+        }}
       ></civ-modal>
     </main>
   `;

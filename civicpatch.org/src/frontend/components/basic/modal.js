@@ -2,6 +2,10 @@ import { component, useState, useEffect, useRef } from "haunted";
 import { html } from "lit-html";
 import { ref } from "lit-html/directives/ref.js";
 
+// `modalProps.size`. Unset: content height, for a confirm or a short form. Wide: a fixed size
+// whose body scrolls, for a list or a long form.
+export const MODAL_SIZE_WIDE = "wide";
+
 // Opened via showModal(), not the `open` attribute: the attribute form is not
 // modal — no ::backdrop, no focus trap, no Escape, and nothing "outside" to click.
 function Modal({ title = "", content = null, footer = null, modalProps = {} }) {
@@ -41,7 +45,10 @@ function Modal({ title = "", content = null, footer = null, modalProps = {} }) {
 
   // Escape arrives as `cancel`; prevent the default close so the parent stays the
   // single source of truth for `open`.
+  // Escape only: the browser's cancel targets the dialog, while a form inside that emits its
+  // own `cancel` event bubbles here too and must not close the modal.
   const onCancel = (e) => {
+    if (e.target !== e.currentTarget) return;
     e.preventDefault();
     handleClose(e);
   };
@@ -54,7 +61,11 @@ function Modal({ title = "", content = null, footer = null, modalProps = {} }) {
   };
 
   return html`
+    <!-- autofocus: opening focuses the dialog, not the body, which drew a keyboard focus ring
+         on every mouse-opened modal. Tab still reaches the body and its ring. -->
     <dialog
+      autofocus
+      class=${modalProps.size === MODAL_SIZE_WIDE ? "modal--wide" : ""}
       aria-label=${modalProps.ariaLabel || title || "Modal"}
       @click=${backdropClick}
       @cancel=${onCancel}

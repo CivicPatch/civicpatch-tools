@@ -134,6 +134,20 @@ dialog[open] {
   max-height: 90vh;
 }
 
+dialog[open].modal--wide {
+  width: var(--modal-width-wide);
+  max-width: var(--modal-width-wide);
+  height: var(--modal-height-tall);
+}
+
+dialog[open].modal--wide > article {
+  height: 100%;
+}
+
+dialog[open]:focus-visible {
+  outline: none;
+}
+
 dialog[open]::backdrop {
   background: rgba(0, 0, 0, 0.45);
 }

@@ -1,7 +1,7 @@
 import pytest
 from shared.schemas import Post
 
-from core.post_deletion import merge_refusal
+from core.post_deletion import merge_refusal, with_holder_names
 
 pytestmark = pytest.mark.unit
 
@@ -40,3 +40,14 @@ def test_the_same_office_in_another_organization_can_take_it():
 )
 def test_anything_else_is_refused_with_a_reason(into):
     assert merge_refusal(COUNCIL_MAYOR, into)
+
+
+def test_each_post_gets_who_holds_or_held_it():
+    organizations = [{"id": "council", "posts": [{"id": "held"}, {"id": "empty"}]}]
+
+    [organization] = with_holder_names(organizations, {"held": ["Bruce Harrell"]})
+
+    assert organization["posts"] == [
+        {"id": "held", "holder_names": ["Bruce Harrell"]},
+        {"id": "empty", "holder_names": []},
+    ]

@@ -11,6 +11,17 @@
     padding: 0;
 }
 
+/* The base `ul li` rule gives every li a square bullet. */
+.organizations-list__organization,
+.organizations-list__post {
+    list-style: none;
+}
+
+.organizations-list__organization {
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border-subtle);
+}
+
 .organizations-list__row {
     display: grid;
     grid-template-columns: 14rem minmax(0, 1fr) auto auto;
@@ -18,7 +29,6 @@
     gap: 0.7rem;
     padding: 0.4rem 0.45rem;
     font-size: var(--font-size-md);
-    border-bottom: 1px solid var(--border-subtle);
 }
 
 .organizations-list__name {
@@ -47,32 +57,52 @@
 
 /* Posts under each organization */
 .organizations-list__posts {
-    padding: 0.25rem 0.45rem 0.6rem 1.2rem;
-    border-bottom: 1px solid var(--border-subtle);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.4rem;
+    padding: 0 0.45rem 0 1.2rem;
 }
 
 .organizations-list__post-rows {
-    list-style: none;
+    align-self: stretch;
     margin: 0;
     padding: 0;
 }
 
-.organizations-list__post {
+.organizations-list__post-line {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 0.7rem;
-    padding: 0.2rem 0;
+    padding: 0.15rem 0;
     font-size: var(--font-size-sm);
-    color: var(--text-muted);
+    color: var(--text-default);
 }
 
 .organizations-list__delete-confirm {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     gap: 0.4rem;
     padding: 0.2rem 0 0.4rem;
     font-size: var(--font-size-sm);
+}
+
+/* The base select is page-sized (1rem, a bottom margin); this one sits beside small buttons. */
+.organizations-list__delete-confirm select {
+    width: auto;
+    max-width: 100%;
+    margin: 0;
+    font-size: var(--font-size-sm);
+}
+
+.organizations-list__form {
+    padding: 0.4rem 0.45rem;
+}
+
+.organizations-list__controls {
+    display: flex;
 }
 
 .organizations-list__capacity {

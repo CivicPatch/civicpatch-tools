@@ -21,11 +21,10 @@ from database.database import get_pool
 from database.review_sessions import ReviewSessionEntryStatus
 from schemas.claims import ClaimKind, EntityType
 from schemas.common import UserRole
-from shared.schemas import GovernmentForm, RoleStatus
+from shared.schemas import GovernmentForm, RoleAliasStatus, RoleStatus
 from shared.utils.statuses import ChangesetKind, DismissalReason, PipelineIssueStatus
 
-# Constraint name → the enum it copies. `exact` says the constraint holds every member;
-# a subset constraint names the members it is allowed to hold and no others.
+# Constraint name → the enum it copies, every member of it.
 EXACT = {
     "changesets_kind_check": ChangesetKind,
     "changesets_dismissed_reason_valid": DismissalReason,
@@ -37,15 +36,10 @@ EXACT = {
     "changeset_batches_kind_check": BatchKind,
     "changeset_batches_status_check": BatchStatus,
     "roles_status_check": RoleStatus,
+    "role_aliases_status_check": RoleAliasStatus,
     "users_role_valid": UserRole,
     "review_session_entries_status_check": ReviewSessionEntryStatus,
     "jurisdictions_extras_government_form_check": GovernmentForm,
-}
-
-# Deliberate subsets. An alias may only be proposed or accepted, never excluded — exclusion is
-# a fact about a role, not about one of its spellings.
-SUBSET = {
-    "role_aliases_status_check": RoleStatus,
 }
 
 # No enum behind it: `active`/`inactive` exists only here and in the SQL that reads it.
@@ -82,19 +76,8 @@ async def test_each_constraint_holds_exactly_its_enum():
 
 @pytest.mark.asyncio
 @pytest.mark.integration
-async def test_subset_constraints_hold_nothing_their_enum_does_not():
-    found = await _constraint_values()
-    for name, enum in SUBSET.items():
-        assert found.get(name), f"{name} not found"
-        assert found[name] < {member.value for member in enum}, (
-            f"{name} is declared a subset but holds {found[name]}"
-        )
-
-
-@pytest.mark.asyncio
-@pytest.mark.integration
 async def test_every_vocabulary_constraint_is_accounted_for():
     """A new one must be mapped to its enum or explicitly recorded as having none — otherwise
     it is the twelfth hand-maintained copy and nothing is watching it."""
     found = await _constraint_values()
-    assert set(found) == set(EXACT) | set(SUBSET) | NO_ENUM
+    assert set(found) == set(EXACT) | NO_ENUM

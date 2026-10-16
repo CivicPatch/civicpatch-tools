@@ -1,7 +1,7 @@
 import "./scrape-modal.css";
 import { component, useState, useEffect } from "haunted";
 import { html } from "lit-html";
-import "../../../components/basic/modal.js";
+import { MODAL_SIZE_WIDE } from "../../../components/basic/modal.js";
 import { flattenSourceUrls } from "./roster-source-urls.ts";
 
 const TOP_LEVEL_SCOPE = "top-level-url";
@@ -212,7 +212,7 @@ function ScrapeModal({
       .title=${"URLs to Scrape"}
       .content=${content}
       .footer=${footer}
-      .modalProps=${modalProps}
+      .modalProps=${{ ...modalProps, size: MODAL_SIZE_WIDE }}
     ></civ-modal>
   `;
 }

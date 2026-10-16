@@ -45,7 +45,7 @@ def get_router() -> APIRouter:
                 deleted = await posts.delete(post_id, user.user_id)
             except posts.PostHasMembers as exc:
                 return JSONResponse(
-                    {"error": f"{exc.holders} people hold this post; choose a post to move them to."},
+                    {"error": "Somebody holds or held this post; pick a post to move them to."},
                     status_code=409,
                 )
             if not deleted:
@@ -57,6 +57,11 @@ def get_router() -> APIRouter:
             return JSONResponse({"error": "No such post."}, status_code=404)
         except roster_edits.PostMergeRefused as exc:
             return JSONResponse({"error": str(exc)}, status_code=422)
+        except posts.PostHasMembers:
+            return JSONResponse(
+                {"error": "The move did not empty this post, so it was not deleted."},
+                status_code=409,
+            )
         return {"data": {"changeset_id": changeset_id}}
 
     @router.get("/bulk")
