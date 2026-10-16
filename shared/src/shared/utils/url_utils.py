@@ -122,8 +122,8 @@ def same_domain(domain: str, url: str) -> bool:
     Returns:
         bool: True if the URL belongs to the same domain, False otherwise.
     """
-    base_host = extract_domain(domain)
-    link_host = extract_domain(url)
+    base_host = extract_domain(format_url(domain))
+    link_host = extract_domain(format_url(url))
 
     if not base_host or not link_host:
         return False

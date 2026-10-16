@@ -1109,10 +1109,25 @@ def test_a_link_the_llm_picked_carries_its_text_from_the_page():
     content = f"Read about the [Office of the Mayor]({url}) and the [council](https://cityofbaycity.org/council)."
     response = RelevantPageResponseSchema(is_relevant=True, relevant_urls=[url])
 
-    urls, comments = _resolve_candidate_urls(response, content, [], None, [], dummy_logger())
+    urls, comments = _resolve_candidate_urls(
+        response, "https://cityofbaycity.org/", content, [], None, [], dummy_logger()
+    )
 
     assert urls == [url]
     assert comments == {url: (None, "Office of the Mayor")}
+
+
+def test_a_link_the_llm_shortened_to_its_path_is_resolved_against_the_page():
+    """Rowley's homepage: every link the model picked came back as a path and was dropped."""
+    page_url = "https://www.townofrowley.net/"
+    full = "https://www.townofrowley.net/board-selectmen"
+    content = f"See the [Board of Selectmen]({full})."
+    response = RelevantPageResponseSchema(is_relevant=False, relevant_urls=["/board-selectmen"])
+
+    urls, comments = _resolve_candidate_urls(response, page_url, content, [], None, [], dummy_logger())
+
+    assert urls == [full]
+    assert comments == {full: (None, "Board of Selectmen")}
 
 
 def test_anchor_texts_skip_empty_link_text():
