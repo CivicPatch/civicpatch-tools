@@ -103,7 +103,8 @@ function renderChange(entry) {
 // A row, not a table row: every column but the summary is a fixed width, and the
 // field diff needs to sit under the head rather than inside a cell.
 function renderRow(entry, markQuarantined: boolean, canViewProfiles: boolean) {
-  const quarantined = markQuarantined && entry.author_role === QUARANTINED_ROLE;
+  // The system user carries the default role too, but is no new account to quarantine.
+  const quarantined = markQuarantined && !entry.is_system && entry.author_role === QUARANTINED_ROLE;
   const authorMode = authorDisplayMode(entry.is_system, canViewProfiles);
   return html`
     <div class="activity-row ${quarantined ? "activity-row--quarantined" : ""}">
@@ -115,7 +116,9 @@ function renderRow(entry, markQuarantined: boolean, canViewProfiles: boolean) {
             : authorMode === "text"
               ? entry.author_name
               : ""}
-          <span class="activity-row__role">${entry.author_role}</span>
+          ${entry.is_system
+            ? html`<span class="activity-row__role">system</span>`
+            : html`<span class="activity-row__role">${entry.author_role}</span>`}
         </span>
         <span class="activity-row__what">
           ${entry.jurisdiction_path
