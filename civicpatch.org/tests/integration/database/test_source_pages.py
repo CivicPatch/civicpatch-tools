@@ -12,7 +12,7 @@ import pytest_asyncio
 
 from core.source_pages import SourcePageRow
 from database.database import get_pool
-from database.source_pages import insert_source_pages
+from database.source_pages import get_scrape_pages, insert_source_pages
 
 _SENTINEL_OCDID = "ocd-jurisdiction/country:us/state:zz/place:zz_source_pages/government"
 _ORGANIZATION = "00000000-0000-4000-8000-0000000000c1"
@@ -111,3 +111,23 @@ async def test_a_failed_run_stores_its_pages_with_no_changeset(sentinel_run):
 
     [(_, changeset_id, _, _)] = await _stored(run_id)
     assert changeset_id is None
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_a_changesets_pages_are_read_back_for_its_timeline_entry(sentinel_run):
+    run_id, changeset_id = sentinel_run
+    home = _row(run_id, changeset_id, url="https://zz.gov/").model_copy(
+        update={"is_relevant": False, "heuristics_failures": []}
+    )
+    await insert_source_pages([_row(run_id, changeset_id), home])
+
+    pages = await get_scrape_pages(changeset_id)
+
+    assert [(page.source_url, page.is_relevant, page.people_count) for page in pages] == [
+        ("https://zz.gov/", False, 0),
+        ("https://zz.gov/council", True, 0),
+    ]
+    assert pages[1].heuristics_failures == ["name_not_in_text"]
+    assert pages[1].unchanged_since is None
+    assert pages[1].organization_names == []  # the sentinel organization id names no row

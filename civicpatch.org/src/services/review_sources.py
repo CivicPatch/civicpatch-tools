@@ -12,6 +12,7 @@ import lib.buckets as buckets
 import lib.storage as storage_service
 import shared.utils.id_utils
 import shared.utils.url_utils
+from core.source_page_outcomes import ScrapePage, ScrapePageRow, scrape_page
 
 
 # The two files the pipeline caches per fetched page: what it downloaded, and what it read.
@@ -54,3 +55,14 @@ def build_sources(
 def without_debug_links(sources: list[dict]) -> list[dict]:
     """What a non-admin gets: which pages a person came from, not the debug bucket's copies."""
     return [{**source, "markdown": None, "html": None} for source in sources]
+
+
+def scrape_page_with_cached_copies(row: ScrapePageRow) -> ScrapePage:
+    """The admin's view of a page a scrape read: also links to what the pipeline cached of it."""
+    folder = shared.utils.id_utils.jurisdiction_ocdid_to_folder(row.jurisdiction_ocdid)
+    return scrape_page(row).model_copy(
+        update={
+            "markdown_url": _cached_url(row.pipeline_run_id, folder, row.source_url, READ_MARKDOWN),
+            "html_url": _cached_url(row.pipeline_run_id, folder, row.source_url, FETCHED_HTML),
+        }
+    )

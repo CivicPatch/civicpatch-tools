@@ -114,6 +114,40 @@
   margin: 0;
 }
 
+/* Pages a scrape read */
+
+.tl-pages {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  font-size: var(--font-size-sm);
+}
+
+.tl-page {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+
+.tl-page__url {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.tl-page__organizations {
+  color: var(--text-muted);
+}
+
+.tl-page__cached {
+  display: flex;
+  gap: 0.5rem;
+  font-size: var(--font-size-xs);
+}
+
 .tl-actions {
   display: flex;
   flex-wrap: wrap;

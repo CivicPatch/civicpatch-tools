@@ -762,12 +762,19 @@ _RUN_COST_COLUMNS = """
                    CASE WHEN run.id IS NOT NULL THEN COALESCE(spent.cost_usd, 0) END AS cost_usd,
                    CASE WHEN run.id IS NOT NULL
                         THEN COALESCE(spent.cost_usd, 0) + COALESCE(cached.cost_usd, 0)
-                   END AS cost_without_cache_usd,
+                   END AS cost_without_cache_usd,"""
+_NO_COST_COLUMNS = """
+                   NULL::float8 AS cost_usd, NULL::float8 AS cost_without_cache_usd,"""
+# Everyone's: the pages a scrape read are public pages.
+_RUN_PAGE_COLUMNS = """
                    CASE WHEN run.id IS NOT NULL THEN pages.pages_cached END AS pages_cached,
                    CASE WHEN run.id IS NOT NULL THEN pages.pages_total END AS pages_total"""
-_NO_COST_COLUMNS = """
-                   NULL::float8 AS cost_usd, NULL::float8 AS cost_without_cache_usd,
-                   NULL::int AS pages_cached, NULL::int AS pages_total"""
+_RUN_PAGE_JOIN = """
+            LEFT JOIN LATERAL (
+                SELECT count(*)::int AS pages_total,
+                       count(unchanged_since_source_page_id)::int AS pages_cached
+                FROM source_pages WHERE source_pages.pipeline_run_id = run.id
+            ) pages ON true"""
 _RUN_COST_JOINS = """
             LEFT JOIN LATERAL (
                 SELECT sum(cost_usd)::float8 AS cost_usd FROM llm_calls
@@ -780,12 +787,7 @@ _RUN_COST_JOINS = """
                 JOIN llm_calls ON llm_calls.pipeline_run_id = original.pipeline_run_id
                               AND llm_calls.source_url = original.source_url
                 WHERE page.pipeline_run_id = run.id
-            ) cached ON true
-            LEFT JOIN LATERAL (
-                SELECT count(*)::int AS pages_total,
-                       count(unchanged_since_source_page_id)::int AS pages_cached
-                FROM source_pages WHERE source_pages.pipeline_run_id = run.id
-            ) pages ON true"""
+            ) cached ON true"""
 
 
 async def get_jurisdiction_activity(
@@ -796,7 +798,8 @@ async def get_jurisdiction_activity(
 ) -> tuple[int, List[JurisdictionActivityEntry]]:
     """`(total, page)`, matching `get_activity_for_roles` — the caller needs the count to
     render a pager, and taking it here keeps it on the same connection as the page.
-    `with_costs` joins each run's LLM spend; admins only, so nobody else pays for the join."""
+    `with_costs` joins each run's LLM spend; admins only, so nobody else pays for the join. Page
+    counts are everyone's."""
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor(row_factory=dict_row) as cur:
         await cur.execute(
@@ -845,8 +848,9 @@ async def get_jurisdiction_activity(
                    COALESCE(iss.issues, '[]'::jsonb) AS issues,
                    COALESCE(rc.changes, '[]'::jsonb) AS changes,
                    {_RUN_COST_COLUMNS if with_costs else _NO_COST_COLUMNS}
+                   {_RUN_PAGE_COLUMNS}
             FROM changesets
-            LEFT JOIN pipeline_runs run ON run.changeset_id = changesets.id{_RUN_COST_JOINS if with_costs else ""}
+            LEFT JOIN pipeline_runs run ON run.changeset_id = changesets.id{_RUN_PAGE_JOIN}{_RUN_COST_JOINS if with_costs else ""}
             LEFT JOIN users resolver ON resolver.id = changesets.resolved_by_user_id
             LEFT JOIN roster_changes rc ON rc.changeset_id = changesets.id::text
             -- Every status: dismissing settles an issue, so filtering to open ones hid the

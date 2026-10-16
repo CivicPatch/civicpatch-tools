@@ -14,6 +14,7 @@ import database.jurisdictions as jurisdictions_db
 import database.people
 import database.pipeline_runs
 import database.review_pool as review_pool_db
+import database.source_pages as source_pages_db
 import database.users
 import shared.utils.data_path_utils
 import shared.utils.id_utils
@@ -26,7 +27,8 @@ from fastapi import (
     Query,
 )
 from fastapi.responses import JSONResponse
-from lib.auth import require_route_access
+from core.source_page_outcomes import scrape_page
+from lib.auth import get_optional_user, require_route_access
 from pydantic import BaseModel
 from schemas.review_cards import ReviewCard
 from schemas.common import (
@@ -39,7 +41,7 @@ from schemas.common import (
 from services.claims import claims_for_people
 from services.review_summary import review_summary_for_changeset
 import services.review_cards as review_cards_service
-from services.review_sources import build_sources, without_debug_links
+from services.review_sources import build_sources, scrape_page_with_cached_copies, without_debug_links
 from services.roster import card_sides
 
 logger = logging.getLogger(__name__)
@@ -275,6 +277,17 @@ def get_router(api_key_header):
         user: Identity = Depends(require_route_access(RouteCategory.AUTHENTICATED)),
     ):
         return {"data": await review_summary_for_changeset(changeset_id)}
+
+    # -- The pages a scrape read: public pages, so public; the cached copies are admins' ---
+    @router.get("/{changeset_id}/pages")
+    async def get_scrape_pages_endpoint(
+        changeset_id: str,
+        identity: Identity | None = Depends(get_optional_user),
+    ):
+        rows = await source_pages_db.get_scrape_pages(changeset_id)
+        is_admin = identity is not None and has_at_least(identity.role, UserRole.ADMINS)
+        pages = [scrape_page_with_cached_copies(row) if is_admin else scrape_page(row) for row in rows]
+        return {"data": [page.model_dump() for page in pages]}
 
     # -- Issues a reviewer filed by hand on this scrape ---
     @router.get("/{changeset_id}/issues")
