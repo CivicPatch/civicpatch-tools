@@ -16,3 +16,21 @@ runs:
     millbury_ma: 1.0
     seattle_wa: 1.0
   dispositions: {}
+- timestamp: '2026-10-16T16:16:30+00:00'
+  provider: gemini
+  model: gemini-2.5-flash
+  prompt_sha256: ee15ea404664
+  cost_usd: 0.0
+  elapsed_seconds: 72.75
+  scores:
+    body: 1.0
+    cases_passed: 1.0
+    name_match: 0.22000000000000003
+    recall: 0.7702380952380953
+  cases:
+    conroe_tx: 1.0
+    milford_mi: 1.0
+    millbury_ma: 1.0
+    pierce_county_wa: 1.0
+    seattle_wa: 1.0
+  dispositions: {}

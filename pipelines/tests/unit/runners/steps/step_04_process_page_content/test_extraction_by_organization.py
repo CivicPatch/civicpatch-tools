@@ -293,3 +293,20 @@ async def test_the_coverage_answer_is_kept_even_when_that_organization_s_extract
 
     assert extraction.heuristics_passed is False
     assert extraction.organization_ids == ["mayor"]
+
+
+@pytest.mark.asyncio
+async def test_an_email_the_page_does_not_show_is_dropped_without_a_retry():
+    """The page spells it out in words, so the exact address is not in the text."""
+    answer = PeopleArrayLLMResponseSchema(
+        people=[ExtractedPersonRecord(name="Rob Saka", label="Council Member District 1", email="rsaka@seattle.gov")]
+    )
+    run_prompt = AsyncMock(return_value=answer)
+
+    with patch(_RUN_PROMPT, new=run_prompt):
+        extraction = await _collect([_COUNCIL])
+
+    [(person, [record])] = extraction.records.items()
+    assert (person, record.email) == ("Rob Saka", None)
+    assert extraction.heuristics_failures == [HeuristicsFailure.EMAIL_NOT_IN_TEXT]
+    assert run_prompt.await_count == 1

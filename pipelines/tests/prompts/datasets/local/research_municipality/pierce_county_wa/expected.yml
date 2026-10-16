@@ -1,0 +1,38 @@
+jurisdiction_ocdid: ocd-jurisdiction/country:us/state:wa/county:pierce/government
+name: Pierce County
+organizations:
+  - name: Board of County Commissioners
+    role_labels: [Commissioner, Chair]
+    meta_is_default: true
+people:
+  - name: Ryan Mello
+    label: County Executive
+    organization: Board of County Commissioners
+  - name: Jani Hitchen
+    label: Council Chair
+    organization: Board of County Commissioners
+  - name: Paul Herrera
+    label: Council Vice Chair
+    organization: Board of County Commissioners
+  - name: Amy Cruver
+    label: Council Member
+    organization: Board of County Commissioners
+  - name: Bryan Yambe
+    label: Council Member
+    organization: Board of County Commissioners
+  - name: Dave Morell
+    label: Council Member
+    organization: Board of County Commissioners
+  - name: Robyn Denson
+    label: Council Member
+    organization: Board of County Commissioners
+  - name: Rosie Ayala
+    label: Council Member
+    organization: Board of County Commissioners
+source: https://www.piercecountywa.gov/3301/Council-Contact-Information
+thoughts: >-
+  The config is wrong for this county: WA counties are configured as commission, but Pierce is a
+  charter county with an elected County Executive and a County Council. The hint says
+  commissioners; the answer should still name the Executive and the Council Members. One
+  organization, so `body` cannot fail; recall is the measure. Roster from the county's council
+  and executive pages, read by a dev scrape.

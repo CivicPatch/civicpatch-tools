@@ -13,6 +13,7 @@ from runners.people_collector.schemas import (
 )
 from runners.people_collector.steps.step_04_process_page_content.heuristics import (
     check_page_heuristics,
+    without_unverified_emails,
 )
 from runners.people_collector.steps.step_04_process_page_content.heuristics_failure import (
     HeuristicsFailure,
@@ -365,7 +366,7 @@ def test_check_page_heuristics_fails_if_phone_not_in_text():
     )
 
 
-def test_check_page_heuristics_fails_if_email_not_in_text():
+def test_an_email_not_in_text_is_dropped_and_the_person_kept():
     records = [
         PersonSourceRecord(
             name="Alex NoEmailInText",
@@ -379,13 +380,12 @@ def test_check_page_heuristics_fails_if_email_not_in_text():
     ]
     input_text = "Mayor Alex NoEmailInText is available at 555-5678 or http://noemail.com/alex. Ward 3."
     # "alex@noemail.com" is not in input_text
-    assert (
-        check_page_heuristics(dummy_logger(), "dummy-link", input_text, records)
-        == HeuristicsFailure.EMAIL_NOT_IN_TEXT
-    )
+    [kept], failures = without_unverified_emails(dummy_logger(), "dummy-link", input_text, records)
+    assert (kept.email, kept.phone, kept.name) == (None, "555-5678", "Alex NoEmailInText")
+    assert failures == [HeuristicsFailure.EMAIL_NOT_IN_TEXT]
 
 
-def test_check_page_heuristics_passes_when_email_has_space_before_at_in_source():
+def test_an_email_is_kept_when_email_has_space_before_at_in_source():
     records = [
         PersonSourceRecord(
             name="Alexandria Inocencio",
@@ -399,12 +399,10 @@ def test_check_page_heuristics_passes_when_email_has_space_before_at_in_source()
     ]
     # Source page has broken email with space before @
     input_text = "Mayor Alexandria Inocencio  alexandria.inocencio @cityofdilleytx.com"
-    assert (
-        check_page_heuristics(dummy_logger(), "dummy-link", input_text, records) is None
-    )
+    assert without_unverified_emails(dummy_logger(), "dummy-link", input_text, records) == (records, [])
 
 
-def test_check_page_heuristics_passes_when_email_has_markdown_escaped_underscore():
+def test_an_email_is_kept_when_email_has_markdown_escaped_underscore():
     records = [
         PersonSourceRecord(
             name="Alfredo Macedo",
@@ -418,12 +416,10 @@ def test_check_page_heuristics_passes_when_email_has_markdown_escaped_underscore
     ]
     # Markdown escapes the underscore as \_
     input_text = "Council Member Alfredo Macedo  amacedo\\_84@hotmail.com"
-    assert (
-        check_page_heuristics(dummy_logger(), "dummy-link", input_text, records) is None
-    )
+    assert without_unverified_emails(dummy_logger(), "dummy-link", input_text, records) == (records, [])
 
 
-def test_check_page_heuristics_passes_when_mailto_href_splits_tld():
+def test_an_email_is_kept_when_mailto_href_splits_tld():
     # CMS bug: <a href="mailto:user@domain.tx">user@domain.tx</a> .us
     # LLM reconstructs the full email; heuristic must find it despite the split
     records = [
@@ -438,12 +434,10 @@ def test_check_page_heuristics_passes_when_mailto_href_splits_tld():
         )
     ]
     input_text = "Joseph Smith, District 1  [district1@ci.lamesa.tx](mailto:district1@ci.lamesa.tx) .us"
-    assert (
-        check_page_heuristics(dummy_logger(), "dummy-link", input_text, records) is None
-    )
+    assert without_unverified_emails(dummy_logger(), "dummy-link", input_text, records) == (records, [])
 
 
-def test_check_page_heuristics_does_not_match_email_without_at_sign():
+def test_an_email_without_an_at_sign_is_dropped():
     # Alnum fallback must not match if there is no @ in the normalized email
     records = [
         PersonSourceRecord(
@@ -457,10 +451,8 @@ def test_check_page_heuristics_does_not_match_email_without_at_sign():
         )
     ]
     input_text = "Jane Doe council member notanemail"
-    assert (
-        check_page_heuristics(dummy_logger(), "dummy-link", input_text, records)
-        == HeuristicsFailure.EMAIL_NOT_IN_TEXT
-    )
+    [kept], failures = without_unverified_emails(dummy_logger(), "dummy-link", input_text, records)
+    assert (kept.email, failures) == (None, [HeuristicsFailure.EMAIL_NOT_IN_TEXT])
 
 
 def test_check_page_heuristics_matches_name_with_curly_apostrophe_in_text():
