@@ -104,6 +104,16 @@ def _extract_links_from_markdown(content: str) -> List[Tuple[str, str]]:
     return re.findall(r"\[([^\]]*)\]\((https?://[^)]+)\)", content)
 
 
+def anchor_texts(content: str) -> Dict[str, str]:
+    """Each linked url's text on this page, by canonical url; the first non-empty one wins."""
+    texts: Dict[str, str] = {}
+    for text, url in _extract_links_from_markdown(content):
+        key = canonical_url(url)
+        if text.strip() and key not in texts:
+            texts[key] = text.strip()
+    return texts
+
+
 def jurisdiction_name_suffix(name: Optional[str]) -> List[str]:
     name = (name or "").strip()
     return [name.split()[-1].lower()] if name else []
@@ -202,7 +212,7 @@ def add_relevant_urls(
     names: Optional[List[str]] = None,
     designations: Optional[List[str]] = None,
     logger=None,
-    url_comments: Optional[Dict[str, Tuple[str, str]]] = None,
+    url_comments: Optional[Dict[str, Tuple[Optional[str], Optional[str]]]] = None,
 ) -> LinkFrontier:
     """Add LLM-identified relevant URLs as pending links, restricted to the same domain.
 

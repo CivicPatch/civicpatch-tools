@@ -19,6 +19,7 @@ from runners.people_collector.steps.step_04_process_page_content.heuristics_fail
     HeuristicsFailure,
 )
 from runners.people_collector.steps.step_04_process_page_content.process_page_content import (
+    _resolve_candidate_urls,
     _split_content_into_chunks,
     check_page_relevance,
     process_page_content,
@@ -28,12 +29,14 @@ from shared.utils.content_hash import content_hash
 from runners.people_collector.utils.link_discovery import (
     _pending_sort_key,
     add_relevant_urls,
+    anchor_texts,
     has_role_and_contact_info,
 )
 from runners.people_collector.utils.organization_terms import as_tokens, search_phrases
 from shared.schemas import KnownOrganization, Post, RoleConfig, Role
 from tests.factories.pipeline_run_context import pipeline_run_context_factory
 from shared.utils.taxonomy import build_taxonomy
+from shared.utils.url_utils import canonical_url
 
 _ROLE_TAXONOMY = build_taxonomy(
     RoleConfig(roles=[Role(id="mayor", label="mayor"), Role(id="council", label="council")])
@@ -1099,3 +1102,20 @@ async def test_process_with_llm_keeps_only_downloaded_images():
         )
 
     assert [r.image for r in records] == ["local://8ac384d14474.png", None, None]
+
+
+def test_a_link_the_llm_picked_carries_its_text_from_the_page():
+    url = "https://cityofbaycity.org/296/Office-of-the-Mayor"
+    content = f"Read about the [Office of the Mayor]({url}) and the [council](https://cityofbaycity.org/council)."
+    response = RelevantPageResponseSchema(is_relevant=True, relevant_urls=[url])
+
+    urls, comments = _resolve_candidate_urls(response, content, [], None, [], dummy_logger())
+
+    assert urls == [url]
+    assert comments == {url: (None, "Office of the Mayor")}
+
+
+def test_anchor_texts_skip_empty_link_text():
+    content = "[](https://a.gov/x) [Council](https://a.gov/x) [ ](https://a.gov/y)"
+
+    assert anchor_texts(content) == {canonical_url("https://a.gov/x"): "Council"}

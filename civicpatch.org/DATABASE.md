@@ -99,7 +99,7 @@ erDiagram
         int             output_tokens
         int             cached_input_tokens
         int             reasoning_tokens
-        numeric         cost_usd            "CHARGED, never computed. The price table this replaced fell through to zero for an unlisted (model, provider) pair, so a model bump reported free work"
+        numeric_null    cost_usd            "CHARGED, never computed. The price table this replaced fell through to zero for an unlisted (model, provider) pair, so a model bump reported free work. 245: NULL = the provider stated none (grounded Gemini); sums skip it, never read as free"
         bool            web_search
         int_null        duration_ms
         text_null       finish_reason       "OpenRouter's, verbatim. 'length' = WE truncated it at _MAX_OUTPUT_TOKENS, so it billed in full and could never parse"

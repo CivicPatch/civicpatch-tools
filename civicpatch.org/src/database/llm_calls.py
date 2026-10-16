@@ -31,10 +31,7 @@ async def record_calls(pipeline_run_id: str, calls: list[dict]) -> int:
     completed re-sends the same calls. They conflict on `(pipeline_run_id, generation_id)` and
     are skipped, which is why the caller logs this count rather than assuming one.
     """
-    # Grounded Google calls state no cost — grounding is sold on a quota, so a per-call figure
-    # is not even well defined. They stay in `costs.json` for the token counts and out of here,
-    # rather than being written as a zero that would read as free.
-    calls = [call for call in calls if call.get("cost_usd") is not None]
+    # Grounded Google calls state no cost: written with a NULL, which sums skip, never a zero.
     if not calls:
         return 0
 
