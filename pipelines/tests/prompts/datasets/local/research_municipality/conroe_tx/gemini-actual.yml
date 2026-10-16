@@ -2,18 +2,18 @@ people:
 - name: Duke W. Coon
   label: Mayor
   organization: City Council
-- name: John Sellars
-  label: Mayor Pro Tem, Place 5
-  organization: City Council
 - name: David Hairel
-  label: City Councilmember, Place 1
+  label: Council Place 1
   organization: City Council
 - name: Shana R. Arthur
-  label: City Councilmember, Place 2
+  label: Council Place 2
   organization: City Council
 - name: Kristin Hoisington
-  label: City Councilmember, Place 3
+  label: Council Place 3
   organization: City Council
 - name: Ken Blevins
-  label: City Councilmember, Place 4
+  label: Council Place 4
+  organization: City Council
+- name: John Sellars
+  label: Mayor Pro Tem, Place 5
   organization: City Council

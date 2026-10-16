@@ -31,6 +31,7 @@ from runners.people_collector.steps.step_04_process_page_content.extraction_by_o
 )
 from runners.people_collector.steps.step_04_process_page_content.heuristics import (
     check_page_heuristics,
+    without_unverified_emails,
 )
 from runners.people_collector.steps.step_04_process_page_content.heuristics_failure import (
     HeuristicsFailure,
@@ -67,11 +68,11 @@ from runners.people_collector.steps.step_04_process_page_content.page_prompts im
 )
 from runners.people_collector.steps.step_04_process_page_content.unchanged_pages import (
     is_unchanged,
+    page_content_hash,
     published_source_page,
     source_page_relevance,
 )
 from shared.schemas import PublishedSourcePage
-from shared.utils.content_hash import content_hash
 from shared.utils.label_parser import ParsedLabel, parse_label
 from shared.utils.taxonomy import Taxonomy, build_taxonomy, lookup_key
 
@@ -194,7 +195,7 @@ async def process_page_content(
         context.data.jurisdiction_ocdid, page_to_process
     )
 
-    page_hash = content_hash(content)
+    page_hash = page_content_hash(content)
     page_prompt_hash = prompt_hash(
         page_to_process.url,
         context.data.config,
@@ -562,6 +563,10 @@ async def _extract_for_scope(
             seed,
             logger,
         )
+        people_found_in_page, dropped = without_unverified_emails(
+            logger, page_to_process.url, content, people_found_in_page
+        )
+        failures.extend(dropped)
         failure = check_page_heuristics(
             logger, page_to_process.url, content, people_found_in_page
         )

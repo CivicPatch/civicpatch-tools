@@ -1,0 +1,25 @@
+people:
+- name: Ryan N. Mello
+  label: Pierce County Executive
+  organization: Office of Executive
+- name: Dave Morell
+  label: Councilmember, District 1
+  organization: Pierce County Council
+- name: Paul Herrera
+  label: Councilmember, District 2
+  organization: Pierce County Council
+- name: Amy Cruver
+  label: Councilmember, District 3
+  organization: Pierce County Council
+- name: Rosie Ayala
+  label: Councilmember, District 4
+  organization: Pierce County Council
+- name: Bryan Yambe
+  label: Councilmember, District 5
+  organization: Pierce County Council
+- name: Jani Hitchen
+  label: Councilmember, District 6
+  organization: Pierce County Council
+- name: Robyn Denson
+  label: Councilmember, District 7
+  organization: Pierce County Council

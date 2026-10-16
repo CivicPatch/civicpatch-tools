@@ -6,6 +6,7 @@ import pytest
 from runners.people_collector.schemas import Link, LinkFrontier, LinkStatus, RelevantPageResponseSchema
 from runners.people_collector.steps.step_04_process_page_content.unchanged_pages import (
     is_unchanged,
+    page_content_hash,
     published_source_page,
 )
 from runners.people_collector.steps.step_04_process_page_content.process_page_content import (
@@ -36,6 +37,18 @@ def _known(**fields) -> PublishedSourcePage:
 
 
 # --- the rule ------------------------------------------------------------------------------
+
+
+def test_images_moving_around_leave_the_page_hash_alone():
+    """An embedded map's tiles load in a different order on every fetch."""
+    first = "# Clerk\n![](/maps/vt?tile=1)\n![](/maps/vt?tile=2)\nJane Doe"
+    second = "# Clerk\n![](/maps/vt?tile=2)\n![](/maps/vt?tile=1)\nJane Doe"
+
+    assert page_content_hash(first) == page_content_hash(second)
+
+
+def test_a_text_change_changes_the_page_hash():
+    assert page_content_hash("# Clerk\nJane Doe") != page_content_hash("# Clerk\nJohn Roe")
 
 
 def test_the_same_page_and_prompts_are_unchanged():

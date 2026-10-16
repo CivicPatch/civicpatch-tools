@@ -1,8 +1,19 @@
+import re
 from typing import List, Optional
 
 from runners.people_collector.schemas import RelevantPageResponseSchema
 from shared.schemas import PublishedSourcePage
+from shared.utils.content_hash import content_hash
 from shared.utils.url_utils import canonical_url
+
+# Embedded maps load their tiles in a different order on every fetch, which changed the hash of
+# pages whose text had not changed.
+_MARKDOWN_IMAGE = re.compile(r"!\[[^\]]*\]\([^)]*\)")
+
+
+def page_content_hash(markdown: str) -> str:
+    """The page's text, images left out: only text changes mean a fresh reading."""
+    return content_hash(_MARKDOWN_IMAGE.sub("", markdown))
 
 
 def published_source_page(

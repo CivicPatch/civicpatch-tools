@@ -33,6 +33,9 @@ _MAX_OUTPUT_TOKENS = 4_096
 # does not buy determinism outright: v4-flash is MoE behind dynamic batching, so expert
 # routing shifts with whatever else is in the batch.
 _DEFAULT_TEMPERATURE = 0.2
+# (connect, read) seconds. Unset, a response that never came hung the run until its 30-minute
+# limit; the slowest real call seen took 70s. A timeout is retried.
+_REQUEST_TIMEOUT_SECONDS = (10, 180)
 _SEMAPHORE_CACHE: dict = {}
 
 
@@ -145,6 +148,7 @@ async def run_prompt(
         started = time.time()
         resp = requests.post(
             url=BASE_URL,
+            timeout=_REQUEST_TIMEOUT_SECONDS,
             headers={
                 "Authorization": f"Bearer {api_key}",
                 "Content-Type": "application/json",

@@ -1,5 +1,5 @@
 import re
-from typing import List, Optional
+from typing import List, Optional, Tuple
 
 from runners.people_collector.schemas import PersonSourceRecord
 from runners.people_collector.steps.step_04_process_page_content.heuristics_failure import (
@@ -8,12 +8,32 @@ from runners.people_collector.steps.step_04_process_page_content.heuristics_fail
 from shared.utils import email_utils, name_utils, phone_utils, url_utils
 
 
+def without_unverified_emails(
+    logger, source_url: str, input_text: str, records_found: List[PersonSourceRecord]
+) -> Tuple[List[PersonSourceRecord], List[HeuristicsFailure]]:
+    """Each email the page does not show is dropped, and the rest of the person kept: a page that
+    spells its emails out ("thein and the extension @cityofcamas.us") loses only the email."""
+    input_text_lower = input_text.lower()
+    kept = []
+    dropped = False
+    for person in records_found:
+        if person.email and not _email_in_text(person.email, input_text_lower):
+            logger.warning(
+                f"Email not found in input text, dropping it: {person.email} under source url: {source_url}"
+            )
+            kept.append(person.model_copy(update={"email": None}))
+            dropped = True
+        else:
+            kept.append(person)
+    return kept, [HeuristicsFailure.EMAIL_NOT_IN_TEXT] if dropped else []
+
+
 def check_page_heuristics(
     logger, source_url: str, input_text: str, records_found: List[PersonSourceRecord]
 ) -> Optional[HeuristicsFailure]:
     """
     Per-page heuristics check for a single LLM's results.
-    Returns None if every non-empty field (email, phone, url, role) in each PersonSourceRecord
+    Returns None if every non-empty field (phone, url, role) in each PersonSourceRecord
     is present in the input_text, else the first check that failed.
     """
     input_text_lower = input_text.lower()
@@ -23,11 +43,6 @@ def check_page_heuristics(
                 f"Name not found in input text: {person.name} under source url: {source_url}"
             )
             return HeuristicsFailure.NAME_NOT_IN_TEXT
-        if person.email and not _email_in_text(person.email, input_text_lower):
-            logger.warning(
-                f"Email not found in input text: {person.email} under source url: {source_url}"
-            )
-            return HeuristicsFailure.EMAIL_NOT_IN_TEXT
         if person.phone:
             if not _phone_in_text(person.phone, input_text):
                 logger.warning(

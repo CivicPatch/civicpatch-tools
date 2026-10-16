@@ -30314,11 +30314,11 @@
      "blocked": false,
      "gate_failures": [],
      "failed_case_ids": [],
-     "cases_passed": 4,
-     "cases_total": 4,
+     "cases_passed": 5,
+     "cases_total": 5,
      "priority_scores": {},
      "cost_usd": 0.0,
-     "ran_at": "2026-10-16T04:26:22+00:00"
+     "ran_at": "2026-10-16T16:16:30+00:00"
     }
    ],
    "matrix": {
@@ -30334,7 +30334,7 @@
       "cells": [
        {
         "mean_score": 1.0,
-        "run_count": 1,
+        "run_count": 2,
         "mean_cost_usd": 0.0
        }
       ]
@@ -30346,19 +30346,118 @@
     "providers": [
      "gemini"
     ],
-    "charts": [],
-    "run_count": 1
+    "charts": [
+     {
+      "metric": "body",
+      "is_priority": false,
+      "gate_floor": null,
+      "series": [
+       {
+        "provider": "gemini",
+        "points": [
+         {
+          "timestamp": "2026-10-16T04:26:22+00:00",
+          "prompt_sha256": "ee15ea404664",
+          "score": 1.0
+         },
+         {
+          "timestamp": "2026-10-16T16:16:30+00:00",
+          "prompt_sha256": "ee15ea404664",
+          "score": 1.0
+         }
+        ]
+       }
+      ]
+     },
+     {
+      "metric": "cases_passed",
+      "is_priority": false,
+      "gate_floor": null,
+      "series": [
+       {
+        "provider": "gemini",
+        "points": [
+         {
+          "timestamp": "2026-10-16T04:26:22+00:00",
+          "prompt_sha256": "ee15ea404664",
+          "score": 1.0
+         },
+         {
+          "timestamp": "2026-10-16T16:16:30+00:00",
+          "prompt_sha256": "ee15ea404664",
+          "score": 1.0
+         }
+        ]
+       }
+      ]
+     },
+     {
+      "metric": "name_match",
+      "is_priority": false,
+      "gate_floor": null,
+      "series": [
+       {
+        "provider": "gemini",
+        "points": [
+         {
+          "timestamp": "2026-10-16T04:26:22+00:00",
+          "prompt_sha256": "ee15ea404664",
+          "score": 0.025
+         },
+         {
+          "timestamp": "2026-10-16T16:16:30+00:00",
+          "prompt_sha256": "ee15ea404664",
+          "score": 0.22000000000000003
+         }
+        ]
+       }
+      ]
+     },
+     {
+      "metric": "recall",
+      "is_priority": false,
+      "gate_floor": null,
+      "series": [
+       {
+        "provider": "gemini",
+        "points": [
+         {
+          "timestamp": "2026-10-16T04:26:22+00:00",
+          "prompt_sha256": "ee15ea404664",
+          "score": 0.7440476190476191
+         },
+         {
+          "timestamp": "2026-10-16T16:16:30+00:00",
+          "prompt_sha256": "ee15ea404664",
+          "score": 0.7702380952380953
+         }
+        ]
+       }
+      ]
+     }
+    ],
+    "run_count": 2
    },
    "prompt_versions": [
     {
      "prompt_sha256": "ee15ea404664",
      "text": "\n    Provide the current elected officials for the specified city, including the Mayor (if applicable)\n    and other elected members of the local government. Format the response as a JSON object.\n\n    Municipality: Conroe city, Texas\n\n    Instructions:\n    1. Identify the elected officials in the local government,\n       including the Mayor (if applicable).\n       1.1. For each official, extract only:\n            - name: Full name only (no titles)\n            - label: The office they hold, exactly as the municipality writes it\n              (\"Council Member, Ward 3\"). One string, not split into parts.\n            - organization: The body they sit on (\"City Council\"); if it is one of the\n              bodies listed above, use that name\n    3. Create a JSON object with the following structure:\n       ```json\n       {\n         \"people\": [\n           {\n             \"name\": \"Name of the official\",\n             \"label\": \"Office as written\",\n             \"organization\": \"Body they sit on\"\n           }\n         ]\n       }\n       ```\n\n    IMPORTANT: If the response contains anything other than a valid JSON object,\n    it will be considered incorrect. Ensure the response is strictly JSON.\n    Verify that the response is valid JSON before returning it.\n    If it is not valid JSON, retry the generation.\n    ",
      "first_run_at": "2026-10-16T04:26:22+00:00",
-     "last_run_at": "2026-10-16T04:26:22+00:00",
+     "last_run_at": "2026-10-16T16:16:30+00:00",
      "providers": [
       "gemini"
      ],
      "runs": [
+      {
+       "timestamp": "2026-10-16T16:16:30+00:00",
+       "provider": "gemini",
+       "scores": {
+        "body": 1.0,
+        "cases_passed": 1.0,
+        "name_match": 0.22000000000000003,
+        "recall": 0.7702380952380953
+       }
+      },
       {
        "timestamp": "2026-10-16T04:26:22+00:00",
        "provider": "gemini",
@@ -30400,17 +30499,24 @@
       "scores": [
        1.0
       ],
-      "stability": "unknown"
+      "stability": "steady"
      },
      {
       "case_id": "milford_mi",
       "scores": [
        1.0
       ],
-      "stability": "unknown"
+      "stability": "steady"
      },
      {
       "case_id": "millbury_ma",
+      "scores": [
+       1.0
+      ],
+      "stability": "steady"
+     },
+     {
+      "case_id": "pierce_county_wa",
       "scores": [
        1.0
       ],
@@ -30421,10 +30527,16 @@
       "scores": [
        1.0
       ],
-      "stability": "unknown"
+      "stability": "steady"
      }
     ],
-    "movements": []
+    "movements": [
+     {
+      "provider": "gemini",
+      "regressed": [],
+      "improved": []
+     }
+    ]
    },
    "latest_mismatches": {},
    "case_inputs": {
@@ -30442,6 +30554,11 @@
      "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:ma/place:millbury/government",
      "name": "Millbury town",
      "organizations": "[{\"name\": \"Select Board\", \"role_labels\": [\"Select Board Member\", \"Chair\", \"Vice Chair\"], \"meta_is_default\": true}, {\"name\": \"Town Meeting\", \"role_labels\": [\"Moderator\"]}]"
+    },
+    "pierce_county_wa": {
+     "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:wa/county:pierce/government",
+     "name": "Pierce County",
+     "organizations": "[{\"name\": \"Board of County Commissioners\", \"role_labels\": [\"Commissioner\", \"Chair\"], \"meta_is_default\": true}]"
     },
     "seattle_wa": {
      "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:wa/place:seattle/government",
