@@ -22320,17 +22320,6 @@
    "dataset_dir": "../../../datasets/local/relevant_page",
    "verdicts": [
     {
-     "provider": "Alibaba",
-     "blocked": false,
-     "gate_failures": [],
-     "failed_case_ids": [],
-     "cases_passed": 57,
-     "cases_total": 57,
-     "priority_scores": {},
-     "cost_usd": 0.0605644892,
-     "ran_at": "2026-09-29T00:58:24+00:00"
-    },
-    {
      "provider": "AtlasCloud",
      "blocked": false,
      "gate_failures": [],
@@ -22338,23 +22327,8 @@
      "cases_passed": 57,
      "cases_total": 57,
      "priority_scores": {},
-     "cost_usd": 0.0370256152,
-     "ran_at": "2026-09-29T00:58:24+00:00"
-    },
-    {
-     "provider": "DigitalOcean",
-     "blocked": true,
-     "gate_failures": [],
-     "failed_case_ids": [
-      "place_omak__www_omakcity_com_directory_aspx_did_19",
-      "place_goldthwaite__www_visitgoldthwaite_com_city-hall",
-      "place_davenport__www_davenportwa_us_index_asp_sec_a2951c48-519e-4aac-a2c8-4e8e24c4010c_de_4af1b45b-81cb-4eee-8dc7-3c6bdb98eaad_type_b_dir"
-     ],
-     "cases_passed": 54,
-     "cases_total": 57,
-     "priority_scores": {},
-     "cost_usd": 0.02950486,
-     "ran_at": "2026-09-29T00:58:23+00:00"
+     "cost_usd": 0.063430248,
+     "ran_at": "2026-10-16T17:07:21+00:00"
     }
    ],
    "matrix": {
@@ -22391,8 +22365,8 @@
        },
        {
         "mean_score": 1.0,
-        "run_count": 1,
-        "mean_cost_usd": 0.0370256152
+        "run_count": 3,
+        "mean_cost_usd": 0.05644567973333333
        },
        {
         "mean_score": 0.9473684210526315,
@@ -22590,23 +22564,22 @@
       },
       "candidate": {
        "mean_score": 1.0,
-       "run_count": 1,
-       "mean_cost_usd": 0.0370256152
+       "run_count": 3,
+       "mean_cost_usd": 0.05644567973333333
       },
       "regressed": [],
       "improved": [],
       "unchanged_count": 57,
       "has_value_detail": true,
-      "newly_wrong": [
+      "newly_wrong": [],
+      "fixed": [
        {
-        "case_id": "quitaque_council",
-        "subject": "https://quitaque.us/cityofficials.html",
+        "case_id": "san_antonio",
+        "subject": "https://www.sa.gov/Directory",
         "field": "relevant_urls",
         "expected": "present",
         "actual": "—"
-       }
-      ],
-      "fixed": [
+       },
        {
         "case_id": "san_saba_airport_advisory_irrelevant",
         "subject": "https://sansabatexas.com/city-hall/",
@@ -23009,8 +22982,8 @@
       "prompt_sha256": "77e3eb2c9e3e",
       "baseline": {
        "mean_score": 1.0,
-       "run_count": 1,
-       "mean_cost_usd": 0.0370256152
+       "run_count": 3,
+       "mean_cost_usd": 0.05644567973333333
       },
       "candidate": {
        "mean_score": 1.0,
@@ -23023,6 +22996,13 @@
       "has_value_detail": true,
       "newly_wrong": [
        {
+        "case_id": "san_antonio",
+        "subject": "https://www.sa.gov/Directory",
+        "field": "relevant_urls",
+        "expected": "present",
+        "actual": "—"
+       },
+       {
         "case_id": "san_saba_airport_advisory_irrelevant",
         "subject": "https://sansabatexas.com/city-hall/",
         "field": "relevant_urls",
@@ -23030,15 +23010,7 @@
         "actual": "—"
        }
       ],
-      "fixed": [
-       {
-        "case_id": "quitaque_council",
-        "subject": "https://quitaque.us/cityofficials.html",
-        "field": "relevant_urls",
-        "expected": "present",
-        "actual": "—"
-       }
-      ]
+      "fixed": []
      },
      {
       "baseline_index": 1,
@@ -23046,8 +23018,8 @@
       "prompt_sha256": "77e3eb2c9e3e",
       "baseline": {
        "mean_score": 1.0,
-       "run_count": 1,
-       "mean_cost_usd": 0.0370256152
+       "run_count": 3,
+       "mean_cost_usd": 0.05644567973333333
       },
       "candidate": {
        "mean_score": 0.9473684210526315,
@@ -23104,22 +23076,7 @@
         "actual": false
        }
       ],
-      "fixed": [
-       {
-        "case_id": "quitaque_council",
-        "subject": "https://quitaque.us/cityofficials.html",
-        "field": "relevant_urls",
-        "expected": "present",
-        "actual": "—"
-       },
-       {
-        "case_id": "san_antonio",
-        "subject": "https://www.sa.gov/Directory",
-        "field": "relevant_urls",
-        "expected": "present",
-        "actual": "—"
-       }
-      ]
+      "fixed": []
      },
      {
       "baseline_index": 1,
@@ -23508,8 +23465,8 @@
       },
       "candidate": {
        "mean_score": 1.0,
-       "run_count": 1,
-       "mean_cost_usd": 0.0370256152
+       "run_count": 3,
+       "mean_cost_usd": 0.05644567973333333
       },
       "regressed": [],
       "improved": [
@@ -23531,22 +23488,7 @@
       ],
       "unchanged_count": 54,
       "has_value_detail": true,
-      "newly_wrong": [
-       {
-        "case_id": "quitaque_council",
-        "subject": "https://quitaque.us/cityofficials.html",
-        "field": "relevant_urls",
-        "expected": "present",
-        "actual": "—"
-       },
-       {
-        "case_id": "san_antonio",
-        "subject": "https://www.sa.gov/Directory",
-        "field": "relevant_urls",
-        "expected": "present",
-        "actual": "—"
-       }
-      ],
+      "newly_wrong": [],
       "fixed": [
        {
         "case_id": "gatesville_ordinance_vote_records",
@@ -25028,6 +24970,16 @@
           "timestamp": "2026-09-29T00:58:24+00:00",
           "prompt_sha256": "77e3eb2c9e3e",
           "score": 1.0
+         },
+         {
+          "timestamp": "2026-10-16T16:57:37+00:00",
+          "prompt_sha256": "77e3eb2c9e3e",
+          "score": 1.0
+         },
+         {
+          "timestamp": "2026-10-16T17:07:21+00:00",
+          "prompt_sha256": "77e3eb2c9e3e",
+          "score": 1.0
          }
         ]
        },
@@ -25320,6 +25272,16 @@
           "timestamp": "2026-09-29T00:58:24+00:00",
           "prompt_sha256": "77e3eb2c9e3e",
           "score": 0.96
+         },
+         {
+          "timestamp": "2026-10-16T16:57:37+00:00",
+          "prompt_sha256": "77e3eb2c9e3e",
+          "score": 1.0
+         },
+         {
+          "timestamp": "2026-10-16T17:07:21+00:00",
+          "prompt_sha256": "77e3eb2c9e3e",
+          "score": 1.0
          }
         ]
        },
@@ -25456,20 +25418,36 @@
       ]
      }
     ],
-    "run_count": 53
+    "run_count": 55
    },
    "prompt_versions": [
     {
      "prompt_sha256": "77e3eb2c9e3e",
      "text": "\n    Decide two things about the page content provided: whether it presents the **currently\n    serving main officials** of the target municipality, and which of its links a crawler should\n    follow to find more of them.\n\n    Main officials hold this municipality's known elected roles, which make up its\n    **primary governing body**: <known roles, per case>.\n\n    Page URL: <page url, per case>\n    Target jurisdiction: <jurisdiction, per case>\n    Government form: <government form, per case>\n    Governing bodies of this municipality: <governing bodies, per case>\n\n    The URL tells you which links share the municipality's domain. It tells you nothing about\n    `is_relevant`, which comes from the page content alone.\n\n    ---\n\n    ## is_relevant\n\n    True when the page exists to show who currently holds a primary governing role: a roster, a\n    directory, or one official's own page. Ask \"does this page exist to show who holds office\n    right now?\" and answer on the page's own heading and body.\n\n    Also true, and these are the ones most often got wrong:\n    - The heading names a known elected role and the page gives a person's name for it. A\n      site-wide navigation menu is not the page's purpose however much of the content it fills,\n      and a non-voting deputy appearing alongside does not change the answer.\n    - The page lists the municipality's own officials and also lists appointed staff. A small\n      town's \"City Officials\" page naming the Mayor and council members alongside the City\n      Manager, Water Supervisor and Fire Chief is the roster. Judge it by whether the governing\n      body's members are presented as such, not by who else shares the page.\n    - A staff or contact directory that gives a row to a current holder of a primary role, such\n      as the Mayor with a phone number and email. That row is a directory entry for the official,\n      even when every other row is staff.\n    - A page about a body named under \"Governing bodies of this municipality\" above, whatever its\n      URL or site section suggests. An Office of the Mayor page filed beside the departments is\n      still the mayor's office.\n\n    When a page names a person who holds one of the roles above and you cannot tell whether it is\n    a roster or a department landing page, answer true. The two mistakes do not cost the same: a\n    page wrongly called relevant costs one extraction that returns nobody, while a page wrongly\n    called irrelevant is never read again and its officials are never found.\n\n    False for these, whoever is named in them:\n    - Auxiliary committees, boards and commissions (Planning and Zoning, Parks and Recreation,\n      Airport Advisory), and pages about department heads or other non-elected staff. A Mayor or\n      Alderman sitting on such a body does not make its page relevant.\n    - Special districts, utility boards and other sub-municipal entities (Water Supply District,\n      Fire District, Library Board), which are separate legal entities. A structured roster of\n      their board members is still not this municipality's governing body.\n    - News, announcements and press releases, even a post naming newly elected members by ward.\n    - Meeting minutes, vote records, ordinances and legislative archives, even titled \"City\n      Council\" or living at a city council URL. Read the body, not the title.\n    - Historical rosters (\"Past Mayors\", \"Mayor History\"), even where the most recent entry is\n      the current holder.\n\n    ---\n\n    ## relevant_urls\n\n    These feed the crawler, so populate them whether or not the page itself is relevant: a page\n    already listing officials still links to more of them. Judge each link by its **anchor text\n    and surrounding context**, not by URL structure, since municipal CMS platforms use opaque\n    numeric paths (e.g. /179/Township-Board) where the slug is the only signal.\n\n    Include every link whose anchor text or context refers to:\n    - a governing body or elected role (\"Township Board\", \"City Council\", \"Mayor\", \"City\n      Officials\", \"Board of Trustees\", \"Aldermen\", \"Commissioners\", \"Select Board\")\n    - a government directory or index page likely to link onward to governance pages\n      (\"Government\", \"City Hall\", \"Our Government\", \"Administration\")\n    - a staff or personnel directory that may list elected officials (\"Staff Directory\",\n      \"Directory\", \"Elected Officials\")\n\n    These are not candidates to weigh against each other. A qualifying link left out is the worst\n    outcome here, because the crawler cannot reach a page it was never told about — include every\n    one, however few qualify and however much navigation surrounds them. A small site's menu may\n    offer exactly one, and returning nothing because one felt too few is the failure to avoid.\n    Stop at 20; beyond that you are including noise.\n\n    Leave out municipal services (library, parks, fire, utilities), individual news stories,\n    press releases and event pages, and non-municipal external domains. Copy each URL exactly as\n    it appears in the content, without normalizing or rewriting any part of it, and do not\n    include the current page's own URL.\n\n    ---\n\n    ## Output Format\n\n    Return a JSON object with the following fields:\n    {\n        \"relevant_urls\": [\"https://example.com/council\", \"https://example.com/directory/departments\"],\n        \"is_relevant\": true/false,\n    }\n    ",
      "first_run_at": "2026-09-29T00:58:23+00:00",
-     "last_run_at": "2026-09-29T00:58:24+00:00",
+     "last_run_at": "2026-10-16T17:07:21+00:00",
      "providers": [
       "Alibaba",
       "AtlasCloud",
       "DigitalOcean"
      ],
      "runs": [
+      {
+       "timestamp": "2026-10-16T17:07:21+00:00",
+       "provider": "AtlasCloud",
+       "scores": {
+        "is_relevant": 1.0,
+        "relevant_urls": 1.0
+       }
+      },
+      {
+       "timestamp": "2026-10-16T16:57:37+00:00",
+       "provider": "AtlasCloud",
+       "scores": {
+        "is_relevant": 1.0,
+        "relevant_urls": 1.0
+       }
+      },
       {
        "timestamp": "2026-09-29T00:58:24+00:00",
        "provider": "Alibaba",
@@ -26801,9 +26779,7 @@
    ],
    "detail": {
     "providers": [
-     "Alibaba",
-     "AtlasCloud",
-     "DigitalOcean"
+     "AtlasCloud"
     ],
     "metric_rows": [
      {
@@ -26812,19 +26788,7 @@
        {
         "score": 1.0,
         "swing_is_wide": false,
-        "half_swing": 0.05263157894736842,
-        "missing_count": 0
-       },
-       {
-        "score": 1.0,
-        "swing_is_wide": false,
         "half_swing": 0.03125,
-        "missing_count": 0
-       },
-       {
-        "score": 0.9473684210526315,
-        "swing_is_wide": false,
-        "half_swing": 0.05263157894736842,
         "missing_count": 0
        }
       ]
@@ -26833,22 +26797,10 @@
       "metric": "relevant_urls",
       "cells": [
        {
-        "score": 0.96,
-        "swing_is_wide": true,
-        "half_swing": 0.18493150684931509,
-        "missing_count": 2
-       },
-       {
-        "score": 0.96,
+        "score": 1.0,
         "swing_is_wide": true,
         "half_swing": 0.2027027027027027,
-        "missing_count": 2
-       },
-       {
-        "score": 0.9803921568627451,
-        "swing_is_wide": true,
-        "half_swing": 0.31293349653202773,
-        "missing_count": 1
+        "missing_count": 0
        }
       ]
      },
@@ -26857,18 +26809,6 @@
       "cells": [
        {
         "score": 1.0,
-        "swing_is_wide": false,
-        "half_swing": 0.0,
-        "missing_count": null
-       },
-       {
-        "score": 1.0,
-        "swing_is_wide": false,
-        "half_swing": 0.0,
-        "missing_count": null
-       },
-       {
-        "score": 0.9473684210526315,
         "swing_is_wide": false,
         "half_swing": 0.0,
         "missing_count": null
@@ -27487,11 +27427,7 @@
      {
       "provider": "AtlasCloud",
       "regressed": [],
-      "improved": [
-       "gatesville_ordinance_vote_records",
-       "place_amherst__www_cityofamherst_com_contact_us_index_php",
-       "place_colville__www_colville_wa_us_pview_aspx_id_35815_catid_462"
-      ]
+      "improved": []
      },
      {
       "provider": "DigitalOcean",
@@ -27529,94 +27465,7 @@
      }
     ]
    },
-   "latest_mismatches": {
-    "Alibaba": {
-     "san_antonio": [
-      {
-       "subject": "https://www.sa.gov/Directory",
-       "field": "relevant_urls",
-       "expected": "present",
-       "actual": "—",
-       "expected_label": null,
-       "actual_label": null
-      }
-     ],
-     "san_saba_airport_advisory_irrelevant": [
-      {
-       "subject": "https://sansabatexas.com/city-hall/",
-       "field": "relevant_urls",
-       "expected": "present",
-       "actual": "—",
-       "expected_label": null,
-       "actual_label": null
-      }
-     ]
-    },
-    "AtlasCloud": {
-     "quitaque_council": [
-      {
-       "subject": "https://quitaque.us/cityofficials.html",
-       "field": "relevant_urls",
-       "expected": "present",
-       "actual": "—",
-       "expected_label": null,
-       "actual_label": null
-      }
-     ],
-     "san_antonio": [
-      {
-       "subject": "https://www.sa.gov/Directory",
-       "field": "relevant_urls",
-       "expected": "present",
-       "actual": "—",
-       "expected_label": null,
-       "actual_label": null
-      }
-     ]
-    },
-    "DigitalOcean": {
-     "gatesville_ordinance_vote_records": [
-      {
-       "subject": "https://gatesvilletx.com/government/index.php",
-       "field": "relevant_urls",
-       "expected": "present",
-       "actual": "—",
-       "expected_label": null,
-       "actual_label": null
-      }
-     ],
-     "place_omak__www_omakcity_com_directory_aspx_did_19": [
-      {
-       "subject": "page",
-       "field": "is_relevant",
-       "expected": true,
-       "actual": false,
-       "expected_label": null,
-       "actual_label": null
-      }
-     ],
-     "place_goldthwaite__www_visitgoldthwaite_com_city-hall": [
-      {
-       "subject": "page",
-       "field": "is_relevant",
-       "expected": false,
-       "actual": true,
-       "expected_label": null,
-       "actual_label": null
-      }
-     ],
-     "place_davenport__www_davenportwa_us_index_asp_sec_a2951c48-519e-4aac-a2c8-4e8e24c4010c_de_4af1b45b-81cb-4eee-8dc7-3c6bdb98eaad_type_b_dir": [
-      {
-       "subject": "page",
-       "field": "is_relevant",
-       "expected": true,
-       "actual": false,
-       "expected_label": null,
-       "actual_label": null
-      }
-     ]
-    }
-   },
+   "latest_mismatches": {},
    "case_inputs": {
     "austin_city_manager_irrelevant": {
      "page_url": "https://www.austintexas.gov/city-manager",
@@ -28323,78 +28172,16 @@
    },
    "prompts_dir": "../relevant_page/_prompts",
    "latest_case_prompts": {
-    "Alibaba": {
-     "template_sha256": "77e3eb2c9e3e",
-     "prompts": {
-      "austin_city_manager_irrelevant": "74e3b235a1f8",
-      "beeville_water_supply_district_irrelevant": "4432315d9859",
-      "castroville_airport_board_irrelevant": "a580fa98d4dd",
-      "dish_irrelevant": "19c0257a0221",
-      "eastpointe_home": "6a24f107aa0a",
-      "ellago_mayor_history_irrelevant": "197d279abc41",
-      "gatesville_ordinance_vote_records": "ce314344db82",
-      "mcgregor_city_announcement_irrelevant": "3a06cee013c9",
-      "mikado_township_home": "c4a986b16030",
-      "millbury_board_of_selectmen": "08d403eeadef",
-      "millbury_school_committee_irrelevant": "981a0c77954c",
-      "olton_newslist_irrelevant": "0e3d76d6d649",
-      "place_abernathy__cityofabernathy_org_directory_": "a17ab3799ced",
-      "place_abilene__abilenetx_gov_526_city-council": "1856e31a83e6",
-      "place_adamsville__www_cityofadamsville_com_boards_commissions_city_commission_index_html": "587168b905ca",
-      "place_airway_heights__cawh_org_city-manager_": "a5f10287e63b",
-      "place_algona__algonawa_gov_": "9e69b8426f68",
-      "place_ames__www_cityofamestexas_com_171_mayor-council": "c1a7905e11f0",
-      "place_amherst__www_cityofamherst_com_city_government_mayor___city_council_php": "0f26848c817d",
-      "place_amherst__www_cityofamherst_com_contact_us_index_php": "9912a3d7ce9d",
-      "place_anacortes__www_anacorteswa_gov_756_mayor": "09ea4c28eb1c",
-      "place_anahuac__anahuac_us_government_city-council": "0beb1043708d",
-      "place_anahuac__anahuac_us_government_greetings-from-the-mayor_": "36f41d2a9c5b",
-      "place_anahuac__www_anahuac_us": "5df83a8eae49",
-      "place_apple_valley__applevalley_org_council-member-info_larry-cusack_": "6abac302b8e6",
-      "place_bainbridge_island__bainbridgewa_gov_directory_aspx_did_14": "3af56c65fdbc",
-      "place_bellevue__bellevuewa_gov_": "4ad24c185e6f",
-      "place_bellevue__bellevuewa_gov_city-government_city-council_councilmembers": "19c642620691",
-      "place_bridgeport__bridgeportwashington_net_city-council_": "7b56a2e82add",
-      "place_bridgeport__bridgeportwashington_net_ova_dep_mayors-office": "71290b7e68d1",
-      "place_cathlamet__www_townofcathlamet_com_about-us": "2cc615d8625a",
-      "place_cathlamet__www_townofcathlamet_com_elected-officials-1": "43d32b9c1479",
-      "place_colville__www_colville_wa_us_": "5f39018ba5c9",
-      "place_colville__www_colville_wa_us_pview_aspx_id_35815_catid_462": "afe81eca3623",
-      "place_colville__www_colville_wa_us_pview_aspx_id_35906_catid_601": "2c3e81f5bd8e",
-      "place_crescent_city__www_crescentcity_org_directory_citycouncil": "5dae8a45ff1d",
-      "place_davenport__www_davenportwa_us_index_asp_sec_a2951c48-519e-4aac-a2c8-4e8e24c4010c_de_4af1b45b-81cb-4eee-8dc7-3c6bdb98eaad_type_b_dir": "3167ebf309ef",
-      "place_ellensburg__ci_ellensburg_wa_us_975_meet-your-city-council": "44f6cca7ea20",
-      "place_ephrata__www_ephrata_org_27_government": "343acd9543b3",
-      "place_goldthwaite__www_visitgoldthwaite_com_": "ef9c9d66a132",
-      "place_goldthwaite__www_visitgoldthwaite_com_city-hall": "cbbc96cf6cf3",
-      "place_lookout_mountain__www_lookoutmtn_us_directory_index_php": "b0f0ce5d7220",
-      "place_manchester__www_cityofmanchestertn_com": "5c05ee9a3be3",
-      "place_omak__www_omakcity_com": "bd3d1b7ef56f",
-      "place_omak__www_omakcity_com_1382_departments": "771dd5a8cf8f",
-      "place_omak__www_omakcity_com_directory_aspx_did_19": "21b6382983f3",
-      "place_republic__www_republicwa_org_": "f3214a6890d5",
-      "place_sedro-woolley__www_sedro-woolley_gov_governing_bodies_city_council_index_php": "05604857b39d",
-      "place_shelton__sheltonwa_gov_government_city_council_city_council_members_councilmember_eric_onisko_php": "b1c45f6650f3",
-      "place_walla_walla__www_wallawallawa_gov_government_city-directory": "bf5d9354751b",
-      "place_wilbur__www_wilburwa_gov_": "1a34343a8071",
-      "place_wilbur__www_wilburwa_gov_27_government": "5e5ab501d41e",
-      "quitaque_council": "098668d3816c",
-      "raisin_township_clerk": "f396d2365584",
-      "raisin_township_supervisor": "31434d4aa0a0",
-      "san_antonio": "74399b461ecd",
-      "san_saba_airport_advisory_irrelevant": "1bfecfe136f1"
-     }
-    },
     "AtlasCloud": {
      "template_sha256": "77e3eb2c9e3e",
      "prompts": {
-      "austin_city_manager_irrelevant": "74e3b235a1f8",
-      "beeville_water_supply_district_irrelevant": "4432315d9859",
+      "austin_city_manager_irrelevant": "7632fce1d717",
+      "beeville_water_supply_district_irrelevant": "2aedaa10e4d7",
       "castroville_airport_board_irrelevant": "a580fa98d4dd",
       "dish_irrelevant": "19c0257a0221",
-      "eastpointe_home": "6a24f107aa0a",
+      "eastpointe_home": "cac83c7b7155",
       "ellago_mayor_history_irrelevant": "197d279abc41",
-      "gatesville_ordinance_vote_records": "ce314344db82",
+      "gatesville_ordinance_vote_records": "fd080303ac47",
       "mcgregor_city_announcement_irrelevant": "3a06cee013c9",
       "mikado_township_home": "c4a986b16030",
       "millbury_board_of_selectmen": "08d403eeadef",
@@ -28440,72 +28227,10 @@
       "place_walla_walla__www_wallawallawa_gov_government_city-directory": "bf5d9354751b",
       "place_wilbur__www_wilburwa_gov_": "1a34343a8071",
       "place_wilbur__www_wilburwa_gov_27_government": "5e5ab501d41e",
-      "quitaque_council": "098668d3816c",
+      "quitaque_council": "4facc3995111",
       "raisin_township_clerk": "f396d2365584",
       "raisin_township_supervisor": "31434d4aa0a0",
-      "san_antonio": "74399b461ecd",
-      "san_saba_airport_advisory_irrelevant": "1bfecfe136f1"
-     }
-    },
-    "DigitalOcean": {
-     "template_sha256": "77e3eb2c9e3e",
-     "prompts": {
-      "austin_city_manager_irrelevant": "74e3b235a1f8",
-      "beeville_water_supply_district_irrelevant": "4432315d9859",
-      "castroville_airport_board_irrelevant": "a580fa98d4dd",
-      "dish_irrelevant": "19c0257a0221",
-      "eastpointe_home": "6a24f107aa0a",
-      "ellago_mayor_history_irrelevant": "197d279abc41",
-      "gatesville_ordinance_vote_records": "ce314344db82",
-      "mcgregor_city_announcement_irrelevant": "3a06cee013c9",
-      "mikado_township_home": "c4a986b16030",
-      "millbury_board_of_selectmen": "08d403eeadef",
-      "millbury_school_committee_irrelevant": "981a0c77954c",
-      "olton_newslist_irrelevant": "0e3d76d6d649",
-      "place_abernathy__cityofabernathy_org_directory_": "a17ab3799ced",
-      "place_abilene__abilenetx_gov_526_city-council": "1856e31a83e6",
-      "place_adamsville__www_cityofadamsville_com_boards_commissions_city_commission_index_html": "587168b905ca",
-      "place_airway_heights__cawh_org_city-manager_": "a5f10287e63b",
-      "place_algona__algonawa_gov_": "9e69b8426f68",
-      "place_ames__www_cityofamestexas_com_171_mayor-council": "c1a7905e11f0",
-      "place_amherst__www_cityofamherst_com_city_government_mayor___city_council_php": "0f26848c817d",
-      "place_amherst__www_cityofamherst_com_contact_us_index_php": "9912a3d7ce9d",
-      "place_anacortes__www_anacorteswa_gov_756_mayor": "09ea4c28eb1c",
-      "place_anahuac__anahuac_us_government_city-council": "0beb1043708d",
-      "place_anahuac__anahuac_us_government_greetings-from-the-mayor_": "36f41d2a9c5b",
-      "place_anahuac__www_anahuac_us": "5df83a8eae49",
-      "place_apple_valley__applevalley_org_council-member-info_larry-cusack_": "6abac302b8e6",
-      "place_bainbridge_island__bainbridgewa_gov_directory_aspx_did_14": "3af56c65fdbc",
-      "place_bellevue__bellevuewa_gov_": "4ad24c185e6f",
-      "place_bellevue__bellevuewa_gov_city-government_city-council_councilmembers": "19c642620691",
-      "place_bridgeport__bridgeportwashington_net_city-council_": "7b56a2e82add",
-      "place_bridgeport__bridgeportwashington_net_ova_dep_mayors-office": "71290b7e68d1",
-      "place_cathlamet__www_townofcathlamet_com_about-us": "2cc615d8625a",
-      "place_cathlamet__www_townofcathlamet_com_elected-officials-1": "43d32b9c1479",
-      "place_colville__www_colville_wa_us_": "5f39018ba5c9",
-      "place_colville__www_colville_wa_us_pview_aspx_id_35815_catid_462": "afe81eca3623",
-      "place_colville__www_colville_wa_us_pview_aspx_id_35906_catid_601": "2c3e81f5bd8e",
-      "place_crescent_city__www_crescentcity_org_directory_citycouncil": "5dae8a45ff1d",
-      "place_davenport__www_davenportwa_us_index_asp_sec_a2951c48-519e-4aac-a2c8-4e8e24c4010c_de_4af1b45b-81cb-4eee-8dc7-3c6bdb98eaad_type_b_dir": "3167ebf309ef",
-      "place_ellensburg__ci_ellensburg_wa_us_975_meet-your-city-council": "44f6cca7ea20",
-      "place_ephrata__www_ephrata_org_27_government": "343acd9543b3",
-      "place_goldthwaite__www_visitgoldthwaite_com_": "ef9c9d66a132",
-      "place_goldthwaite__www_visitgoldthwaite_com_city-hall": "cbbc96cf6cf3",
-      "place_lookout_mountain__www_lookoutmtn_us_directory_index_php": "b0f0ce5d7220",
-      "place_manchester__www_cityofmanchestertn_com": "5c05ee9a3be3",
-      "place_omak__www_omakcity_com": "bd3d1b7ef56f",
-      "place_omak__www_omakcity_com_1382_departments": "771dd5a8cf8f",
-      "place_omak__www_omakcity_com_directory_aspx_did_19": "21b6382983f3",
-      "place_republic__www_republicwa_org_": "f3214a6890d5",
-      "place_sedro-woolley__www_sedro-woolley_gov_governing_bodies_city_council_index_php": "05604857b39d",
-      "place_shelton__sheltonwa_gov_government_city_council_city_council_members_councilmember_eric_onisko_php": "b1c45f6650f3",
-      "place_walla_walla__www_wallawallawa_gov_government_city-directory": "bf5d9354751b",
-      "place_wilbur__www_wilburwa_gov_": "1a34343a8071",
-      "place_wilbur__www_wilburwa_gov_27_government": "5e5ab501d41e",
-      "quitaque_council": "098668d3816c",
-      "raisin_township_clerk": "f396d2365584",
-      "raisin_township_supervisor": "31434d4aa0a0",
-      "san_antonio": "74399b461ecd",
+      "san_antonio": "8b61d9831767",
       "san_saba_airport_advisory_irrelevant": "1bfecfe136f1"
      }
     }
@@ -30574,23 +30299,6 @@
   {
    "kind": "cases_failed",
    "severity": 0,
-   "eval_name": "relevant_page",
-   "provider": "DigitalOcean",
-   "metric": null,
-   "score": null,
-   "gate_floor": null,
-   "missing_count": null,
-   "expected_count": null,
-   "swing": null,
-   "failed_case_ids": [
-    "place_omak__www_omakcity_com_directory_aspx_did_19",
-    "place_goldthwaite__www_visitgoldthwaite_com_city-hall",
-    "place_davenport__www_davenportwa_us_index_asp_sec_a2951c48-519e-4aac-a2c8-4e8e24c4010c_de_4af1b45b-81cb-4eee-8dc7-3c6bdb98eaad_type_b_dir"
-   ]
-  },
-  {
-   "kind": "cases_failed",
-   "severity": 0,
    "eval_name": "page_covers",
    "provider": "DigitalOcean",
    "metric": null,
@@ -30698,19 +30406,6 @@
    "kind": "wide_swing",
    "severity": 2,
    "eval_name": "relevant_page",
-   "provider": "Alibaba",
-   "metric": "relevant_urls",
-   "score": null,
-   "gate_floor": null,
-   "missing_count": null,
-   "expected_count": null,
-   "swing": 0.18493150684931509,
-   "failed_case_ids": []
-  },
-  {
-   "kind": "wide_swing",
-   "severity": 2,
-   "eval_name": "relevant_page",
    "provider": "AtlasCloud",
    "metric": "relevant_urls",
    "score": null,
@@ -30718,19 +30413,6 @@
    "missing_count": null,
    "expected_count": null,
    "swing": 0.2027027027027027,
-   "failed_case_ids": []
-  },
-  {
-   "kind": "wide_swing",
-   "severity": 2,
-   "eval_name": "relevant_page",
-   "provider": "DigitalOcean",
-   "metric": "relevant_urls",
-   "score": null,
-   "gate_floor": null,
-   "missing_count": null,
-   "expected_count": null,
-   "swing": 0.31293349653202773,
    "failed_case_ids": []
   }
  ]

@@ -1,17 +1,7 @@
 providers:
-  open_router-DigitalOcean:
-    elapsed_seconds: 443.56
-    cost_usd: 0.02950486
-    failed_cases: 3
-    passed_cases: 54
   open_router-AtlasCloud:
-    elapsed_seconds: 447.17
-    cost_usd: 0.0370256152
-    failed_cases: 0
-    passed_cases: 57
-  open_router-Alibaba:
-    elapsed_seconds: 472.26
-    cost_usd: 0.0605644892
+    elapsed_seconds: 472.13
+    cost_usd: 0.063430248
     failed_cases: 0
     passed_cases: 57
 failures: {}
