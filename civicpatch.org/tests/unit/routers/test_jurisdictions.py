@@ -679,12 +679,12 @@ def test_an_unknown_post_is_a_404(client):
 
 # ── POST /jurisdictions/{ocdid}/pull_requests ─────────────────────────────────
 #
-# Every jurisdictions.yml edit, url and government form alike: a PR a person merges. The url
-# tests were the PATCH /jurisdictions/data tests until url edits moved onto pull requests.
+# Every jurisdictions.yml edit: a PR a person merges. The government form is not one; it is
+# saved directly (test_government_forms.py).
 
 PULL_REQUEST_OCDID = "ocd-jurisdiction/country:us/state:wa/place:seattle/government"
 PULL_REQUEST_URL = f"/jurisdictions/{PULL_REQUEST_OCDID}/pull_requests"
-PULL_REQUEST_BODY = {"government_form": "mayor_council", "sources": ["https://seattle.gov"]}
+PULL_REQUEST_BODY = {"url": "https://seattle.gov/new", "sources": ["https://seattle.gov"]}
 
 
 def _service_key():
@@ -717,7 +717,7 @@ def test_a_maintainer_opens_a_pull_request_labelled_as_a_maintainer(client):
     assert response.status_code == 201
     assert response.json()["data"]["pull_request_number"] == 7
     _ocdid, edit, label, author = mock_open.call_args.args
-    assert (edit.government_form, label, author) == (GovernmentForm.MAYOR_COUNCIL, PullRequestLabel.MAINTAINER, "user-789")
+    assert (edit.patch, label, author) == ({"url": "https://seattle.gov/new"}, PullRequestLabel.MAINTAINER, "user-789")
 
 
 @pytest.mark.unit
@@ -733,8 +733,7 @@ def test_a_url_edit_carries_only_the_fields_sent(client):
     response, mock_open = _post(client, {"url": "https://seattle.gov/new"}, _maintainer)
 
     assert response.status_code == 201
-    edit = mock_open.call_args.args[1]
-    assert (edit.patch, edit.government_form) == ({"url": "https://seattle.gov/new"}, None)
+    assert mock_open.call_args.args[1].patch == {"url": "https://seattle.gov/new"}
 
 
 @pytest.mark.unit
@@ -789,7 +788,6 @@ def test_a_person_with_no_user_row_cannot_pass_as_the_system(client):
     [
         (jurisdiction_pr_service.UnknownJurisdiction("x"), 404),
         (jurisdiction_pr_service.NothingToChange("x"), 400),
-        (jurisdiction_pr_service.GovernmentFormNotAtLevel("x"), 422),
         (jurisdiction_pr_service.PullRequestAlreadyOpen("https://example.test/pull/6"), 409),
         (jurisdiction_pr_service.PullRequestFailed("x"), 502),
     ],

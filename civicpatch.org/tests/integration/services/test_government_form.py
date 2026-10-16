@@ -35,18 +35,17 @@ _WA_COUNTY = "ocd-jurisdiction/country:us/state:wa/county:zyform/government"
 async def _seed(
     jurisdiction_ocdid: str, state: str, data: dict, government_form: str | None = None
 ) -> None:
-    """`government_form` is what open-data's entry sets under `extras`, as the sync stores it."""
-    if government_form is not None:
-        data = {**data, "extras": {"government_form": government_form}}
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
-            INSERT INTO jurisdictions (jurisdiction_ocdid, state, data, updated_at)
-            VALUES (%s, %s, %s::jsonb, now())
-            ON CONFLICT (jurisdiction_ocdid) DO UPDATE SET data = EXCLUDED.data
+            INSERT INTO jurisdictions
+                (jurisdiction_ocdid, state, data, updated_at, extras_government_form)
+            VALUES (%s, %s, %s::jsonb, now(), %s)
+            ON CONFLICT (jurisdiction_ocdid) DO UPDATE
+                SET data = EXCLUDED.data, extras_government_form = EXCLUDED.extras_government_form
             """,
-            (jurisdiction_ocdid, state, json.dumps(data)),
+            (jurisdiction_ocdid, state, json.dumps(data), government_form),
         )
         await conn.commit()
 

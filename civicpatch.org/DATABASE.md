@@ -31,7 +31,7 @@ erDiagram
         int_null        population          "240: the entry's population, written by the sync"
         text_null       geoid               "240: the entry's geoid, written by the sync"
         text_null       wiki_url            "240: the entry's wiki_url, written by the sync"
-        text_null       extras_government_form "240: the entry's extras.government_form, written by the sync; check: the seven GovernmentForm values; null = the config files decide"
+        text_null       extras_government_form "cp.org's own, set by a person or a scrape, never by the open-data sync; check: the seven GovernmentForm values; null = the config files decide"
         timestamptz_null updated_at
     }
 

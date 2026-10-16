@@ -23,7 +23,7 @@ from database.changeset_predicates import (
 from database.database import get_pool, to_iso
 from schemas.common import InFlightEntry, InFlightEntryType, JurisdictionInFlight
 from shared.utils.id_utils import make_id
-from shared.utils.statuses import ActivityType, ChangesetKind, DismissalReason
+from shared.utils.statuses import ActivityType, ChangesetKind
 
 logger = logging.getLogger(__name__)
 
@@ -338,23 +338,6 @@ async def mark_changeset_published(changeset_id: str) -> None:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await mark_published(cur, changeset_id)
-
-
-async def has_rejected_jurisdiction_pull_request(jurisdiction_ocdid: str) -> bool:
-    """Whether someone closed a pull request for this jurisdiction without merging it."""
-    pool = await get_pool()
-    async with pool.connection() as conn, conn.cursor() as cur:
-        await cur.execute(
-            """
-            SELECT EXISTS (
-                SELECT 1 FROM changesets
-                WHERE jurisdiction_ocdid = %s AND kind = %s AND dismissed_reason = %s
-            )
-            """,
-            (jurisdiction_ocdid, ChangesetKind.JURISDICTION_EDIT, DismissalReason.REJECTED),
-        )
-        row = await cur.fetchone()
-    return bool(row and row[0])
 
 
 async def live_roster_changeset(cur, jurisdiction_ocdid: str) -> str | None:

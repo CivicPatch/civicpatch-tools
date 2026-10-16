@@ -4,7 +4,8 @@
 // control, so a field looks and behaves the same wherever you meet it. What
 // differs is the save: a person's edits accumulate and publish together, while a
 // jurisdiction edit is a pull request a person merges — so it opens on an explicit
-// Save rather than on every keystroke.
+// Save rather than on every keystroke. The government form is cp.org's own, not a PR, so it
+// saves as soon as it is picked.
 //
 // The website and the government form are editable. The rest are shown because they
 // identify the record, not because anyone edits them here.
@@ -37,6 +38,7 @@ interface JurisdictionDetailsProps {
   // decides on its own when to show the field as editable.
   canEditPermission: boolean;
   onSave: (changes: any) => Promise<any>;
+  onGovernmentFormChange: (value: string) => Promise<void>;
   blockedReason: string | null;
 }
 
@@ -66,21 +68,27 @@ function renderGovernmentForm(governmentForm: GovernmentForm | null) {
   );
 }
 
+// "Not known" only while nothing is saved: a saved form can be changed, not cleared.
 function renderGovernmentFormPicker(
   options: GovernmentForm[],
   selected: string,
+  isSaving: boolean,
   onChange: (value: string) => void,
 ) {
   const description = options.find((option) => option.value === selected)?.description;
   return renderRow(
     "Government form",
-    html`<select @change=${(e: Event) => onChange((e.target as HTMLSelectElement).value)}>
-        <option value="" .selected=${!selected}>Not known</option>
+    html`<select
+        ?disabled=${isSaving}
+        @change=${(e: Event) => onChange((e.target as HTMLSelectElement).value)}
+      >
+        ${selected ? nothing : html`<option value="" selected>Not known</option>`}
         ${options.map(
           (option) =>
             html`<option value=${option.value} .selected=${option.value === selected}>${option.name}</option>`,
         )}
       </select>
+      ${isSaving ? html`<div class="jurisdiction-details__progress" role="progressbar"></div>` : nothing}
       ${description ? html`<div class="jurisdiction-details__hint">${description}</div>` : nothing}`,
   );
 }
@@ -137,11 +145,13 @@ function JurisdictionDetails({
   openPullRequestUrl,
   canEditPermission,
   onSave,
+  onGovernmentFormChange,
   blockedReason,
 }: JurisdictionDetailsProps) {
-  const saved: JurisdictionFields = { url: data?.url ?? "", government_form: governmentForm?.value ?? "" };
+  const saved: JurisdictionFields = { url: data?.url ?? "" };
   const [draft, setDraft] = useState<JurisdictionFields>(saved);
   const [isSaving, setIsSaving] = useState(false);
+  const [isSavingForm, setIsSavingForm] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [prResult, setPrResult] = useState<any>(null);
   const [editing, setEditing] = useState(false);
@@ -149,7 +159,19 @@ function JurisdictionDetails({
   // A sync can change what is saved while the panel is open.
   useEffect(() => {
     setDraft(saved);
-  }, [saved.url, saved.government_form]);
+  }, [saved.url]);
+
+  const handleGovernmentFormChange = async (value: string) => {
+    setIsSavingForm(true);
+    setError(null);
+    try {
+      await onGovernmentFormChange(value);
+    } catch (e: any) {
+      setError(e.message ?? "Failed to save the government form.");
+    } finally {
+      setIsSavingForm(false);
+    }
+  };
 
   const changes = changedFields(saved, draft);
   const hasChanges = Object.keys(changes).length > 0;
@@ -238,7 +260,12 @@ function JurisdictionDetails({
       ${prResult ? nothing : renderWaitingPullRequest(openPullRequestUrl)}
       ${renderRow("Website", website)}
       ${canEdit && governmentFormOptions.length
-        ? renderGovernmentFormPicker(governmentFormOptions, draft.government_form, editDraft("government_form"))
+        ? renderGovernmentFormPicker(
+            governmentFormOptions,
+            governmentForm?.value ?? "",
+            isSavingForm,
+            handleGovernmentFormChange,
+          )
         : renderGovernmentForm(governmentForm)}
       ${readOnlyRows(data).map(renderReadOnly)}
       ${renderList("Term information", terms)}

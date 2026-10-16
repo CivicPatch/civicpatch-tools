@@ -468,7 +468,7 @@ export const fetchPeopleDirectory = async (
   return res.json();
 };
 
-const JURISDICTION_PULL_REQUEST_FIELDS = ["url", "geoid", "population", "government_form"];
+const JURISDICTION_PULL_REQUEST_FIELDS = ["url", "geoid", "population"];
 
 // Only the fields the caller sent: one left out stays as it is, and null clears it.
 const jurisdictionPullRequestBody = (data) => {
@@ -501,6 +501,22 @@ export const openJurisdictionPullRequest = async (jurisdictionOcdid, data) => {
       "X-CSRF-Token": getCsrfCookie(),
     },
     body: JSON.stringify(jurisdictionPullRequestBody(data)),
+  });
+  const body = await res.json().catch(() => ({}));
+  if (!res.ok) throw new Error(errorDetail(body, res.status));
+  return body;
+};
+
+// Saved at once, no pull request; the response is the details panel's fields as they now are.
+export const setGovernmentForm = async (jurisdictionOcdid, governmentForm) => {
+  const res = await fetch(`/api/v1/jurisdictions/${jurisdictionOcdid}/government_form`, {
+    method: "PUT",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+      "X-CSRF-Token": getCsrfCookie(),
+    },
+    body: JSON.stringify({ government_form: governmentForm }),
   });
   const body = await res.json().catch(() => ({}));
   if (!res.ok) throw new Error(errorDetail(body, res.status));

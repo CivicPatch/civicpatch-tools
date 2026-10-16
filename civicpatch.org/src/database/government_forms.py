@@ -4,10 +4,8 @@ from core.organization_derivation import ExistingOrganization
 from database.database import get_pool
 from shared.schemas import GovernmentForm
 
-# The form a person or a merged pull request set in open-data, under the entry's `extras`.
-_INPUTS_SELECT = (
-    "SELECT jurisdiction_ocdid, data->>'name', data->'extras'->>'government_form' FROM jurisdictions"
-)
+# cp.org's own column, set by a person or a scrape; the open-data sync never writes it.
+_INPUTS_SELECT = "SELECT jurisdiction_ocdid, data->>'name', extras_government_form FROM jurisdictions"
 
 
 class GovernmentFormInputs(BaseModel):
@@ -32,6 +30,25 @@ async def get_government_form_inputs(jurisdiction_ocdid: str) -> GovernmentFormI
         )
         row = await cur.fetchone()
     return _inputs(row) if row else None
+
+
+async def save_government_form(cur, jurisdiction_ocdid: str, government_form: GovernmentForm) -> None:
+    await cur.execute(
+        "UPDATE jurisdictions SET extras_government_form = %s WHERE jurisdiction_ocdid = %s",
+        (government_form, jurisdiction_ocdid),
+    )
+
+
+async def fill_government_form(cur, jurisdiction_ocdid: str, government_form: GovernmentForm) -> bool:
+    """Save it only while none is saved. Returns whether it was."""
+    await cur.execute(
+        """
+        UPDATE jurisdictions SET extras_government_form = %s
+        WHERE jurisdiction_ocdid = %s AND extras_government_form IS NULL
+        """,
+        (government_form, jurisdiction_ocdid),
+    )
+    return cur.rowcount > 0
 
 
 async def government_form_inputs_below_state() -> list[GovernmentFormInputs]:

@@ -24,6 +24,7 @@ import {
   fetchJurisdictionInFlight,
   fetchRosterSourceUrls,
   openJurisdictionPullRequest,
+  setGovernmentForm,
 } from "../../api.js";
 import { renderJurisdictionHeader } from "./jurisdiction-header.js";
 import type { RosterSourceUrls } from "./scrape-modal/roster-source-urls.ts";
@@ -81,6 +82,7 @@ function renderDetailsSection(
   jurisdictionData: any,
   canEditPermission: boolean,
   onSave: (form: any) => Promise<any>,
+  onGovernmentFormChange: (value: string) => Promise<void>,
   blockedReason: string | null,
 ) {
   return html`
@@ -92,6 +94,7 @@ function renderDetailsSection(
         .openPullRequestUrl=${jurisdictionData?.open_pull_request_url ?? null}
         .canEditPermission=${canEditPermission}
         .onSave=${onSave}
+        .onGovernmentFormChange=${onGovernmentFormChange}
         .blockedReason=${blockedReason}
       ></civ-jurisdiction-details>
     </section>
@@ -119,6 +122,9 @@ function JurisdictionPage({
   const [inFlight, setInFlight] = useState<InFlightEntry[]>([]);
   const [publishedAtDate, setPublishedAtDate] = useState<string | null>(null);
   const [isTriggering, setIsTriggering] = useState(false);
+  const [savedDetails, setSavedDetails] = useState<any>(null);
+  // Bumped when a government form saves: it may have created organizations the roster groups by.
+  const [organizationsVersion, setOrganizationsVersion] = useState(0);
   const [scrapeError, setScrapeError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -146,9 +152,9 @@ function JurisdictionPage({
     autoConnect: !!wsTopic,
   });
 
-  const jurisdictionData = jurisdiction_data
-    ? JSON.parse(jurisdiction_data)
-    : null;
+  const renderedData = jurisdiction_data ? JSON.parse(jurisdiction_data) : null;
+  // The page is server-rendered; a saved government form answers with the details as they now are.
+  const jurisdictionData = renderedData && savedDetails ? { ...renderedData, ...savedDetails } : renderedData;
   // Split rather than decorate: a scrape in flight is a different thing from one waiting on a
   // reviewer, and only the first has a progress bar to show.
   const liveEntry = inFlight.find((entry) => entry.is_running);
@@ -191,6 +197,12 @@ function JurisdictionPage({
   const handleJurisdictionSave = async (formData: any) => {
     const result = await openJurisdictionPullRequest(jurisdiction_ocdid, formData);
     return result.data;
+  };
+
+  const handleGovernmentFormChange = async (governmentForm: string) => {
+    const result = await setGovernmentForm(jurisdiction_ocdid, governmentForm);
+    setSavedDetails(result.data);
+    setOrganizationsVersion((version) => version + 1);
   };
 
   // Both sources answer it themselves now — the socket payload and the in-flight row carry
@@ -237,6 +249,7 @@ function JurisdictionPage({
                 jurisdictionData,
                 hasEditPermission && !jurisdictionBlockers.length,
                 handleJurisdictionSave,
+                handleGovernmentFormChange,
                 jurisdictionEditBlockedReason(jurisdictionBlockers),
               )}
             </div>
@@ -255,6 +268,7 @@ function JurisdictionPage({
                 .isLoading=${peopleLoading}
                 .blockedReason=${editingBlockedReason(peopleBlockers)}
                 .onPublished=${refetchPeople}
+                .organizationsVersion=${organizationsVersion}
               ></civ-roster-editor>
             </div>
           </div>

@@ -36,6 +36,8 @@ interface RosterEditorProps {
   isLoading: boolean;
   blockedReason: string | null;
   onPublished: () => void;
+  // Changes when something outside the roster (a saved government form) changed its organizations.
+  organizationsVersion: number;
 }
 
 type PublishStage = "idle" | "publishing";
@@ -56,9 +58,13 @@ function RosterEditor({
   isLoading,
   blockedReason,
   onPublished,
+  organizationsVersion,
 }: RosterEditorProps) {
   const { organizations, reload: reloadOrganizations } =
     useOrganizations(jurisdictionOcdid);
+  useEffect(() => {
+    if (organizationsVersion) reloadOrganizations();
+  }, [organizationsVersion]);
   // No changeset: this page edits live data, so a claim applies to the published roster as soon
   // as the next publish re-derives it.
   const { memberships } = useRosterMemberships(jurisdictionOcdid);

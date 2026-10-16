@@ -15,6 +15,7 @@ import routers.api.coverage as api_coverage_router
 import routers.api.data as api_data_router
 import routers.api.elections as api_elections_router
 import routers.api.jurisdictions as api_jurisdictions_router
+import routers.api.government_forms as api_government_forms_router
 import routers.api.leaderboard as api_leaderboard_router
 import routers.api.claims as api_claims_router
 import routers.api.memberships as api_memberships_router
@@ -148,6 +149,12 @@ app.include_router(
     dependencies=[
         Depends(require_route_access(RouteCategory.PUBLIC))
     ],  # public route for now
+)
+
+app.include_router(
+    api_government_forms_router.get_router(),
+    prefix="/api/v1/jurisdictions",
+    tags=["jurisdictions"],
 )
 
 app.include_router(
