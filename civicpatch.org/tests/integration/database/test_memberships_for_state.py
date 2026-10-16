@@ -17,7 +17,7 @@ import pytest
 import pytest_asyncio
 
 from core.sinks.sheet.people_rows import HEADERS
-from database import activity, divisions, memberships, organizations, posts
+from database import activity, divisions, memberships, organizations
 from database.database import get_pool
 from tests.integration import factories
 
@@ -75,7 +75,7 @@ async def _add_membership(cur, ocdid, division, state, name, stints) -> str:
     )
     organization_id = await organizations.find_or_create(cur, ocdid)
     await divisions.find_or_create(cur, division, ocdid)
-    post_id = await posts.find_or_create(cur, ocdid, organization_id, _ROLE, division)
+    post_id = await factories.seed_post(cur, ocdid, organization_id, _ROLE, division)
 
     person_id = str(uuid.uuid4())
     await cur.execute(

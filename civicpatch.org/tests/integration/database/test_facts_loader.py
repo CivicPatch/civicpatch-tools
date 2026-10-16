@@ -16,7 +16,7 @@ import pytest
 import pytest_asyncio
 
 from core.projection.facts import EntityType, PostKey
-from database import divisions, posts, source_records
+from database import divisions, source_records
 from database.database import get_pool
 from database.facts import load_facts_for
 from database.users import SYSTEM_USER_ID
@@ -122,7 +122,7 @@ async def test_a_claim_on_this_jurisdictions_membership_is_loaded():
     async with pool.connection() as conn, conn.cursor() as cur:
         organization_id = await factories.default_organization(cur, _OCDID)
         await divisions.find_or_create(cur, _BASE, _OCDID)
-        await posts.find_or_create(cur, _OCDID, organization_id, "mayor", _BASE)
+        await factories.seed_post(cur, _OCDID, organization_id, "mayor", _BASE)
         await conn.commit()
     await factories.published_source_record(
         _OCDID, organization_id, person_id, "Lia Load", "Mayor", _PAGE, _T0

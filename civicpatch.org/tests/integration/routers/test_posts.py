@@ -16,7 +16,7 @@ from fastapi import FastAPI
 from fastapi.testclient import TestClient
 
 from tests.integration.factories import SeededMembership
-from database import divisions, organizations, post_listings, posts
+from database import divisions, organizations, post_listings
 from database.database import get_pool
 from lib.auth import get_optional_user
 from routers.api import organizations as organizations_router
@@ -292,7 +292,7 @@ async def test_verified_is_on_the_wire_both_ways(client):
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await divisions.find_or_create(cur, _BASE, _OCDID)
-        unheld = await posts.find_or_create(cur, _OCDID, await _default_org_id(), "mayor", _BASE)
+        unheld = await factories.seed_post(cur, _OCDID, await _default_org_id(), "mayor", _BASE)
         await conn.commit()
     held = (await _create(client, role_id="clerk")).json()["data"]["id"]
     await _seat_someone(held)

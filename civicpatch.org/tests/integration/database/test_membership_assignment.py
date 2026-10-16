@@ -16,7 +16,7 @@ import pytest
 import pytest_asyncio
 
 from tests.integration.factories import SeededMembership
-from database import divisions, organizations, posts, projection
+from database import divisions, organizations, projection
 from database.database import get_pool
 from database.users import SYSTEM_USER_ID
 from schemas.jurisdictions import OfficeEdit, PersonEdit
@@ -86,8 +86,8 @@ async def _seed(label: str = "Mayor", read_in: str | None = None) -> tuple[str, 
         org = await organizations.find_or_create(cur, _OCDID)
         await divisions.find_or_create(cur, _BASE, _OCDID)
         await divisions.find_or_create(cur, _WARD_3, _OCDID)
-        first = await posts.find_or_create(cur, _OCDID, org, "mayor", _BASE)
-        second = await posts.find_or_create(cur, _OCDID, org, "council-member", _WARD_3)
+        first = await factories.seed_post(cur, _OCDID, org, "mayor", _BASE)
+        second = await factories.seed_post(cur, _OCDID, org, "council-member", _WARD_3)
         listed_by = (
             await organizations.find_or_create(cur, _OCDID, read_in) if read_in else org
         )

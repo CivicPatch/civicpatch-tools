@@ -35,7 +35,7 @@ from shared.utils.taxonomy import UNMATCHED_ROLE_ID, build_taxonomy
 
 from core.projection.diff import RosterDiff, roster_diff
 from core.projection.roster import derive_roster
-from database import claims, divisions, posts
+from database import claims, divisions
 from database.database import get_pool
 from database.facts import load_facts
 from database.projection import stored_roster
@@ -110,8 +110,8 @@ async def _seed() -> dict:
         ids["mayors_office"] = mayor_org
         await divisions.find_or_create(cur, _BASE, _OCDID)
         await divisions.find_or_create(cur, _WARD_2, _OCDID)
-        await posts.find_or_create(cur, _OCDID, ids["council"], "council-member", _WARD_2)
-        await posts.find_or_create(cur, _OCDID, mayor_org, "mayor", _BASE)
+        await factories.seed_post(cur, _OCDID, ids["council"], "council-member", _WARD_2)
+        await factories.seed_post(cur, _OCDID, mayor_org, "mayor", _BASE)
         await conn.commit()
     return ids
 

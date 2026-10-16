@@ -241,14 +241,27 @@ async def publish_changeset(
     """
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        updated_at = await get_updated_at(cur, changeset_id)
-        await _refuse_if_superseded(cur, changeset_id, jurisdiction_ocdid, updated_at)
-        await _refuse_if_not_publishable(cur, changeset_id)
-        await _record_publish(
+        return await publish_changeset_on(
             cur, changeset_id, jurisdiction_ocdid, resolved_by_user_id, changes
         )
-        await _publish_review_edit(cur, changeset_id)
-        # After both publishes, so their facts are part of what this derives.
-        written = await projection.rebuild_from_facts(cur, jurisdiction_ocdid, changeset_id)
-        await _supersede_stale_cards(cur, changeset_id, jurisdiction_ocdid)
+
+
+async def publish_changeset_on(
+    cur,
+    changeset_id: str,
+    jurisdiction_ocdid: str,
+    resolved_by_user_id: str | None = None,
+    changes: Change | None = None,
+) -> int:
+    """`publish_changeset` on the caller's cursor, so it commits or rolls back with the rest."""
+    updated_at = await get_updated_at(cur, changeset_id)
+    await _refuse_if_superseded(cur, changeset_id, jurisdiction_ocdid, updated_at)
+    await _refuse_if_not_publishable(cur, changeset_id)
+    await _record_publish(
+        cur, changeset_id, jurisdiction_ocdid, resolved_by_user_id, changes
+    )
+    await _publish_review_edit(cur, changeset_id)
+    # After both publishes, so their facts are part of what this derives.
+    written = await projection.rebuild_from_facts(cur, jurisdiction_ocdid, changeset_id)
+    await _supersede_stale_cards(cur, changeset_id, jurisdiction_ocdid)
     return written

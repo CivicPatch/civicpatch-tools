@@ -33,6 +33,7 @@ from services.review_summary import review_summary_for_changeset
 from services.roster import card_sides
 import services.roster_edits as roster_edits
 from shared.schemas import IssueCode
+from shared.utils.statuses import ChangesetKind
 from tests.integration import factories
 
 _OCDID = "ocd-jurisdiction/country:us/state:zz/place:testville/government"
@@ -134,8 +135,8 @@ async def test_record_mints_once_then_matches():
         org = await organizations.find_or_create(cur, _OCDID)
         await divisions.find_or_create(cur, _BASE, _OCDID)
 
-        first = await posts.find_or_create(cur, _OCDID, org, "mayor", _BASE)
-        second = await posts.find_or_create(cur, _OCDID, org, "mayor", _BASE)
+        first = await factories.seed_post(cur, _OCDID, org, "mayor", _BASE)
+        second = await factories.seed_post(cur, _OCDID, org, "mayor", _BASE)
         assert first == second
 
         await cur.execute("SELECT count(*) FROM posts WHERE jurisdiction_ocdid = %s", (_OCDID,))
@@ -158,13 +159,13 @@ async def test_a_match_never_overwrites_a_human_edit():
     async with pool.connection() as conn, conn.cursor() as cur:
         org = await organizations.find_or_create(cur, _OCDID)
         await divisions.find_or_create(cur, _BASE, _OCDID)
-        post_id = await posts.find_or_create(cur, _OCDID, org, "council-member", _BASE)
+        post_id = await factories.seed_post(cur, _OCDID, org, "council-member", _BASE)
         await conn.commit()
 
     await posts.update(post_id, 9, False, SYSTEM_USER_ID)
 
     async with pool.connection() as conn, conn.cursor() as cur:
-        await posts.find_or_create(cur, _OCDID, org, "council-member", _BASE)
+        await factories.seed_post(cur, _OCDID, org, "council-member", _BASE)
         post = await post_listings.get(cur, post_id)
         assert post is not None
         assert (post.meta_headcount, post.meta_is_tracked) == (9, False)
@@ -182,7 +183,7 @@ async def _already_published() -> None:
     async with pool.connection() as conn, conn.cursor() as cur:
         org = await organizations.find_or_create(cur, _OCDID)
         await divisions.find_or_create(cur, _BASE, _OCDID)
-        other = await posts.find_or_create(cur, _OCDID, org, "clerk", _BASE)
+        other = await factories.seed_post(cur, _OCDID, org, "clerk", _BASE)
         await factories.bind_membership(cur, SeededMembership(person_id=person_id), other, org, _T0)
         await conn.commit()
 
@@ -231,7 +232,7 @@ async def test_a_post_is_unverified_until_a_publish_puts_somebody_in_it():
     async with pool.connection() as conn, conn.cursor() as cur:
         org = await organizations.find_or_create(cur, _OCDID)
         await divisions.find_or_create(cur, _BASE, _OCDID)
-        post_id = await posts.find_or_create(cur, _OCDID, org, "mayor", _BASE)
+        post_id = await factories.seed_post(cur, _OCDID, org, "mayor", _BASE)
 
         unverified = await post_listings.unverified_by_jurisdiction(cur, [_OCDID])
         assert [post["id"] for post in unverified[_OCDID]] == [post_id]
@@ -261,7 +262,7 @@ async def test_an_unverified_post_raises_the_queue_score_and_the_badge():
     async with pool.connection() as conn, conn.cursor() as cur:
         org = await organizations.find_or_create(cur, _OCDID)
         await divisions.find_or_create(cur, _BASE, _OCDID)
-        await posts.find_or_create(cur, _OCDID, org, "mayor", _BASE)
+        await factories.seed_post(cur, _OCDID, org, "mayor", _BASE)
 
         await cur.execute(
             f"SELECT {issue_count('t.ocdid')}, {issue_priority('t.ocdid')} "
@@ -302,8 +303,8 @@ async def test_unmatched_people_share_one_post_per_division():
         org = await organizations.find_or_create(cur, _OCDID)
         await divisions.find_or_create(cur, _BASE, _OCDID)
 
-        bucket = await posts.find_or_create(cur, _OCDID, org, "unmatched", _BASE)
-        again = await posts.find_or_create(cur, _OCDID, org, "unmatched", _BASE)
+        bucket = await factories.seed_post(cur, _OCDID, org, "unmatched", _BASE)
+        again = await factories.seed_post(cur, _OCDID, org, "unmatched", _BASE)
         assert bucket == again
 
         await factories.bind_membership(
@@ -432,7 +433,7 @@ async def test_a_human_created_post_is_matched_by_a_later_scrape():
     created = await posts.create(org, "mayor", _BASE, 3, SYSTEM_USER_ID)
 
     async with pool.connection() as conn, conn.cursor() as cur:
-        matched = await posts.find_or_create(cur, _OCDID, org, "mayor", _BASE)
+        matched = await factories.seed_post(cur, _OCDID, org, "mayor", _BASE)
         post = await post_listings.get(cur, matched)
 
     assert created == matched
@@ -449,8 +450,8 @@ async def test_delete_refuses_a_post_that_has_ever_been_held():
     async with pool.connection() as conn, conn.cursor() as cur:
         org = await organizations.find_or_create(cur, _OCDID)
         await divisions.find_or_create(cur, _BASE, _OCDID)
-        held = await posts.find_or_create(cur, _OCDID, org, "mayor", _BASE)
-        unheld = await posts.find_or_create(cur, _OCDID, org, "clerk", _BASE)
+        held = await factories.seed_post(cur, _OCDID, org, "mayor", _BASE)
+        unheld = await factories.seed_post(cur, _OCDID, org, "clerk", _BASE)
         await factories.bind_membership(cur, SeededMembership(person_id=person_id), held, org, _T0)
 
         assert await posts.delete_if_unheld(cur, held) is False
@@ -466,7 +467,7 @@ async def test_update_reaches_the_two_human_fields_and_reports_a_miss():
     async with pool.connection() as conn, conn.cursor() as cur:
         org = await organizations.find_or_create(cur, _OCDID)
         await divisions.find_or_create(cur, _BASE, _OCDID)
-        post_id = await posts.find_or_create(cur, _OCDID, org, "trustee", _BASE)
+        post_id = await factories.seed_post(cur, _OCDID, org, "trustee", _BASE)
         await conn.commit()
 
     assert await posts.update(post_id, 5, False, SYSTEM_USER_ID) == _OCDID
@@ -502,7 +503,7 @@ async def test_the_membership_read_still_selects_every_column_it_names():
     async with pool.connection() as conn, conn.cursor() as cur:
         org = await organizations.find_or_create(cur, _OCDID)
         await divisions.find_or_create(cur, _BASE, _OCDID)
-        post_id = await posts.find_or_create(cur, _OCDID, org, "mayor", _BASE)
+        post_id = await factories.seed_post(cur, _OCDID, org, "mayor", _BASE)
         await factories.bind_membership(cur, SeededMembership(person_id=person_id), post_id, org, _T0)
 
         rows = await memberships.list_for_jurisdiction(cur, _OCDID)
@@ -632,7 +633,7 @@ async def test_a_jurisdictions_first_scrape_raises_no_post_issues():
     async with pool.connection() as conn, conn.cursor() as cur:
         org = await organizations.find_or_create(cur, _OCDID)
         await divisions.find_or_create(cur, _BASE, _OCDID)
-        await posts.find_or_create(cur, _OCDID, org, "mayor", _BASE)
+        await factories.seed_post(cur, _OCDID, org, "mayor", _BASE)
         await conn.commit()
 
     async with pool.connection() as conn, conn.cursor() as cur:
@@ -650,7 +651,7 @@ async def test_the_same_post_raises_once_the_jurisdiction_has_been_published():
     async with pool.connection() as conn, conn.cursor() as cur:
         org = await organizations.find_or_create(cur, _OCDID)
         await divisions.find_or_create(cur, _BASE, _OCDID)
-        post_id = await posts.find_or_create(cur, _OCDID, org, "mayor", _BASE)
+        post_id = await factories.seed_post(cur, _OCDID, org, "mayor", _BASE)
         await conn.commit()
 
     await _already_published()
@@ -680,7 +681,7 @@ async def test_an_unreviewed_scrape_leaves_published_memberships_alone():
     async with pool.connection() as conn, conn.cursor() as cur:
         org = await organizations.find_or_create(cur, _OCDID)
         await divisions.find_or_create(cur, _BASE, _OCDID)
-        post_id = await posts.find_or_create(cur, _OCDID, org, "mayor", _BASE)
+        post_id = await factories.seed_post(cur, _OCDID, org, "mayor", _BASE)
         await factories.bind_membership(cur, SeededMembership(person_id=person_id), post_id, org, _T0)
         await cur.execute(
             "INSERT INTO changesets (id, jurisdiction_ocdid, kind) "
@@ -759,7 +760,7 @@ async def test_a_scrape_that_re_confirms_the_roster_publishes():
             (changeset_id := str(uuid.uuid4()), _OCDID, _T1, _T1),
         )
         for person_id, (role_id, role_label) in zip(people, seats):
-            post_id = await posts.find_or_create(cur, _OCDID, org, role_id, _BASE)
+            post_id = await factories.seed_post(cur, _OCDID, org, role_id, _BASE)
             await factories.bind_membership(
                 cur, SeededMembership(person_id=person_id), post_id, org, _T0
             )
@@ -821,7 +822,7 @@ async def test_a_scrape_the_pipeline_reported_an_issue_on_does_not_publish():
             (changeset_id := str(uuid.uuid4()), _OCDID, _T1, _T1),
         )
         for person_id, (role_id, role_label) in zip(people, seats):
-            post_id = await posts.find_or_create(cur, _OCDID, org, role_id, _BASE)
+            post_id = await factories.seed_post(cur, _OCDID, org, role_id, _BASE)
             await factories.bind_membership(
                 cur, SeededMembership(person_id=person_id), post_id, org, _T0
             )
@@ -876,7 +877,7 @@ async def test_a_partial_term_date_is_stored_as_the_source_gave_it():
     async with pool.connection() as conn, conn.cursor() as cur:
         org = await organizations.find_or_create(cur, _OCDID)
         await divisions.find_or_create(cur, _BASE, _OCDID)
-        post_id = await posts.find_or_create(cur, _OCDID, org, "mayor", _BASE)
+        post_id = await factories.seed_post(cur, _OCDID, org, "mayor", _BASE)
 
         membership_id = await factories.bind_membership(
             cur,
@@ -906,7 +907,7 @@ async def test_a_persons_term_is_read_off_the_seat_they_hold():
     async with pool.connection() as conn, conn.cursor() as cur:
         org = await organizations.find_or_create(cur, _OCDID)
         await divisions.find_or_create(cur, _BASE, _OCDID)
-        post_id = await posts.find_or_create(cur, _OCDID, org, "mayor", _BASE)
+        post_id = await factories.seed_post(cur, _OCDID, org, "mayor", _BASE)
         await factories.bind_membership(
             cur,
             SeededMembership(person_id=person_id, start_date="2024", end_date="2028-01"),
@@ -1068,7 +1069,7 @@ async def test_a_proposal_names_a_post_by_the_name_a_human_gave_it():
     async with pool.connection() as conn, conn.cursor() as cur:
         council = await organizations.find_or_create(cur, _OCDID)
         await divisions.find_or_create(cur, _BASE, _OCDID)
-        post_id = await posts.find_or_create(cur, _OCDID, council, "council-member", _BASE)
+        post_id = await factories.seed_post(cur, _OCDID, council, "council-member", _BASE)
         await cur.execute(
             "INSERT INTO users (email, provider, provider_user_id, username, role) "
             "VALUES (%s, 'email', %s, %s, 'admins') RETURNING id::text",
@@ -1373,7 +1374,7 @@ async def test_deleting_a_post_into_another_moves_its_holder_and_drops_the_row()
     await _publish((council, person_id, "Mayor"))
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        office_mayor = await posts.find_or_create(cur, _OCDID, mayors_office, "mayor", _BASE)
+        office_mayor = await factories.seed_post(cur, _OCDID, mayors_office, "mayor", _BASE)
         await conn.commit()
     council_mayor = PostKey(organization_id=council, role_id="mayor", division_ocdid=_BASE).post_id
 
@@ -1385,25 +1386,57 @@ async def test_deleting_a_post_into_another_moves_its_holder_and_drops_the_row()
         assert await post_listings.get(cur, council_mayor) is None
 
 
-async def _council_mayor_deleted_into_the_office() -> tuple[str, str]:
+async def _council_mayor_deleted_into_the_office() -> tuple[str, str, str]:
     """Seattle's Mayor read under Council, its Council post deleted into Office of the Mayor's."""
     person_id = await _seed_person("Katie Wilson")
     council, mayors_office = await _two_bodies()
     await _publish((council, person_id, "Mayor"))
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        office_mayor = await posts.find_or_create(cur, _OCDID, mayors_office, "mayor", _BASE)
+        office_mayor = await factories.seed_post(cur, _OCDID, mayors_office, "mayor", _BASE)
         await conn.commit()
     council_mayor = PostKey(organization_id=council, role_id="mayor", division_ocdid=_BASE).post_id
     await roster_edits.delete_post_into(council_mayor, office_mayor, SYSTEM_USER_ID)
-    return council, council_mayor
+    return council, council_mayor, office_mayor
+
+
+async def _roster_edit_count() -> int:
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "SELECT count(*) FROM changesets WHERE jurisdiction_ocdid = %s AND kind = %s",
+            (_OCDID, ChangesetKind.ROSTER_EDIT),
+        )
+        return (await cur.fetchone())[0]
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_a_delete_the_rebuild_cannot_finish_leaves_nothing_behind():
+    """A post minted back without undoing its old deletion (legacy data; no path does it now)
+    makes a loop, so the move cannot empty the office's post. One transaction: no claim, no
+    changeset, the post still there."""
+    council, council_mayor, office_mayor = await _council_mayor_deleted_into_the_office()
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await posts.create_if_absent(cur, _OCDID, council, "mayor", _BASE)
+        await conn.commit()
+    edits_before = await _roster_edit_count()
+
+    with pytest.raises(posts.PostHasMembers):
+        await roster_edits.delete_post_into(office_mayor, council_mayor, SYSTEM_USER_ID)
+
+    async with pool.connection() as conn, conn.cursor() as cur:
+        assert await post_claims.get_deletion_claim_ids(cur, office_mayor) == []
+        assert await post_listings.get(cur, office_mayor) is not None
+    assert await _roster_edit_count() == edits_before
 
 
 @pytest.mark.asyncio
 @pytest.mark.integration
 async def test_re_adding_a_deleted_post_undoes_its_deletion():
     """Its id comes back with its key, so the old `same_as` would merge the new post away again."""
-    council, council_mayor = await _council_mayor_deleted_into_the_office()
+    council, council_mayor, _ = await _council_mayor_deleted_into_the_office()
 
     re_added = await posts.create(council, "mayor", _BASE, 1, SYSTEM_USER_ID)
 

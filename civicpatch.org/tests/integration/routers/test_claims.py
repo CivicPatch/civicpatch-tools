@@ -14,7 +14,8 @@ import pytest_asyncio
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 
-from database import claims, divisions, organizations, post_listings, posts
+from database import claims, divisions, organizations, post_listings
+from tests.integration import factories
 from database.database import get_pool
 from lib.auth import get_optional_user
 from schemas.claims import ClaimKind
@@ -102,7 +103,7 @@ async def _seed() -> str:
         )
         organization_id = await organizations.find_or_create(cur, _OCDID)
         await divisions.find_or_create(cur, _BASE, _OCDID)
-        post_id = await posts.find_or_create(cur, _OCDID, organization_id, "mayor", _BASE)
+        post_id = await factories.seed_post(cur, _OCDID, organization_id, "mayor", _BASE)
         await conn.commit()
     return post_id
 

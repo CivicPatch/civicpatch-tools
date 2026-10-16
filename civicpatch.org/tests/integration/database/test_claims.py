@@ -84,7 +84,7 @@ async def _seed() -> tuple[str, str]:
         )
         organization_id = await organizations.find_or_create(cur, _OCDID)
         await divisions.find_or_create(cur, _BASE, _OCDID)
-        post_id = await posts.find_or_create(cur, _OCDID, organization_id, "mayor", _BASE)
+        post_id = await factories.seed_post(cur, _OCDID, organization_id, "mayor", _BASE)
         # A held seat somewhere else in the jurisdiction, so this is not its first scrape:
         # `unverified_by_jurisdiction` says nothing where nobody holds anything, and without
         # this the vouching test below would pass for the wrong reason.
@@ -96,7 +96,7 @@ async def _seed() -> tuple[str, str]:
         seated = (await cur.fetchone())[0]
         # `assessor` because the tests below mint `clerk` and `treasurer` themselves and
         # expect those unverified — a collision here hands them back this held one.
-        other = await posts.find_or_create(
+        other = await factories.seed_post(
             cur, _OCDID, organization_id, "assessor", _BASE
         )
         await factories.bind_membership(cur, SeededMembership(person_id=seated), other, organization_id, _SEEN_AT)
@@ -195,7 +195,7 @@ async def test_a_hand_made_post_is_verified_by_having_been_made():
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         organization_id = await organizations.find_or_create(cur, _OCDID)
-        derived = await posts.find_or_create(
+        derived = await factories.seed_post(
             cur, _OCDID, organization_id, "clerk", _BASE
         )
         await conn.commit()

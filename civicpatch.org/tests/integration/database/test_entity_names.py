@@ -94,7 +94,7 @@ async def test_an_entity_that_is_gone_has_no_name():
 @pytest.mark.integration
 async def test_a_membership_is_named_by_who_holds_it():
     """A seat has no name of its own — it is read as the person in it."""
-    from database import divisions, organizations, posts
+    from database import divisions, organizations
 
     person_id = await _person("Ada Lovelace")
     pool = await get_pool()
@@ -102,7 +102,7 @@ async def test_a_membership_is_named_by_who_holds_it():
         org = await organizations.find_or_create(cur, _OCDID)
         base = "ocd-division/country:us/state:zz/place:zz_names"
         await divisions.find_or_create(cur, base, _OCDID)
-        post_id = await posts.find_or_create(cur, _OCDID, org, "mayor", base)
+        post_id = await factories.seed_post(cur, _OCDID, org, "mayor", base)
         membership_id = await factories.bind_membership(
             cur, SeededMembership(person_id=person_id), post_id, org, "2026-01-01"
         )
