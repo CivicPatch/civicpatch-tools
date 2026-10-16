@@ -14,7 +14,7 @@ Not in `changesets.py`: the score reads `posts` too, and importing posts there c
 
 from typing import LiteralString, cast
 
-from database.posts import JURISDICTIONS_FIRST_SCRAPE, POST_IS_VERIFIED
+from database.post_listings import JURISDICTIONS_FIRST_SCRAPE, POST_IS_VERIFIED
 from shared.schemas import IssueCode
 
 # How much a reviewer should care, per issue. Ordering on `jsonb_array_length` weighted every

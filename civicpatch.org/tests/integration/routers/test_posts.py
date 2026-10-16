@@ -16,7 +16,7 @@ from fastapi import FastAPI
 from fastapi.testclient import TestClient
 
 from tests.integration.factories import SeededMembership
-from database import divisions, organizations, posts
+from database import divisions, organizations, post_listings, posts
 from database.database import get_pool
 from lib.auth import get_optional_user
 from routers.api import organizations as organizations_router
@@ -345,7 +345,7 @@ async def test_the_identity_triple_is_not_patchable(client):
 
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        assert (await posts.get(cur, post_id)).role_id == "mayor"
+        assert (await post_listings.get(cur, post_id)).role_id == "mayor"
 
 
 @pytest.mark.asyncio
@@ -379,7 +379,7 @@ async def test_a_rejected_create_leaves_no_trace(client):
 async def _is_tracked(post_id: str) -> bool:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        post = await posts.get(cur, post_id)
+        post = await post_listings.get(cur, post_id)
     assert post is not None
     return post.meta_is_tracked
 
@@ -470,7 +470,7 @@ async def test_a_post_nobody_holds_is_deleted(client):
     assert response.status_code == 200, response.text
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        assert await posts.get(cur, post_id) is None
+        assert await post_listings.get(cur, post_id) is None
 
 
 @pytest.mark.asyncio

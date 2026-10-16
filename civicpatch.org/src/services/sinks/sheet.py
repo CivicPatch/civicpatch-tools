@@ -27,7 +27,7 @@ from database import jurisdictions as jurisdictions_db
 from database import output_hashes as output_hashes_db
 from database import memberships
 from database import people as people_db
-from database import posts as posts_db
+from database import post_listings as post_listings_db
 from lib import sheets
 from services import entry_sheet
 
@@ -172,7 +172,7 @@ async def _post_chunks(
     memberships (TX: 3,201 against 5,844)."""
     offset = 0
     while True:
-        _, page = await posts_db.list_page_for_state(state, chunk_size, offset)
+        _, page = await post_listings_db.list_page_for_state(state, chunk_size, offset)
         if not page:
             return
         yield post_rows.to_rows(page)
@@ -210,7 +210,7 @@ async def write_roster(
         await memberships.count_for_state(state),
         lambda: _membership_chunks(state, chunk_size),
     )
-    total_posts, _ = await posts_db.list_page_for_state(state, 1, 0)
+    total_posts, _ = await post_listings_db.list_page_for_state(state, 1, 0)
     posts = await _replace_rows(
         posts_tab(state),
         post_rows.HEADERS,

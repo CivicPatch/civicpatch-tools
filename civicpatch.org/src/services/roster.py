@@ -12,7 +12,8 @@ from core.projection.facts import Facts
 from core.projection.roster import Roster, overridden_page_values
 from database import claims, source_pages
 from database import changesets as changesets_db
-from database import posts as posts_db
+from database import post_claims as post_claims_db
+from database import post_listings as post_listings_db
 from database import projection as projection_db
 from database.database import get_pool
 from database.people import get_people_by_ids, get_roster
@@ -59,7 +60,7 @@ async def _fold_for_card(
         roster, facts = await projection_db.derived_roster_and_facts(
             cur, jurisdiction_ocdid, including=including, taxonomy=taxonomy
         )
-        post_labels = await posts_db.claimed_labels_by_key(cur, jurisdiction_ocdid)
+        post_labels = await post_claims_db.claimed_labels_by_key(cur, jurisdiction_ocdid)
     rows = display_rows(on_roster(roster), jurisdiction_ocdid, taxonomy, post_labels)
     return rows, facts, taxonomy
 
@@ -126,7 +127,7 @@ async def card_fold(changeset_id: str, jurisdiction_ocdid: str) -> CardFold:
             as_of=as_of,
             taxonomy=taxonomy,
         )
-        post_labels = await posts_db.claimed_labels_by_key(cur, jurisdiction_ocdid)
+        post_labels = await post_claims_db.claimed_labels_by_key(cur, jurisdiction_ocdid)
     return CardFold(
         published=on_roster(published),
         proposed=on_roster(proposed),
@@ -210,7 +211,7 @@ async def _one_post_each(changeset_id: str, people: list[dict]) -> list[dict]:
         organization_ids = await source_pages.organizations_read_by_changeset(
             cur, changeset_id
         )
-        here = await posts_db.ids_in_organizations(cur, every_id, organization_ids)
+        here = await post_listings_db.ids_in_organizations(cur, every_id, organization_ids)
 
     return [
         {

@@ -14,7 +14,7 @@ import pytest_asyncio
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 
-from database import claims, divisions, organizations, posts
+from database import claims, divisions, organizations, post_listings, posts
 from database.database import get_pool
 from lib.auth import get_optional_user
 from schemas.claims import ClaimKind
@@ -133,7 +133,7 @@ async def test_vouching_for_a_post_makes_it_read_verified(client):
     assert response.status_code == 200, response.text
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        rows = await posts.list_for_jurisdiction(cur, _OCDID)
+        rows = await post_listings.list_for_jurisdiction(cur, _OCDID)
     assert rows[0]["meta_is_verified"] is True
 
 

@@ -32,7 +32,7 @@ from shared.utils.statuses import ActivityType, ChangesetKind
 from core.roster_changes import UNCHANGED_NOTE, ChangeCounts
 from core.source_sites import SiteIndex
 from lib.csv import parse_csv
-from database import activity, changeset_batches, dismissals, divisions, organizations, posts
+from database import activity, changeset_batches, dismissals, divisions, organizations, post_listings, posts
 from database.database import get_pool
 from database.publications import publish_attributions
 from services import publish
@@ -537,7 +537,7 @@ async def test_a_batched_card_says_what_the_single_card_reads_say(user_id, batch
     assert card.jurisdiction_ocdid == _OCDID
     assert card.review == await review_summary_for_changeset(result.changeset_id)
     assert card.overridden_source_values == overridden
-    assert card.organizations == await posts.list_by_organization(_OCDID)
+    assert card.organizations == await post_listings.list_by_organization(_OCDID)
 
 
 @pytest.mark.integration

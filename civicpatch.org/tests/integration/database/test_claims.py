@@ -14,7 +14,7 @@ import pytest_asyncio
 from psycopg.errors import CheckViolation, ForeignKeyViolation, NotNullViolation
 
 from tests.integration.factories import SeededMembership
-from database import claims, divisions, memberships, organizations, posts
+from database import claims, divisions, memberships, organizations, post_claims, post_listings, posts
 from database import changesets as changesets_db
 from database.database import get_pool
 from core.projection.memberships import MEMBERSHIP_LABEL_FIELD
@@ -139,19 +139,19 @@ async def test_vouching_for_a_post_verifies_it_without_a_publish():
 
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        rows = await posts.list_for_jurisdiction(cur, _OCDID)
+        rows = await post_listings.list_for_jurisdiction(cur, _OCDID)
         assert _verified(rows, post_id) is False
         # The review queue reads the same fact through a different query. Asserted together
         # because the screen saying "unverified" while the queue stops asking is the failure
         # neither test catches alone.
-        unverified = await posts.unverified_by_jurisdiction(cur, [_OCDID])
+        unverified = await post_listings.unverified_by_jurisdiction(cur, [_OCDID])
         assert [post["id"] for post in unverified[_OCDID]] == [post_id]
 
     await claims.create(_vouch(post_id, await factories.hand_edit(_OCDID, user_id)), user_id)
 
     async with pool.connection() as conn, conn.cursor() as cur:
-        rows = await posts.list_for_jurisdiction(cur, _OCDID)
-        assert await posts.unverified_by_jurisdiction(cur, [_OCDID]) == {_OCDID: []}
+        rows = await post_listings.list_for_jurisdiction(cur, _OCDID)
+        assert await post_listings.unverified_by_jurisdiction(cur, [_OCDID]) == {_OCDID: []}
     assert _verified(rows, post_id) is True
 
 
@@ -171,12 +171,12 @@ async def test_naming_a_post_does_not_verify_it():
     async with pool.connection() as conn, conn.cursor() as cur:
         edit = str(uuid.uuid4())
         await changesets_db.create_roster_edit_changeset(cur, edit, _OCDID, user_id)
-        await posts.set_post_label(cur, post_id, "Position 8", user_id, edit)
+        await post_claims.set_post_label(cur, post_id, "Position 8", user_id, edit)
         await conn.commit()
 
     async with pool.connection() as conn, conn.cursor() as cur:
-        rows = await posts.list_for_jurisdiction(cur, _OCDID)
-        unverified = await posts.unverified_by_jurisdiction(cur, [_OCDID])
+        rows = await post_listings.list_for_jurisdiction(cur, _OCDID)
+        unverified = await post_listings.unverified_by_jurisdiction(cur, [_OCDID])
     assert _verified(rows, post_id) is False
     assert [post["id"] for post in unverified[_OCDID]] == [post_id]
 
@@ -205,7 +205,7 @@ async def test_a_hand_made_post_is_verified_by_having_been_made():
     async with pool.connection() as conn, conn.cursor() as cur:
         verified = {
             row["id"]: row["meta_is_verified"]
-            for row in await posts.list_for_jurisdiction(cur, _OCDID)
+            for row in await post_listings.list_for_jurisdiction(cur, _OCDID)
         }
     assert verified[by_hand] is True
     assert verified[derived] is False
@@ -230,7 +230,7 @@ async def test_a_hand_made_post_can_override_its_own_derived_label():
     assert post_id is not None
 
     async with pool.connection() as conn, conn.cursor() as cur:
-        minted = await posts.get(cur, post_id)
+        minted = await post_listings.get(cur, post_id)
     assert minted is not None
     assert minted.label == "Position 8"
 
@@ -249,7 +249,7 @@ async def test_a_hand_made_post_without_a_label_override_keeps_the_derived_one()
     assert post_id is not None
 
     async with pool.connection() as conn, conn.cursor() as cur:
-        minted = await posts.get(cur, post_id)
+        minted = await post_listings.get(cur, post_id)
     assert minted is not None
     assert minted.label == "Council Member"
 

@@ -1,7 +1,7 @@
-"""`POST_IS_VERIFIED` names the same fields `_accept_fields` writes.
+"""`POST_IS_VERIFIED` names the same fields `accept_fields` writes.
 
 The predicate is a `LiteralString` spliced into several queries, so its field list cannot be
-joined from `_HUMAN_FIELDS` at runtime and is spelled out instead. This is what stops the two
+joined from `HUMAN_FIELDS` at runtime and is spelled out instead. This is what stops the two
 drifting: add a human field and the predicate would silently ignore posts verified through it.
 
 Same shape as `test_check_constraints_match_enums.py` -- a duplicated vocabulary, pinned rather
@@ -10,12 +10,13 @@ than deduplicated, because the duplication buys something (here, SQL injection s
 
 import pytest
 
-from database.posts import _HUMAN_FIELDS, POST_IS_VERIFIED, POST_LABEL_FIELD
+from database.post_claims import HUMAN_FIELDS, POST_LABEL_FIELD
+from database.post_listings import POST_IS_VERIFIED
 
 
 @pytest.mark.unit
 def test_the_verified_arm_names_the_human_fields():
-    for field in _HUMAN_FIELDS:
+    for field in HUMAN_FIELDS:
         assert f"'{field}'" in POST_IS_VERIFIED
 
 

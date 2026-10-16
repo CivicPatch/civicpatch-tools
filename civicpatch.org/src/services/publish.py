@@ -19,7 +19,7 @@ from core.images import artifacts_key, promoted_key
 from core.membership_label import post_label
 from core.projection.diff import on_roster, roster_diff
 from core.projection.roster import Roster
-from database import posts as posts_db
+from database import post_claims as post_claims_db
 from database import projection as projection_db
 from database.changesets import get_changeset_kind
 from database.database import get_pool
@@ -142,7 +142,7 @@ async def _post_labels(
     role_labels = {role_id: label for label, role_id in taxonomy.role_ids.items()}
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        claimed = await posts_db.claimed_labels_by_key(cur, jurisdiction_ocdid)
+        claimed = await post_claims_db.claimed_labels_by_key(cur, jurisdiction_ocdid)
     return {
         post_id: post_label(
             role_labels.get(post.role_id, post.role_id),

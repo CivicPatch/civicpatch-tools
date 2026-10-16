@@ -4,7 +4,7 @@ from fastapi import APIRouter, Depends, HTTPException, Query
 from fastapi.responses import JSONResponse
 
 import services.roster_edits as roster_edits
-from database import posts
+from database import post_listings, posts
 from lib.auth import require_route_access
 from schemas.common import Identity, RouteCategory, UserRole
 from schemas.pagination import paginated_response, pagination_offset
@@ -81,7 +81,7 @@ def get_router() -> APIRouter:
             raise HTTPException(
                 status_code=400, detail="state must be a two-letter code, e.g. 'wa'"
             )
-        total, rows = await posts.list_page_for_state(
+        total, rows = await post_listings.list_page_for_state(
             state.lower(), per_page, pagination_offset(page, per_page)
         )
         return paginated_response(total, page, per_page, rows)

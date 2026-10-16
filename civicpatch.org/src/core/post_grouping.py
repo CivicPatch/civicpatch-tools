@@ -1,7 +1,7 @@
 """The response shape for posts: nested under the body that holds them.
 
 Pure, so the shape is testable without a database. The SQL that feeds it lives in
-`database/posts.py` and `database/organizations.py`, which compose it in `list_by_organization`.
+`database/post_listings.py` and `database/organizations.py`, which compose it in `list_by_organization`.
 
 The `_`-prefixed keys marking our non-standard fields are aliased in that query, beside the
 values they name, rather than renamed in a second pass here.

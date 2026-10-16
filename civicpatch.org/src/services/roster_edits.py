@@ -22,6 +22,7 @@ from core.roster_edits import (
 from database import claims as claims_db
 from database import memberships as memberships_db
 from database import posts as posts_db
+from database import post_listings as post_listings_db
 from database import projection as projection_db
 from database.changesets import (
     find_or_create_review_edit,
@@ -122,7 +123,7 @@ async def delete_post_into(post_id: str, into_post_id: str, user_id: str) -> str
     changeset id: rolling it back undoes the move."""
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        found = await posts_db.get_many(cur, [post_id, into_post_id])
+        found = await post_listings_db.get_many(cur, [post_id, into_post_id])
     post, into = found.get(post_id), found.get(into_post_id)
     if post is None or into is None:
         raise UnknownPost(post_id if post is None else into_post_id)
@@ -207,7 +208,7 @@ async def _refuse_unknown_posts(people: list[PersonEdit]) -> None:
         return
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        known = await posts_db.identities_by_id(cur, wanted)
+        known = await post_listings_db.identities_by_id(cur, wanted)
     missing = [post_id for post_id in wanted if post_id not in known]
     if missing:
         raise UnknownPost(missing)
