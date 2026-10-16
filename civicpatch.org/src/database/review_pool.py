@@ -15,7 +15,7 @@ from database.database import get_pool, to_iso
 from database.changeset_predicates import (
     AVAILABLE_FOR_REVIEW,
     REVIEW_POOL_KIND_VALUES_SQL,
-    WORK_IN_FLIGHT,
+    WORK_WITH_RECORDS_IN_FLIGHT,
 )
 from database.review_priority import issue_count, issue_priority
 
@@ -174,7 +174,7 @@ async def jurisdiction_ocdids_with_open_changesets(state_code: str) -> set[str]:
             f"""
             SELECT DISTINCT changesets.jurisdiction_ocdid
             FROM changesets
-            WHERE {WORK_IN_FLIGHT}
+            WHERE {WORK_WITH_RECORDS_IN_FLIGHT}
               AND changesets.jurisdiction_ocdid LIKE %s
             """,
             (f"%state:{state_code}%",),
@@ -192,7 +192,7 @@ async def has_open_review(jurisdiction_ocdid: str) -> bool:
             f"""
             SELECT 1
             FROM changesets
-            WHERE {WORK_IN_FLIGHT}
+            WHERE {WORK_WITH_RECORDS_IN_FLIGHT}
               AND changesets.kind IN ({REVIEW_POOL_KIND_VALUES_SQL})
               AND changesets.jurisdiction_ocdid = %s
             LIMIT 1

@@ -47,6 +47,13 @@ WORK_IN_FLIGHT = (
     f"AND changesets.kind != '{ChangesetKind.JURISDICTION_EDIT.value}'"
 )
 
+# In flight and holding something to review: an open scrape that kept no records shows on no
+# review surface, so it must not block a scrape or read as "needs review" either.
+WORK_WITH_RECORDS_IN_FLIGHT = (
+    f"{WORK_IN_FLIGHT} "
+    "AND EXISTS (SELECT 1 FROM source_records sr WHERE sr.changeset_id = changesets.id)"
+)
+
 # Duplicates `DismissalReason`; kept only because the SQL fragments below splice it.
 DISMISSED_SUPERSEDED = "superseded"
 

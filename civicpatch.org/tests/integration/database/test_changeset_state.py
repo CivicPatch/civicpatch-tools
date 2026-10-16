@@ -22,6 +22,7 @@ from database.changesets import (
 )
 from database.database import get_pool
 from database.review_pool import has_open_review
+from database.source_records import insert_source_records
 from database.users import SYSTEM_USER_ID
 from shared.utils.statuses import ChangesetKind
 from tests.integration import factories
@@ -40,6 +41,9 @@ async def _wipe():
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
+            "DELETE FROM source_records WHERE jurisdiction_ocdid = %s", (_OCDID,)
+        )
+        await cur.execute(
             "DELETE FROM changesets WHERE jurisdiction_ocdid = %s", (_OCDID,)
         )
         await cur.execute(
@@ -47,6 +51,9 @@ async def _wipe():
         )
         await cur.execute(
             "DELETE FROM changeset_batches WHERE lock_key = %s", (_BATCH_LOCK_KEY,)
+        )
+        await cur.execute(
+            "DELETE FROM organizations WHERE jurisdiction_ocdid = %s", (_OCDID,)
         )
         await cur.execute(
             "DELETE FROM jurisdictions WHERE jurisdiction_ocdid = %s", (_OCDID,)
@@ -187,6 +194,15 @@ async def test_an_import_waiting_on_its_batch_page_does_not_block_a_scrape():
 @pytest.mark.asyncio
 @pytest.mark.integration
 async def test_a_scrape_awaiting_review_blocks_another():
-    await factories.complete_run(await factories.start_run(_OCDID))
+    changeset_id = await factories.complete_run(await factories.start_run(_OCDID))
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        organization_id = await factories.default_organization(cur, _OCDID)
+        await conn.commit()
+    await insert_source_records(
+        changeset_id,
+        _OCDID,
+        {str(uuid.uuid4()): [{"name": "Ana Reyes", "label": "Mayor", "source_url": "https://zz.gov", "organization_id": organization_id}]},
+    )
 
     assert await has_open_review(_OCDID)

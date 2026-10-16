@@ -53,7 +53,7 @@
    longer one on the next land at different x-positions instead of lining up as a table. */
 .activity-row__head {
   display: grid;
-  grid-template-columns: 8rem 10rem 1fr 4rem 10rem;
+  grid-template-columns: 8rem 10rem 1fr 4rem 13rem;
   gap: 0.7rem;
   align-items: baseline;
   font-size: var(--font-size-md);
@@ -61,7 +61,7 @@
 
 .activity-row-list__head {
   display: grid;
-  grid-template-columns: 8rem 10rem 1fr 4rem 10rem;
+  grid-template-columns: 8rem 10rem 1fr 4rem 13rem;
   gap: 0.7rem;
   align-items: center;
   padding: 0.4rem 0.3rem;
