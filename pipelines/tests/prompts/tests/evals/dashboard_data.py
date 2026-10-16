@@ -2,7 +2,6 @@ import json
 import pathlib
 
 import yaml
-
 from eval_records import (
     CaseMismatches,
     CasePrompts,
@@ -20,6 +19,7 @@ EVAL_DIRS = {
     "relevant_page": EVALS / "relevant_page",
     "page_covers": EVALS / "page_covers",
     "find_jurisdiction_url": EVALS / "find_jurisdiction_url",
+    "research_municipality": EVALS / "research_municipality",
 }
 # Relative to dashboard/, since the page links to them.
 DATASET_DIRS = {
@@ -27,6 +27,7 @@ DATASET_DIRS = {
     "relevant_page": "../../../datasets/local/relevant_page",
     "page_covers": "../../../datasets/local/page_covers",
     "find_jurisdiction_url": "../../../datasets/local/find_jurisdiction_url",
+    "research_municipality": "../../../datasets/local/research_municipality",
 }
 REPORT_SUFFIX = "-eval-report.yml"
 
@@ -131,7 +132,7 @@ def _report_cost(report: dict) -> float | None:
 
 _DASHBOARD_DIR = pathlib.Path(__file__).parent / "dashboard"
 # Keys in a case's expected.yml that hold its answer or a note, not something the prompt was given.
-_NOT_PROMPT_INPUTS = {"page", "covers", "people", "expected_url", "thought", "thoughts", "generated"}
+_NOT_PROMPT_INPUTS = {"page", "covers", "people", "expected_url", "thought", "thoughts", "source", "generated"}
 
 
 def _as_text(value) -> str:
@@ -183,4 +184,5 @@ def read_results() -> dict[str, EvalResults]:
         "relevant_page": read_pass_fail_results("relevant_page"),
         "page_covers": read_pass_fail_results("page_covers"),
         "find_jurisdiction_url": read_pass_fail_results("find_jurisdiction_url"),
+        "research_municipality": read_pass_fail_results("research_municipality"),
     }

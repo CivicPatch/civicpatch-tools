@@ -1,0 +1,31 @@
+people:
+- name: Katie Wilson
+  label: Mayor
+  organization: Office of the Mayor
+- name: Rob Saka
+  label: Councilmember, District 1
+  organization: City Council
+- name: Eddie Lin
+  label: Councilmember, District 2
+  organization: City Council
+- name: Joy Hollingsworth
+  label: Council President, District 3
+  organization: City Council
+- name: Maritza Rivera
+  label: Councilmember, District 4
+  organization: City Council
+- name: Debora Juarez
+  label: Councilmember, District 5
+  organization: City Council
+- name: Dan Strauss
+  label: Councilmember, District 6
+  organization: City Council
+- name: Bob Kettle
+  label: Councilmember, District 7
+  organization: City Council
+- name: Alexis Mercedes Rinck
+  label: Councilmember, Position 8
+  organization: City Council
+- name: Dionne Foster
+  label: Councilmember, Position 9
+  organization: City Council

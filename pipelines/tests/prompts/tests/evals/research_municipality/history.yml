@@ -1,0 +1,18 @@
+runs:
+- timestamp: '2026-10-16T04:26:22+00:00'
+  provider: gemini
+  model: gemini-2.5-flash
+  prompt_sha256: ee15ea404664
+  cost_usd: 0.0
+  elapsed_seconds: 252.39
+  scores:
+    body: 1.0
+    cases_passed: 1.0
+    name_match: 0.025
+    recall: 0.7440476190476191
+  cases:
+    conroe_tx: 1.0
+    milford_mi: 1.0
+    millbury_ma: 1.0
+    seattle_wa: 1.0
+  dispositions: {}

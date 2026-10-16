@@ -1,0 +1,19 @@
+people:
+- name: Mary Krumsiek
+  label: Chairman
+  organization: Board of Selectmen
+- name: Brian A. Sora
+  label: Vice Chairman
+  organization: Board of Selectmen
+- name: Nicholas Lazzaro
+  label: Clerk
+  organization: Board of Selectmen
+- name: Brian Tagg
+  label: Member
+  organization: Board of Selectmen
+- name: Michael R. Gilchrist
+  label: Member
+  organization: Board of Selectmen
+- name: Richard Hamilton
+  label: Moderator
+  organization: Town Meeting

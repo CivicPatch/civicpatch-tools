@@ -264,6 +264,8 @@ class ResearchedPerson(BaseModel):
 
     name: str
     label: str = ""
+    # The organization research says they sit on, as it names it; matched to ours by name.
+    organization: str = ""
 
 
 class ExpectedMembership(BaseModel):

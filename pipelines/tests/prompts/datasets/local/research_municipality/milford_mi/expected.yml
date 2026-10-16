@@ -1,0 +1,33 @@
+jurisdiction_ocdid: ocd-jurisdiction/country:us/state:mi/place:milford/government
+name: Milford village
+organizations:
+  - name: Council
+    role_labels: [Council Member, Mayor]
+    meta_is_default: true
+people:
+  - name: Jerry Aubry
+    label: Council President
+    organization: Council
+  - name: James Kovach
+    label: Council President Pro-tem
+    organization: Council
+  - name: Kevin Ziegler
+    label: Council Member
+    organization: Council
+  - name: Jennifer Frankford
+    label: Council Member
+    organization: Council
+  - name: Harley Maxwell
+    label: Council Member
+    organization: Council
+  - name: Andy Grohowski
+    label: Council Member
+    organization: Council
+  - name: Anisa Allen
+    label: Council Member
+    organization: Council
+source: https://www.villageofmilford.org/government/council/index.php
+thoughts: >-
+  council_manager. One derived organization "Council" holding both Council Member and Mayor: the
+  president sits on the council, so nothing goes to a separate mayor body. Seven members, checked
+  2026.

@@ -1,0 +1,31 @@
+jurisdiction_ocdid: >-
+  ocd-jurisdiction/country:us/state:ma/place:millbury/government
+name: Millbury town
+organizations:
+  - name: Select Board
+    role_labels: [Select Board Member, Chair, Vice Chair]
+    meta_is_default: true
+  - name: Town Meeting
+    role_labels: [Moderator]
+people:
+  - name: Mary Krumsiek
+    label: Chairman
+    organization: Select Board
+  - name: Brian A. Sora
+    label: Vice Chairman
+    organization: Select Board
+  - name: Nicholas Lazzaro
+    label: Clerk
+    organization: Select Board
+  - name: Brian Tagg
+    label: Member
+    organization: Select Board
+  - name: Michael R. Gilchrist
+    label: Member
+    organization: Select Board
+source: https://www.millburyma.gov/1506/Board-of-Selectmen
+thoughts: >-
+  open_town_meeting. The site calls the body "Board of Selectmen" but the
+  derived organization is "Select Board" — this pins that research uses the
+  hinted name. Town Meeting has no named Moderator on the site, so no people
+  are expected there. Checked 2026.
