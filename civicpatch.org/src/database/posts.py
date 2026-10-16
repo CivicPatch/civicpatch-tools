@@ -1,6 +1,7 @@
 from core.membership_label import post_label
 from shared.schemas import Post
 from core.post_grouping import group_by_organization
+from core.projection.canonical_ids import SAME_AS
 from core.projection.facts import PostKey
 from database import claims, divisions, organizations
 from database.activity import record_change
@@ -240,6 +241,26 @@ async def delete_if_unheld(cur, post_id: str) -> bool:
     return cur.rowcount > 0
 
 
+async def get_deletion_claim_ids(cur, post_id: str) -> list[str]:
+    """The live `same_as` claims that deleted this post into another."""
+    await cur.execute(
+        """
+        SELECT id::text FROM claims
+        WHERE entity_type = %s AND entity_id = %s AND field_path = %s AND claim_is_live(id)
+        """,
+        (EntityType.POST.value, post_id, SAME_AS),
+    )
+    return [row[0] for row in await cur.fetchall()]
+
+
+async def _undo_deletion(cur, post_id: str, user_id: str, changeset_id: str) -> bool:
+    """A post's id is derived from its key, so re-adding a post deleted into another gets the old
+    id back, and with it the old `same_as` that would merge it away again. Re-adding undoes that."""
+    deletions = await get_deletion_claim_ids(cur, post_id)
+    await claims.withdraw_facts(cur, EntityType.CLAIM, deletions, user_id, changeset_id)
+    return bool(deletions)
+
+
 async def _holder_count(cur, post_id: str) -> int:
     await cur.execute(
         "SELECT count(*) FROM memberships WHERE memberships.post_id = %s", (post_id,)
@@ -259,6 +280,25 @@ async def _refuse_if_held(cur, post_id: str) -> None:
     )
     if (await cur.fetchone())[0]:
         raise PostHasMembers((await _holder_count(cur, post_id)))
+
+
+async def get_holder_names(post_ids: list[str]) -> dict[str, list[str]]:
+    """Everyone who holds or held each post, by post id. A post nobody held is absent."""
+    if not post_ids:
+        return {}
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            """
+            SELECT memberships.post_id::text,
+                   array_agg(DISTINCT coalesce(people.name, 'someone unnamed'))
+            FROM memberships JOIN people ON people.id = memberships.person_id
+            WHERE memberships.post_id = ANY(%s::uuid[])
+            GROUP BY memberships.post_id
+            """,
+            (post_ids,),
+        )
+        return {post_id: names for post_id, names in await cur.fetchall()}
 
 
 async def get_many(cur, post_ids: list[str]) -> dict[str, Post]:
@@ -526,6 +566,7 @@ async def create(
         if post_id:
             changeset_id = make_id()
             await create_roster_edit_changeset(cur, changeset_id, jurisdiction_ocdid, user_id)
+            undid_deletion = await _undo_deletion(cur, post_id, user_id, changeset_id)
             await _accept_fields(
                 cur, post_id, {"meta_headcount": headcount}, user_id, changeset_id
             )
@@ -541,6 +582,7 @@ async def create(
                     entity_type=EntityType.POST,
                     entity_id=post_id,
                     subject=(minted.label if minted else None) or role_id,
+                    detail="Undid an earlier deletion into another post." if undid_deletion else None,
                 ),
                 changeset_id=changeset_id,
             )

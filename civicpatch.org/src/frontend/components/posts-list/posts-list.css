@@ -139,6 +139,13 @@
    column — so the two modals read as the same app. Left to flex-wrap, the controls took the
    modal's full width and a one-word select looked like a paragraph field. */
 
+.post-edit__actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+
 .post-edit {
     --label-column: 7rem;
     --label-gap: 0.5rem;

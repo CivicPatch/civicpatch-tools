@@ -12,6 +12,7 @@ from core.organization_derivation import (
     resolve_government,
     with_role_labels,
 )
+from core.post_deletion import with_holder_names
 from database import organizations as organizations_db
 from database import posts as posts_db
 from database.organizations import DEFAULT_ORGANIZATION_NAME
@@ -77,8 +78,10 @@ def _summary(government_form: GovernmentForm) -> GovernmentFormSummary:
 async def organizations_with_role_labels(jurisdiction_ocdid: str) -> list[dict]:
     """Every organization in the jurisdiction with its posts and derived role labels."""
     organizations = await posts_db.list_by_organization(jurisdiction_ocdid)
+    post_ids = [post["id"] for organization in organizations for post in organization["posts"]]
+    holder_names = await posts_db.get_holder_names(post_ids)
     government = await resolved_government(jurisdiction_ocdid)
-    return with_role_labels(organizations, government.candidate_organizations)
+    return with_role_labels(with_holder_names(organizations, holder_names), government.candidate_organizations)
 
 
 async def ensure_government_form_organizations() -> int:

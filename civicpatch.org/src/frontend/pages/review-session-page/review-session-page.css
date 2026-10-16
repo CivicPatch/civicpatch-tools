@@ -184,10 +184,6 @@
   report-issue-button {
     display: contents;
   }
-  dialog[open]:has(.report-issue-modal__form) {
-    width: min(92vw, 34rem);
-    max-width: min(92vw, 34rem);
-  }
   .report-issue-modal__form {
     display: flex;
     flex-direction: column;

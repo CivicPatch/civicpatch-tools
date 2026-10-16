@@ -482,7 +482,7 @@ async def test_a_held_post_needs_somewhere_to_move_its_holders(client):
     response = client.delete(f"{_PREFIX}/{post_id}")
 
     assert response.status_code == 409
-    assert "choose a post" in response.json()["error"]
+    assert "pick a post" in response.json()["error"]
 
 
 @pytest.mark.asyncio

@@ -3,7 +3,7 @@ import { component, useState, useEffect } from "haunted";
 import { KNOWN_ISSUE_TYPES, ISSUE_TYPE } from "../../schemas/issue-types.js";
 import { fetchIssueDetails } from "../../api.js";
 import { formatIssueType } from "./utils.js";
-import "../../components/basic/modal.js";
+import { MODAL_SIZE_WIDE } from "../../components/basic/modal.js";
 import "../../components/civ-tab-bar/civ-tab-bar.js";
 import { jurisdictionOcdidToPath } from "../../components/ocdid-utils.js";
 
@@ -204,7 +204,7 @@ function ResolveModal(host) {
       .title=${getModalTitle(issue, detailsOnly)}
       .content=${content}
       .footer=${footer}
-      .modalProps=${{ open: true, onClose: handleClose }}
+      .modalProps=${{ open: true, onClose: handleClose, size: MODAL_SIZE_WIDE }}
     ></civ-modal>
   `;
 }

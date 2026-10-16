@@ -58,6 +58,11 @@
   /* Shared max content width for the navbar + page containers, so the nav rail
      and page content align on the same gutters. */
   --page-width: 1360px;
+
+  /* For a modal holding a list or a long field; the default dialog is 32rem. */
+  --modal-width-wide: min(92vw, 44rem);
+  /* A fixed height, so a form opening inside scrolls the body rather than growing the modal. */
+  --modal-height-tall: min(85vh, 44rem);
 }
 
 :root,

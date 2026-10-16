@@ -1383,3 +1383,31 @@ async def test_deleting_a_post_into_another_moves_its_holder_and_drops_the_row()
     assert await _open_memberships(person_id) == [(mayors_office, "mayor", _BASE)]
     async with pool.connection() as conn, conn.cursor() as cur:
         assert await posts.get(cur, council_mayor) is None
+
+
+async def _council_mayor_deleted_into_the_office() -> tuple[str, str]:
+    """Seattle's Mayor read under Council, its Council post deleted into Office of the Mayor's."""
+    person_id = await _seed_person("Katie Wilson")
+    council, mayors_office = await _two_bodies()
+    await _publish((council, person_id, "Mayor"))
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        office_mayor = await posts.find_or_create(cur, _OCDID, mayors_office, "mayor", _BASE)
+        await conn.commit()
+    council_mayor = PostKey(organization_id=council, role_id="mayor", division_ocdid=_BASE).post_id
+    await roster_edits.delete_post_into(council_mayor, office_mayor, SYSTEM_USER_ID)
+    return council, council_mayor
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_re_adding_a_deleted_post_undoes_its_deletion():
+    """Its id comes back with its key, so the old `same_as` would merge the new post away again."""
+    council, council_mayor = await _council_mayor_deleted_into_the_office()
+
+    re_added = await posts.create(council, "mayor", _BASE, 1, SYSTEM_USER_ID)
+
+    assert re_added == council_mayor
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        assert await posts.get_deletion_claim_ids(cur, council_mayor) == []

@@ -1,12 +1,15 @@
 import type { Post } from "../posts-list/posts-model.js";
 
+// Everyone who holds or held it: a held post cannot be deleted outright.
+export type OrganizationPost = Post & { holder_names: string[] };
+
 export interface Organization {
   id: string;
   name: string;
   url: string | null;
   sort_order: number;
   meta_is_default: boolean;
-  posts: Post[];
+  posts: OrganizationPost[];
 }
 
 // Mirrors database/organizations.py `get_default`: the list arrives in its fallback order.
