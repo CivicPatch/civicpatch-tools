@@ -1,0 +1,13 @@
+run:
+  timestamp: '2026-10-16T04:26:22+00:00'
+  prompt_sha256: ee15ea404664
+  prompt_file: _prompts/ee15ea404664.txt
+cost_summary:
+  model: gemini-2.5-flash
+  elapsed_seconds: 252.39
+  total_input_tokens: 1310
+  total_output_tokens: 5562
+  total_cost_usd: 0.0
+total_cases: 4
+passed_cases: 4
+failed_cases: []

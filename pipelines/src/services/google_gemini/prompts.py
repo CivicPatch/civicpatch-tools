@@ -1,6 +1,6 @@
 from urllib.parse import urlparse
 
-from shared.schemas import GovernmentForm
+from shared.schemas import GovernmentForm, KnownOrganization
 from shared.utils import id_utils
 from shared.utils.government_forms import GOVERNMENT_FORM_DESCRIPTIONS
 
@@ -64,7 +64,24 @@ def find_jurisdiction_url_prompt(jurisdiction_ocdid: str, municipality_name: str
 
 # Only ever called for a jurisdiction with no posts on record — once there are posts, they
 # are the answer this would be asking for, already parsed and stored.
-def research_municipality_prompt(jurisdiction_ocdid: str, municipality_name: str):
+def _usual_organizations(organizations: list[KnownOrganization]) -> str:
+    hinted = [organization for organization in organizations if organization.role_labels]
+    if not hinted:
+        return ""
+    lines = "\n".join(
+        f"    - {organization.name}: usually {', '.join(organization.role_labels)}" for organization in hinted
+    )
+    return (
+        "\n    Its government probably has these bodies and offices. Check them: list the offices"
+        f" that actually exist, even ones not named here.\n{lines}\n"
+    )
+
+
+# organizations: the jurisdiction's organizations and the roles each usually has, from its
+# government form; a hint to check, not an answer. Empty when nothing is known yet.
+def research_municipality_prompt(
+    jurisdiction_ocdid: str, municipality_name: str, organizations: list[KnownOrganization]
+):
     jurisdiction_ocdid_parts = id_utils.parse_jurisdiction_ocdid(jurisdiction_ocdid)
     state = id_utils.state_name(jurisdiction_ocdid)
     county = jurisdiction_ocdid_parts.county
@@ -76,22 +93,24 @@ def research_municipality_prompt(jurisdiction_ocdid: str, municipality_name: str
     and other elected members of the local government. Format the response as a JSON object.
 
     Municipality: {location_str}
-
+{_usual_organizations(organizations)}
     Instructions:
-
     1. Identify the elected officials in the local government,
        including the Mayor (if applicable).
        1.1. For each official, extract only:
             - name: Full name only (no titles)
             - label: The office they hold, exactly as the municipality writes it
               ("Council Member, Ward 3"). One string, not split into parts.
+            - organization: The body they sit on ("City Council"); if it is one of the
+              bodies listed above, use that name
     3. Create a JSON object with the following structure:
        ```json
        {{
          "people": [
            {{
              "name": "Name of the official",
-             "label": "Office as written"
+             "label": "Office as written",
+             "organization": "Body they sit on"
            }}
          ]
        }}

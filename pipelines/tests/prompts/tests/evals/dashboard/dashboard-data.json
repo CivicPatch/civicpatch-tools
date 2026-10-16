@@ -30304,6 +30304,153 @@
    },
    "prompts_dir": "../find_jurisdiction_url/_prompts",
    "latest_case_prompts": {}
+  },
+  {
+   "eval_name": "research_municipality",
+   "dataset_dir": "../../../datasets/local/research_municipality",
+   "verdicts": [
+    {
+     "provider": "gemini",
+     "blocked": false,
+     "gate_failures": [],
+     "failed_case_ids": [],
+     "cases_passed": 4,
+     "cases_total": 4,
+     "priority_scores": {},
+     "cost_usd": 0.0,
+     "ran_at": "2026-10-16T04:26:22+00:00"
+    }
+   ],
+   "matrix": {
+    "lineages": [
+     {
+      "model": "gemini-2.5-flash",
+      "provider": "gemini"
+     }
+    ],
+    "rows": [
+     {
+      "prompt_sha256": "ee15ea404664",
+      "cells": [
+       {
+        "mean_score": 1.0,
+        "run_count": 1,
+        "mean_cost_usd": 0.0
+       }
+      ]
+     }
+    ]
+   },
+   "comparison": null,
+   "trends": {
+    "providers": [
+     "gemini"
+    ],
+    "charts": [],
+    "run_count": 1
+   },
+   "prompt_versions": [
+    {
+     "prompt_sha256": "ee15ea404664",
+     "text": "\n    Provide the current elected officials for the specified city, including the Mayor (if applicable)\n    and other elected members of the local government. Format the response as a JSON object.\n\n    Municipality: Conroe city, Texas\n\n    Instructions:\n    1. Identify the elected officials in the local government,\n       including the Mayor (if applicable).\n       1.1. For each official, extract only:\n            - name: Full name only (no titles)\n            - label: The office they hold, exactly as the municipality writes it\n              (\"Council Member, Ward 3\"). One string, not split into parts.\n            - organization: The body they sit on (\"City Council\"); if it is one of the\n              bodies listed above, use that name\n    3. Create a JSON object with the following structure:\n       ```json\n       {\n         \"people\": [\n           {\n             \"name\": \"Name of the official\",\n             \"label\": \"Office as written\",\n             \"organization\": \"Body they sit on\"\n           }\n         ]\n       }\n       ```\n\n    IMPORTANT: If the response contains anything other than a valid JSON object,\n    it will be considered incorrect. Ensure the response is strictly JSON.\n    Verify that the response is valid JSON before returning it.\n    If it is not valid JSON, retry the generation.\n    ",
+     "first_run_at": "2026-10-16T04:26:22+00:00",
+     "last_run_at": "2026-10-16T04:26:22+00:00",
+     "providers": [
+      "gemini"
+     ],
+     "runs": [
+      {
+       "timestamp": "2026-10-16T04:26:22+00:00",
+       "provider": "gemini",
+       "scores": {
+        "body": 1.0,
+        "cases_passed": 1.0,
+        "name_match": 0.025,
+        "recall": 0.7440476190476191
+       }
+      }
+     ],
+     "previous_sha256": null,
+     "diff": []
+    }
+   ],
+   "detail": {
+    "providers": [
+     "gemini"
+    ],
+    "metric_rows": [
+     {
+      "metric": "cases passed",
+      "cells": [
+       {
+        "score": 1.0,
+        "swing_is_wide": false,
+        "half_swing": 0.0,
+        "missing_count": null
+       }
+      ]
+     }
+    ],
+    "case_providers": [
+     "gemini"
+    ],
+    "case_rows": [
+     {
+      "case_id": "conroe_tx",
+      "scores": [
+       1.0
+      ],
+      "stability": "unknown"
+     },
+     {
+      "case_id": "milford_mi",
+      "scores": [
+       1.0
+      ],
+      "stability": "unknown"
+     },
+     {
+      "case_id": "millbury_ma",
+      "scores": [
+       1.0
+      ],
+      "stability": "unknown"
+     },
+     {
+      "case_id": "seattle_wa",
+      "scores": [
+       1.0
+      ],
+      "stability": "unknown"
+     }
+    ],
+    "movements": []
+   },
+   "latest_mismatches": {},
+   "case_inputs": {
+    "conroe_tx": {
+     "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:tx/place:conroe/government",
+     "name": "Conroe city",
+     "organizations": "[{\"name\": \"Government\", \"role_labels\": [], \"meta_is_default\": true}]"
+    },
+    "milford_mi": {
+     "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:mi/place:milford/government",
+     "name": "Milford village",
+     "organizations": "[{\"name\": \"Council\", \"role_labels\": [\"Council Member\", \"Mayor\"], \"meta_is_default\": true}]"
+    },
+    "millbury_ma": {
+     "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:ma/place:millbury/government",
+     "name": "Millbury town",
+     "organizations": "[{\"name\": \"Select Board\", \"role_labels\": [\"Select Board Member\", \"Chair\", \"Vice Chair\"], \"meta_is_default\": true}, {\"name\": \"Town Meeting\", \"role_labels\": [\"Moderator\"]}]"
+    },
+    "seattle_wa": {
+     "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:wa/place:seattle/government",
+     "name": "Seattle city",
+     "organizations": "[{\"name\": \"Council\", \"role_labels\": [\"Council Member\"], \"meta_is_default\": true}, {\"name\": \"Office of the Mayor\", \"role_labels\": [\"Mayor\"]}]"
+    }
+   },
+   "prompts_dir": "../research_municipality/_prompts",
+   "latest_case_prompts": {}
   }
  ],
  "issues": [

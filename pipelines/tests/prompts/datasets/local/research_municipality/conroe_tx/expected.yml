@@ -1,0 +1,24 @@
+jurisdiction_ocdid: ocd-jurisdiction/country:us/state:tx/place:conroe/government
+name: Conroe city
+organizations:
+  - name: Government
+    role_labels: []
+    meta_is_default: true
+people:
+  - name: Duke Coon
+    label: Mayor
+  - name: David Hairel
+    label: Council Member, Place 1
+  - name: Shana R. Arthur
+    label: Council Member, Place 2
+  - name: Kristin Hoisington
+    label: Council Member, Place 3
+  - name: Ken Blevins
+    label: Council Member, Place 4
+  - name: John Sellars
+    label: Mayor Pro Tem, Place 5
+source: https://www.cityofconroe.org/government/city_council/index.php
+thoughts: >-
+  No government form is known, so no hint is offered and no organization is
+  expected or scored. This case only checks that research still returns the
+  officials. Conroe is mayor-council by charter. Checked 2026.

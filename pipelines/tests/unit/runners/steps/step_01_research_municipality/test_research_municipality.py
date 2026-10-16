@@ -106,8 +106,8 @@ _MAYOR_COUNCIL_COUNCIL = KnownOrganization(
 _MAYOR_COUNCIL_MAYOR = KnownOrganization(id="mayor", name="Office of the Mayor", role_labels=["Mayor"])
 
 
-def _researched(label: str) -> ResearchedPerson:
-    return ResearchedPerson(name="Ann Lee", label=label)
+def _researched(label: str, organization: str = "") -> ResearchedPerson:
+    return ResearchedPerson(name="Ann Lee", label=label, organization=organization)
 
 
 def test_research_is_expected_in_the_default_organization():
@@ -140,14 +140,26 @@ def test_each_researched_role_goes_to_the_organization_whose_role_labels_hold_it
     ]
 
 
-def test_a_role_no_organization_holds_is_not_expected():
+def test_a_role_the_form_does_not_list_is_still_expected_in_the_default():
+    """The form's role labels are a hint to research, not a filter on its answer."""
     expected = _researched_memberships(
         [_researched("Council President")],
         [_MAYOR_COUNCIL_MAYOR, _MAYOR_COUNCIL_COUNCIL],
         build_taxonomy(_ROLE_CONFIG),
     )
 
-    assert expected == []
+    assert [(e.organization_id, e.role_label) for e in expected] == [("council", "Council President")]
+
+
+def test_the_organization_research_names_beats_the_forms_role_labels():
+    """A Mayor elected from the council, as research tells it, sits on the Council."""
+    expected = _researched_memberships(
+        [_researched("Mayor", organization="council")],
+        [_MAYOR_COUNCIL_COUNCIL, _MAYOR_COUNCIL_MAYOR],
+        build_taxonomy(_ROLE_CONFIG),
+    )
+
+    assert [(e.organization_id, e.role_label) for e in expected] == [("council", "Mayor")]
 
 
 def test_a_researched_label_naming_no_role_is_not_expected():
@@ -190,9 +202,9 @@ _SELECT_BOARD_ROLES = RoleConfig(
 )
 
 
-def test_only_the_organizations_posts_are_expected_whatever_research_calls_them():
-    """Research's titles are not ours to choose: a generic Chair or Member the label also names
-    loses to the organization's post, and a Town Clerk, which no organization holds, is dropped."""
+def test_an_organizations_role_wins_an_ambiguous_label_and_other_roles_are_kept():
+    """A generic Chair or Member the label also names loses to the organization's post; a Town
+    Clerk, which the form does not list, is still expected, in the default."""
     select_board = KnownOrganization(
         id="select", name="Select Board", meta_is_default=True, role_labels=["Select Board Member"]
     )
@@ -210,4 +222,5 @@ def test_only_the_organizations_posts_are_expected_whatever_research_calls_them(
     assert [(e.organization_id, e.role_label) for e in expected] == [
         ("select", "Select Board Member"),
         ("select", "Select Board Member"),
+        ("select", "Clerk"),
     ]

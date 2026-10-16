@@ -45,17 +45,18 @@ async def research_municipality(
 
     jurisdiction_ocdid = context.data.jurisdiction_ocdid
     existing = await civicpatch_api.get_active_people(api_client, jurisdiction_ocdid)
-    organizations = await civicpatch_api.get_organizations(api_client, jurisdiction_ocdid)
-    posts = [post for organization in organizations for post in organization.posts]
 
     if _can_research() and context.data.config.government_form_choices:
         await government_form.request_government_form(context, api_client, logger)
+    # After the form: a form saved just now has already built its organizations.
+    organizations = await civicpatch_api.get_organizations(api_client, jurisdiction_ocdid)
+    posts = [post for organization in organizations for post in organization.posts]
 
     researched: List[ResearchedPerson] = []
     if posts:
         logger.info(f"research_municipality: {len(posts)} known posts, skipping research.")
     else:
-        researched = await _research_roster(context, logger) if _can_research() else []
+        researched = await _research_roster(context, organizations, logger) if _can_research() else []
 
     taxonomy = build_taxonomy(context.data.role_config)
     return ResearchMunicipalityStep(
@@ -128,12 +129,17 @@ def _first_division(designations: List[str]) -> Optional[str]:
     return found[0] if found else None
 
 
-def _organization_for_role(
+def _organization_for(
+    researched_organization: str,
     role_label: str,
     organizations: List[KnownOrganization],
     default: KnownOrganization,
 ) -> KnownOrganization:
-    """The organization whose role labels include this role; else the default."""
+    """The organization research named, if it is one of ours; else the one whose role labels
+    include this role; else the default."""
+    for organization in organizations:
+        if organization.name.casefold() == researched_organization.strip().casefold():
+            return organization
     for organization in organizations:
         if role_label in organization.role_labels:
             return organization
@@ -145,10 +151,9 @@ def _researched_memberships(
     organizations: List[KnownOrganization],
     taxonomy: Taxonomy,
 ) -> List[ExpectedMembership]:
-    """Research knows no organizations, so each organization's role labels place a role, and the
-    default takes what none claims. A label naming no role counts toward nothing, since progress
-    is counted by role. Once the organizations have role labels, only their posts are expected:
-    a researched Town Clerk is not a post any of them holds."""
+    """Every role research names is expected: the form's role labels are a hint to research, not
+    a filter on its answer. A label naming no role counts toward nothing, since progress is
+    counted by role."""
     default = next(
         (organization for organization in organizations if organization.meta_is_default),
         organizations[0],
@@ -159,15 +164,13 @@ def _researched_memberships(
         parsed = parse_label_preferring(person.label, taxonomy, post_roles)
         if not parsed.role:
             continue
-        if post_roles and parsed.role not in post_roles:
-            continue
         designations = (
             [f"{parsed.division.designation} {parsed.division.value}"] if parsed.division else []
         )
         expected.append(
             ExpectedMembership(
-                organization_id=_organization_for_role(
-                    parsed.role, organizations, default
+                organization_id=_organization_for(
+                    person.organization, parsed.role, organizations, default
                 ).id,
                 role_label=parsed.role,
                 division=_first_division(designations),
@@ -183,16 +186,12 @@ def _can_research() -> bool:
 
 
 async def _research_roster(
-    context: PeopleCollectorContext, logger
+    context: PeopleCollectorContext, organizations: List[KnownOrganization], logger
 ) -> List[ResearchedPerson]:
-    """Who might be there, for a jurisdiction we have not published anybody from.
-
-    Names alone — which offices exist is cp.org's answer, not the model's. Those offices go
-    into the prompt though: naming them turns an open question into a roll call, and the
-    scrape has posts to work from well before it has people, since posts derive at ingest.
-    """
+    """Who is there, for a jurisdiction with no posts yet. The organizations' usual roles go in
+    as a hint; the offices research names come back as the answer."""
     prompt = google_gemini_prompt.research_municipality_prompt(
-        context.data.jurisdiction_ocdid, context.data.config.name or ""
+        context.data.jurisdiction_ocdid, context.data.config.name or "", organizations
     )
     # Tool call + JSON output doesn't work at the same time for Google Gemini,
     # let's retry a couple times til it works.
