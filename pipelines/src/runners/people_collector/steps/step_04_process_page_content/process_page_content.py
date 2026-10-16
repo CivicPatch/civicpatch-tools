@@ -45,6 +45,7 @@ from runners.people_collector.utils.organization_terms import (
 )
 from runners.people_collector.utils.link_discovery import (
     add_relevant_urls,
+    anchor_texts,
     extract_names_and_designations,
     find_heuristic_urls,
     has_role_and_contact_info,
@@ -323,7 +324,10 @@ def _resolve_candidate_urls(
     logger,
 ) -> Tuple[list[str], Optional[dict]]:
     if response.relevant_urls:
-        return response.relevant_urls, None
+        texts = anchor_texts(content)
+        return response.relevant_urls, {
+            url: (None, texts.get(url_utils.canonical_url(url))) for url in response.relevant_urls
+        }
     combined_designations = designations + known_roles  # token-exact matching
     roles = known_roles + jurisdiction_name_suffix(config_name)  # substring matching
     heuristic_urls = find_heuristic_urls(content, combined_designations, roles=roles)

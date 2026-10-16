@@ -116,16 +116,23 @@ async def test_a_call_with_no_generation_id_still_lands():
 
 @pytest.mark.integration
 @pytest.mark.asyncio
-async def test_a_call_with_no_stated_cost_is_not_written():
-    """Grounded Google calls state none, and `cost_usd` is NOT NULL — a zero would read as free."""
+async def test_a_call_with_no_stated_cost_is_written_without_one():
+    """Grounded Google calls state none: written with a NULL, never a zero that reads as free."""
     run_id = await factories.start_run(_OCDID)
 
     written = await record_calls(
-        run_id, [_call(), _call(gateway="google", cost_usd=None)]
+        run_id, [_call(), _call(gateway="google", cost_usd=None, generation_id=None)]
     )
 
-    assert written == 1
-    assert [row[0] for row in await _rows(run_id)] == ["municipality_officials"]
+    assert written == 2
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "SELECT gateway, cost_usd FROM llm_calls WHERE pipeline_run_id = %s ORDER BY gateway",
+            (run_id,),
+        )
+        rows = await cur.fetchall()
+    assert [(gateway, cost is None) for gateway, cost in rows] == [("google", True), ("openrouter", False)]
 
 
 @pytest.mark.integration

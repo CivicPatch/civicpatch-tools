@@ -50,9 +50,7 @@ async def run_prompt(pipeline_run_id, jurisdiction_ocdid, prompt, prompt_name: s
         response, input_tokens_num, output_tokens_num = make_request_with_search(
             logger, model, api_key, prompt
         )
-        # Grounded, so Google states no cost — grounding is sold on a quota, and a zero here
-        # would read as free. Tracked for tokens only; `record_calls` keeps it out of
-        # `llm_calls`, whose `cost_usd` is NOT NULL.
+        # Grounded, so Google states no cost: recorded with none, never a zero that reads as free.
         cost_utils.record_call(
             logger,
             pipeline_run_id,

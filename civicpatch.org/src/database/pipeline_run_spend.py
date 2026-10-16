@@ -44,7 +44,7 @@ async def get_month_to_date_spend(state: str) -> tuple[Decimal, Decimal]:
 
 # Per run, not per call, and null rather than zero when the state has not run this month.
 MONTH_TO_DATE_COST_PER_RUN_SQL = """
-SELECT sum(lc.cost_usd) / NULLIF(count(DISTINCT lc.pipeline_run_id), 0)
+SELECT sum(lc.cost_usd) / NULLIF(count(DISTINCT lc.pipeline_run_id) FILTER (WHERE lc.cost_usd IS NOT NULL), 0)
 FROM llm_calls lc
 JOIN pipeline_runs pr ON pr.id = lc.pipeline_run_id
 JOIN jurisdictions j USING (jurisdiction_ocdid)
@@ -63,7 +63,7 @@ async def get_month_to_date_cost_per_run(state: str) -> Decimal | None:
 
 
 FLEET_MONTH_TO_DATE_COST_PER_RUN_SQL = """
-SELECT sum(cost_usd) / NULLIF(count(DISTINCT pipeline_run_id), 0)
+SELECT sum(cost_usd) / NULLIF(count(DISTINCT pipeline_run_id) FILTER (WHERE cost_usd IS NOT NULL), 0)
 FROM llm_calls
 WHERE created_at >= date_trunc('month', now() AT TIME ZONE 'utc')
 """
