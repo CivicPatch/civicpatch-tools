@@ -2,7 +2,7 @@ from datetime import datetime
 from typing import List
 
 from pydantic import BaseModel
-from shared.schemas import GovernmentForm
+from shared.schemas import GovernmentForm, JurisdictionLevel
 from shared.utils.government_forms import describe_government_form
 
 
@@ -231,8 +231,30 @@ def _roles_hint(
 
 
 # Note: Claude Sonnet 4.6 Generated prompt
+_TARGET_NOUN = {
+    JurisdictionLevel.LOCAL: "municipality",
+    JurisdictionLevel.COUNTIES: "county",
+    JurisdictionLevel.STATE: "state",
+}
+_TARGET_ADJECTIVE = {
+    JurisdictionLevel.LOCAL: "municipal",
+    JurisdictionLevel.COUNTIES: "county",
+    JurisdictionLevel.STATE: "state",
+}
+
+
+def _jurisdiction_line(level: JurisdictionLevel, state: str, county: str | None) -> str:
+    """A county in a town's ocdid locates the town; at county level it is the target itself."""
+    if level == JurisdictionLevel.LOCAL and county:
+        context = f"a municipality in {county} County, {state}"
+    else:
+        context = ", ".join(part for part in [f"{county} County" if county else None, state] if part)
+    return f"\n    Jurisdiction: {context}" if context else ""
+
+
 def elected_officials_prompt(
     known_roles: List[str],
+    level: JurisdictionLevel,
     state: str = "",
     county: str | None = None,
     current_date: str | None = None,
@@ -241,7 +263,7 @@ def elected_officials_prompt(
     government_form_role_labels: List[str] = [],
 ):
     """
-    Generate a prompt for extracting municipality officials (Llama-optimized).
+    Generate a prompt for extracting a jurisdiction's elected officials (Llama-optimized).
 
     `current_date` is an argument because the prompt asks for *currently serving*
     officials: reading the clock in here made the prompt a function of wall-time, so the
@@ -254,18 +276,14 @@ def elected_officials_prompt(
         "" if organization else _roles_hint(known_roles, divisions, government_form_role_labels)
     )
 
-    jurisdiction_parts = [f"{county} County" if county else None, state]
-    jurisdiction_context = ", ".join(p for p in jurisdiction_parts if p)
-    jurisdiction_line = (
-        f"\n    Jurisdiction: {jurisdiction_context}" if jurisdiction_context else ""
-    )
+    jurisdiction_line = _jurisdiction_line(level, state, county)
 
     scope = _organization_scope(organization) if organization else ""
     label_rules = _label_rules(organization)
 
     return f"""
     You are a data extraction assistant. Extract information about the currently
-    serving elected officials of the target municipality from the provided content.
+    serving elected officials of the target {_TARGET_NOUN[level]} from the provided content.
 
     Current Date: {current_date}{jurisdiction_line}
 {scope}
@@ -309,8 +327,8 @@ def elected_officials_prompt(
     {roles_hint_str}
 
     phone, email:
-    - Use in this order: the person's own, then their office's, then any general municipal
-      contact found anywhere in the content.
+    - Use in this order: the person's own, then their office's, then any general
+      {_TARGET_ADJECTIVE[level]} contact found anywhere in the content.
     - An email must be a valid address (email@domain.tld). A contact form URL
       (e.g. /email-contact/node/...) is not an email; treat it as a url candidate.
 

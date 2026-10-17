@@ -1,0 +1,83 @@
+generated: true
+jurisdiction_ocdid: ocd-jurisdiction/country:us/state:co/place:greenwood_village/government
+current_date: '2026-10-02'
+organization:
+  name: Council
+  role_labels:
+  - Mayor Pro Tempore
+  - Council Member
+  divisions:
+  - district 2
+  - district 1
+  - district 3
+  - district 4
+people:
+- name: Ann Nelson
+  label: Council Member, District 1
+  phone: (303) 804-4137
+  email: anelson@greenwoodvillage.com
+  url: https://www.greenwoodvillage.com/2707/Contact-Your-Elected-Officials
+  start_date: null
+  end_date: null
+  image: null
+- name: Donna Johnston
+  label: Council Member, District 3
+  phone: (303) 804-4128
+  email: djohnston@greenwoodvillage.com
+  url: https://www.greenwoodvillage.com/2707/Contact-Your-Elected-Officials
+  start_date: null
+  end_date: null
+  image: null
+- name: Libby Hilton Barnacle
+  label: Mayor Pro Tem, District 3
+  phone: (303) 804-4129
+  email: ebarnacle@greenwoodvillage.com
+  url: https://www.greenwoodvillage.com/2707/Contact-Your-Elected-Officials
+  start_date: null
+  end_date: null
+  image: null
+- name: Paul Wiesner
+  label: Council Member, District 1
+  phone: (303) 804-4138
+  email: pwiesner@greenwoodvillage.com
+  url: https://www.greenwoodvillage.com/2707/Contact-Your-Elected-Officials
+  start_date: null
+  end_date: null
+  image: null
+- name: Tom Stahl
+  label: Council Member, District 4
+  phone: (303) 804-4132
+  email: tstahl@greenwoodvillage.com
+  url: https://www.greenwoodvillage.com/2707/Contact-Your-Elected-Officials
+  start_date: null
+  end_date: null
+  image: null
+- name: Jay Schneiderman
+  label: Council Member, District 2
+  phone: (303) 804-4136
+  email: jschneiderman@greenwoodvillage.com
+  url: https://www.greenwoodvillage.com/2707/Contact-Your-Elected-Officials
+  start_date: null
+  end_date: null
+  image: null
+- name: Bob Doyle
+  label: Council Member, District 2
+  phone: (303) 804-4135
+  email: bdoyle@greenwoodvillage.com
+  url: https://www.greenwoodvillage.com/2707/Contact-Your-Elected-Officials
+  start_date: null
+  end_date: null
+  image: null
+- name: Katrin Mezger
+  label: Council Member, District 4
+  phone: (303) 804-4131
+  email: kmezger@greenwoodvillage.com
+  url: https://www.greenwoodvillage.com/2707/Contact-Your-Elected-Officials
+  start_date: null
+  end_date: null
+  image: null
+thought: 'GENERATED, review before moving into the dataset. Form mayor_council (one
+  of several allowed, so assumed); known_titles, scoped to Council. People are the
+  published roster''s, filed by role (a role no organization lists goes to the main
+  board): check titles, dates and anyone the page lists that the roster lacks. Hand-corrected
+  against the page: the published roster was out of date.'

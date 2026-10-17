@@ -3,7 +3,7 @@ people:
   label: King County Executive
   phone: null
   email: null
-  url: null
+  url: https://kingcounty.gov/en/dept/executive
   start_date: null
   end_date: null
   image: local://456fd6692c50.png

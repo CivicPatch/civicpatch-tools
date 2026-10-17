@@ -8,6 +8,7 @@ from tests.prompts.tests.evals.generate_officials_cases import (
     PublishedPerson,
     Variant,
     _plausible,
+    _scopings,
     a_variety,
     case_id,
     people_in,
@@ -20,6 +21,12 @@ _PAGE = "https://millburyma.gov/1506/board-of-selectmen"
 _SELECT_BOARD = DerivedOrganization(name="Select Board", role_labels=["Select Board Member", "Chair"])
 _TOWN_MEETING = DerivedOrganization(name="Town Meeting", role_labels=["Moderator"])
 _FORM = [_SELECT_BOARD, _TOWN_MEETING]
+
+
+def test_a_lone_body_yields_scoped_and_unscoped_cases_and_several_bodies_only_scoped():
+    """Production scopes a lone real body; unscoped stays for a placeholder or no bodies."""
+    assert _scopings([_SELECT_BOARD]) == [False, True]
+    assert _scopings(_FORM) == [True]
 
 
 def _person(name: str, *roles: str) -> PublishedPerson:
@@ -75,6 +82,7 @@ def test_a_county_may_have_any_form_its_state_allows():
 def _case(form: GovernmentForm, run: str, variant: Variant, scoped: bool = True) -> CandidateCase:
     return CandidateCase(
         case_id=f"{run}_{variant.value}",
+        jurisdiction_ocdid="ocd-jurisdiction/country:us/state:ma/place:ada/government",
         input_path="input.md",
         government_form=form,
         form_was_decided=False,
@@ -134,4 +142,12 @@ def test_an_unscoped_run_shares_its_known_and_no_titles_cases_across_forms():
     )
     assert case_id("place_x", GovernmentForm.MAYOR_COUNCIL, "Council", known, True) != case_id(
         "place_x", GovernmentForm.MAYOR_COUNCIL, "Office of the Mayor", known, True
+    )
+
+
+def test_a_lone_bodys_scoped_and_unscoped_suggestion_cases_get_their_own_ids():
+    suggested = Variant.SUGGESTED_TITLES
+
+    assert case_id("place_ada", GovernmentForm.COUNCIL_MANAGER, "Council", suggested, False) != case_id(
+        "place_ada", GovernmentForm.COUNCIL_MANAGER, "Council", suggested, True
     )

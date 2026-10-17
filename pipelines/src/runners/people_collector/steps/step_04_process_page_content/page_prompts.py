@@ -76,6 +76,7 @@ def extraction_prompt(
     ocdid_parts = id_utils.parse_jurisdiction_ocdid(jurisdiction_ocdid)
     return open_router_prompt.elected_officials_prompt(
         expected_roles(memberships),
+        level=ocdid_parts.level,
         state=ocdid_parts.state,
         county=ocdid_parts.county,
         organization=scope.prompt_organization,

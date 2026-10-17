@@ -4,9 +4,10 @@ describe a body's offices: titles found before, suggestions from the form of gov
 Offline: no network, no LLM, no cost. Writes to `datasets/candidates/municipal_officials/` for a
 person to review and move into `datasets/local/municipal_officials/`; nothing here is trusted.
 
-A form with two or more organizations is scoped to each in turn, as production runs it; a
-one-organization form (a county, a council-manager city, a township) runs unscoped, with the
-titles as `known_roles`. A form the config cannot decide is tried as each form allowed.
+Each organization is scoped in turn, as production runs it. A one-organization form (a county,
+a council-manager city, a township) also yields unscoped cases, with the titles as
+`known_roles`: the prompt a "Government" placeholder or a body-less jurisdiction still gets.
+A form the config cannot decide is tried as each form allowed.
 A roster page is one published people cite; its expected people are those people, each filed
 under the organization whose `role_labels` hold their role. A case already staged is never
 overwritten, since it may have been reviewed.
@@ -68,6 +69,7 @@ class PublishedPerson(BaseModel):
 
 class CandidateCase(BaseModel):
     case_id: str
+    jurisdiction_ocdid: str
     input_path: str
     government_form: GovernmentForm
     form_was_decided: bool
@@ -203,8 +205,11 @@ def case_id(
     run_folder: str, form: GovernmentForm, organization: str, variant: Variant, scoped: bool
 ) -> str:
     """An unscoped run's known titles and its absence of titles are the same whatever form is
-    assumed, so those two ids leave the form out and the second form's copy is "already staged"."""
-    if not scoped and variant is not Variant.SUGGESTED_TITLES:
+    assumed, so those two ids leave the form out and the second form's copy is "already staged".
+    Every unscoped id says so: a lone body also yields a scoped case under the same form."""
+    if not scoped and variant is Variant.SUGGESTED_TITLES:
+        raw = f"{run_folder}__unscoped__{form.value}__{variant.value}"
+    elif not scoped:
         raw = f"{run_folder}__unscoped__{variant.value}"
     else:
         raw = f"{run_folder}__{form.value}__{organization}__{variant.value}"
@@ -244,6 +249,7 @@ def expected_yaml(case: CandidateCase) -> str:
     )
     expected = {
         GENERATED_KEY: True,
+        "jurisdiction_ocdid": case.jurisdiction_ocdid,
         "current_date": case.current_date,
         **prompt_inputs(case),
         "people": [
@@ -264,6 +270,12 @@ def expected_yaml(case: CandidateCase) -> str:
     return yaml.safe_dump(expected, sort_keys=False)
 
 
+def _scopings(organizations: list[DerivedOrganization]) -> list[bool]:
+    """A lone body runs scoped in production; unscoped is still how a placeholder or a
+    jurisdiction with no bodies runs, so a lone body's page yields both."""
+    return [False, True] if len(organizations) == 1 else [True]
+
+
 def candidate_cases(
     configs: dict[str, ConfigFile],
     run: SavedRun,
@@ -279,26 +291,27 @@ def candidate_cases(
     cases = []
     for form, form_was_decided in forms_to_try(configs, run):
         organizations = derived_organizations(config, form)
-        scoped = len(organizations) >= 2
         for organization in organizations:
             listed = people_in(organization, organizations, people, page_url_key)
             role_labels, found_divisions = roles_and_divisions(listed, taxonomy)
-            for variant in Variant:
-                cases.append(
-                    CandidateCase(
-                        case_id=case_id(run.folder, form, organization.name, variant, scoped),
-                        input_path=input_path,
-                        government_form=form,
-                        form_was_decided=form_was_decided,
-                        organization=organization,
-                        scoped=scoped,
-                        variant=variant,
-                        current_date=run.read_on,
-                        role_labels=role_labels,
-                        divisions=found_divisions,
-                        people=listed,
+            for scoped in _scopings(organizations):
+                for variant in Variant:
+                    cases.append(
+                        CandidateCase(
+                            case_id=case_id(run.folder, form, organization.name, variant, scoped),
+                            jurisdiction_ocdid=run.jurisdiction_ocdid,
+                            input_path=input_path,
+                            government_form=form,
+                            form_was_decided=form_was_decided,
+                            organization=organization,
+                            scoped=scoped,
+                            variant=variant,
+                            current_date=run.read_on,
+                            role_labels=role_labels,
+                            divisions=found_divisions,
+                            people=listed,
+                        )
                     )
-                )
     return cases
 
 

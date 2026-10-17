@@ -21,6 +21,8 @@ from runners.people_collector.schemas import (
 )
 from services.open_router.llm import run_prompt as run_together_prompt
 from services.open_router.prompts import PromptOrganization, elected_officials_prompt
+from shared.schemas import JurisdictionLevel
+from shared.utils.id_utils import parse_jurisdiction_ocdid
 from utils import cost_utils
 from scoring import (
     EVAL_TAXONOMY,
@@ -56,10 +58,21 @@ PER_PERSON_THRESHOLDS = {"roles": 1.0, "designations": 1.0}
 EVAL_CURRENT_DATE = "2025-09-01"
 
 
+def _jurisdiction_inputs(expected: dict) -> dict:
+    """What production derives from the ocdid. A case recorded before cases carried one is
+    read as a municipality with no Jurisdiction line, the prompt it was labelled against."""
+    ocdid = expected.get("jurisdiction_ocdid")
+    if not ocdid:
+        return {"level": JurisdictionLevel.LOCAL}
+    parts = parse_jurisdiction_ocdid(ocdid)
+    return {"level": parts.level, "state": parts.state, "county": parts.county}
+
+
 def make_together_prompt(expected: dict):
     organization = expected.get("organization")
     return elected_officials_prompt(
         expected.get("known_roles", []),
+        **_jurisdiction_inputs(expected),
         # The day the page was read, where the case records it: terms are judged as of then.
         current_date=expected.get("current_date", EVAL_CURRENT_DATE),
         organization=PromptOrganization(**organization) if organization else None,

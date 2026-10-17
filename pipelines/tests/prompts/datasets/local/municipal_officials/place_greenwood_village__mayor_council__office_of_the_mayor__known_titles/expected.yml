@@ -1,0 +1,20 @@
+generated: true
+jurisdiction_ocdid: ocd-jurisdiction/country:us/state:co/place:greenwood_village/government
+current_date: '2026-10-02'
+organization:
+  name: Office of the Mayor
+  role_labels:
+  - Mayor
+people:
+- name: George Lantz
+  label: Mayor
+  phone: (303) 486-5745
+  email: glantz@greenwoodvillage.com
+  url: https://www.greenwoodvillage.com/2707/Contact-Your-Elected-Officials
+  start_date: null
+  end_date: null
+  image: null
+thought: 'GENERATED, review before moving into the dataset. Form mayor_council (one
+  of several allowed, so assumed); known_titles, scoped to Office of the Mayor. People
+  are the published roster''s, filed by role (a role no organization lists goes to
+  the main board): check titles, dates and anyone the page lists that the roster lacks.'

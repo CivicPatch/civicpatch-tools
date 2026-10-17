@@ -1,8 +1,0 @@
-mismatches:
-  austin_council_shared_roster_scoped_to_council:
-  - actual: present
-    actual_label: Mayor
-    expected: "\u2014"
-    expected_label: ''
-    field: person
-    person: Kirk Watson

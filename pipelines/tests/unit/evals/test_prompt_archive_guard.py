@@ -12,7 +12,7 @@ import pytest
 from eval_utils import record_run
 
 from services.google_gemini import prompts as gemini_prompts
-from shared.schemas import GovernmentForm
+from shared.schemas import GovernmentForm, JurisdictionLevel
 from services.open_router.prompts import (
     elected_officials_prompt,
     relevant_page_prompt,
@@ -55,7 +55,7 @@ def test_archives_once_per_distinct_prompt(tmp_path):
 def test_real_prompts_pass_the_guard(tmp_path):
     """The guard is worthless if it fires on the prompts actually in use."""
 
-    record_run(str(tmp_path), elected_officials_prompt(["<injected per case>"]))
+    record_run(str(tmp_path), elected_officials_prompt(["<injected per case>"], level=JurisdictionLevel.LOCAL))
     record_run(str(tmp_path), relevant_page_prompt("<url>", "<place>", ["<roles>"]))
     record_run(
         str(tmp_path),

@@ -1,0 +1,55 @@
+generated: true
+jurisdiction_ocdid: ocd-jurisdiction/country:us/state:ca/county:alameda/government
+current_date: '2026-10-16'
+organization:
+  name: Board of Supervisors
+  government_form_role_labels:
+  - Supervisor
+  - Chair
+  - Vice Chair
+people:
+- name: David Haubert
+  label: Supervisor, District 1
+  phone: (510) 272-6691
+  email: null
+  url: https://district1.acgov.org/
+  start_date: null
+  end_date: null
+  image: null
+- name: Lena Tam
+  label: Supervisor, District 3
+  phone: (510) 272-6693
+  email: null
+  url: https://district3.acgov.org/
+  start_date: null
+  end_date: null
+  image: null
+- name: Elisa Márquez
+  label: Supervisor, District 2
+  phone: (510) 272-6692
+  email: null
+  url: https://district2.acgov.org/
+  start_date: null
+  end_date: null
+  image: null
+- name: Nate Miley
+  label: Supervisor, District 4
+  phone: (510) 272-6694
+  email: null
+  url: https://district4.acgov.org/
+  start_date: null
+  end_date: null
+  image: null
+- name: Nikki Fortunato Bas
+  label: Supervisor, District 5
+  phone: (510) 272-6695
+  email: null
+  url: https://district5.acgov.org/
+  start_date: null
+  end_date: null
+  image: null
+thought: 'GENERATED, review before moving into the dataset. Form commission (decided
+  by the config); suggested_titles, scoped to Board of Supervisors. People are the
+  published roster''s, filed by role (a role no organization lists goes to the main
+  board): check titles, dates and anyone the page lists that the roster lacks. Hand-corrected
+  against the page: the published roster was out of date.'

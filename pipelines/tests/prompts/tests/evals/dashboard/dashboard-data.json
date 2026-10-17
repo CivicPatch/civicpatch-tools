@@ -12,11 +12,11 @@
      "cases_passed": null,
      "cases_total": null,
      "priority_scores": {
-      "primary_role": 0.9926739926739927,
+      "primary_role": 0.9881235154394299,
       "district": 1.0
      },
-     "cost_usd": 0.077141316,
-     "ran_at": "2026-10-15T21:10:39+00:00"
+     "cost_usd": 0.124165524,
+     "ran_at": "2026-10-17T01:34:07+00:00"
     }
    ],
    "matrix": {
@@ -47,6 +47,21 @@
      }
     ],
     "rows": [
+     {
+      "prompt_sha256": "766d04d7f1f4",
+      "cells": [
+       null,
+       {
+        "mean_score": 0.9255916744755205,
+        "run_count": 4,
+        "mean_cost_usd": 0.11491326
+       },
+       null,
+       null,
+       null,
+       null
+      ]
+     },
      {
       "prompt_sha256": "f35d758c8c80",
       "cells": [
@@ -283,8 +298,8 @@
        },
        {
         "mean_score": 1.0,
-        "run_count": 4,
-        "mean_cost_usd": 0.001802738
+        "run_count": 2,
+        "mean_cost_usd": 0.001255268
        },
        null,
        {
@@ -335,11 +350,7 @@
         "run_count": 2,
         "mean_cost_usd": 0.0012492016
        },
-       {
-        "mean_score": 0.9545454545454546,
-        "run_count": 2,
-        "mean_cost_usd": 0.001218084
-       },
+       null,
        null,
        {
         "mean_score": 0.9285714285714286,
@@ -11308,21 +11319,6 @@
         "provider": "AtlasCloud",
         "points": [
          {
-          "timestamp": "2026-09-16T23:50:26+00:00",
-          "prompt_sha256": "aeb59ab46565",
-          "score": 1.0
-         },
-         {
-          "timestamp": "2026-09-16T23:56:30+00:00",
-          "prompt_sha256": "56b24ff86e61",
-          "score": 1.0
-         },
-         {
-          "timestamp": "2026-09-16T23:56:57+00:00",
-          "prompt_sha256": "56b24ff86e61",
-          "score": 1.0
-         },
-         {
           "timestamp": "2026-09-16T23:59:20+00:00",
           "prompt_sha256": "8cdc56e997db",
           "score": 1.0
@@ -11441,6 +11437,26 @@
           "timestamp": "2026-10-15T21:10:39+00:00",
           "prompt_sha256": "f35d758c8c80",
           "score": 0.9926739926739927
+         },
+         {
+          "timestamp": "2026-10-17T00:39:27+00:00",
+          "prompt_sha256": "766d04d7f1f4",
+          "score": 0.9963503649635036
+         },
+         {
+          "timestamp": "2026-10-17T01:03:42+00:00",
+          "prompt_sha256": "766d04d7f1f4",
+          "score": 0.96875
+         },
+         {
+          "timestamp": "2026-10-17T01:13:43+00:00",
+          "prompt_sha256": "766d04d7f1f4",
+          "score": 0.9771908763505402
+         },
+         {
+          "timestamp": "2026-10-17T01:34:07+00:00",
+          "prompt_sha256": "766d04d7f1f4",
+          "score": 0.9881235154394299
          }
         ]
        },
@@ -11820,16 +11836,6 @@
         "provider": "AtlasCloud",
         "points": [
          {
-          "timestamp": "2026-09-16T23:50:26+00:00",
-          "prompt_sha256": "aeb59ab46565",
-          "score": 1.0
-         },
-         {
-          "timestamp": "2026-09-16T23:56:30+00:00",
-          "prompt_sha256": "56b24ff86e61",
-          "score": 1.0
-         },
-         {
           "timestamp": "2026-09-16T23:59:20+00:00",
           "prompt_sha256": "8cdc56e997db",
           "score": 1.0
@@ -11932,6 +11938,26 @@
          {
           "timestamp": "2026-10-15T21:10:39+00:00",
           "prompt_sha256": "f35d758c8c80",
+          "score": 1.0
+         },
+         {
+          "timestamp": "2026-10-17T00:39:27+00:00",
+          "prompt_sha256": "766d04d7f1f4",
+          "score": 1.0
+         },
+         {
+          "timestamp": "2026-10-17T01:03:42+00:00",
+          "prompt_sha256": "766d04d7f1f4",
+          "score": 0.9285714285714286
+         },
+         {
+          "timestamp": "2026-10-17T01:13:43+00:00",
+          "prompt_sha256": "766d04d7f1f4",
+          "score": 1.0
+         },
+         {
+          "timestamp": "2026-10-17T01:34:07+00:00",
+          "prompt_sha256": "766d04d7f1f4",
           "score": 1.0
          }
         ]
@@ -12302,21 +12328,6 @@
         "provider": "AtlasCloud",
         "points": [
          {
-          "timestamp": "2026-09-16T23:50:26+00:00",
-          "prompt_sha256": "aeb59ab46565",
-          "score": 1.0
-         },
-         {
-          "timestamp": "2026-09-16T23:56:30+00:00",
-          "prompt_sha256": "56b24ff86e61",
-          "score": 0.9523809523809523
-         },
-         {
-          "timestamp": "2026-09-16T23:56:57+00:00",
-          "prompt_sha256": "56b24ff86e61",
-          "score": 1.0
-         },
-         {
           "timestamp": "2026-09-16T23:59:20+00:00",
           "prompt_sha256": "8cdc56e997db",
           "score": 1.0
@@ -12435,6 +12446,26 @@
           "timestamp": "2026-10-15T21:10:39+00:00",
           "prompt_sha256": "f35d758c8c80",
           "score": 0.9963768115942029
+         },
+         {
+          "timestamp": "2026-10-17T00:39:27+00:00",
+          "prompt_sha256": "766d04d7f1f4",
+          "score": 0.9963768115942029
+         },
+         {
+          "timestamp": "2026-10-17T01:03:42+00:00",
+          "prompt_sha256": "766d04d7f1f4",
+          "score": 0.9648924122310306
+         },
+         {
+          "timestamp": "2026-10-17T01:13:43+00:00",
+          "prompt_sha256": "766d04d7f1f4",
+          "score": 0.9918509895227008
+         },
+         {
+          "timestamp": "2026-10-17T01:34:07+00:00",
+          "prompt_sha256": "766d04d7f1f4",
+          "score": 0.9759450171821306
          }
         ]
        },
@@ -12859,21 +12890,6 @@
         "provider": "AtlasCloud",
         "points": [
          {
-          "timestamp": "2026-09-16T23:50:26+00:00",
-          "prompt_sha256": "aeb59ab46565",
-          "score": 1.0
-         },
-         {
-          "timestamp": "2026-09-16T23:56:30+00:00",
-          "prompt_sha256": "56b24ff86e61",
-          "score": 1.0
-         },
-         {
-          "timestamp": "2026-09-16T23:56:57+00:00",
-          "prompt_sha256": "56b24ff86e61",
-          "score": 1.0
-         },
-         {
           "timestamp": "2026-09-16T23:59:20+00:00",
           "prompt_sha256": "8cdc56e997db",
           "score": 1.0
@@ -12992,6 +13008,26 @@
           "timestamp": "2026-10-15T21:10:39+00:00",
           "prompt_sha256": "f35d758c8c80",
           "score": 0.9529411764705882
+         },
+         {
+          "timestamp": "2026-10-17T00:39:27+00:00",
+          "prompt_sha256": "766d04d7f1f4",
+          "score": 0.9551656920077972
+         },
+         {
+          "timestamp": "2026-10-17T01:03:42+00:00",
+          "prompt_sha256": "766d04d7f1f4",
+          "score": 0.8827238335435057
+         },
+         {
+          "timestamp": "2026-10-17T01:13:43+00:00",
+          "prompt_sha256": "766d04d7f1f4",
+          "score": 0.9188514357053683
+         },
+         {
+          "timestamp": "2026-10-17T01:34:07+00:00",
+          "prompt_sha256": "766d04d7f1f4",
+          "score": 0.9478787878787879
          }
         ]
        },
@@ -13366,11 +13402,6 @@
         "provider": "AtlasCloud",
         "points": [
          {
-          "timestamp": "2026-09-16T23:50:26+00:00",
-          "prompt_sha256": "aeb59ab46565",
-          "score": 1.0
-         },
-         {
           "timestamp": "2026-09-17T00:28:03+00:00",
           "prompt_sha256": "b122485569e2",
           "score": 1.0
@@ -13453,6 +13484,26 @@
          {
           "timestamp": "2026-10-15T21:10:39+00:00",
           "prompt_sha256": "f35d758c8c80",
+          "score": 1.0
+         },
+         {
+          "timestamp": "2026-10-17T00:39:27+00:00",
+          "prompt_sha256": "766d04d7f1f4",
+          "score": 1.0
+         },
+         {
+          "timestamp": "2026-10-17T01:03:42+00:00",
+          "prompt_sha256": "766d04d7f1f4",
+          "score": 1.0
+         },
+         {
+          "timestamp": "2026-10-17T01:13:43+00:00",
+          "prompt_sha256": "766d04d7f1f4",
+          "score": 1.0
+         },
+         {
+          "timestamp": "2026-10-17T01:34:07+00:00",
+          "prompt_sha256": "766d04d7f1f4",
           "score": 1.0
          }
         ]
@@ -13743,11 +13794,6 @@
         "provider": "AtlasCloud",
         "points": [
          {
-          "timestamp": "2026-09-16T23:50:26+00:00",
-          "prompt_sha256": "aeb59ab46565",
-          "score": 1.0
-         },
-         {
           "timestamp": "2026-09-17T00:28:03+00:00",
           "prompt_sha256": "b122485569e2",
           "score": 1.0
@@ -13841,6 +13887,26 @@
           "timestamp": "2026-10-15T21:10:39+00:00",
           "prompt_sha256": "f35d758c8c80",
           "score": 0.97
+         },
+         {
+          "timestamp": "2026-10-17T00:39:27+00:00",
+          "prompt_sha256": "766d04d7f1f4",
+          "score": 0.9533169533169533
+         },
+         {
+          "timestamp": "2026-10-17T01:03:42+00:00",
+          "prompt_sha256": "766d04d7f1f4",
+          "score": 0.9667673716012085
+         },
+         {
+          "timestamp": "2026-10-17T01:13:43+00:00",
+          "prompt_sha256": "766d04d7f1f4",
+          "score": 1.0
+         },
+         {
+          "timestamp": "2026-10-17T01:34:07+00:00",
+          "prompt_sha256": "766d04d7f1f4",
+          "score": 0.9970674486803519
          }
         ]
        },
@@ -14185,21 +14251,6 @@
         "provider": "AtlasCloud",
         "points": [
          {
-          "timestamp": "2026-09-16T23:50:26+00:00",
-          "prompt_sha256": "aeb59ab46565",
-          "score": 1.0
-         },
-         {
-          "timestamp": "2026-09-16T23:56:30+00:00",
-          "prompt_sha256": "56b24ff86e61",
-          "score": 1.0
-         },
-         {
-          "timestamp": "2026-09-16T23:56:57+00:00",
-          "prompt_sha256": "56b24ff86e61",
-          "score": 1.0
-         },
-         {
           "timestamp": "2026-09-16T23:59:20+00:00",
           "prompt_sha256": "8cdc56e997db",
           "score": 1.0
@@ -14318,6 +14369,26 @@
           "timestamp": "2026-10-15T21:10:39+00:00",
           "prompt_sha256": "f35d758c8c80",
           "score": 0.9504950495049505
+         },
+         {
+          "timestamp": "2026-10-17T00:39:27+00:00",
+          "prompt_sha256": "766d04d7f1f4",
+          "score": 0.9658536585365853
+         },
+         {
+          "timestamp": "2026-10-17T01:03:42+00:00",
+          "prompt_sha256": "766d04d7f1f4",
+          "score": 0.8481848184818482
+         },
+         {
+          "timestamp": "2026-10-17T01:13:43+00:00",
+          "prompt_sha256": "766d04d7f1f4",
+          "score": 0.9228395061728395
+         },
+         {
+          "timestamp": "2026-10-17T01:34:07+00:00",
+          "prompt_sha256": "766d04d7f1f4",
+          "score": 0.9246987951807228
          }
         ]
        },
@@ -14730,6 +14801,26 @@
           "timestamp": "2026-10-15T21:10:39+00:00",
           "prompt_sha256": "f35d758c8c80",
           "score": 0.7692307692307693
+         },
+         {
+          "timestamp": "2026-10-17T00:39:27+00:00",
+          "prompt_sha256": "766d04d7f1f4",
+          "score": 0.7692307692307693
+         },
+         {
+          "timestamp": "2026-10-17T01:03:42+00:00",
+          "prompt_sha256": "766d04d7f1f4",
+          "score": 0.2803738317757009
+         },
+         {
+          "timestamp": "2026-10-17T01:13:43+00:00",
+          "prompt_sha256": "766d04d7f1f4",
+          "score": 0.2912621359223301
+         },
+         {
+          "timestamp": "2026-10-17T01:34:07+00:00",
+          "prompt_sha256": "766d04d7f1f4",
+          "score": 0.2912621359223301
          }
         ]
        },
@@ -14997,6 +15088,26 @@
           "timestamp": "2026-10-15T21:10:39+00:00",
           "prompt_sha256": "f35d758c8c80",
           "score": 0.8449197860962567
+         },
+         {
+          "timestamp": "2026-10-17T00:39:27+00:00",
+          "prompt_sha256": "766d04d7f1f4",
+          "score": 0.8876404494382022
+         },
+         {
+          "timestamp": "2026-10-17T01:03:42+00:00",
+          "prompt_sha256": "766d04d7f1f4",
+          "score": 0.596078431372549
+         },
+         {
+          "timestamp": "2026-10-17T01:13:43+00:00",
+          "prompt_sha256": "766d04d7f1f4",
+          "score": 0.6528925619834711
+         },
+         {
+          "timestamp": "2026-10-17T01:34:07+00:00",
+          "prompt_sha256": "766d04d7f1f4",
+          "score": 0.6294820717131474
          }
         ]
        },
@@ -15236,11 +15347,6 @@
         "provider": "AtlasCloud",
         "points": [
          {
-          "timestamp": "2026-09-16T23:50:26+00:00",
-          "prompt_sha256": "aeb59ab46565",
-          "score": 1.0
-         },
-         {
           "timestamp": "2026-09-17T00:28:03+00:00",
           "prompt_sha256": "b122485569e2",
           "score": 1.0
@@ -15339,6 +15445,26 @@
           "timestamp": "2026-10-15T21:10:39+00:00",
           "prompt_sha256": "f35d758c8c80",
           "score": 0.5076923076923077
+         },
+         {
+          "timestamp": "2026-10-17T00:39:27+00:00",
+          "prompt_sha256": "766d04d7f1f4",
+          "score": 0.5116279069767442
+         },
+         {
+          "timestamp": "2026-10-17T01:03:42+00:00",
+          "prompt_sha256": "766d04d7f1f4",
+          "score": 0.36666666666666664
+         },
+         {
+          "timestamp": "2026-10-17T01:13:43+00:00",
+          "prompt_sha256": "766d04d7f1f4",
+          "score": 0.35106382978723405
+         },
+         {
+          "timestamp": "2026-10-17T01:34:07+00:00",
+          "prompt_sha256": "766d04d7f1f4",
+          "score": 0.36065573770491804
          }
         ]
        },
@@ -15703,21 +15829,6 @@
         "provider": "AtlasCloud",
         "points": [
          {
-          "timestamp": "2026-09-16T23:50:26+00:00",
-          "prompt_sha256": "aeb59ab46565",
-          "score": 1.0
-         },
-         {
-          "timestamp": "2026-09-16T23:56:30+00:00",
-          "prompt_sha256": "56b24ff86e61",
-          "score": 1.0
-         },
-         {
-          "timestamp": "2026-09-16T23:56:57+00:00",
-          "prompt_sha256": "56b24ff86e61",
-          "score": 1.0
-         },
-         {
           "timestamp": "2026-09-16T23:59:20+00:00",
           "prompt_sha256": "8cdc56e997db",
           "score": 1.0
@@ -15836,6 +15947,26 @@
           "timestamp": "2026-10-15T21:10:39+00:00",
           "prompt_sha256": "f35d758c8c80",
           "score": 0.9589490968801314
+         },
+         {
+          "timestamp": "2026-10-17T00:39:27+00:00",
+          "prompt_sha256": "766d04d7f1f4",
+          "score": 0.9671052631578947
+         },
+         {
+          "timestamp": "2026-10-17T01:03:42+00:00",
+          "prompt_sha256": "766d04d7f1f4",
+          "score": 0.9401330376940134
+         },
+         {
+          "timestamp": "2026-10-17T01:13:43+00:00",
+          "prompt_sha256": "766d04d7f1f4",
+          "score": 0.9458563535911603
+         },
+         {
+          "timestamp": "2026-10-17T01:34:07+00:00",
+          "prompt_sha256": "766d04d7f1f4",
+          "score": 0.9593852908891328
          }
         ]
        },
@@ -16115,6 +16246,112 @@
     "run_count": 119
    },
    "prompt_versions": [
+    {
+     "prompt_sha256": "766d04d7f1f4",
+     "text": "\n    You are a data extraction assistant. Extract information about the currently\n    serving elected officials of the target municipality from the provided content.\n\n    Current Date: 2025-09-01\n\n    TARGET BODY\n    Only extract people who hold a post in <body, per case>.\n\n    STEP 1 - FIND OFFICIALS\n    Only extract officials from:\n    - A structured table, list, or directory of officials\n    - A dedicated biography, about, or contact section for an official\n    - A contact or position page for a single elected official, where the page or section\n      heading names an elected role and the content includes the person's name and contact\n      information, even if the body mostly describes the role's duties\n    - A section labeled with a governing body name (e.g. \"City Council Members\", \"Board of\n      Aldermen\") that lists names as headings or line items, even with no other details;\n      take the role from the section heading\n    Do NOT extract from news, event summaries, meeting notes, scattered mentions, or content\n    recording what officials did (votes, minutes, ordinances, resolutions), even if structured.\n    A list of links whose text is only a role or position label (e.g. \"Mayor\",\n    \"Councilmember, Place 1\", \"Alderman\") is navigation, not a roster, and those labels are\n    not person names.\n    Only extract elected members of the governing body (e.g. Mayor, City Council, Board of\n    Aldermen, Board of Commissioners). Exclude appointed staff and officials of other\n    governments (another city or county, the state, a precinct or special district), even when\n    listed on the same page.\n    Treat officials as currently serving unless the content says the roster is historical, or\n    gives a term that ended before the current date: leave those people out.\n    If there are no valid sources, return an empty \"people\" array.\n\n    STEP 2 - FOR EACH OFFICIAL, EXTRACT THE FOLLOWING\n    Use null for any field the content does not give.\n\n    name:\n    - The person's name only, with every personal name component (honorifics, suffixes,\n      generational markers: Dr., Hon., Jr., Sr., III) and no role or position labels.\n    - Preserve name punctuation as-is: a \"Last, First\" comma is part of the name.\n    - Only add an entry for a real person's name you can see. Never invent or infer one.\n\n    image:\n    - The image src of a profile photo, exactly as it appears in the content.\n\n    label:\n    - Everything the page uses to identify which office this person holds, written as one\n      label. Collect both parts:\n        * the title — what the office is called: \"Mayor\", \"Council Member\", \"Alderman\",\n          \"Commissioner\", \"Supervisor\", \"Clerk\"\n        * which one — the district, ward, place or number, when a body has several:\n          \"District 6\", \"Ward 3\", \"Place 2\", \"At-Large A\", \"Posn. 2\"\n    - Write each part exactly as the page writes it. Do not rename, expand, abbreviate or\n      normalize: \"Posn. 2\" stays \"Posn. 2\", \"Council Ward 3\" stays \"Council Ward 3\".\n    - The two parts are often far apart. The district or place sits beside the name; the\n      title is in the section heading, the page title, or the body's description of itself.\n      Collect the title from wherever the page states it:\n        \"Place 3 (East Ward)\" under a \"City Council\" section\n            -> \"Council Member Place 3 (East Ward)\"\n        \"District 1\" on a page describing \"one councilperson per district\"\n            -> \"Council Member District 1\"\n    - Every seat belongs to a body, and its label needs that body's member title. Take the\n      title from anywhere on the page: the page title, a section heading, or a sentence about\n      the body. A heading directly above a person that is only a seat is not the title:\n        \"Ward 7\" on a page titled \"Mayor and Board of Selectmen\"\n            -> \"Selectman Ward 7\"\n      A title naming several offices does not give all of them to everyone: only the person\n      the page names as mayor is the mayor.\n    - If the person holds more than one office, include every one in the same label, in the\n      page's order. A second office often follows the name rather than preceding it:\n        \"Council Member Seat 4: Jane Roe, Vice Mayor\"\n            -> \"Council Member Seat 4 and Vice Mayor\"\n    \n\n    phone, email:\n    - Use in this order: the person's own, then their office's, then any general\n      municipal contact found anywhere in the content.\n    - An email must be a valid address (email@domain.tld). A contact form URL\n      (e.g. /email-contact/node/...) is not an email; treat it as a url candidate.\n\n    url:\n    - Use in this order: official profile page, biography page, contact form URL, position\n      listing page, general listing page.\n    - Copy it exactly as it appears. Do not normalize, lowercase, or remove subdomains like \"www\".\n\n    start_date, end_date:\n    - start_date is the most recent election or appointment; end_date is when the current\n      term expires.\n    - Parse any written format (e.g. \"Jan. 6, 2023\", \"January 2023\", \"2023\") into \"YYYY\",\n      \"YYYY-MM\", or \"YYYY-MM-DD\", as precise as the content allows.\n\n    STEP 3 - RULES\n    - Only use information present in the content. The one inference allowed is a title taken\n      from a heading, page title or description, as described under label.\n    - One entry per person. If the same person appears more than once, merge into one record.\n    - All details must refer to the official's current term.\n    ",
+     "first_run_at": "2026-10-17T00:39:27+00:00",
+     "last_run_at": "2026-10-17T01:34:07+00:00",
+     "providers": [
+      "AtlasCloud"
+     ],
+     "runs": [
+      {
+       "timestamp": "2026-10-17T01:34:07+00:00",
+       "provider": "AtlasCloud",
+       "scores": {
+        "designations_other": 1.0,
+        "district": 1.0,
+        "email": 0.9970674486803519,
+        "end_date": 0.6294820717131474,
+        "image": 0.36065573770491804,
+        "person": 0.9759450171821306,
+        "phone": 0.9246987951807228,
+        "primary_role": 0.9881235154394299,
+        "roles": 0.9593852908891328,
+        "start_date": 0.2912621359223301,
+        "url": 0.9478787878787879
+       }
+      },
+      {
+       "timestamp": "2026-10-17T01:13:43+00:00",
+       "provider": "AtlasCloud",
+       "scores": {
+        "designations_other": 1.0,
+        "district": 1.0,
+        "email": 1.0,
+        "end_date": 0.6528925619834711,
+        "image": 0.35106382978723405,
+        "person": 0.9918509895227008,
+        "phone": 0.9228395061728395,
+        "primary_role": 0.9771908763505402,
+        "roles": 0.9458563535911603,
+        "start_date": 0.2912621359223301,
+        "url": 0.9188514357053683
+       }
+      },
+      {
+       "timestamp": "2026-10-17T01:03:42+00:00",
+       "provider": "AtlasCloud",
+       "scores": {
+        "designations_other": 1.0,
+        "district": 0.9285714285714286,
+        "email": 0.9667673716012085,
+        "end_date": 0.596078431372549,
+        "image": 0.36666666666666664,
+        "person": 0.9648924122310306,
+        "phone": 0.8481848184818482,
+        "primary_role": 0.96875,
+        "roles": 0.9401330376940134,
+        "start_date": 0.2803738317757009,
+        "url": 0.8827238335435057
+       }
+      },
+      {
+       "timestamp": "2026-10-17T00:39:27+00:00",
+       "provider": "AtlasCloud",
+       "scores": {
+        "designations_other": 1.0,
+        "district": 1.0,
+        "email": 0.9533169533169533,
+        "end_date": 0.8876404494382022,
+        "image": 0.5116279069767442,
+        "person": 0.9963768115942029,
+        "phone": 0.9658536585365853,
+        "primary_role": 0.9963503649635036,
+        "roles": 0.9671052631578947,
+        "start_date": 0.7692307692307693,
+        "url": 0.9551656920077972
+       }
+      }
+     ],
+     "previous_sha256": "f35d758c8c80",
+     "diff": [
+      {
+       "kind": "context",
+       "text": "     phone, email:"
+      },
+      {
+       "kind": "removed",
+       "text": "-    - Use in this order: the person's own, then their office's, then any general municipal"
+      },
+      {
+       "kind": "removed",
+       "text": "-      contact found anywhere in the content."
+      },
+      {
+       "kind": "added",
+       "text": "+    - Use in this order: the person's own, then their office's, then any general"
+      },
+      {
+       "kind": "added",
+       "text": "+      municipal contact found anywhere in the content."
+      },
+      {
+       "kind": "context",
+       "text": "     - An email must be a valid address (email@domain.tld). A contact form URL"
+      }
+     ]
+    },
     {
      "prompt_sha256": "f35d758c8c80",
      "text": "\n    You are a data extraction assistant. Extract information about the currently\n    serving elected officials of the target municipality from the provided content.\n\n    Current Date: 2025-09-01\n\n    TARGET BODY\n    Only extract people who hold a post in <body, per case>.\n\n    STEP 1 - FIND OFFICIALS\n    Only extract officials from:\n    - A structured table, list, or directory of officials\n    - A dedicated biography, about, or contact section for an official\n    - A contact or position page for a single elected official, where the page or section\n      heading names an elected role and the content includes the person's name and contact\n      information, even if the body mostly describes the role's duties\n    - A section labeled with a governing body name (e.g. \"City Council Members\", \"Board of\n      Aldermen\") that lists names as headings or line items, even with no other details;\n      take the role from the section heading\n    Do NOT extract from news, event summaries, meeting notes, scattered mentions, or content\n    recording what officials did (votes, minutes, ordinances, resolutions), even if structured.\n    A list of links whose text is only a role or position label (e.g. \"Mayor\",\n    \"Councilmember, Place 1\", \"Alderman\") is navigation, not a roster, and those labels are\n    not person names.\n    Only extract elected members of the governing body (e.g. Mayor, City Council, Board of\n    Aldermen, Board of Commissioners). Exclude appointed staff and officials of other\n    governments (another city or county, the state, a precinct or special district), even when\n    listed on the same page.\n    Treat officials as currently serving unless the content says the roster is historical, or\n    gives a term that ended before the current date: leave those people out.\n    If there are no valid sources, return an empty \"people\" array.\n\n    STEP 2 - FOR EACH OFFICIAL, EXTRACT THE FOLLOWING\n    Use null for any field the content does not give.\n\n    name:\n    - The person's name only, with every personal name component (honorifics, suffixes,\n      generational markers: Dr., Hon., Jr., Sr., III) and no role or position labels.\n    - Preserve name punctuation as-is: a \"Last, First\" comma is part of the name.\n    - Only add an entry for a real person's name you can see. Never invent or infer one.\n\n    image:\n    - The image src of a profile photo, exactly as it appears in the content.\n\n    label:\n    - Everything the page uses to identify which office this person holds, written as one\n      label. Collect both parts:\n        * the title — what the office is called: \"Mayor\", \"Council Member\", \"Alderman\",\n          \"Commissioner\", \"Supervisor\", \"Clerk\"\n        * which one — the district, ward, place or number, when a body has several:\n          \"District 6\", \"Ward 3\", \"Place 2\", \"At-Large A\", \"Posn. 2\"\n    - Write each part exactly as the page writes it. Do not rename, expand, abbreviate or\n      normalize: \"Posn. 2\" stays \"Posn. 2\", \"Council Ward 3\" stays \"Council Ward 3\".\n    - The two parts are often far apart. The district or place sits beside the name; the\n      title is in the section heading, the page title, or the body's description of itself.\n      Collect the title from wherever the page states it:\n        \"Place 3 (East Ward)\" under a \"City Council\" section\n            -> \"Council Member Place 3 (East Ward)\"\n        \"District 1\" on a page describing \"one councilperson per district\"\n            -> \"Council Member District 1\"\n    - Every seat belongs to a body, and its label needs that body's member title. Take the\n      title from anywhere on the page: the page title, a section heading, or a sentence about\n      the body. A heading directly above a person that is only a seat is not the title:\n        \"Ward 7\" on a page titled \"Mayor and Board of Selectmen\"\n            -> \"Selectman Ward 7\"\n      A title naming several offices does not give all of them to everyone: only the person\n      the page names as mayor is the mayor.\n    - If the person holds more than one office, include every one in the same label, in the\n      page's order. A second office often follows the name rather than preceding it:\n        \"Council Member Seat 4: Jane Roe, Vice Mayor\"\n            -> \"Council Member Seat 4 and Vice Mayor\"\n    \n\n    phone, email:\n    - Use in this order: the person's own, then their office's, then any general municipal\n      contact found anywhere in the content.\n    - An email must be a valid address (email@domain.tld). A contact form URL\n      (e.g. /email-contact/node/...) is not an email; treat it as a url candidate.\n\n    url:\n    - Use in this order: official profile page, biography page, contact form URL, position\n      listing page, general listing page.\n    - Copy it exactly as it appears. Do not normalize, lowercase, or remove subdomains like \"www\".\n\n    start_date, end_date:\n    - start_date is the most recent election or appointment; end_date is when the current\n      term expires.\n    - Parse any written format (e.g. \"Jan. 6, 2023\", \"January 2023\", \"2023\") into \"YYYY\",\n      \"YYYY-MM\", or \"YYYY-MM-DD\", as precise as the content allows.\n\n    STEP 3 - RULES\n    - Only use information present in the content. The one inference allowed is a title taken\n      from a heading, page title or description, as described under label.\n    - One entry per person. If the same person appears more than once, merge into one record.\n    - All details must refer to the official's current term.\n    ",
@@ -17877,21 +18114,6 @@
       },
       {
        "timestamp": "2026-09-16T23:50:26+00:00",
-       "provider": "AtlasCloud",
-       "scores": {
-        "designations_other": 1.0,
-        "district": 1.0,
-        "email": 1.0,
-        "image": 1.0,
-        "person": 1.0,
-        "phone": 1.0,
-        "primary_role": 1.0,
-        "roles": 1.0,
-        "url": 1.0
-       }
-      },
-      {
-       "timestamp": "2026-09-16T23:50:26+00:00",
        "provider": "DigitalOcean",
        "scores": {
         "designations_other": 1.0,
@@ -17923,11 +18145,6 @@
       {
        "timestamp": "2026-09-16T23:49:33+00:00",
        "provider": "Alibaba",
-       "scores": {}
-      },
-      {
-       "timestamp": "2026-09-16T23:49:33+00:00",
-       "provider": "AtlasCloud",
        "scores": {}
       },
       {
@@ -18201,7 +18418,6 @@
      "last_run_at": "2026-09-16T23:56:57+00:00",
      "providers": [
       "Alibaba",
-      "AtlasCloud",
       "DigitalOcean",
       "NextBit"
      ],
@@ -18209,17 +18425,6 @@
       {
        "timestamp": "2026-09-16T23:56:57+00:00",
        "provider": "Alibaba",
-       "scores": {
-        "person": 1.0,
-        "phone": 1.0,
-        "primary_role": 1.0,
-        "roles": 1.0,
-        "url": 1.0
-       }
-      },
-      {
-       "timestamp": "2026-09-16T23:56:57+00:00",
-       "provider": "AtlasCloud",
        "scores": {
         "person": 1.0,
         "phone": 1.0,
@@ -18265,18 +18470,6 @@
       {
        "timestamp": "2026-09-16T23:56:30+00:00",
        "provider": "Alibaba",
-       "scores": {
-        "district": 1.0,
-        "person": 0.9523809523809523,
-        "phone": 1.0,
-        "primary_role": 1.0,
-        "roles": 1.0,
-        "url": 1.0
-       }
-      },
-      {
-       "timestamp": "2026-09-16T23:56:30+00:00",
-       "provider": "AtlasCloud",
        "scores": {
         "district": 1.0,
         "person": 0.9523809523809523,
@@ -19279,10 +19472,10 @@
       "metric": "primary_role",
       "cells": [
        {
-        "score": 0.9926739926739927,
+        "score": 0.9881235154394299,
         "swing_is_wide": false,
         "half_swing": 0.056338028169014065,
-        "missing_count": 4
+        "missing_count": 10
        }
       ]
      },
@@ -19292,7 +19485,7 @@
        {
         "score": 1.0,
         "swing_is_wide": false,
-        "half_swing": 0.0,
+        "half_swing": 0.0357142857142857,
         "missing_count": 0
        }
       ]
@@ -19301,10 +19494,10 @@
       "metric": "person",
       "cells": [
        {
-        "score": 0.9963768115942029,
+        "score": 0.9759450171821306,
         "swing_is_wide": false,
         "half_swing": 0.0267379679144385,
-        "missing_count": 0
+        "missing_count": 1
        }
       ]
      },
@@ -19312,10 +19505,10 @@
       "metric": "url",
       "cells": [
        {
-        "score": 0.9529411764705882,
+        "score": 0.9478787878787879,
         "swing_is_wide": true,
         "half_swing": 0.5,
-        "missing_count": 24
+        "missing_count": 11
        }
       ]
      },
@@ -19334,10 +19527,10 @@
       "metric": "email",
       "cells": [
        {
-        "score": 0.97,
+        "score": 0.9970674486803519,
         "swing_is_wide": false,
         "half_swing": 0.051724137931034475,
-        "missing_count": 12
+        "missing_count": 2
        }
       ]
      },
@@ -19345,10 +19538,10 @@
       "metric": "phone",
       "cells": [
        {
-        "score": 0.9504950495049505,
+        "score": 0.9246987951807228,
         "swing_is_wide": true,
         "half_swing": 0.11983471074380164,
-        "missing_count": 20
+        "missing_count": 34
        }
       ]
      },
@@ -19356,7 +19549,7 @@
       "metric": "start_date",
       "cells": [
        {
-        "score": 0.7692307692307693,
+        "score": 0.2912621359223301,
         "swing_is_wide": true,
         "half_swing": 0.5,
         "missing_count": 0
@@ -19367,9 +19560,9 @@
       "metric": "end_date",
       "cells": [
        {
-        "score": 0.8449197860962567,
+        "score": 0.6294820717131474,
         "swing_is_wide": true,
-        "half_swing": 0.09999999999999998,
+        "half_swing": 0.2019607843137255,
         "missing_count": 0
        }
       ]
@@ -19378,7 +19571,7 @@
       "metric": "image",
       "cells": [
        {
-        "score": 0.5076923076923077,
+        "score": 0.36065573770491804,
         "swing_is_wide": true,
         "half_swing": 0.5,
         "missing_count": 0
@@ -19389,10 +19582,10 @@
       "metric": "roles",
       "cells": [
        {
-        "score": 0.9589490968801314,
+        "score": 0.9593852908891328,
         "swing_is_wide": false,
         "half_swing": 0.03459119496855345,
-        "missing_count": 12
+        "missing_count": 18
        }
       ]
      }
@@ -19434,7 +19627,7 @@
       "case_id": "mixed_current_past",
       "scores": [
        1.0,
-       0.6666666666666666,
+       1.0,
        0.42857142857142855,
        null,
        null,
@@ -19455,6 +19648,30 @@
       "stability": "steady"
      },
      {
+      "case_id": "place_millbury__open_town_meeting__town_meeting__known_titles",
+      "scores": [
+       1.0,
+       0.0,
+       null,
+       null,
+       null,
+       null
+      ],
+      "stability": "moves"
+     },
+     {
+      "case_id": "place_millbury__representative_town_meeting__town_meeting__no_titles",
+      "scores": [
+       1.0,
+       0.0,
+       null,
+       null,
+       null,
+       null
+      ],
+      "stability": "moves"
+     },
+     {
       "case_id": "raisin_township_clerk",
       "scores": [
        1.0,
@@ -19463,6 +19680,18 @@
        null,
        null,
        0.0
+      ],
+      "stability": "moves"
+     },
+     {
+      "case_id": "place_abernathy__unscoped__no_titles",
+      "scores": [
+       0.875,
+       0.14583333333333331,
+       null,
+       null,
+       null,
+       null
       ],
       "stability": "moves"
      },
@@ -19494,7 +19723,7 @@
       "case_id": "board_of_aldermen",
       "scores": [
        0.6666666666666667,
-       0.7592592592592592,
+       1.0,
        0.5,
        null,
        null,
@@ -19515,22 +19744,10 @@
       "stability": "moves"
      },
      {
-      "case_id": "place_amador_city__mayor_council__office_of_the_mayor__suggested_titles",
-      "scores": [
-       0.8333333333333334,
-       0.5,
-       null,
-       null,
-       null,
-       null
-      ],
-      "stability": "moves"
-     },
-     {
       "case_id": "place_armada__unscoped__no_titles",
       "scores": [
        0.7777777777777778,
-       0.8571428571428571,
+       0.9841269841269842,
        null,
        0.5555555555555556,
        null,
@@ -19554,25 +19771,49 @@
       "case_id": "county_hunterdon__place_alexandria__township_board__board__suggested_titles",
       "scores": [
        1.0,
-       1.0,
+       0.8333333333333334,
        null,
        0.6666666666666666,
        null,
        null
       ],
-      "stability": "steady"
+      "stability": "moves"
+     },
+     {
+      "case_id": "place_amador_city__mayor_council__office_of_the_mayor__suggested_titles",
+      "scores": [
+       0.8333333333333334,
+       0.6666666666666666,
+       null,
+       null,
+       null,
+       null
+      ],
+      "stability": "moves"
      },
      {
       "case_id": "place_armada__township_board__board__suggested_titles",
       "scores": [
        0.9841269841269842,
-       1.0,
+       null,
        null,
        0.6984126984126985,
        null,
        null
       ],
       "stability": "moves"
+     },
+     {
+      "case_id": "county_alameda__commission__board_of_supervisors__known_titles",
+      "scores": [
+       null,
+       0.7142857142857143,
+       null,
+       null,
+       null,
+       null
+      ],
+      "stability": "steady"
      },
      {
       "case_id": "golinda_mixed_city_county",
@@ -19614,7 +19855,7 @@
       "case_id": "place_abernathy__unscoped__known_titles",
       "scores": [
        0.75,
-       1.0,
+       0.875,
        null,
        null,
        null,
@@ -19635,6 +19876,42 @@
       "stability": "moves"
      },
      {
+      "case_id": "place_acton__open_town_meeting__select_board__no_titles",
+      "scores": [
+       null,
+       0.7999999999999999,
+       null,
+       null,
+       null,
+       null
+      ],
+      "stability": "moves"
+     },
+     {
+      "case_id": "place_acton__open_town_meeting__select_board__suggested_titles",
+      "scores": [
+       null,
+       0.7999999999999999,
+       null,
+       null,
+       null,
+       null
+      ],
+      "stability": "moves"
+     },
+     {
+      "case_id": "place_millbury__open_town_meeting__select_board__known_titles",
+      "scores": [
+       0.9571428571428572,
+       0.7999999999999999,
+       null,
+       null,
+       null,
+       null
+      ],
+      "stability": "moves"
+     },
+     {
       "case_id": "place_greenwood_village__unscoped__no_titles",
       "scores": [
        0.802469135802469,
@@ -19647,10 +19924,22 @@
       "stability": "moves"
      },
      {
+      "case_id": "place_greenwood_village__unscoped__known_titles",
+      "scores": [
+       null,
+       0.8042328042328042,
+       null,
+       null,
+       null,
+       null
+      ],
+      "stability": "moves"
+     },
+     {
       "case_id": "place_millbury__representative_town_meeting__select_board__known_titles",
       "scores": [
        0.8142857142857143,
-       1.0,
+       0.9428571428571428,
        null,
        null,
        null,
@@ -19683,7 +19972,31 @@
       "stability": "moves"
      },
      {
-      "case_id": "county_king__county_executive__county_executive__no_titles",
+      "case_id": "county_kauai__county_executive__county_council__known_titles",
+      "scores": [
+       null,
+       0.8333333333333334,
+       null,
+       null,
+       null,
+       null
+      ],
+      "stability": "moves"
+     },
+     {
+      "case_id": "county_kauai__county_executive__county_council__no_titles",
+      "scores": [
+       null,
+       0.8333333333333334,
+       null,
+       null,
+       null,
+       null
+      ],
+      "stability": "steady"
+     },
+     {
+      "case_id": "county_king__county_executive__county_executive__known_titles",
       "scores": [
        1.0,
        0.8333333333333334,
@@ -19707,9 +20020,9 @@
       "stability": "moves"
      },
      {
-      "case_id": "place_amador_city__mayor_council__council__suggested_titles",
+      "case_id": "place_acton__open_town_meeting__select_board__known_titles",
       "scores": [
-       1.0,
+       null,
        0.8333333333333334,
        null,
        null,
@@ -19734,7 +20047,7 @@
       "case_id": "place_gibbsboro__mayor_council__council__no_titles",
       "scores": [
        1.0,
-       0.8333333333333334,
+       1.0,
        null,
        0.8333333333333334,
        null,
@@ -19755,9 +20068,9 @@
       "stability": "moves"
      },
      {
-      "case_id": "county_king__county_executive__county_council__known_titles",
+      "case_id": "county_alameda__commission__board_of_supervisors__no_titles",
       "scores": [
-       0.8571428571428571,
+       null,
        0.8571428571428571,
        null,
        null,
@@ -19767,9 +20080,45 @@
       "stability": "moves"
      },
      {
-      "case_id": "place_millbury__open_town_meeting__select_board__no_titles",
+      "case_id": "county_alameda__commission__board_of_supervisors__suggested_titles",
       "scores": [
+       null,
+       0.8571428571428571,
+       null,
+       null,
+       null,
+       null
+      ],
+      "stability": "steady"
+     },
+     {
+      "case_id": "county_king__county_executive__county_council__known_titles",
+      "scores": [
+       0.8571428571428571,
        1.0,
+       null,
+       null,
+       null,
+       null
+      ],
+      "stability": "moves"
+     },
+     {
+      "case_id": "place_meridian__mayor_council__council__known_titles",
+      "scores": [
+       null,
+       0.8571428571428571,
+       null,
+       null,
+       null,
+       null
+      ],
+      "stability": "moves"
+     },
+     {
+      "case_id": "place_meridian__mayor_council__council__no_titles",
+      "scores": [
+       null,
        0.8571428571428571,
        null,
        null,
@@ -19782,7 +20131,7 @@
       "case_id": "place_payette__unscoped__no_titles",
       "scores": [
        0.8571428571428571,
-       1.0,
+       0.9795918367346939,
        null,
        0.8571428571428571,
        null,
@@ -19800,13 +20149,13 @@
        null,
        0.875
       ],
-      "stability": "steady"
+      "stability": "moves"
      },
      {
       "case_id": "place_abernathy__council_manager__council__suggested_titles",
       "scores": [
        0.875,
-       1.0,
+       null,
        null,
        null,
        null,
@@ -19815,16 +20164,40 @@
       "stability": "moves"
      },
      {
-      "case_id": "place_abernathy__unscoped__no_titles",
+      "case_id": "place_greenwood_village__mayor_council__council__known_titles",
       "scores": [
-       0.875,
-       1.0,
+       null,
+       0.8888888888888888,
        null,
        null,
        null,
        null
       ],
-      "stability": "moves"
+      "stability": "steady"
+     },
+     {
+      "case_id": "place_greenwood_village__mayor_council__council__no_titles",
+      "scores": [
+       null,
+       0.8888888888888888,
+       null,
+       null,
+       null,
+       null
+      ],
+      "stability": "steady"
+     },
+     {
+      "case_id": "place_greenwood_village__mayor_council__council__suggested_titles",
+      "scores": [
+       null,
+       0.8888888888888888,
+       null,
+       null,
+       null,
+       null
+      ],
+      "stability": "steady"
      },
      {
       "case_id": "seattle_council_pick_list_missing_president",
@@ -19863,22 +20236,10 @@
       "stability": "moves"
      },
      {
-      "case_id": "place_millbury__open_town_meeting__select_board__known_titles",
-      "scores": [
-       0.9571428571428572,
-       1.0,
-       null,
-       null,
-       null,
-       null
-      ],
-      "stability": "moves"
-     },
-     {
       "case_id": "place_belle_meade__commission__commission__suggested_titles",
       "scores": [
        0.9666666666666667,
-       0.9666666666666667,
+       null,
        null,
        null,
        null,
@@ -19890,13 +20251,37 @@
       "case_id": "place_belle_meade__council_manager__council__suggested_titles",
       "scores": [
        0.9666666666666667,
-       0.9666666666666667,
+       null,
        null,
        null,
        null,
        null
       ],
       "stability": "moves"
+     },
+     {
+      "case_id": "place_belle_meade__unscoped__commission__suggested_titles",
+      "scores": [
+       null,
+       0.9666666666666667,
+       null,
+       null,
+       null,
+       null
+      ],
+      "stability": "steady"
+     },
+     {
+      "case_id": "place_belle_meade__unscoped__council_manager__suggested_titles",
+      "scores": [
+       null,
+       0.9666666666666667,
+       null,
+       null,
+       null,
+       null
+      ],
+      "stability": "steady"
      },
      {
       "case_id": "place_belle_meade__unscoped__known_titles",
@@ -19915,6 +20300,18 @@
       "scores": [
        0.9666666666666667,
        0.9666666666666667,
+       null,
+       null,
+       null,
+       null
+      ],
+      "stability": "moves"
+     },
+     {
+      "case_id": "place_meridian__mayor_council__council__suggested_titles",
+      "scores": [
+       null,
+       0.9761904761904762,
        null,
        null,
        null,
@@ -19959,6 +20356,138 @@
       "stability": "steady"
      },
      {
+      "case_id": "county_allegan__place_leighton__township_board__board__known_titles",
+      "scores": [
+       null,
+       1.0,
+       null,
+       null,
+       null,
+       null
+      ],
+      "stability": "moves"
+     },
+     {
+      "case_id": "county_allegan__place_leighton__township_board__board__no_titles",
+      "scores": [
+       null,
+       1.0,
+       null,
+       null,
+       null,
+       null
+      ],
+      "stability": "moves"
+     },
+     {
+      "case_id": "county_allegan__place_leighton__unscoped__known_titles",
+      "scores": [
+       null,
+       1.0,
+       null,
+       null,
+       null,
+       null
+      ],
+      "stability": "moves"
+     },
+     {
+      "case_id": "county_allegan__place_leighton__unscoped__township_board__suggested_titles",
+      "scores": [
+       null,
+       1.0,
+       null,
+       null,
+       null,
+       null
+      ],
+      "stability": "steady"
+     },
+     {
+      "case_id": "county_hunterdon__place_alexandria__township_board__board__known_titles",
+      "scores": [
+       null,
+       1.0,
+       null,
+       null,
+       null,
+       null
+      ],
+      "stability": "moves"
+     },
+     {
+      "case_id": "county_hunterdon__place_alexandria__township_board__board__no_titles",
+      "scores": [
+       null,
+       1.0,
+       null,
+       null,
+       null,
+       null
+      ],
+      "stability": "steady"
+     },
+     {
+      "case_id": "county_hunterdon__place_alexandria__unscoped__township_board__suggested_titles",
+      "scores": [
+       null,
+       1.0,
+       null,
+       null,
+       null,
+       null
+      ],
+      "stability": "moves"
+     },
+     {
+      "case_id": "county_kauai__county_executive__county_council__suggested_titles",
+      "scores": [
+       null,
+       1.0,
+       null,
+       null,
+       null,
+       null
+      ],
+      "stability": "moves"
+     },
+     {
+      "case_id": "county_kauai__county_executive__office_of_the_mayor__known_titles",
+      "scores": [
+       null,
+       1.0,
+       null,
+       null,
+       null,
+       null
+      ],
+      "stability": "steady"
+     },
+     {
+      "case_id": "county_kauai__county_executive__office_of_the_mayor__no_titles",
+      "scores": [
+       null,
+       1.0,
+       null,
+       null,
+       null,
+       null
+      ],
+      "stability": "steady"
+     },
+     {
+      "case_id": "county_kauai__county_executive__office_of_the_mayor__suggested_titles",
+      "scores": [
+       null,
+       1.0,
+       null,
+       null,
+       null,
+       null
+      ],
+      "stability": "steady"
+     },
+     {
       "case_id": "county_king__county_executive__county_council__no_titles",
       "scores": [
        1.0,
@@ -19980,10 +20509,10 @@
        null,
        null
       ],
-      "stability": "steady"
+      "stability": "moves"
      },
      {
-      "case_id": "county_king__county_executive__county_executive__known_titles",
+      "case_id": "county_king__county_executive__county_executive__no_titles",
       "scores": [
        1.0,
        1.0,
@@ -20031,9 +20560,81 @@
       "stability": "steady"
      },
      {
+      "case_id": "place_abernathy__unscoped__council_manager__suggested_titles",
+      "scores": [
+       null,
+       1.0,
+       null,
+       null,
+       null,
+       null
+      ],
+      "stability": "steady"
+     },
+     {
+      "case_id": "place_acton__open_town_meeting__town_meeting__known_titles",
+      "scores": [
+       null,
+       1.0,
+       null,
+       null,
+       null,
+       null
+      ],
+      "stability": "steady"
+     },
+     {
+      "case_id": "place_acton__open_town_meeting__town_meeting__no_titles",
+      "scores": [
+       null,
+       1.0,
+       null,
+       null,
+       null,
+       null
+      ],
+      "stability": "steady"
+     },
+     {
+      "case_id": "place_acton__open_town_meeting__town_meeting__suggested_titles",
+      "scores": [
+       null,
+       1.0,
+       null,
+       null,
+       null,
+       null
+      ],
+      "stability": "steady"
+     },
+     {
       "case_id": "place_amador_city__commission__commission__suggested_titles",
       "scores": [
        1.0,
+       null,
+       null,
+       null,
+       null,
+       null
+      ],
+      "stability": "steady"
+     },
+     {
+      "case_id": "place_amador_city__council_manager__council__known_titles",
+      "scores": [
+       null,
+       1.0,
+       null,
+       null,
+       null,
+       null
+      ],
+      "stability": "steady"
+     },
+     {
+      "case_id": "place_amador_city__council_manager__council__no_titles",
+      "scores": [
+       null,
        1.0,
        null,
        null,
@@ -20052,7 +20653,7 @@
        null,
        null
       ],
-      "stability": "steady"
+      "stability": "moves"
      },
      {
       "case_id": "place_amador_city__mayor_council__council__known_titles",
@@ -20065,6 +20666,42 @@
        null
       ],
       "stability": "moves"
+     },
+     {
+      "case_id": "place_amador_city__mayor_council__council__suggested_titles",
+      "scores": [
+       1.0,
+       1.0,
+       null,
+       null,
+       null,
+       null
+      ],
+      "stability": "moves"
+     },
+     {
+      "case_id": "place_amador_city__unscoped__commission__suggested_titles",
+      "scores": [
+       null,
+       1.0,
+       null,
+       null,
+       null,
+       null
+      ],
+      "stability": "moves"
+     },
+     {
+      "case_id": "place_amador_city__unscoped__council_manager__suggested_titles",
+      "scores": [
+       null,
+       1.0,
+       null,
+       null,
+       null,
+       null
+      ],
+      "stability": "steady"
      },
      {
       "case_id": "place_amador_city__unscoped__known_titles",
@@ -20091,6 +20728,18 @@
       "stability": "moves"
      },
      {
+      "case_id": "place_armada__unscoped__township_board__suggested_titles",
+      "scores": [
+       null,
+       1.0,
+       null,
+       null,
+       null,
+       null
+      ],
+      "stability": "moves"
+     },
+     {
       "case_id": "place_gibbsboro__mayor_council__office_of_the_mayor__no_titles",
       "scores": [
        1.0,
@@ -20103,7 +20752,79 @@
       "stability": "moves"
      },
      {
-      "case_id": "place_millbury__open_town_meeting__town_meeting__known_titles",
+      "case_id": "place_greenwood_village__mayor_council__office_of_the_mayor__known_titles",
+      "scores": [
+       null,
+       1.0,
+       null,
+       null,
+       null,
+       null
+      ],
+      "stability": "moves"
+     },
+     {
+      "case_id": "place_greenwood_village__mayor_council__office_of_the_mayor__no_titles",
+      "scores": [
+       null,
+       1.0,
+       null,
+       null,
+       null,
+       null
+      ],
+      "stability": "moves"
+     },
+     {
+      "case_id": "place_greenwood_village__mayor_council__office_of_the_mayor__suggested_titles",
+      "scores": [
+       null,
+       1.0,
+       null,
+       null,
+       null,
+       null
+      ],
+      "stability": "moves"
+     },
+     {
+      "case_id": "place_meridian__mayor_council__office_of_the_mayor__known_titles",
+      "scores": [
+       null,
+       1.0,
+       null,
+       null,
+       null,
+       null
+      ],
+      "stability": "steady"
+     },
+     {
+      "case_id": "place_meridian__mayor_council__office_of_the_mayor__no_titles",
+      "scores": [
+       null,
+       1.0,
+       null,
+       null,
+       null,
+       null
+      ],
+      "stability": "steady"
+     },
+     {
+      "case_id": "place_meridian__mayor_council__office_of_the_mayor__suggested_titles",
+      "scores": [
+       null,
+       1.0,
+       null,
+       null,
+       null,
+       null
+      ],
+      "stability": "steady"
+     },
+     {
+      "case_id": "place_millbury__open_town_meeting__select_board__no_titles",
       "scores": [
        1.0,
        1.0,
@@ -20161,18 +20882,6 @@
        null
       ],
       "stability": "moves"
-     },
-     {
-      "case_id": "place_millbury__representative_town_meeting__town_meeting__no_titles",
-      "scores": [
-       1.0,
-       1.0,
-       null,
-       null,
-       null,
-       null
-      ],
-      "stability": "steady"
      },
      {
       "case_id": "place_millbury__representative_town_meeting__town_meeting__suggested_titles",
@@ -20259,27 +20968,26 @@
      {
       "provider": "AtlasCloud",
       "regressed": [
-       "board_of_aldermen",
-       "county_king__county_executive__county_council__known_titles",
-       "county_king__county_executive__county_executive__no_titles",
-       "place_amador_city__mayor_council__council__suggested_titles",
+       "county_kauai__county_executive__county_council__known_titles",
+       "county_king__county_executive__county_executive__known_titles",
+       "place_abernathy__unscoped__no_titles",
+       "place_acton__open_town_meeting__select_board__no_titles",
        "place_amador_city__mayor_council__office_of_the_mayor__suggested_titles",
-       "place_gibbsboro__mayor_council__council__no_titles",
-       "place_millbury__open_town_meeting__select_board__no_titles",
-       "place_millbury__representative_town_meeting__select_board__suggested_titles"
+       "place_armada__unscoped__no_titles",
+       "place_millbury__open_town_meeting__town_meeting__known_titles",
+       "place_millbury__representative_town_meeting__town_meeting__no_titles",
+       "place_payette__unscoped__no_titles"
       ],
       "improved": [
+       "board_of_aldermen",
+       "county_alameda__commission__board_of_supervisors__no_titles",
+       "county_kauai__county_executive__county_council__suggested_titles",
+       "county_king__county_executive__county_executive__suggested_titles",
        "la_porte_council",
-       "mixed_current_past",
-       "place_abernathy__council_manager__council__suggested_titles",
-       "place_armada__unscoped__no_titles",
-       "place_gibbsboro__mayor_council__council__suggested_titles",
-       "place_millbury__open_town_meeting__select_board__known_titles",
+       "place_gibbsboro__mayor_council__council__no_titles",
+       "place_meridian__mayor_council__council__suggested_titles",
        "place_millbury__open_town_meeting__select_board__suggested_titles",
-       "place_millbury__representative_town_meeting__select_board__known_titles",
-       "place_millbury__representative_town_meeting__select_board__no_titles",
-       "seattle_council_pick_list_missing_president",
-       "seattle_council_separate_mayor"
+       "place_millbury__representative_town_meeting__select_board__known_titles"
       ]
      },
      {
@@ -20322,72 +21030,874 @@
    },
    "latest_mismatches": {
     "AtlasCloud": {
-     "board_of_aldermen": [
+     "county_alameda__commission__board_of_supervisors__known_titles": [
       {
-       "subject": "Abelardo Gonzalez",
-       "field": "person",
+       "subject": "David Haubert",
+       "field": "phone",
+       "expected": "(510) 272-6691",
+       "actual": "—",
+       "expected_label": "Supervisor, District 1",
+       "actual_label": "Board of Supervisors, 1st District"
+      },
+      {
+       "subject": "David Haubert",
+       "field": "url",
+       "expected": "https://district1.acgov.org",
+       "actual": "—",
+       "expected_label": "Supervisor, District 1",
+       "actual_label": "Board of Supervisors, 1st District"
+      },
+      {
+       "subject": "David Haubert",
+       "field": "start_date",
        "expected": "—",
-       "actual": "present",
-       "expected_label": "",
-       "actual_label": "Alderman"
+       "actual": "2024",
+       "expected_label": "Supervisor, District 1",
+       "actual_label": "Board of Supervisors, 1st District"
       },
       {
-       "subject": "Christi Burnias",
-       "field": "phone",
-       "expected": "(956) 350-4093",
-       "actual": "—",
-       "expected_label": "Alderwoman",
-       "actual_label": "Alderwoman"
+       "subject": "David Haubert",
+       "field": "end_date",
+       "expected": "—",
+       "actual": "2028",
+       "expected_label": "Supervisor, District 1",
+       "actual_label": "Board of Supervisors, 1st District"
       },
       {
-       "subject": "Javier Vera",
+       "subject": "Elisa Márquez",
        "field": "phone",
-       "expected": "(956) 350-4093",
+       "expected": "(510) 272-6692",
        "actual": "—",
-       "expected_label": "Mayor Pro Tem",
-       "actual_label": "Mayor Pro Tem"
+       "expected_label": "Supervisor, District 2",
+       "actual_label": "Board of Supervisors, 2nd District"
       },
       {
-       "subject": "Mark A. Johnson",
-       "field": "phone",
-       "expected": "(956) 350-4093",
+       "subject": "Elisa Márquez",
+       "field": "url",
+       "expected": "https://district2.acgov.org",
        "actual": "—",
-       "expected_label": "Alderman",
-       "actual_label": "Alderman"
+       "expected_label": "Supervisor, District 2",
+       "actual_label": "Board of Supervisors, 2nd District"
       },
       {
-       "subject": "Peter Harris",
+       "subject": "Elisa Márquez",
+       "field": "start_date",
+       "expected": "—",
+       "actual": "2024",
+       "expected_label": "Supervisor, District 2",
+       "actual_label": "Board of Supervisors, 2nd District"
+      },
+      {
+       "subject": "Elisa Márquez",
+       "field": "end_date",
+       "expected": "—",
+       "actual": "2026",
+       "expected_label": "Supervisor, District 2",
+       "actual_label": "Board of Supervisors, 2nd District"
+      },
+      {
+       "subject": "Lena Tam",
        "field": "phone",
-       "expected": "(956) 350-4093",
+       "expected": "(510) 272-6693",
        "actual": "—",
-       "expected_label": "Alderman",
-       "actual_label": "Alderman"
+       "expected_label": "Supervisor, District 3",
+       "actual_label": "Board of Supervisors, 3rd District"
+      },
+      {
+       "subject": "Lena Tam",
+       "field": "url",
+       "expected": "https://district3.acgov.org",
+       "actual": "—",
+       "expected_label": "Supervisor, District 3",
+       "actual_label": "Board of Supervisors, 3rd District"
+      },
+      {
+       "subject": "Lena Tam",
+       "field": "start_date",
+       "expected": "—",
+       "actual": "2023",
+       "expected_label": "Supervisor, District 3",
+       "actual_label": "Board of Supervisors, 3rd District"
+      },
+      {
+       "subject": "Lena Tam",
+       "field": "end_date",
+       "expected": "—",
+       "actual": "2026",
+       "expected_label": "Supervisor, District 3",
+       "actual_label": "Board of Supervisors, 3rd District"
+      },
+      {
+       "subject": "Nate Miley",
+       "field": "phone",
+       "expected": "(510) 272-6694",
+       "actual": "—",
+       "expected_label": "Supervisor, District 4",
+       "actual_label": "Board of Supervisors, 4th District"
+      },
+      {
+       "subject": "Nate Miley",
+       "field": "url",
+       "expected": "https://district4.acgov.org",
+       "actual": "—",
+       "expected_label": "Supervisor, District 4",
+       "actual_label": "Board of Supervisors, 4th District"
+      },
+      {
+       "subject": "Nate Miley",
+       "field": "start_date",
+       "expected": "—",
+       "actual": "2024",
+       "expected_label": "Supervisor, District 4",
+       "actual_label": "Board of Supervisors, 4th District"
+      },
+      {
+       "subject": "Nate Miley",
+       "field": "end_date",
+       "expected": "—",
+       "actual": "2028",
+       "expected_label": "Supervisor, District 4",
+       "actual_label": "Board of Supervisors, 4th District"
+      },
+      {
+       "subject": "Nikki Fortunato Bas",
+       "field": "phone",
+       "expected": "(510) 272-6695",
+       "actual": "—",
+       "expected_label": "Supervisor, District 5",
+       "actual_label": "Board of Supervisors, 5th District"
+      },
+      {
+       "subject": "Nikki Fortunato Bas",
+       "field": "url",
+       "expected": "https://district5.acgov.org",
+       "actual": "—",
+       "expected_label": "Supervisor, District 5",
+       "actual_label": "Board of Supervisors, 5th District"
+      },
+      {
+       "subject": "Nikki Fortunato Bas",
+       "field": "start_date",
+       "expected": "—",
+       "actual": "2024",
+       "expected_label": "Supervisor, District 5",
+       "actual_label": "Board of Supervisors, 5th District"
+      },
+      {
+       "subject": "Nikki Fortunato Bas",
+       "field": "end_date",
+       "expected": "—",
+       "actual": "2028",
+       "expected_label": "Supervisor, District 5",
+       "actual_label": "Board of Supervisors, 5th District"
+      }
+     ],
+     "county_alameda__commission__board_of_supervisors__no_titles": [
+      {
+       "subject": "David Haubert",
+       "field": "phone",
+       "expected": "(510) 272-6691",
+       "actual": "—",
+       "expected_label": "Supervisor, District 1",
+       "actual_label": "Board of Supervisors, 1st District"
+      },
+      {
+       "subject": "David Haubert",
+       "field": "start_date",
+       "expected": "—",
+       "actual": "2024",
+       "expected_label": "Supervisor, District 1",
+       "actual_label": "Board of Supervisors, 1st District"
+      },
+      {
+       "subject": "David Haubert",
+       "field": "end_date",
+       "expected": "—",
+       "actual": "2028",
+       "expected_label": "Supervisor, District 1",
+       "actual_label": "Board of Supervisors, 1st District"
+      },
+      {
+       "subject": "Elisa Márquez",
+       "field": "phone",
+       "expected": "(510) 272-6692",
+       "actual": "—",
+       "expected_label": "Supervisor, District 2",
+       "actual_label": "Board of Supervisors, 2nd District"
+      },
+      {
+       "subject": "Elisa Márquez",
+       "field": "start_date",
+       "expected": "—",
+       "actual": "2024",
+       "expected_label": "Supervisor, District 2",
+       "actual_label": "Board of Supervisors, 2nd District"
+      },
+      {
+       "subject": "Elisa Márquez",
+       "field": "end_date",
+       "expected": "—",
+       "actual": "2026",
+       "expected_label": "Supervisor, District 2",
+       "actual_label": "Board of Supervisors, 2nd District"
+      },
+      {
+       "subject": "Lena Tam",
+       "field": "phone",
+       "expected": "(510) 272-6693",
+       "actual": "—",
+       "expected_label": "Supervisor, District 3",
+       "actual_label": "Board of Supervisors, 3rd District"
+      },
+      {
+       "subject": "Lena Tam",
+       "field": "start_date",
+       "expected": "—",
+       "actual": "2023",
+       "expected_label": "Supervisor, District 3",
+       "actual_label": "Board of Supervisors, 3rd District"
+      },
+      {
+       "subject": "Lena Tam",
+       "field": "end_date",
+       "expected": "—",
+       "actual": "2026",
+       "expected_label": "Supervisor, District 3",
+       "actual_label": "Board of Supervisors, 3rd District"
+      },
+      {
+       "subject": "Nate Miley",
+       "field": "phone",
+       "expected": "(510) 272-6694",
+       "actual": "—",
+       "expected_label": "Supervisor, District 4",
+       "actual_label": "Board of Supervisors, 4th District"
+      },
+      {
+       "subject": "Nate Miley",
+       "field": "start_date",
+       "expected": "—",
+       "actual": "2024",
+       "expected_label": "Supervisor, District 4",
+       "actual_label": "Board of Supervisors, 4th District"
+      },
+      {
+       "subject": "Nate Miley",
+       "field": "end_date",
+       "expected": "—",
+       "actual": "2028",
+       "expected_label": "Supervisor, District 4",
+       "actual_label": "Board of Supervisors, 4th District"
+      },
+      {
+       "subject": "Nikki Fortunato Bas",
+       "field": "phone",
+       "expected": "(510) 272-6695",
+       "actual": "—",
+       "expected_label": "Supervisor, District 5",
+       "actual_label": "Board of Supervisors, 5th District"
+      },
+      {
+       "subject": "Nikki Fortunato Bas",
+       "field": "start_date",
+       "expected": "—",
+       "actual": "2024",
+       "expected_label": "Supervisor, District 5",
+       "actual_label": "Board of Supervisors, 5th District"
+      },
+      {
+       "subject": "Nikki Fortunato Bas",
+       "field": "end_date",
+       "expected": "—",
+       "actual": "2028",
+       "expected_label": "Supervisor, District 5",
+       "actual_label": "Board of Supervisors, 5th District"
+      }
+     ],
+     "county_alameda__commission__board_of_supervisors__suggested_titles": [
+      {
+       "subject": "David Haubert",
+       "field": "phone",
+       "expected": "(510) 272-6691",
+       "actual": "—",
+       "expected_label": "Supervisor, District 1",
+       "actual_label": "Board of Supervisors, 1st District"
+      },
+      {
+       "subject": "David Haubert",
+       "field": "start_date",
+       "expected": "—",
+       "actual": "2024",
+       "expected_label": "Supervisor, District 1",
+       "actual_label": "Board of Supervisors, 1st District"
+      },
+      {
+       "subject": "David Haubert",
+       "field": "end_date",
+       "expected": "—",
+       "actual": "2028",
+       "expected_label": "Supervisor, District 1",
+       "actual_label": "Board of Supervisors, 1st District"
+      },
+      {
+       "subject": "Elisa Márquez",
+       "field": "phone",
+       "expected": "(510) 272-6692",
+       "actual": "—",
+       "expected_label": "Supervisor, District 2",
+       "actual_label": "Board of Supervisors, 2nd District"
+      },
+      {
+       "subject": "Elisa Márquez",
+       "field": "start_date",
+       "expected": "—",
+       "actual": "2024",
+       "expected_label": "Supervisor, District 2",
+       "actual_label": "Board of Supervisors, 2nd District"
+      },
+      {
+       "subject": "Elisa Márquez",
+       "field": "end_date",
+       "expected": "—",
+       "actual": "2026",
+       "expected_label": "Supervisor, District 2",
+       "actual_label": "Board of Supervisors, 2nd District"
+      },
+      {
+       "subject": "Lena Tam",
+       "field": "phone",
+       "expected": "(510) 272-6693",
+       "actual": "—",
+       "expected_label": "Supervisor, District 3",
+       "actual_label": "Board of Supervisors, 3rd District"
+      },
+      {
+       "subject": "Lena Tam",
+       "field": "start_date",
+       "expected": "—",
+       "actual": "2023",
+       "expected_label": "Supervisor, District 3",
+       "actual_label": "Board of Supervisors, 3rd District"
+      },
+      {
+       "subject": "Lena Tam",
+       "field": "end_date",
+       "expected": "—",
+       "actual": "2026",
+       "expected_label": "Supervisor, District 3",
+       "actual_label": "Board of Supervisors, 3rd District"
+      },
+      {
+       "subject": "Nate Miley",
+       "field": "phone",
+       "expected": "(510) 272-6694",
+       "actual": "—",
+       "expected_label": "Supervisor, District 4",
+       "actual_label": "Board of Supervisors, 4th District"
+      },
+      {
+       "subject": "Nate Miley",
+       "field": "start_date",
+       "expected": "—",
+       "actual": "2024",
+       "expected_label": "Supervisor, District 4",
+       "actual_label": "Board of Supervisors, 4th District"
+      },
+      {
+       "subject": "Nate Miley",
+       "field": "end_date",
+       "expected": "—",
+       "actual": "2028",
+       "expected_label": "Supervisor, District 4",
+       "actual_label": "Board of Supervisors, 4th District"
+      },
+      {
+       "subject": "Nikki Fortunato Bas",
+       "field": "phone",
+       "expected": "(510) 272-6695",
+       "actual": "—",
+       "expected_label": "Supervisor, District 5",
+       "actual_label": "Board of Supervisors, 5th District"
+      },
+      {
+       "subject": "Nikki Fortunato Bas",
+       "field": "start_date",
+       "expected": "—",
+       "actual": "2024",
+       "expected_label": "Supervisor, District 5",
+       "actual_label": "Board of Supervisors, 5th District"
+      },
+      {
+       "subject": "Nikki Fortunato Bas",
+       "field": "end_date",
+       "expected": "—",
+       "actual": "2028",
+       "expected_label": "Supervisor, District 5",
+       "actual_label": "Board of Supervisors, 5th District"
+      }
+     ],
+     "county_hunterdon__place_alexandria__township_board__board__suggested_titles": [
+      {
+       "subject": "Brad Patkochis",
+       "field": "phone",
+       "expected": "(908) 996-7071",
+       "actual": "—",
+       "expected_label": "Committee Member",
+       "actual_label": "Committee Member"
+      },
+      {
+       "subject": "Jim Kiernan",
+       "field": "phone",
+       "expected": "(908) 996-7071",
+       "actual": "—",
+       "expected_label": "Mayor",
+       "actual_label": "Mayor"
+      },
+      {
+       "subject": "Robert Mortara",
+       "field": "phone",
+       "expected": "(908) 996-7071",
+       "actual": "—",
+       "expected_label": "Committee Member",
+       "actual_label": "Committee Member"
+      },
+      {
+       "subject": "Tom Hudanish",
+       "field": "phone",
+       "expected": "(908) 996-7071",
+       "actual": "—",
+       "expected_label": "Deputy Mayor",
+       "actual_label": "Deputy Mayor"
+      }
+     ],
+     "county_kauai__county_executive__county_council__known_titles": [
+      {
+       "subject": "Addison Bulosan",
+       "field": "phone",
+       "expected": "—",
+       "actual": "(808) 241-4188",
+       "expected_label": "Council Member",
+       "actual_label": "Councilmember"
+      },
+      {
+       "subject": "Arryl Kaneshiro",
+       "field": "phone",
+       "expected": "—",
+       "actual": "(808) 241-4188",
+       "expected_label": "Council Member",
+       "actual_label": "Councilmember"
+      },
+      {
+       "subject": "Bernard P. Carvalho Jr.",
+       "field": "phone",
+       "expected": "—",
+       "actual": "(808) 241-4188",
+       "expected_label": "Council Member",
+       "actual_label": "Councilmember"
+      },
+      {
+       "subject": "Felicia Cowden",
+       "field": "phone",
+       "expected": "—",
+       "actual": "(808) 241-4188",
+       "expected_label": "Council Member",
+       "actual_label": "Councilmember"
+      },
+      {
+       "subject": "Fern Holland",
+       "field": "phone",
+       "expected": "—",
+       "actual": "(808) 241-4188",
+       "expected_label": "Council Member",
+       "actual_label": "Councilmember"
+      },
+      {
+       "subject": "KipuKai Kuali'i",
+       "field": "roles",
+       "expected": [
+        "Vice Chair"
+       ],
+       "actual": [
+        "Council Member",
+        "Vice Chair"
+       ],
+       "expected_label": "Vice Chair",
+       "actual_label": "Council Vice Chair"
+      },
+      {
+       "subject": "KipuKai Kuali'i",
+       "field": "phone",
+       "expected": "—",
+       "actual": "(808) 241-4188",
+       "expected_label": "Vice Chair",
+       "actual_label": "Council Vice Chair"
+      },
+      {
+       "subject": "Mel Rapozo",
+       "field": "roles",
+       "expected": [
+        "Chair"
+       ],
+       "actual": [
+        "Chair",
+        "Council Member"
+       ],
+       "expected_label": "Chair",
+       "actual_label": "Council Chair"
+      },
+      {
+       "subject": "Mel Rapozo",
+       "field": "phone",
+       "expected": "—",
+       "actual": "(808) 241-4188",
+       "expected_label": "Chair",
+       "actual_label": "Council Chair"
+      }
+     ],
+     "county_kauai__county_executive__county_council__no_titles": [
+      {
+       "subject": "Addison Bulosan",
+       "field": "phone",
+       "expected": "—",
+       "actual": "(808) 241-4188",
+       "expected_label": "Council Member",
+       "actual_label": "Councilmember"
+      },
+      {
+       "subject": "Addison Bulosan",
+       "field": "start_date",
+       "expected": "—",
+       "actual": "2024",
+       "expected_label": "Council Member",
+       "actual_label": "Councilmember"
+      },
+      {
+       "subject": "Addison Bulosan",
+       "field": "end_date",
+       "expected": "—",
+       "actual": "2026",
+       "expected_label": "Council Member",
+       "actual_label": "Councilmember"
+      },
+      {
+       "subject": "Arryl Kaneshiro",
+       "field": "phone",
+       "expected": "—",
+       "actual": "(808) 241-4188",
+       "expected_label": "Council Member",
+       "actual_label": "Councilmember"
+      },
+      {
+       "subject": "Arryl Kaneshiro",
+       "field": "start_date",
+       "expected": "—",
+       "actual": "2024",
+       "expected_label": "Council Member",
+       "actual_label": "Councilmember"
+      },
+      {
+       "subject": "Arryl Kaneshiro",
+       "field": "end_date",
+       "expected": "—",
+       "actual": "2026",
+       "expected_label": "Council Member",
+       "actual_label": "Councilmember"
+      },
+      {
+       "subject": "Bernard P. Carvalho Jr.",
+       "field": "phone",
+       "expected": "—",
+       "actual": "(808) 241-4188",
+       "expected_label": "Council Member",
+       "actual_label": "Councilmember"
+      },
+      {
+       "subject": "Bernard P. Carvalho Jr.",
+       "field": "start_date",
+       "expected": "—",
+       "actual": "2024",
+       "expected_label": "Council Member",
+       "actual_label": "Councilmember"
+      },
+      {
+       "subject": "Bernard P. Carvalho Jr.",
+       "field": "end_date",
+       "expected": "—",
+       "actual": "2026",
+       "expected_label": "Council Member",
+       "actual_label": "Councilmember"
+      },
+      {
+       "subject": "Felicia Cowden",
+       "field": "phone",
+       "expected": "—",
+       "actual": "(808) 241-4188",
+       "expected_label": "Council Member",
+       "actual_label": "Councilmember"
+      },
+      {
+       "subject": "Felicia Cowden",
+       "field": "start_date",
+       "expected": "—",
+       "actual": "2024",
+       "expected_label": "Council Member",
+       "actual_label": "Councilmember"
+      },
+      {
+       "subject": "Felicia Cowden",
+       "field": "end_date",
+       "expected": "—",
+       "actual": "2026",
+       "expected_label": "Council Member",
+       "actual_label": "Councilmember"
+      },
+      {
+       "subject": "Fern Holland",
+       "field": "phone",
+       "expected": "—",
+       "actual": "(808) 241-4188",
+       "expected_label": "Council Member",
+       "actual_label": "Councilmember"
+      },
+      {
+       "subject": "Fern Holland",
+       "field": "start_date",
+       "expected": "—",
+       "actual": "2024",
+       "expected_label": "Council Member",
+       "actual_label": "Councilmember"
+      },
+      {
+       "subject": "Fern Holland",
+       "field": "end_date",
+       "expected": "—",
+       "actual": "2026",
+       "expected_label": "Council Member",
+       "actual_label": "Councilmember"
+      },
+      {
+       "subject": "KipuKai Kuali'i",
+       "field": "roles",
+       "expected": [
+        "Vice Chair"
+       ],
+       "actual": [
+        "Council Member",
+        "Vice Chair"
+       ],
+       "expected_label": "Vice Chair",
+       "actual_label": "Council Vice Chair"
+      },
+      {
+       "subject": "KipuKai Kuali'i",
+       "field": "phone",
+       "expected": "—",
+       "actual": "(808) 241-4188",
+       "expected_label": "Vice Chair",
+       "actual_label": "Council Vice Chair"
+      },
+      {
+       "subject": "KipuKai Kuali'i",
+       "field": "start_date",
+       "expected": "—",
+       "actual": "2024",
+       "expected_label": "Vice Chair",
+       "actual_label": "Council Vice Chair"
+      },
+      {
+       "subject": "KipuKai Kuali'i",
+       "field": "end_date",
+       "expected": "—",
+       "actual": "2026",
+       "expected_label": "Vice Chair",
+       "actual_label": "Council Vice Chair"
+      },
+      {
+       "subject": "Mel Rapozo",
+       "field": "roles",
+       "expected": [
+        "Chair"
+       ],
+       "actual": [
+        "Chair",
+        "Council Member"
+       ],
+       "expected_label": "Chair",
+       "actual_label": "Council Chair"
+      },
+      {
+       "subject": "Mel Rapozo",
+       "field": "phone",
+       "expected": "—",
+       "actual": "(808) 241-4188",
+       "expected_label": "Chair",
+       "actual_label": "Council Chair"
+      },
+      {
+       "subject": "Mel Rapozo",
+       "field": "start_date",
+       "expected": "—",
+       "actual": "2024",
+       "expected_label": "Chair",
+       "actual_label": "Council Chair"
+      },
+      {
+       "subject": "Mel Rapozo",
+       "field": "end_date",
+       "expected": "—",
+       "actual": "2026",
+       "expected_label": "Chair",
+       "actual_label": "Council Chair"
+      }
+     ],
+     "county_kauai__county_executive__county_council__suggested_titles": [
+      {
+       "subject": "Addison Bulosan",
+       "field": "start_date",
+       "expected": "—",
+       "actual": "2024",
+       "expected_label": "Council Member",
+       "actual_label": "Councilmember"
+      },
+      {
+       "subject": "Addison Bulosan",
+       "field": "end_date",
+       "expected": "—",
+       "actual": "2026",
+       "expected_label": "Council Member",
+       "actual_label": "Councilmember"
+      },
+      {
+       "subject": "Arryl Kaneshiro",
+       "field": "start_date",
+       "expected": "—",
+       "actual": "2024",
+       "expected_label": "Council Member",
+       "actual_label": "Councilmember"
+      },
+      {
+       "subject": "Arryl Kaneshiro",
+       "field": "end_date",
+       "expected": "—",
+       "actual": "2026",
+       "expected_label": "Council Member",
+       "actual_label": "Councilmember"
+      },
+      {
+       "subject": "Bernard P. Carvalho Jr.",
+       "field": "start_date",
+       "expected": "—",
+       "actual": "2024",
+       "expected_label": "Council Member",
+       "actual_label": "Councilmember"
+      },
+      {
+       "subject": "Bernard P. Carvalho Jr.",
+       "field": "end_date",
+       "expected": "—",
+       "actual": "2026",
+       "expected_label": "Council Member",
+       "actual_label": "Councilmember"
+      },
+      {
+       "subject": "Felicia Cowden",
+       "field": "start_date",
+       "expected": "—",
+       "actual": "2024",
+       "expected_label": "Council Member",
+       "actual_label": "Councilmember"
+      },
+      {
+       "subject": "Felicia Cowden",
+       "field": "end_date",
+       "expected": "—",
+       "actual": "2026",
+       "expected_label": "Council Member",
+       "actual_label": "Councilmember"
+      },
+      {
+       "subject": "Fern Holland",
+       "field": "start_date",
+       "expected": "—",
+       "actual": "2024",
+       "expected_label": "Council Member",
+       "actual_label": "Councilmember"
+      },
+      {
+       "subject": "Fern Holland",
+       "field": "end_date",
+       "expected": "—",
+       "actual": "2026",
+       "expected_label": "Council Member",
+       "actual_label": "Councilmember"
+      },
+      {
+       "subject": "KipuKai Kuali'i",
+       "field": "roles",
+       "expected": [
+        "Vice Chair"
+       ],
+       "actual": [
+        "Council Member",
+        "Vice Chair"
+       ],
+       "expected_label": "Vice Chair",
+       "actual_label": "Council Vice Chair"
+      },
+      {
+       "subject": "KipuKai Kuali'i",
+       "field": "start_date",
+       "expected": "—",
+       "actual": "2024",
+       "expected_label": "Vice Chair",
+       "actual_label": "Council Vice Chair"
+      },
+      {
+       "subject": "KipuKai Kuali'i",
+       "field": "end_date",
+       "expected": "—",
+       "actual": "2026",
+       "expected_label": "Vice Chair",
+       "actual_label": "Council Vice Chair"
+      },
+      {
+       "subject": "Mel Rapozo",
+       "field": "roles",
+       "expected": [
+        "Chair"
+       ],
+       "actual": [
+        "Chair",
+        "Council Member"
+       ],
+       "expected_label": "Chair",
+       "actual_label": "Council Chair"
+      },
+      {
+       "subject": "Mel Rapozo",
+       "field": "start_date",
+       "expected": "—",
+       "actual": "2024",
+       "expected_label": "Chair",
+       "actual_label": "Council Chair"
+      },
+      {
+       "subject": "Mel Rapozo",
+       "field": "end_date",
+       "expected": "—",
+       "actual": "2026",
+       "expected_label": "Chair",
+       "actual_label": "Council Chair"
       }
      ],
      "county_king__county_executive__county_council__known_titles": [
-      {
-       "subject": "Claudia Balducci",
-       "field": "url",
-       "expected": "https://kingcounty.gov/en/dept/council/governance-leadership/county-council/councilmembers-districts/claudia-balducci",
-       "actual": "—",
-       "expected_label": "Council Member, District 6",
-       "actual_label": "King County Councilmember District 6"
-      },
       {
        "subject": "Claudia Balducci",
        "field": "image",
        "expected": "—",
        "actual": "local://4e25e6caf6e2.png",
        "expected_label": "Council Member, District 6",
-       "actual_label": "King County Councilmember District 6"
-      },
-      {
-       "subject": "Jorge L. Barón",
-       "field": "url",
-       "expected": "https://kingcounty.gov/en/dept/council/governance-leadership/county-council/councilmembers-districts/jorge-l-baron",
-       "actual": "—",
-       "expected_label": "Council Member, District 4",
-       "actual_label": "King County Councilmember District 4"
+       "actual_label": "Council Member District 6"
       },
       {
        "subject": "Jorge L. Barón",
@@ -20395,15 +21905,7 @@
        "expected": "—",
        "actual": "local://b7781f80cfaa.png",
        "expected_label": "Council Member, District 4",
-       "actual_label": "King County Councilmember District 4"
-      },
-      {
-       "subject": "Pete von Reichbauer",
-       "field": "url",
-       "expected": "https://kingcounty.gov/en/dept/council/governance-leadership/county-council/councilmembers-districts/pete-von-reichbauer",
-       "actual": "—",
-       "expected_label": "Council Member, District 7",
-       "actual_label": "King County Councilmember District 7"
+       "actual_label": "Council Member District 4"
       },
       {
        "subject": "Pete von Reichbauer",
@@ -20411,15 +21913,7 @@
        "expected": "—",
        "actual": "local://a4a58cdeecca.png",
        "expected_label": "Council Member, District 7",
-       "actual_label": "King County Councilmember District 7"
-      },
-      {
-       "subject": "Reagan Dunn",
-       "field": "url",
-       "expected": "https://kingcounty.gov/en/dept/council/governance-leadership/county-council/councilmembers-districts/reagan-dunn",
-       "actual": "—",
-       "expected_label": "Council Member, District 9",
-       "actual_label": "King County Councilmember District 9"
+       "actual_label": "Council Member District 7"
       },
       {
        "subject": "Reagan Dunn",
@@ -20427,15 +21921,7 @@
        "expected": "—",
        "actual": "local://78bd4203babd.png",
        "expected_label": "Council Member, District 9",
-       "actual_label": "King County Councilmember District 9"
-      },
-      {
-       "subject": "Rhonda Lewis",
-       "field": "url",
-       "expected": "https://kingcounty.gov/en/dept/council/governance-leadership/county-council/councilmembers-districts/rhonda-lewis",
-       "actual": "—",
-       "expected_label": "Council Member, District 2",
-       "actual_label": "King County Councilmember District 2"
+       "actual_label": "Council Member District 9"
       },
       {
        "subject": "Rhonda Lewis",
@@ -20443,15 +21929,7 @@
        "expected": "—",
        "actual": "local://2400d22da048.png",
        "expected_label": "Council Member, District 2",
-       "actual_label": "King County Councilmember District 2"
-      },
-      {
-       "subject": "Rod Dembowski",
-       "field": "url",
-       "expected": "https://kingcounty.gov/en/dept/council/governance-leadership/county-council/councilmembers-districts/rod-dembowski",
-       "actual": "—",
-       "expected_label": "Council Member, District 1",
-       "actual_label": "King County Councilmember District 1"
+       "actual_label": "Council Member District 2"
       },
       {
        "subject": "Rod Dembowski",
@@ -20459,15 +21937,7 @@
        "expected": "—",
        "actual": "local://1017c456c9ca.png",
        "expected_label": "Council Member, District 1",
-       "actual_label": "King County Councilmember District 1"
-      },
-      {
-       "subject": "Sarah Perry",
-       "field": "url",
-       "expected": "https://kingcounty.gov/en/dept/council/governance-leadership/county-council/councilmembers-districts/sarah-perry",
-       "actual": "—",
-       "expected_label": "Council Member, District 3",
-       "actual_label": "King County Councilmember District 3"
+       "actual_label": "Council Member District 1"
       },
       {
        "subject": "Sarah Perry",
@@ -20475,15 +21945,7 @@
        "expected": "—",
        "actual": "local://260753e33326.png",
        "expected_label": "Council Member, District 3",
-       "actual_label": "King County Councilmember District 3"
-      },
-      {
-       "subject": "Steffanie Fain",
-       "field": "url",
-       "expected": "https://kingcounty.gov/en/dept/council/governance-leadership/county-council/councilmembers-districts/steffanie-fain",
-       "actual": "—",
-       "expected_label": "Council Member, District 5",
-       "actual_label": "King County Councilmember District 5"
+       "actual_label": "Council Member District 3"
       },
       {
        "subject": "Steffanie Fain",
@@ -20491,15 +21953,7 @@
        "expected": "—",
        "actual": "local://0b42e9ac8027.png",
        "expected_label": "Council Member, District 5",
-       "actual_label": "King County Councilmember District 5"
-      },
-      {
-       "subject": "Teresa Mosqueda",
-       "field": "url",
-       "expected": "https://kingcounty.gov/en/dept/council/governance-leadership/county-council/councilmembers-districts/teresa-mosqueda",
-       "actual": "—",
-       "expected_label": "Council Member, District 8",
-       "actual_label": "King County Councilmember District 8"
+       "actual_label": "Council Member District 5"
       },
       {
        "subject": "Teresa Mosqueda",
@@ -20507,7 +21961,7 @@
        "expected": "—",
        "actual": "local://eb3637466d89.png",
        "expected_label": "Council Member, District 8",
-       "actual_label": "King County Councilmember District 8"
+       "actual_label": "Council Member District 8"
       }
      ],
      "county_king__county_executive__county_council__no_titles": [
@@ -20661,6 +22115,14 @@
      "county_king__county_executive__county_executive__known_titles": [
       {
        "subject": "Girmay Zahilay",
+       "field": "url",
+       "expected": "https://kingcounty.gov/en/dept/executive",
+       "actual": "—",
+       "expected_label": "King County Executive",
+       "actual_label": "King County Executive"
+      },
+      {
+       "subject": "Girmay Zahilay",
        "field": "image",
        "expected": "—",
        "actual": "local://456fd6692c50.png",
@@ -20669,14 +22131,6 @@
       }
      ],
      "county_king__county_executive__county_executive__no_titles": [
-      {
-       "subject": "Girmay Zahilay",
-       "field": "url",
-       "expected": "https://kingcounty.gov/en/dept/executive",
-       "actual": "—",
-       "expected_label": "King County Executive",
-       "actual_label": "King County Executive"
-      },
       {
        "subject": "Girmay Zahilay",
        "field": "image",
@@ -20693,7 +22147,7 @@
        "expected": "—",
        "actual": "local://456fd6692c50.png",
        "expected_label": "King County Executive",
-       "actual_label": "King County Executive"
+       "actual_label": "County Executive"
       }
      ],
      "la_porte_council": [
@@ -20770,104 +22224,6 @@
        "actual_label": "Councilperson District 4"
       }
      ],
-     "mixed_current_past": [
-      {
-       "subject": "Al Stephens",
-       "field": "email",
-       "expected": "cityadmin@cityofleonard.net",
-       "actual": "—",
-       "expected_label": "Mayor Pro Tem",
-       "actual_label": "Mayor Pro Tem"
-      },
-      {
-       "subject": "Al Stephens",
-       "field": "phone",
-       "expected": "(903) 587-3334",
-       "actual": "—",
-       "expected_label": "Mayor Pro Tem",
-       "actual_label": "Mayor Pro Tem"
-      },
-      {
-       "subject": "Billy Wayne Martin",
-       "field": "email",
-       "expected": "cityadmin@cityofleonard.net",
-       "actual": "—",
-       "expected_label": "Council Member",
-       "actual_label": "Council Member"
-      },
-      {
-       "subject": "Billy Wayne Martin",
-       "field": "phone",
-       "expected": "(903) 587-3334",
-       "actual": "—",
-       "expected_label": "Council Member",
-       "actual_label": "Council Member"
-      },
-      {
-       "subject": "Bobby Hanson",
-       "field": "email",
-       "expected": "cityadmin@cityofleonard.net",
-       "actual": "—",
-       "expected_label": "Council Member",
-       "actual_label": "Council Member"
-      },
-      {
-       "subject": "Bobby Hanson",
-       "field": "phone",
-       "expected": "(903) 587-3334",
-       "actual": "—",
-       "expected_label": "Council Member",
-       "actual_label": "Council Member"
-      },
-      {
-       "subject": "Charles Wrenn",
-       "field": "email",
-       "expected": "cityadmin@cityofleonard.net",
-       "actual": "—",
-       "expected_label": "Council Member",
-       "actual_label": "Council Member"
-      },
-      {
-       "subject": "Charles Wrenn",
-       "field": "phone",
-       "expected": "(903) 587-3334",
-       "actual": "—",
-       "expected_label": "Council Member",
-       "actual_label": "Council Member"
-      },
-      {
-       "subject": "Darrell Grintz",
-       "field": "email",
-       "expected": "cityadmin@cityofleonard.net",
-       "actual": "—",
-       "expected_label": "Council Member",
-       "actual_label": "Council Member"
-      },
-      {
-       "subject": "Darrell Grintz",
-       "field": "phone",
-       "expected": "(903) 587-3334",
-       "actual": "—",
-       "expected_label": "Council Member",
-       "actual_label": "Council Member"
-      },
-      {
-       "subject": "Michael Pye",
-       "field": "email",
-       "expected": "cityadmin@cityofleonard.net",
-       "actual": "—",
-       "expected_label": "Mayor",
-       "actual_label": "Mayor"
-      },
-      {
-       "subject": "Michael Pye",
-       "field": "phone",
-       "expected": "(903) 587-3334",
-       "actual": "—",
-       "expected_label": "Mayor",
-       "actual_label": "Mayor"
-      }
-     ],
      "nav_links_no_names": [
       {
        "subject": "Edward Zapalac",
@@ -20878,7 +22234,7 @@
        "actual_label": "Councilmember, Place 5"
       }
      ],
-     "place_abernathy__council_manager__council__suggested_titles": [
+     "place_abernathy__unscoped__council_manager__suggested_titles": [
       {
        "subject": "Harold Bufe",
        "field": "image",
@@ -20891,14 +22247,12 @@
      "place_abernathy__unscoped__known_titles": [
       {
        "subject": "Harold Bufe",
-       "field": "image",
-       "expected": "—",
-       "actual": "local://48140b328c80.png",
+       "field": "phone",
+       "expected": "(806) 298-2546",
+       "actual": "—",
        "expected_label": "Mayor",
        "actual_label": "Mayor"
-      }
-     ],
-     "place_abernathy__unscoped__no_titles": [
+      },
       {
        "subject": "Harold Bufe",
        "field": "image",
@@ -20908,46 +22262,258 @@
        "actual_label": "Mayor"
       }
      ],
-     "place_amador_city__mayor_council__council__suggested_titles": [
+     "place_abernathy__unscoped__no_titles": [
       {
-       "subject": "Bruce Sherrill",
-       "field": "email",
-       "expected": "city.clerk@amador-city.com",
-       "actual": "—",
-       "expected_label": "Council Member",
-       "actual_label": "Council Member"
+       "subject": "Mrs. Bilinda Prater",
+       "field": "person",
+       "expected": "—",
+       "actual": "present",
+       "expected_label": "",
+       "actual_label": "Mayor Pro-Tempore"
       },
       {
-       "subject": "Nikko Ambroselli",
-       "field": "email",
-       "expected": "city.clerk@amador-city.com",
-       "actual": "—",
-       "expected_label": "Council Member",
-       "actual_label": "Council Member"
+       "subject": "Mrs. Eva Cortez",
+       "field": "person",
+       "expected": "—",
+       "actual": "present",
+       "expected_label": "",
+       "actual_label": "Alderwoman"
       },
+      {
+       "subject": "Mr. Gary Stephenson",
+       "field": "person",
+       "expected": "—",
+       "actual": "present",
+       "expected_label": "",
+       "actual_label": "Alderman"
+      },
+      {
+       "subject": "Harold Bufe",
+       "field": "phone",
+       "expected": "(806) 298-2546",
+       "actual": "—",
+       "expected_label": "Mayor",
+       "actual_label": "Mayor"
+      },
+      {
+       "subject": "Harold Bufe",
+       "field": "image",
+       "expected": "—",
+       "actual": "local://48140b328c80.png",
+       "expected_label": "Mayor",
+       "actual_label": "Mayor"
+      },
+      {
+       "subject": "Matthew Speer",
+       "field": "person",
+       "expected": "—",
+       "actual": "present",
+       "expected_label": "",
+       "actual_label": "Alderman"
+      },
+      {
+       "subject": "Mrs. Tammy Mahan",
+       "field": "person",
+       "expected": "—",
+       "actual": "present",
+       "expected_label": "",
+       "actual_label": "Alderwoman"
+      }
+     ],
+     "place_acton__open_town_meeting__select_board__known_titles": [
+      {
+       "subject": "Alissa Nicol",
+       "field": "url",
+       "expected": "https://actonma.gov/87/board-of-selectmen",
+       "actual": "https://actonma.gov/87/select-board",
+       "expected_label": "Chair",
+       "actual_label": "Select Board Chair"
+      },
+      {
+       "subject": "David D. Martin",
+       "field": "url",
+       "expected": "https://actonma.gov/87/board-of-selectmen",
+       "actual": "https://actonma.gov/87/select-board",
+       "expected_label": "Vice Chair",
+       "actual_label": "Select Board Vice Chair"
+      },
+      {
+       "subject": "Dean A. Charter",
+       "field": "url",
+       "expected": "https://actonma.gov/87/board-of-selectmen",
+       "actual": "https://actonma.gov/87/select-board",
+       "expected_label": "Select Board Member",
+       "actual_label": "Select Board Member"
+      },
+      {
+       "subject": "Francesca Arsenault",
+       "field": "url",
+       "expected": "https://actonma.gov/87/board-of-selectmen",
+       "actual": "https://actonma.gov/87/select-board",
+       "expected_label": "Clerk",
+       "actual_label": "Select Board Clerk"
+      },
+      {
+       "subject": "Pam Nourse",
+       "field": "url",
+       "expected": "https://actonma.gov/87/board-of-selectmen",
+       "actual": "https://actonma.gov/87/select-board",
+       "expected_label": "Select Board Member",
+       "actual_label": "Select Board Member"
+      }
+     ],
+     "place_acton__open_town_meeting__select_board__no_titles": [
+      {
+       "subject": "Alissa Nicol",
+       "field": "url",
+       "expected": "https://actonma.gov/87/board-of-selectmen",
+       "actual": "https://actonma.gov/87/select-board",
+       "expected_label": "Chair",
+       "actual_label": "Select Board Chair"
+      },
+      {
+       "subject": "David D. Martin",
+       "field": "url",
+       "expected": "https://actonma.gov/87/board-of-selectmen",
+       "actual": "https://actonma.gov/87/select-board",
+       "expected_label": "Vice Chair",
+       "actual_label": "Select Board Vice Chair"
+      },
+      {
+       "subject": "Dean A. Charter",
+       "field": "primary_role",
+       "expected": [
+        "Select Board Member"
+       ],
+       "actual": [],
+       "expected_label": "Select Board Member",
+       "actual_label": "Select Board"
+      },
+      {
+       "subject": "Dean A. Charter",
+       "field": "roles",
+       "expected": [
+        "Select Board Member"
+       ],
+       "actual": [],
+       "expected_label": "Select Board Member",
+       "actual_label": "Select Board"
+      },
+      {
+       "subject": "Dean A. Charter",
+       "field": "url",
+       "expected": "https://actonma.gov/87/board-of-selectmen",
+       "actual": "https://actonma.gov/87/select-board",
+       "expected_label": "Select Board Member",
+       "actual_label": "Select Board"
+      },
+      {
+       "subject": "Francesca Arsenault",
+       "field": "url",
+       "expected": "https://actonma.gov/87/board-of-selectmen",
+       "actual": "https://actonma.gov/87/select-board",
+       "expected_label": "Clerk",
+       "actual_label": "Select Board Clerk"
+      },
+      {
+       "subject": "Pam Nourse",
+       "field": "url",
+       "expected": "https://actonma.gov/87/board-of-selectmen",
+       "actual": "https://actonma.gov/87/select-board",
+       "expected_label": "Select Board Member",
+       "actual_label": "Select Board Member"
+      }
+     ],
+     "place_acton__open_town_meeting__select_board__suggested_titles": [
+      {
+       "subject": "Alissa Nicol",
+       "field": "url",
+       "expected": "https://actonma.gov/87/board-of-selectmen",
+       "actual": "https://actonma.gov/87/select-board",
+       "expected_label": "Chair",
+       "actual_label": "Chair"
+      },
+      {
+       "subject": "David D. Martin",
+       "field": "url",
+       "expected": "https://actonma.gov/87/board-of-selectmen",
+       "actual": "https://actonma.gov/87/select-board",
+       "expected_label": "Vice Chair",
+       "actual_label": "Vice Chair"
+      },
+      {
+       "subject": "Dean A. Charter",
+       "field": "url",
+       "expected": "https://actonma.gov/87/board-of-selectmen",
+       "actual": "https://actonma.gov/87/select-board",
+       "expected_label": "Select Board Member",
+       "actual_label": "Select Board Member"
+      },
+      {
+       "subject": "Francesca Arsenault",
+       "field": "url",
+       "expected": "https://actonma.gov/87/board-of-selectmen",
+       "actual": "https://actonma.gov/87/select-board",
+       "expected_label": "Clerk",
+       "actual_label": "Clerk"
+      },
+      {
+       "subject": "Pam Nourse",
+       "field": "primary_role",
+       "expected": [
+        "Select Board Member"
+       ],
+       "actual": [],
+       "expected_label": "Select Board Member",
+       "actual_label": "Member"
+      },
+      {
+       "subject": "Pam Nourse",
+       "field": "roles",
+       "expected": [
+        "Select Board Member"
+       ],
+       "actual": [],
+       "expected_label": "Select Board Member",
+       "actual_label": "Member"
+      },
+      {
+       "subject": "Pam Nourse",
+       "field": "url",
+       "expected": "https://actonma.gov/87/board-of-selectmen",
+       "actual": "https://actonma.gov/87/select-board",
+       "expected_label": "Select Board Member",
+       "actual_label": "Member"
+      }
+     ],
+     "place_amador_city__council_manager__council__known_titles": [
       {
        "subject": "Sandra Staples",
-       "field": "email",
-       "expected": "city.clerk@amador-city.com",
-       "actual": "—",
-       "expected_label": "Mayor and Council Member",
+       "field": "roles",
+       "expected": [
+        "Mayor"
+       ],
+       "actual": [
+        "Council Member",
+        "Mayor"
+       ],
+       "expected_label": "Mayor",
        "actual_label": "Mayor and Council Member"
-      },
+      }
+     ],
+     "place_amador_city__council_manager__council__no_titles": [
       {
-       "subject": "Stephen Testa",
-       "field": "email",
-       "expected": "city.clerk@amador-city.com",
-       "actual": "—",
-       "expected_label": "Council Member",
-       "actual_label": "Council Member"
-      },
-      {
-       "subject": "Susan Bragstad",
-       "field": "email",
-       "expected": "city.clerk@amador-city.com",
-       "actual": "—",
-       "expected_label": "Council Member",
-       "actual_label": "Council Member"
+       "subject": "Sandra Staples",
+       "field": "roles",
+       "expected": [
+        "Mayor"
+       ],
+       "actual": [
+        "Council Member",
+        "Mayor"
+       ],
+       "expected_label": "Mayor",
+       "actual_label": "Mayor and Council Member"
       }
      ],
      "place_amador_city__mayor_council__office_of_the_mayor__suggested_titles": [
@@ -20966,91 +22532,19 @@
        "actual": "—",
        "expected_label": "Mayor",
        "actual_label": "Mayor"
-      },
-      {
-       "subject": "Sandra Staples",
-       "field": "url",
-       "expected": "https://amador-city.com/government-overview",
-       "actual": "—",
-       "expected_label": "Mayor",
-       "actual_label": "Mayor"
       }
      ],
      "place_armada__unscoped__no_titles": [
       {
-       "subject": "Amy Barzyk",
-       "field": "phone",
-       "expected": "(586) 784-9151",
-       "actual": "—",
-       "expected_label": "Trustee and Street Administrator",
-       "actual_label": "Trustee and Street Administrator"
-      },
-      {
-       "subject": "Anne Porter",
-       "field": "phone",
-       "expected": "(586) 784-9151",
-       "actual": "—",
-       "expected_label": "Treasurer",
-       "actual_label": "Treasurer"
-      },
-      {
-       "subject": "David Coenen",
-       "field": "phone",
-       "expected": "(586) 784-9151",
-       "actual": "—",
-       "expected_label": "Village President",
-       "actual_label": "Village President"
-      },
-      {
-       "subject": "Jo Adair",
-       "field": "phone",
-       "expected": "(586) 784-9151",
-       "actual": "—",
-       "expected_label": "Trustee and Police Commissioner",
-       "actual_label": "Trustee and Police Commissioner"
-      },
-      {
        "subject": "Michael Shall",
-       "field": "phone",
-       "expected": "(586) 784-9151",
+       "field": "email",
+       "expected": "parkcommissioner@villageofarmada.org",
        "actual": "—",
        "expected_label": "Trustee and Park Commissioner",
        "actual_label": "Trustee and Park Commissioner"
-      },
-      {
-       "subject": "Michael Stirrett",
-       "field": "phone",
-       "expected": "(586) 784-9151",
-       "actual": "—",
-       "expected_label": "Trustee and Sewer Commissioner",
-       "actual_label": "Trustee and Sewer Commissioner"
-      },
-      {
-       "subject": "Michelle Poulos",
-       "field": "phone",
-       "expected": "(586) 784-9151",
-       "actual": "—",
-       "expected_label": "Clerk",
-       "actual_label": "Clerk"
-      },
-      {
-       "subject": "Ross Boelke",
-       "field": "phone",
-       "expected": "(586) 784-9151",
-       "actual": "—",
-       "expected_label": "Trustee and Water Commissioner",
-       "actual_label": "Trustee and Water Commissioner"
-      },
-      {
-       "subject": "Stephen Clark",
-       "field": "phone",
-       "expected": "(586) 784-9151",
-       "actual": "—",
-       "expected_label": "Trustee and President Pro Tem",
-       "actual_label": "Trustee and President Pro Tem"
       }
      ],
-     "place_belle_meade__commission__commission__suggested_titles": [
+     "place_belle_meade__unscoped__commission__suggested_titles": [
       {
        "subject": "Haley Dale",
        "field": "roles",
@@ -21158,7 +22652,7 @@
        "actual_label": "Commissioner"
       }
      ],
-     "place_belle_meade__council_manager__council__suggested_titles": [
+     "place_belle_meade__unscoped__council_manager__suggested_titles": [
       {
        "subject": "Haley Dale",
        "field": "roles",
@@ -21353,7 +22847,7 @@
        "subject": "Rusty Moore",
        "field": "image",
        "expected": "—",
-       "actual": "local://8e74ecbd4d08.png",
+       "actual": "local://5750533ab677.png",
        "expected_label": "Commissioner and Mayor",
        "actual_label": "Mayor"
       },
@@ -21482,70 +22976,950 @@
        "actual_label": "Commissioner"
       }
      ],
-     "place_gibbsboro__mayor_council__council__no_titles": [
+     "place_greenwood_village__mayor_council__council__known_titles": [
       {
-       "subject": "Andrew Parsinitz",
-       "field": "url",
-       "expected": "https://gibbsborotownhall.com/borough-council",
-       "actual": "—",
-       "expected_label": "Councilman",
-       "actual_label": "Councilman"
+       "subject": "Ann Nelson",
+       "field": "start_date",
+       "expected": "—",
+       "actual": "2025-11",
+       "expected_label": "Council Member, District 1",
+       "actual_label": "Council Member District 1"
       },
       {
-       "subject": "Beth Schmidt",
-       "field": "url",
-       "expected": "https://gibbsborotownhall.com/borough-council",
-       "actual": "—",
-       "expected_label": "Councilwoman",
-       "actual_label": "Councilwoman"
+       "subject": "Ann Nelson",
+       "field": "end_date",
+       "expected": "—",
+       "actual": "2027-11",
+       "expected_label": "Council Member, District 1",
+       "actual_label": "Council Member District 1"
       },
       {
-       "subject": "Brandon Boots",
-       "field": "url",
-       "expected": "https://gibbsborotownhall.com/borough-council",
-       "actual": "—",
-       "expected_label": "Councilman",
-       "actual_label": "Councilman"
+       "subject": "Ann Nelson",
+       "field": "image",
+       "expected": "—",
+       "actual": "local://c175baeebdd2.png",
+       "expected_label": "Council Member, District 1",
+       "actual_label": "Council Member District 1"
       },
       {
-       "subject": "Edward G. Campbell III",
-       "field": "url",
-       "expected": "https://gibbsborotownhall.com/borough-council",
-       "actual": "—",
+       "subject": "Bob Doyle",
+       "field": "start_date",
+       "expected": "—",
+       "actual": "2025-11",
+       "expected_label": "Council Member, District 2",
+       "actual_label": "Council Member District 2"
+      },
+      {
+       "subject": "Bob Doyle",
+       "field": "end_date",
+       "expected": "—",
+       "actual": "2027-11",
+       "expected_label": "Council Member, District 2",
+       "actual_label": "Council Member District 2"
+      },
+      {
+       "subject": "Bob Doyle",
+       "field": "image",
+       "expected": "—",
+       "actual": "local://92195470815f.png",
+       "expected_label": "Council Member, District 2",
+       "actual_label": "Council Member District 2"
+      },
+      {
+       "subject": "Donna Johnston",
+       "field": "start_date",
+       "expected": "—",
+       "actual": "2025-11",
+       "expected_label": "Council Member, District 3",
+       "actual_label": "Council Member District 3"
+      },
+      {
+       "subject": "Donna Johnston",
+       "field": "end_date",
+       "expected": "—",
+       "actual": "2027-11",
+       "expected_label": "Council Member, District 3",
+       "actual_label": "Council Member District 3"
+      },
+      {
+       "subject": "Donna Johnston",
+       "field": "image",
+       "expected": "—",
+       "actual": "local://2716200a4d65.png",
+       "expected_label": "Council Member, District 3",
+       "actual_label": "Council Member District 3"
+      },
+      {
+       "subject": "George Lantz",
+       "field": "person",
+       "expected": "—",
+       "actual": "present",
+       "expected_label": "",
+       "actual_label": "Mayor"
+      },
+      {
+       "subject": "Jay Schneiderman",
+       "field": "start_date",
+       "expected": "—",
+       "actual": "2025-11",
+       "expected_label": "Council Member, District 2",
+       "actual_label": "Council Member District 2"
+      },
+      {
+       "subject": "Jay Schneiderman",
+       "field": "end_date",
+       "expected": "—",
+       "actual": "2027-11",
+       "expected_label": "Council Member, District 2",
+       "actual_label": "Council Member District 2"
+      },
+      {
+       "subject": "Jay Schneiderman",
+       "field": "image",
+       "expected": "—",
+       "actual": "local://7ea160bab3ca.png",
+       "expected_label": "Council Member, District 2",
+       "actual_label": "Council Member District 2"
+      },
+      {
+       "subject": "Katrin Mezger",
+       "field": "start_date",
+       "expected": "—",
+       "actual": "2025-11",
+       "expected_label": "Council Member, District 4",
+       "actual_label": "Council Member District 4"
+      },
+      {
+       "subject": "Katrin Mezger",
+       "field": "end_date",
+       "expected": "—",
+       "actual": "2027-11",
+       "expected_label": "Council Member, District 4",
+       "actual_label": "Council Member District 4"
+      },
+      {
+       "subject": "Katrin Mezger",
+       "field": "image",
+       "expected": "—",
+       "actual": "local://9aebb99b6152.png",
+       "expected_label": "Council Member, District 4",
+       "actual_label": "Council Member District 4"
+      },
+      {
+       "subject": "Libby Hilton Barnacle",
+       "field": "roles",
+       "expected": [
+        "Mayor Pro Tem"
+       ],
+       "actual": [
+        "Council Member",
+        "Mayor Pro Tem"
+       ],
+       "expected_label": "Mayor Pro Tem, District 3",
+       "actual_label": "Council Member District 3 and Mayor Pro Tem"
+      },
+      {
+       "subject": "Libby Hilton Barnacle",
+       "field": "start_date",
+       "expected": "—",
+       "actual": "2025-11",
+       "expected_label": "Mayor Pro Tem, District 3",
+       "actual_label": "Council Member District 3 and Mayor Pro Tem"
+      },
+      {
+       "subject": "Libby Hilton Barnacle",
+       "field": "end_date",
+       "expected": "—",
+       "actual": "2027-11",
+       "expected_label": "Mayor Pro Tem, District 3",
+       "actual_label": "Council Member District 3 and Mayor Pro Tem"
+      },
+      {
+       "subject": "Libby Hilton Barnacle",
+       "field": "image",
+       "expected": "—",
+       "actual": "local://513a106f2b44.png",
+       "expected_label": "Mayor Pro Tem, District 3",
+       "actual_label": "Council Member District 3 and Mayor Pro Tem"
+      },
+      {
+       "subject": "Paul Wiesner",
+       "field": "start_date",
+       "expected": "—",
+       "actual": "2025-11",
+       "expected_label": "Council Member, District 1",
+       "actual_label": "Council Member District 1"
+      },
+      {
+       "subject": "Paul Wiesner",
+       "field": "end_date",
+       "expected": "—",
+       "actual": "2027-11",
+       "expected_label": "Council Member, District 1",
+       "actual_label": "Council Member District 1"
+      },
+      {
+       "subject": "Paul Wiesner",
+       "field": "image",
+       "expected": "—",
+       "actual": "local://d15ec3fc330d.png",
+       "expected_label": "Council Member, District 1",
+       "actual_label": "Council Member District 1"
+      },
+      {
+       "subject": "Tom Stahl",
+       "field": "start_date",
+       "expected": "—",
+       "actual": "2025-11",
+       "expected_label": "Council Member, District 4",
+       "actual_label": "Council Member District 4"
+      },
+      {
+       "subject": "Tom Stahl",
+       "field": "end_date",
+       "expected": "—",
+       "actual": "2027-11",
+       "expected_label": "Council Member, District 4",
+       "actual_label": "Council Member District 4"
+      },
+      {
+       "subject": "Tom Stahl",
+       "field": "image",
+       "expected": "—",
+       "actual": "local://ae9612794888.png",
+       "expected_label": "Council Member, District 4",
+       "actual_label": "Council Member District 4"
+      }
+     ],
+     "place_greenwood_village__mayor_council__council__no_titles": [
+      {
+       "subject": "Ann Nelson",
+       "field": "start_date",
+       "expected": "—",
+       "actual": "2025-11",
+       "expected_label": "Council Member, District 1",
+       "actual_label": "Council Member District 1"
+      },
+      {
+       "subject": "Ann Nelson",
+       "field": "end_date",
+       "expected": "—",
+       "actual": "2027-11",
+       "expected_label": "Council Member, District 1",
+       "actual_label": "Council Member District 1"
+      },
+      {
+       "subject": "Ann Nelson",
+       "field": "image",
+       "expected": "—",
+       "actual": "local://c175baeebdd2.png",
+       "expected_label": "Council Member, District 1",
+       "actual_label": "Council Member District 1"
+      },
+      {
+       "subject": "Bob Doyle",
+       "field": "start_date",
+       "expected": "—",
+       "actual": "2025-11",
+       "expected_label": "Council Member, District 2",
+       "actual_label": "Council Member District 2"
+      },
+      {
+       "subject": "Bob Doyle",
+       "field": "end_date",
+       "expected": "—",
+       "actual": "2027-11",
+       "expected_label": "Council Member, District 2",
+       "actual_label": "Council Member District 2"
+      },
+      {
+       "subject": "Bob Doyle",
+       "field": "image",
+       "expected": "—",
+       "actual": "local://92195470815f.png",
+       "expected_label": "Council Member, District 2",
+       "actual_label": "Council Member District 2"
+      },
+      {
+       "subject": "Donna Johnston",
+       "field": "start_date",
+       "expected": "—",
+       "actual": "2025-11",
+       "expected_label": "Council Member, District 3",
+       "actual_label": "Council Member District 3"
+      },
+      {
+       "subject": "Donna Johnston",
+       "field": "end_date",
+       "expected": "—",
+       "actual": "2027-11",
+       "expected_label": "Council Member, District 3",
+       "actual_label": "Council Member District 3"
+      },
+      {
+       "subject": "Donna Johnston",
+       "field": "image",
+       "expected": "—",
+       "actual": "local://2716200a4d65.png",
+       "expected_label": "Council Member, District 3",
+       "actual_label": "Council Member District 3"
+      },
+      {
+       "subject": "George Lantz",
+       "field": "person",
+       "expected": "—",
+       "actual": "present",
+       "expected_label": "",
+       "actual_label": "Mayor"
+      },
+      {
+       "subject": "Jay Schneiderman",
+       "field": "start_date",
+       "expected": "—",
+       "actual": "2025-11",
+       "expected_label": "Council Member, District 2",
+       "actual_label": "Council Member District 2"
+      },
+      {
+       "subject": "Jay Schneiderman",
+       "field": "end_date",
+       "expected": "—",
+       "actual": "2027-11",
+       "expected_label": "Council Member, District 2",
+       "actual_label": "Council Member District 2"
+      },
+      {
+       "subject": "Jay Schneiderman",
+       "field": "image",
+       "expected": "—",
+       "actual": "local://7ea160bab3ca.png",
+       "expected_label": "Council Member, District 2",
+       "actual_label": "Council Member District 2"
+      },
+      {
+       "subject": "Katrin Mezger",
+       "field": "start_date",
+       "expected": "—",
+       "actual": "2025-11",
+       "expected_label": "Council Member, District 4",
+       "actual_label": "Council Member District 4"
+      },
+      {
+       "subject": "Katrin Mezger",
+       "field": "end_date",
+       "expected": "—",
+       "actual": "2027-11",
+       "expected_label": "Council Member, District 4",
+       "actual_label": "Council Member District 4"
+      },
+      {
+       "subject": "Katrin Mezger",
+       "field": "image",
+       "expected": "—",
+       "actual": "local://9aebb99b6152.png",
+       "expected_label": "Council Member, District 4",
+       "actual_label": "Council Member District 4"
+      },
+      {
+       "subject": "Libby Hilton Barnacle",
+       "field": "roles",
+       "expected": [
+        "Mayor Pro Tem"
+       ],
+       "actual": [
+        "Council Member",
+        "Mayor Pro Tem"
+       ],
+       "expected_label": "Mayor Pro Tem, District 3",
+       "actual_label": "Council Member District 3 and Mayor Pro Tem"
+      },
+      {
+       "subject": "Libby Hilton Barnacle",
+       "field": "start_date",
+       "expected": "—",
+       "actual": "2025-11",
+       "expected_label": "Mayor Pro Tem, District 3",
+       "actual_label": "Council Member District 3 and Mayor Pro Tem"
+      },
+      {
+       "subject": "Libby Hilton Barnacle",
+       "field": "end_date",
+       "expected": "—",
+       "actual": "2027-11",
+       "expected_label": "Mayor Pro Tem, District 3",
+       "actual_label": "Council Member District 3 and Mayor Pro Tem"
+      },
+      {
+       "subject": "Libby Hilton Barnacle",
+       "field": "image",
+       "expected": "—",
+       "actual": "local://513a106f2b44.png",
+       "expected_label": "Mayor Pro Tem, District 3",
+       "actual_label": "Council Member District 3 and Mayor Pro Tem"
+      },
+      {
+       "subject": "Paul Wiesner",
+       "field": "start_date",
+       "expected": "—",
+       "actual": "2025-11",
+       "expected_label": "Council Member, District 1",
+       "actual_label": "Council Member District 1"
+      },
+      {
+       "subject": "Paul Wiesner",
+       "field": "end_date",
+       "expected": "—",
+       "actual": "2027-11",
+       "expected_label": "Council Member, District 1",
+       "actual_label": "Council Member District 1"
+      },
+      {
+       "subject": "Paul Wiesner",
+       "field": "image",
+       "expected": "—",
+       "actual": "local://d15ec3fc330d.png",
+       "expected_label": "Council Member, District 1",
+       "actual_label": "Council Member District 1"
+      },
+      {
+       "subject": "Tom Stahl",
+       "field": "start_date",
+       "expected": "—",
+       "actual": "2025-11",
+       "expected_label": "Council Member, District 4",
+       "actual_label": "Council Member District 4"
+      },
+      {
+       "subject": "Tom Stahl",
+       "field": "end_date",
+       "expected": "—",
+       "actual": "2027-11",
+       "expected_label": "Council Member, District 4",
+       "actual_label": "Council Member District 4"
+      },
+      {
+       "subject": "Tom Stahl",
+       "field": "image",
+       "expected": "—",
+       "actual": "local://ae9612794888.png",
+       "expected_label": "Council Member, District 4",
+       "actual_label": "Council Member District 4"
+      }
+     ],
+     "place_greenwood_village__mayor_council__council__suggested_titles": [
+      {
+       "subject": "Ann Nelson",
+       "field": "start_date",
+       "expected": "—",
+       "actual": "2025-11",
+       "expected_label": "Council Member, District 1",
+       "actual_label": "Council Member District 1"
+      },
+      {
+       "subject": "Ann Nelson",
+       "field": "end_date",
+       "expected": "—",
+       "actual": "2027-11",
+       "expected_label": "Council Member, District 1",
+       "actual_label": "Council Member District 1"
+      },
+      {
+       "subject": "Ann Nelson",
+       "field": "image",
+       "expected": "—",
+       "actual": "local://c175baeebdd2.png",
+       "expected_label": "Council Member, District 1",
+       "actual_label": "Council Member District 1"
+      },
+      {
+       "subject": "Bob Doyle",
+       "field": "start_date",
+       "expected": "—",
+       "actual": "2025-11",
+       "expected_label": "Council Member, District 2",
+       "actual_label": "Council Member District 2"
+      },
+      {
+       "subject": "Bob Doyle",
+       "field": "end_date",
+       "expected": "—",
+       "actual": "2027-11",
+       "expected_label": "Council Member, District 2",
+       "actual_label": "Council Member District 2"
+      },
+      {
+       "subject": "Bob Doyle",
+       "field": "image",
+       "expected": "—",
+       "actual": "local://92195470815f.png",
+       "expected_label": "Council Member, District 2",
+       "actual_label": "Council Member District 2"
+      },
+      {
+       "subject": "Donna Johnston",
+       "field": "start_date",
+       "expected": "—",
+       "actual": "2025-11",
+       "expected_label": "Council Member, District 3",
+       "actual_label": "Council Member District 3"
+      },
+      {
+       "subject": "Donna Johnston",
+       "field": "end_date",
+       "expected": "—",
+       "actual": "2027-11",
+       "expected_label": "Council Member, District 3",
+       "actual_label": "Council Member District 3"
+      },
+      {
+       "subject": "Donna Johnston",
+       "field": "image",
+       "expected": "—",
+       "actual": "local://2716200a4d65.png",
+       "expected_label": "Council Member, District 3",
+       "actual_label": "Council Member District 3"
+      },
+      {
+       "subject": "George Lantz",
+       "field": "person",
+       "expected": "—",
+       "actual": "present",
+       "expected_label": "",
+       "actual_label": "Mayor"
+      },
+      {
+       "subject": "Jay Schneiderman",
+       "field": "start_date",
+       "expected": "—",
+       "actual": "2025-11",
+       "expected_label": "Council Member, District 2",
+       "actual_label": "Council Member District 2"
+      },
+      {
+       "subject": "Jay Schneiderman",
+       "field": "end_date",
+       "expected": "—",
+       "actual": "2027-11",
+       "expected_label": "Council Member, District 2",
+       "actual_label": "Council Member District 2"
+      },
+      {
+       "subject": "Jay Schneiderman",
+       "field": "image",
+       "expected": "—",
+       "actual": "local://7ea160bab3ca.png",
+       "expected_label": "Council Member, District 2",
+       "actual_label": "Council Member District 2"
+      },
+      {
+       "subject": "Katrin Mezger",
+       "field": "start_date",
+       "expected": "—",
+       "actual": "2025-11",
+       "expected_label": "Council Member, District 4",
+       "actual_label": "Council Member District 4"
+      },
+      {
+       "subject": "Katrin Mezger",
+       "field": "end_date",
+       "expected": "—",
+       "actual": "2027-11",
+       "expected_label": "Council Member, District 4",
+       "actual_label": "Council Member District 4"
+      },
+      {
+       "subject": "Katrin Mezger",
+       "field": "image",
+       "expected": "—",
+       "actual": "local://9aebb99b6152.png",
+       "expected_label": "Council Member, District 4",
+       "actual_label": "Council Member District 4"
+      },
+      {
+       "subject": "Libby Hilton Barnacle",
+       "field": "roles",
+       "expected": [
+        "Mayor Pro Tem"
+       ],
+       "actual": [
+        "Council Member",
+        "Mayor Pro Tem"
+       ],
+       "expected_label": "Mayor Pro Tem, District 3",
+       "actual_label": "Council Member District 3 and Mayor Pro Tem"
+      },
+      {
+       "subject": "Libby Hilton Barnacle",
+       "field": "start_date",
+       "expected": "—",
+       "actual": "2025-11",
+       "expected_label": "Mayor Pro Tem, District 3",
+       "actual_label": "Council Member District 3 and Mayor Pro Tem"
+      },
+      {
+       "subject": "Libby Hilton Barnacle",
+       "field": "end_date",
+       "expected": "—",
+       "actual": "2027-11",
+       "expected_label": "Mayor Pro Tem, District 3",
+       "actual_label": "Council Member District 3 and Mayor Pro Tem"
+      },
+      {
+       "subject": "Libby Hilton Barnacle",
+       "field": "image",
+       "expected": "—",
+       "actual": "local://513a106f2b44.png",
+       "expected_label": "Mayor Pro Tem, District 3",
+       "actual_label": "Council Member District 3 and Mayor Pro Tem"
+      },
+      {
+       "subject": "Paul Wiesner",
+       "field": "start_date",
+       "expected": "—",
+       "actual": "2025-11",
+       "expected_label": "Council Member, District 1",
+       "actual_label": "Council Member District 1"
+      },
+      {
+       "subject": "Paul Wiesner",
+       "field": "end_date",
+       "expected": "—",
+       "actual": "2027-11",
+       "expected_label": "Council Member, District 1",
+       "actual_label": "Council Member District 1"
+      },
+      {
+       "subject": "Paul Wiesner",
+       "field": "image",
+       "expected": "—",
+       "actual": "local://d15ec3fc330d.png",
+       "expected_label": "Council Member, District 1",
+       "actual_label": "Council Member District 1"
+      },
+      {
+       "subject": "Tom Stahl",
+       "field": "start_date",
+       "expected": "—",
+       "actual": "2025-11",
+       "expected_label": "Council Member, District 4",
+       "actual_label": "Council Member District 4"
+      },
+      {
+       "subject": "Tom Stahl",
+       "field": "end_date",
+       "expected": "—",
+       "actual": "2027-11",
+       "expected_label": "Council Member, District 4",
+       "actual_label": "Council Member District 4"
+      },
+      {
+       "subject": "Tom Stahl",
+       "field": "image",
+       "expected": "—",
+       "actual": "local://ae9612794888.png",
+       "expected_label": "Council Member, District 4",
+       "actual_label": "Council Member District 4"
+      }
+     ],
+     "place_greenwood_village__mayor_council__office_of_the_mayor__known_titles": [
+      {
+       "subject": "George Lantz",
+       "field": "start_date",
+       "expected": "—",
+       "actual": "2023-11",
        "expected_label": "Mayor",
        "actual_label": "Mayor"
       },
       {
-       "subject": "Glenn Werner",
-       "field": "url",
-       "expected": "https://gibbsborotownhall.com/borough-council",
-       "actual": "—",
-       "expected_label": "Councilman",
-       "actual_label": "Councilman"
+       "subject": "George Lantz",
+       "field": "end_date",
+       "expected": "—",
+       "actual": "2027-11",
+       "expected_label": "Mayor",
+       "actual_label": "Mayor"
       },
       {
-       "subject": "John Ritz",
-       "field": "url",
-       "expected": "https://gibbsborotownhall.com/borough-council",
-       "actual": "—",
-       "expected_label": "Councilman",
-       "actual_label": "Councilman"
+       "subject": "George Lantz",
+       "field": "image",
+       "expected": "—",
+       "actual": "local://05074859a7df.png",
+       "expected_label": "Mayor",
+       "actual_label": "Mayor"
+      }
+     ],
+     "place_greenwood_village__mayor_council__office_of_the_mayor__no_titles": [
+      {
+       "subject": "George Lantz",
+       "field": "start_date",
+       "expected": "—",
+       "actual": "2023-11",
+       "expected_label": "Mayor",
+       "actual_label": "Mayor"
       },
       {
-       "subject": "Marianne Colavita",
-       "field": "url",
-       "expected": "https://gibbsborotownhall.com/borough-council",
-       "actual": "—",
-       "expected_label": "Councilman",
-       "actual_label": "Councilman"
+       "subject": "George Lantz",
+       "field": "end_date",
+       "expected": "—",
+       "actual": "2027-11",
+       "expected_label": "Mayor",
+       "actual_label": "Mayor"
       },
       {
-       "subject": "Mitch Brown",
-       "field": "url",
-       "expected": "https://gibbsborotownhall.com/borough-council",
+       "subject": "George Lantz",
+       "field": "image",
+       "expected": "—",
+       "actual": "local://05074859a7df.png",
+       "expected_label": "Mayor",
+       "actual_label": "Mayor"
+      }
+     ],
+     "place_greenwood_village__mayor_council__office_of_the_mayor__suggested_titles": [
+      {
+       "subject": "George Lantz",
+       "field": "start_date",
+       "expected": "—",
+       "actual": "2023-11",
+       "expected_label": "Mayor",
+       "actual_label": "Mayor"
+      },
+      {
+       "subject": "George Lantz",
+       "field": "end_date",
+       "expected": "—",
+       "actual": "2027-11",
+       "expected_label": "Mayor",
+       "actual_label": "Mayor"
+      },
+      {
+       "subject": "George Lantz",
+       "field": "image",
+       "expected": "—",
+       "actual": "local://05074859a7df.png",
+       "expected_label": "Mayor",
+       "actual_label": "Mayor"
+      }
+     ],
+     "place_greenwood_village__unscoped__known_titles": [
+      {
+       "subject": "Ann Nelson",
+       "field": "start_date",
+       "expected": "—",
+       "actual": "2025-11",
+       "expected_label": "Council Member, District 1",
+       "actual_label": "Council Member District 1"
+      },
+      {
+       "subject": "Ann Nelson",
+       "field": "end_date",
+       "expected": "—",
+       "actual": "2027-11",
+       "expected_label": "Council Member, District 1",
+       "actual_label": "Council Member District 1"
+      },
+      {
+       "subject": "Ann Nelson",
+       "field": "image",
+       "expected": "—",
+       "actual": "local://c175baeebdd2.png",
+       "expected_label": "Council Member, District 1",
+       "actual_label": "Council Member District 1"
+      },
+      {
+       "subject": "Bob Doyle",
+       "field": "start_date",
+       "expected": "—",
+       "actual": "2025-11",
+       "expected_label": "Council Member, District 2",
+       "actual_label": "Council Member District 2"
+      },
+      {
+       "subject": "Bob Doyle",
+       "field": "end_date",
+       "expected": "—",
+       "actual": "2027-11",
+       "expected_label": "Council Member, District 2",
+       "actual_label": "Council Member District 2"
+      },
+      {
+       "subject": "Bob Doyle",
+       "field": "image",
+       "expected": "—",
+       "actual": "local://92195470815f.png",
+       "expected_label": "Council Member, District 2",
+       "actual_label": "Council Member District 2"
+      },
+      {
+       "subject": "Donna Johnston",
+       "field": "start_date",
+       "expected": "—",
+       "actual": "2025-11",
+       "expected_label": "Council Member, District 3",
+       "actual_label": "Council Member District 3"
+      },
+      {
+       "subject": "Donna Johnston",
+       "field": "end_date",
+       "expected": "—",
+       "actual": "2027-11",
+       "expected_label": "Council Member, District 3",
+       "actual_label": "Council Member District 3"
+      },
+      {
+       "subject": "Donna Johnston",
+       "field": "image",
+       "expected": "—",
+       "actual": "local://2716200a4d65.png",
+       "expected_label": "Council Member, District 3",
+       "actual_label": "Council Member District 3"
+      },
+      {
+       "subject": "George E. Lantz",
+       "field": "person",
+       "expected": "present",
        "actual": "—",
-       "expected_label": "Councilman",
-       "actual_label": "Councilman"
+       "expected_label": "Mayor",
+       "actual_label": ""
+      },
+      {
+       "subject": "George Lantz",
+       "field": "person",
+       "expected": "—",
+       "actual": "present",
+       "expected_label": "",
+       "actual_label": "Mayor"
+      },
+      {
+       "subject": "Jay Schneiderman",
+       "field": "start_date",
+       "expected": "—",
+       "actual": "2025-11",
+       "expected_label": "Council Member, District 2",
+       "actual_label": "Council Member District 2"
+      },
+      {
+       "subject": "Jay Schneiderman",
+       "field": "end_date",
+       "expected": "—",
+       "actual": "2027-11",
+       "expected_label": "Council Member, District 2",
+       "actual_label": "Council Member District 2"
+      },
+      {
+       "subject": "Jay Schneiderman",
+       "field": "image",
+       "expected": "—",
+       "actual": "local://7ea160bab3ca.png",
+       "expected_label": "Council Member, District 2",
+       "actual_label": "Council Member District 2"
+      },
+      {
+       "subject": "Katrin Mezger",
+       "field": "start_date",
+       "expected": "—",
+       "actual": "2025-11",
+       "expected_label": "Council Member, District 4",
+       "actual_label": "Council Member District 4"
+      },
+      {
+       "subject": "Katrin Mezger",
+       "field": "end_date",
+       "expected": "—",
+       "actual": "2027-11",
+       "expected_label": "Council Member, District 4",
+       "actual_label": "Council Member District 4"
+      },
+      {
+       "subject": "Katrin Mezger",
+       "field": "image",
+       "expected": "—",
+       "actual": "local://9aebb99b6152.png",
+       "expected_label": "Council Member, District 4",
+       "actual_label": "Council Member District 4"
+      },
+      {
+       "subject": "Libby Hilton Barnacle",
+       "field": "roles",
+       "expected": [
+        "Mayor Pro Tem"
+       ],
+       "actual": [
+        "Council Member",
+        "Mayor Pro Tem"
+       ],
+       "expected_label": "Mayor Pro Tem, District 3",
+       "actual_label": "Council Member District 3 and Mayor Pro Tem"
+      },
+      {
+       "subject": "Libby Hilton Barnacle",
+       "field": "start_date",
+       "expected": "—",
+       "actual": "2025-11",
+       "expected_label": "Mayor Pro Tem, District 3",
+       "actual_label": "Council Member District 3 and Mayor Pro Tem"
+      },
+      {
+       "subject": "Libby Hilton Barnacle",
+       "field": "end_date",
+       "expected": "—",
+       "actual": "2027-11",
+       "expected_label": "Mayor Pro Tem, District 3",
+       "actual_label": "Council Member District 3 and Mayor Pro Tem"
+      },
+      {
+       "subject": "Libby Hilton Barnacle",
+       "field": "image",
+       "expected": "—",
+       "actual": "local://513a106f2b44.png",
+       "expected_label": "Mayor Pro Tem, District 3",
+       "actual_label": "Council Member District 3 and Mayor Pro Tem"
+      },
+      {
+       "subject": "Paul Wiesner",
+       "field": "start_date",
+       "expected": "—",
+       "actual": "2025-11",
+       "expected_label": "Council Member, District 1",
+       "actual_label": "Council Member District 1"
+      },
+      {
+       "subject": "Paul Wiesner",
+       "field": "end_date",
+       "expected": "—",
+       "actual": "2027-11",
+       "expected_label": "Council Member, District 1",
+       "actual_label": "Council Member District 1"
+      },
+      {
+       "subject": "Paul Wiesner",
+       "field": "image",
+       "expected": "—",
+       "actual": "local://d15ec3fc330d.png",
+       "expected_label": "Council Member, District 1",
+       "actual_label": "Council Member District 1"
+      },
+      {
+       "subject": "Tom Stahl",
+       "field": "start_date",
+       "expected": "—",
+       "actual": "2025-11",
+       "expected_label": "Council Member, District 4",
+       "actual_label": "Council Member District 4"
+      },
+      {
+       "subject": "Tom Stahl",
+       "field": "end_date",
+       "expected": "—",
+       "actual": "2027-11",
+       "expected_label": "Council Member, District 4",
+       "actual_label": "Council Member District 4"
+      },
+      {
+       "subject": "Tom Stahl",
+       "field": "image",
+       "expected": "—",
+       "actual": "local://ae9612794888.png",
+       "expected_label": "Council Member, District 4",
+       "actual_label": "Council Member District 4"
       }
      ],
      "place_greenwood_village__unscoped__no_titles": [
@@ -21694,45 +24068,340 @@
        "actual_label": "Council Member District 4"
       }
      ],
+     "place_meridian__mayor_council__council__known_titles": [
+      {
+       "subject": "Anne Little Roberts",
+       "field": "phone",
+       "expected": "(208) 888-4433",
+       "actual": "—",
+       "expected_label": "Council Vice President, District 5",
+       "actual_label": "City Council Vice President, District 5"
+      },
+      {
+       "subject": "Anne Little Roberts",
+       "field": "image",
+       "expected": "—",
+       "actual": "local://fb51fe6e6cc4.png",
+       "expected_label": "Council Vice President, District 5",
+       "actual_label": "City Council Vice President, District 5"
+      },
+      {
+       "subject": "Brian Whitlock",
+       "field": "phone",
+       "expected": "(208) 850-3301",
+       "actual": "—",
+       "expected_label": "Council Member, District 1",
+       "actual_label": "City Council Member, District 1"
+      },
+      {
+       "subject": "Brian Whitlock",
+       "field": "image",
+       "expected": "—",
+       "actual": "local://77962d1b6d9f.png",
+       "expected_label": "Council Member, District 1",
+       "actual_label": "City Council Member, District 1"
+      },
+      {
+       "subject": "Doug Taylor",
+       "field": "phone",
+       "expected": "(208) 888-4433",
+       "actual": "—",
+       "expected_label": "Council Member, District 3",
+       "actual_label": "City Council Member, District 3"
+      },
+      {
+       "subject": "Doug Taylor",
+       "field": "image",
+       "expected": "—",
+       "actual": "local://54cf92715421.png",
+       "expected_label": "Council Member, District 3",
+       "actual_label": "City Council Member, District 3"
+      },
+      {
+       "subject": "John Overton",
+       "field": "phone",
+       "expected": "(208) 888-4433",
+       "actual": "—",
+       "expected_label": "Council President, District 4",
+       "actual_label": "City Council President, District 4"
+      },
+      {
+       "subject": "John Overton",
+       "field": "image",
+       "expected": "—",
+       "actual": "local://0f8201674819.png",
+       "expected_label": "Council President, District 4",
+       "actual_label": "City Council President, District 4"
+      },
+      {
+       "subject": "Liz Strader",
+       "field": "phone",
+       "expected": "(208) 888-4433",
+       "actual": "—",
+       "expected_label": "Council Member, District 2",
+       "actual_label": "City Council Member, District 2"
+      },
+      {
+       "subject": "Liz Strader",
+       "field": "image",
+       "expected": "—",
+       "actual": "local://b92363fb9ed9.png",
+       "expected_label": "Council Member, District 2",
+       "actual_label": "City Council Member, District 2"
+      },
+      {
+       "subject": "Luke Cavener",
+       "field": "phone",
+       "expected": "(208) 888-4433",
+       "actual": "—",
+       "expected_label": "Council Member, District 6",
+       "actual_label": "City Council Member, District 6"
+      },
+      {
+       "subject": "Luke Cavener",
+       "field": "image",
+       "expected": "—",
+       "actual": "local://6e0994db207d.png",
+       "expected_label": "Council Member, District 6",
+       "actual_label": "City Council Member, District 6"
+      }
+     ],
+     "place_meridian__mayor_council__council__no_titles": [
+      {
+       "subject": "Anne Little Roberts",
+       "field": "phone",
+       "expected": "(208) 888-4433",
+       "actual": "—",
+       "expected_label": "Council Vice President, District 5",
+       "actual_label": "City Council Vice President, District 5"
+      },
+      {
+       "subject": "Anne Little Roberts",
+       "field": "image",
+       "expected": "—",
+       "actual": "local://fb51fe6e6cc4.png",
+       "expected_label": "Council Vice President, District 5",
+       "actual_label": "City Council Vice President, District 5"
+      },
+      {
+       "subject": "Brian Whitlock",
+       "field": "phone",
+       "expected": "(208) 850-3301",
+       "actual": "—",
+       "expected_label": "Council Member, District 1",
+       "actual_label": "City Council Member, District 1"
+      },
+      {
+       "subject": "Brian Whitlock",
+       "field": "image",
+       "expected": "—",
+       "actual": "local://77962d1b6d9f.png",
+       "expected_label": "Council Member, District 1",
+       "actual_label": "City Council Member, District 1"
+      },
+      {
+       "subject": "Doug Taylor",
+       "field": "phone",
+       "expected": "(208) 888-4433",
+       "actual": "—",
+       "expected_label": "Council Member, District 3",
+       "actual_label": "City Council Member, District 3"
+      },
+      {
+       "subject": "Doug Taylor",
+       "field": "image",
+       "expected": "—",
+       "actual": "local://54cf92715421.png",
+       "expected_label": "Council Member, District 3",
+       "actual_label": "City Council Member, District 3"
+      },
+      {
+       "subject": "John Overton",
+       "field": "phone",
+       "expected": "(208) 888-4433",
+       "actual": "—",
+       "expected_label": "Council President, District 4",
+       "actual_label": "City Council President, District 4"
+      },
+      {
+       "subject": "John Overton",
+       "field": "image",
+       "expected": "—",
+       "actual": "local://0f8201674819.png",
+       "expected_label": "Council President, District 4",
+       "actual_label": "City Council President, District 4"
+      },
+      {
+       "subject": "Liz Strader",
+       "field": "phone",
+       "expected": "(208) 888-4433",
+       "actual": "—",
+       "expected_label": "Council Member, District 2",
+       "actual_label": "City Council Member, District 2"
+      },
+      {
+       "subject": "Liz Strader",
+       "field": "image",
+       "expected": "—",
+       "actual": "local://b92363fb9ed9.png",
+       "expected_label": "Council Member, District 2",
+       "actual_label": "City Council Member, District 2"
+      },
+      {
+       "subject": "Luke Cavener",
+       "field": "phone",
+       "expected": "(208) 888-4433",
+       "actual": "—",
+       "expected_label": "Council Member, District 6",
+       "actual_label": "City Council Member, District 6"
+      },
+      {
+       "subject": "Luke Cavener",
+       "field": "image",
+       "expected": "—",
+       "actual": "local://6e0994db207d.png",
+       "expected_label": "Council Member, District 6",
+       "actual_label": "City Council Member, District 6"
+      }
+     ],
+     "place_meridian__mayor_council__council__suggested_titles": [
+      {
+       "subject": "Anne Little Roberts",
+       "field": "image",
+       "expected": "—",
+       "actual": "local://fb51fe6e6cc4.png",
+       "expected_label": "Council Vice President, District 5",
+       "actual_label": "City Council Vice President, District 5"
+      },
+      {
+       "subject": "Brian Whitlock",
+       "field": "phone",
+       "expected": "(208) 850-3301",
+       "actual": "(208) 888-4433",
+       "expected_label": "Council Member, District 1",
+       "actual_label": "City Council Member, District 1"
+      },
+      {
+       "subject": "Brian Whitlock",
+       "field": "image",
+       "expected": "—",
+       "actual": "local://77962d1b6d9f.png",
+       "expected_label": "Council Member, District 1",
+       "actual_label": "City Council Member, District 1"
+      },
+      {
+       "subject": "Doug Taylor",
+       "field": "image",
+       "expected": "—",
+       "actual": "local://54cf92715421.png",
+       "expected_label": "Council Member, District 3",
+       "actual_label": "City Council Member, District 3"
+      },
+      {
+       "subject": "John Overton",
+       "field": "image",
+       "expected": "—",
+       "actual": "local://0f8201674819.png",
+       "expected_label": "Council President, District 4",
+       "actual_label": "City Council President, District 4"
+      },
+      {
+       "subject": "Liz Strader",
+       "field": "image",
+       "expected": "—",
+       "actual": "local://b92363fb9ed9.png",
+       "expected_label": "Council Member, District 2",
+       "actual_label": "City Council Member, District 2"
+      },
+      {
+       "subject": "Luke Cavener",
+       "field": "image",
+       "expected": "—",
+       "actual": "local://6e0994db207d.png",
+       "expected_label": "Council Member, District 6",
+       "actual_label": "City Council Member, District 6"
+      }
+     ],
      "place_millbury__open_town_meeting__select_board__known_titles": [
       {
        "subject": "Brian A. Sora",
+       "field": "url",
+       "expected": "https://millburyma.gov/1506/board-of-selectmen",
+       "actual": "—",
+       "expected_label": "Vice Chairman",
+       "actual_label": "Vice Chairman"
+      },
+      {
+       "subject": "Brian Tagg",
+       "field": "primary_role",
+       "expected": [
+        "Select Board Member"
+       ],
+       "actual": [],
+       "expected_label": "Selectman",
+       "actual_label": "Member"
+      },
+      {
+       "subject": "Brian Tagg",
        "field": "roles",
        "expected": [
-        "Vice Chair"
+        "Select Board Member"
        ],
-       "actual": [
-        "Select Board Member",
-        "Vice Chair"
-       ],
-       "expected_label": "Vice Chairman",
-       "actual_label": "Selectman Vice Chairman"
+       "actual": [],
+       "expected_label": "Selectman",
+       "actual_label": "Member"
+      },
+      {
+       "subject": "Brian Tagg",
+       "field": "url",
+       "expected": "https://millburyma.gov/1506/board-of-selectmen",
+       "actual": "—",
+       "expected_label": "Selectman",
+       "actual_label": "Member"
       },
       {
        "subject": "Mary Krumsiek",
-       "field": "roles",
+       "field": "url",
+       "expected": "https://millburyma.gov/1506/board-of-selectmen",
+       "actual": "—",
+       "expected_label": "Chairman",
+       "actual_label": "Chairman"
+      },
+      {
+       "subject": "Michael R. Gilchrist",
+       "field": "primary_role",
        "expected": [
-        "Chair"
-       ],
-       "actual": [
-        "Chair",
         "Select Board Member"
        ],
-       "expected_label": "Chairman",
-       "actual_label": "Selectman Chairman"
+       "actual": [],
+       "expected_label": "Selectman",
+       "actual_label": "Member"
+      },
+      {
+       "subject": "Michael R. Gilchrist",
+       "field": "roles",
+       "expected": [
+        "Select Board Member"
+       ],
+       "actual": [],
+       "expected_label": "Selectman",
+       "actual_label": "Member"
+      },
+      {
+       "subject": "Michael R. Gilchrist",
+       "field": "url",
+       "expected": "https://millburyma.gov/1506/board-of-selectmen",
+       "actual": "—",
+       "expected_label": "Selectman",
+       "actual_label": "Member"
       },
       {
        "subject": "Nicholas Lazzaro",
-       "field": "roles",
-       "expected": [
-        "Clerk"
-       ],
-       "actual": [
-        "Clerk",
-        "Select Board Member"
-       ],
+       "field": "url",
+       "expected": "https://millburyma.gov/1506/board-of-selectmen",
+       "actual": "—",
        "expected_label": "Clerk",
-       "actual_label": "Selectman Clerk"
+       "actual_label": "Clerk"
       }
      ],
      "place_millbury__open_town_meeting__select_board__no_titles": [
@@ -21750,22 +24419,6 @@
        "actual_label": "Selectman Vice Chairman"
       },
       {
-       "subject": "Brian A. Sora",
-       "field": "url",
-       "expected": "https://millburyma.gov/1506/board-of-selectmen",
-       "actual": "—",
-       "expected_label": "Vice Chairman",
-       "actual_label": "Selectman Vice Chairman"
-      },
-      {
-       "subject": "Brian Tagg",
-       "field": "url",
-       "expected": "https://millburyma.gov/1506/board-of-selectmen",
-       "actual": "—",
-       "expected_label": "Selectman",
-       "actual_label": "Selectman Member"
-      },
-      {
        "subject": "Mary Krumsiek",
        "field": "roles",
        "expected": [
@@ -21779,22 +24432,6 @@
        "actual_label": "Selectman Chairman"
       },
       {
-       "subject": "Mary Krumsiek",
-       "field": "url",
-       "expected": "https://millburyma.gov/1506/board-of-selectmen",
-       "actual": "—",
-       "expected_label": "Chairman",
-       "actual_label": "Selectman Chairman"
-      },
-      {
-       "subject": "Michael R. Gilchrist",
-       "field": "url",
-       "expected": "https://millburyma.gov/1506/board-of-selectmen",
-       "actual": "—",
-       "expected_label": "Selectman",
-       "actual_label": "Selectman Member"
-      },
-      {
        "subject": "Nicholas Lazzaro",
        "field": "roles",
        "expected": [
@@ -21804,14 +24441,6 @@
         "Clerk",
         "Select Board Member"
        ],
-       "expected_label": "Clerk",
-       "actual_label": "Selectman Clerk"
-      },
-      {
-       "subject": "Nicholas Lazzaro",
-       "field": "url",
-       "expected": "https://millburyma.gov/1506/board-of-selectmen",
-       "actual": "—",
        "expected_label": "Clerk",
        "actual_label": "Selectman Clerk"
       }
@@ -21858,45 +24487,88 @@
        "actual_label": "Member"
       }
      ],
-     "place_millbury__representative_town_meeting__select_board__known_titles": [
+     "place_millbury__open_town_meeting__town_meeting__known_titles": [
       {
        "subject": "Brian A. Sora",
-       "field": "roles",
-       "expected": [
-        "Vice Chair"
-       ],
-       "actual": [
-        "Select Board Member",
-        "Vice Chair"
-       ],
-       "expected_label": "Vice Chairman",
+       "field": "person",
+       "expected": "—",
+       "actual": "present",
+       "expected_label": "",
        "actual_label": "Selectman Vice Chairman"
       },
       {
+       "subject": "Brian Tagg",
+       "field": "person",
+       "expected": "—",
+       "actual": "present",
+       "expected_label": "",
+       "actual_label": "Selectman Member"
+      },
+      {
        "subject": "Mary Krumsiek",
-       "field": "roles",
-       "expected": [
-        "Chair"
-       ],
-       "actual": [
-        "Chair",
-        "Select Board Member"
-       ],
-       "expected_label": "Chairman",
+       "field": "person",
+       "expected": "—",
+       "actual": "present",
+       "expected_label": "",
        "actual_label": "Selectman Chairman"
       },
       {
+       "subject": "Michael R. Gilchrist",
+       "field": "person",
+       "expected": "—",
+       "actual": "present",
+       "expected_label": "",
+       "actual_label": "Selectman Member"
+      },
+      {
        "subject": "Nicholas Lazzaro",
-       "field": "roles",
+       "field": "person",
+       "expected": "—",
+       "actual": "present",
+       "expected_label": "",
+       "actual_label": "Selectman Clerk"
+      }
+     ],
+     "place_millbury__representative_town_meeting__select_board__known_titles": [
+      {
+       "subject": "Brian Tagg",
+       "field": "primary_role",
        "expected": [
-        "Clerk"
-       ],
-       "actual": [
-        "Clerk",
         "Select Board Member"
        ],
-       "expected_label": "Clerk",
-       "actual_label": "Selectman Clerk"
+       "actual": [],
+       "expected_label": "Selectman",
+       "actual_label": "Member"
+      },
+      {
+       "subject": "Brian Tagg",
+       "field": "roles",
+       "expected": [
+        "Select Board Member"
+       ],
+       "actual": [],
+       "expected_label": "Selectman",
+       "actual_label": "Member"
+      },
+      {
+       "subject": "Michael R. Gilchrist",
+       "field": "primary_role",
+       "expected": [
+        "Select Board Member"
+       ],
+       "actual": [],
+       "expected_label": "Selectman",
+       "actual_label": "Member"
+      },
+      {
+       "subject": "Michael R. Gilchrist",
+       "field": "roles",
+       "expected": [
+        "Select Board Member"
+       ],
+       "actual": [],
+       "expected_label": "Selectman",
+       "actual_label": "Member"
       }
      ],
      "place_millbury__representative_town_meeting__select_board__no_titles": [
@@ -21982,19 +24654,56 @@
        "actual_label": "Member"
       }
      ],
+     "place_millbury__representative_town_meeting__town_meeting__no_titles": [
+      {
+       "subject": "Brian A. Sora",
+       "field": "person",
+       "expected": "—",
+       "actual": "present",
+       "expected_label": "",
+       "actual_label": "Vice Chairman"
+      },
+      {
+       "subject": "Brian Tagg",
+       "field": "person",
+       "expected": "—",
+       "actual": "present",
+       "expected_label": "",
+       "actual_label": "Member"
+      },
+      {
+       "subject": "Mary Krumsiek",
+       "field": "person",
+       "expected": "—",
+       "actual": "present",
+       "expected_label": "",
+       "actual_label": "Chairman"
+      },
+      {
+       "subject": "Michael R. Gilchrist",
+       "field": "person",
+       "expected": "—",
+       "actual": "present",
+       "expected_label": "",
+       "actual_label": "Member"
+      },
+      {
+       "subject": "Nicholas Lazzaro",
+       "field": "person",
+       "expected": "—",
+       "actual": "present",
+       "expected_label": "",
+       "actual_label": "Clerk"
+      }
+     ],
      "place_payette__unscoped__no_titles": [
       {
        "subject": "Ray Wickersham",
-       "field": "roles",
-       "expected": [
-        "Mayor"
-       ],
-       "actual": [
-        "Council Member",
-        "Mayor"
-       ],
+       "field": "url",
+       "expected": "https://cityofpayette.com/index.asp?sec=3e868623-d11c-4f30-a389-c51a121fb9a7&type=b_basic",
+       "actual": "https://cityofpayette.com/index.asp?sec=ec229bcb-6752-46f1-a3d6-8ae9e7492111&type=b_basic",
        "expected_label": "Mayor",
-       "actual_label": "Council Member and Mayor"
+       "actual_label": "Mayor"
       }
      ],
      "raisin_township_clerk": [
@@ -22016,6 +24725,21 @@
        "expected_label": "Supervisor",
        "actual_label": "Supervisor"
       }
+     ],
+     "seattle_council_pick_list_missing_president": [
+      {
+       "subject": "Joy Hollingsworth",
+       "field": "roles",
+       "expected": [
+        "Council President"
+       ],
+       "actual": [
+        "Council Member",
+        "Council President"
+       ],
+       "expected_label": "Council President District 3",
+       "actual_label": "Council Member District 3 and Council President"
+      }
      ]
     }
    },
@@ -22025,16 +24749,62 @@
     "austin_district7_council_member": {},
     "board_of_aldermen": {},
     "coleman_council": {},
-    "county_allegan__place_leighton__township_board__board__suggested_titles": {
+    "county_alameda__commission__board_of_supervisors__known_titles": {
+     "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:ca/county:alameda/government",
+     "current_date": "2026-10-16",
+     "organization": "{\"name\": \"Board of Supervisors\", \"role_labels\": [\"Council President\", \"Council Vice President\", \"Supervisor\", \"Treasurer\", \"Assessor\"], \"divisions\": [\"district 1\", \"district 3\", \"district 2\", \"district 4\", \"district 5\"]}"
+    },
+    "county_alameda__commission__board_of_supervisors__no_titles": {
+     "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:ca/county:alameda/government",
+     "current_date": "2026-10-16",
+     "organization": "{\"name\": \"Board of Supervisors\"}"
+    },
+    "county_alameda__commission__board_of_supervisors__suggested_titles": {
+     "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:ca/county:alameda/government",
+     "current_date": "2026-10-16",
+     "organization": "{\"name\": \"Board of Supervisors\", \"government_form_role_labels\": [\"Supervisor\", \"Chair\", \"Vice Chair\"]}"
+    },
+    "county_allegan__place_leighton__township_board__board__known_titles": {
+     "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:mi/county:allegan/place:leighton/government",
      "current_date": "2026-10-02",
-     "government_form_role_labels": "[\"Supervisor\", \"Clerk\", \"Treasurer\", \"Trustee\"]"
+     "organization": "{\"name\": \"Board\", \"role_labels\": [\"Trustee\", \"Supervisor\", \"Clerk\", \"Treasurer\"]}"
+    },
+    "county_allegan__place_leighton__township_board__board__no_titles": {
+     "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:mi/county:allegan/place:leighton/government",
+     "current_date": "2026-10-02",
+     "organization": "{\"name\": \"Board\"}"
+    },
+    "county_allegan__place_leighton__township_board__board__suggested_titles": {
+     "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:mi/county:allegan/place:leighton/government",
+     "current_date": "2026-10-02",
+     "organization": "{\"name\": \"Board\", \"government_form_role_labels\": [\"Supervisor\", \"Clerk\", \"Treasurer\", \"Trustee\"]}"
+    },
+    "county_allegan__place_leighton__unscoped__known_titles": {
+     "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:mi/county:allegan/place:leighton/government",
+     "current_date": "2026-10-02",
+     "known_roles": "[\"Trustee\", \"Supervisor\", \"Clerk\", \"Treasurer\"]"
     },
     "county_allegan__place_leighton__unscoped__no_titles": {
      "current_date": "2026-10-02"
     },
-    "county_hunterdon__place_alexandria__township_board__board__suggested_titles": {
+    "county_allegan__place_leighton__unscoped__township_board__suggested_titles": {
      "current_date": "2026-10-02",
      "government_form_role_labels": "[\"Supervisor\", \"Clerk\", \"Treasurer\", \"Trustee\"]"
+    },
+    "county_hunterdon__place_alexandria__township_board__board__known_titles": {
+     "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:nj/county:hunterdon/place:alexandria/government",
+     "current_date": "2026-10-02",
+     "organization": "{\"name\": \"Board\", \"role_labels\": [\"Mayor\", \"Deputy Mayor\", \"Committee Member\"]}"
+    },
+    "county_hunterdon__place_alexandria__township_board__board__no_titles": {
+     "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:nj/county:hunterdon/place:alexandria/government",
+     "current_date": "2026-10-02",
+     "organization": "{\"name\": \"Board\"}"
+    },
+    "county_hunterdon__place_alexandria__township_board__board__suggested_titles": {
+     "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:nj/county:hunterdon/place:alexandria/government",
+     "current_date": "2026-10-02",
+     "organization": "{\"name\": \"Board\", \"government_form_role_labels\": [\"Supervisor\", \"Clerk\", \"Treasurer\", \"Trustee\"]}"
     },
     "county_hunterdon__place_alexandria__unscoped__known_titles": {
      "current_date": "2026-10-02",
@@ -22043,27 +24813,67 @@
     "county_hunterdon__place_alexandria__unscoped__no_titles": {
      "current_date": "2026-10-02"
     },
+    "county_hunterdon__place_alexandria__unscoped__township_board__suggested_titles": {
+     "current_date": "2026-10-02",
+     "government_form_role_labels": "[\"Supervisor\", \"Clerk\", \"Treasurer\", \"Trustee\"]"
+    },
+    "county_kauai__county_executive__county_council__known_titles": {
+     "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:hi/county:kauai/government",
+     "current_date": "2026-10-16",
+     "organization": "{\"name\": \"County Council\", \"role_labels\": [\"Chair\", \"Vice Chair\", \"Council Member\"]}"
+    },
+    "county_kauai__county_executive__county_council__no_titles": {
+     "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:hi/county:kauai/government",
+     "current_date": "2026-10-16",
+     "organization": "{\"name\": \"County Council\"}"
+    },
+    "county_kauai__county_executive__county_council__suggested_titles": {
+     "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:hi/county:kauai/government",
+     "current_date": "2026-10-16",
+     "organization": "{\"name\": \"County Council\", \"government_form_role_labels\": [\"Council Member\", \"Chair\", \"Vice Chair\"]}"
+    },
+    "county_kauai__county_executive__office_of_the_mayor__known_titles": {
+     "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:hi/county:kauai/government",
+     "current_date": "2026-10-16",
+     "organization": "{\"name\": \"Office of the Mayor\", \"role_labels\": []}"
+    },
+    "county_kauai__county_executive__office_of_the_mayor__no_titles": {
+     "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:hi/county:kauai/government",
+     "current_date": "2026-10-16",
+     "organization": "{\"name\": \"Office of the Mayor\"}"
+    },
+    "county_kauai__county_executive__office_of_the_mayor__suggested_titles": {
+     "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:hi/county:kauai/government",
+     "current_date": "2026-10-16",
+     "organization": "{\"name\": \"Office of the Mayor\", \"government_form_role_labels\": [\"Mayor\"]}"
+    },
     "county_king__county_executive__county_council__known_titles": {
+     "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:wa/county:king/government",
      "current_date": "2026-09-29",
      "organization": "{\"name\": \"County Council\", \"role_labels\": [\"Chair\", \"Council Member\"], \"divisions\": [\"district 3\", \"district 1\", \"district 2\", \"district 4\", \"district 5\", \"district 6\", \"district 7\", \"district 8\", \"district 9\"]}"
     },
     "county_king__county_executive__county_council__no_titles": {
+     "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:wa/county:king/government",
      "current_date": "2026-09-29",
      "organization": "{\"name\": \"County Council\"}"
     },
     "county_king__county_executive__county_council__suggested_titles": {
+     "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:wa/county:king/government",
      "current_date": "2026-09-29",
      "organization": "{\"name\": \"County Council\", \"government_form_role_labels\": [\"Council Member\", \"Chair\"]}"
     },
     "county_king__county_executive__county_executive__known_titles": {
+     "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:wa/county:king/government",
      "current_date": "2026-09-29",
      "organization": "{\"name\": \"County Executive\"}"
     },
     "county_king__county_executive__county_executive__no_titles": {
+     "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:wa/county:king/government",
      "current_date": "2026-09-29",
      "organization": "{\"name\": \"County Executive\"}"
     },
     "county_king__county_executive__county_executive__suggested_titles": {
+     "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:wa/county:king/government",
      "current_date": "2026-09-29",
      "organization": "{\"name\": \"County Executive\", \"government_form_role_labels\": [\"County Executive\"]}"
     },
@@ -22081,7 +24891,7 @@
     },
     "mixed_current_past": {},
     "nav_links_no_names": {},
-    "place_abernathy__council_manager__council__suggested_titles": {
+    "place_abernathy__unscoped__council_manager__suggested_titles": {
      "current_date": "2026-06-03",
      "government_form_role_labels": "[\"Council Member\", \"Mayor\"]"
     },
@@ -22092,13 +24902,50 @@
     "place_abernathy__unscoped__no_titles": {
      "current_date": "2026-06-03"
     },
-    "place_amador_city__commission__commission__suggested_titles": {
+    "place_acton__open_town_meeting__select_board__known_titles": {
+     "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:ma/place:acton/government",
+     "current_date": "2026-10-16",
+     "organization": "{\"name\": \"Select Board\", \"role_labels\": [\"Chair\", \"Vice Chair\", \"Select Board Member\", \"Clerk\"]}"
+    },
+    "place_acton__open_town_meeting__select_board__no_titles": {
+     "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:ma/place:acton/government",
+     "current_date": "2026-10-16",
+     "organization": "{\"name\": \"Select Board\"}"
+    },
+    "place_acton__open_town_meeting__select_board__suggested_titles": {
+     "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:ma/place:acton/government",
+     "current_date": "2026-10-16",
+     "organization": "{\"name\": \"Select Board\", \"government_form_role_labels\": [\"Select Board Member\", \"Chair\", \"Vice Chair\"]}"
+    },
+    "place_acton__open_town_meeting__town_meeting__known_titles": {
+     "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:ma/place:acton/government",
+     "current_date": "2026-10-16",
+     "organization": "{\"name\": \"Town Meeting\", \"role_labels\": []}"
+    },
+    "place_acton__open_town_meeting__town_meeting__no_titles": {
+     "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:ma/place:acton/government",
+     "current_date": "2026-10-16",
+     "organization": "{\"name\": \"Town Meeting\"}"
+    },
+    "place_acton__open_town_meeting__town_meeting__suggested_titles": {
+     "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:ma/place:acton/government",
+     "current_date": "2026-10-16",
+     "organization": "{\"name\": \"Town Meeting\", \"government_form_role_labels\": [\"Moderator\"]}"
+    },
+    "place_amador_city__council_manager__council__known_titles": {
+     "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:ca/place:amador_city/government",
      "current_date": "2026-09-11",
-     "government_form_role_labels": "[\"Commissioner\", \"Mayor\"]"
+     "organization": "{\"name\": \"Council\", \"role_labels\": [\"Mayor\", \"Council Member\"]}"
+    },
+    "place_amador_city__council_manager__council__no_titles": {
+     "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:ca/place:amador_city/government",
+     "current_date": "2026-09-11",
+     "organization": "{\"name\": \"Council\"}"
     },
     "place_amador_city__council_manager__council__suggested_titles": {
+     "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:ca/place:amador_city/government",
      "current_date": "2026-09-11",
-     "government_form_role_labels": "[\"Council Member\", \"Mayor\"]"
+     "organization": "{\"name\": \"Council\", \"government_form_role_labels\": [\"Council Member\", \"Mayor\"]}"
     },
     "place_amador_city__mayor_council__council__known_titles": {
      "current_date": "2026-09-11",
@@ -22124,6 +24971,14 @@
      "current_date": "2026-09-11",
      "organization": "{\"name\": \"Office of the Mayor\", \"government_form_role_labels\": [\"Mayor\"]}"
     },
+    "place_amador_city__unscoped__commission__suggested_titles": {
+     "current_date": "2026-09-11",
+     "government_form_role_labels": "[\"Commissioner\", \"Mayor\"]"
+    },
+    "place_amador_city__unscoped__council_manager__suggested_titles": {
+     "current_date": "2026-09-11",
+     "government_form_role_labels": "[\"Council Member\", \"Mayor\"]"
+    },
     "place_amador_city__unscoped__known_titles": {
      "current_date": "2026-09-11",
      "known_roles": "[\"Mayor\", \"Council Member\"]"
@@ -22131,18 +24986,18 @@
     "place_amador_city__unscoped__no_titles": {
      "current_date": "2026-09-11"
     },
-    "place_armada__township_board__board__suggested_titles": {
-     "current_date": "2026-10-02",
-     "government_form_role_labels": "[\"Supervisor\", \"Clerk\", \"Treasurer\", \"Trustee\"]"
-    },
     "place_armada__unscoped__no_titles": {
      "current_date": "2026-10-02"
     },
-    "place_belle_meade__commission__commission__suggested_titles": {
+    "place_armada__unscoped__township_board__suggested_titles": {
+     "current_date": "2026-10-02",
+     "government_form_role_labels": "[\"Supervisor\", \"Clerk\", \"Treasurer\", \"Trustee\"]"
+    },
+    "place_belle_meade__unscoped__commission__suggested_titles": {
      "current_date": "2026-05-25",
      "government_form_role_labels": "[\"Commissioner\", \"Mayor\"]"
     },
-    "place_belle_meade__council_manager__council__suggested_titles": {
+    "place_belle_meade__unscoped__council_manager__suggested_titles": {
      "current_date": "2026-05-25",
      "government_form_role_labels": "[\"Council Member\", \"Mayor\"]"
     },
@@ -22165,8 +25020,74 @@
      "current_date": "2026-10-02",
      "organization": "{\"name\": \"Office of the Mayor\"}"
     },
+    "place_greenwood_village__mayor_council__council__known_titles": {
+     "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:co/place:greenwood_village/government",
+     "current_date": "2026-10-02",
+     "organization": "{\"name\": \"Council\", \"role_labels\": [\"Mayor Pro Tempore\", \"Council Member\"], \"divisions\": [\"district 2\", \"district 1\", \"district 3\", \"district 4\"]}"
+    },
+    "place_greenwood_village__mayor_council__council__no_titles": {
+     "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:co/place:greenwood_village/government",
+     "current_date": "2026-10-02",
+     "organization": "{\"name\": \"Council\"}"
+    },
+    "place_greenwood_village__mayor_council__council__suggested_titles": {
+     "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:co/place:greenwood_village/government",
+     "current_date": "2026-10-02",
+     "organization": "{\"name\": \"Council\", \"government_form_role_labels\": [\"Council Member\"]}"
+    },
+    "place_greenwood_village__mayor_council__office_of_the_mayor__known_titles": {
+     "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:co/place:greenwood_village/government",
+     "current_date": "2026-10-02",
+     "organization": "{\"name\": \"Office of the Mayor\", \"role_labels\": [\"Mayor\"]}"
+    },
+    "place_greenwood_village__mayor_council__office_of_the_mayor__no_titles": {
+     "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:co/place:greenwood_village/government",
+     "current_date": "2026-10-02",
+     "organization": "{\"name\": \"Office of the Mayor\"}"
+    },
+    "place_greenwood_village__mayor_council__office_of_the_mayor__suggested_titles": {
+     "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:co/place:greenwood_village/government",
+     "current_date": "2026-10-02",
+     "organization": "{\"name\": \"Office of the Mayor\", \"government_form_role_labels\": [\"Mayor\"]}"
+    },
+    "place_greenwood_village__unscoped__known_titles": {
+     "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:co/place:greenwood_village/government",
+     "current_date": "2026-10-02",
+     "known_roles": "[\"Mayor\", \"Mayor Pro Tempore\", \"Council Member\"]",
+     "divisions": "[\"district 2\", \"district 1\", \"district 3\", \"district 4\"]"
+    },
     "place_greenwood_village__unscoped__no_titles": {
      "current_date": "2026-10-02"
+    },
+    "place_meridian__mayor_council__council__known_titles": {
+     "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:id/place:meridian/government",
+     "current_date": "2026-10-16",
+     "organization": "{\"name\": \"Council\", \"role_labels\": [\"Council President\", \"Council Vice President\", \"Council Member\"]}"
+    },
+    "place_meridian__mayor_council__council__no_titles": {
+     "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:id/place:meridian/government",
+     "current_date": "2026-10-16",
+     "organization": "{\"name\": \"Council\"}"
+    },
+    "place_meridian__mayor_council__council__suggested_titles": {
+     "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:id/place:meridian/government",
+     "current_date": "2026-10-16",
+     "organization": "{\"name\": \"Council\", \"government_form_role_labels\": [\"Council Member\"]}"
+    },
+    "place_meridian__mayor_council__office_of_the_mayor__known_titles": {
+     "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:id/place:meridian/government",
+     "current_date": "2026-10-16",
+     "organization": "{\"name\": \"Office of the Mayor\", \"role_labels\": []}"
+    },
+    "place_meridian__mayor_council__office_of_the_mayor__no_titles": {
+     "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:id/place:meridian/government",
+     "current_date": "2026-10-16",
+     "organization": "{\"name\": \"Office of the Mayor\"}"
+    },
+    "place_meridian__mayor_council__office_of_the_mayor__suggested_titles": {
+     "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:id/place:meridian/government",
+     "current_date": "2026-10-16",
+     "organization": "{\"name\": \"Office of the Mayor\", \"government_form_role_labels\": [\"Mayor\"]}"
     },
     "place_millbury__open_town_meeting__select_board__known_titles": {
      "current_date": "2026-09-25",
@@ -22241,76 +25162,114 @@
    "prompts_dir": "../municipal_officials/_prompts",
    "latest_case_prompts": {
     "AtlasCloud": {
-     "template_sha256": "f35d758c8c80",
+     "template_sha256": "766d04d7f1f4",
      "prompts": {
-      "austin_city_manager_staff": "9904fd3283d5",
-      "austin_council": "9904fd3283d5",
-      "austin_district7_council_member": "9904fd3283d5",
-      "board_of_aldermen": "9904fd3283d5",
-      "coleman_council": "9904fd3283d5",
-      "county_allegan__place_leighton__township_board__board__suggested_titles": "0dbc9b08b274",
-      "county_allegan__place_leighton__unscoped__no_titles": "a8a22de51687",
-      "county_hunterdon__place_alexandria__township_board__board__suggested_titles": "0dbc9b08b274",
-      "county_hunterdon__place_alexandria__unscoped__known_titles": "c2099b55857a",
-      "county_hunterdon__place_alexandria__unscoped__no_titles": "a8a22de51687",
-      "county_king__county_executive__county_council__known_titles": "8f363aaca887",
-      "county_king__county_executive__county_council__no_titles": "490e0d5015d9",
-      "county_king__county_executive__county_council__suggested_titles": "046540867f9e",
-      "county_king__county_executive__county_executive__known_titles": "e2ac3f60af2e",
-      "county_king__county_executive__county_executive__no_titles": "e2ac3f60af2e",
-      "county_king__county_executive__county_executive__suggested_titles": "314cb1b77808",
-      "golinda_mixed_city_county": "9904fd3283d5",
-      "inverted_name_format": "9904fd3283d5",
-      "jackson_mayors_office": "fc99c90dcad0",
-      "jackson_mayors_office_scoped_to_council": "80b53f6360e8",
-      "la_porte_council": "9904fd3283d5",
-      "millbury_school_committee_scoped_to_select_board": "275cba2361a2",
-      "mixed_current_past": "9904fd3283d5",
-      "nav_links_no_names": "9904fd3283d5",
-      "place_abernathy__council_manager__council__suggested_titles": "84c81017402d",
-      "place_abernathy__unscoped__known_titles": "66a5a7cc62d2",
-      "place_abernathy__unscoped__no_titles": "42198a89b5fd",
-      "place_amador_city__commission__commission__suggested_titles": "f0f191af28d9",
-      "place_amador_city__council_manager__council__suggested_titles": "f00f2edb2b3c",
-      "place_amador_city__mayor_council__council__known_titles": "816fc9d44705",
-      "place_amador_city__mayor_council__council__no_titles": "470196955597",
-      "place_amador_city__mayor_council__council__suggested_titles": "6018557df6f6",
-      "place_amador_city__mayor_council__office_of_the_mayor__known_titles": "21275dc93750",
-      "place_amador_city__mayor_council__office_of_the_mayor__no_titles": "f19803fa0601",
-      "place_amador_city__mayor_council__office_of_the_mayor__suggested_titles": "f7c3981b986d",
-      "place_amador_city__unscoped__known_titles": "083cd793adc4",
-      "place_amador_city__unscoped__no_titles": "e0806323c527",
-      "place_armada__township_board__board__suggested_titles": "0dbc9b08b274",
-      "place_armada__unscoped__no_titles": "a8a22de51687",
-      "place_belle_meade__commission__commission__suggested_titles": "00cf36ddc9c9",
-      "place_belle_meade__council_manager__council__suggested_titles": "047bfc89966a",
-      "place_belle_meade__unscoped__known_titles": "c48345054534",
-      "place_belle_meade__unscoped__no_titles": "111d69ffd79b",
-      "place_gibbsboro__mayor_council__council__no_titles": "9e889cd90edb",
-      "place_gibbsboro__mayor_council__council__suggested_titles": "b6ecfe201720",
-      "place_gibbsboro__mayor_council__office_of_the_mayor__no_titles": "74cf3f1cb47e",
-      "place_greenwood_village__unscoped__no_titles": "a8a22de51687",
-      "place_millbury__open_town_meeting__select_board__known_titles": "278f58da7c18",
-      "place_millbury__open_town_meeting__select_board__no_titles": "d310b3adeb50",
-      "place_millbury__open_town_meeting__select_board__suggested_titles": "5f4f6226bc44",
-      "place_millbury__open_town_meeting__town_meeting__known_titles": "9a5fce3787d1",
-      "place_millbury__open_town_meeting__town_meeting__no_titles": "9a5fce3787d1",
-      "place_millbury__open_town_meeting__town_meeting__suggested_titles": "cbdbf3af486b",
-      "place_millbury__representative_town_meeting__select_board__known_titles": "278f58da7c18",
-      "place_millbury__representative_town_meeting__select_board__no_titles": "d310b3adeb50",
-      "place_millbury__representative_town_meeting__select_board__suggested_titles": "5f4f6226bc44",
-      "place_millbury__representative_town_meeting__town_meeting__known_titles": "9a5fce3787d1",
-      "place_millbury__representative_town_meeting__town_meeting__no_titles": "9a5fce3787d1",
-      "place_millbury__representative_town_meeting__town_meeting__suggested_titles": "cd78302eba6d",
-      "place_payette__unscoped__no_titles": "a8a22de51687",
-      "placeholder_name_council": "9904fd3283d5",
-      "raisin_township_clerk": "d4971d33b92d",
-      "raisin_township_supervisor": "d4971d33b92d",
-      "redundant_place_role": "9904fd3283d5",
-      "seattle_council_pick_list_missing_president": "f8e7b5deae5e",
-      "seattle_council_scoped_to_mayor": "fc99c90dcad0",
-      "seattle_council_separate_mayor": "0652d925ede0",
-      "vacant_positions_council": "9904fd3283d5"
+      "austin_city_manager_staff": "692551de0881",
+      "austin_council": "692551de0881",
+      "austin_district7_council_member": "692551de0881",
+      "board_of_aldermen": "692551de0881",
+      "coleman_council": "692551de0881",
+      "county_alameda__commission__board_of_supervisors__known_titles": "bfe1339e4eed",
+      "county_alameda__commission__board_of_supervisors__no_titles": "3ed2c3afdeef",
+      "county_alameda__commission__board_of_supervisors__suggested_titles": "e81e66f9a5d0",
+      "county_allegan__place_leighton__township_board__board__known_titles": "ffb272abed1a",
+      "county_allegan__place_leighton__township_board__board__no_titles": "45a16c1301aa",
+      "county_allegan__place_leighton__township_board__board__suggested_titles": "a9109ecfca11",
+      "county_allegan__place_leighton__unscoped__known_titles": "56560bcdf763",
+      "county_allegan__place_leighton__unscoped__no_titles": "7a25695d8676",
+      "county_allegan__place_leighton__unscoped__township_board__suggested_titles": "aad37c48b16a",
+      "county_hunterdon__place_alexandria__township_board__board__known_titles": "837c0263b28c",
+      "county_hunterdon__place_alexandria__township_board__board__no_titles": "6954869c7760",
+      "county_hunterdon__place_alexandria__township_board__board__suggested_titles": "308bfd7623f0",
+      "county_hunterdon__place_alexandria__unscoped__known_titles": "c08279d86886",
+      "county_hunterdon__place_alexandria__unscoped__no_titles": "7a25695d8676",
+      "county_hunterdon__place_alexandria__unscoped__township_board__suggested_titles": "aad37c48b16a",
+      "county_kauai__county_executive__county_council__known_titles": "4b6ba824e12d",
+      "county_kauai__county_executive__county_council__no_titles": "27d8be6a6b9d",
+      "county_kauai__county_executive__county_council__suggested_titles": "581b761cc00c",
+      "county_kauai__county_executive__office_of_the_mayor__known_titles": "9f66bb702dd1",
+      "county_kauai__county_executive__office_of_the_mayor__no_titles": "9f66bb702dd1",
+      "county_kauai__county_executive__office_of_the_mayor__suggested_titles": "ef5324480eb5",
+      "county_king__county_executive__county_council__known_titles": "f1806208df8f",
+      "county_king__county_executive__county_council__no_titles": "def1a98d1fd4",
+      "county_king__county_executive__county_council__suggested_titles": "5bf6d0962c2a",
+      "county_king__county_executive__county_executive__known_titles": "b4636ad12d47",
+      "county_king__county_executive__county_executive__no_titles": "b4636ad12d47",
+      "county_king__county_executive__county_executive__suggested_titles": "4d2a9e86c1fc",
+      "golinda_mixed_city_county": "692551de0881",
+      "inverted_name_format": "692551de0881",
+      "jackson_mayors_office": "46f529f2fe6c",
+      "jackson_mayors_office_scoped_to_council": "411842307d97",
+      "la_porte_council": "692551de0881",
+      "millbury_school_committee_scoped_to_select_board": "2d67bfd4e706",
+      "mixed_current_past": "692551de0881",
+      "nav_links_no_names": "692551de0881",
+      "place_abernathy__unscoped__council_manager__suggested_titles": "38f051a890f5",
+      "place_abernathy__unscoped__known_titles": "0c14f8557c6c",
+      "place_abernathy__unscoped__no_titles": "03e713ef0d5b",
+      "place_acton__open_town_meeting__select_board__known_titles": "e9235849eb8c",
+      "place_acton__open_town_meeting__select_board__no_titles": "77b7e9db3111",
+      "place_acton__open_town_meeting__select_board__suggested_titles": "fc6d1da37b21",
+      "place_acton__open_town_meeting__town_meeting__known_titles": "767db83a6d17",
+      "place_acton__open_town_meeting__town_meeting__no_titles": "767db83a6d17",
+      "place_acton__open_town_meeting__town_meeting__suggested_titles": "29db1d707457",
+      "place_amador_city__council_manager__council__known_titles": "cc50af59c0f4",
+      "place_amador_city__council_manager__council__no_titles": "351f5a8b6fac",
+      "place_amador_city__council_manager__council__suggested_titles": "c4301ef53856",
+      "place_amador_city__mayor_council__council__known_titles": "2ed036a77089",
+      "place_amador_city__mayor_council__council__no_titles": "f5ffad8c0d16",
+      "place_amador_city__mayor_council__council__suggested_titles": "c5a2e3ef00d4",
+      "place_amador_city__mayor_council__office_of_the_mayor__known_titles": "246459279f84",
+      "place_amador_city__mayor_council__office_of_the_mayor__no_titles": "f2e8e49cdeaf",
+      "place_amador_city__mayor_council__office_of_the_mayor__suggested_titles": "a6c2e5a73e0c",
+      "place_amador_city__unscoped__commission__suggested_titles": "58f4c5abd02e",
+      "place_amador_city__unscoped__council_manager__suggested_titles": "09fea736d90b",
+      "place_amador_city__unscoped__known_titles": "4fa055e1d873",
+      "place_amador_city__unscoped__no_titles": "3e3de8a86e87",
+      "place_armada__unscoped__no_titles": "7a25695d8676",
+      "place_armada__unscoped__township_board__suggested_titles": "aad37c48b16a",
+      "place_belle_meade__unscoped__commission__suggested_titles": "5c029baa66ef",
+      "place_belle_meade__unscoped__council_manager__suggested_titles": "c8e5cfc8fd7a",
+      "place_belle_meade__unscoped__known_titles": "d3cc14b26bec",
+      "place_belle_meade__unscoped__no_titles": "f12dfeb0219a",
+      "place_gibbsboro__mayor_council__council__no_titles": "5ccf543c30ca",
+      "place_gibbsboro__mayor_council__council__suggested_titles": "9789007b9da8",
+      "place_gibbsboro__mayor_council__office_of_the_mayor__no_titles": "aedc4a340972",
+      "place_greenwood_village__mayor_council__council__known_titles": "180bb697e03b",
+      "place_greenwood_village__mayor_council__council__no_titles": "51f4a90652d9",
+      "place_greenwood_village__mayor_council__council__suggested_titles": "952a3f3d5eb0",
+      "place_greenwood_village__mayor_council__office_of_the_mayor__known_titles": "008af988e9c4",
+      "place_greenwood_village__mayor_council__office_of_the_mayor__no_titles": "289780d39830",
+      "place_greenwood_village__mayor_council__office_of_the_mayor__suggested_titles": "c9b4572f95a1",
+      "place_greenwood_village__unscoped__known_titles": "7c15d8afdbf7",
+      "place_greenwood_village__unscoped__no_titles": "7a25695d8676",
+      "place_meridian__mayor_council__council__known_titles": "9fe7732cc347",
+      "place_meridian__mayor_council__council__no_titles": "15ab0aaed4d0",
+      "place_meridian__mayor_council__council__suggested_titles": "6a544a901860",
+      "place_meridian__mayor_council__office_of_the_mayor__known_titles": "b0912e098912",
+      "place_meridian__mayor_council__office_of_the_mayor__no_titles": "b0912e098912",
+      "place_meridian__mayor_council__office_of_the_mayor__suggested_titles": "09eb292bdfb8",
+      "place_millbury__open_town_meeting__select_board__known_titles": "6daec771d570",
+      "place_millbury__open_town_meeting__select_board__no_titles": "142af32890ee",
+      "place_millbury__open_town_meeting__select_board__suggested_titles": "2fed1dc1d8e5",
+      "place_millbury__open_town_meeting__town_meeting__known_titles": "ae7986d7d29b",
+      "place_millbury__open_town_meeting__town_meeting__no_titles": "ae7986d7d29b",
+      "place_millbury__open_town_meeting__town_meeting__suggested_titles": "2da77c1049f7",
+      "place_millbury__representative_town_meeting__select_board__known_titles": "6daec771d570",
+      "place_millbury__representative_town_meeting__select_board__no_titles": "142af32890ee",
+      "place_millbury__representative_town_meeting__select_board__suggested_titles": "2fed1dc1d8e5",
+      "place_millbury__representative_town_meeting__town_meeting__known_titles": "ae7986d7d29b",
+      "place_millbury__representative_town_meeting__town_meeting__no_titles": "ae7986d7d29b",
+      "place_millbury__representative_town_meeting__town_meeting__suggested_titles": "c2cf124846fb",
+      "place_payette__unscoped__no_titles": "7a25695d8676",
+      "placeholder_name_council": "692551de0881",
+      "raisin_township_clerk": "79b1e459fd62",
+      "raisin_township_supervisor": "79b1e459fd62",
+      "redundant_place_role": "692551de0881",
+      "seattle_council_pick_list_missing_president": "1a93320c73bc",
+      "seattle_council_scoped_to_mayor": "46f529f2fe6c",
+      "seattle_council_separate_mayor": "783730a99b71",
+      "vacant_positions_council": "692551de0881"
      }
     }
    }
@@ -30316,11 +33275,11 @@
    "severity": 1,
    "eval_name": "officials",
    "provider": "AtlasCloud",
-   "metric": "roles",
+   "metric": "primary_role",
    "score": null,
    "gate_floor": null,
-   "missing_count": 12,
-   "expected_count": 304,
+   "missing_count": 10,
+   "expected_count": 426,
    "swing": null,
    "failed_case_ids": []
   },
@@ -30329,11 +33288,11 @@
    "severity": 1,
    "eval_name": "officials",
    "provider": "AtlasCloud",
-   "metric": "email",
+   "metric": "roles",
    "score": null,
    "gate_floor": null,
-   "missing_count": 12,
-   "expected_count": 206,
+   "missing_count": 18,
+   "expected_count": 455,
    "swing": null,
    "failed_case_ids": []
   },
@@ -30345,8 +33304,8 @@
    "metric": "phone",
    "score": null,
    "gate_floor": null,
-   "missing_count": 20,
-   "expected_count": 212,
+   "missing_count": 34,
+   "expected_count": 341,
    "swing": null,
    "failed_case_ids": []
   },
@@ -30358,8 +33317,8 @@
    "metric": "url",
    "score": null,
    "gate_floor": null,
-   "missing_count": 24,
-   "expected_count": 267,
+   "missing_count": 11,
+   "expected_count": 402,
    "swing": null,
    "failed_case_ids": []
   },
@@ -30386,7 +33345,7 @@
    "gate_floor": null,
    "missing_count": null,
    "expected_count": null,
-   "swing": 0.09999999999999998,
+   "swing": 0.2019607843137255,
    "failed_case_ids": []
   },
   {

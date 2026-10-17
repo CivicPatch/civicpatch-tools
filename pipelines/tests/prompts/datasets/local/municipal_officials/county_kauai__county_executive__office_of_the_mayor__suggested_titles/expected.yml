@@ -1,0 +1,12 @@
+generated: true
+jurisdiction_ocdid: ocd-jurisdiction/country:us/state:hi/county:kauai/government
+current_date: '2026-10-16'
+organization:
+  name: Office of the Mayor
+  government_form_role_labels:
+  - Mayor
+people: []
+thought: 'GENERATED, review before moving into the dataset. Form county_executive
+  (decided by the config); suggested_titles, scoped to Office of the Mayor. People
+  are the published roster''s, filed by role (a role no organization lists goes to
+  the main board): check titles, dates and anyone the page lists that the roster lacks.'
