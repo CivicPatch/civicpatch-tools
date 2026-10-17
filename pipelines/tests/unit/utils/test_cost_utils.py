@@ -23,7 +23,7 @@ def _add(cost_usd, error=None, gateway="openrouter", tokens=(10, 20), run=_RUN):
         MagicMock(),
         run,
         LLMCall(
-            prompt_name="municipality_officials",
+            prompt_name="elected_officials",
             gateway=gateway,
             model="deepseek/deepseek-v4-flash",
             upstream_provider="AtlasCloud",

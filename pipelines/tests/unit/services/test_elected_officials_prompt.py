@@ -5,7 +5,7 @@ Wording is judged by the evals; these pin what reaches the prompt at all.
 
 import pytest
 
-from services.open_router.prompts import PromptOrganization, municipality_officials_prompt
+from services.open_router.prompts import PromptOrganization, elected_officials_prompt
 
 pytestmark = pytest.mark.unit
 
@@ -17,7 +17,7 @@ _BARE_COUNCIL = PromptOrganization(name="City Council")
 
 
 def _prompt(**kwargs) -> str:
-    return municipality_officials_prompt([], current_date="2025-09-01", **kwargs)
+    return elected_officials_prompt([], current_date="2025-09-01", **kwargs)
 
 
 def test_a_term_that_ended_before_the_current_date_is_left_out():
@@ -67,13 +67,13 @@ def test_every_office_a_person_holds_goes_in_one_label():
 
 
 def test_an_unscoped_prompt_lists_known_roles_and_divisions_or_the_forms_usual_roles():
-    known = municipality_officials_prompt(
+    known = elected_officials_prompt(
         ["Mayor", "Alderperson"], current_date="2025-09-01", divisions=["ward 1", "ward 2"]
     )
-    guessed = municipality_officials_prompt(
+    guessed = elected_officials_prompt(
         [], current_date="2025-09-01", government_form_role_labels=["Council Member", "Mayor"]
     )
-    neither = municipality_officials_prompt([], current_date="2025-09-01")
+    neither = elected_officials_prompt([], current_date="2025-09-01")
 
     assert "- Roles in this municipality: Mayor, Alderperson." in known
     assert "- Divisions in this municipality: ward 1, ward 2." in known

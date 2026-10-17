@@ -231,7 +231,7 @@ def _roles_hint(
 
 
 # Note: Claude Sonnet 4.6 Generated prompt
-def municipality_officials_prompt(
+def elected_officials_prompt(
     known_roles: List[str],
     state: str = "",
     county: str | None = None,
