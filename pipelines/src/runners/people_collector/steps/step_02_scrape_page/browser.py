@@ -23,6 +23,7 @@ from runners.people_collector.steps.step_02_scrape_page.scrape_images import (
 from runners.people_collector.steps.step_02_scrape_page.scrape_wait import (
     auto_detect_and_wait,
 )
+from shared.utils.url_utils import other_scheme
 
 
 @asynccontextmanager
@@ -62,66 +63,17 @@ async def scrape(logger, website_url, options=None):
             page = await browser.new_page()
             page.set_default_timeout(timeout)
 
-            network_failure_reason = None
-
-            def handle_request_failed(request):
-                nonlocal network_failure_reason
-                if request.url == website_url or request.url == website_url + "/":
-                    if request.failure:
-                        network_failure_reason = request.failure
-
-            page.on("requestfailed", handle_request_failed)
-
-            response = None
-            last_errors: list[str] = []
-
-            wait_until_strategies: list[
-                Literal["networkidle", "load", "domcontentloaded"]
-            ] = ["networkidle", "load", "domcontentloaded"]
-            for wait_until in wait_until_strategies:
+            try:
+                response = await _goto(page, logger, website_url)
+            except NavigationError as e:
+                if e.reason == NavigationFailureReason.NET_DNS_FAILURE:
+                    raise
+                flipped_url = other_scheme(website_url)
+                logger.info(f"Retrying {website_url} as {flipped_url}")
                 try:
-                    response = await page.goto(
-                        website_url,
-                        wait_until=wait_until,
-                        timeout=PAGE_NAVIGATION_TIMEOUT_MS,
-                    )
-                    if response:
-                        break
-                except Exception as e:
-                    last_errors.append(str(e))
-                    logger.warning(
-                        f"Warning: navigation to {website_url} with wait_until={wait_until} failed: {e}"
-                    )
-
-            if response is None or not response.ok:
-                http_status = response.status if response else None
-                detailed_reason = _failure_detail(network_failure_reason, last_errors)
-
-                if http_status:
-                    if http_status == 403:
-                        reason = NavigationFailureReason.HTTP_403
-                    elif http_status == 429:
-                        reason = NavigationFailureReason.HTTP_429
-                    elif http_status >= 500:
-                        reason = NavigationFailureReason.HTTP_5XX
-                    else:
-                        reason = NavigationFailureReason.UNKNOWN
-                else:
-                    if "ERR_NAME_NOT_RESOLVED" in detailed_reason:
-                        reason = NavigationFailureReason.NET_DNS_FAILURE
-                    elif "ERR_CONNECTION_REFUSED" in detailed_reason:
-                        reason = NavigationFailureReason.NET_CONNECTION_REFUSED
-                    elif "ERR_ABORTED" in detailed_reason:
-                        reason = NavigationFailureReason.NET_ABORTED
-                    elif "TIMEOUT" in detailed_reason:
-                        reason = NavigationFailureReason.NET_TIMEOUT
-                    else:
-                        reason = NavigationFailureReason.UNKNOWN
-
-                logger.error(
-                    f"[{reason}] Failure at {website_url}. Detail: {detailed_reason}"
-                )
-                raise NavigationError(website_url, reason, source=detailed_reason)
+                    response = await _goto(page, logger, flipped_url)
+                except NavigationError:
+                    raise e
 
             scraped_urls = options.get("scraped_urls")
             if scraped_urls and page.url in scraped_urls:
@@ -156,6 +108,69 @@ async def scrape(logger, website_url, options=None):
                 await browser.close()
             except Exception:
                 pass
+
+
+async def _goto(page, logger, url):
+    network_failure_reason = None
+
+    def handle_request_failed(request):
+        nonlocal network_failure_reason
+        if request.url == url or request.url == url + "/":
+            if request.failure:
+                network_failure_reason = request.failure
+
+    page.on("requestfailed", handle_request_failed)
+
+    response = None
+    last_errors: list[str] = []
+
+    wait_until_strategies: list[
+        Literal["networkidle", "load", "domcontentloaded"]
+    ] = ["networkidle", "load", "domcontentloaded"]
+    for wait_until in wait_until_strategies:
+        try:
+            response = await page.goto(
+                url,
+                wait_until=wait_until,
+                timeout=PAGE_NAVIGATION_TIMEOUT_MS,
+            )
+            if response:
+                break
+        except Exception as e:
+            last_errors.append(str(e))
+            logger.warning(
+                f"Warning: navigation to {url} with wait_until={wait_until} failed: {e}"
+            )
+
+    if response is None or not response.ok:
+        http_status = response.status if response else None
+        detailed_reason = _failure_detail(network_failure_reason, last_errors)
+
+        if http_status:
+            if http_status == 403:
+                reason = NavigationFailureReason.HTTP_403
+            elif http_status == 429:
+                reason = NavigationFailureReason.HTTP_429
+            elif http_status >= 500:
+                reason = NavigationFailureReason.HTTP_5XX
+            else:
+                reason = NavigationFailureReason.UNKNOWN
+        else:
+            if "ERR_NAME_NOT_RESOLVED" in detailed_reason:
+                reason = NavigationFailureReason.NET_DNS_FAILURE
+            elif "ERR_CONNECTION_REFUSED" in detailed_reason:
+                reason = NavigationFailureReason.NET_CONNECTION_REFUSED
+            elif "ERR_ABORTED" in detailed_reason:
+                reason = NavigationFailureReason.NET_ABORTED
+            elif "TIMEOUT" in detailed_reason:
+                reason = NavigationFailureReason.NET_TIMEOUT
+            else:
+                reason = NavigationFailureReason.UNKNOWN
+
+        logger.error(f"[{reason}] Failure at {url}. Detail: {detailed_reason}")
+        raise NavigationError(url, reason, source=detailed_reason)
+
+    return response
 
 
 # Chromium aborts the pending navigation when the next wait_until strategy issues its goto, so
