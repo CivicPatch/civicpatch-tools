@@ -84,7 +84,7 @@ erDiagram
     llm_calls {
         uuid            id                  PK
         uuid            pipeline_run_id     FK  "idx. ON DELETE CASCADE — a call outlives nothing"
-        text            prompt_name         "which prompt, not which step — steps get renamed and split, and this is the key the evals use"
+        text            prompt_name         "which prompt, not which step — steps get renamed and split, and this is the key the evals use. 246: municipality_officials became elected_officials"
         text_null       source_url          "what it read; with chunk_* these DESCRIBE a call, they do not identify it. The cache folder is format_url_to_folder(source_url), so it is derived, not stored"
         smallint_null   chunk_index
         smallint_null   chunk_count

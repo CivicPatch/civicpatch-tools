@@ -80,7 +80,7 @@ mise run tlive      # live scrape tests: hit real external URLs to verify scrape
                     # runs locally (not Docker) so the browser window is visible for debugging
                     # never run in CI; run manually when changing scrape_utils.py
 mise run evalsr     # relevant-page prompt evals (run after any relevant_page_prompt change)
-mise run evalsm     # municipality officials prompt evals (run after any municipality_officials_prompt change)
+mise run evalsm     # municipality officials prompt evals (run after any elected_officials_prompt change)
 ```
 
 ## Contributing

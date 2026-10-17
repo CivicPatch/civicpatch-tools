@@ -603,7 +603,7 @@ async def process_with_llm(
         pipeline_run_id,
         jurisdiction_ocdid,
         prompt,
-        prompt_name="municipality_officials",
+        prompt_name="elected_officials",
         response_schema=PeopleArrayLLMResponseSchema,
         content=content,
         seed=seed,

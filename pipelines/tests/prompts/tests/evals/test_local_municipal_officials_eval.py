@@ -20,7 +20,7 @@ from runners.people_collector.schemas import (
     ExtractedPersonRecord,
 )
 from services.open_router.llm import run_prompt as run_together_prompt
-from services.open_router.prompts import PromptOrganization, municipality_officials_prompt
+from services.open_router.prompts import PromptOrganization, elected_officials_prompt
 from utils import cost_utils
 from scoring import (
     EVAL_TAXONOMY,
@@ -58,7 +58,7 @@ EVAL_CURRENT_DATE = "2025-09-01"
 
 def make_together_prompt(expected: dict):
     organization = expected.get("organization")
-    return municipality_officials_prompt(
+    return elected_officials_prompt(
         expected.get("known_roles", []),
         # The day the page was read, where the case records it: terms are judged as of then.
         current_date=expected.get("current_date", EVAL_CURRENT_DATE),
@@ -103,7 +103,7 @@ async def _run_single_case(model_client, case, ocdid):
             _eval_run_id(name),
             ocdid,
             prompt,
-            prompt_name="municipality_officials",
+            prompt_name="elected_officials",
             response_schema=PeopleArrayLLMResponseSchema,
             content=case["input"],
             **extra_kwargs,

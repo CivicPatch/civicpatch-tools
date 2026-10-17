@@ -74,7 +74,7 @@ def extraction_prompt(
     """An unscoped run is told the whole jurisdiction's roles and divisions; a scoped one reads
     its organization's from `scope`."""
     ocdid_parts = id_utils.parse_jurisdiction_ocdid(jurisdiction_ocdid)
-    return open_router_prompt.municipality_officials_prompt(
+    return open_router_prompt.elected_officials_prompt(
         expected_roles(memberships),
         state=ocdid_parts.state,
         county=ocdid_parts.county,
