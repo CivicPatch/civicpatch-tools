@@ -85,6 +85,12 @@ def same_url(url1: str, url2: str) -> bool:
     return canonical_url(url1) == canonical_url(url2)
 
 
+def other_scheme(url: str) -> str:
+    parsed = urlparse(format_url(url))
+    scheme = "http" if parsed.scheme == "https" else "https"
+    return urlunparse(parsed._replace(scheme=scheme))
+
+
 def url_in_text(url: str, text: str) -> bool:
     """
     Check if a URL appears in text, tolerating www./non-www. variants.

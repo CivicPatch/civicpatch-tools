@@ -69,6 +69,18 @@ def test_same_url_keeps_distinct_queries_apart():
     assert not url_utils.same_url("https://example.com/p?x=1", "https://example.com/p?x=2")
 
 
+# other_scheme
+
+def test_other_scheme_upgrades_http():
+    assert url_utils.other_scheme("http://aroostook.me.us") == "https://aroostook.me.us"
+
+def test_other_scheme_downgrades_https():
+    assert url_utils.other_scheme("https://example.com/council/") == "http://example.com/council/"
+
+def test_other_scheme_of_a_bare_host_is_http():
+    assert url_utils.other_scheme("example.com/council") == "http://example.com/council"
+
+
 def test_same_domain_accepts_a_bare_domain_or_a_url_on_either_side():
     assert url_utils.same_domain("www.nederlandco.gov", "https://nederlandco.gov/1231/Board-of-Trustees")
     assert url_utils.same_domain("https://www.nederlandco.gov/1231/Board-of-Trustees", "nederlandco.gov/1490")
