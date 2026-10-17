@@ -1,4 +1,5 @@
 generated: true
+jurisdiction_ocdid: ocd-jurisdiction/country:us/state:wa/county:king/government
 current_date: '2026-09-29'
 organization:
   name: County Council

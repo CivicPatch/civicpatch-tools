@@ -6,8 +6,11 @@ Wording is judged by the evals; these pin what reaches the prompt at all.
 import pytest
 
 from services.open_router.prompts import PromptOrganization, elected_officials_prompt
+from shared.schemas import JurisdictionLevel
 
 pytestmark = pytest.mark.unit
+
+_LOCAL = JurisdictionLevel.LOCAL
 
 _COUNCIL = PromptOrganization(
     name="City Council", role_labels=["Council Member", "Council President"], divisions=["district 1"]
@@ -17,7 +20,28 @@ _BARE_COUNCIL = PromptOrganization(name="City Council")
 
 
 def _prompt(**kwargs) -> str:
-    return elected_officials_prompt([], current_date="2025-09-01", **kwargs)
+    return elected_officials_prompt([], level=kwargs.pop("level", _LOCAL), current_date="2025-09-01", **kwargs)
+
+
+def test_a_county_is_named_as_the_target_and_in_the_jurisdiction_line():
+    prompt = _prompt(level=JurisdictionLevel.COUNTIES, state="tx", county="travis")
+
+    assert "elected officials of the target county" in prompt
+    assert "any general\n      county contact" in prompt
+    assert "Jurisdiction: travis County, tx" in prompt
+    assert "municipal" not in prompt
+
+
+def test_a_town_inside_a_county_is_not_read_as_the_county():
+    prompt = _prompt(state="nj", county="bergen")
+
+    assert "elected officials of the target municipality" in prompt
+    assert "any general\n      municipal contact" in prompt
+    assert "Jurisdiction: a municipality in bergen County, nj" in prompt
+
+
+def test_a_town_directly_under_its_state_names_only_the_state():
+    assert "Jurisdiction: ca\n" in _prompt(state="ca")
 
 
 def test_a_term_that_ended_before_the_current_date_is_left_out():
@@ -68,12 +92,12 @@ def test_every_office_a_person_holds_goes_in_one_label():
 
 def test_an_unscoped_prompt_lists_known_roles_and_divisions_or_the_forms_usual_roles():
     known = elected_officials_prompt(
-        ["Mayor", "Alderperson"], current_date="2025-09-01", divisions=["ward 1", "ward 2"]
+        ["Mayor", "Alderperson"], level=_LOCAL, current_date="2025-09-01", divisions=["ward 1", "ward 2"]
     )
     guessed = elected_officials_prompt(
-        [], current_date="2025-09-01", government_form_role_labels=["Council Member", "Mayor"]
+        [], level=_LOCAL, current_date="2025-09-01", government_form_role_labels=["Council Member", "Mayor"]
     )
-    neither = elected_officials_prompt([], current_date="2025-09-01")
+    neither = elected_officials_prompt([], level=_LOCAL, current_date="2025-09-01")
 
     assert "- Roles in this municipality: Mayor, Alderperson." in known
     assert "- Divisions in this municipality: ward 1, ward 2." in known

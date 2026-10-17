@@ -1,10 +1,13 @@
 generated: true
+jurisdiction_ocdid: ocd-jurisdiction/country:us/state:nj/county:hunterdon/place:alexandria/government
 current_date: '2026-10-02'
-government_form_role_labels:
-- Supervisor
-- Clerk
-- Treasurer
-- Trustee
+organization:
+  name: Board
+  government_form_role_labels:
+  - Supervisor
+  - Clerk
+  - Treasurer
+  - Trustee
 people:
 - name: Jim Kiernan
   label: Mayor
@@ -38,3 +41,7 @@ people:
   start_date: null
   end_date: null
   image: null
+thought: 'GENERATED, review before moving into the dataset. Form township_board (one
+  of several allowed, so assumed); suggested_titles, scoped to Board. People are the
+  published roster''s, filed by role (a role no organization lists goes to the main
+  board): check titles, dates and anyone the page lists that the roster lacks.'

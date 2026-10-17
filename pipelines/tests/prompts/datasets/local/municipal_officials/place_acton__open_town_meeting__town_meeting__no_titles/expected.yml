@@ -1,0 +1,10 @@
+generated: true
+jurisdiction_ocdid: ocd-jurisdiction/country:us/state:ma/place:acton/government
+current_date: '2026-10-16'
+organization:
+  name: Town Meeting
+people: []
+thought: 'GENERATED, review before moving into the dataset. Form open_town_meeting
+  (one of several allowed, so assumed); no_titles, scoped to Town Meeting. People
+  are the published roster''s, filed by role (a role no organization lists goes to
+  the main board): check titles, dates and anyone the page lists that the roster lacks.'

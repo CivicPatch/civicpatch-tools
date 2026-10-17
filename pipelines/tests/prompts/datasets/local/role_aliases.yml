@@ -64,7 +64,11 @@ roles:
 
   Commissioner: []
 
-  Supervisor: []
+  # As production's config: a county page labels a supervisor by the board's name.
+  Supervisor:
+    - Board of Supervisors
+    - Town Supervisor
+    - Township Supervisor
   County Executive: []
   Clerk: []
   Treasurer: []

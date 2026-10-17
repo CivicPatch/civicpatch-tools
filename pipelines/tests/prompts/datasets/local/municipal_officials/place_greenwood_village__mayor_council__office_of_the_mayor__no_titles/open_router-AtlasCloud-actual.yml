@@ -1,0 +1,9 @@
+people:
+- name: George Lantz
+  label: Mayor
+  phone: 303-486-5745
+  email: glantz@greenwoodvillage.com
+  url: https://greenwoodvillage.com/2707/Contact-Your-Elected-Officials
+  start_date: 2023-11
+  end_date: 2027-11
+  image: local://05074859a7df.png

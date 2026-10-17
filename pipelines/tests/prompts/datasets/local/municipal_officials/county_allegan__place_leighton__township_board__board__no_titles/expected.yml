@@ -1,0 +1,50 @@
+generated: true
+jurisdiction_ocdid: ocd-jurisdiction/country:us/state:mi/county:allegan/place:leighton/government
+current_date: '2026-10-02'
+organization:
+  name: Board
+people:
+- name: Brian Bonnema
+  label: Trustee
+  phone: (616) 293-2106
+  email: bbonnema75@gmail.com
+  url: https://leightontownship.org/officials/
+  start_date: null
+  end_date: null
+  image: null
+- name: John Hooker
+  label: Trustee
+  phone: (616) 813-0594
+  email: jhook1566@gmail.com
+  url: https://leightontownship.org/officials/
+  start_date: null
+  end_date: null
+  image: null
+- name: Steve Wolbrink
+  label: Supervisor
+  phone: (616) 891-8238 ext. 111
+  email: supervisor@leightontownship.org
+  url: https://leightontownship.org/officials/
+  start_date: null
+  end_date: null
+  image: null
+- name: Rachel Fennema
+  label: Clerk
+  phone: (616) 891-8238 ext. 114
+  email: clerk@leightontownship.org
+  url: https://leightontownship.org/officials/
+  start_date: null
+  end_date: null
+  image: null
+- name: Jacquelynn Bultsma
+  label: Treasurer
+  phone: (616) 891-8238 ext. 113
+  email: treasurer@leightontownship.org
+  url: https://leightontownship.org/officials/
+  start_date: null
+  end_date: null
+  image: null
+thought: 'GENERATED, review before moving into the dataset. Form township_board (decided
+  by the config); no_titles, scoped to Board. People are the published roster''s,
+  filed by role (a role no organization lists goes to the main board): check titles,
+  dates and anyone the page lists that the roster lacks.'

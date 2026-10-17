@@ -1,0 +1,59 @@
+generated: true
+jurisdiction_ocdid: ocd-jurisdiction/country:us/state:id/place:meridian/government
+current_date: '2026-10-16'
+organization:
+  name: Council
+people:
+- name: Luke Cavener
+  label: Council Member, District 6
+  phone: (208) 888-4433
+  email: lcavener@meridiancity.org
+  url: https://meridiancity.org/city-council/seat-6
+  start_date: null
+  end_date: null
+  image: null
+- name: Liz Strader
+  label: Council Member, District 2
+  phone: (208) 888-4433
+  email: lstrader@meridiancity.org
+  url: https://meridiancity.org/city-council/seat-2
+  start_date: null
+  end_date: null
+  image: null
+- name: Anne Little Roberts
+  label: Council Vice President, District 5
+  phone: (208) 888-4433
+  email: alittleroberts@meridiancity.org
+  url: https://meridiancity.org/city-council/seat-5
+  start_date: null
+  end_date: null
+  image: null
+- name: Brian Whitlock
+  label: Council Member, District 1
+  phone: (208) 850-3301
+  email: bwhitlock@meridiancity.org
+  url: https://meridiancity.org/city-council/seat-1
+  start_date: null
+  end_date: null
+  image: null
+- name: Doug Taylor
+  label: Council Member, District 3
+  phone: (208) 888-4433
+  email: dtaylor@meridiancity.org
+  url: https://meridiancity.org/city-council/seat-3
+  start_date: null
+  end_date: null
+  image: null
+- name: John Overton
+  label: Council President, District 4
+  phone: (208) 888-4433
+  email: joverton@meridiancity.org
+  url: https://meridiancity.org/city-council/seat-4
+  start_date: null
+  end_date: null
+  image: null
+thought: 'GENERATED, review before moving into the dataset. Form mayor_council (one
+  of several allowed, so assumed); no_titles, scoped to Council. People are the published
+  roster''s, filed by role (a role no organization lists goes to the main board):
+  check titles, dates and anyone the page lists that the roster lacks. Hand-corrected
+  against the page: the published roster was out of date.'
