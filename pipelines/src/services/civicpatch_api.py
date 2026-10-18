@@ -245,3 +245,27 @@ async def fill_government_form(
         return False
     response.raise_for_status()
     return True
+
+
+async def store_governing_law_source_page(
+    client: httpx.AsyncClient, jurisdiction_ocdid: str, source_url: str, text: str
+) -> dict:
+    """Cache a collected page, stripped to markdown, through cp.org (the pipeline holds no
+    bucket credentials). Answers the `governing_law_source_pages` row."""
+    env = get_env_vars()
+    response = await client.post(
+        f"{env['CIVICPATCH_ORG_URL']}/api/v1/jurisdictions/{jurisdiction_ocdid}/governing_law_source_pages",
+        json={"source_url": source_url, "text": text},
+    )
+    response.raise_for_status()
+    return response.json()["data"]
+
+
+async def get_governing_law_source_page(client: httpx.AsyncClient, jurisdiction_ocdid: str, source_page_id: str) -> dict:
+    """The row with its text."""
+    env = get_env_vars()
+    response = await client.get(
+        f"{env['CIVICPATCH_ORG_URL']}/api/v1/jurisdictions/{jurisdiction_ocdid}/governing_law_source_pages/{source_page_id}"
+    )
+    response.raise_for_status()
+    return response.json()["data"]

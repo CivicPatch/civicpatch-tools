@@ -1,4 +1,5 @@
 import re
+from enum import StrEnum
 
 from pydantic import BaseModel, model_validator
 from shared.schemas import GovernmentForm, JurisdictionLevel, Role, RoleConfig
@@ -33,13 +34,47 @@ class GovernmentFormConfig(BaseModel):
 
 GovernmentFormsConfig = dict[GovernmentForm, GovernmentFormConfig]
 
+class GovernedBy(StrEnum):
+    CHARTER = "charter"
+    GENERAL_LAW = "general_law"
+    CHARTER_OR_GENERAL_LAW = "charter_or_general_law"
+
+
+class Classification(BaseModel):
+    """One of the state's statutory classes of municipality: Vermont's village, Texas's Type A."""
+
+    # The Census LSAD words that are always this class; empty where a name cannot tell.
+    lsad: list[str] = []
+    governed_by: GovernedBy
+    general_law: list[str] = []
+
+
+class GoverningLawConfig(BaseModel):
+    """Where a state's local law lives. `charter_terms` are the state's names for a charter."""
+
+    charter_terms: list[str]
+    charter_index_url: str | None = None
+    classifications: dict[str, Classification] = {}
+
+    @model_validator(mode="after")
+    def _one_classification_per_lsad(self) -> "GoverningLawConfig":
+        seen: set[str] = set()
+        for classification in self.classifications.values():
+            for lsad in classification.lsad:
+                if lsad in seen:
+                    raise ValueError(f"lsad {lsad!r} is in two classifications")
+                seen.add(lsad)
+        return self
+
 
 class ConfigFile(BaseModel):
     """One `data_source/.../config.yml`: the country's roles (`data_source/config.yml`), the
-    country's government forms for one level, or one state's roles and government forms for one level."""
+    country's government forms for one level, or one state's roles, government forms and
+    governing law for one level."""
 
     roles: list[ConfigRole] = []
     government_forms: GovernmentFormsConfig = {}
+    governing_law: GoverningLawConfig | None = None
 
     @model_validator(mode="after")
     def _roles_are_distinct(self) -> "ConfigFile":
@@ -53,6 +88,7 @@ class MergedConfig(BaseModel):
     roles: RoleConfig
     country_government_forms: GovernmentFormsConfig
     state_government_forms: GovernmentFormsConfig
+    governing_law: GoverningLawConfig | None
 
 
 def merged_config(
@@ -61,6 +97,8 @@ def merged_config(
     state = state or ConfigFile()
     if country_roles.government_forms or country_government_forms.roles:
         raise ValueError("country roles and country government forms belong in separate files")
+    if country_roles.governing_law or country_government_forms.governing_law:
+        raise ValueError("governing law belongs in a state's file")
     config_roles = [*country_roles.roles, *state.roles]
     _check_roles_distinct(config_roles)
     _check_country_government_forms(country_government_forms.government_forms)
@@ -71,6 +109,7 @@ def merged_config(
         ),
         country_government_forms=country_government_forms.government_forms,
         state_government_forms=state.government_forms,
+        governing_law=state.governing_law,
     )
     _check_role_labels_resolve(merged)
     _check_one_organization_per_role(merged)
@@ -148,6 +187,27 @@ def derived_organizations(
     if government_form is None or government_form not in config.country_government_forms:
         return []
     return government_form_organizations(config, government_form)
+
+
+def allowed_classifications(governing_law: GoverningLawConfig, name: str) -> list[str]:
+    lsad = name_suffix(name)
+    return [
+        classification_id
+        for classification_id, classification in governing_law.classifications.items()
+        if lsad in classification.lsad
+    ]
+
+
+def resolve_classification(
+    governing_law: GoverningLawConfig, name: str, classification_id: str | None
+) -> str | None:
+    """The saved classification, else the only one its LSAD allows, else unknown."""
+    if classification_id is not None:
+        return classification_id
+    classification_ids = allowed_classifications(governing_law, name)
+    if len(classification_ids) == 1:
+        return classification_ids[0]
+    return None
 
 
 def _role(config_role: ConfigRole, priority: int) -> Role:

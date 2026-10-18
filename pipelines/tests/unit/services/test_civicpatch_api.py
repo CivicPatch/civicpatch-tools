@@ -82,3 +82,25 @@ async def test_get_organizations_keeps_each_bodys_posts_under_it():
         ("Office of the Mayor", True, ["p1"]),
         ("City Council", False, ["p2", "p3"]),
     ]
+
+
+@pytest.mark.asyncio
+async def test_a_governing_law_source_page_is_stored_through_cp_org_and_read_back_by_id():
+    from services.civicpatch_api import get_governing_law_source_page, store_governing_law_source_page
+
+    row = {"id": "row-1", "jurisdiction_ocdid": _OCDID, "source_url": "https://x.gov/charter", "page_hash": "abc", "cache_path": "governing_law/abc.md"}
+    client = MagicMock()
+    client.post = AsyncMock(return_value=_response(row))
+    client.get = AsyncMock(return_value=_response({**row, "text": "§ 1."}))
+
+    with patch(f"{MODULE}.get_env_vars", return_value=_ENV):
+        stored = await store_governing_law_source_page(client, _OCDID, "https://x.gov/charter", "§ 1.")
+        found = await get_governing_law_source_page(client, _OCDID, "row-1")
+
+    client.post.assert_awaited_once_with(
+        f"https://civicpatch.org/api/v1/jurisdictions/{_OCDID}/governing_law_source_pages",
+        json={"source_url": "https://x.gov/charter", "text": "§ 1."},
+    )
+    client.get.assert_awaited_once_with(f"https://civicpatch.org/api/v1/jurisdictions/{_OCDID}/governing_law_source_pages/row-1")
+    assert stored == row
+    assert found["text"] == "§ 1."

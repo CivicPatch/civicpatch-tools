@@ -84,6 +84,8 @@ A page the visitor can't view redirects to `/`.
 - Assign a person to a post and set their office label.
 - View Activity.
 - Read jurisdictions, people, review cards and unmatched role text through the API.
+- Read a jurisdiction's governing law and its collected source pages through the API; the
+  service key may too. Not public.
 
 ### Contributors
 
@@ -97,6 +99,7 @@ A page the visitor can't view redirects to `/`.
 - Edit a jurisdiction's published data (opens a PR), and edit the live roster directly.
 - Edit a post's headcount and tracked state; delete a post, or fold it into another.
 - Create, edit and delete organizations; choose a jurisdiction's default organization.
+- Set a jurisdiction's governing law, and store a collected source page; the service key may too.
 - Add, edit and remove roles (each opens a PR on open-data's `data_source/config.yml`).
 - Set a jurisdiction's government form (saved at once, no PR; a scrape fills it only while unset).
 - Scrape a single jurisdiction; read pipeline run details; resume a paused run.

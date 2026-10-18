@@ -2,6 +2,7 @@ import boto3
 import logging
 from typing import Optional
 from botocore.client import Config
+from botocore.exceptions import ClientError
 from fastapi import UploadFile
 import os
 from datetime import datetime, timedelta
@@ -282,3 +283,12 @@ def copy_object(
         CopySource={"Bucket": source_bucket, "Key": source_key},
         Key=dest_key,
     )
+
+def download_bytes_from_storage(bucket_name: str, key: str) -> bytes | None:
+    """The object's body, or None when the key does not exist. Synchronous, like `upload_bytes_to_storage`."""
+    try:
+        return get_client().get_object(Bucket=bucket_name, Key=key)["Body"].read()
+    except ClientError as error:
+        if error.response.get("Error", {}).get("Code") == "NoSuchKey":
+            return None
+        raise
