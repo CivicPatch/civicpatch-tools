@@ -13,6 +13,7 @@ from shared.utils.statuses import (
     RUN_LEVEL_ISSUE_TYPES,
     ActivityType,
     DismissalReason,
+    PipelineRunKind,
     PipelineRunStatus,
     TERMINAL_PIPELINE_RUN_STATUSES,
 )
@@ -24,6 +25,7 @@ _TERMINAL = TERMINAL_PIPELINE_RUN_STATUSES
 
 async def register_run(
     run_id: str,
+    kind: PipelineRunKind,
     jurisdiction_ocdid: str,
     arguments_json: dict,
     created_by_user_id: Optional[str] = None,
@@ -49,10 +51,10 @@ async def register_run(
         cur = await conn.execute(
             sql.SQL(f"""
             INSERT INTO pipeline_runs (
-                id, jurisdiction_ocdid, arguments_json, created_by_user_id, status, progress,
+                id, kind, jurisdiction_ocdid, arguments_json, created_by_user_id, status, progress,
                 pipeline_run_cap_usd
             )
-            VALUES (%s, %s, %s, %s, %s, %s, (
+            VALUES (%s, %s, %s, %s, %s, %s, %s, (
                 SELECT ss.pipeline_run_cap_usd
                 FROM jurisdictions j
                 JOIN state_settings ss ON ss.state = j.state
@@ -62,6 +64,7 @@ async def register_run(
             """),
             (
                 run_id,
+                kind,
                 jurisdiction_ocdid,
                 json.dumps(arguments_json),
                 created_by_user_id,
@@ -188,7 +191,7 @@ async def jurisdiction_ocdids_with_unfinished_runs() -> set[str]:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "SELECT DISTINCT jurisdiction_ocdid FROM pipeline_runs WHERE finished_at IS NULL"
+            f"SELECT DISTINCT jurisdiction_ocdid FROM pipeline_runs WHERE finished_at IS NULL AND kind = '{PipelineRunKind.PEOPLE_COLLECTOR.value}'"
         )
         return {row[0] for row in await cur.fetchall()}
 
@@ -199,10 +202,10 @@ async def jurisdiction_ocdids_with_unfinished_runs_in_state(
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            """
+            f"""
             SELECT DISTINCT jurisdiction_ocdid
             FROM pipeline_runs
-            WHERE finished_at IS NULL AND jurisdiction_ocdid LIKE %s
+            WHERE finished_at IS NULL AND jurisdiction_ocdid LIKE %s AND kind = '{PipelineRunKind.PEOPLE_COLLECTOR.value}'
             """,
             (f"%state:{state_code}%",),
         )
@@ -218,7 +221,7 @@ async def get_active_pipeline_runs(
         query = """
             SELECT r.id::text, r.status, r.progress, r.created_at, r.updated_at,
                    r.jurisdiction_ocdid, jur.state, jur.data->>'name',
-                   COUNT(*) OVER() AS total_count
+                   COUNT(*) OVER() AS total_count, r.kind
             FROM pipeline_runs r
             JOIN jurisdictions jur ON jur.jurisdiction_ocdid = r.jurisdiction_ocdid
             WHERE r.finished_at IS NULL
@@ -242,6 +245,7 @@ async def get_active_pipeline_runs(
                 "jurisdiction_ocdid": row[5],
                 "state": row[6],
                 "jurisdiction_name": row[7],
+                "kind": row[9],
             }
             for row in rows
         ], total

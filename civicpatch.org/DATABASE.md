@@ -70,6 +70,7 @@ erDiagram
 
     pipeline_runs {
         uuid            id                  PK  "169: split back out of changesets, undoing 147"
+        text            kind                "248: which pipeline (check: people_collector|governing_law_collector|organizations_collector, mirrors PipelineRunKind; no default: a writer says which pipeline it is). The cap, llm_calls, issues, cancel and the stale sweep serve every kind; the scrape's scheduling (LAST_ATTEMPT_JOIN, the unfinished-run sets, IN_FLIGHT_SQL, the per-run cost and time averages) reads only people_collector. The monthly budget counts every kind"
         text            jurisdiction_ocdid  "NOT NULL — a run is always about somewhere"
         uuid_null       changeset_id        FK  "the proposal this run minted, NULL until ingest succeeds. ON DELETE SET NULL"
         text_null       status

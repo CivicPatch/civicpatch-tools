@@ -34,9 +34,10 @@ tests/
 ## State machine
 
 The `people_collector` pipeline is a state machine, and the graph is
-`PIPELINE_RUN_TRANSITIONS` in `shared/utils/statuses.py`. It is the definition, not a
-description of one: the engine checks every step's answer against it, and
-`TERMINAL_PIPELINE_RUN_STATUSES` is derived from it.
+`PEOPLE_COLLECTOR_TRANSITIONS` in `runners/people_collector/transitions/graph.py`. It is the
+definition, not a description of one: the engine (`runners/engine.py`, handed the graph and its
+handlers as a `Machine`) checks every step's answer against it, and every graph must end on
+`TERMINAL_PIPELINE_RUN_STATUSES` in `shared/utils/statuses.py`, which civicpatch.org reads.
 
 You cannot forget to update it: a handler returning a state the table does not list raises on
 the spot, so the table and the handlers cannot drift apart the way a diagram could.

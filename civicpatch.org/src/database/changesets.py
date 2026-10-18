@@ -23,7 +23,7 @@ from database.changeset_predicates import (
 from database.database import get_pool, to_iso
 from schemas.common import InFlightEntry, InFlightEntryType, JurisdictionInFlight
 from shared.utils.id_utils import make_id
-from shared.utils.statuses import ActivityType, ChangesetKind
+from shared.utils.statuses import ActivityType, ChangesetKind, PipelineRunKind
 
 logger = logging.getLogger(__name__)
 
@@ -372,6 +372,7 @@ IN_FLIGHT_SQL = f"""
     WHERE jurisdiction_ocdid = %s
       AND finished_at IS NULL
       AND changeset_id IS NULL
+      AND kind = '{PipelineRunKind.PEOPLE_COLLECTOR.value}'
 
     UNION ALL
 

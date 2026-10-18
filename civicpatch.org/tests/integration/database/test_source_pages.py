@@ -41,7 +41,7 @@ async def sentinel_run():
         )
         changeset_id = (await cur.fetchone())[0]
         await cur.execute(
-            "INSERT INTO pipeline_runs (id, jurisdiction_ocdid, arguments_json) VALUES (%s, %s, '{}')",
+            "INSERT INTO pipeline_runs (id, kind, jurisdiction_ocdid, arguments_json) VALUES (%s, 'people_collector', %s, '{}')",
             (run_id, _SENTINEL_OCDID),
         )
         await conn.commit()

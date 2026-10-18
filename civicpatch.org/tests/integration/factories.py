@@ -27,7 +27,7 @@ from database.changesets import create_roster_edit_changeset, register_scrape_ch
 from database.database import get_pool
 from database.pipeline_runs import register_run, update_pipeline_run_status
 from database.source_records import insert_source_records
-from shared.utils.statuses import PipelineRunStatus
+from shared.utils.statuses import PipelineRunKind, PipelineRunStatus
 
 
 class SeededMembership(BaseModel):
@@ -62,11 +62,12 @@ async def start_run(
     status: PipelineRunStatus = PipelineRunStatus.INIT,
     progress: int = 0,
     created_by_user_id: str | None = None,
+    kind: PipelineRunKind = PipelineRunKind.PEOPLE_COLLECTOR,
 ) -> str:
     """An attempt in flight: no changeset, no `finished_at`, exactly as production starts one."""
     run_id = str(uuid.uuid4())
     await register_run(
-        run_id, jurisdiction_ocdid, {}, created_by_user_id, status, progress
+        run_id, kind, jurisdiction_ocdid, {}, created_by_user_id, status, progress
     )
     return run_id
 

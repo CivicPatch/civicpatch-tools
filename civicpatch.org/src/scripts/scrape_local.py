@@ -22,7 +22,7 @@ from database.database import get_pool
 from database.pipeline_runs import register_run
 from database.review_pool import has_open_review
 from routers.api.pipeline_runs import _DISPATCH_MODE_LOCAL, DISPATCH_MODE
-from shared.utils.statuses import PipelineRunStatus
+from shared.utils.statuses import PipelineRunKind, PipelineRunStatus
 
 MEMINFO_PATH = "/proc/meminfo"
 MEMINFO_AVAILABLE_KEY = "MemAvailable:"
@@ -91,6 +91,7 @@ async def start_run(ocdid: str, name: str | None, url: str) -> Run:
     run_id = shared.utils.id_utils.make_id()
     await register_run(
         run_id=run_id,
+        kind=PipelineRunKind.PEOPLE_COLLECTOR,
         arguments_json={"jurisdiction_ocdid": ocdid, "name": name, "url": url, "source_urls": None},
         jurisdiction_ocdid=ocdid,
     )

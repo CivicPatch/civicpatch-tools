@@ -1,6 +1,6 @@
 """The engine loop: which states it may move between, and how it leaves.
 
-`PIPELINE_RUN_TRANSITIONS` is the graph. The engine checks every step's answer against it,
+Each pipeline brings its graph (`PEOPLE_COLLECTOR_TRANSITIONS` for the scrape). The engine checks every step's answer against it,
 so a handler that returns an impossible state fails here rather than writing that state outward.
 
 `civicpatch_api` is patched because it is HTTP — a real process boundary. Transition maps are
@@ -11,9 +11,10 @@ from unittest.mock import AsyncMock, MagicMock, patch
 
 import pytest
 
-from runners.engine import IllegalTransition, run_pipeline
+from runners.engine import IllegalTransition, Machine, run_pipeline
 from runners.people_collector.schemas import PipelineStatus
-from shared.utils.statuses import PipelineRunStatus
+from runners.people_collector.transitions.graph import PEOPLE_COLLECTOR_TRANSITIONS
+from shared.utils.statuses import TERMINAL_PIPELINE_RUN_STATUSES, PipelineRunStatus
 from tests.factories.pipeline_run_context import pipeline_run_context_factory
 
 
@@ -30,6 +31,10 @@ def _returning(next_state: PipelineStatus):
         return context, next_state
 
     return _fn
+
+
+def _machine(handlers) -> Machine:
+    return Machine(transitions=PEOPLE_COLLECTOR_TRANSITIONS, handlers=handlers)
 
 
 def _patched_api(reported_status=PipelineRunStatus.RUNNING):
@@ -52,7 +57,7 @@ async def test_a_cancelled_run_reports_cancelled_not_the_step_it_was_on():
             result = await run_pipeline(
                 _at(PipelineStatus.SCRAPE_PAGE),
                 MagicMock(),
-                {PipelineStatus.SCRAPE_PAGE: should_not_run},
+                _machine({PipelineStatus.SCRAPE_PAGE: should_not_run}),
                 AsyncMock(),
             )
     finally:
@@ -78,7 +83,7 @@ async def test_a_step_naming_a_state_the_graph_forbids_raises():
                 await run_pipeline(
                     _at(PipelineStatus.SAVE_OUTPUT),
                     MagicMock(),
-                    {PipelineStatus.SAVE_OUTPUT: _returning(PipelineStatus.CLEANUP)},
+                    _machine({PipelineStatus.SAVE_OUTPUT: _returning(PipelineStatus.CLEANUP)}),
                     AsyncMock(),
                 )
     finally:
@@ -101,10 +106,10 @@ async def test_a_run_walks_the_graph_to_a_terminal_state():
             result = await run_pipeline(
                 _at(PipelineStatus.SAVE_OUTPUT),
                 MagicMock(),
-                {
+                _machine({
                     PipelineStatus.SAVE_OUTPUT: _returning(PipelineStatus.SEND_SUCCESS),
                     PipelineStatus.SEND_SUCCESS: _returning(PipelineStatus.SUCCESS),
-                },
+                }),
                 AsyncMock(),
             )
     finally:
@@ -113,20 +118,59 @@ async def test_a_run_walks_the_graph_to_a_terminal_state():
     assert result.current_state == PipelineStatus.SUCCESS
 
 
+
+@pytest.mark.unit
+@pytest.mark.asyncio
+async def test_a_run_is_held_to_its_own_pipelines_graph():
+    """A second pipeline brings its own graph. Here SAVE_OUTPUT may go straight to SUCCESS,
+    which the people collector's graph forbids, and CLEANUP is no longer reachable from it."""
+    shortcut = {
+        PipelineStatus.SAVE_OUTPUT: frozenset({PipelineStatus.SUCCESS}),
+        PipelineStatus.SUCCESS: frozenset(),
+    }
+    api, _ = _patched_api()
+    try:
+        with patch("runners.engine.log_system_usage"):
+            walked = await run_pipeline(
+                _at(PipelineStatus.SAVE_OUTPUT),
+                MagicMock(),
+                Machine(transitions=shortcut, handlers={PipelineStatus.SAVE_OUTPUT: _returning(PipelineStatus.SUCCESS)}),
+                AsyncMock(),
+            )
+            with pytest.raises(IllegalTransition):
+                await run_pipeline(
+                    _at(PipelineStatus.SAVE_OUTPUT),
+                    MagicMock(),
+                    Machine(transitions=shortcut, handlers={PipelineStatus.SAVE_OUTPUT: _returning(PipelineStatus.SEND_SUCCESS)}),
+                    AsyncMock(),
+                )
+    finally:
+        api.stop()
+
+    assert walked.current_state == PipelineStatus.SUCCESS
+
 @pytest.mark.unit
 def test_every_state_the_engine_handles_is_in_the_graph_and_vice_versa():
-    """`TRANSITION_MAP` says who runs a state; `PIPELINE_RUN_TRANSITIONS` says where it may go.
+    """`TRANSITION_MAP` says who runs a state; `PEOPLE_COLLECTOR_TRANSITIONS` says where it may go.
     Adding one without the other is the drift this pins — a handler with no declared edges
     raises on its first transition, and an edge with no handler is a KeyError mid-run."""
     from runners.people_collector.transitions.main import TRANSITION_MAP
-    from shared.utils.statuses import PIPELINE_RUN_TRANSITIONS
 
     # PENDING and RUNNING are civicpatch.org's; the engine starts at INIT.
     before_the_engine = {PipelineStatus.PENDING, PipelineStatus.RUNNING}
     engine_states = {
         state
-        for state, allowed in PIPELINE_RUN_TRANSITIONS.items()
+        for state, allowed in PEOPLE_COLLECTOR_TRANSITIONS.items()
         if allowed and state not in before_the_engine
     }
 
     assert set(TRANSITION_MAP) == engine_states
+
+
+@pytest.mark.unit
+def test_the_people_collectors_graph_ends_where_every_run_ends():
+    """civicpatch.org tells a finished run by `TERMINAL_PIPELINE_RUN_STATUSES`; a graph ending
+    anywhere else would leave runs it thinks are still going."""
+    from runners.engine import terminal_states
+
+    assert set(terminal_states(PEOPLE_COLLECTOR_TRANSITIONS)) == set(TERMINAL_PIPELINE_RUN_STATUSES)

@@ -618,8 +618,8 @@ async function seedPerson(client, ocdid, person) {
 // state's scrape button, and what the "already running" figure counts.
 async function seedRunInFlight(client, id, ocdid) {
   await client.query(
-    `INSERT INTO pipeline_runs (id, jurisdiction_ocdid, status, progress)
-     VALUES ($1, $2, 'SCRAPE_PAGE', 40)
+    `INSERT INTO pipeline_runs (id, kind, jurisdiction_ocdid, status, progress)
+     VALUES ($1, 'people_collector', $2, 'SCRAPE_PAGE', 40)
      ON CONFLICT (id) DO NOTHING`,
     [id, ocdid],
   );
@@ -629,9 +629,9 @@ async function seedRunInFlight(client, id, ocdid) {
 // dismissed. Windowed by `created_at`, hence the age.
 async function seedFailedRun(client, id, ocdid, ageSeconds) {
   await client.query(
-    `INSERT INTO pipeline_runs (id, jurisdiction_ocdid, status, progress,
+    `INSERT INTO pipeline_runs (id, kind, jurisdiction_ocdid, status, progress,
                                 created_at, updated_at, finished_at)
-     VALUES ($1, $2, 'ERROR', 20,
+     VALUES ($1, 'people_collector', $2, 'ERROR', 20,
              NOW() - ($3 * INTERVAL '1 second'),
              NOW() - ($3 * INTERVAL '1 second'),
              NOW() - ($3 * INTERVAL '1 second'))

@@ -419,8 +419,8 @@ async def test_a_scrape_entry_carries_its_run_s_clock_not_the_changeset_s():
             (changeset_id, _OCDID),
         )
         await cur.execute(
-            "INSERT INTO pipeline_runs (id, jurisdiction_ocdid, arguments_json, status, "
-            "changeset_id, created_at, finished_at) VALUES (%s, %s, '{}'::jsonb, 'SUCCESS', %s, "
+            "INSERT INTO pipeline_runs (id, kind, jurisdiction_ocdid, arguments_json, status, "
+            "changeset_id, created_at, finished_at) VALUES (%s, 'people_collector', %s, '{}'::jsonb, 'SUCCESS', %s, "
             "now() - interval '9 minutes', now())",
             (run_id, _OCDID, changeset_id),
         )
@@ -484,9 +484,9 @@ async def test_an_entry_carries_what_the_run_reported():
         # that run produced — so this entry needs a run, which it did not before: the issue used
         # to name the changeset directly.
         await cur.execute(
-            "INSERT INTO pipeline_runs (id, jurisdiction_ocdid, arguments_json, status, "
+            "INSERT INTO pipeline_runs (id, kind, jurisdiction_ocdid, arguments_json, status, "
             "  changeset_id, finished_at) "
-            "VALUES (gen_random_uuid(), %s, '{}'::jsonb, 'SUCCESS', %s, now()) RETURNING id::text",
+            "VALUES (gen_random_uuid(), 'people_collector', %s, '{}'::jsonb, 'SUCCESS', %s, now()) RETURNING id::text",
             (_OCDID, changeset_id),
         )
         run_id = (await cur.fetchone())[0]
@@ -523,8 +523,8 @@ async def test_a_scrape_entry_carries_what_its_run_spent():
             (changeset_id, _OCDID),
         )
         await cur.execute(
-            "INSERT INTO pipeline_runs (id, jurisdiction_ocdid, arguments_json, status, "
-            "changeset_id, finished_at) VALUES (%s, %s, '{}'::jsonb, 'SUCCESS', %s, now())",
+            "INSERT INTO pipeline_runs (id, kind, jurisdiction_ocdid, arguments_json, status, "
+            "changeset_id, finished_at) VALUES (%s, 'people_collector', %s, '{}'::jsonb, 'SUCCESS', %s, now())",
             (run_id, _OCDID, changeset_id),
         )
         for cost in ("0.0016", "0.0110"):
@@ -552,8 +552,8 @@ async def _seed_scrape_run(cur) -> tuple[str, str]:
         (changeset_id, _OCDID),
     )
     await cur.execute(
-        "INSERT INTO pipeline_runs (id, jurisdiction_ocdid, arguments_json, status, "
-        "changeset_id, finished_at) VALUES (%s, %s, '{}'::jsonb, 'SUCCESS', %s, now())",
+        "INSERT INTO pipeline_runs (id, kind, jurisdiction_ocdid, arguments_json, status, "
+        "changeset_id, finished_at) VALUES (%s, 'people_collector', %s, '{}'::jsonb, 'SUCCESS', %s, now())",
         (run_id, _OCDID, changeset_id),
     )
     return changeset_id, run_id
@@ -619,9 +619,9 @@ async def test_a_settled_issue_still_appears_on_the_entry():
             (changeset_id, _OCDID),
         )
         await cur.execute(
-            "INSERT INTO pipeline_runs (id, jurisdiction_ocdid, arguments_json, status, "
+            "INSERT INTO pipeline_runs (id, kind, jurisdiction_ocdid, arguments_json, status, "
             "  changeset_id, finished_at) "
-            "VALUES (gen_random_uuid(), %s, '{}'::jsonb, 'SUCCESS', %s, now()) RETURNING id::text",
+            "VALUES (gen_random_uuid(), 'people_collector', %s, '{}'::jsonb, 'SUCCESS', %s, now()) RETURNING id::text",
             (_OCDID, changeset_id),
         )
         run_id = (await cur.fetchone())[0]

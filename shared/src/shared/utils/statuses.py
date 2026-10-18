@@ -23,62 +23,14 @@ class PipelineRunStatus(StrEnum):
     FIND_JURISDICTION_URL = "FIND_JURISDICTION_URL"
 
 
-# A run's whole life. The engine walks the middle, civicpatch.org owns the ends, and both read
-# this — they used to disagree about which states were terminal.
-PIPELINE_RUN_TRANSITIONS: dict[PipelineRunStatus, frozenset[PipelineRunStatus]] = {
-    # civicpatch.org's, before the engine exists
-    PipelineRunStatus.PENDING: frozenset({PipelineRunStatus.RUNNING}),
-    PipelineRunStatus.RUNNING: frozenset({PipelineRunStatus.INIT}),
-    # the engine's
-    PipelineRunStatus.INIT: frozenset({PipelineRunStatus.RESEARCH_MUNICIPALITY}),
-    PipelineRunStatus.RESEARCH_MUNICIPALITY: frozenset({PipelineRunStatus.SCRAPE_PAGE}),
-    PipelineRunStatus.SCRAPE_PAGE: frozenset({
-        PipelineRunStatus.PREPROCESS_PAGE_CONTENT,
-        PipelineRunStatus.SCRAPE_PAGE,
-        PipelineRunStatus.CLEANUP,
-        PipelineRunStatus.FIND_JURISDICTION_URL,
-    }),
-    PipelineRunStatus.PREPROCESS_PAGE_CONTENT: frozenset({
-        PipelineRunStatus.PROCESS_PAGE_CONTENT,
-        PipelineRunStatus.SCRAPE_PAGE,
-        PipelineRunStatus.FIND_JURISDICTION_URL,
-    }),
-    PipelineRunStatus.PROCESS_PAGE_CONTENT: frozenset({
-        PipelineRunStatus.CLEANUP,
-        PipelineRunStatus.SCRAPE_PAGE,
-    }),
-    PipelineRunStatus.CLEANUP: frozenset({PipelineRunStatus.REVIEW_OUTPUT}),
-    PipelineRunStatus.REVIEW_OUTPUT: frozenset({
-        PipelineRunStatus.SAVE_OUTPUT,
-        PipelineRunStatus.FIND_JURISDICTION_URL,
-    }),
-    PipelineRunStatus.FIND_JURISDICTION_URL: frozenset({
-        PipelineRunStatus.REVIEW_OUTPUT,
-        PipelineRunStatus.SCRAPE_PAGE,
-    }),
-    PipelineRunStatus.SAVE_OUTPUT: frozenset({PipelineRunStatus.SEND_SUCCESS}),
-    PipelineRunStatus.SEND_SUCCESS: frozenset({PipelineRunStatus.SUCCESS}),
-    PipelineRunStatus.SEND_ERROR: frozenset({PipelineRunStatus.ERROR}),
-    # nothing follows these
-    PipelineRunStatus.SUCCESS: frozenset(),
-    PipelineRunStatus.ERROR: frozenset(),
-    PipelineRunStatus.CANCELLED: frozenset(),
-    PipelineRunStatus.RESOLVED: frozenset(),
-}
-
-TERMINAL_PIPELINE_RUN_STATUSES = tuple(
-    status for status, allowed in PIPELINE_RUN_TRANSITIONS.items() if not allowed
+# Where every pipeline's run ends, whichever pipeline it is. civicpatch.org reads this to tell a
+# finished run; each pipeline's graph must end on exactly these (test_engine.py holds them to it).
+TERMINAL_PIPELINE_RUN_STATUSES = (
+    PipelineRunStatus.SUCCESS,
+    PipelineRunStatus.ERROR,
+    PipelineRunStatus.CANCELLED,
+    PipelineRunStatus.RESOLVED,
 )
-
-
-def next_states(current: PipelineRunStatus) -> frozenset[PipelineRunStatus]:
-    """Where a run may go from here. Empty for a terminal state."""
-    allowed = PIPELINE_RUN_TRANSITIONS.get(current, frozenset())
-    if not allowed:
-        return allowed
-    # A handler that raises is sent to SEND_ERROR, and cancellation is polled each loop, so
-    # both are reachable from every state rather than chosen by a step.
-    return allowed | {PipelineRunStatus.SEND_ERROR, PipelineRunStatus.CANCELLED}
 
 
 class PipelineIssueStatus(StrEnum):
@@ -158,6 +110,15 @@ class ChangesetKind(StrEnum):
 
 
 COLLECTION_KINDS = (ChangesetKind.SCRAPE, ChangesetKind.SHEET_IMPORT)
+
+
+class PipelineRunKind(StrEnum):
+    """Which pipeline a `pipeline_runs` row is an attempt of. The run machinery (cap, `llm_calls`,
+    issues, cancel, the stale sweep) is shared; the scrape's scheduling reads only its own kind."""
+
+    PEOPLE_COLLECTOR = "people_collector"
+    GOVERNING_LAW_COLLECTOR = "governing_law_collector"
+    ORGANIZATIONS_COLLECTOR = "organizations_collector"
 
 
 class DismissalReason(StrEnum):

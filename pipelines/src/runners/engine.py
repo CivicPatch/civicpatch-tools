@@ -14,14 +14,36 @@ import httpx
 import services.civicpatch_api as civicpatch_api
 from shared.utils.statuses import PipelineRunStatus
 import psutil
+from pydantic import BaseModel
 
-from runners.people_collector.schemas import PipelineStatus
-from shared.utils.statuses import TERMINAL_PIPELINE_RUN_STATUSES, next_states
+
+Transitions = dict[PipelineRunStatus, frozenset[PipelineRunStatus]]
+
+
+def terminal_states(transitions: Transitions) -> tuple[PipelineRunStatus, ...]:
+    return tuple(status for status, allowed in transitions.items() if not allowed)
+
+
+def next_states(transitions: Transitions, current: PipelineRunStatus) -> frozenset[PipelineRunStatus]:
+    """Where a run may go from here in its pipeline's graph. Empty for a terminal state."""
+    allowed = transitions.get(current, frozenset())
+    if not allowed:
+        return allowed
+    # A handler that raises is sent to SEND_ERROR, and cancellation is polled each loop, so
+    # both are reachable from every state rather than chosen by a step.
+    return allowed | {PipelineRunStatus.SEND_ERROR, PipelineRunStatus.CANCELLED}
+
+
+class Machine(BaseModel):
+    """A pipeline as the engine runs it: its graph, and who handles each state in it."""
+
+    transitions: Transitions
+    handlers: Dict[PipelineRunStatus, Callable[..., Any]]
 
 
 class IllegalTransition(Exception):
-    """A step returned a state `PIPELINE_RUN_TRANSITIONS` does not allow from this one."""
-    def __init__(self, current: PipelineStatus, requested: PipelineStatus):
+    """A step returned a state its pipeline's graph does not allow from this one."""
+    def __init__(self, current: PipelineRunStatus, requested: PipelineRunStatus):
         self.current = current
         self.requested = requested
         super().__init__(f"{current} -> {requested} is not a legal transition")
@@ -46,7 +68,7 @@ def log_system_usage():
 async def run_pipeline(
     context: TContext,
     logger: log_utils.PipelineRunLogger,
-    transition_map: Dict[PipelineStatus, Callable[..., Any]],
+    machine: Machine,
     api_client: httpx.AsyncClient,
     persist_fn: Optional[Callable] = None,
 ) -> TContext:
@@ -59,10 +81,10 @@ async def run_pipeline(
     created_at = time.time()
     ctx = ctx.copy(update={"created_at": created_at, "updated_at": created_at})
 
-    terminal_states = set(TERMINAL_PIPELINE_RUN_STATUSES)
+    terminal = set(terminal_states(machine.transitions))
 
     try:
-        while ctx.current_state not in terminal_states:
+        while ctx.current_state not in terminal:
             log_system_usage()
             try:
                 current_status = await civicpatch_api.fetch_pipeline_run_status(api_client, ctx.pipeline_run_id)
@@ -70,7 +92,7 @@ async def run_pipeline(
                     logger.info(f"Pipeline run {ctx.pipeline_run_id} cancelled — stopping.")
                     ctx = ctx.copy(
                         update={
-                            "current_state": PipelineStatus.CANCELLED,
+                            "current_state": PipelineRunStatus.CANCELLED,
                             "updated_at": time.time(),
                         }
                     )
@@ -88,7 +110,7 @@ async def run_pipeline(
                 logger.warning(f"Failed to update job status (non-fatal): {e}")
 
             current = ctx.current_state
-            transition_fn = transition_map[current]
+            transition_fn = machine.handlers[current]
             try:
                 ctx, next_state = await transition_fn(limits, logger, ctx, api_client)
             except Exception as e:
@@ -96,11 +118,11 @@ async def run_pipeline(
                     f"Unhandled exception in {current} transition: {e}\n"
                     f"{traceback.format_exc()}"
                 )
-                ctx = ctx.copy(update={"current_state": PipelineStatus.SEND_ERROR, "updated_at": time.time()})
+                ctx = ctx.copy(update={"current_state": PipelineRunStatus.SEND_ERROR, "updated_at": time.time()})
             else:
                 # Outside the except: a step failing ends a run, a step naming an impossible
                 # state is a bug, and SEND_ERROR would hide the second as the first.
-                if next_state not in next_states(current):
+                if next_state not in next_states(machine.transitions, current):
                     raise IllegalTransition(current, next_state)
                 ctx = ctx.copy(update={"current_state": next_state, "updated_at": time.time()})
 
@@ -108,7 +130,7 @@ async def run_pipeline(
                 persist_fn(ctx)
     finally:
         log_system_usage()
-        final_progress = 100 if ctx.current_state == PipelineStatus.SUCCESS else ctx.progress
+        final_progress = 100 if ctx.current_state == PipelineRunStatus.SUCCESS else ctx.progress
         try:
             await civicpatch_api.update_pipeline_run_status(
                 api_client, logger, ctx.pipeline_run_id, ctx.data.jurisdiction_ocdid,
@@ -118,7 +140,7 @@ async def run_pipeline(
         except Exception as e:
             logger.warning(f"Failed to update final job status (non-fatal): {e}")
 
-    if ctx.current_state == PipelineStatus.ERROR:
+    if ctx.current_state == PipelineRunStatus.ERROR:
         raise PipelineRunError(jurisdiction_ocdid, ctx)
 
     return ctx
