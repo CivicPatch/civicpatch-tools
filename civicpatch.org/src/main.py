@@ -15,6 +15,8 @@ import routers.api.coverage as api_coverage_router
 import routers.api.data as api_data_router
 import routers.api.elections as api_elections_router
 import routers.api.jurisdictions as api_jurisdictions_router
+import routers.api.governing_law as api_governing_law_router
+import routers.api.governing_law_source_pages as api_governing_law_source_pages_router
 import routers.api.government_forms as api_government_forms_router
 import routers.api.leaderboard as api_leaderboard_router
 import routers.api.claims as api_claims_router
@@ -155,6 +157,22 @@ app.include_router(
     api_government_forms_router.get_router(),
     prefix="/api/v1/jurisdictions",
     tags=["jurisdictions"],
+)
+
+# Private: the governing law and its cached pages are read by the team and the collectors'
+# service key, never the public.
+app.include_router(
+    api_governing_law_router.get_router(),
+    prefix="/api/v1/jurisdictions",
+    tags=["jurisdictions"],
+    dependencies=[Depends(require_route_access(RouteCategory.TEAM_REQUIRED, service_key=ServiceKey.ACCEPTED))],
+)
+
+app.include_router(
+    api_governing_law_source_pages_router.get_router(),
+    prefix="/api/v1/jurisdictions",
+    tags=["jurisdictions"],
+    dependencies=[Depends(require_route_access(RouteCategory.TEAM_REQUIRED, service_key=ServiceKey.ACCEPTED))],
 )
 
 app.include_router(

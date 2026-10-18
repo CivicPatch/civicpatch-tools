@@ -32,6 +32,7 @@ erDiagram
         text_null       geoid               "240: the entry's geoid, written by the sync"
         text_null       wiki_url            "240: the entry's wiki_url, written by the sync"
         text_null       extras_government_form "cp.org's own, set by a person or a scrape, never by the open-data sync; check: the seven GovernmentForm values; null = the config files decide"
+        jsonb_null      extras_governing_law "247: what law governs the place (charter, general law, none found), as the governing_law_collector last found it; shape is shared.schemas.GoverningLaw, which points at its governing_law_source_pages rows by id; its collected_at is the collector's early-exit check; null = never collected"
         timestamptz_null updated_at
     }
 
@@ -230,6 +231,15 @@ erDiagram
         timestamptz     created_at          "default: now()"
     }
 
+    governing_law_source_pages {
+        uuid            id                  PK  "247: the governing_law_collector's own pages, apart from source_pages (the people scrape's), whose run, changeset and relevance columns mean nothing here. default gen_random_uuid()"
+        text            jurisdiction_ocdid  FK  "idx. The jurisdiction it was collected for"
+        text            source_url          "check: <> ''"
+        text            page_hash           "sha256 of the markdown"
+        text            cache_path          "governing_law/<sha256>.md in the artifacts bucket: content-addressed, so a statute collected for many jurisdictions is one object and many rows"
+        timestamptz     collected_at        "default now()"
+    }
+
     source_pages {
         uuid            id                          PK  "241: one row per url per run; unique: (pipeline_run_id, source_url)"
         text            source_url                  "idx: (source_url, created_at DESC); check: <> ''"
@@ -359,6 +369,7 @@ erDiagram
     jurisdictions ||--o{ source_records : "jurisdiction_ocdid"
     jurisdictions ||--o{ source_pages : "jurisdiction_ocdid"
     pipeline_runs ||--o{ source_pages : "pipeline_run_id"
+    jurisdictions ||--o{ governing_law_source_pages : "jurisdiction_ocdid"
     changesets ||--o{ source_pages : "changeset_id"
     source_pages ||--o{ source_pages : "unchanged_since_source_page_id"
     jurisdictions ||--o{ changesets : "jurisdiction_ocdid"

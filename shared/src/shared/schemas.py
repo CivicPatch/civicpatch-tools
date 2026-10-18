@@ -485,3 +485,41 @@ class Role(BaseModel):
 
 class RoleConfig(BaseModel):
     roles: List[Role] = []
+
+
+class GoverningLawKind(StrEnum):
+    CHARTER = "charter"
+    GENERAL_LAW = "general_law"
+    NONE_FOUND = "none_found"
+
+
+class Finder(StrEnum):
+    # The state's own list said so.
+    STATE_INDEX = "state_index"
+    # A Gemini hint, confirmed by fetch and classify.
+    SEARCH = "search"
+
+
+class GoverningLawSourcePage(BaseModel):
+    """A `governing_law_source_pages` row, as the API answers it: the text is fetched by id."""
+
+    id: str
+    jurisdiction_ocdid: str
+    source_url: str
+    page_hash: str
+    cache_path: str
+    collected_at: datetime
+
+
+class GoverningLaw(BaseModel):
+    """What law governs a jurisdiction, as the governing_law_collector last found it: the
+    contract of `jurisdictions.extras_governing_law`."""
+
+    kind: GoverningLawKind
+    classification: str | None
+    finder: Finder
+    # Its `governing_law_source_pages` rows; empty for none_found.
+    source_page_ids: List[str] = []
+    collected_at: datetime
+    # None when the provider stated no cost, as grounded Gemini does.
+    cost_usd: Decimal | None
