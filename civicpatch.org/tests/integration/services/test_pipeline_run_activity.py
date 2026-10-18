@@ -14,7 +14,7 @@ from database.changesets import register_scrape_changeset
 from database.database import get_pool
 from database.pipeline_runs import register_run
 from services.pipeline_runs import apply_pipeline_run_status
-from shared.utils.statuses import ActivityType, PipelineRunStatus
+from shared.utils.statuses import ActivityType, PipelineRunKind, PipelineRunStatus
 from tests.integration import factories
 
 _OCDID = "ocd-jurisdiction/country:us/state:zy/place:zy_activity/government"
@@ -64,7 +64,7 @@ async def test_starting_a_run_logs_a_pipeline_run_start():
 async def test_registering_the_same_run_twice_logs_only_one_start():
     run_id = await factories.start_run(_OCDID)
     # The idempotent path production actually uses for a retried trigger.
-    await register_run(run_id, _OCDID, {}, if_not_exists=True)
+    await register_run(run_id, PipelineRunKind.PEOPLE_COLLECTOR, _OCDID, {}, if_not_exists=True)
 
     rows = await _activity_rows(_OCDID)
 

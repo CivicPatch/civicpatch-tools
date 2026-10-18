@@ -69,8 +69,8 @@ async def _scrape(at: datetime.datetime, published: bool = True, **page_fields) 
             (changeset_id, _OCDID, at if published else None),
         )
         await cur.execute(
-            "INSERT INTO pipeline_runs (id, jurisdiction_ocdid, arguments_json, changeset_id) "
-            "VALUES (%s, %s, '{}', %s)",
+            "INSERT INTO pipeline_runs (id, kind, jurisdiction_ocdid, arguments_json, changeset_id) "
+            "VALUES (%s, 'people_collector', %s, '{}', %s)",
             (run_id, _OCDID, changeset_id),
         )
         await conn.commit()

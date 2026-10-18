@@ -106,8 +106,8 @@ async def _changeset(
             await cur.execute(
                 """
                 INSERT INTO pipeline_runs
-                    (id, jurisdiction_ocdid, status, finished_at, changeset_id)
-                VALUES (gen_random_uuid(), %s, %s, CASE WHEN %s = ANY(%s) THEN now() END, %s)
+                    (id, kind, jurisdiction_ocdid, status, finished_at, changeset_id)
+                VALUES (gen_random_uuid(), 'people_collector', %s, %s, CASE WHEN %s = ANY(%s) THEN now() END, %s)
                 """,
                 (
                     ocdid,

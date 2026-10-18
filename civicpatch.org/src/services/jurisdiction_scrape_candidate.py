@@ -4,6 +4,7 @@ import database.pipeline_runs as pipeline_runs_db
 import database.review_pool as review_pool_db
 import shared.utils.id_utils
 from schemas.common import Jurisdiction
+from shared.utils.statuses import PipelineRunKind
 
 
 async def get_scrape_candidates(
@@ -52,6 +53,7 @@ async def claim_jurisdictions_to_scrape(
         run_id = shared.utils.id_utils.make_id()
         await pipeline_runs_db.register_run(
             run_id=run_id,
+            kind=PipelineRunKind.PEOPLE_COLLECTOR,
             jurisdiction_ocdid=candidate.id,
             arguments_json={
                 "jurisdiction_ocdid": candidate.id,

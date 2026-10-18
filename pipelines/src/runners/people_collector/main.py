@@ -4,13 +4,14 @@ import traceback
 
 import httpx
 from pipelines_environment import get_env_vars
-from runners.engine import PipelineRunError, run_pipeline
+from runners.engine import Machine, PipelineRunError, run_pipeline
 from runners.people_collector.schemas import (
     PeopleCollectorContext,
     PeopleCollectorData,
     PipelineRunConfig,
     PipelineStatus,
 )
+from runners.people_collector.transitions.graph import PEOPLE_COLLECTOR_TRANSITIONS
 from runners.people_collector.transitions.main import TRANSITION_MAP
 from services.browser import resolve_redirect
 from services.civicpatch_api import get_role_config
@@ -62,7 +63,7 @@ async def start(
             return await run_pipeline(
                 context,
                 pipeline_run_logger,
-                TRANSITION_MAP,
+                Machine(transitions=PEOPLE_COLLECTOR_TRANSITIONS, handlers=TRANSITION_MAP),
                 api_client,
                 persist_context,
             )

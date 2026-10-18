@@ -20,6 +20,7 @@ from database.database import get_pool
 from database.pipeline_runs import get_pipeline_run, register_run
 from services.scrape_settings import get_state_panel
 from services.spend_budget import cap_reached_for_state
+from shared.utils.statuses import PipelineRunKind
 from database.state_settings import (
     get_all_state_settings,
     get_global_settings,
@@ -164,7 +165,7 @@ async def test_a_run_records_the_cap_its_state_was_set_to():
         )
         await conn.commit()
     try:
-        await register_run(run_id, ocdid, {})
+        await register_run(run_id, PipelineRunKind.PEOPLE_COLLECTOR, ocdid, {})
 
         async with pool.connection() as conn, conn.cursor() as cur:
             await cur.execute(
@@ -193,7 +194,7 @@ async def test_a_run_in_an_unconfigured_state_inherits_rather_than_failing():
     pipeline reads as `use pipeline.yml`. The subquery matching nothing is the common case."""
     run_id = str(uuid.uuid4())
     try:
-        await register_run(run_id, "ocd-jurisdiction/country:us/state:zw/place:nope/government", {})
+        await register_run(run_id, PipelineRunKind.PEOPLE_COLLECTOR, "ocd-jurisdiction/country:us/state:zw/place:nope/government", {})
 
         pool = await get_pool()
         async with pool.connection() as conn, conn.cursor() as cur:

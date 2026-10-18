@@ -1,7 +1,7 @@
 """The pipeline run lifecycle, as far as cp.org owns it.
 
-The step order belongs to the engine — `PIPELINE_RUN_TRANSITIONS` in `shared/utils/statuses.py`
-is the graph, and cp.org owns only the ends: which reports are final, and what a final one means
+The step order belongs to each pipeline's own graph, in pipelines (`PEOPLE_COLLECTOR_TRANSITIONS`
+for the scrape), and cp.org owns only the ends: which reports are final, and what a final one means
 for the proposal the run minted.
 """
 

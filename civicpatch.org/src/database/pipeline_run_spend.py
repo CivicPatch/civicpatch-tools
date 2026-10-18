@@ -7,9 +7,10 @@ so nothing here joins `changesets` at all.
 from decimal import Decimal
 
 from database.database import get_pool
-from shared.utils.statuses import PipelineRunStatus
+from shared.utils.statuses import PipelineRunKind, PipelineRunStatus
 
-# Month to date, for the two monthly caps. The calendar month in UTC, not a rolling 30 days:
+# Month to date, for the two monthly caps. Every kind of run: a collector's spend is real money.
+# The calendar month in UTC, not a rolling 30 days:
 # a budget is something an operator sets against a month they can name, and a rolling window
 # would let spend that was refused on the 30th become affordable again on the 31st.
 #
@@ -43,12 +44,13 @@ async def get_month_to_date_spend(state: str) -> tuple[Decimal, Decimal]:
 
 
 # Per run, not per call, and null rather than zero when the state has not run this month.
-MONTH_TO_DATE_COST_PER_RUN_SQL = """
+MONTH_TO_DATE_COST_PER_RUN_SQL = f"""
 SELECT sum(lc.cost_usd) / NULLIF(count(DISTINCT lc.pipeline_run_id) FILTER (WHERE lc.cost_usd IS NOT NULL), 0)
 FROM llm_calls lc
 JOIN pipeline_runs pr ON pr.id = lc.pipeline_run_id
 JOIN jurisdictions j USING (jurisdiction_ocdid)
 WHERE j.state = %(state)s
+  AND pr.kind = '{PipelineRunKind.PEOPLE_COLLECTOR.value}'
   AND lc.created_at >= date_trunc('month', now() AT TIME ZONE 'utc')
 """
 
@@ -62,10 +64,12 @@ async def get_month_to_date_cost_per_run(state: str) -> Decimal | None:
     return row[0]
 
 
-FLEET_MONTH_TO_DATE_COST_PER_RUN_SQL = """
-SELECT sum(cost_usd) / NULLIF(count(DISTINCT pipeline_run_id) FILTER (WHERE cost_usd IS NOT NULL), 0)
-FROM llm_calls
-WHERE created_at >= date_trunc('month', now() AT TIME ZONE 'utc')
+FLEET_MONTH_TO_DATE_COST_PER_RUN_SQL = f"""
+SELECT sum(lc.cost_usd) / NULLIF(count(DISTINCT lc.pipeline_run_id) FILTER (WHERE lc.cost_usd IS NOT NULL), 0)
+FROM llm_calls lc
+JOIN pipeline_runs pr ON pr.id = lc.pipeline_run_id
+WHERE pr.kind = '{PipelineRunKind.PEOPLE_COLLECTOR.value}'
+  AND lc.created_at >= date_trunc('month', now() AT TIME ZONE 'utc')
 """
 
 
@@ -79,10 +83,11 @@ async def get_fleet_month_to_date_cost_per_run() -> Decimal | None:
 
 
 # SUCCESS only: the stale-run sweep stamps finished_at when it gives up, hours after the run died.
-FLEET_MONTH_TO_DATE_SECONDS_PER_RUN_SQL = """
+FLEET_MONTH_TO_DATE_SECONDS_PER_RUN_SQL = f"""
 SELECT round(extract(epoch FROM avg(finished_at - created_at)))::int
 FROM pipeline_runs
 WHERE status = %(status)s
+  AND kind = '{PipelineRunKind.PEOPLE_COLLECTOR.value}'
   AND finished_at >= date_trunc('month', now() AT TIME ZONE 'utc')
 """
 

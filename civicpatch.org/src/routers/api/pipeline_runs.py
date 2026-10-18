@@ -69,6 +69,7 @@ from shared.utils.statuses import (
     RUN_LEVEL_ISSUE_TYPES,
     ChangesetKind,
     DismissalReason,
+    PipelineRunKind,
     PipelineRunStatus,
 )
 
@@ -112,6 +113,7 @@ async def _register_pipeline_run_bg(request: RegisterPipelineRunRequest) -> None
     try:
         await register_run(
             run_id=request.pipeline_run_id,
+            kind=PipelineRunKind.PEOPLE_COLLECTOR,
             if_not_exists=True,
             arguments_json={
                 "jurisdiction_ocdid": request.jurisdiction_ocdid,
@@ -162,6 +164,7 @@ def get_router(api_key_header):
             pipeline_run_id = shared.utils.id_utils.make_id()
             await register_run(
                 run_id=pipeline_run_id,
+                kind=PipelineRunKind.PEOPLE_COLLECTOR,
                 arguments_json={
                     "jurisdiction_ocdid": request.jurisdiction_ocdid,
                     "name": request.name,

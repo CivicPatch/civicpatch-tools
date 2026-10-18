@@ -842,9 +842,9 @@ async def test_a_scrape_the_pipeline_reported_an_issue_on_does_not_publish():
     # that run produced — so the fixture needs a real run, which the foreign key now insists on.
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "INSERT INTO pipeline_runs (id, jurisdiction_ocdid, arguments_json, status, "
+            "INSERT INTO pipeline_runs (id, kind, jurisdiction_ocdid, arguments_json, status, "
             "  changeset_id, finished_at) "
-            "VALUES (gen_random_uuid(), %s, '{}'::jsonb, 'SUCCESS', %s, now()) RETURNING id::text",
+            "VALUES (gen_random_uuid(), 'people_collector', %s, '{}'::jsonb, 'SUCCESS', %s, now()) RETURNING id::text",
             (_OCDID, changeset_id),
         )
         run_id = (await cur.fetchone())[0]
@@ -1323,8 +1323,8 @@ async def _page_row_only_scrape(organization_id: str, at: datetime.datetime) -> 
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "INSERT INTO pipeline_runs (id, jurisdiction_ocdid, arguments_json, changeset_id) "
-            "VALUES (%s, %s, '{}', %s)",
+            "INSERT INTO pipeline_runs (id, kind, jurisdiction_ocdid, arguments_json, changeset_id) "
+            "VALUES (%s, 'people_collector', %s, '{}', %s)",
             (run_id, _OCDID, changeset_id),
         )
         await conn.commit()

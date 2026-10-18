@@ -17,6 +17,7 @@ from shared.utils.statuses import (
     ChangesetKind,
     PipelineIssueStatus,
     PipelineIssueType,
+    PipelineRunKind,
 )
 
 PUBLISHED = f"changesets.changeset_state IN ('{ChangesetState.PUBLISHED.value}')"
@@ -151,7 +152,7 @@ LAST_COLLECTED_AT = "collected.last_collected_at"
 LAST_ATTEMPT_JOIN = (
     "LEFT JOIN ("
     "SELECT jurisdiction_ocdid, max(created_at) AS last_attempt_at "
-    "FROM pipeline_runs GROUP BY jurisdiction_ocdid"
+    f"FROM pipeline_runs WHERE kind = '{PipelineRunKind.PEOPLE_COLLECTOR.value}' GROUP BY jurisdiction_ocdid"
     ") attempts USING (jurisdiction_ocdid)"
 )
 LAST_ATTEMPT_AT = "attempts.last_attempt_at"

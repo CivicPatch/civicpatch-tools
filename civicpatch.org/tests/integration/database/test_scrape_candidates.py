@@ -58,8 +58,8 @@ async def _attempt(ocdid: str, days_ago: int, status: str = "ERROR") -> None:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "INSERT INTO pipeline_runs (id, jurisdiction_ocdid, arguments_json, status, "
-            "created_at, finished_at) VALUES (%s, %s, '{}'::jsonb, %s, "
+            "INSERT INTO pipeline_runs (id, kind, jurisdiction_ocdid, arguments_json, status, "
+            "created_at, finished_at) VALUES (%s, 'people_collector', %s, '{}'::jsonb, %s, "
             "now() - make_interval(days => %s), now() - make_interval(days => %s))",
             (str(uuid.uuid4()), ocdid, status, days_ago, days_ago),
         )
