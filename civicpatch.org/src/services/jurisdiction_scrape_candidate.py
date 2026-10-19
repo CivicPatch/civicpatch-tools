@@ -29,7 +29,7 @@ async def get_scrape_candidates(
     return eligible[:num_jurisdictions] if num_jurisdictions else eligible
 
 
-async def claim_jurisdictions_to_scrape(
+async def claim_jurisdictions_for_people_collector(
     state: str,
     num_jurisdictions: int | None = None,
     created_by_user_id: str | None = None,

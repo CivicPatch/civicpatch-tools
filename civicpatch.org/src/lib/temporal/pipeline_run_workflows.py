@@ -15,12 +15,12 @@ from temporalio.common import RetryPolicy, WorkflowIDReusePolicy
 
 with workflow.unsafe.imports_passed_through():
     from routers.temporal.pipeline_run_activities import (
-        budget_cap_reached,
-        cancel_local_run,
-        claim_jurisdictions_to_scrape,
+        people_collector_month_cap_reached,
+        cancel_local_pipeline_run,
+        claim_jurisdictions_for_people_collector,
         poll_pipeline_run_status,
-        trigger_github_action,
-        trigger_local,
+        trigger_people_collector_remote,
+        trigger_people_collector_local,
         update_pipeline_run_status,
     )
     from shared.utils.statuses import PipelineRunStatus
@@ -64,7 +64,7 @@ class PeopleCollectorWorkflow:
             if dispatch_mode == _DISPATCH_MODE_LOCAL:
                 await asyncio.shield(
                     workflow.execute_activity(
-                        cancel_local_run,
+                        cancel_local_pipeline_run,
                         args=[pipeline_run_id],
                         start_to_close_timeout=timedelta(seconds=30),
                     )
@@ -74,7 +74,7 @@ class PeopleCollectorWorkflow:
             # Stop the scrape too: left running, it reports into a run already settled.
             if dispatch_mode == _DISPATCH_MODE_LOCAL:
                 await workflow.execute_activity(
-                    cancel_local_run,
+                    cancel_local_pipeline_run,
                     args=[pipeline_run_id],
                     start_to_close_timeout=timedelta(seconds=30),
                 )
@@ -96,9 +96,9 @@ class PeopleCollectorWorkflow:
         source_urls: Optional[list[str]] = None,
     ) -> str:
         trigger = (
-            trigger_local
+            trigger_people_collector_local
             if dispatch_mode == _DISPATCH_MODE_LOCAL
-            else trigger_github_action
+            else trigger_people_collector_remote
         )
         await workflow.execute_activity(
             trigger,
@@ -145,7 +145,7 @@ DEFAULT_PIPELINE_RUN_CONCURRENCY = 25
 
 
 @workflow.defn
-class StateScrapeWorkflow:
+class PeopleCollectorStateWorkflow:
     """A state's scrape, start to finish, as one durable thing.
 
     It asks the API for its own candidates rather than being handed a list. A Temporal Schedule
@@ -178,7 +178,7 @@ class StateScrapeWorkflow:
         # call returns fresh jurisdictions and the second case always arrives.
         while num_jurisdictions is None or dispatched < num_jurisdictions:
             cap = await workflow.execute_activity(
-                budget_cap_reached,
+                people_collector_month_cap_reached,
                 args=[state],
                 start_to_close_timeout=timedelta(seconds=30),
                 retry_policy=RetryPolicy(maximum_attempts=3),
@@ -195,7 +195,7 @@ class StateScrapeWorkflow:
                 else min(slice_size, num_jurisdictions - dispatched)
             )
             items = await workflow.execute_activity(
-                claim_jurisdictions_to_scrape,
+                claim_jurisdictions_for_people_collector,
                 args=[state, wanted, created_by_user_id],
                 start_to_close_timeout=timedelta(minutes=2),
                 retry_policy=RetryPolicy(maximum_attempts=3),

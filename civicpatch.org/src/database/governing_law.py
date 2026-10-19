@@ -2,6 +2,7 @@ from pydantic import BaseModel
 
 from database.database import get_pool
 from shared.schemas import GoverningLaw
+from shared.utils.statuses import PipelineRunKind
 
 
 class GoverningLawRow(BaseModel):
@@ -39,3 +40,47 @@ async def save_governing_law(cur, jurisdiction_ocdid: str, governing_law: Govern
         "UPDATE jurisdictions SET extras_governing_law = %s::jsonb WHERE jurisdiction_ocdid = %s",
         (governing_law.model_dump_json(), jurisdiction_ocdid),
     )
+
+
+class CollectionCandidate(BaseModel):
+    jurisdiction_ocdid: str
+    name: str
+
+
+# A year, then a jurisdiction's governing law is collected again: charters change by act.
+_COLLECT_AGAIN_AFTER = "365 days"
+
+
+async def get_collection_candidates(state: str, limit: int | None) -> list[CollectionCandidate]:
+    """The state's jurisdictions below the state with no governing law yet, or only a year-old
+    one, and no collection already in flight. Never-collected first."""
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            f"""
+            SELECT j.jurisdiction_ocdid, j.data->>'name'
+            FROM jurisdictions j
+            WHERE j.state = %s AND j.status = 'active' AND j.level <> 'state'
+              AND (j.extras_governing_law IS NULL
+                   OR (j.extras_governing_law->>'collected_at')::timestamptz < now() - interval '{_COLLECT_AGAIN_AFTER}')
+              AND NOT EXISTS (
+                  SELECT 1 FROM pipeline_runs r
+                  WHERE r.jurisdiction_ocdid = j.jurisdiction_ocdid AND r.finished_at IS NULL AND r.kind = %s
+              )
+            ORDER BY j.extras_governing_law IS NOT NULL, j.jurisdiction_ocdid
+            LIMIT %s
+            """,
+            (state, PipelineRunKind.GOVERNING_LAW_COLLECTOR, limit),
+        )
+        return [CollectionCandidate(jurisdiction_ocdid=row[0], name=row[1] or "") for row in await cur.fetchall()]
+
+
+async def has_unfinished_collection(jurisdiction_ocdid: str) -> bool:
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "SELECT EXISTS (SELECT 1 FROM pipeline_runs WHERE jurisdiction_ocdid = %s AND finished_at IS NULL AND kind = %s)",
+            (jurisdiction_ocdid, PipelineRunKind.GOVERNING_LAW_COLLECTOR),
+        )
+        row = await cur.fetchone()
+    return bool(row and row[0])

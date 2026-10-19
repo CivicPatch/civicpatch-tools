@@ -24,7 +24,7 @@ def test_a_state_schedule_is_recognisable_from_its_id_alone():
 
 def test_the_schedule_id_is_not_the_workflow_instance_id():
     """Temporal lets you name them the same and then confuses the two in its own UI."""
-    assert schedule_id("wa") != "state-scrape-wa"
+    assert schedule_id("wa") != "people-collector-state-wa"
 
 
 def test_no_start_date_means_no_offset():

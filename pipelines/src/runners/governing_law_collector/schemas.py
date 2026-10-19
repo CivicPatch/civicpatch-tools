@@ -4,7 +4,7 @@ from typing import List, Optional
 
 from domain.pipeline_run_context import PipelineRunContext
 from pydantic import BaseModel, Field
-from shared.schemas import FoundBy, GoverningLaw, GoverningLawKind
+from shared.schemas import FoundBy, GoverningLaw
 from shared.utils.layered_config import GoverningLawConfig
 from shared.utils.statuses import PipelineRunStatus
 
@@ -34,12 +34,17 @@ class GoverningLawCollectorConfig(BaseModel):
 
 
 class FinderAnswer(BaseModel):
-    """What a finder says governs the jurisdiction, and where its texts are."""
+    """What a finder says governs the jurisdiction, and where its texts are. The kind is not
+    here: it follows from which of these texts the run actually stores."""
 
     found_by: FoundBy
-    kind: GoverningLawKind
     classification: Optional[str]
-    urls: List[str]
+    charter_urls: List[str] = []
+    general_law_urls: List[str] = []
+
+    @property
+    def urls(self) -> List[str]:
+        return [*self.charter_urls, *self.general_law_urls]
 
 
 class FetchedPage(BaseModel):
@@ -60,7 +65,8 @@ class GoverningLawCollectorData(BaseModel):
     markdown: Optional[str] = Field(default=None, exclude=True)
     # The url in hand was thin by plain GET, so the next fetch of it is by browser.
     escalate: bool = False
-    source_page_ids: List[str] = []
+    charter_source_page_ids: List[str] = []
+    general_law_source_page_ids: List[str] = []
     # Urls a host refused (403, 429), or that stayed empty even by browser. Never retried.
     skipped_urls: List[str] = []
     governing_law: Optional[GoverningLaw] = None

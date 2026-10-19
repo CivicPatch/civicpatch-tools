@@ -306,17 +306,17 @@ def test_batch_starts_a_workflow_and_does_not_pick_candidates(client):
     """The workflow finds its own work. If the route still resolved candidates, a scheduled
     scrape — which can only pass a state — would have no way to reach the same path."""
     with patch(
-        "routers.api.pipeline_runs.temporal_service.start_state_scrape_workflow",
+        "routers.api.pipeline_runs.temporal_service.start_people_collector_state_workflow",
         new_callable=AsyncMock,
-        return_value="state-scrape-wa",
+        return_value="people-collector-state-wa",
     ) as start, patch(
-        "routers.api.pipeline_runs.candidate_service.claim_jurisdictions_to_scrape",
+        "routers.api.pipeline_runs.candidate_service.claim_jurisdictions_for_people_collector",
         new_callable=AsyncMock,
     ) as claim:
         response = client.post("/pipeline_runs/batch", json={"state": "wa"})
 
     assert response.status_code == 200
-    assert response.json()["data"]["workflow_id"] == "state-scrape-wa"
+    assert response.json()["data"]["workflow_id"] == "people-collector-state-wa"
     claim.assert_not_awaited()
     # No count: "scrape this state" means every jurisdiction due, and the workflow decides how
     # many that is. The concurrency window is the API's to supply — a workflow cannot read it
@@ -352,9 +352,9 @@ def test_batch_is_allowed_for_an_admin():
     client = _batch_client()
     _as(client, UserRole.ADMINS)
     with patch(
-        "routers.api.pipeline_runs.temporal_service.start_state_scrape_workflow",
+        "routers.api.pipeline_runs.temporal_service.start_people_collector_state_workflow",
         new_callable=AsyncMock,
-        return_value="state-scrape-wa",
+        return_value="people-collector-state-wa",
     ):
         response = client.post("/pipeline_runs/batch", json={"state": "wa"})
 
@@ -367,7 +367,7 @@ def test_claim_registers_and_returns_the_work(service_client):
     dispatches anything at them."""
     items = [{"jurisdiction_ocdid": "ocd/x", "changeset_id": "c1", "name": "X", "url": "u"}]
     with patch(
-        "routers.api.pipeline_runs.candidate_service.claim_jurisdictions_to_scrape",
+        "routers.api.pipeline_runs.candidate_service.claim_jurisdictions_for_people_collector",
         new_callable=AsyncMock,
         return_value=items,
     ):
@@ -382,7 +382,7 @@ def test_claim_registers_and_returns_the_work(service_client):
 @pytest.mark.unit
 def test_claim_404s_for_an_unknown_state(service_client):
     with patch(
-        "routers.api.pipeline_runs.candidate_service.claim_jurisdictions_to_scrape",
+        "routers.api.pipeline_runs.candidate_service.claim_jurisdictions_for_people_collector",
         new_callable=AsyncMock,
         side_effect=ValueError("No such state: zz"),
     ):

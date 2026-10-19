@@ -13,7 +13,7 @@ import pytest
 from temporalio.testing import ActivityEnvironment
 
 from core.spend_limits import Cap
-from routers.temporal.pipeline_run_activities import budget_cap_reached
+from routers.temporal.pipeline_run_activities import people_collector_month_cap_reached
 
 pytestmark = pytest.mark.unit
 
@@ -42,7 +42,7 @@ def _patch(cap: str | None):
 @pytest.mark.asyncio
 async def test_a_state_under_both_caps_may_keep_spending():
     with _patch(None):
-        assert await ActivityEnvironment().run(budget_cap_reached, "wa") is None
+        assert await ActivityEnvironment().run(people_collector_month_cap_reached, "wa") is None
 
 
 @pytest.mark.asyncio
@@ -51,7 +51,7 @@ async def test_the_cap_is_named_rather_than_reported_as_a_bare_stop(cap):
     """A caller told only "stop" cannot say whether to raise one state's cap or the global
     one, and the workflow logs this string when it halts a scrape."""
     with _patch(cap.value):
-        assert await ActivityEnvironment().run(budget_cap_reached, "wa") == cap.value
+        assert await ActivityEnvironment().run(people_collector_month_cap_reached, "wa") == cap.value
 
 
 @pytest.mark.asyncio
@@ -59,6 +59,6 @@ async def test_the_answer_is_a_plain_string_so_it_survives_temporal():
     """Activity results are serialised into workflow history. A StrEnum member round-trips as
     its value; returning the member itself would be relying on that rather than stating it."""
     with _patch(Cap.STATE_MONTH.value):
-        result = await ActivityEnvironment().run(budget_cap_reached, "wa")
+        result = await ActivityEnvironment().run(people_collector_month_cap_reached, "wa")
 
     assert type(result) is str

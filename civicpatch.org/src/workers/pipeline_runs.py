@@ -17,18 +17,28 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 from lib.temporal.connection import connect_with_retry, run_worker
+from lib.temporal.governing_law_collector_workflows import (
+    GoverningLawCollectorWorkflow,
+    GoverningLawCollectorStateWorkflow,
+)
 from lib.temporal.pipeline_run_workflows import (
     PeopleCollectorWorkflow,
-    StateScrapeWorkflow,
+    PeopleCollectorStateWorkflow,
 )
 from lib.temporal.types import PIPELINE_RUNS_TASK_QUEUE
+from routers.temporal.governing_law_collector_activities import (
+    claim_jurisdictions_for_governing_law_collector,
+    governing_law_collector_month_cap_reached,
+    trigger_governing_law_collector_local,
+    trigger_governing_law_collector_remote,
+)
 from routers.temporal.pipeline_run_activities import (
-    budget_cap_reached,
-    cancel_local_run,
-    claim_jurisdictions_to_scrape,
+    people_collector_month_cap_reached,
+    cancel_local_pipeline_run,
+    claim_jurisdictions_for_people_collector,
     poll_pipeline_run_status,
-    trigger_github_action,
-    trigger_local,
+    trigger_people_collector_remote,
+    trigger_people_collector_local,
     update_pipeline_run_status,
 )
 
@@ -37,17 +47,23 @@ TEMPORAL_NAMESPACE = os.environ.get("TEMPORAL_NAMESPACE", "default")
 
 WORKFLOWS = [
     PeopleCollectorWorkflow,
-    StateScrapeWorkflow,
+    PeopleCollectorStateWorkflow,
+    GoverningLawCollectorWorkflow,
+    GoverningLawCollectorStateWorkflow,
 ]
 
 ACTIVITIES = [
-    budget_cap_reached,
-    trigger_github_action,
-    trigger_local,
-    cancel_local_run,
+    people_collector_month_cap_reached,
+    trigger_people_collector_remote,
+    trigger_people_collector_local,
+    cancel_local_pipeline_run,
     poll_pipeline_run_status,
     update_pipeline_run_status,
-    claim_jurisdictions_to_scrape,
+    claim_jurisdictions_for_people_collector,
+    claim_jurisdictions_for_governing_law_collector,
+    governing_law_collector_month_cap_reached,
+    trigger_governing_law_collector_local,
+    trigger_governing_law_collector_remote,
 ]
 
 # Deliberately uncapped, unlike `sinks.py`: `poll_pipeline_run_status` holds a slot for up to

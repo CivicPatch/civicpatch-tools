@@ -14,7 +14,9 @@ from lib.temporal.sink_workflows import (
     WriteSheetRosterWorkflow,
 )
 from lib.temporal.types import (
+    GOVERNING_LAW_COLLECTOR_EXECUTION_TIMEOUT,
     PEOPLE_COLLECTOR_EXECUTION_TIMEOUT,
+    governing_law_collector_workflow_id,
     PIPELINE_RUNS_TASK_QUEUE,
     SINKS_TASK_QUEUE,
     OpenDataBatchCommitRequest,
@@ -74,7 +76,7 @@ def _pipeline_run_concurrency() -> int:
     return int(get_env_vars()["PIPELINE_RUN_CONCURRENCY"])
 
 
-async def start_state_scrape_workflow(
+async def start_people_collector_state_workflow(
     state: str,
     num_jurisdictions: int | None = None,
     created_by_user_id: str | None = None,
@@ -90,7 +92,7 @@ async def start_state_scrape_workflow(
     """
     client = await get_client()
     handle = await client.start_workflow(
-        "StateScrapeWorkflow",
+        "PeopleCollectorStateWorkflow",
         args=[
             state,
             num_jurisdictions,
@@ -98,7 +100,7 @@ async def start_state_scrape_workflow(
             _pipeline_run_concurrency(),
             dispatch_mode,
         ],
-        id=f"state-scrape-{state}",
+        id=f"people-collector-state-{state}",
         task_queue=PIPELINE_RUNS_TASK_QUEUE,
         id_conflict_policy=WorkflowIDConflictPolicy.FAIL,
     )
@@ -200,3 +202,33 @@ async def cancel_workflow(jurisdiction_ocdid: str) -> None:
         if e.status == RPCStatusCode.NOT_FOUND:
             return
         raise
+
+
+async def start_governing_law_collector_workflow(
+    jurisdiction_ocdid: str, pipeline_run_id: str, dispatch_mode: str = "remote"
+) -> str:
+    client = await get_client()
+    handle = await client.start_workflow(
+        "GoverningLawCollectorWorkflow",
+        args=[jurisdiction_ocdid, pipeline_run_id, dispatch_mode],
+        id=governing_law_collector_workflow_id(jurisdiction_ocdid),
+        task_queue=PIPELINE_RUNS_TASK_QUEUE,
+        id_conflict_policy=WorkflowIDConflictPolicy.TERMINATE_EXISTING,
+        execution_timeout=GOVERNING_LAW_COLLECTOR_EXECUTION_TIMEOUT,
+    )
+    return handle.id
+
+
+async def start_governing_law_collector_state_workflow(
+    state: str, num_jurisdictions: int | None, created_by_user_id: str | None, dispatch_mode: str = "remote"
+) -> str:
+    """Keyed on the state alone, like the scrape's: a second start is an error, not a duplicate."""
+    client = await get_client()
+    handle = await client.start_workflow(
+        "GoverningLawCollectorStateWorkflow",
+        args=[state, num_jurisdictions, created_by_user_id, _pipeline_run_concurrency(), dispatch_mode],
+        id=f"governing-law-collector-state-{state}",
+        task_queue=PIPELINE_RUNS_TASK_QUEUE,
+        id_conflict_policy=WorkflowIDConflictPolicy.FAIL,
+    )
+    return handle.id

@@ -81,6 +81,12 @@ run = """
     docker exec -w /app civicpatch-org python src/scripts/scrape_local.py "$@"
 """
 
+[tasks.collect-governing-law]
+description = "Collect jurisdictions' governing law on the local pipelines server (dev only). Usage: mise run collect-governing-law -- <jurisdiction ocdid>..."
+run = """
+    docker exec -w /app civicpatch-org python src/scripts/collect_governing_law_local.py "$@"
+"""
+
 [tasks.pytest-shared]
 run = "uv run pytest"
 dir = "shared"

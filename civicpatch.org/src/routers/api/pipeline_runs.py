@@ -215,20 +215,20 @@ def get_router(api_key_header):
           the workflow a state and nothing else. The manual path now ends where a scheduled
           one will.
         """
-        workflow_id = await temporal_service.start_state_scrape_workflow(
+        workflow_id = await temporal_service.start_people_collector_state_workflow(
             request.state, request.num_jurisdictions, user.user_id, DISPATCH_MODE
         )
         return {"data": {"workflow_id": workflow_id, "state": request.state}}
 
     @router.post("/batch/claim", include_in_schema=False)
-    async def claim_jurisdictions_to_scrape_endpoint(
+    async def claim_jurisdictions_for_people_collector_endpoint(
         request: BatchPipelineRunRequest,
         _: Identity = Depends(require_route_access(RouteCategory.SERVICE)),
     ):
         """What the workflow calls to find its work. Synchronous, unlike `/register`: the
         workflow must know the changesets exist before it dispatches anything at them."""
         try:
-            items = await candidate_service.claim_jurisdictions_to_scrape(
+            items = await candidate_service.claim_jurisdictions_for_people_collector(
                 request.state, request.num_jurisdictions, request.created_by_user_id
             )
         except ValueError as e:

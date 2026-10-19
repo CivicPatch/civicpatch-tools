@@ -13,6 +13,8 @@ from enum import StrEnum
 class Cap(StrEnum):
     STATE_MONTH = "state_month"
     GLOBAL_MONTH = "global_month"
+    # A charter collector kind's month, across every state (`collector_settings`).
+    COLLECTOR_MONTH = "collector_month"
 
 
 def cap_reached(
@@ -38,6 +40,6 @@ def cap_reached(
     return None
 
 
-def month_cap_reached(spent: Decimal, cap: Decimal | None) -> bool:
-    """One scope's month: a collector kind's. `None` is no cap; `>=`, so `$0` stops it outright."""
-    return cap is not None and spent >= cap
+def collector_cap_reached(spent: Decimal, cap: Decimal | None) -> Cap | None:
+    """A collector kind's month, the one scope it has. `None` is no cap; `>=`, so `$0` stops it."""
+    return Cap.COLLECTOR_MONTH if cap is not None and spent >= cap else None

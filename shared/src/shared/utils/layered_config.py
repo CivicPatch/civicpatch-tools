@@ -49,11 +49,38 @@ class Classification(BaseModel):
     general_law: list[str] = []
 
 
+PLACE_PLACEHOLDER = "{place}"
+
+
+class TextLink(BaseModel):
+    """How an index link reaches its full text: `old` in the url becomes `new`, once."""
+
+    old: str
+    new: str
+
+
+class CharterLinkList(BaseModel):
+    """A web page the state publishes with one link per charter, whose text names the place.
+    A list of another shape (a spreadsheet, a search form) is another block, not this one."""
+
+    url: str
+    # A charter's whole link text: {lsad} and {place} are the jurisdiction's, {*} is anything.
+    # Vermont's "Chapter {*} : {lsad} of {place}" is "Chapter 149 : Town of Stowe" for Stowe town.
+    title: str
+    text_link: TextLink | None = None
+
+    @model_validator(mode="after")
+    def _title_names_the_place(self) -> "CharterLinkList":
+        if PLACE_PLACEHOLDER not in self.title:
+            raise ValueError(f"charter_link_list title {self.title!r} has no {PLACE_PLACEHOLDER}")
+        return self
+
+
 class GoverningLawConfig(BaseModel):
     """Where a state's local law lives. `charter_terms` are the state's names for a charter."""
 
     charter_terms: list[str]
-    charter_index_url: str | None = None
+    charter_link_list: CharterLinkList | None = None
     classifications: dict[str, Classification] = {}
 
     @model_validator(mode="after")

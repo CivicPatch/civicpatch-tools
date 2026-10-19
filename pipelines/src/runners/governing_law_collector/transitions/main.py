@@ -32,7 +32,7 @@ async def start(_limits: PipelineRunLimits, _logger: PipelineRunLogger, context:
 
 async def find_source(_limits: PipelineRunLimits, logger: PipelineRunLogger, context: GoverningLawCollectorContext, _client: httpx.AsyncClient) -> Step:
     answer = await finders.find(context.data.config)
-    logger.info(f"{answer.found_by}: {answer.kind}, {len(answer.urls)} url(s)")
+    logger.info(f"{answer.found_by}: {len(answer.charter_urls)} charter url(s), {len(answer.general_law_urls)} general law url(s)")
     next_context = _next(context, answer=answer, pending_urls=answer.urls)
     return next_context, GoverningLawCollectorStep.FETCH_SOURCE if answer.urls else GoverningLawCollectorStep.WRITE_GOVERNING_LAW
 
@@ -63,10 +63,11 @@ async def preprocess_page_content(_limits: PipelineRunLimits, logger: PipelineRu
 async def store_source_page(_limits: PipelineRunLimits, _logger: PipelineRunLogger, context: GoverningLawCollectorContext, client: httpx.AsyncClient) -> Step:
     markdown = context.data.markdown
     assert markdown is not None, "PREPROCESS_PAGE_CONTENT always leaves markdown for STORE_SOURCE_PAGE"
-    stored = await civicpatch_api.store_governing_law_source_page(
-        client, context.data.jurisdiction_ocdid, context.data.pending_urls[0], markdown
-    )
-    return _after_url(context, source_page_ids=[*context.data.source_page_ids, stored["id"]])
+    url = context.data.pending_urls[0]
+    stored = await civicpatch_api.store_governing_law_source_page(client, context.data.jurisdiction_ocdid, url, markdown)
+    if _is_charter(context, url):
+        return _after_url(context, charter_source_page_ids=[*context.data.charter_source_page_ids, stored["id"]])
+    return _after_url(context, general_law_source_page_ids=[*context.data.general_law_source_page_ids, stored["id"]])
 
 
 async def classify(_limits: PipelineRunLimits, _logger: PipelineRunLogger, context: GoverningLawCollectorContext, _client: httpx.AsyncClient) -> Step:
@@ -83,16 +84,23 @@ async def send_error(_limits: PipelineRunLimits, _logger: PipelineRunLogger, con
     return context, PipelineRunStatus.ERROR
 
 
+def _is_charter(context: GoverningLawCollectorContext, url: str) -> bool:
+    answer = context.data.answer
+    return answer is not None and url in answer.charter_urls
+
+
 def governing_law_from(context: GoverningLawCollectorContext) -> GoverningLaw:
-    """What the run found. Urls it was told of but could not store leave it none found."""
+    """What the run stored decides the kind, not what the finder hoped for: a charter if one was
+    stored, else general law if a statute was, else none found."""
     answer = context.data.answer
     assert answer is not None, "FIND_SOURCE always answers before WRITE_GOVERNING_LAW"
-    stored = context.data.source_page_ids
+    charter, general_law = context.data.charter_source_page_ids, context.data.general_law_source_page_ids
+    kind = GoverningLawKind.CHARTER if charter else GoverningLawKind.GENERAL_LAW if general_law else GoverningLawKind.NONE_FOUND
     return GoverningLaw(
-        kind=answer.kind if stored or not answer.urls else GoverningLawKind.NONE_FOUND,
+        kind=kind,
         classification=answer.classification,
         found_by=answer.found_by,
-        source_page_ids=stored,
+        source_page_ids=[*charter, *general_law],
         collected_at=datetime.now(timezone.utc),
         cost_usd=cost_utils.total_cost(context.pipeline_run_id),
     )
