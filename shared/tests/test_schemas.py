@@ -1,7 +1,7 @@
 import pytest
 from pydantic import ValidationError
 
-from shared.schemas import Issue, IssueCode, JurisdictionLevel, SubmittedPersonRecord
+from shared.schemas import GoverningLawOrganizations, Issue, IssueCode, JurisdictionLevel, SelectionMethod, SubmittedPersonRecord
 from shared.utils.id_utils import parse_jurisdiction_ocdid
 
 
@@ -124,3 +124,24 @@ class TestJurisdictionLevel:
     def test_level_is_the_open_data_directory_name(self):
         # Interpolated straight into a repo path, so the string value is the contract.
         assert f"{JurisdictionLevel.COUNTIES}" == "counties"
+
+
+def _organizations(*posts: dict) -> GoverningLawOrganizations:
+    return GoverningLawOrganizations.model_validate({
+        "organizations": [{"name": "Council", "posts": list(posts)}],
+        "extras": {"governing_law_collected_at": "2026-10-19T00:00:00Z"},
+    })
+
+
+def test_a_jurisdictions_selection_methods_come_from_posts_whose_clause_was_found():
+    organizations = _organizations(
+        {"role": "council-member", "maximum_memberships": 9, "extras": {"selection_method": "elected_by_voters"}},
+        {"role": "mayor"},
+    )
+
+    assert organizations.selection_methods() == {"council-member": SelectionMethod.ELECTED_BY_VOTERS}
+
+
+def test_a_post_holds_at_least_one_person():
+    with pytest.raises(ValidationError):
+        _organizations({"role": "council-member", "maximum_memberships": 0})

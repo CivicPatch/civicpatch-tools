@@ -232,6 +232,9 @@ def test_the_jurisdiction_page_carries_its_government_form(permissions_client):
         ),
         government_form_options=[],
         open_pull_request_url="https://example.test/pull/7",
+        extras_government_form=GovernmentForm.TOWNSHIP_BOARD,
+        extras_governing_law=None,
+        extras_organizations=None,
     )
     with (
         patch("routers.frontend.get_jurisdiction", new_callable=AsyncMock, return_value={"data": {"name": "Macomb"}}),

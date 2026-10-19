@@ -108,6 +108,7 @@ class ConfigFile(BaseModel):
     @model_validator(mode="after")
     def _roles_are_distinct(self) -> "ConfigFile":
         _check_roles_distinct(self.roles)
+        _check_aliases_unique(self.roles)
         return self
 
 
@@ -130,6 +131,7 @@ def merged_config(
         raise ValueError("governing law belongs in a state's file")
     config_roles = [*country_roles.roles, *state.roles]
     _check_roles_distinct(config_roles)
+    _check_aliases_unique(config_roles)
     _check_country_government_forms(country_government_forms.government_forms)
     _check_state_government_forms(state.government_forms, country_government_forms.government_forms)
     merged = MergedConfig(
@@ -267,13 +269,23 @@ def _check_roles_distinct(roles: list[ConfigRole]) -> None:
         if key in role_id_by_label:
             raise ValueError(f"{role.label!r} names both {role_id_by_label[key]!r} and {role.id!r}")
         role_id_by_label[key] = role.id
-    # An alias may name several roles (the record's organization breaks the tie), but never
-    # another role's label: a label names exactly one role.
+    # A label names exactly one role, so no alias may be another role's label.
     for role in roles:
         for alias in role.aliases:
             owner = role_id_by_label.get(lookup_key(alias))
             if owner is not None and owner != role.id:
                 raise ValueError(f"{alias!r} names both {owner!r} and {role.id!r}")
+
+
+def _check_aliases_unique(roles: list[ConfigRole]) -> None:
+    """Within the roles one jurisdiction uses, an alias names one role. Two states that never
+    merge may share one ("executive", Tennessee and Hawaii), so the cross-file check skips this."""
+    owner_by_alias: dict[str, str] = {}
+    for role in roles:
+        for alias in role.aliases:
+            owner = owner_by_alias.setdefault(lookup_key(alias), role.id)
+            if owner != role.id:
+                raise ValueError(f"{alias!r} is an alias of both {owner!r} and {role.id!r}")
 
 
 def _check_country_government_forms(government_forms: GovernmentFormsConfig) -> None:
@@ -293,7 +305,7 @@ def _check_state_government_forms(state_government_forms: GovernmentFormsConfig,
 
 
 def _check_role_labels_resolve(config: MergedConfig) -> None:
-    """A role label, not an alias: an alias may name several roles, so it cannot say which."""
+    """A role label, not an alias: the forms name roles the way the roles file does."""
     labels = {lookup_key(role.label) for role in config.roles.roles}
     for government_form, organization in _every_organization(config):
         for label in organization.role_labels:

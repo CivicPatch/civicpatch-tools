@@ -77,7 +77,7 @@ def test_the_role_elected_by_members_stays_on_the_membership():
 
 
 def test_a_vice_mayor_with_a_division_is_on_that_divisions_post():
-    posts = _posts("Vice Mayor Ward 7", "Council Member Ward 6")
+    posts = _posts("Vice Mayor Ward 7", "Council Member Ward 6", "Council Member Ward 5")
 
     assert _post("council-member", BASE + "/ward:7") in posts
 
@@ -134,7 +134,29 @@ def test_the_post_role_has_divisions_when_a_holder_names_one():
 
 
 def test_the_post_role_is_read_from_each_persons_newest_labels():
-    older = _record("p0", "Council Member", minutes=0)
-    newer = _record("p0", "Mayor", minutes=5).model_copy(update={"changeset_id": "c2"})
+    records = [
+        record
+        for person in ("p0", "p1")
+        for record in (
+            _record(person, "Council Member", minutes=0),
+            _record(person, "Mayor", minutes=5).model_copy(update={"changeset_id": "c2"}),
+        )
+    ]
 
-    assert organization_post_roles([older, newer], JURISDICTION, TAXONOMY)[COUNCIL].role == "Mayor"
+    assert organization_post_roles(records, JURISDICTION, TAXONOMY)[COUNCIL].role == "Mayor"
+
+
+def test_a_role_one_person_holds_is_never_the_post_role():
+    clerk_and_titles = [_record("p0", "Clerk"), _record("p1", "Chair"), _record("p2", "Vice Chair")]
+    taxonomy = build_taxonomy(
+        RoleConfig(
+            roles=[
+                _role("chair", "Chair", 0, SelectionMethod.ELECTED_BY_MEMBERS),
+                _role("vice-chair", "Vice Chair", 1, SelectionMethod.ELECTED_BY_MEMBERS),
+                _role("clerk", "Clerk", 2, SelectionMethod.ELECTED_BY_VOTERS),
+            ]
+        )
+    )
+
+    assert organization_post_roles(clerk_and_titles, JURISDICTION, taxonomy) == {}
+    assert _post("chair") in set(post_keys(clerk_and_titles, JURISDICTION, taxonomy))

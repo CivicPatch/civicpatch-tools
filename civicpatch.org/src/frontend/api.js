@@ -509,14 +509,14 @@ export const openJurisdictionPullRequest = async (jurisdictionOcdid, data) => {
 
 // Saved at once, no pull request; the response is the details panel's fields as they now are.
 export const setGovernmentForm = async (jurisdictionOcdid, governmentForm) => {
-  const res = await fetch(`/api/v1/jurisdictions/${jurisdictionOcdid}/government_form`, {
-    method: "PUT",
+  const res = await fetch(`/api/v1/jurisdictions/${jurisdictionOcdid}`, {
+    method: "PATCH",
     credentials: "include",
     headers: {
       "Content-Type": "application/json",
       "X-CSRF-Token": getCsrfCookie(),
     },
-    body: JSON.stringify({ government_form: governmentForm }),
+    body: JSON.stringify({ extras_government_form: governmentForm }),
   });
   const body = await res.json().catch(() => ({}));
   if (!res.ok) throw new Error(errorDetail(body, res.status));

@@ -8,6 +8,7 @@ from shared.utils.taxonomy import (
     normalize_roles,
     resolve_role,
     sort_designations,
+    with_selection_methods,
 )
 
 _ROLE_ALIASES = {
@@ -277,3 +278,19 @@ def test_an_inactive_role_has_no_selection_method():
     taxonomy = build_taxonomy(RoleConfig(roles=[Role(id="warden", label="Warden", status=RoleStatus.INACTIVE)]))
 
     assert taxonomy.selection_methods == {}
+
+
+def test_a_jurisdictions_methods_replace_the_configs_for_its_roles_only():
+    taxonomy = build_taxonomy(
+        RoleConfig(
+            roles=[
+                Role(id="vice-mayor", label="Vice Mayor", selection_method=SelectionMethod.ELECTED_BY_MEMBERS),
+                Role(id="chair", label="Chair", selection_method=SelectionMethod.ELECTED_BY_MEMBERS),
+            ]
+        )
+    )
+
+    nashville = with_selection_methods(taxonomy, {"vice-mayor": SelectionMethod.ELECTED_BY_VOTERS, "no-such-role": SelectionMethod.APPOINTED})
+
+    assert nashville.selection_methods == {"Vice Mayor": SelectionMethod.ELECTED_BY_VOTERS, "Chair": SelectionMethod.ELECTED_BY_MEMBERS}
+    assert taxonomy.selection_methods["Vice Mayor"] == SelectionMethod.ELECTED_BY_MEMBERS

@@ -1,11 +1,10 @@
 import os
-from http import HTTPStatus
 from typing import List, Optional
 
 import httpx
 from fastapi import Request
 from pipelines_environment import get_env_vars
-from shared.schemas import GoverningLaw, GovernmentForm, KnownOrganization
+from shared.schemas import JurisdictionExtras, KnownOrganization
 from shared.utils.config_utils import (
     RoleConfig,
 )
@@ -232,19 +231,15 @@ async def fetch_pipeline_run_config(
     return await with_retry(logger, _fetch)
 
 
-async def fill_government_form(
-    client: httpx.AsyncClient, jurisdiction_ocdid: str, government_form: GovernmentForm
-) -> bool:
-    """Save the jurisdiction's government form. False when one is already set: cp.org keeps it."""
+async def patch_jurisdiction_extras(client: httpx.AsyncClient, jurisdiction_ocdid: str, extras: JurisdictionExtras) -> None:
+    """Save cp.org's own fields on the jurisdiction: only the ones set on `extras` change."""
     env = get_env_vars()
-    response = await client.put(
-        f"{env['CIVICPATCH_ORG_URL']}/api/v1/jurisdictions/{jurisdiction_ocdid}/government_form",
-        json={"government_form": government_form.value},
+    response = await client.patch(
+        f"{env['CIVICPATCH_ORG_URL']}/api/v1/jurisdictions/{jurisdiction_ocdid}",
+        # Only the fields set, each sent whole: `exclude_unset` would also drop a nested default.
+        json=extras.model_dump(mode="json", include=extras.model_fields_set),
     )
-    if response.status_code == HTTPStatus.CONFLICT:
-        return False
     response.raise_for_status()
-    return True
 
 
 async def store_governing_law_source_page(
@@ -293,12 +288,3 @@ async def fetch_governing_law_collector_config(client: httpx.AsyncClient, logger
         return resp.json()
 
     return await with_retry(logger, _fetch)
-
-
-async def put_governing_law(client: httpx.AsyncClient, jurisdiction_ocdid: str, governing_law: GoverningLaw) -> None:
-    env = get_env_vars()
-    response = await client.put(
-        f"{env['CIVICPATCH_ORG_URL']}/api/v1/jurisdictions/{jurisdiction_ocdid}/governing_law",
-        json=governing_law.model_dump(mode="json"),
-    )
-    response.raise_for_status()

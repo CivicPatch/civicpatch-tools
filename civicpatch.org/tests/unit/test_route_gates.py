@@ -40,7 +40,7 @@ KEY_ROUTES = [
     ("POST", "/api/v1/jurisdictions/by-ocdids"),
     ("GET", "/api/v1/jurisdictions/{jurisdiction_ocdid:path}/roster-source-urls"),
     ("POST", "/api/v1/jurisdictions/{jurisdiction_ocdid:path}/pull_requests"),
-    ("PUT", "/api/v1/jurisdictions/{jurisdiction_ocdid:path}/government_form"),
+    ("PATCH", "/api/v1/jurisdictions/{jurisdiction_ocdid:path}"),
     ("GET", "/api/v1/organizations/{jurisdiction_ocdid:path}"),
     ("GET", "/api/v1/people/search"),
     ("GET", "/api/v1/roles"),

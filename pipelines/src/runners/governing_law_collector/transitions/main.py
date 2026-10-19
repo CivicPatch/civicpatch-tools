@@ -7,7 +7,7 @@ import httpx
 import services.civicpatch_api as civicpatch_api
 from runners.governing_law_collector import converters, fetchers, finders
 from runners.governing_law_collector.schemas import GoverningLawCollectorContext, GoverningLawCollectorState, GoverningLawCollectorStep
-from shared.schemas import GoverningLaw, GoverningLawKind, PipelineRunLimits
+from shared.schemas import GoverningLaw, GoverningLawKind, JurisdictionExtras, PipelineRunLimits
 from shared.utils.statuses import PipelineRunStatus
 from utils import cost_utils
 from utils.log_utils import PipelineRunLogger
@@ -85,7 +85,9 @@ async def classify(_limits: PipelineRunLimits, _logger: PipelineRunLogger, conte
 
 async def write_governing_law(_limits: PipelineRunLimits, _logger: PipelineRunLogger, context: GoverningLawCollectorContext, client: httpx.AsyncClient) -> Step:
     governing_law = governing_law_from(context)
-    await civicpatch_api.put_governing_law(client, context.data.jurisdiction_ocdid, governing_law)
+    await civicpatch_api.patch_jurisdiction_extras(
+        client, context.data.jurisdiction_ocdid, JurisdictionExtras(extras_governing_law=governing_law)
+    )
     return _next(context, governing_law=governing_law), PipelineRunStatus.SUCCESS
 
 

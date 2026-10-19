@@ -7,10 +7,10 @@ from services.civicpatch_api import (
     fetch_governing_law_collector_config,
     get_governing_law_source_page,
     get_organizations,
-    put_governing_law,
+    patch_jurisdiction_extras,
     store_governing_law_source_page,
 )
-from shared.schemas import FoundBy, GoverningLaw, GoverningLawKind
+from shared.schemas import FoundBy, GoverningLaw, GoverningLawKind, JurisdictionExtras
 
 pytestmark = pytest.mark.unit
 
@@ -114,7 +114,7 @@ async def test_a_governing_law_source_page_is_stored_through_cp_org_and_read_bac
 
 
 @pytest.mark.asyncio
-async def test_the_collector_asks_for_its_config_and_puts_what_it_found():
+async def test_the_collector_asks_for_its_config_and_patches_in_what_it_found():
     found = GoverningLaw(
         kind=GoverningLawKind.NONE_FOUND, classification=None, found_by=FoundBy.CLASSIFICATION,
         collected_at=datetime(2026, 10, 18, tzinfo=timezone.utc), cost_usd=None,
@@ -124,14 +124,15 @@ async def test_the_collector_asks_for_its_config_and_puts_what_it_found():
     config_response.raise_for_status = MagicMock()
     client = MagicMock()
     client.get = AsyncMock(return_value=config_response)
-    client.put = AsyncMock(return_value=_response({}))
+    client.patch = AsyncMock(return_value=_response({}))
 
     with patch(f"{MODULE}.get_env_vars", return_value=_ENV):
         config = await fetch_governing_law_collector_config(client, MagicMock(), "run-1")
-        await put_governing_law(client, _OCDID, found)
+        await patch_jurisdiction_extras(client, _OCDID, JurisdictionExtras(extras_governing_law=found))
 
     client.get.assert_awaited_once_with("https://civicpatch.org/api/v1/pipeline_runs/run-1/governing_law_collector_config")
     assert config["name"] == "Stowe town"
-    client.put.assert_awaited_once_with(
-        f"https://civicpatch.org/api/v1/jurisdictions/{_OCDID}/governing_law", json=found.model_dump(mode="json")
+    # Only the field set is sent: the PATCH leaves the jurisdiction's other fields alone.
+    client.patch.assert_awaited_once_with(
+        f"https://civicpatch.org/api/v1/jurisdictions/{_OCDID}", json={"extras_governing_law": found.model_dump(mode="json")}
     )

@@ -4,7 +4,7 @@ from typing import Any, List
 
 from pydantic import BaseModel, Field, field_validator, model_validator
 from schemas.activity import RosterChange
-from shared.schemas import GovernmentForm
+from shared.schemas import GoverningLaw, GoverningLawOrganizations, GovernmentForm
 
 
 class GovernmentFormSummary(BaseModel):
@@ -20,6 +20,11 @@ class JurisdictionDetailsFields(BaseModel):
     government_form_options: List[GovernmentFormSummary]
     # From our table only: a PR closed on GitHub shows until the next hourly sync.
     open_pull_request_url: str | None
+    # cp.org's own fields, named as their columns; `government_form` above is the same form with
+    # its display name and description.
+    extras_government_form: GovernmentForm | None
+    extras_governing_law: GoverningLaw | None
+    extras_organizations: GoverningLawOrganizations | None
 
 
 class OrganizationRosterSourceUrls(BaseModel):

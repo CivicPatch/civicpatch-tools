@@ -99,7 +99,7 @@ def test_country_roles_and_forms_stay_in_their_own_files():
 
 
 def test_two_states_may_share_an_alias():
-    """An alias may name several roles; the record's organization, then priority, picks."""
+    """They never merge for one jurisdiction, so the alias names one role wherever it is read."""
     tennessee = ConfigFile(roles=[ConfigRole(id="county-mayor", label="County Mayor", aliases=["executive"])])
     hawaii = ConfigFile(roles=[ConfigRole(id="county-executive", label="County Executive", aliases=["executive"])])
 
@@ -114,13 +114,21 @@ def test_two_states_still_cannot_share_a_label():
         check_roles_distinct_across([_COUNTRY_ROLES, tennessee, hawaii])
 
 
-def test_one_file_may_give_two_roles_one_alias():
-    ConfigFile(
-        roles=[
-            ConfigRole(id="chair", label="Chair", aliases=["presiding officer"]),
-            ConfigRole(id="president", label="President", aliases=["presiding officer"]),
-        ]
-    )
+def test_one_file_may_not_give_two_roles_one_alias():
+    with pytest.raises(ValidationError, match="'presiding officer' is an alias of both 'chair' and 'president'"):
+        ConfigFile(
+            roles=[
+                ConfigRole(id="chair", label="Chair", aliases=["presiding officer"]),
+                ConfigRole(id="president", label="President", aliases=["presiding officer"]),
+            ]
+        )
+
+
+def test_a_state_alias_may_not_repeat_a_country_alias():
+    state = ConfigFile(roles=[ConfigRole(id="alderperson", label="Alderperson", aliases=["councilmember"])])
+
+    with pytest.raises(ValueError, match="'councilmember' is an alias of both 'council-member' and 'alderperson'"):
+        merged_config(_COUNTRY_ROLES, _COUNTRY_FORMS, state)
 
 
 def test_an_alias_may_not_be_another_roles_label():

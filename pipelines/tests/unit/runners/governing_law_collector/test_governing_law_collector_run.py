@@ -51,7 +51,7 @@ async def _run(answer: FinderAnswer, fetch, reusable: dict[str, str] | None = No
     api = MagicMock()
     api.reuse_governing_law_source_page = AsyncMock(side_effect=lambda _client, _ocdid, url: {"id": reusable[url]} if url in reusable else None)
     api.store_governing_law_source_page = AsyncMock(side_effect=lambda *_: {"id": next(stored)})
-    api.put_governing_law = AsyncMock()
+    api.patch_jurisdiction_extras = AsyncMock()
     engine_api = MagicMock()
     engine_api.fetch_pipeline_run_status = AsyncMock(return_value=PipelineRunStatus.RUNNING)
     engine_api.update_pipeline_run_status = AsyncMock()
@@ -80,7 +80,7 @@ async def test_a_charter_is_fetched_converted_stored_and_written():
     assert context.current_state == PipelineRunStatus.SUCCESS
     stored_text = api.store_governing_law_source_page.await_args.args[3]
     assert "<" not in stored_text and "Corporate existence retained" in stored_text
-    written = api.put_governing_law.await_args.args[2]
+    written = api.patch_jurisdiction_extras.await_args.args[2].extras_governing_law
     assert (written.kind, written.found_by, written.classification, written.source_page_ids) == (
         GoverningLawKind.CHARTER, FoundBy.STATE_INDEX, "town", ["page-1"]
     )
@@ -95,7 +95,7 @@ async def test_nothing_to_fetch_is_written_as_none_found():
 
     assert context.current_state == PipelineRunStatus.SUCCESS
     fetch.assert_not_awaited()
-    assert api.put_governing_law.await_args.args[2].kind == GoverningLawKind.NONE_FOUND
+    assert api.patch_jurisdiction_extras.await_args.args[2].extras_governing_law.kind == GoverningLawKind.NONE_FOUND
 
 
 @pytest.mark.asyncio
@@ -113,7 +113,7 @@ async def test_a_refusal_skips_that_url_and_is_never_retried_by_browser():
     assert [call.args for call in spy.await_args_list] == [(_CHARTER,), (_STATUTE,)]
     assert all(call.kwargs == {"by_browser": False} for call in spy.await_args_list)
     assert context.data.skipped_urls == [_CHARTER]
-    assert api.put_governing_law.await_args.args[2].source_page_ids == ["page-1"]
+    assert api.patch_jurisdiction_extras.await_args.args[2].extras_governing_law.source_page_ids == ["page-1"]
 
 
 @pytest.mark.asyncio
@@ -138,7 +138,7 @@ async def test_urls_none_of_which_could_be_stored_leave_it_none_found():
     context, api = await _run(answer, fetch)
 
     assert context.current_state == PipelineRunStatus.SUCCESS
-    assert api.put_governing_law.await_args.args[2].kind == GoverningLawKind.NONE_FOUND
+    assert api.patch_jurisdiction_extras.await_args.args[2].extras_governing_law.kind == GoverningLawKind.NONE_FOUND
 
 
 
@@ -149,7 +149,7 @@ async def test_a_charter_with_its_general_law_is_a_charter_with_both_pages():
 
     _, api = await _run(answer, fetch)
 
-    written = api.put_governing_law.await_args.args[2]
+    written = api.patch_jurisdiction_extras.await_args.args[2].extras_governing_law
     assert (written.kind, written.source_page_ids) == (GoverningLawKind.CHARTER, ["page-1", "page-2"])
 
 
@@ -164,4 +164,4 @@ async def test_a_page_another_run_stored_today_is_not_fetched_again():
 
     assert [call.args for call in fetch.await_args_list] == [(_CHARTER,)]
     assert context.data.general_law_source_page_ids == ["stowes-statute"]
-    assert api.put_governing_law.await_args.args[2].source_page_ids == ["page-1", "stowes-statute"]
+    assert api.patch_jurisdiction_extras.await_args.args[2].extras_governing_law.source_page_ids == ["page-1", "stowes-statute"]

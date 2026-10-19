@@ -33,6 +33,7 @@ erDiagram
         text_null       wiki_url            "240: the entry's wiki_url, written by the sync"
         text_null       extras_government_form "cp.org's own, set by a person or a scrape, never by the open-data sync; check: the eight GovernmentForm values (251 added village_board, a state's own form); null = the config files decide"
         jsonb_null      extras_governing_law "247: what law governs the place (charter, general law, none found), as the governing_law_collector last found it; shape is shared.schemas.GoverningLaw, which points at its governing_law_source_pages rows by id; its collected_at is the collector's early-exit check; null = never collected"
+        jsonb_null      extras_organizations "252: what the governing law says the government is made of, OCD Organizations and Posts (shared.schemas.GoverningLawOrganizations); written only by the organizations collector; its posts' selection_method overrides the role's for this jurisdiction's fold; null = not yet read"
         timestamptz_null updated_at
     }
 

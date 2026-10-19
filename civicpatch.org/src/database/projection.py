@@ -31,9 +31,10 @@ from core.projection.roster import Roster, derive_roster, with_published_images
 from database import divisions, posts
 from database.activity import record_change
 from database.facts import load_facts
+from database.extras_organizations import get_extras_organizations
 from database.roles import get_roles
 from shared.schemas import RoleConfig
-from shared.utils.taxonomy import Taxonomy, build_taxonomy
+from shared.utils.taxonomy import Taxonomy, build_taxonomy, with_selection_methods
 from schemas.activity import Change
 from schemas.claims import EntityType
 
@@ -165,6 +166,13 @@ async def _taxonomy(taxonomy: Taxonomy | None) -> Taxonomy:
     return build_taxonomy(RoleConfig(roles=await get_roles()))
 
 
+async def _jurisdiction_taxonomy(cur, jurisdiction_ocdid: str, taxonomy: Taxonomy | None) -> Taxonomy:
+    """The config's taxonomy with this jurisdiction's own selection methods, from its law."""
+    base = await _taxonomy(taxonomy)
+    organizations = await get_extras_organizations(cur, jurisdiction_ocdid)
+    return with_selection_methods(base, organizations.selection_methods()) if organizations else base
+
+
 def _fold(facts: Facts, jurisdiction_ocdid: str, taxonomy: Taxonomy) -> Roster:
     return with_published_images(
         derive_roster(facts, jurisdiction_ocdid, taxonomy),
@@ -220,7 +228,7 @@ async def derived_roster_and_facts(
     facts = await load_facts(cur, jurisdiction_ocdid, cutoff, including)
     if merged_into:
         facts = with_merges(facts, merged_into, cutoff)
-    return _fold(facts, jurisdiction_ocdid, await _taxonomy(taxonomy)), facts
+    return _fold(facts, jurisdiction_ocdid, await _jurisdiction_taxonomy(cur, jurisdiction_ocdid, taxonomy)), facts
 
 
 async def base_identities(cur, jurisdiction_ocdid: str, taxonomy: Taxonomy) -> Roster:
@@ -237,7 +245,7 @@ async def rebuild_from_facts(
     Call it after whatever made a fact true is published, so the fold can see it. Returns the
     number of people written.
     """
-    taxonomy = await _taxonomy(None)
+    taxonomy = await _jurisdiction_taxonomy(cur, jurisdiction_ocdid, None)
     facts = await load_facts(cur, jurisdiction_ocdid, datetime.now(timezone.utc))
     roster = _fold(facts, jurisdiction_ocdid, taxonomy)
     history = await _history(cur, facts, jurisdiction_ocdid, taxonomy)
