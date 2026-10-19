@@ -3,7 +3,7 @@ import os
 import shutil
 from typing import List
 
-from runners.people_collector.schemas import PeopleCollectorContext, PipelineStatus
+from runners.people_collector.schemas import PeopleCollectorContext, PeopleCollectorState, PeopleCollectorStep
 from shared.schemas import LOCAL_IMAGE_PREFIX, PersonSourceRecord
 from shared.utils import url_utils
 from shared.utils.data_path_utils import get_data_source_path_for_jurisdiction_ocdid
@@ -16,7 +16,7 @@ def cleanup(context: PeopleCollectorContext):
     """Drop downloaded images no record points at. Every cached page is kept."""
     jurisdiction_ocdid = context.data.jurisdiction_ocdid
     logger = log_utils.get_pipeline_run_logger(jurisdiction_ocdid)
-    logger.info(f"Step 5: {PipelineStatus.CLEANUP.value}")
+    logger.info(f"Step 5: {PeopleCollectorStep.CLEANUP.value}")
 
     assert context.data.process_page_content_step is not None, (
         "should never happen — process_page_content_step is required before cleanup"

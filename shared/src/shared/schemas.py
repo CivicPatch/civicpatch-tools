@@ -498,6 +498,8 @@ class Finder(StrEnum):
     STATE_INDEX = "state_index"
     # A Gemini hint, confirmed by fetch and classify.
     SEARCH = "search"
+    # The state's classification rule alone: no index, no search (general law by LSAD).
+    CLASSIFICATION = "classification"
 
 
 class GoverningLawSourcePage(BaseModel):

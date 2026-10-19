@@ -1,7 +1,8 @@
 import traceback
 import traceback
 from typing import Callable, Optional, Dict, Any, TypeVar
-from dataclasses import replace
+from dataclasses import dataclass, replace
+from enum import StrEnum
 from time import sleep
 from domain.pipeline_run_context import PipelineRunContext
 
@@ -14,17 +15,17 @@ import httpx
 import services.civicpatch_api as civicpatch_api
 from shared.utils.statuses import PipelineRunStatus
 import psutil
-from pydantic import BaseModel
 
 
-Transitions = dict[PipelineRunStatus, frozenset[PipelineRunStatus]]
+# A state is a pipeline's own step or a shared lifecycle state: a member of either StrEnum.
+Transitions = dict[StrEnum, frozenset[StrEnum]]
 
 
-def terminal_states(transitions: Transitions) -> tuple[PipelineRunStatus, ...]:
+def terminal_states(transitions: Transitions) -> tuple[StrEnum, ...]:
     return tuple(status for status, allowed in transitions.items() if not allowed)
 
 
-def next_states(transitions: Transitions, current: PipelineRunStatus) -> frozenset[PipelineRunStatus]:
+def next_states(transitions: Transitions, current: StrEnum) -> frozenset[StrEnum]:
     """Where a run may go from here in its pipeline's graph. Empty for a terminal state."""
     allowed = transitions.get(current, frozenset())
     if not allowed:
@@ -34,16 +35,18 @@ def next_states(transitions: Transitions, current: PipelineRunStatus) -> frozens
     return allowed | {PipelineRunStatus.SEND_ERROR, PipelineRunStatus.CANCELLED}
 
 
-class Machine(BaseModel):
-    """A pipeline as the engine runs it: its graph, and who handles each state in it."""
+@dataclass(frozen=True)
+class Machine:
+    """A pipeline as the engine runs it: its graph, and who handles each state in it. A dataclass,
+    not a model: validation would coerce each StrEnum key against the bare base class."""
 
     transitions: Transitions
-    handlers: Dict[PipelineRunStatus, Callable[..., Any]]
+    handlers: Dict[StrEnum, Callable[..., Any]]
 
 
 class IllegalTransition(Exception):
     """A step returned a state its pipeline's graph does not allow from this one."""
-    def __init__(self, current: PipelineRunStatus, requested: PipelineRunStatus):
+    def __init__(self, current: StrEnum, requested: StrEnum):
         self.current = current
         self.requested = requested
         super().__init__(f"{current} -> {requested} is not a legal transition")

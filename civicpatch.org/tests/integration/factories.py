@@ -59,7 +59,7 @@ async def seed_jurisdiction(
 async def start_run(
     jurisdiction_ocdid: str,
     *,
-    status: PipelineRunStatus = PipelineRunStatus.INIT,
+    status: str = PipelineRunStatus.INIT,
     progress: int = 0,
     created_by_user_id: str | None = None,
     kind: PipelineRunKind = PipelineRunKind.PEOPLE_COLLECTOR,

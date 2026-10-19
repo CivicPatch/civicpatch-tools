@@ -22,7 +22,7 @@ def test_every_terminal_status_is_final(status):
 def test_a_step_report_is_not_final():
     """A running row holds a step name, not a lifecycle state — the engine reports its current
     step every loop."""
-    assert is_final(PipelineRunStatus.SCRAPE_PAGE) is False
+    assert is_final("SCRAPE_PAGE") is False
 
 
 @pytest.mark.unit

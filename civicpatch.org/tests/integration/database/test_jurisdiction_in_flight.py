@@ -121,7 +121,7 @@ async def test_a_run_that_has_not_reached_ingest_yet_is_still_in_flight():
     before that a changeset-rooted query reports the jurisdiction idle while it is scraping."""
     await factories.seed_jurisdiction(_OCDID, "zz")
     run_id = await factories.start_run(
-        _OCDID, status=PipelineRunStatus.SCRAPE_PAGE, progress=40
+        _OCDID, status="SCRAPE_PAGE", progress=40
     )
 
     result = await get_in_flight(_OCDID)
@@ -130,7 +130,7 @@ async def test_a_run_that_has_not_reached_ingest_yet_is_still_in_flight():
     assert result.in_flight[0].entry_type is InFlightEntryType.PIPELINE_RUN
     assert result.in_flight[0].is_running is True
     assert result.in_flight[0].awaiting_review is False
-    assert result.in_flight[0].pipeline_run_status == PipelineRunStatus.SCRAPE_PAGE.value
+    assert result.in_flight[0].pipeline_run_status == "SCRAPE_PAGE"
     assert result.in_flight[0].pipeline_run_progress == 40
 
 

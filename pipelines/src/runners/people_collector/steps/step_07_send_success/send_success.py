@@ -4,14 +4,14 @@ import httpx
 from pipelines_environment import get_env_vars
 
 import services.civicpatch_api
-from runners.people_collector.schemas import MaybeSendToGitHubStep, PeopleCollectorContext, PipelineStatus
+from runners.people_collector.schemas import MaybeSendToGitHubStep, PeopleCollectorContext, PeopleCollectorState, PeopleCollectorStep
 from shared.utils.statuses import PipelineRunStatus
 from utils import log_utils, file_utils
 
 
 async def send_success(context: PeopleCollectorContext, api_client: httpx.AsyncClient) -> MaybeSendToGitHubStep:
     logger = log_utils.get_pipeline_run_logger(context.data.jurisdiction_ocdid)
-    logger.info(f"Step 7: {PipelineStatus.SEND_SUCCESS.value}")
+    logger.info(f"Step 7: {PeopleCollectorStep.SEND_SUCCESS.value}")
 
     env = get_env_vars()
     SERVICE_API_KEY = env["SERVICE_API_KEY"]

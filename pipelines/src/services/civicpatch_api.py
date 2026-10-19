@@ -5,7 +5,7 @@ from typing import List, Optional
 import httpx
 from fastapi import Request
 from pipelines_environment import get_env_vars
-from shared.schemas import GovernmentForm, KnownOrganization
+from shared.schemas import GoverningLaw, GovernmentForm, KnownOrganization
 from shared.utils.config_utils import (
     RoleConfig,
 )
@@ -269,3 +269,24 @@ async def get_governing_law_source_page(client: httpx.AsyncClient, jurisdiction_
     )
     response.raise_for_status()
     return response.json()["data"]
+
+
+async def fetch_governing_law_collector_config(client: httpx.AsyncClient, logger, pipeline_run_id: str) -> dict:
+    async def _fetch():
+        env = get_env_vars()
+        resp = await client.get(
+            f"{env['CIVICPATCH_ORG_URL']}/api/v1/pipeline_runs/{pipeline_run_id}/governing_law_collector_config"
+        )
+        resp.raise_for_status()
+        return resp.json()
+
+    return await with_retry(logger, _fetch)
+
+
+async def put_governing_law(client: httpx.AsyncClient, jurisdiction_ocdid: str, governing_law: GoverningLaw) -> None:
+    env = get_env_vars()
+    response = await client.put(
+        f"{env['CIVICPATCH_ORG_URL']}/api/v1/jurisdictions/{jurisdiction_ocdid}/governing_law",
+        json=governing_law.model_dump(mode="json"),
+    )
+    response.raise_for_status()

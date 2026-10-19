@@ -9,7 +9,7 @@ from runners.people_collector.schemas import (
     PeopleCollectorContext,
     PeopleCollectorData,
     PipelineRunConfig,
-    PipelineStatus,
+    PeopleCollectorState,
 )
 from runners.people_collector.transitions.graph import PEOPLE_COLLECTOR_TRANSITIONS
 from runners.people_collector.transitions.main import TRANSITION_MAP
@@ -19,6 +19,7 @@ from shared.utils import data_path_utils
 from shared.utils.url_utils import same_domain, same_url
 from utils import log_utils
 from utils.log_utils import PipelineRunLogger
+from shared.utils.statuses import PipelineRunStatus
 
 logger = logging.getLogger(__name__)
 
@@ -29,7 +30,7 @@ def initialize_pipeline_run(
     pipeline_run_logger = log_utils.get_pipeline_run_logger(jurisdiction_ocdid)
     context = PeopleCollectorContext(
         pipeline_run_id=pipeline_run_id,
-        current_state=PipelineStatus.INIT,
+        current_state=PipelineRunStatus.INIT,
         data=PeopleCollectorData(
             jurisdiction_ocdid=jurisdiction_ocdid,
             config=config,

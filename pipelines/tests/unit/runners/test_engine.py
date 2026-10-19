@@ -12,7 +12,7 @@ from unittest.mock import AsyncMock, MagicMock, patch
 import pytest
 
 from runners.engine import IllegalTransition, Machine, run_pipeline
-from runners.people_collector.schemas import PipelineStatus
+from runners.people_collector.schemas import PeopleCollectorState, PeopleCollectorStep
 from runners.people_collector.transitions.graph import PEOPLE_COLLECTOR_TRANSITIONS
 from shared.utils.statuses import TERMINAL_PIPELINE_RUN_STATUSES, PipelineRunStatus
 from tests.factories.pipeline_run_context import pipeline_run_context_factory
@@ -22,11 +22,11 @@ def _reported_statuses(update_mock) -> list[str]:
     return [call.kwargs["status"] for call in update_mock.call_args_list]
 
 
-def _at(state: PipelineStatus):
+def _at(state: PeopleCollectorState):
     return pipeline_run_context_factory({}).copy(update={"current_state": state})
 
 
-def _returning(next_state: PipelineStatus):
+def _returning(next_state: PeopleCollectorState):
     async def _fn(_limits, _logger, context, _api_client):
         return context, next_state
 
@@ -55,18 +55,18 @@ async def test_a_cancelled_run_reports_cancelled_not_the_step_it_was_on():
     try:
         with patch("runners.engine.log_system_usage"):
             result = await run_pipeline(
-                _at(PipelineStatus.SCRAPE_PAGE),
+                _at(PeopleCollectorStep.SCRAPE_PAGE),
                 MagicMock(),
-                _machine({PipelineStatus.SCRAPE_PAGE: should_not_run}),
+                _machine({PeopleCollectorStep.SCRAPE_PAGE: should_not_run}),
                 AsyncMock(),
             )
     finally:
         api.stop()
 
     assert _reported_statuses(mock.update_pipeline_run_status)[-1] == (
-        PipelineStatus.CANCELLED.value
+        PipelineRunStatus.CANCELLED.value
     )
-    assert result.current_state == PipelineStatus.CANCELLED
+    assert result.current_state == PipelineRunStatus.CANCELLED
     # Cancelling stops work; it does not run one more step first.
     should_not_run.assert_not_awaited()
 
@@ -81,17 +81,17 @@ async def test_a_step_naming_a_state_the_graph_forbids_raises():
         with patch("runners.engine.log_system_usage"):
             with pytest.raises(IllegalTransition) as raised:
                 await run_pipeline(
-                    _at(PipelineStatus.SAVE_OUTPUT),
+                    _at(PeopleCollectorStep.SAVE_OUTPUT),
                     MagicMock(),
-                    _machine({PipelineStatus.SAVE_OUTPUT: _returning(PipelineStatus.CLEANUP)}),
+                    _machine({PeopleCollectorStep.SAVE_OUTPUT: _returning(PeopleCollectorStep.CLEANUP)}),
                     AsyncMock(),
                 )
     finally:
         api.stop()
 
-    assert raised.value.current == PipelineStatus.SAVE_OUTPUT
-    assert raised.value.requested == PipelineStatus.CLEANUP
-    assert PipelineStatus.CLEANUP.value not in _reported_statuses(
+    assert raised.value.current == PeopleCollectorStep.SAVE_OUTPUT
+    assert raised.value.requested == PeopleCollectorStep.CLEANUP
+    assert PeopleCollectorStep.CLEANUP.value not in _reported_statuses(
         mock.update_pipeline_run_status
     )
 
@@ -104,18 +104,18 @@ async def test_a_run_walks_the_graph_to_a_terminal_state():
     try:
         with patch("runners.engine.log_system_usage"):
             result = await run_pipeline(
-                _at(PipelineStatus.SAVE_OUTPUT),
+                _at(PeopleCollectorStep.SAVE_OUTPUT),
                 MagicMock(),
                 _machine({
-                    PipelineStatus.SAVE_OUTPUT: _returning(PipelineStatus.SEND_SUCCESS),
-                    PipelineStatus.SEND_SUCCESS: _returning(PipelineStatus.SUCCESS),
+                    PeopleCollectorStep.SAVE_OUTPUT: _returning(PeopleCollectorStep.SEND_SUCCESS),
+                    PeopleCollectorStep.SEND_SUCCESS: _returning(PipelineRunStatus.SUCCESS),
                 }),
                 AsyncMock(),
             )
     finally:
         api.stop()
 
-    assert result.current_state == PipelineStatus.SUCCESS
+    assert result.current_state == PipelineRunStatus.SUCCESS
 
 
 
@@ -125,29 +125,29 @@ async def test_a_run_is_held_to_its_own_pipelines_graph():
     """A second pipeline brings its own graph. Here SAVE_OUTPUT may go straight to SUCCESS,
     which the people collector's graph forbids, and CLEANUP is no longer reachable from it."""
     shortcut = {
-        PipelineStatus.SAVE_OUTPUT: frozenset({PipelineStatus.SUCCESS}),
-        PipelineStatus.SUCCESS: frozenset(),
+        PeopleCollectorStep.SAVE_OUTPUT: frozenset({PipelineRunStatus.SUCCESS}),
+        PipelineRunStatus.SUCCESS: frozenset(),
     }
     api, _ = _patched_api()
     try:
         with patch("runners.engine.log_system_usage"):
             walked = await run_pipeline(
-                _at(PipelineStatus.SAVE_OUTPUT),
+                _at(PeopleCollectorStep.SAVE_OUTPUT),
                 MagicMock(),
-                Machine(transitions=shortcut, handlers={PipelineStatus.SAVE_OUTPUT: _returning(PipelineStatus.SUCCESS)}),
+                Machine(transitions=shortcut, handlers={PeopleCollectorStep.SAVE_OUTPUT: _returning(PipelineRunStatus.SUCCESS)}),
                 AsyncMock(),
             )
             with pytest.raises(IllegalTransition):
                 await run_pipeline(
-                    _at(PipelineStatus.SAVE_OUTPUT),
+                    _at(PeopleCollectorStep.SAVE_OUTPUT),
                     MagicMock(),
-                    Machine(transitions=shortcut, handlers={PipelineStatus.SAVE_OUTPUT: _returning(PipelineStatus.SEND_SUCCESS)}),
+                    Machine(transitions=shortcut, handlers={PeopleCollectorStep.SAVE_OUTPUT: _returning(PeopleCollectorStep.SEND_SUCCESS)}),
                     AsyncMock(),
                 )
     finally:
         api.stop()
 
-    assert walked.current_state == PipelineStatus.SUCCESS
+    assert walked.current_state == PipelineRunStatus.SUCCESS
 
 @pytest.mark.unit
 def test_every_state_the_engine_handles_is_in_the_graph_and_vice_versa():
@@ -157,7 +157,7 @@ def test_every_state_the_engine_handles_is_in_the_graph_and_vice_versa():
     from runners.people_collector.transitions.main import TRANSITION_MAP
 
     # PENDING and RUNNING are civicpatch.org's; the engine starts at INIT.
-    before_the_engine = {PipelineStatus.PENDING, PipelineStatus.RUNNING}
+    before_the_engine = {PipelineRunStatus.PENDING, PipelineRunStatus.RUNNING}
     engine_states = {
         state
         for state, allowed in PEOPLE_COLLECTOR_TRANSITIONS.items()
@@ -174,3 +174,14 @@ def test_the_people_collectors_graph_ends_where_every_run_ends():
     from runners.engine import terminal_states
 
     assert set(terminal_states(PEOPLE_COLLECTOR_TRANSITIONS)) == set(TERMINAL_PIPELINE_RUN_STATUSES)
+
+
+@pytest.mark.unit
+def test_no_pipelines_step_reuses_a_lifecycle_name():
+    """A step named SUCCESS or INIT would be the lifecycle state as far as the engine and
+    civicpatch.org can tell, since both compare by value."""
+    from runners.governing_law_collector.schemas import GoverningLawCollectorStep
+
+    lifecycle = {status.value for status in PipelineRunStatus}
+    for steps in (PeopleCollectorStep, GoverningLawCollectorStep):
+        assert lifecycle.isdisjoint(step.value for step in steps), steps.__name__

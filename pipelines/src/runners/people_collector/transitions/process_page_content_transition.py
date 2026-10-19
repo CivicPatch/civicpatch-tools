@@ -2,10 +2,11 @@ from decimal import Decimal
 from typing import List
 
 from runners.people_collector.schemas import (
-  PipelineStatus,
+  PeopleCollectorState,
   ProgressState,
   Link,
-  LinkStatus
+  LinkStatus,
+  PeopleCollectorStep,
 )
 from runners.people_collector.steps.step_04_process_page_content.organization_progress import is_done
 from shared.schemas import PipelineRunLimits
@@ -31,17 +32,17 @@ def next_process_content_state(
     current_cost: Decimal,
     limits: PipelineRunLimits,
     progress: ProgressState,
-) -> tuple[PipelineStatus, str | None]:
+) -> tuple[PeopleCollectorState, str | None]:
     if should_stop_for_data_requirement(progress):
-        return PipelineStatus.CLEANUP, None
+        return PeopleCollectorStep.CLEANUP, None
 
     if should_stop_for_cap(current_cost, limits):
-        return PipelineStatus.CLEANUP, STOP_COST_CAP
+        return PeopleCollectorStep.CLEANUP, STOP_COST_CAP
 
     if should_stop_for_max_pages(processed_count, limits, progress):
-        return PipelineStatus.CLEANUP, STOP_MAX_PAGES
+        return PeopleCollectorStep.CLEANUP, STOP_MAX_PAGES
 
-    return PipelineStatus.SCRAPE_PAGE, None
+    return PeopleCollectorStep.SCRAPE_PAGE, None
 
 
 

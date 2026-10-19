@@ -5,8 +5,9 @@ from runners.people_collector.schemas import (
     MaybeSendToGitHubStep,
     PeopleCollectorContext,
     PeopleCollectorData,
+    PeopleCollectorState,
+    PeopleCollectorStep,
     PipelineRunConfig,
-    PipelineStatus,
     PreprocessPageContentStep,
     ProcessPageContentStep,
     ResearchMunicipalityStep,
@@ -14,11 +15,11 @@ from runners.people_collector.schemas import (
 
 
 def pipeline_run_context_factory(
-    steps: dict[PipelineStatus, Any],
+    steps: dict[PeopleCollectorState, Any],
     research_municipality_step=None,
 ) -> PeopleCollectorContext:
     default_steps: Dict[
-        PipelineStatus,
+        PeopleCollectorState,
         Union[
             ResearchMunicipalityStep,
             PreprocessPageContentStep,
@@ -31,7 +32,7 @@ def pipeline_run_context_factory(
 
     return PeopleCollectorContext(
         pipeline_run_id="random-request-id",
-        current_state=PipelineStatus.SAVE_OUTPUT,
+        current_state=PeopleCollectorStep.SAVE_OUTPUT,
         data=PeopleCollectorData(
             config=PipelineRunConfig(
                 name="Seattle",
@@ -40,16 +41,16 @@ def pipeline_run_context_factory(
             frontier=LinkFrontier(),
             jurisdiction_ocdid="ocd-jurisdiction/country:us/state:wa/place:seattle/government",
             research_municipality_step=research_municipality_step
-            or default_steps.get(PipelineStatus.RESEARCH_MUNICIPALITY)
+            or default_steps.get(PeopleCollectorStep.RESEARCH_MUNICIPALITY)
             or ResearchMunicipalityStep(
                 identities={},
                 source_urls=[],
             ),
             preprocess_page_content_step=default_steps.get(
-                PipelineStatus.PREPROCESS_PAGE_CONTENT
+                PeopleCollectorStep.PREPROCESS_PAGE_CONTENT
             ),
             process_page_content_step=default_steps.get(
-                PipelineStatus.PROCESS_PAGE_CONTENT
+                PeopleCollectorStep.PROCESS_PAGE_CONTENT
             ),
         ),
     )
