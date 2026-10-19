@@ -12,18 +12,26 @@ spending without the number it is measured against.
 
 import logging
 
+from database import collector_settings as collector_settings_db
 from database import state_settings as db
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException
 from lib.auth import require_route_access
 from schemas.common import Identity, RouteCategory, UserRole
+from schemas.collector_settings import SetCollectorCapsRequest
 from schemas.scrape_settings import SetCadenceRequest, SetCapsRequest, SetGlobalCapRequest
 from lib.temporal.client import get_client
 from lib.temporal.schedules import reconcile_state_schedule
 from services.scrape_settings import get_global_panel, get_state_panel
+from shared.utils.statuses import COLLECTOR_RUN_KINDS, PipelineRunKind
 
 logger = logging.getLogger(__name__)
 
 _ADMIN = require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.ADMINS)
+
+
+def _require_collector(kind: PipelineRunKind) -> None:
+    if kind not in COLLECTOR_RUN_KINDS:
+        raise HTTPException(status_code=404, detail=f"{kind} is the scrape: its caps are per state")
 
 
 def get_router() -> APIRouter:
@@ -39,6 +47,20 @@ def get_router() -> APIRouter:
     ):
         await db.set_global_cap(body.monthly_cap_usd, user.user_id)
         return {"data": (await get_global_panel()).model_dump(mode="json")}
+
+    # The charter collectors' bounds, apart from the scrape's: one row per kind, not per state.
+    @router.get("/collectors/{kind}")
+    async def get_collector_settings_endpoint(kind: PipelineRunKind, _: Identity = Depends(_ADMIN)):
+        _require_collector(kind)
+        return {"data": (await collector_settings_db.get_collector_settings(kind)).model_dump(mode="json")}
+
+    @router.put("/collectors/{kind}")
+    async def put_collector_settings_endpoint(
+        kind: PipelineRunKind, body: SetCollectorCapsRequest, user: Identity = Depends(_ADMIN)
+    ):
+        _require_collector(kind)
+        await collector_settings_db.set_collector_caps(kind, body.pipeline_run_cap_usd, body.monthly_cap_usd, user.user_id)
+        return {"data": (await collector_settings_db.get_collector_settings(kind)).model_dump(mode="json")}
 
     @router.get("/{state}")
     async def get_state_settings_endpoint(state: str, _: Identity = Depends(_ADMIN)):

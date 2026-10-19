@@ -70,16 +70,24 @@ erDiagram
 
     pipeline_runs {
         uuid            id                  PK  "169: split back out of changesets, undoing 147"
-        text            kind                "248: which pipeline (check: people_collector|governing_law_collector|organizations_collector, mirrors PipelineRunKind; no default: a writer says which pipeline it is). The cap, llm_calls, issues, cancel and the stale sweep serve every kind; the scrape's scheduling (LAST_ATTEMPT_JOIN, the unfinished-run sets, IN_FLIGHT_SQL, the per-run cost and time averages) reads only people_collector. The monthly budget counts every kind"
+        text            kind                "248: which pipeline (check: people_collector|governing_law_collector|organizations_collector, mirrors PipelineRunKind; no default: a writer says which pipeline it is). The cap, llm_calls, issues, cancel and the stale sweep serve every kind; the scrape's scheduling (LAST_ATTEMPT_JOIN, the unfinished-run sets, IN_FLIGHT_SQL, the per-run cost and time averages) and its monthly budget read only people_collector (249)"
         text            jurisdiction_ocdid  "NOT NULL — a run is always about somewhere"
         uuid_null       changeset_id        FK  "the proposal this run minted, NULL until ingest succeeds. ON DELETE SET NULL"
         text_null       status
         int_null        progress
         jsonb           arguments_json      "170: moved off changesets. What the scrape was asked to fetch"
-        numeric_null    pipeline_run_cap_usd "183: the ceiling this run was dispatched under. Resolved from state_settings inside register_run's INSERT, so neither dispatch path can forget the lookup; NULL = the state set none, or is unconfigured, or the jurisdiction is unknown — all meaning inherit pipeline.yml. Recorded rather than only resolved: the llm_calls total cannot say what it was measured against"
+        numeric_null    pipeline_run_cap_usd "183: the ceiling this run was dispatched under. 249: a collector run's from collector_settings by kind, a scrape's from state_settings. Resolved inside register_run's INSERT, so neither dispatch path can forget the lookup; NULL = the state set none, or is unconfigured, or the jurisdiction is unknown — all meaning inherit pipeline.yml. Recorded rather than only resolved: the llm_calls total cannot say what it was measured against"
         uuid_null       created_by_user_id  FK
         timestamptz_null finished_at        "NULL means in flight; the stale-run sweep reads this"
         timestamptz     created_at
+        timestamptz     updated_at
+    }
+
+    collector_settings {
+        text            kind                PK  "249: one seeded row per charter collector kind (check: governing_law_collector|organizations_collector, mirrors COLLECTOR_RUN_KINDS). Their spend bounds, apart from the scrape's state_settings and global_settings, which bound people_collector runs only"
+        numeric         pipeline_run_cap_usd "NOT NULL, default 0.50: copied onto each collector run at register_run, as a scrape's comes from state_settings. Never none: a runaway jurisdiction must stop"
+        numeric_null    monthly_cap_usd     "NULL = no monthly cap; 0 = spend nothing. Checked before a collector batch dispatches more"
+        uuid_null       updated_by_user_id  FK
         timestamptz     updated_at
     }
 
@@ -388,6 +396,7 @@ erDiagram
     users ||--o{ activity : "user_id (ON DELETE SET NULL)"
     users ||--o{ state_settings : "updated_by_user_id"
     users ||--o{ global_settings : "updated_by_user_id"
+    users ||--o{ collector_settings : "updated_by_user_id"
     jurisdictions ||--o{ activity : "jurisdiction_ocdid"
     roles ||--o{ activity : "jurisdiction_ocdid"
     review_sessions ||--o{ review_session_entries : "review_session_id"

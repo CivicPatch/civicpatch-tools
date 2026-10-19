@@ -36,3 +36,8 @@ def cap_reached(
     if global_cap is not None and global_spent >= global_cap:
         return Cap.GLOBAL_MONTH
     return None
+
+
+def month_cap_reached(spent: Decimal, cap: Decimal | None) -> bool:
+    """One scope's month: a collector kind's. `None` is no cap; `>=`, so `$0` stops it outright."""
+    return cap is not None and spent >= cap

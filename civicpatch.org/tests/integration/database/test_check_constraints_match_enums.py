@@ -22,7 +22,7 @@ from database.review_sessions import ReviewSessionEntryStatus
 from schemas.claims import ClaimKind, EntityType
 from schemas.common import UserRole
 from shared.schemas import GovernmentForm, RoleAliasStatus, RoleStatus
-from shared.utils.statuses import ChangesetKind, DismissalReason, PipelineIssueStatus, PipelineRunKind
+from shared.utils.statuses import COLLECTOR_RUN_KINDS, ChangesetKind, DismissalReason, PipelineIssueStatus, PipelineRunKind
 
 # Constraint name → the enum it copies, every member of it.
 EXACT = {
@@ -41,6 +41,8 @@ EXACT = {
     "review_session_entries_status_check": ReviewSessionEntryStatus,
     "jurisdictions_extras_government_form_check": GovernmentForm,
     "pipeline_runs_kind_check": PipelineRunKind,
+    # A subset, not a whole enum: every kind but the scrape.
+    "collector_settings_kind_check": COLLECTOR_RUN_KINDS,
 }
 
 # No enum behind it: `active`/`inactive` exists only here and in the SQL that reads it.

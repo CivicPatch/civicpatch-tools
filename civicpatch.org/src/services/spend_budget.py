@@ -1,4 +1,4 @@
-"""Whether a state may spend any more this month.
+"""Whether a state, or a charter collector, may spend any more this month.
 
 Orchestration only: two reads and one pure decision. The decision itself is
 `core.spend_limits.cap_reached`, which knows nothing about the database.
@@ -8,9 +8,11 @@ spending is running away, and a cached answer would keep dispatching for as long
 lived.
 """
 
-from core.spend_limits import Cap, cap_reached
-from database.pipeline_run_spend import get_month_to_date_spend
+from core.spend_limits import Cap, cap_reached, month_cap_reached
+from database.collector_settings import get_collector_settings
+from database.pipeline_run_spend import get_collector_month_to_date_spend, get_month_to_date_spend
 from database.state_settings import get_global_settings, get_state_settings
+from shared.utils.statuses import PipelineRunKind
 
 
 async def cap_reached_for_state(state: str) -> Cap | None:
@@ -20,3 +22,9 @@ async def cap_reached_for_state(state: str) -> Cap | None:
     return cap_reached(
         state_spent, settings.monthly_cap_usd, global_spent, fleet.monthly_cap_usd
     )
+
+
+async def collector_month_cap_reached(kind: PipelineRunKind) -> bool:
+    """Read before a collector batch dispatches more, as `cap_reached_for_state` is for a scrape."""
+    settings = await get_collector_settings(kind)
+    return month_cap_reached(await get_collector_month_to_date_spend(kind), settings.monthly_cap_usd)

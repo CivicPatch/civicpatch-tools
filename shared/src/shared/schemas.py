@@ -493,13 +493,17 @@ class GoverningLawKind(StrEnum):
     NONE_FOUND = "none_found"
 
 
-class Finder(StrEnum):
-    # The state's own list said so.
+class FoundBy(StrEnum):
+    """How a jurisdiction's governing law was found."""
+
+    # The state's own list said so, charter or not.
     STATE_INDEX = "state_index"
     # A Gemini hint, confirmed by fetch and classify.
     SEARCH = "search"
-    # The state's classification rule alone: no index, no search (general law by LSAD).
+    # The LSAD's general law alone: no index asked, nothing searched.
     CLASSIFICATION = "classification"
+    # Set by hand through the API; the route records it whatever the body says.
+    MAINTAINER = "maintainer"
 
 
 class GoverningLawSourcePage(BaseModel):
@@ -519,7 +523,7 @@ class GoverningLaw(BaseModel):
 
     kind: GoverningLawKind
     classification: str | None
-    finder: Finder
+    found_by: FoundBy
     # Its `governing_law_source_pages` rows; empty for none_found.
     source_page_ids: List[str] = []
     collected_at: datetime

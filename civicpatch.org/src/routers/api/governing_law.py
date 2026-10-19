@@ -4,7 +4,7 @@ import services.governing_law as governing_law_service
 from fastapi import APIRouter, Depends, HTTPException
 from lib.auth import is_service_key, require_route_access
 from schemas.common import Identity, RouteCategory, ServiceKey, UserRole
-from shared.schemas import GoverningLaw
+from shared.schemas import FoundBy, GoverningLaw
 
 
 def get_router() -> APIRouter:
@@ -33,10 +33,12 @@ def get_router() -> APIRouter:
         """The collector's service key or a maintainer; either replaces what was there."""
         if not is_service_key(identity) and identity.user_id is None:
             raise HTTPException(status_code=401, detail="Sign in to set the governing law.")
+        # A person's answer is recorded as theirs, whatever the body claims found it.
+        governing_law = body if is_service_key(identity) else body.model_copy(update={"found_by": FoundBy.MAINTAINER})
         try:
-            await governing_law_service.set_governing_law(jurisdiction_ocdid, body, identity.user_id)
+            await governing_law_service.set_governing_law(jurisdiction_ocdid, governing_law, identity.user_id)
         except governing_law_service.UnknownJurisdiction:
             raise HTTPException(status_code=404, detail=f"No such jurisdiction: {jurisdiction_ocdid}")
-        return {"data": body.model_dump(mode="json")}
+        return {"data": governing_law.model_dump(mode="json")}
 
     return router
