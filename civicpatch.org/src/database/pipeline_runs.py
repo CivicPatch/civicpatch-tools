@@ -55,12 +55,14 @@ async def register_run(
                 id, kind, jurisdiction_ocdid, arguments_json, created_by_user_id, status, progress,
                 pipeline_run_cap_usd
             )
-            VALUES (%s, %s, %s, %s, %s, %s, %s, (
+            VALUES (%s, %s, %s, %s, %s, %s, %s, CASE WHEN %s = '{PipelineRunKind.PEOPLE_COLLECTOR.value}' THEN (
                 SELECT ss.pipeline_run_cap_usd
                 FROM jurisdictions j
                 JOIN state_settings ss ON ss.state = j.state
                 WHERE j.jurisdiction_ocdid = %s
-            ))
+            ) ELSE (
+                SELECT cs.pipeline_run_cap_usd FROM collector_settings cs WHERE cs.kind = %s
+            ) END)
             {conflict}
             """),
             (
@@ -71,7 +73,9 @@ async def register_run(
                 created_by_user_id,
                 status,
                 progress,
+                kind,
                 jurisdiction_ocdid,
+                kind,
             ),
         )
         registered = bool(cur.rowcount)

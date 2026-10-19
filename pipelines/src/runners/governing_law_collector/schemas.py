@@ -4,7 +4,7 @@ from typing import List, Optional
 
 from domain.pipeline_run_context import PipelineRunContext
 from pydantic import BaseModel, Field
-from shared.schemas import Finder, GoverningLaw, GoverningLawKind
+from shared.schemas import FoundBy, GoverningLaw, GoverningLawKind
 from shared.utils.layered_config import GoverningLawConfig
 from shared.utils.statuses import PipelineRunStatus
 
@@ -36,7 +36,7 @@ class GoverningLawCollectorConfig(BaseModel):
 class FinderAnswer(BaseModel):
     """What a finder says governs the jurisdiction, and where its texts are."""
 
-    finder: Finder
+    found_by: FoundBy
     kind: GoverningLawKind
     classification: Optional[str]
     urls: List[str]

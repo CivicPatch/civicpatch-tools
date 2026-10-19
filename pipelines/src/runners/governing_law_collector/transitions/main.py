@@ -32,7 +32,7 @@ async def start(_limits: PipelineRunLimits, _logger: PipelineRunLogger, context:
 
 async def find_source(_limits: PipelineRunLimits, logger: PipelineRunLogger, context: GoverningLawCollectorContext, _client: httpx.AsyncClient) -> Step:
     answer = await finders.find(context.data.config)
-    logger.info(f"{answer.finder}: {answer.kind}, {len(answer.urls)} url(s)")
+    logger.info(f"{answer.found_by}: {answer.kind}, {len(answer.urls)} url(s)")
     next_context = _next(context, answer=answer, pending_urls=answer.urls)
     return next_context, GoverningLawCollectorStep.FETCH_SOURCE if answer.urls else GoverningLawCollectorStep.WRITE_GOVERNING_LAW
 
@@ -91,7 +91,7 @@ def governing_law_from(context: GoverningLawCollectorContext) -> GoverningLaw:
     return GoverningLaw(
         kind=answer.kind if stored or not answer.urls else GoverningLawKind.NONE_FOUND,
         classification=answer.classification,
-        finder=answer.finder,
+        found_by=answer.found_by,
         source_page_ids=stored,
         collected_at=datetime.now(timezone.utc),
         cost_usd=cost_utils.total_cost(context.pipeline_run_id),

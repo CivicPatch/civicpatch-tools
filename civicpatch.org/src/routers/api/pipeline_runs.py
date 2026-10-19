@@ -9,6 +9,7 @@ import lib.files as file_utils
 import lib.buckets as buckets
 import lib.storage as storage_service
 import lib.temporal.client as temporal_service
+import services.governing_law as governing_law_service
 import services.government_form as government_form_service
 import services.jurisdiction_scrape_candidate as candidate_service
 import services.pipeline_runs as pipeline_run_service
@@ -288,6 +289,22 @@ def get_router(api_key_header):
                 for page in await published_source_pages(pipeline_run["jurisdiction_ocdid"])
             ],
         }
+
+    @router.get("/{pipeline_run_id}/governing_law_collector_config", include_in_schema=False)
+    async def get_governing_law_collector_config_endpoint(
+        pipeline_run_id: str,
+        _: Identity = Depends(require_route_access(RouteCategory.SERVICE)),
+    ):
+        """The collector's counterpart of `/config`: asked for, like the scrape's, so nothing
+        between dispatch and the run has to carry it."""
+        pipeline_run = await get_pipeline_run(pipeline_run_id)
+        if not pipeline_run:
+            raise HTTPException(status_code=404, detail="Pipeline run not found")
+        try:
+            config = await governing_law_service.collector_config(pipeline_run["jurisdiction_ocdid"])
+        except governing_law_service.UnknownJurisdiction:
+            raise HTTPException(status_code=404, detail="Jurisdiction not found")
+        return {**config.model_dump(mode="json"), "pipeline_run_cap_usd": pipeline_run.get("pipeline_run_cap_usd")}
 
     # ── Pipeline Runs: Status & Progress ──────────────
 

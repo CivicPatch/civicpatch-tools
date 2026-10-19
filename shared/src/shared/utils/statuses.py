@@ -116,6 +116,11 @@ class PipelineRunKind(StrEnum):
     ORGANIZATIONS_COLLECTOR = "organizations_collector"
 
 
+# The charter collectors: every kind but the scrape. Their spend is bounded by `collector_settings`,
+# the scrape's by `state_settings` and `global_settings`.
+COLLECTOR_RUN_KINDS = (PipelineRunKind.GOVERNING_LAW_COLLECTOR, PipelineRunKind.ORGANIZATIONS_COLLECTOR)
+
+
 class DismissalReason(StrEnum):
     REJECTED = "rejected"  # a reviewer read the roster and said no
     CANCELLED = "cancelled"  # somebody stopped the run before it produced one

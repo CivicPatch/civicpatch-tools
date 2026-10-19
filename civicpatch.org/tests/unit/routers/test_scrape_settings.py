@@ -15,7 +15,11 @@ from fastapi.testclient import TestClient
 from lib.auth import get_optional_user
 from routers.api import scrape_settings as settings_router
 from schemas.common import Identity, UserRole
+from datetime import datetime, timezone
+
+from schemas.collector_settings import CollectorSettings
 from schemas.scrape_settings import GlobalScrapePanel, StateScrapePanel
+from shared.utils.statuses import PipelineRunKind
 from schemas.state_settings import GlobalSettings, StateSettings
 
 pytestmark = pytest.mark.unit
@@ -150,3 +154,41 @@ def test_the_state_caps_total_is_shown_even_when_it_exceeds_the_cap(client):
         body = client.get("/scrape_settings/global").json()["data"]
 
     assert body["state_monthly_caps_usd"] == "120"
+
+
+_COLLECTOR = CollectorSettings(
+    kind=PipelineRunKind.GOVERNING_LAW_COLLECTOR, pipeline_run_cap_usd=Decimal("0.5"), monthly_cap_usd=None,
+    updated_by_user_id=None, updated_at=datetime(2026, 10, 18, tzinfo=timezone.utc),
+)
+
+
+def test_an_admin_sets_a_collectors_caps(client):
+    _as(client, UserRole.ADMINS)
+    with patch.object(settings_router.collector_settings_db, "set_collector_caps", new=AsyncMock()) as set_caps, patch.object(
+        settings_router.collector_settings_db, "get_collector_settings", new=AsyncMock(return_value=_COLLECTOR)
+    ):
+        response = client.put(
+            "/scrape_settings/collectors/governing_law_collector", json={"pipeline_run_cap_usd": "0.25", "monthly_cap_usd": "20"}
+        )
+
+    assert response.status_code == 200, response.text
+    set_caps.assert_awaited_once_with(PipelineRunKind.GOVERNING_LAW_COLLECTOR, Decimal("0.25"), Decimal("20"), "user-1")
+
+
+def test_a_collectors_run_cap_cannot_be_unset(client):
+    """A runaway jurisdiction must stop: there is no "no cap" for one collector run."""
+    _as(client, UserRole.ADMINS)
+    response = client.put("/scrape_settings/collectors/governing_law_collector", json={"pipeline_run_cap_usd": None, "monthly_cap_usd": None})
+
+    assert response.status_code == 422
+
+
+def test_the_scrape_is_not_a_collector(client):
+    _as(client, UserRole.ADMINS)
+    assert client.get("/scrape_settings/collectors/people_collector").status_code == 404
+
+
+@pytest.mark.parametrize("role", [UserRole.MAINTAINERS, UserRole.CONTRIBUTORS])
+def test_nobody_below_admin_may_touch_a_collectors_caps(client, role):
+    _as(client, role)
+    assert client.get("/scrape_settings/collectors/governing_law_collector").status_code == 403

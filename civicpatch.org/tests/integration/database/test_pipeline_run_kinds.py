@@ -2,12 +2,14 @@
 
 Each test starts a governing-law collector run beside, or instead of, a scrape and asks one of
 the scrape-only queries: the cooldown, the unfinished-run sets, the in-flight lane, the per-run
-averages. The monthly budget is the one that must count it.
+averages, the scrape's monthly budget. A collection is bounded by its kind's own caps instead.
 
 Real Postgres: the filters are SQL. Isolation: sentinel state 'zz', cleaned before and after.
 """
 
 from typing import LiteralString, cast
+
+from decimal import Decimal
 
 import pytest
 import pytest_asyncio
@@ -15,7 +17,9 @@ import pytest_asyncio
 from database import changeset_predicates
 from database.changesets import get_in_flight
 from database.database import get_pool
+from database.collector_settings import get_collector_settings, set_collector_caps
 from database.pipeline_run_spend import (
+    get_collector_month_to_date_spend,
     get_fleet_month_to_date_cost_per_run,
     get_fleet_month_to_date_seconds_per_run,
     get_month_to_date_cost_per_run,
@@ -145,9 +149,37 @@ async def test_a_collections_cost_and_time_stay_out_of_the_per_scrape_averages()
 
 @pytest.mark.integration
 @pytest.mark.asyncio
-async def test_a_collections_spend_counts_against_the_monthly_budget():
+async def test_a_collections_spend_counts_against_its_own_month_not_the_scrapes():
+    """The admin's monthly caps bound scrapes; a collector kind has its own (migration 249)."""
+    before = await get_collector_month_to_date_spend(_COLLECTOR)
     run_id = await factories.start_run(_OCDID, kind=_COLLECTOR)
     await _spend(run_id, "0.25")
 
     state_spent, _ = await get_month_to_date_spend("zz")
-    assert state_spent == pytest.approx(0.25)
+    assert state_spent == 0
+    assert await get_collector_month_to_date_spend(_COLLECTOR) - before == pytest.approx(Decimal("0.25"))
+
+
+async def _cap(run_id: str):
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute("SELECT pipeline_run_cap_usd FROM pipeline_runs WHERE id = %s", (run_id,))
+        row = await cur.fetchone()
+        assert row
+        return row[0]
+
+
+@pytest.mark.integration
+@pytest.mark.asyncio
+async def test_a_collection_runs_under_its_kinds_cap_and_a_scrape_under_its_states():
+    settings = await get_collector_settings(_COLLECTOR)
+    await set_collector_caps(_COLLECTOR, Decimal("0.75"), settings.monthly_cap_usd, None)
+    try:
+        collection = await factories.start_run(_OCDID, kind=_COLLECTOR)
+        scrape = await factories.start_run(_OCDID)
+
+        assert await _cap(collection) == Decimal("0.75")
+        # 'zz' has no state_settings row: a scrape inherits pipeline.yml's default.
+        assert await _cap(scrape) is None
+    finally:
+        await set_collector_caps(_COLLECTOR, settings.pipeline_run_cap_usd, settings.monthly_cap_usd, settings.updated_by_user_id)

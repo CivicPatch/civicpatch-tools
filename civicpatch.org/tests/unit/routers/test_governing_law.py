@@ -7,7 +7,7 @@ import services.governing_law as governing_law_service
 from lib.auth import get_optional_user
 from routers.api import governing_law as governing_law_router
 from schemas.common import Identity, UserRole
-from shared.schemas import Finder, GoverningLaw, GoverningLawKind
+from shared.schemas import FoundBy, GoverningLaw, GoverningLawKind
 
 pytestmark = pytest.mark.unit
 
@@ -16,7 +16,7 @@ URL = f"/jurisdictions/{OCDID}/governing_law"
 BODY = {
     "kind": "charter",
     "classification": "town",
-    "finder": "state_index",
+    "found_by": "state_index",
     "source_page_ids": ["5d3e2c6a-0c4b-4b8e-9a2d-1f6e7c8b9a01"],
     "collected_at": "2026-10-18T12:00:00Z",
     "cost_usd": None,
@@ -59,8 +59,9 @@ def test_a_maintainer_sets_it_as_themselves(client):
     response, mock_set = _put(client, _maintainer)
 
     assert response.status_code == 200, response.text
-    mock_set.assert_awaited_once_with(OCDID, GoverningLaw.model_validate(BODY), "user-789")
-    assert response.json()["data"]["kind"] == "charter"
+    by_hand = GoverningLaw.model_validate({**BODY, "found_by": "maintainer"})
+    mock_set.assert_awaited_once_with(OCDID, by_hand, "user-789")
+    assert response.json()["data"]["found_by"] == "maintainer"
 
 
 def test_the_collector_sets_it_as_nobody(client):
@@ -93,7 +94,7 @@ def test_a_body_off_the_contract_is_422(client):
 
 
 _NONE_FOUND = GoverningLaw(
-    kind=GoverningLawKind.NONE_FOUND, classification=None, finder=Finder.STATE_INDEX,
+    kind=GoverningLawKind.NONE_FOUND, classification=None, found_by=FoundBy.STATE_INDEX,
     collected_at="2026-10-18T12:00:00Z", cost_usd=None,
 )
 
