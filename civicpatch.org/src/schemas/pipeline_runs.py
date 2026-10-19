@@ -39,6 +39,13 @@ class BatchPipelineRunRequest(BaseModel):
     created_by_user_id: Optional[str] = None
 
 
+# ── POST /api/v1/pipeline_runs/governing_law_collector ───────────────────────
+# Its batch and claim take `BatchPipelineRunRequest`, the scrape's, field for field.
+
+class StartGoverningLawCollectionRequest(BaseModel):
+    jurisdiction_ocdid: str
+
+
 # ── POST /api/v1/pipeline_runs/register (internal) ───────────────────────────
 
 class RegisterPipelineRunRequest(BaseModel):

@@ -1,6 +1,9 @@
 import { describe, expect, it } from "vitest";
 
 import {
+  RUN_CAP_REQUIRED,
+  collectorCapsToSave,
+  collectorLabel,
   describeStateCaps,
   describeBudget,
   describeCadence,
@@ -202,5 +205,25 @@ describe("describeNextPass", () => {
 
   it("says nothing when there are no runs to average, never $0", () => {
     expect(describeNextPass(41, fleet())).toEqual({ cost: "", wall_clock: "", total: "" });
+  });
+});
+
+
+describe("collectorCapsToSave", () => {
+  it("never sends a run without a cap", () => {
+    expect(collectorCapsToSave("", "20")).toEqual({ error: RUN_CAP_REQUIRED });
+    expect(collectorCapsToSave("  ", "")).toEqual({ error: RUN_CAP_REQUIRED });
+  });
+
+  it("sends an empty monthly cap as none, and $0 as a real cap", () => {
+    expect(collectorCapsToSave("0.50", "")).toEqual({ run: "0.50", month: null });
+    expect(collectorCapsToSave("0", "0")).toEqual({ run: "0", month: "0" });
+  });
+});
+
+describe("collectorLabel", () => {
+  it("names a collector kind for the page, and falls back to the kind", () => {
+    expect(collectorLabel("governing_law_collector")).toBe("governing law");
+    expect(collectorLabel("some_new_collector")).toBe("some_new_collector");
   });
 });

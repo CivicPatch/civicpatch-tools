@@ -25,7 +25,7 @@ def _chapters(name: str) -> list[str]:
 
 
 def test_a_place_matches_its_chapter_by_lsad_and_name():
-    assert _chapters("Stowe town") == ["149"]
+    assert _chapters("Stowe town") == ["153"]
     assert _chapters("Barre city") == ["001"]
     assert _chapters("Barre town") == ["101"]
     assert _chapters("St. Albans city") == ["011"]
@@ -48,14 +48,14 @@ def test_a_title_marked_repealed_is_no_charter():
 
 def test_a_link_outside_the_list_that_names_the_place_is_not_its_charter():
     """The fixture's footer links "Visiting the Town of Stowe": only the exact title counts."""
-    assert _chapters("Stowe town") == ["149"]
+    assert _chapters("Stowe town") == ["153"]
 
 
 def test_without_a_text_link_the_index_link_is_the_text():
     plain_index = VERMONT.model_copy(update={"text_link": None})
 
     assert charter_links(plain_index, INDEX, INDEX_URL, "Stowe town") == [
-        "https://legislature.vermont.gov/statutes/chapter/24APPENDIX/149"
+        "https://legislature.vermont.gov/statutes/chapter/24APPENDIX/153"
     ]
 
 
@@ -63,7 +63,7 @@ _VERMONT_TITLE = "Chapter {*} : {lsad} of {place}"
 
 
 def test_a_charter_title_matches_the_whole_link_text():
-    assert charter_title_matches(_VERMONT_TITLE, "Stowe town", "Chapter  149 :  Town of Stowe")
+    assert charter_title_matches(_VERMONT_TITLE, "Stowe town", "Chapter  153 :  Town of Stowe")
     assert charter_title_matches(_VERMONT_TITLE, "St. Albans city", "Chapter 011 : City of St. Albans")
     assert charter_title_matches(_VERMONT_TITLE, "Northfield town", "Chapter 129D : Town of Northfield")
 

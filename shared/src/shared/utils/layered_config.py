@@ -65,7 +65,7 @@ class CharterLinkList(BaseModel):
 
     url: str
     # A charter's whole link text: {lsad} and {place} are the jurisdiction's, {*} is anything.
-    # Vermont's "Chapter {*} : {lsad} of {place}" is "Chapter 149 : Town of Stowe" for Stowe town.
+    # Vermont's "Chapter {*} : {lsad} of {place}" is "Chapter 153 : Town of Stowe" for Stowe town.
     title: str
     text_link: TextLink | None = None
 

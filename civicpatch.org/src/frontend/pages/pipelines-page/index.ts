@@ -7,6 +7,7 @@ import { html, nothing, type TemplateResult } from "lit-html";
 import "./pipelines-page.css";
 import {
   fetchActivePipelineRuns,
+  fetchCollectorPanels,
   fetchGlobalScrapeSettings,
   fetchJurisdictionStates,
   fetchStateScrapeSettings,
@@ -15,8 +16,10 @@ import {
 import "../../components/confirm-modal/confirm-modal.ts";
 import "./scrape-settings-modal.ts";
 import "./global-budget-modal.ts";
+import "./collector-budget-modal.ts";
 import "./active-runs/index.js";
 import {
+  collectorLabel,
   describeAnchor,
   describeBudget,
   describeCadence,
@@ -25,6 +28,7 @@ import {
   describePerRun,
   formatDuration,
   formatUsd,
+  type CollectorPanel,
   type GlobalScrapePanel,
   type StateScrapePanel,
 } from "./scrape-settings.js";
@@ -199,11 +203,46 @@ function renderRow(
   `;
 }
 
+const COLLECTOR_COLS = ["per run", "this month", "runs", "hit the cap"];
+
+function renderCollectors(collectors: CollectorPanel[], canEdit: boolean, onEdit: (kind: string) => void) {
+  return html`
+    <h2 class="pipelines-page__section-title">Collectors</h2>
+    <div class="pipelines-page__list pipelines-page__list--collectors">
+      <div class="pipelines-page__row pipelines-page__row--head">
+        <span class="pipelines-page__row-state">collector</span>
+        ${COLLECTOR_COLS.map((label) => html`<span class="pipelines-page__row-fig">${label}</span>`)}
+        <span></span>
+      </div>
+      ${collectors.map(
+        (panel) => html`
+          <div class="pipelines-page__row">
+            <span class="pipelines-page__row-state">${collectorLabel(panel.settings.kind)}</span>
+            <span class="pipelines-page__row-fig">
+              ${describePerRun(panel.cost_per_run_this_month_usd, panel.settings.pipeline_run_cap_usd)}
+            </span>
+            <span class="pipelines-page__row-fig">
+              ${describeBudget(panel.spent_this_month_usd, panel.settings.monthly_cap_usd)}
+            </span>
+            <span class="pipelines-page__row-fig">${panel.runs_this_month}</span>
+            <span class="pipelines-page__row-fig">${panel.cost_cap_hits_this_month}</span>
+            ${canEdit
+              ? html`<button class="pipelines-page__edit" @click=${() => onEdit(panel.settings.kind)}>edit</button>`
+              : html`<span></span>`}
+          </div>
+        `,
+      )}
+    </div>
+  `;
+}
+
 function PipelinesPage() {
   const { permissions } = useAuth();
   const [panels, setPanels] = useState<StateScrapePanel[] | null>(null);
   const [budget, setBudget] = useState<GlobalScrapePanel | null>(null);
   const [editingBudget, setEditingBudget] = useState(false);
+  const [collectors, setCollectors] = useState<CollectorPanel[] | null>(null);
+  const [editingCollector, setEditingCollector] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [editingState, setEditingState] = useState<string | null>(null);
   const [confirmingState, setConfirmingState] = useState<string | null>(null);
@@ -232,8 +271,15 @@ function PipelinesPage() {
       .catch(() => setBudget(null));
   };
 
+  const loadCollectors = () => {
+    fetchCollectorPanels()
+      .then(setCollectors)
+      .catch(() => setCollectors(null));
+  };
+
   useEffect(load, []);
   useEffect(loadBudget, []);
+  useEffect(loadCollectors, []);
 
   useEffect(() => {
     const onPopState = () => {
@@ -281,6 +327,8 @@ function PipelinesPage() {
       .finally(() => setStarting(null));
   };
 
+  const editingCollectorPanel = collectors?.find((panel) => panel.settings.kind === editingCollector) ?? null;
+
   if (error) return html`<main class="pipelines-page page-content"><p class="pipelines-page__empty">${error}</p></main>`;
   if (!panels) return html`<main class="pipelines-page page-content"><p class="pipelines-page__empty">Loading…</p></main>`;
 
@@ -319,6 +367,8 @@ function PipelinesPage() {
         )}
       </div>
 
+      ${collectors ? renderCollectors(collectors, !!permissions.can_write_global_config, setEditingCollector) : nothing}
+
       ${runsLoaded && runs.length === 0
         ? html`<p class="pipelines-page__empty">No runs in progress.</p>`
         : html`<pipeline-runs-list
@@ -345,6 +395,17 @@ function PipelinesPage() {
             }}
             @cancel=${() => setEditingState(null)}
           ></civ-scrape-settings-modal>`
+        : nothing}
+
+      ${editingCollectorPanel
+        ? html`<civ-collector-budget-modal
+            .panel=${editingCollectorPanel}
+            @settings-saved=${() => {
+              setEditingCollector(null);
+              loadCollectors();
+            }}
+            @cancel=${() => setEditingCollector(null)}
+          ></civ-collector-budget-modal>`
         : nothing}
 
       ${confirmingState

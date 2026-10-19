@@ -23,6 +23,41 @@ export interface StateScrapePanel {
   candidates_due: number;
 }
 
+// One charter collector kind's row: its own caps, apart from the scrape's.
+export interface CollectorSettings {
+  kind: string;
+  pipeline_run_cap_usd: string;
+  monthly_cap_usd: string | null;
+}
+
+export interface CollectorPanel {
+  settings: CollectorSettings;
+  spent_this_month_usd: string;
+  cost_per_run_this_month_usd: string | null;
+  runs_this_month: number;
+  cost_cap_hits_this_month: number;
+}
+
+const COLLECTOR_LABELS: Record<string, string> = {
+  governing_law_collector: "governing law",
+  organizations_collector: "organizations",
+};
+
+export function collectorLabel(kind: string): string {
+  return COLLECTOR_LABELS[kind] ?? kind;
+}
+
+export const RUN_CAP_REQUIRED = "A run needs a cap. Set $0 to stop this collector altogether.";
+
+// What the collector modal sends: a run's cap is never "none", a monthly cap may be.
+export function collectorCapsToSave(
+  runCap: string,
+  monthCap: string,
+): { error: string } | { run: string; month: string | null } {
+  if (runCap.trim() === "") return { error: RUN_CAP_REQUIRED };
+  return { run: runCap.trim(), month: monthCap.trim() === "" ? null : monthCap.trim() };
+}
+
 export const MANUAL = "manual";
 
 export function describeCadence(panel: StateScrapePanel): string {

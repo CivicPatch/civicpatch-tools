@@ -25,9 +25,9 @@ pytestmark = pytest.mark.unit
 
 MAIN = "runners.governing_law_collector.transitions.main"
 _OCDID = "ocd-jurisdiction/country:us/state:vt/place:stowe/government"
-_CHARTER = "https://legislature.vermont.gov/statutes/fullchapter/24APPENDIX/149"
+_CHARTER = "https://legislature.vermont.gov/statutes/fullchapter/24APPENDIX/153"
 _STATUTE = "https://legislature.vermont.gov/statutes/section/17/055/02646"
-_TEXT = "# Chapter 149\n\n" + "§ 1. Corporate existence retained. " * 20
+_TEXT = "# Chapter 153\n\n" + "§ 1. Corporate existence retained. " * 20
 
 
 def _context() -> GoverningLawCollectorContext:
@@ -44,9 +44,12 @@ def _html(url: str, body: str, by_browser: bool = False) -> FetchedPage:
     return FetchedPage(url=url, content_type="text/html", body=f"<html><body><article>{body}</article></body></html>".encode(), by_browser=by_browser)
 
 
-async def _run(answer: FinderAnswer, fetch) -> tuple[GoverningLawCollectorContext, MagicMock]:
+async def _run(answer: FinderAnswer, fetch, reusable: dict[str, str] | None = None) -> tuple[GoverningLawCollectorContext, MagicMock]:
+    """`reusable` maps a url to the row id another run stored for it within a day."""
     stored = iter(f"page-{n}" for n in range(1, 10))
+    reusable = reusable or {}
     api = MagicMock()
+    api.reuse_governing_law_source_page = AsyncMock(side_effect=lambda _client, _ocdid, url: {"id": reusable[url]} if url in reusable else None)
     api.store_governing_law_source_page = AsyncMock(side_effect=lambda *_: {"id": next(stored)})
     api.put_governing_law = AsyncMock()
     engine_api = MagicMock()
@@ -149,3 +152,16 @@ async def test_a_charter_with_its_general_law_is_a_charter_with_both_pages():
     written = api.put_governing_law.await_args.args[2]
     assert (written.kind, written.source_page_ids) == (GoverningLawKind.CHARTER, ["page-1", "page-2"])
 
+
+
+
+@pytest.mark.asyncio
+async def test_a_page_another_run_stored_today_is_not_fetched_again():
+    answer = FinderAnswer(found_by=FoundBy.STATE_INDEX, classification="town", charter_urls=[_CHARTER], general_law_urls=[_STATUTE])
+    fetch = AsyncMock(side_effect=lambda url, by_browser: _html(url, _TEXT))
+
+    context, api = await _run(answer, fetch, reusable={_STATUTE: "stowes-statute"})
+
+    assert [call.args for call in fetch.await_args_list] == [(_CHARTER,)]
+    assert context.data.general_law_source_page_ids == ["stowes-statute"]
+    assert api.put_governing_law.await_args.args[2].source_page_ids == ["page-1", "stowes-statute"]

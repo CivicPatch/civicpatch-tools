@@ -21,7 +21,7 @@ pytestmark = pytest.mark.unit
 
 OCDID = "ocd-jurisdiction/country:us/state:vt/place:stowe/government"
 URL = f"/jurisdictions/{OCDID}/governing_law_source_pages"
-_SOURCE_URL = "https://legislature.vermont.gov/statutes/fullchapter/24APPENDIX/149"
+_SOURCE_URL = "https://legislature.vermont.gov/statutes/fullchapter/24APPENDIX/153"
 _PAGE = GoverningLawSourcePage(
     id="row-1", jurisdiction_ocdid=OCDID, source_url=_SOURCE_URL, page_hash="abc", cache_path="governing_law/abc.md",
     collected_at=datetime(2026, 10, 18, tzinfo=timezone.utc),
@@ -79,3 +79,15 @@ def test_the_public_can_neither_store_nor_read(client):
     client.app.dependency_overrides[get_optional_user] = lambda: None
     assert client.post(URL, json={"source_url": _SOURCE_URL, "text": "§ 1."}).status_code == 403
     assert client.get(f"{URL}/row-1").status_code == 403
+
+
+
+def test_a_recent_page_is_reused_and_none_means_fetch(client):
+    client.app.dependency_overrides[get_optional_user] = _service_key
+    with patch.object(source_pages_service, "reuse_source_page", new=AsyncMock(return_value=_PAGE)) as reuse:
+        assert client.post(f"{URL}/reuse", json={"source_url": _SOURCE_URL}).json() == {"data": _PAGE.model_dump(mode="json")}
+    reuse.assert_awaited_once_with(OCDID, _SOURCE_URL)
+    with patch.object(source_pages_service, "reuse_source_page", new=AsyncMock(return_value=None)):
+        assert client.post(f"{URL}/reuse", json={"source_url": _SOURCE_URL}).json() == {"data": None}
+    with patch.object(source_pages_service, "reuse_source_page", new=AsyncMock(side_effect=UnknownJurisdiction(OCDID))):
+        assert client.post(f"{URL}/reuse", json={"source_url": _SOURCE_URL}).status_code == 404

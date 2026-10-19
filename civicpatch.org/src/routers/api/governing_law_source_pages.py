@@ -4,13 +4,8 @@ whole, read back by id."""
 import services.governing_law_source_pages as source_pages_service
 from fastapi import APIRouter, Depends, HTTPException
 from lib.auth import require_route_access
-from pydantic import BaseModel
 from schemas.common import Identity, RouteCategory, ServiceKey
-
-
-class GoverningLawSourcePageRequest(BaseModel):
-    source_url: str
-    text: str
+from schemas.governing_law_source_pages import GoverningLawSourcePageRequest, GoverningLawSourcePageReuseRequest
 
 
 def get_router() -> APIRouter:
@@ -28,6 +23,18 @@ def get_router() -> APIRouter:
         except source_pages_service.NotPlainText:
             raise HTTPException(status_code=422, detail="The cache takes text, not a page: strip the HTML first.")
         return {"data": page.model_dump(mode="json")}
+
+    @router.post("/{jurisdiction_ocdid:path}/governing_law_source_pages/reuse", include_in_schema=False)
+    async def reuse_governing_law_source_page_endpoint(
+        jurisdiction_ocdid: str, body: GoverningLawSourcePageReuseRequest, _: Identity = access
+    ):
+        """A page this url gave another run within a day, as this jurisdiction's. `data` null means
+        nothing to reuse, and the caller fetches."""
+        try:
+            page = await source_pages_service.reuse_source_page(jurisdiction_ocdid, body.source_url)
+        except source_pages_service.UnknownJurisdiction:
+            raise HTTPException(status_code=404, detail=f"No such jurisdiction: {jurisdiction_ocdid}")
+        return {"data": page.model_dump(mode="json") if page else None}
 
     @router.get("/{jurisdiction_ocdid:path}/governing_law_source_pages/{source_page_id}", include_in_schema=False)
     async def get_governing_law_source_page_endpoint(jurisdiction_ocdid: str, source_page_id: str, _: Identity = access):

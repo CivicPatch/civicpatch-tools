@@ -261,6 +261,18 @@ async def store_governing_law_source_page(
     return response.json()["data"]
 
 
+
+async def reuse_governing_law_source_page(client: httpx.AsyncClient, jurisdiction_ocdid: str, source_url: str) -> dict | None:
+    """A page another run stored from this url within a day, as this jurisdiction's row; None when
+    there is none, and the url has to be fetched."""
+    env = get_env_vars()
+    response = await client.post(
+        f"{env['CIVICPATCH_ORG_URL']}/api/v1/jurisdictions/{jurisdiction_ocdid}/governing_law_source_pages/reuse",
+        json={"source_url": source_url},
+    )
+    response.raise_for_status()
+    return response.json()["data"]
+
 async def get_governing_law_source_page(client: httpx.AsyncClient, jurisdiction_ocdid: str, source_page_id: str) -> dict:
     """The row with its text."""
     env = get_env_vars()

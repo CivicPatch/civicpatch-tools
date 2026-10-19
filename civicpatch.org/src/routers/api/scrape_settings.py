@@ -21,6 +21,7 @@ from schemas.collector_settings import SetCollectorCapsRequest
 from schemas.scrape_settings import SetCadenceRequest, SetCapsRequest, SetGlobalCapRequest
 from lib.temporal.client import get_client
 from lib.temporal.schedules import reconcile_state_schedule
+import services.collector_settings as collector_settings_service
 from services.scrape_settings import get_global_panel, get_state_panel
 from shared.utils.statuses import COLLECTOR_RUN_KINDS, PipelineRunKind
 
@@ -49,6 +50,10 @@ def get_router() -> APIRouter:
         return {"data": (await get_global_panel()).model_dump(mode="json")}
 
     # The charter collectors' bounds, apart from the scrape's: one row per kind, not per state.
+    @router.get("/collectors")
+    async def get_collector_panels_endpoint(_: Identity = Depends(_ADMIN)):
+        return {"data": [panel.model_dump(mode="json") for panel in await collector_settings_service.get_collector_panels()]}
+
     @router.get("/collectors/{kind}")
     async def get_collector_settings_endpoint(kind: PipelineRunKind, _: Identity = Depends(_ADMIN)):
         _require_collector(kind)

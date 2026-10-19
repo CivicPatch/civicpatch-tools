@@ -64,6 +64,28 @@ async def get_collector_month_to_date_spend(kind: PipelineRunKind) -> Decimal:
     assert row, "COLLECTOR_MONTH_TO_DATE_SQL aggregates, so it always returns one row"
     return row[0]
 
+
+COLLECTOR_MONTH_TO_DATE_RUNS_SQL = """
+SELECT count(*)::int,
+       (SELECT sum(lc.cost_usd) / NULLIF(count(DISTINCT lc.pipeline_run_id) FILTER (WHERE lc.cost_usd IS NOT NULL), 0)
+          FROM llm_calls lc JOIN pipeline_runs pr ON pr.id = lc.pipeline_run_id
+         WHERE pr.kind = %(kind)s AND lc.created_at >= date_trunc('month', now() AT TIME ZONE 'utc'))
+FROM pipeline_runs
+WHERE kind = %(kind)s
+  AND created_at >= date_trunc('month', now() AT TIME ZONE 'utc')
+"""
+
+
+async def get_collector_month_to_date_runs(kind: PipelineRunKind) -> tuple[int, Decimal | None]:
+    """`(runs started this month, cost per run)` for one collector kind. The cost is None when no
+    run has stated a cost to average, never a free run."""
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(COLLECTOR_MONTH_TO_DATE_RUNS_SQL, {"kind": kind})
+        row = await cur.fetchone()
+    assert row, "COLLECTOR_MONTH_TO_DATE_RUNS_SQL aggregates, so it always returns one row"
+    return row[0], row[1]
+
 # Per run, not per call, and null rather than zero when the state has not run this month.
 MONTH_TO_DATE_COST_PER_RUN_SQL = f"""
 SELECT sum(lc.cost_usd) / NULLIF(count(DISTINCT lc.pipeline_run_id) FILTER (WHERE lc.cost_usd IS NOT NULL), 0)

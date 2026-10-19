@@ -80,6 +80,18 @@
   overflow-x: auto;
 }
 
+/* The collectors' own caps: same rows, fewer columns. 6 = cells per row. */
+.pipelines-page__list--collectors {
+  grid-template-columns: repeat(6, auto);
+}
+
+.pipelines-page__section-title {
+  margin: 2rem 0 0.5rem;
+  font-size: var(--font-size-sm);
+  color: var(--text-muted);
+  text-transform: lowercase;
+}
+
 .pipelines-page__row {
   display: grid;
   grid-column: 1 / -1;

@@ -110,6 +110,8 @@ A page the visitor can't view redirects to `/`.
 
 - Reorder roles (opens a PR, like the other role changes).
 - `/pipelines`: scrape costs, batch scrapes, cadence, cost caps and in-progress runs.
+- Start a governing-law collection, for one jurisdiction or a whole state (API only), and set the
+  collectors' cost caps.
 - Cancel a run; read a running run's Temporal state.
 - Moderate the Issues page.
 - Change other users' levels; roll back a user's hand-made edits.
