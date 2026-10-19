@@ -1,3 +1,4 @@
+import json
 from database.database import get_pool
 from shared.schemas import PLACEHOLDER_ORGANIZATION_NAME
 
@@ -136,15 +137,28 @@ async def create(jurisdiction_ocdid: str, name: str, url: str | None) -> str | N
         return row[0] if row else None
 
 
-async def update(organization_id: str, name: str, url: str | None) -> bool:
-    """False if no such organization."""
+async def update(organization_id: str, name: str, url: str | None, extras_role_labels: dict[str, str] | None) -> bool:
+    """False if no such organization. `extras_role_labels` None keeps the labels as they are."""
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "UPDATE organizations SET name = %s, url = %s WHERE id = %s",
-            (name, url, organization_id),
+            """
+            UPDATE organizations SET name = %s, url = %s, extras_role_labels = COALESCE(%s::jsonb, extras_role_labels)
+            WHERE id = %s
+            """,
+            (name, url, json.dumps(extras_role_labels) if extras_role_labels is not None else None, organization_id),
         )
         return cur.rowcount > 0
+
+
+async def set_extras_role_labels(cur, organization_id: str, role_labels: dict[str, str]) -> None:
+    """What the organization calls its roles, laid over what it had: a form's or the charter's answer."""
+    if not role_labels:
+        return
+    await cur.execute(
+        "UPDATE organizations SET extras_role_labels = extras_role_labels || %s::jsonb WHERE id = %s",
+        (json.dumps(role_labels), organization_id),
+    )
 
 
 async def rename(cur, organization_id: str, name: str) -> None:

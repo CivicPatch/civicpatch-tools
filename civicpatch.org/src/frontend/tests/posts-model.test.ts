@@ -33,12 +33,6 @@ const held = (postId: string, count: number) =>
     person_name: `Holder ${index}`,
   }));
 
-const ROLE_LABELS = new Map([
-  ["council-member", "Council Member"],
-  ["mayor", "Mayor"],
-  ["clerk", "Clerk"],
-]);
-
 describe("groupPostsByRole", () => {
   it("gathers a role's posts under one heading", () => {
     const groups = groupPostsByRole(
@@ -48,7 +42,6 @@ describe("groupPostsByRole", () => {
         post({ id: "c", role_id: "council-member" }),
       ],
       [],
-      ROLE_LABELS,
     );
 
     expect(groups.map((g) => g.role_id)).toEqual(["council-member", "mayor"]);
@@ -61,7 +54,6 @@ describe("groupPostsByRole", () => {
     const groups = groupPostsByRole(
       [post({ id: "z", role_id: "mayor" }), post({ id: "a", role_id: "council-member" })],
       [],
-      ROLE_LABELS,
     );
 
     expect(groups.map((g) => g.role_id)).toEqual(["mayor", "council-member"]);
@@ -74,7 +66,6 @@ describe("groupPostsByRole", () => {
         post({ id: "b", role_id: "council-member", meta_headcount: 4 }),
       ],
       [...held("a", 5), ...held("b", 3)],
-      ROLE_LABELS,
     );
 
     expect(groups[0]).toMatchObject({ headcount: 11, filled: 8, free: 3 });
@@ -86,7 +77,6 @@ describe("groupPostsByRole", () => {
     const groups = groupPostsByRole(
       [post({ id: "a", role_id: "mayor", meta_headcount: 1 })],
       held("a", 2),
-      ROLE_LABELS,
     );
 
     expect(groups[0].free).toBe(0);
@@ -101,7 +91,6 @@ describe("groupPostsByRole", () => {
         { post_id: "b", person_name: "Someone Else" },
         { post_id: "a", person_name: "Gilles Bergeron" },
       ],
-      ROLE_LABELS,
     );
 
     expect(groups[0].posts[0].holder_names).toEqual(["Gilles Bergeron", "Robert Michaud"]);

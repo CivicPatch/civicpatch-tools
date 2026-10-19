@@ -1,18 +1,18 @@
-"""Plan 2's step 2.5: only a role elected by voters is a post's role, and a role elected by the
-organization's members ("Vice Mayor") stays on the membership of its holder's post.
+"""Plan 2's 2.5 and 2.6d: only a role elected by voters is a post's role, and a label naming only
+roles the organization's members elect ("Vice Mayor", "Chair") is a member's, on the
+organization's Member post at the division it names.
 
-Labels are the dry run's real ones (Alameda, Bakersfield, Antioch). Posts come from `post_keys`,
-which reads each organization's post role off everyone's labels, as the fold does.
+Labels are the dry run's real ones (Alameda, Bakersfield, Antioch).
 """
 
 from datetime import datetime, timedelta, timezone
 
 import pytest
 from shared.schemas import Role, RoleConfig, RoleStatus, SelectionMethod
-from shared.utils.taxonomy import build_taxonomy
+from shared.utils.taxonomy import MEMBER_ROLE_ID, build_taxonomy
 
 from core.projection.facts import PostKey, SourceRecord
-from core.projection.posts import PostRole, organization_post_roles, parse_labels, post_keys
+from core.projection.posts import parse_labels, post_keys
 
 pytestmark = pytest.mark.unit
 
@@ -34,18 +34,18 @@ TAXONOMY = build_taxonomy(
             _role("mayor", "Mayor", 0, SelectionMethod.ELECTED_BY_VOTERS),
             _role("vice-mayor", "Vice Mayor", 1, SelectionMethod.ELECTED_BY_MEMBERS),
             _role("mayor-pro-tempore", "Mayor Pro Tempore", 2, SelectionMethod.ELECTED_BY_MEMBERS, ["mayor pro tem"]),
-            _role("council-member", "Council Member", 3, SelectionMethod.ELECTED_BY_VOTERS),
+            _role(MEMBER_ROLE_ID, "Member", 3, SelectionMethod.ELECTED_BY_VOTERS, ["Council Member", "Select Board Member", "Trustee"]),
             _role("city-manager", "City Manager", 4, SelectionMethod.APPOINTED),
         ]
     )
 )
 
 
-def _record(person_id: str, label: str, minutes: int = 0) -> SourceRecord:
+def _record(person_id: str, label: str) -> SourceRecord:
     return SourceRecord(
-        id=f"{person_id}-{minutes}",
+        id=f"{person_id}-{label}",
         changeset_id="c1",
-        created_at=_T + timedelta(minutes=minutes),
+        created_at=_T + timedelta(minutes=1),
         person_id=person_id,
         organization_id=COUNCIL,
         name=person_id,
@@ -63,41 +63,29 @@ def _posts(*labels: str) -> set[PostKey]:
 
 
 def test_a_label_naming_both_roles_is_on_the_post_elected_by_voters():
-    posts = _posts("Mayor Pro Tem, District 3 Council Member", "District 4 Council Member")
-
-    assert _post("council-member", BASE + "/council_district:3") in posts
+    assert _posts("Mayor Pro Tem, District 3 Council Member") == {_post(MEMBER_ROLE_ID, BASE + "/council_district:3")}
 
 
 def test_the_role_elected_by_members_stays_on_the_membership():
-    records = [_record("p0", "Mayor Pro Tem, District 3 Council Member")]
-
-    _, details = parse_labels(records, JURISDICTION, TAXONOMY, {})
+    _, details = parse_labels([_record("p0", "Mayor Pro Tem, District 3 Council Member")], JURISDICTION, TAXONOMY)
 
     assert details.extra_roles == ("mayor-pro-tempore",)
 
 
-def test_a_vice_mayor_with_a_division_is_on_that_divisions_post():
-    posts = _posts("Vice Mayor Ward 7", "Council Member Ward 6", "Council Member Ward 5")
-
-    assert _post("council-member", BASE + "/ward:7") in posts
+def test_a_vice_mayor_is_a_member_at_the_division_the_label_names():
+    assert _posts("Vice Mayor Ward 7") == {_post(MEMBER_ROLE_ID, BASE + "/ward:7")}
 
 
-def test_a_vice_mayor_on_an_at_large_council_is_on_the_post_at_large():
-    posts = _posts("Vice Mayor", "Council Member", "Council Member")
-
-    assert posts == {_post("council-member")}
+def test_a_vice_mayor_naming_no_division_is_a_member_at_large():
+    assert _posts("Vice Mayor") == {_post(MEMBER_ROLE_ID)}
 
 
-def test_a_vice_mayor_on_a_council_with_divisions_and_none_named_keeps_its_post():
-    posts = _posts("Mayor Pro Tem", "District 1 Council Member", "District 2 Council Member")
-
-    assert _post("mayor-pro-tempore") in posts
+def test_every_local_name_for_a_member_is_the_one_member_post():
+    assert _posts("Council Member", "Select Board Member", "Trustee") == {_post(MEMBER_ROLE_ID)}
 
 
-def test_an_appointed_role_never_moves_onto_a_post_elected_by_voters():
-    posts = _posts("City Manager", "Council Member", "Council Member")
-
-    assert _post("city-manager") in posts
+def test_an_appointed_role_keeps_its_own_post():
+    assert _posts("City Manager") == {_post("city-manager")}
 
 
 def test_a_role_elected_by_members_wins_over_an_appointed_one_whatever_the_config_order():
@@ -110,53 +98,10 @@ def test_a_role_elected_by_members_wins_over_an_appointed_one_whatever_the_confi
         )
     )
 
-    post, _ = parse_labels([_record("p0", "Vice Mayor and City Manager")], JURISDICTION, taxonomy, {})
+    post, _ = parse_labels([_record("p0", "Vice Mayor and City Manager")], JURISDICTION, taxonomy)
 
-    assert post == _post("vice-mayor")
-
-
-def test_a_vice_mayor_with_no_post_role_beside_it_keeps_its_post():
-    assert _posts("Vice Mayor") == {_post("vice-mayor")}
+    assert post == _post(MEMBER_ROLE_ID)
 
 
-def test_the_post_role_is_the_one_most_people_hold_not_a_lone_mayor():
-    records = [_record("p0", "Mayor"), *(_record(f"p{i}", "Council Member") for i in range(1, 5))]
-
-    assert organization_post_roles(records, JURISDICTION, TAXONOMY) == {
-        COUNCIL: PostRole(role="Council Member", has_divisions=False)
-    }
-
-
-def test_the_post_role_has_divisions_when_a_holder_names_one():
-    records = [_record("p0", "District 1 Council Member"), _record("p1", "Council Member")]
-
-    assert organization_post_roles(records, JURISDICTION, TAXONOMY)[COUNCIL].has_divisions
-
-
-def test_the_post_role_is_read_from_each_persons_newest_labels():
-    records = [
-        record
-        for person in ("p0", "p1")
-        for record in (
-            _record(person, "Council Member", minutes=0),
-            _record(person, "Mayor", minutes=5).model_copy(update={"changeset_id": "c2"}),
-        )
-    ]
-
-    assert organization_post_roles(records, JURISDICTION, TAXONOMY)[COUNCIL].role == "Mayor"
-
-
-def test_a_role_one_person_holds_is_never_the_post_role():
-    clerk_and_titles = [_record("p0", "Clerk"), _record("p1", "Chair"), _record("p2", "Vice Chair")]
-    taxonomy = build_taxonomy(
-        RoleConfig(
-            roles=[
-                _role("chair", "Chair", 0, SelectionMethod.ELECTED_BY_MEMBERS),
-                _role("vice-chair", "Vice Chair", 1, SelectionMethod.ELECTED_BY_MEMBERS),
-                _role("clerk", "Clerk", 2, SelectionMethod.ELECTED_BY_VOTERS),
-            ]
-        )
-    )
-
-    assert organization_post_roles(clerk_and_titles, JURISDICTION, taxonomy) == {}
-    assert _post("chair") in set(post_keys(clerk_and_titles, JURISDICTION, taxonomy))
+def test_a_mayor_is_still_a_mayor():
+    assert _posts("Mayor") == {_post("mayor")}

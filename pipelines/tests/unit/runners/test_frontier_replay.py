@@ -156,6 +156,7 @@ def test_post_labels_are_terms_too():
                     role_id="trustee",
                     division_ocdid="ocd-division/country:us/state:zz/place:zz",
                     label="Trustee, Ward 3",
+                    role_label="Trustee",
                 )
             ],
         )

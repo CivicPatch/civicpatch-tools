@@ -189,20 +189,6 @@ def test_an_organization_role_must_be_a_role():
         merged_config(_COUNTRY_ROLES, _COUNTRY_FORMS, state)
 
 
-def test_an_organization_role_must_be_a_roles_label_not_an_alias():
-    """An alias may name several roles, so it cannot say which one the organization holds."""
-    state = ConfigFile(
-        government_forms={
-            GovernmentForm.MAYOR_COUNCIL: GovernmentFormConfig(
-                organizations=[DerivedOrganization(name="Council", role_labels=["Councilmember"])]
-            )
-        }
-    )
-
-    with pytest.raises(ValueError, match="Council's role 'Councilmember' is not a role's label"):
-        merged_config(_COUNTRY_ROLES, _COUNTRY_FORMS, state)
-
-
 def test_without_state_forms_every_country_form_is_allowed():
     config = merged_config(_COUNTRY_ROLES, _COUNTRY_FORMS, None)
 
@@ -421,3 +407,16 @@ def test_a_charter_index_title_names_the_place():
     with pytest.raises(ValidationError, match="has no {place}"):
         CharterLinkList(url="https://example.gov/charters", title="{lsad} charter")
 
+
+
+def test_a_forms_role_label_may_be_an_alias_of_a_role():
+    roles = ConfigFile(roles=[ConfigRole(id="member", label="Member", aliases=["Select Board Member"])])
+    forms = ConfigFile(
+        government_forms={
+            GovernmentForm.OPEN_TOWN_MEETING: GovernmentFormConfig(
+                organizations=[DerivedOrganization(name="Select Board", role_labels=["Select Board Member"])]
+            )
+        }
+    )
+
+    assert merged_config(roles, forms, None).country_government_forms[GovernmentForm.OPEN_TOWN_MEETING].organizations[0].role_labels == ["Select Board Member"]

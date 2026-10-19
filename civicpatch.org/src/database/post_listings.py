@@ -34,8 +34,8 @@ async def get_many(cur, post_ids: list[str]) -> dict[str, Post]:
         """
         SELECT posts.id::text, posts.jurisdiction_ocdid, posts.organization_id::text,
                posts.role_id, posts.division_ocdid,
-               roles.label AS role_label
-        FROM posts LEFT JOIN roles ON roles.id = posts.role_id
+               post_role_label(posts.organization_id, posts.role_id) AS role_label
+        FROM posts
         WHERE posts.id::text = ANY(%s)
         """,
         (post_ids,),
@@ -119,8 +119,8 @@ async def list_for_jurisdictions(cur, jurisdiction_ocdids: list[str]) -> dict[st
         SELECT posts.id::text, posts.jurisdiction_ocdid, posts.organization_id::text,
                posts.role_id, posts.division_ocdid,
                {POST_IS_VERIFIED} AS meta_is_verified,
-               roles.label AS role_label
-        FROM posts LEFT JOIN roles ON roles.id = posts.role_id
+               post_role_label(posts.organization_id, posts.role_id) AS role_label
+        FROM posts
         WHERE posts.jurisdiction_ocdid = ANY(%(jurisdiction_ocdids)s)
         ORDER BY posts.role_id, posts.division_ocdid
         """,
@@ -154,8 +154,8 @@ async def list_page_for_state(
                    posts.id::text, posts.organization_id::text, posts.role_id,
                    posts.division_ocdid,
                    {POST_IS_VERIFIED} AS meta_is_verified,
-                   roles.label AS role_label
-            FROM posts LEFT JOIN roles ON roles.id = posts.role_id
+                   post_role_label(posts.organization_id, posts.role_id) AS role_label
+            FROM posts
             WHERE posts.jurisdiction_ocdid LIKE %(prefix)s
             ORDER BY posts.jurisdiction_ocdid, posts.role_id, posts.division_ocdid
             LIMIT %(limit)s OFFSET %(offset)s
@@ -219,9 +219,8 @@ async def unverified_by_jurisdiction(
     await cur.execute(
         f"""
         SELECT posts.jurisdiction_ocdid, posts.id::text, posts.role_id,
-               posts.division_ocdid, roles.label AS role_label
+               posts.division_ocdid, post_role_label(posts.organization_id, posts.role_id) AS role_label
         FROM posts
-        JOIN roles ON roles.id = posts.role_id
         WHERE posts.jurisdiction_ocdid = ANY(%s) AND NOT {POST_IS_VERIFIED}
           -- Silent on the jurisdiction's first scrape — see the constant.
           AND NOT {JURISDICTIONS_FIRST_SCRAPE}

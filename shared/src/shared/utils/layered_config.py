@@ -305,13 +305,15 @@ def _check_state_government_forms(state_government_forms: GovernmentFormsConfig,
 
 
 def _check_role_labels_resolve(config: MergedConfig) -> None:
-    """A role label, not an alias: the forms name roles the way the roles file does."""
-    labels = {lookup_key(role.label) for role in config.roles.roles}
+    """A role's label or one of its aliases: an alias is what the organization calls the role
+    ("Select Board Member" for `member`), which becomes its label for that role."""
+    known = {lookup_key(role.label) for role in config.roles.roles}
+    known.update(lookup_key(alias) for role in config.roles.roles for alias in role.aliases)
     for government_form, organization in _every_organization(config):
         for label in organization.role_labels:
-            if lookup_key(label) not in labels:
+            if lookup_key(label) not in known:
                 raise ValueError(
-                    f"{government_form.value}: {organization.name}'s role {label!r} is not a role's label"
+                    f"{government_form.value}: {organization.name}'s role {label!r} is not a role's label or alias"
                 )
 
 

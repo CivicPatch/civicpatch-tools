@@ -26,6 +26,7 @@ def _post(organization_id: str, label: str) -> Post:
         role_id="role",
         division_ocdid="ocd-division/country:us/state:zz/place:zz",
         label=label,
+        role_label=label,
     )
 
 

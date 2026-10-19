@@ -95,7 +95,7 @@ def get_router() -> APIRouter:
             require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.MAINTAINERS)
         ),
     ):
-        updated = await organizations.update(organization_id, body.name, body.url)
+        updated = await organizations.update(organization_id, body.name, body.url, body.extras_role_labels)
         if not updated:
             return JSONResponse({"error": "No such organization."}, status_code=404)
         return {"data": {"ok": True}}

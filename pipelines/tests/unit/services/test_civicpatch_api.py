@@ -35,6 +35,7 @@ def _post(post_id: str, organization_id: str) -> dict:
         "role_id": "mayor",
         "division_ocdid": "ocd-division/country:us/state:wa/place:seattle",
         "label": "Mayor",
+        "role_label": "Mayor",
         "meta_headcount": 1,
         "meta_is_tracked": True,
         "meta_is_verified": False,

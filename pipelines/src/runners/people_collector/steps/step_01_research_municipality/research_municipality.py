@@ -95,12 +95,11 @@ def _post_memberships(
 ) -> List[ExpectedMembership]:
     """One per post, carrying the designations of every membership held on it. `unmatched` is
     skipped: it has no label worth searching a page for."""
-    labels_by_id = {role.id: role.label for role in (role_config.roles if role_config else [])}
     taxonomy = build_taxonomy(role_config)
     return [
         ExpectedMembership(
             organization_id=post.organization_id,
-            role_label=labels_by_id[post.role_id],
+            role_label=post.role_label,
             division=_division(post.division_ocdid, jurisdiction_ocdid),
             designations=_designations_held_on(post, held, taxonomy),
         )

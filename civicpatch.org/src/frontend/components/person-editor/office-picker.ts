@@ -158,6 +158,7 @@ function OfficePicker(host: OfficePickerHost) {
         id: post_id,
         organization_id: host.organizationId,
         role_id: role,
+        role_label: roles.find((r) => r.id === role)?.label ?? role,
         division_ocdid: division,
         label: roles.find((r) => r.id === role)?.label ?? role,
         meta_headcount: 1,
@@ -204,6 +205,7 @@ function OfficePicker(host: OfficePickerHost) {
       id: post_id,
       organization_id: host.organizationId ?? "",
       role_id,
+      role_label: roles.find((role) => role.id === role_id)?.label ?? role_id,
       division_ocdid,
       label:
         label ?? roles.find((role) => role.id === role_id)?.label ?? role_id,

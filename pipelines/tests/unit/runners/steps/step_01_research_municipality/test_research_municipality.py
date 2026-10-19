@@ -50,7 +50,8 @@ def _post(role_id: str, division_ocdid: str = _BASE) -> Post:
         organization_id="org",
         role_id=role_id,
         division_ocdid=division_ocdid,
-        label=role_id,
+        label=role_id.replace("-", " ").title(),
+        role_label=role_id.replace("-", " ").title(),
     )
 
 

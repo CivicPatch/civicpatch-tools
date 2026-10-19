@@ -425,7 +425,7 @@ async function seedReviewCard(
 // row alone is invisible to it, so every proposed person diffs as `added` and no card ever
 // collapses to a strip. Seating needs four rows, because a membership points at a post, a post
 // at an organization and a division, and `posts.role_id` is a real FK.
-const SEAT_ROLE_FALLBACK = "council-member";
+const FALLBACK_ROLE_ID = "member";
 
 const roleSlug = (name) =>
   (name || "")
@@ -476,7 +476,7 @@ async function seatPerson(client, ocdid, person) {
   await seatAt(client, ocdid, {
     organizationId,
     personId: person.id,
-    roleId: role.length ? wanted : SEAT_ROLE_FALLBACK,
+    roleId: role.length ? wanted : FALLBACK_ROLE_ID,
     // The person's own ward when the fixture gave them one, else the jurisdiction itself.
     division: person.office?.division_ocdid ?? divisionOf(ocdid),
     startDate: person.start_date ?? null,
@@ -986,19 +986,19 @@ export async function seedE2eFixtures() {
     await seatIn(client, TWO_BODY_JURISDICTION_OCDID, {
       organizationName: TWO_BODY_COUNCIL,
       personId: "two-body-ada",
-      roleId: "council-member",
+      roleId: "member",
       division: twoBodyDivision,
     });
     await seatIn(client, TWO_BODY_JURISDICTION_OCDID, {
       organizationName: TWO_BODY_SCHOOL_BOARD,
       personId: "two-body-ada",
-      roleId: "trustee",
+      roleId: "member",
       division: twoBodyDivision,
     });
     await seatIn(client, TWO_BODY_JURISDICTION_OCDID, {
       organizationName: TWO_BODY_COUNCIL,
       personId: "two-body-bo",
-      roleId: "council-member",
+      roleId: "member",
       division: twoBodyDivision,
     });
 

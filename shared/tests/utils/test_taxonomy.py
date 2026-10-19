@@ -7,6 +7,7 @@ from shared.utils.taxonomy import (
     normalize_designations,
     normalize_roles,
     resolve_role,
+    role_labels_by_role_id,
     sort_designations,
     with_selection_methods,
 )
@@ -294,3 +295,16 @@ def test_a_jurisdictions_methods_replace_the_configs_for_its_roles_only():
 
     assert nashville.selection_methods == {"Vice Mayor": SelectionMethod.ELECTED_BY_VOTERS, "Chair": SelectionMethod.ELECTED_BY_MEMBERS}
     assert taxonomy.selection_methods["Vice Mayor"] == SelectionMethod.ELECTED_BY_MEMBERS
+
+
+def test_an_organizations_role_labels_that_are_aliases_are_its_labels_for_those_roles():
+    taxonomy = build_taxonomy(
+        RoleConfig(
+            roles=[
+                Role(id="member", label="Member", aliases=["Select Board Member", "Council Member"]),
+                Role(id="chair", label="Chair"),
+            ]
+        )
+    )
+
+    assert role_labels_by_role_id(["Select Board Member", "Chair", "Vice Chair"], taxonomy) == {"member": "Select Board Member"}

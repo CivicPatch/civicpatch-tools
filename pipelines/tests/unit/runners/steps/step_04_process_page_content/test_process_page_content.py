@@ -746,6 +746,7 @@ def test_add_relevant_urls_ranks_an_organizations_page_by_its_post_labels():
                 role_id="council-member",
                 division_ocdid="ocd-division/country:us/state:zz/place:bay_city",
                 label="Council Member",
+                role_label="Council Member",
             )
         ],
     )

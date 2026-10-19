@@ -17,6 +17,7 @@ def post(id: str, organization: str, role: str = "mayor", division: str = BASE, 
         role_id=role,
         division_ocdid=division,
         label="Mayor",
+        role_label="Mayor",
     )
 
 

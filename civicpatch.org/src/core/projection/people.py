@@ -27,7 +27,7 @@ from core.projection.memberships import (
     membership_label_claim,
     membership_state,
 )
-from core.projection.posts import PostRoles, records_by_post
+from core.projection.posts import records_by_post
 
 
 class Membership(BaseModel, frozen=True):
@@ -140,10 +140,9 @@ def derive_person(
     facts: Facts,
     jurisdiction_ocdid: str,
     taxonomy: Taxonomy,
-    post_roles: PostRoles,
 ) -> Person:
     mine = [record for record in facts.records if record.person_id in members]
-    by_post = records_by_post(mine, jurisdiction_ocdid, taxonomy, post_roles)
+    by_post = records_by_post(mine, jurisdiction_ocdid, taxonomy)
     candidates = sorted(set(by_post) | claimed_posts(members, facts), key=_by_post_id)
 
     active = [

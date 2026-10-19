@@ -191,6 +191,8 @@ class Post(BaseModel):
     role_id: str
     division_ocdid: str
     label: str
+    # What this organization calls the role: `post_role_label` in the database, the one resolver.
+    role_label: str
     meta_headcount: int = 1
     meta_is_tracked: bool = True
 
@@ -566,8 +568,11 @@ class GoverningLawPostExtras(BaseModel):
 
 
 class GoverningLawPost(BaseModel):
-    # A role id from config ("council-member"); OCD's is free text.
+    # A role id from config ("member"); OCD's is free text.
     role: str
+    # The office's name as the law writes it ("Selectboard member", "Mayor-President"): what
+    # readers see for this role in this organization, through `organizations.role_labels`.
+    label: str
     maximum_memberships: int = Field(default=1, ge=1)
     sources: List[Source] = []
     extras: GoverningLawPostExtras = GoverningLawPostExtras()

@@ -38,7 +38,7 @@ PERSON_MEMBERSHIPS = """COALESCE((
         'post_id', posts.id::text,
         'organization_id', posts.organization_id::text,
         'role_id', posts.role_id,
-        'role_label', roles.label,
+        'role_label', post_role_label(posts.organization_id, posts.role_id),
         -- Ranking only; never published. Lower wins, as `core.people_roles` has it.
         'priority', roles.priority,
         'jurisdiction_ocdid', posts.jurisdiction_ocdid,
