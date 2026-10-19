@@ -72,3 +72,13 @@ async def test_a_collection_in_flight_is_not_a_candidate_and_a_scrape_does_not_c
 @pytest.mark.asyncio
 async def test_the_limit_is_kept():
     assert len(await get_collection_candidates("zz", 1)) == 1
+
+
+
+@pytest.mark.integration
+@pytest.mark.asyncio
+async def test_a_collection_that_failed_today_is_not_claimed_again():
+    run_id = await factories.start_run(_NEVER, kind=PipelineRunKind.GOVERNING_LAW_COLLECTOR)
+    await factories.fail_run(run_id)
+
+    assert [c.jurisdiction_ocdid for c in await get_collection_candidates("zz", None)] == [_STALE]

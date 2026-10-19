@@ -17,7 +17,7 @@ from routers.api import scrape_settings as settings_router
 from schemas.common import Identity, UserRole
 from datetime import datetime, timezone
 
-from schemas.collector_settings import CollectorSettings
+from schemas.collector_settings import CollectorPanel, CollectorSettings
 from schemas.scrape_settings import GlobalScrapePanel, StateScrapePanel
 from shared.utils.statuses import PipelineRunKind
 from schemas.state_settings import GlobalSettings, StateSettings
@@ -192,3 +192,14 @@ def test_the_scrape_is_not_a_collector(client):
 def test_nobody_below_admin_may_touch_a_collectors_caps(client, role):
     _as(client, role)
     assert client.get("/scrape_settings/collectors/governing_law_collector").status_code == 403
+
+
+
+def test_an_admin_reads_every_collectors_panel(client):
+    _as(client, UserRole.ADMINS)
+    panel = CollectorPanel(settings=_COLLECTOR, spent_this_month_usd=Decimal("0"), cost_per_run_this_month_usd=None, runs_this_month=0, cost_cap_hits_this_month=0)
+    with patch.object(settings_router.collector_settings_service, "get_collector_panels", new=AsyncMock(return_value=[panel])):
+        response = client.get("/scrape_settings/collectors")
+
+    assert response.status_code == 200, response.text
+    assert response.json()["data"][0]["settings"]["kind"] == "governing_law_collector"

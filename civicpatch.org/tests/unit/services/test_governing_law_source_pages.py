@@ -21,8 +21,8 @@ pytestmark = pytest.mark.unit
 
 MODULE = "services.governing_law_source_pages"
 _OCDID = "ocd-jurisdiction/country:us/state:vt/place:stowe/government"
-_URL = "https://legislature.vermont.gov/statutes/fullchapter/24APPENDIX/149"
-_TEXT = "# Chapter 149\n\n§ 1. Corporate existence retained.\n"
+_URL = "https://legislature.vermont.gov/statutes/fullchapter/24APPENDIX/153"
+_TEXT = "# Chapter 153\n\n§ 1. Corporate existence retained.\n"
 _ROW = GoverningLawRow(jurisdiction_ocdid=_OCDID, name="Stowe town", governing_law=None)
 _PAGE = GoverningLawSourcePage(
     id="row-1", jurisdiction_ocdid=_OCDID, source_url=_URL, page_hash="abc", cache_path="governing_law/abc.md",
@@ -46,7 +46,7 @@ async def test_the_text_goes_to_artifacts_under_its_hash_and_the_row_points_at_i
     assert key.startswith("governing_law/") and key.endswith(".md")
     assert (body, content_type) == (_TEXT.encode(), "text/markdown")
     page_hash = key.removeprefix("governing_law/").removesuffix(".md")
-    insert.assert_awaited_once_with(_OCDID, _URL, page_hash, key)
+    insert.assert_awaited_once_with(_OCDID, _URL, page_hash, key, None)
     assert page == _PAGE
 
 

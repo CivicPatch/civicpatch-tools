@@ -18,7 +18,9 @@ from database import changeset_predicates
 from database.changesets import get_in_flight
 from database.database import get_pool
 from database.collector_settings import get_collector_settings, set_collector_caps
+from database.issue_listings import count_collector_cost_cap_hits_this_month, count_cost_cap_hits_this_month
 from database.pipeline_run_spend import (
+    get_collector_month_to_date_runs,
     get_collector_month_to_date_spend,
     get_fleet_month_to_date_cost_per_run,
     get_fleet_month_to_date_seconds_per_run,
@@ -29,7 +31,7 @@ from database.pipeline_runs import (
     jurisdiction_ocdids_with_unfinished_runs,
     jurisdiction_ocdids_with_unfinished_runs_in_state,
 )
-from shared.utils.statuses import PipelineRunKind, PipelineRunStatus
+from shared.utils.statuses import PipelineIssueType, PipelineRunKind, PipelineRunStatus
 from tests.integration import factories
 
 _OCDID = "ocd-jurisdiction/country:us/state:zz/place:zz_run_kinds/government"
@@ -183,3 +185,24 @@ async def test_a_collection_runs_under_its_kinds_cap_and_a_scrape_under_its_stat
         assert await _cap(scrape) is None
     finally:
         await set_collector_caps(_COLLECTOR, settings.pipeline_run_cap_usd, settings.monthly_cap_usd, settings.updated_by_user_id)
+
+
+
+@pytest.mark.integration
+@pytest.mark.asyncio
+async def test_a_collections_runs_and_cap_hits_are_its_kinds_not_the_states():
+    runs_before, _ = await get_collector_month_to_date_runs(_COLLECTOR)
+    hits_before = await count_collector_cost_cap_hits_this_month(_COLLECTOR)
+    run_id = await factories.start_run(_OCDID, kind=_COLLECTOR)
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "INSERT INTO pipeline_run_issues (pipeline_run_id, issue_type, status) VALUES (%s, %s, 'pending')",
+            (run_id, PipelineIssueType.COST_CAP_REACHED),
+        )
+        await conn.commit()
+
+    runs_after, _ = await get_collector_month_to_date_runs(_COLLECTOR)
+    assert runs_after - runs_before == 1
+    assert await count_collector_cost_cap_hits_this_month(_COLLECTOR) - hits_before == 1
+    assert await count_cost_cap_hits_this_month("zz") == 0

@@ -50,3 +50,18 @@ def test_a_script_rendered_shell_is_thin():
 def test_a_pdf_has_no_converter_yet():
     with pytest.raises(UnsupportedContentType):
         to_markdown(FetchedPage(url="https://example.gov/c.pdf", content_type="application/pdf", body=b"%PDF-1.7", by_browser=False))
+
+
+def test_a_tag_trafilatura_leaves_is_dropped_and_its_words_kept():
+    """Barre town's charter underlines its notes; the converter used to pass <u> through."""
+    underlined = FetchedPage(
+        url="https://example.gov/charter", content_type="text/html",
+        body=("<html><body><article><p>" + "§ 101. Corporate existence retained. " * 10
+              + "(Amended 2023, No. M-3.) <u>Notes</u> History.</p></article></body></html>").encode(),
+        by_browser=False,
+    )
+
+    markdown = to_markdown(underlined)
+
+    assert "Notes" in markdown
+    assert not _HTML_TAG.search(markdown)

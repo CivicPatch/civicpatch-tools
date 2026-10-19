@@ -51,6 +51,7 @@ function GlobalBudgetModal(host: Host) {
         A shared ceiling, not an allocation: states draw from it first-come, and each state's
         own monthly cap is what stops one state emptying it. ${describeStateCaps(host.panel)}.
         The state caps may add up past this, which is normal.
+        Scrapes only: the collectors have their own caps, below the states.
       </p>
       ${error ? html`<p class="cs-settings-form__error">${error}</p>` : ""}
     </div>

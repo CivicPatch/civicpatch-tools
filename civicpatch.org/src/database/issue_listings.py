@@ -8,7 +8,7 @@ from typing import Any
 import shared.utils.id_utils
 from database.database import get_pool
 from psycopg import sql
-from shared.utils.statuses import PipelineIssueStatus, PipelineIssueType
+from shared.utils.statuses import PipelineIssueStatus, PipelineIssueType, PipelineRunKind
 
 
 def _jurisdiction_entry(ocdid: str | None, name: str | None) -> list[dict]:
@@ -242,8 +242,28 @@ JOIN pipeline_runs run ON run.id = issue.pipeline_run_id
 JOIN jurisdictions j ON j.jurisdiction_ocdid = run.jurisdiction_ocdid
 WHERE issue.issue_type = %(issue_type)s
   AND j.state = %(state)s
+  AND run.kind = %(kind)s
   AND issue.created_at >= date_trunc('month', now() AT TIME ZONE 'utc')
 """
+
+COLLECTOR_COST_CAP_HITS_SQL = """
+SELECT count(*)::int
+FROM pipeline_run_issues issue
+JOIN pipeline_runs run ON run.id = issue.pipeline_run_id
+WHERE issue.issue_type = %(issue_type)s
+  AND run.kind = %(kind)s
+  AND issue.created_at >= date_trunc('month', now() AT TIME ZONE 'utc')
+"""
+
+
+async def count_collector_cost_cap_hits_this_month(kind: PipelineRunKind) -> int:
+    """A collector kind's runs that stopped at their cap this month, across every state."""
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(COLLECTOR_COST_CAP_HITS_SQL, {"issue_type": PipelineIssueType.COST_CAP_REACHED, "kind": kind})
+        row = await cur.fetchone()
+    assert row, "count(*) always returns a row"
+    return row[0]
 
 
 async def count_cost_cap_hits_this_month(state: str) -> int:
@@ -253,7 +273,7 @@ async def count_cost_cap_hits_this_month(state: str) -> int:
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             COST_CAP_HITS_SQL,
-            {"issue_type": PipelineIssueType.COST_CAP_REACHED, "state": state},
+            {"issue_type": PipelineIssueType.COST_CAP_REACHED, "state": state, "kind": PipelineRunKind.PEOPLE_COLLECTOR},
         )
         row = await cur.fetchone()
     assert row, "count(*) always returns a row"

@@ -37,8 +37,13 @@ async def find_source(_limits: PipelineRunLimits, logger: PipelineRunLogger, con
     return next_context, GoverningLawCollectorStep.FETCH_SOURCE if answer.urls else GoverningLawCollectorStep.WRITE_GOVERNING_LAW
 
 
-async def fetch_source(_limits: PipelineRunLimits, logger: PipelineRunLogger, context: GoverningLawCollectorContext, _client: httpx.AsyncClient) -> Step:
+async def fetch_source(_limits: PipelineRunLimits, logger: PipelineRunLogger, context: GoverningLawCollectorContext, client: httpx.AsyncClient) -> Step:
     url = context.data.pending_urls[0]
+    if not context.data.escalate:
+        reused = await civicpatch_api.reuse_governing_law_source_page(client, context.data.jurisdiction_ocdid, url)
+        if reused is not None:
+            logger.info(f"{url}: stored by another run within a day, not fetched again")
+            return _recorded(context, url, reused["id"])
     try:
         page = await fetchers.fetch(url, by_browser=context.data.escalate)
     except fetchers.RefusedByHost as refused:
@@ -65,9 +70,13 @@ async def store_source_page(_limits: PipelineRunLimits, _logger: PipelineRunLogg
     assert markdown is not None, "PREPROCESS_PAGE_CONTENT always leaves markdown for STORE_SOURCE_PAGE"
     url = context.data.pending_urls[0]
     stored = await civicpatch_api.store_governing_law_source_page(client, context.data.jurisdiction_ocdid, url, markdown)
+    return _recorded(context, url, stored["id"])
+
+
+def _recorded(context: GoverningLawCollectorContext, url: str, source_page_id: str) -> Step:
     if _is_charter(context, url):
-        return _after_url(context, charter_source_page_ids=[*context.data.charter_source_page_ids, stored["id"]])
-    return _after_url(context, general_law_source_page_ids=[*context.data.general_law_source_page_ids, stored["id"]])
+        return _after_url(context, charter_source_page_ids=[*context.data.charter_source_page_ids, source_page_id])
+    return _after_url(context, general_law_source_page_ids=[*context.data.general_law_source_page_ids, source_page_id])
 
 
 async def classify(_limits: PipelineRunLimits, _logger: PipelineRunLogger, context: GoverningLawCollectorContext, _client: httpx.AsyncClient) -> Step:

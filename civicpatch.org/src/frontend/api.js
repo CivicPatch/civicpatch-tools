@@ -1067,6 +1067,17 @@ export const saveGlobalCap = async (monthlyCapUsd) =>
     body: JSON.stringify({ monthly_cap_usd: monthlyCapUsd }),
   });
 
+export const fetchCollectorPanels = async () => scrapeSettingsRequest("/collectors");
+
+export const saveCollectorCaps = async (kind, pipelineRunCapUsd, monthlyCapUsd) =>
+  scrapeSettingsRequest(`/collectors/${encodeURIComponent(kind)}`, {
+    method: "PUT",
+    body: JSON.stringify({
+      pipeline_run_cap_usd: pipelineRunCapUsd,
+      monthly_cap_usd: monthlyCapUsd,
+    }),
+  });
+
 export const saveCadence = async (state, cadenceDays, cadenceAnchor) =>
   scrapeSettingsRequest(`/${encodeURIComponent(state)}/cadence`, {
     method: "PUT",
