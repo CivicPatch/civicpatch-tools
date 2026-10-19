@@ -6,7 +6,8 @@ from runners.people_collector.schemas import (
     LinkStatus,
     PeopleCollectorContext,
     PeopleCollectorData,
-    PipelineStatus,
+    PeopleCollectorState,
+    PeopleCollectorStep,
     ProgressState,
 )
 from runners.people_collector.steps.step_00_prepare_pipeline.prepare_pipeline import (
@@ -44,7 +45,7 @@ from runners.people_collector.utils.links import (
     get_next_link_with_status,
 )
 from shared.schemas import PipelineRunLimits
-from shared.utils.statuses import PipelineIssueType, PipelineRunErrorType
+from shared.utils.statuses import PipelineIssueType, PipelineRunErrorType, PipelineRunStatus
 from shared.utils.url_utils import same_domain
 from utils import cost_utils
 from utils.log_utils import PipelineRunLogger
@@ -66,12 +67,12 @@ async def start_job(
     logger: PipelineRunLogger,
     context: PeopleCollectorContext,
     _api_client: httpx.AsyncClient,
-) -> tuple[PeopleCollectorContext, PipelineStatus]:
+) -> tuple[PeopleCollectorContext, PeopleCollectorState]:
     await prepare_pipeline(context)
     frontier = LinkFrontier.from_urls([context.data.config.url])
     return _next_context(
         context, frontier=frontier
-    ), PipelineStatus.RESEARCH_MUNICIPALITY
+    ), PeopleCollectorStep.RESEARCH_MUNICIPALITY
 
 
 async def research_municipality_transition(
@@ -79,7 +80,7 @@ async def research_municipality_transition(
     logger: PipelineRunLogger,
     context: PeopleCollectorContext,
     api_client: httpx.AsyncClient,
-) -> tuple[PeopleCollectorContext, PipelineStatus]:
+) -> tuple[PeopleCollectorContext, PeopleCollectorState]:
     result = await research_municipality(context, api_client)
     progress = calculate_progress_percentage(context.data, 1)
     next_context = _next_context(
@@ -98,7 +99,7 @@ async def research_municipality_transition(
             next_context, frontier=next_context.data.frontier.add_front(source_urls)
         )
 
-    return next_context, PipelineStatus.SCRAPE_PAGE
+    return next_context, PeopleCollectorStep.SCRAPE_PAGE
 
 
 def _classify_all_failed_error(frontier: LinkFrontier) -> PipelineRunErrorType:
@@ -124,7 +125,7 @@ async def scrape_page_transition(
     logger: PipelineRunLogger,
     context: PeopleCollectorContext,
     _api_client: httpx.AsyncClient,
-) -> tuple[PeopleCollectorContext, PipelineStatus]:
+) -> tuple[PeopleCollectorContext, PeopleCollectorState]:
     page_to_scrape = get_next_link_with_status(
         context.data.frontier, LinkStatus.PENDING
     )
@@ -140,7 +141,7 @@ async def scrape_page_transition(
         )
         if all_failed:
             if context.data.find_jurisdiction_url_step is None:
-                return context, PipelineStatus.FIND_JURISDICTION_URL
+                return context, PeopleCollectorStep.FIND_JURISDICTION_URL
             error_type = _classify_all_failed_error(context.data.frontier)
             detail = (
                 _navigation_error_detail(context.data.frontier)
@@ -149,8 +150,8 @@ async def scrape_page_transition(
             )
             return _next_context(
                 context, error_step=error_type, error_detail=detail
-            ), PipelineStatus.SEND_ERROR
-        return context, PipelineStatus.CLEANUP
+            ), PipelineRunStatus.SEND_ERROR
+        return context, PeopleCollectorStep.CLEANUP
 
     frontier, final_url = await scrape_page(context, page_to_scrape)
     progress = calculate_progress_percentage(context.data, 3)
@@ -164,9 +165,9 @@ async def scrape_page_transition(
 
     link_status = get_link_status_by_url(frontier, page_to_scrape.url)
     next_state = (
-        PipelineStatus.PREPROCESS_PAGE_CONTENT
+        PeopleCollectorStep.PREPROCESS_PAGE_CONTENT
         if link_status == LinkStatus.SCRAPED
-        else PipelineStatus.SCRAPE_PAGE
+        else PeopleCollectorStep.SCRAPE_PAGE
     )
     return next_context, next_state
 
@@ -176,7 +177,7 @@ async def preprocess_page_content_transition(
     logger: PipelineRunLogger,
     context: PeopleCollectorContext,
     _api_client: httpx.AsyncClient,
-) -> tuple[PeopleCollectorContext, PipelineStatus]:
+) -> tuple[PeopleCollectorContext, PeopleCollectorState]:
     page_to_preprocess = get_next_link_with_status(
         context.data.frontier, LinkStatus.SCRAPED
     )
@@ -188,7 +189,7 @@ async def preprocess_page_content_transition(
         )
         if not preprocessed_links:
             if context.data.find_jurisdiction_url_step is None:
-                return context, PipelineStatus.FIND_JURISDICTION_URL
+                return context, PeopleCollectorStep.FIND_JURISDICTION_URL
             error_type = _classify_all_failed_error(context.data.frontier)
             detail = (
                 _navigation_error_detail(context.data.frontier)
@@ -197,8 +198,8 @@ async def preprocess_page_content_transition(
             )
             return _next_context(
                 context, error_step=error_type, error_detail=detail
-            ), PipelineStatus.SEND_ERROR
-        return context, PipelineStatus.PROCESS_PAGE_CONTENT
+            ), PipelineRunStatus.SEND_ERROR
+        return context, PeopleCollectorStep.PROCESS_PAGE_CONTENT
 
     frontier, result = preprocess_page_content(context, page_to_preprocess)
     progress = calculate_progress_percentage(context.data, 4)
@@ -211,9 +212,9 @@ async def preprocess_page_content_transition(
 
     link_status = get_link_status_by_url(frontier, page_to_preprocess.url)
     next_state = (
-        PipelineStatus.PROCESS_PAGE_CONTENT
+        PeopleCollectorStep.PROCESS_PAGE_CONTENT
         if link_status == LinkStatus.PREPROCESSED
-        else PipelineStatus.SCRAPE_PAGE
+        else PeopleCollectorStep.SCRAPE_PAGE
     )
     return next_context, next_state
 
@@ -223,12 +224,12 @@ async def process_page_content_transition(
     logger: PipelineRunLogger,
     context: PeopleCollectorContext,
     _api_client: httpx.AsyncClient,
-) -> tuple[PeopleCollectorContext, PipelineStatus]:
+) -> tuple[PeopleCollectorContext, PeopleCollectorState]:
     preprocessed_links = get_links_with_status(
         context.data.frontier, [LinkStatus.PREPROCESSED]
     )
     if len(preprocessed_links) == 0:
-        return context, PipelineStatus.CLEANUP
+        return context, PeopleCollectorStep.CLEANUP
 
     page_to_process = preprocessed_links[0]
     try:
@@ -242,7 +243,7 @@ async def process_page_content_transition(
             context,
             error_step=None,
             error_detail={"error": f"{type(e).__name__}: {e}"},
-        ), PipelineStatus.SEND_ERROR
+        ), PipelineRunStatus.SEND_ERROR
 
     progress = calculate_progress_percentage(context.data, 5)
     next_context = _next_context(
@@ -279,13 +280,13 @@ async def cleanup_transition(
     logger: PipelineRunLogger,
     context: PeopleCollectorContext,
     _api_client: httpx.AsyncClient,
-) -> tuple[PeopleCollectorContext, PipelineStatus]:
+) -> tuple[PeopleCollectorContext, PeopleCollectorState]:
     _result = cleanup(context)
     progress = calculate_progress_percentage(context.data, 9)
     return _next_context(
         context,
         progress=progress,
-    ), PipelineStatus.REVIEW_OUTPUT
+    ), PeopleCollectorStep.REVIEW_OUTPUT
 
 
 async def review_output_transition(
@@ -293,12 +294,12 @@ async def review_output_transition(
     logger: PipelineRunLogger,
     context: PeopleCollectorContext,
     _api_client: httpx.AsyncClient,
-) -> tuple[PeopleCollectorContext, PipelineStatus]:
+) -> tuple[PeopleCollectorContext, PeopleCollectorState]:
     assert context.data.process_page_content_step is not None
     records = context.data.process_page_content_step.all_records()
 
     if not records and context.data.find_jurisdiction_url_step is None:
-        return context, PipelineStatus.FIND_JURISDICTION_URL
+        return context, PeopleCollectorStep.FIND_JURISDICTION_URL
 
     error_type, issues = _collect_pipeline_heuristics(
         records,
@@ -310,14 +311,14 @@ async def review_output_transition(
         return _next_context(
             context,
             error_step=error_type,
-        ), PipelineStatus.SEND_ERROR
+        ), PipelineRunStatus.SEND_ERROR
 
     progress = calculate_progress_percentage(context.data, 10)
     return _next_context(
         context,
         progress=progress,
         issues=issues,
-    ), PipelineStatus.SAVE_OUTPUT
+    ), PeopleCollectorStep.SAVE_OUTPUT
 
 
 async def save_output_transition(
@@ -325,14 +326,14 @@ async def save_output_transition(
     logger: PipelineRunLogger,
     context: PeopleCollectorContext,
     _api_client: httpx.AsyncClient,
-) -> tuple[PeopleCollectorContext, PipelineStatus]:
+) -> tuple[PeopleCollectorContext, PeopleCollectorState]:
     cost_utils.log_costs(context.pipeline_run_id, context.data.jurisdiction_ocdid)
     _result = await save_output(context)
     progress = calculate_progress_percentage(context.data, 11)
     return _next_context(
         context,
         progress=progress,
-    ), PipelineStatus.SEND_SUCCESS
+    ), PeopleCollectorStep.SEND_SUCCESS
 
 
 async def send_success_transition(
@@ -340,14 +341,14 @@ async def send_success_transition(
     logger: PipelineRunLogger,
     context: PeopleCollectorContext,
     api_client: httpx.AsyncClient,
-) -> tuple[PeopleCollectorContext, PipelineStatus]:
+) -> tuple[PeopleCollectorContext, PeopleCollectorState]:
     result = await send_success(context, api_client)
     progress = calculate_progress_percentage(context.data, 12)
     return _next_context(
         context,
         progress=progress,
         send_success_step=result,
-    ), PipelineStatus.SUCCESS
+    ), PipelineRunStatus.SUCCESS
 
 
 async def send_error_transition(
@@ -355,7 +356,7 @@ async def send_error_transition(
     logger: PipelineRunLogger,
     context: PeopleCollectorContext,
     api_client: httpx.AsyncClient,
-) -> tuple[PeopleCollectorContext, PipelineStatus]:
+) -> tuple[PeopleCollectorContext, PeopleCollectorState]:
     # A run that failed still spent money — 24 of 49 dismissed scrapes on dev wrote no
     # costs.json at all. Before `send_error`, which zips the artifacts this belongs in.
     # Recoverable on its own: an unreported cost must not cost us the error report.
@@ -373,7 +374,7 @@ async def send_error_transition(
     except Exception as e:
         logger.error(f"send_error_transition failed: {e}\n{traceback.format_exc()}")
         next_context = context
-    return next_context, PipelineStatus.ERROR
+    return next_context, PipelineRunStatus.ERROR
 
 
 async def find_jurisdiction_url_transition(
@@ -381,7 +382,7 @@ async def find_jurisdiction_url_transition(
     logger: PipelineRunLogger,
     context: PeopleCollectorContext,
     _api_client: httpx.AsyncClient,
-) -> tuple[PeopleCollectorContext, PipelineStatus]:
+) -> tuple[PeopleCollectorContext, PeopleCollectorState]:
     result = await find_jurisdiction_url(context)
     next_context = _next_context(
         context,
@@ -404,17 +405,17 @@ async def find_jurisdiction_url_transition(
                 "failure_reason": root_link.failure_reason,
                 "failure_source": root_link.failure_source,
             },
-        ), PipelineStatus.SEND_ERROR
+        ), PipelineRunStatus.SEND_ERROR
 
     # No URL found at all — domain is inactive
     if discovered is None:
         return _next_context(
             next_context, error_step=PipelineRunErrorType.DOMAIN_INACTIVE
-        ), PipelineStatus.SEND_ERROR
+        ), PipelineRunStatus.SEND_ERROR
 
     # Found a URL on the same domain — retry review with what we have
     if same_domain(discovered, context.data.config.url):
-        return next_context, PipelineStatus.REVIEW_OUTPUT
+        return next_context, PeopleCollectorStep.REVIEW_OUTPUT
 
     # Found a new domain — restart scraping from scratch
     logger.info(f"Inactive domain fixed: {context.data.config.url} -> {discovered}")
@@ -425,7 +426,7 @@ async def find_jurisdiction_url_transition(
         next_context,
         config=new_config,
         frontier=LinkFrontier.from_urls([discovered]),
-    ), PipelineStatus.SCRAPE_PAGE
+    ), PeopleCollectorStep.SCRAPE_PAGE
 
 
 # TODO: steps can go backwards, so progress may decrease at certain points
@@ -476,15 +477,15 @@ def _collect_pipeline_heuristics(
 
 
 TRANSITION_MAP = {
-    PipelineStatus.INIT: start_job,
-    PipelineStatus.RESEARCH_MUNICIPALITY: research_municipality_transition,
-    PipelineStatus.SCRAPE_PAGE: scrape_page_transition,
-    PipelineStatus.PREPROCESS_PAGE_CONTENT: preprocess_page_content_transition,
-    PipelineStatus.PROCESS_PAGE_CONTENT: process_page_content_transition,
-    PipelineStatus.CLEANUP: cleanup_transition,
-    PipelineStatus.REVIEW_OUTPUT: review_output_transition,
-    PipelineStatus.SAVE_OUTPUT: save_output_transition,
-    PipelineStatus.SEND_SUCCESS: send_success_transition,
-    PipelineStatus.SEND_ERROR: send_error_transition,
-    PipelineStatus.FIND_JURISDICTION_URL: find_jurisdiction_url_transition,
+    PipelineRunStatus.INIT: start_job,
+    PeopleCollectorStep.RESEARCH_MUNICIPALITY: research_municipality_transition,
+    PeopleCollectorStep.SCRAPE_PAGE: scrape_page_transition,
+    PeopleCollectorStep.PREPROCESS_PAGE_CONTENT: preprocess_page_content_transition,
+    PeopleCollectorStep.PROCESS_PAGE_CONTENT: process_page_content_transition,
+    PeopleCollectorStep.CLEANUP: cleanup_transition,
+    PeopleCollectorStep.REVIEW_OUTPUT: review_output_transition,
+    PeopleCollectorStep.SAVE_OUTPUT: save_output_transition,
+    PeopleCollectorStep.SEND_SUCCESS: send_success_transition,
+    PipelineRunStatus.SEND_ERROR: send_error_transition,
+    PeopleCollectorStep.FIND_JURISDICTION_URL: find_jurisdiction_url_transition,
 }

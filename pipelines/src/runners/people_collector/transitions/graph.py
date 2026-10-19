@@ -1,5 +1,6 @@
 from runners.engine import Transitions
 from shared.utils.statuses import PipelineRunStatus
+from runners.people_collector.schemas import PeopleCollectorStep
 
 # A people collector run's whole life. The engine walks the middle, civicpatch.org owns the ends.
 PEOPLE_COLLECTOR_TRANSITIONS: Transitions = {
@@ -7,34 +8,34 @@ PEOPLE_COLLECTOR_TRANSITIONS: Transitions = {
     PipelineRunStatus.PENDING: frozenset({PipelineRunStatus.RUNNING}),
     PipelineRunStatus.RUNNING: frozenset({PipelineRunStatus.INIT}),
     # the engine's
-    PipelineRunStatus.INIT: frozenset({PipelineRunStatus.RESEARCH_MUNICIPALITY}),
-    PipelineRunStatus.RESEARCH_MUNICIPALITY: frozenset({PipelineRunStatus.SCRAPE_PAGE}),
-    PipelineRunStatus.SCRAPE_PAGE: frozenset({
-        PipelineRunStatus.PREPROCESS_PAGE_CONTENT,
-        PipelineRunStatus.SCRAPE_PAGE,
-        PipelineRunStatus.CLEANUP,
-        PipelineRunStatus.FIND_JURISDICTION_URL,
+    PipelineRunStatus.INIT: frozenset({PeopleCollectorStep.RESEARCH_MUNICIPALITY}),
+    PeopleCollectorStep.RESEARCH_MUNICIPALITY: frozenset({PeopleCollectorStep.SCRAPE_PAGE}),
+    PeopleCollectorStep.SCRAPE_PAGE: frozenset({
+        PeopleCollectorStep.PREPROCESS_PAGE_CONTENT,
+        PeopleCollectorStep.SCRAPE_PAGE,
+        PeopleCollectorStep.CLEANUP,
+        PeopleCollectorStep.FIND_JURISDICTION_URL,
     }),
-    PipelineRunStatus.PREPROCESS_PAGE_CONTENT: frozenset({
-        PipelineRunStatus.PROCESS_PAGE_CONTENT,
-        PipelineRunStatus.SCRAPE_PAGE,
-        PipelineRunStatus.FIND_JURISDICTION_URL,
+    PeopleCollectorStep.PREPROCESS_PAGE_CONTENT: frozenset({
+        PeopleCollectorStep.PROCESS_PAGE_CONTENT,
+        PeopleCollectorStep.SCRAPE_PAGE,
+        PeopleCollectorStep.FIND_JURISDICTION_URL,
     }),
-    PipelineRunStatus.PROCESS_PAGE_CONTENT: frozenset({
-        PipelineRunStatus.CLEANUP,
-        PipelineRunStatus.SCRAPE_PAGE,
+    PeopleCollectorStep.PROCESS_PAGE_CONTENT: frozenset({
+        PeopleCollectorStep.CLEANUP,
+        PeopleCollectorStep.SCRAPE_PAGE,
     }),
-    PipelineRunStatus.CLEANUP: frozenset({PipelineRunStatus.REVIEW_OUTPUT}),
-    PipelineRunStatus.REVIEW_OUTPUT: frozenset({
-        PipelineRunStatus.SAVE_OUTPUT,
-        PipelineRunStatus.FIND_JURISDICTION_URL,
+    PeopleCollectorStep.CLEANUP: frozenset({PeopleCollectorStep.REVIEW_OUTPUT}),
+    PeopleCollectorStep.REVIEW_OUTPUT: frozenset({
+        PeopleCollectorStep.SAVE_OUTPUT,
+        PeopleCollectorStep.FIND_JURISDICTION_URL,
     }),
-    PipelineRunStatus.FIND_JURISDICTION_URL: frozenset({
-        PipelineRunStatus.REVIEW_OUTPUT,
-        PipelineRunStatus.SCRAPE_PAGE,
+    PeopleCollectorStep.FIND_JURISDICTION_URL: frozenset({
+        PeopleCollectorStep.REVIEW_OUTPUT,
+        PeopleCollectorStep.SCRAPE_PAGE,
     }),
-    PipelineRunStatus.SAVE_OUTPUT: frozenset({PipelineRunStatus.SEND_SUCCESS}),
-    PipelineRunStatus.SEND_SUCCESS: frozenset({PipelineRunStatus.SUCCESS}),
+    PeopleCollectorStep.SAVE_OUTPUT: frozenset({PeopleCollectorStep.SEND_SUCCESS}),
+    PeopleCollectorStep.SEND_SUCCESS: frozenset({PipelineRunStatus.SUCCESS}),
     PipelineRunStatus.SEND_ERROR: frozenset({PipelineRunStatus.ERROR}),
     # nothing follows these
     PipelineRunStatus.SUCCESS: frozenset(),

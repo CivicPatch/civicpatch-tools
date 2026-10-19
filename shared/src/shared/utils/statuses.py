@@ -2,25 +2,20 @@ from enum import StrEnum
 
 
 class PipelineRunStatus(StrEnum):
-    # Lifecycle states
+    """The lifecycle every pipeline shares. Each pipeline's own steps are a StrEnum in its runner
+    (`PeopleCollectorStep`, `GoverningLawCollectorStep`); `pipeline_runs.status` stores either as text."""
+
+    # civicpatch.org's, before a pipeline starts
     PENDING = "PENDING"
     RUNNING = "RUNNING"
+    # every pipeline's first state, and where the engine sends a step that raised
+    INIT = "INIT"
+    SEND_ERROR = "SEND_ERROR"
+    # the ends
     SUCCESS = "SUCCESS"
     ERROR = "ERROR"
     RESOLVED = "RESOLVED"
     CANCELLED = "CANCELLED"
-    # Step-level progress states
-    INIT = "INIT"
-    RESEARCH_MUNICIPALITY = "RESEARCH_MUNICIPALITY"
-    SCRAPE_PAGE = "SCRAPE_PAGE"
-    PREPROCESS_PAGE_CONTENT = "PREPROCESS_PAGE_CONTENT"
-    PROCESS_PAGE_CONTENT = "PROCESS_PAGE_CONTENT"
-    CLEANUP = "CLEANUP"
-    REVIEW_OUTPUT = "REVIEW_OUTPUT"
-    SAVE_OUTPUT = "SAVE_OUTPUT"
-    SEND_SUCCESS = "SEND_SUCCESS"
-    SEND_ERROR = "SEND_ERROR"
-    FIND_JURISDICTION_URL = "FIND_JURISDICTION_URL"
 
 
 # Where every pipeline's run ends, whichever pipeline it is. civicpatch.org reads this to tell a

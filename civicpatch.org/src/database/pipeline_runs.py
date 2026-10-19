@@ -29,7 +29,8 @@ async def register_run(
     jurisdiction_ocdid: str,
     arguments_json: dict,
     created_by_user_id: Optional[str] = None,
-    status: PipelineRunStatus = PipelineRunStatus.PENDING,
+    # Any pipeline's state: a shared lifecycle one, or a step its runner owns, stored as text.
+    status: str = PipelineRunStatus.PENDING,
     progress: int = 0,
     if_not_exists: bool = False,
 ) -> bool:

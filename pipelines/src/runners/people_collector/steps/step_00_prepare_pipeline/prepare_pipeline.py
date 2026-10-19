@@ -1,12 +1,13 @@
 import os
 import shutil
-from runners.people_collector.schemas import PeopleCollectorContext, PipelineStatus
+from runners.people_collector.schemas import PeopleCollectorContext, PeopleCollectorState
 from shared.utils.data_path_utils import get_cache_path, get_images_path
 from utils import log_utils
+from shared.utils.statuses import PipelineRunStatus
 
 async def prepare_pipeline(context: PeopleCollectorContext) -> None:
     logger = log_utils.get_pipeline_run_logger(context.data.jurisdiction_ocdid)
-    logger.info(f"Step 0: {PipelineStatus.INIT.value}")
+    logger.info(f"Step 0: {PipelineRunStatus.INIT.value}")
 
     jurisdiction_ocdid = context.data.jurisdiction_ocdid
     logger.clear()

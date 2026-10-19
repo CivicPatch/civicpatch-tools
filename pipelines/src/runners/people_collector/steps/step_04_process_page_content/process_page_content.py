@@ -12,11 +12,12 @@ from runners.people_collector.schemas import (
     LinkFrontier,
     LinkStatus,
     OrganizationCoverageResponseSchema,
-    PersonSourceRecord,
     PeopleArrayLLMResponseSchema,
     PeopleByName,
     PeopleCollectorContext,
-    PipelineStatus,
+    PeopleCollectorState,
+    PeopleCollectorStep,
+    PersonSourceRecord,
     ProcessPageContentStep,
     ProgressState,
     RelevantPageResponseSchema,
@@ -174,7 +175,7 @@ async def process_page_content(
 ) -> Tuple[LinkFrontier, ProcessPageContentStep]:
     logger = log_utils.get_pipeline_run_logger(context.data.jurisdiction_ocdid)
     logger.info(
-        f"Step 4: {PipelineStatus.PROCESS_PAGE_CONTENT.value}: {page_to_process.url}"
+        f"Step 4: {PeopleCollectorStep.PROCESS_PAGE_CONTENT.value}: {page_to_process.url}"
     )
 
     assert context.data.research_municipality_step is not None, (

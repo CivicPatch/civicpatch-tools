@@ -17,9 +17,10 @@ from pipelines_environment import get_env_vars
 from runners.people_collector.schemas import (
     ExpectedMembership,
     PeopleCollectorContext,
-    PipelineStatus,
-    ResearchedPerson,
+    PeopleCollectorState,
+    PeopleCollectorStep,
     ResearchMunicipalityStep,
+    ResearchedPerson,
 )
 from shared.schemas import KnownOrganization, Membership, Person, Post, RoleConfig
 from runners.people_collector.steps.step_01_research_municipality import government_form
@@ -41,7 +42,7 @@ async def research_municipality(
     back is parsed with the same parser cp.org uses.
     """
     logger = log_utils.get_pipeline_run_logger(context.data.jurisdiction_ocdid)
-    logger.info(f"Step 1: {PipelineStatus.RESEARCH_MUNICIPALITY.value}")
+    logger.info(f"Step 1: {PeopleCollectorStep.RESEARCH_MUNICIPALITY.value}")
 
     jurisdiction_ocdid = context.data.jurisdiction_ocdid
     existing = await civicpatch_api.get_active_people(api_client, jurisdiction_ocdid)

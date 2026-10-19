@@ -10,6 +10,8 @@ from pydantic import BaseModel
 
 from pipelines_environment import get_env_vars
 from runners.engine import PipelineRunError
+from runners.governing_law_collector.main import start as start_governing_law_collector
+from runners.governing_law_collector.schemas import GoverningLawCollectorConfig
 from runners.people_collector.main import start_threaded
 from runners.people_collector.schemas import PipelineRunConfig
 from shared.schemas import PublishedSourcePage
@@ -96,10 +98,41 @@ async def _run(pipeline_run_id: str, jurisdiction_ocdid: str, url: Optional[str]
     _track(pipeline_run_id, asyncio.create_task(_run_pipeline()))
 
 
-@app.post("/pipeline_runs", response_model=PipelineRunStatusResponse)
+@app.post("/pipeline_runs/people_collector", response_model=PipelineRunStatusResponse)
 async def start_pipeline_run(req: StartPipelineRunRequest) -> PipelineRunStatusResponse:
     _track(req.pipeline_run_id, asyncio.create_task(
         _run(req.pipeline_run_id, req.jurisdiction_ocdid, req.url, req.source_urls)
+    ))
+    return PipelineRunStatusResponse(pipeline_run_id=req.pipeline_run_id, status=PipelineRunStatus.PENDING)
+
+
+class StartGoverningLawCollectorRunRequest(BaseModel):
+    pipeline_run_id: str
+    jurisdiction_ocdid: str
+
+
+async def _run_governing_law_collector(pipeline_run_id: str, jurisdiction_ocdid: str) -> None:
+    env = get_env_vars()
+    headers = {"Authorization": env["SERVICE_API_KEY"]}
+    try:
+        async with httpx.AsyncClient(headers=headers, timeout=30.0) as client:
+            config_data = await civicpatch_api.fetch_governing_law_collector_config(client, logger, pipeline_run_id)
+        await start_governing_law_collector(
+            pipeline_run_id, jurisdiction_ocdid, GoverningLawCollectorConfig.model_validate(config_data)
+        )
+    except PipelineRunError:
+        pass
+    except Exception:
+        logger.exception("governing law collector run %s failed", pipeline_run_id)
+        async with httpx.AsyncClient(headers=headers, timeout=30.0) as client:
+            await update_pipeline_run_status(client, logger, pipeline_run_id, jurisdiction_ocdid, PipelineRunStatus.ERROR, 0)
+
+
+# One door per pipeline, named by its kind: the route says which, so nothing carries a kind.
+@app.post("/pipeline_runs/governing_law_collector", response_model=PipelineRunStatusResponse)
+async def start_governing_law_collector_run(req: StartGoverningLawCollectorRunRequest) -> PipelineRunStatusResponse:
+    _track(req.pipeline_run_id, asyncio.create_task(
+        _run_governing_law_collector(req.pipeline_run_id, req.jurisdiction_ocdid)
     ))
     return PipelineRunStatusResponse(pipeline_run_id=req.pipeline_run_id, status=PipelineRunStatus.PENDING)
 

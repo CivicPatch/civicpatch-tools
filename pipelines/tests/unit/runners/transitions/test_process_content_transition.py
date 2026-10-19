@@ -2,7 +2,7 @@ from decimal import Decimal
 
 import pytest
 
-from runners.people_collector.schemas import OrganizationProgress, PipelineStatus, ProgressState
+from runners.people_collector.schemas import OrganizationProgress, PeopleCollectorState, PeopleCollectorStep, ProgressState
 from runners.people_collector.transitions.process_page_content_transition import (
     STOP_COST_CAP,
     STOP_MAX_PAGES,
@@ -40,7 +40,7 @@ def test_data_requirement_met_is_success():
         limits=_limits(),
         progress=_met_progress(),
     )
-    assert state == PipelineStatus.CLEANUP
+    assert state == PeopleCollectorStep.CLEANUP
     assert error is None
 
 
@@ -51,7 +51,7 @@ def test_data_requirement_met_overrides_cap():
         limits=_limits(cap="1.00"),
         progress=_met_progress(),
     )
-    assert state == PipelineStatus.CLEANUP
+    assert state == PeopleCollectorStep.CLEANUP
     assert error is None
 
 
@@ -62,7 +62,7 @@ def test_data_requirement_met_overrides_max_pages():
         limits=_limits(max_pages=10),
         progress=_met_progress(),
     )
-    assert state == PipelineStatus.CLEANUP
+    assert state == PeopleCollectorStep.CLEANUP
     assert error is None
 
 
@@ -78,7 +78,7 @@ def test_cap_without_data_proceeds_to_merge():
         limits=_limits(cap="1.00"),
         progress=_progress(),
     )
-    assert state == PipelineStatus.CLEANUP
+    assert state == PeopleCollectorStep.CLEANUP
     assert reason == STOP_COST_CAP
     assert "Cost limit" in STOP_MESSAGES[reason]
 
@@ -95,7 +95,7 @@ def test_max_pages_without_data_is_failure():
         limits=_limits(max_pages=10),
         progress=_progress(required_data=5),
     )
-    assert state == PipelineStatus.CLEANUP
+    assert state == PeopleCollectorStep.CLEANUP
     assert reason == STOP_MAX_PAGES
     assert reason != STOP_COST_CAP
 
@@ -109,7 +109,7 @@ def test_no_stop_condition_continues_scrape():
         limits=_limits(max_pages=10, cap="1.00"),
         progress=_progress(current_data=2, required_data=5),
     )
-    assert state == PipelineStatus.SCRAPE_PAGE
+    assert state == PeopleCollectorStep.SCRAPE_PAGE
     assert error is None
 
 
@@ -131,7 +131,7 @@ def test_one_short_of_the_expected_roster_still_stops():
             has_target_divisions=True,
         ),
     )
-    assert state == PipelineStatus.CLEANUP
+    assert state == PeopleCollectorStep.CLEANUP
     assert error is None
 
 
@@ -149,7 +149,7 @@ def test_two_short_still_stops():
             has_target_divisions=True,
         ),
     )
-    assert state == PipelineStatus.CLEANUP
+    assert state == PeopleCollectorStep.CLEANUP
 
 
 def test_three_short_keeps_scraping():
@@ -165,7 +165,7 @@ def test_three_short_keeps_scraping():
             has_target_divisions=True,
         ),
     )
-    assert state == PipelineStatus.SCRAPE_PAGE
+    assert state == PeopleCollectorStep.SCRAPE_PAGE
 
 
 def test_tolerance_does_not_bypass_the_target_flags():
@@ -181,7 +181,7 @@ def test_tolerance_does_not_bypass_the_target_flags():
             has_target_divisions=True,
         ),
     )
-    assert state == PipelineStatus.SCRAPE_PAGE
+    assert state == PeopleCollectorStep.SCRAPE_PAGE
 
 
 # ── several organizations: each is done on its own count ──────────────────────
@@ -205,18 +205,18 @@ def _organizations_state(council_found: int, mayor_found: int):
 
 
 def test_every_organization_done_stops_the_crawl():
-    assert _organizations_state(council_found=10, mayor_found=1) == PipelineStatus.CLEANUP
+    assert _organizations_state(council_found=10, mayor_found=1) == PeopleCollectorStep.CLEANUP
 
 
 def test_a_complete_council_does_not_stop_the_crawl_while_the_mayor_is_missing():
     """Seattle, 2026-08-17: a flat count read "Council complete, Mayor missing" as nearly done and
     crawled council pages to the cap looking for someone who was never on one."""
-    assert _organizations_state(council_found=10, mayor_found=0) == PipelineStatus.SCRAPE_PAGE
+    assert _organizations_state(council_found=10, mayor_found=0) == PeopleCollectorStep.SCRAPE_PAGE
 
 
 def test_a_large_organization_is_done_short_of_every_member():
-    assert _organizations_state(council_found=8, mayor_found=1) == PipelineStatus.CLEANUP
-    assert _organizations_state(council_found=7, mayor_found=1) == PipelineStatus.SCRAPE_PAGE
+    assert _organizations_state(council_found=8, mayor_found=1) == PeopleCollectorStep.CLEANUP
+    assert _organizations_state(council_found=7, mayor_found=1) == PeopleCollectorStep.SCRAPE_PAGE
 
 
 # ── the cap has to be visible outside the container log ───────────────────────

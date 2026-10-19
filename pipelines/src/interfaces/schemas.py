@@ -1,13 +1,14 @@
-from runners.people_collector.schemas import PipelineStatus, PipelineRunConfig
+from runners.people_collector.schemas import PeopleCollectorState, PipelineRunConfig
 from pydantic import BaseModel
 from shared.utils import id_utils
 from typing import List, Literal, Optional
 from urllib.parse import urlparse
+from shared.utils.statuses import PipelineRunStatus
 
 class PeopleCollectorRequest(BaseModel):
     jurisdiction_ocdid: str  # Format: ocd-jurisdiction/country:us/state:wa/place:seattle
     # OR ocd-jurisdiction/country:us/state:il/county:dupage/place:naperville, for cousubs
-    state: PipelineStatus = PipelineStatus.INIT
+    state: PeopleCollectorState = PipelineRunStatus.INIT
     config: PipelineRunConfig
     scrape_mode: Literal["remote", "local"] = "local"
 

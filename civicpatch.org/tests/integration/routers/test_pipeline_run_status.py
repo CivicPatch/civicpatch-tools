@@ -291,7 +291,7 @@ async def test_a_cancelled_run_is_not_reopened_by_a_late_step_report():
     run_id = await _a_run_in_flight()
 
     await _apply(run_id, PipelineRunStatus.CANCELLED.value)
-    await _apply(run_id, PipelineRunStatus.SCRAPE_PAGE.value)
+    await _apply(run_id, "SCRAPE_PAGE")
 
     assert await _status(run_id) == PipelineRunStatus.CANCELLED
 

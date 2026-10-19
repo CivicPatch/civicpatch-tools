@@ -6,7 +6,8 @@ from runners.people_collector.schemas import (
     LinkFrontier,
     LinkStatus,
     PeopleCollectorContext,
-    PipelineStatus,
+    PeopleCollectorState,
+    PeopleCollectorStep,
 )
 from runners.people_collector.steps.step_02_scrape_page.scrape_constants import (
     MAX_SCRAPE_ATTEMPTS,
@@ -26,7 +27,7 @@ async def scrape_page(
 ) -> tuple[LinkFrontier, str]:
     logger = log_utils.get_pipeline_run_logger(context.data.jurisdiction_ocdid)
     logger.info(
-        f"Step 2: {PipelineStatus.SCRAPE_PAGE.value}: scraping {link_to_scrape.url}"
+        f"Step 2: {PeopleCollectorStep.SCRAPE_PAGE.value}: scraping {link_to_scrape.url}"
     )
     visit_order = _next_visit_order(context.data.frontier)
     frontier = context.data.frontier.dequeue(link_to_scrape.url)

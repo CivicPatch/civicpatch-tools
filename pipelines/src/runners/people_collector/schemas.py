@@ -1,4 +1,4 @@
-from enum import Enum
+from enum import Enum, StrEnum
 from typing import Dict, List, Optional, TypeAlias
 
 from domain.pipeline_run_context import PipelineRunContext
@@ -18,6 +18,23 @@ from shared.schemas import (
 )
 from shared.utils.statuses import PipelineRunStatus
 
+
+
+class PeopleCollectorStep(StrEnum):
+    """The people collector's own steps; the lifecycle every pipeline shares is `PipelineRunStatus`."""
+
+    RESEARCH_MUNICIPALITY = "RESEARCH_MUNICIPALITY"
+    SCRAPE_PAGE = "SCRAPE_PAGE"
+    PREPROCESS_PAGE_CONTENT = "PREPROCESS_PAGE_CONTENT"
+    PROCESS_PAGE_CONTENT = "PROCESS_PAGE_CONTENT"
+    CLEANUP = "CLEANUP"
+    REVIEW_OUTPUT = "REVIEW_OUTPUT"
+    SAVE_OUTPUT = "SAVE_OUTPUT"
+    SEND_SUCCESS = "SEND_SUCCESS"
+    FIND_JURISDICTION_URL = "FIND_JURISDICTION_URL"
+
+
+PeopleCollectorState = PipelineRunStatus | PeopleCollectorStep
 
 class OrganizationProgress(BaseModel):
     """How far one organization's roster is along, when a jurisdiction has several."""
@@ -248,7 +265,6 @@ OtherNamesByCanonicalName: TypeAlias = Dict[
 ]  # Canonical name to other names found while scraping
 PeopleByName: TypeAlias = Dict[str, List[PersonSourceRecord]]
 
-PipelineStatus = PipelineRunStatus
 
 
 class ResearchedPerson(BaseModel):
@@ -354,5 +370,5 @@ class PeopleCollectorData(BaseModel):
     stop_reason: Optional[str] = None
 
 
-class PeopleCollectorContext(PipelineRunContext[PeopleCollectorData, PipelineStatus]):
+class PeopleCollectorContext(PipelineRunContext[PeopleCollectorData, PeopleCollectorState]):
     pass
