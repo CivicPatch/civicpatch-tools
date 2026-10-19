@@ -135,8 +135,8 @@ def _organizations(*posts: dict) -> GoverningLawOrganizations:
 
 def test_a_jurisdictions_selection_methods_come_from_posts_whose_clause_was_found():
     organizations = _organizations(
-        {"role": "council-member", "maximum_memberships": 9, "extras": {"selection_method": "elected_by_voters"}},
-        {"role": "mayor"},
+        {"role": "council-member", "label": "Council member", "maximum_memberships": 9, "extras": {"selection_method": "elected_by_voters"}},
+        {"role": "mayor", "label": "Mayor"},
     )
 
     assert organizations.selection_methods() == {"council-member": SelectionMethod.ELECTED_BY_VOTERS}
@@ -144,4 +144,4 @@ def test_a_jurisdictions_selection_methods_come_from_posts_whose_clause_was_foun
 
 def test_a_post_holds_at_least_one_person():
     with pytest.raises(ValidationError):
-        _organizations({"role": "council-member", "maximum_memberships": 0})
+        _organizations({"role": "council-member", "label": "Council member", "maximum_memberships": 0})

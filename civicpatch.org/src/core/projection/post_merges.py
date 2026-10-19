@@ -13,7 +13,7 @@ from shared.utils.taxonomy import Taxonomy
 from core.people_edits import POSTS_FIELD
 from core.projection.canonical_ids import SAME_AS, canonical_ids
 from core.projection.facts import Claim, EntityType, Facts, PostKey, SourceRecord
-from core.projection.posts import organization_post_roles, parse_labels, post_keys
+from core.projection.posts import parse_labels, post_keys
 
 
 def with_post_merges(facts: Facts, jurisdiction_ocdid: str, taxonomy: Taxonomy) -> Facts:
@@ -69,10 +69,9 @@ def _records_merged(
     batches: dict[tuple[str, str, str], list[SourceRecord]] = {}
     for record in records:
         batches.setdefault((record.changeset_id, record.organization_id, record.person_id), []).append(record)
-    post_roles = organization_post_roles(records, jurisdiction_ocdid, taxonomy)
     organization_by_record: dict[str, str] = {}
     for batch in batches.values():
-        key, _ = parse_labels(batch, jurisdiction_ocdid, taxonomy, post_roles)
+        key, _ = parse_labels(batch, jurisdiction_ocdid, taxonomy)
         if key in merged_into:
             for record in batch:
                 organization_by_record[record.id] = merged_into[key].organization_id

@@ -18,10 +18,9 @@ POST_LABEL_FIELD = "label"
 
 
 def with_label(post: dict, asserted_label: str | None = None) -> dict:
-    role_label = post.pop("role_label", None) or post["role_id"]
     return {
         **post,
-        "label": post_label(role_label, post["division_ocdid"], asserted_label),
+        "label": post_label(post["role_label"], post["division_ocdid"], asserted_label),
     }
 
 

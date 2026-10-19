@@ -89,7 +89,7 @@ async def test_without_a_flag_the_first_in_list_order_is_the_default():
 @pytest.mark.integration
 async def test_renaming_the_default_keeps_it_the_default():
     default = await _insert("Government", is_default=True)
-    await organizations.update(default, "City Council", None)
+    await organizations.update(default, "City Council", None, None)
 
     assert await _default() == default
 
@@ -130,7 +130,7 @@ async def test_ensure_defaults_exist_creates_a_flagged_first_organization():
 @pytest.mark.integration
 async def test_ensure_defaults_exist_does_not_recreate_a_renamed_default():
     await organizations.ensure_defaults_exist([_OCDID])
-    await organizations.update(await _default(), "City Council", None)
+    await organizations.update(await _default(), "City Council", None, None)
 
     await organizations.ensure_defaults_exist([_OCDID])
 
@@ -141,7 +141,7 @@ async def test_ensure_defaults_exist_does_not_recreate_a_renamed_default():
 @pytest.mark.integration
 async def test_the_default_cannot_be_deleted_even_after_a_rename():
     default = await _insert("Government", is_default=True)
-    await organizations.update(default, "City Council", None)
+    await organizations.update(default, "City Council", None, None)
 
     assert await organizations.delete(default) is None
     assert await _names() == ["City Council"]

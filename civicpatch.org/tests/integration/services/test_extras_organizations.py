@@ -20,7 +20,7 @@ def _organizations(role: str, maximum_memberships: int = 5) -> GoverningLawOrgan
         "organizations": [{
             "name": "Board of Trustees",
             "posts": [{
-                "role": role,
+                "role": role, "label": "Trustee",
                 "maximum_memberships": maximum_memberships,
                 "extras": {"selection_method": "elected_by_voters"},
                 "sources": [{"url": "https://example.gov/24/039", "note": "five trustees", "extras": {"source_page_id": "p1"}}],

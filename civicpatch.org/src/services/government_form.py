@@ -37,6 +37,7 @@ from shared.utils.layered_config import (
 )
 from shared.utils.id_utils import parse_jurisdiction_ocdid
 from shared.utils.statuses import ActivityType
+from shared.utils.taxonomy import build_taxonomy, role_labels_by_role_id
 
 
 async def resolved_government(jurisdiction_ocdid: str) -> ResolvedGovernment:
@@ -130,12 +131,13 @@ async def _build_organizations(
     if not existing:
         return False
     government_form = resolve_government_form(config, jurisdiction.name, jurisdiction.government_form)
-    changes = organization_changes(
-        derived_organizations(config, government_form), existing, DEFAULT_ORGANIZATION_NAME
-    )
+    derived = derived_organizations(config, government_form)
+    changes = organization_changes(derived, existing, DEFAULT_ORGANIZATION_NAME)
     if changes.has_no_changes:
         return False
-    await _apply(jurisdiction, existing[0], changes)
+    taxonomy = build_taxonomy(config.roles)
+    role_labels = {organization.name: role_labels_by_role_id(organization.role_labels, taxonomy) for organization in derived}
+    await _apply(jurisdiction, existing[0], changes, role_labels)
     return True
 
 
@@ -151,16 +153,20 @@ async def _apply(
     jurisdiction: GovernmentFormInputs,
     default: ExistingOrganization,
     changes: OrganizationChanges,
+    role_labels: dict[str, dict[str, str]],
 ) -> None:
-    """Rename the default, create the rest, and log it: one transaction."""
+    """Rename the default, create the rest, give each what the form calls its roles, and log
+    it: one transaction. `role_labels` is per organization name."""
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         if changes.rename_default_to is not None:
             await organizations_db.rename(cur, default.id, changes.rename_default_to)
+            await organizations_db.set_extras_role_labels(cur, default.id, role_labels[changes.rename_default_to])
         for organization in changes.organizations_to_create:
-            await organizations_db.find_or_create(
+            organization_id = await organizations_db.find_or_create(
                 cur, jurisdiction.jurisdiction_ocdid, organization.name
             )
+            await organizations_db.set_extras_role_labels(cur, organization_id, role_labels[organization.name])
         fields = _organization_fields(default.name, changes)
         await record_change(
             cur,

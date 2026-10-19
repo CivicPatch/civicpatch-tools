@@ -40,12 +40,11 @@ async def list_for_jurisdiction(
                membership_source_labels(m.sources) AS source_labels,
                p.role_id, p.division_ocdid,
                p.organization_id::text, o.name AS organization_name,
-               r.label AS role_label
+               post_role_label(p.organization_id, p.role_id) AS role_label
         FROM memberships m
         JOIN posts p ON p.id = m.post_id
         JOIN people pe ON pe.id = m.person_id
         JOIN organizations o ON o.id = p.organization_id
-        JOIN roles r ON r.id = p.role_id
         WHERE p.jurisdiction_ocdid = %(jurisdiction_ocdid)s
           AND m.opened_at < COALESCE(%(as_of)s::date + 1, now())
           AND (m.closed_at IS NULL OR m.closed_at >= COALESCE(%(as_of)s::date + 1, now()))
@@ -121,7 +120,7 @@ _STATE_ROWS = """
                    p.id::text       AS post_id,
                    p.role_id        AS post_role_id,
                    p.division_ocdid AS post_division_ocdid,
-                   r.label          AS role_label,
+                   post_role_label(p.organization_id, p.role_id) AS role_label,
                    m.id::text       AS membership_id,
                    m.label          AS membership_label,
                    m.start_date     AS membership_start_date,
@@ -132,7 +131,6 @@ _STATE_ROWS = """
             FROM memberships m
             JOIN posts p ON p.id = m.post_id
             JOIN people pe ON pe.id = m.person_id
-            JOIN roles r ON r.id = p.role_id
             WHERE p.jurisdiction_ocdid LIKE %(prefix)s
             ORDER BY p.jurisdiction_ocdid, pe.name, pe.id, m.opened_at
 """

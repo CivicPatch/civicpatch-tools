@@ -24,7 +24,7 @@ ORGANIZATIONS = {
     "organizations": [{
         "name": "Metropolitan Council",
         "posts": [{
-            "role": "vice-mayor",
+            "role": "vice-mayor", "label": "Vice Mayor",
             "extras": {"selection_method": "elected_by_voters"},
             "sources": [{"url": "https://example.gov/charter", "note": "The vice mayor shall be elected", "extras": {"source_page_id": "p1"}}],
         }],

@@ -24,6 +24,7 @@ def _organization(organization_id: str, name: str, labels: list[str]) -> KnownOr
             role_id="role",
             division_ocdid="ocd-division/country:us/state:wa/place:seattle",
             label=label,
+            role_label=label,
         )
         for label in labels
     ]

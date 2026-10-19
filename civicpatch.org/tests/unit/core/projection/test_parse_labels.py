@@ -59,12 +59,12 @@ def key(role_id: str, division: str = BASE) -> PostKey:
 
 
 def post_for(records) -> PostKey:
-    return parse_labels(records, JURISDICTION, TAXONOMY, {})[0]
+    return parse_labels(records, JURISDICTION, TAXONOMY)[0]
 
 
 def details(*labels: str) -> LabelDetails:
     records = [record(f"r{i}", label, minutes=i) for i, label in enumerate(labels)]
-    return parse_labels(records, JURISDICTION, TAXONOMY, {})[1]
+    return parse_labels(records, JURISDICTION, TAXONOMY)[1]
 
 
 @pytest.mark.unit
@@ -218,7 +218,7 @@ def test_every_losing_role_is_kept_in_rank_order():
         record("r3", "Council Member", minutes=3),
     ]
 
-    post, found = parse_labels(records, JURISDICTION, build_taxonomy(RoleConfig(roles=roles)), {})
+    post, found = parse_labels(records, JURISDICTION, build_taxonomy(RoleConfig(roles=roles)))
 
     assert post == key("chair")
     assert found.extra_roles == ("vice-chair", "council-member")
@@ -249,7 +249,7 @@ _LABEL_ROLES = [
 def _label(*labels: str) -> str | None:
     records = [record(f"r{i}", label, minutes=i) for i, label in enumerate(labels)]
     taxonomy = build_taxonomy(RoleConfig(roles=_LABEL_ROLES))
-    return parse_labels(records, JURISDICTION, taxonomy, {})[1].derived_membership_label
+    return parse_labels(records, JURISDICTION, taxonomy)[1].derived_membership_label
 
 
 @pytest.mark.unit

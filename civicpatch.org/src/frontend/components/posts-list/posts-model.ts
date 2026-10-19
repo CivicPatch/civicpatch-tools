@@ -7,6 +7,7 @@ export interface Post {
   id: string;
   organization_id: string;
   role_id: string;
+  role_label: string;
   division_ocdid: string;
   label: string;
 
@@ -82,7 +83,6 @@ export const holderNames = (
 export function groupPostsByRole(
   posts: Post[],
   memberships: Membership[],
-  roleLabels: Map<string, string>,
 ): RoleGroup[] {
   const groups = new Map<string, PostRow[]>();
 
@@ -105,7 +105,8 @@ export function groupPostsByRole(
     );
     return {
       role_id,
-      role_label: roleLabels.get(role_id) ?? role_id,
+      // The organization's own label, resolved by the API for every post in the group alike.
+      role_label: rows[0].role_label,
       posts: rows,
       headcount,
       filled,

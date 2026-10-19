@@ -38,6 +38,9 @@ ALLOWED: dict[tuple[str, str], int] = {
     # The second is `rename`, applying a government form to the default organization.
     ("database/organizations.py", "UPDATE organizations SET name"): 2,
     ("database/organizations.py", "UPDATE organizations SET meta_is_default"): 2,
+    # The organization's role labels (plan 2's 2.6d): the government form and the charter run set
+    # them; a claim when organizations become claims at step 11.
+    ("database/organizations.py", "UPDATE organizations SET extras_role_labels"): 1,
     ("database/organizations.py", "DELETE FROM organizations"): 1,
     # Dev-only seed that truncates and reloads an export, then backfills the facts behind it
     # (migration 215), so a publish rebuilds those rows rather than wiping them.
