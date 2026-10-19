@@ -112,7 +112,7 @@ def membership_claim(
 
 
 def derive(members, facts, person_id="alice"):
-    return derive_person(person_id, members, facts, JURISDICTION, TAXONOMY)
+    return derive_person(person_id, members, facts, JURISDICTION, TAXONOMY, {})
 
 
 @pytest.mark.unit

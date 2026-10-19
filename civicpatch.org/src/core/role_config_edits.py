@@ -56,7 +56,7 @@ def edited_config_text(raw: str, edit: RolesEdit) -> str:
     """Only `roles:` is rewritten; the rest of the file keeps its text."""
     document = yaml_load(raw)
     roles = ConfigFile.model_validate(document).roles
-    document["roles"] = [role.model_dump() for role in edit(roles)]
+    document["roles"] = [role.model_dump(mode="json") for role in edit(roles)]
     return yaml_dump(document)
 
 

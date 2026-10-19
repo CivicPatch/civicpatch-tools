@@ -17,6 +17,7 @@ from core.projection.partial_records import with_inherited_blanks
 from core.projection.people import Person, derive_person
 from core.projection.person_ids import with_person_ids
 from core.projection.post_merges import with_post_merges
+from core.projection.posts import organization_post_roles
 from core.projection.stale_claims import without_stale_claims
 
 
@@ -34,6 +35,8 @@ def derive_roster(facts: Facts, jurisdiction_ocdid: str, taxonomy: Taxonomy) -> 
         with_inherited_blanks(with_person_ids(live_facts(facts))), jurisdiction_ocdid, taxonomy
     )
     clusters = person_clusters(live)
+    # Read across everyone at once: one person's "Vice Mayor" cannot say which post it is on.
+    post_roles = organization_post_roles(live.records, jurisdiction_ocdid, taxonomy)
     people = [
         derive_person(
             root_id,
@@ -41,6 +44,7 @@ def derive_roster(facts: Facts, jurisdiction_ocdid: str, taxonomy: Taxonomy) -> 
             without_stale_claims(clusters[root_id], live),
             jurisdiction_ocdid,
             taxonomy,
+            post_roles,
         )
         for root_id in sorted(clusters.keys())
     ]

@@ -372,6 +372,8 @@ class GovernmentForm(StrEnum):
     OPEN_TOWN_MEETING = "open_town_meeting"
     REPRESENTATIVE_TOWN_MEETING = "representative_town_meeting"
     COUNTY_EXECUTIVE = "county_executive"
+    # A state's own, not the country's: Vermont's and Michigan's statutory villages.
+    VILLAGE_BOARD = "village_board"
 
 
 class JurisdictionId(BaseModel):
@@ -470,6 +472,15 @@ class RoleAliasStatus(str, Enum):
     CANDIDATE = "candidate"
 
 
+class SelectionMethod(StrEnum):
+    """How a role is filled. Only an `elected_by_voters` role is a post's role; an
+    `elected_by_members` role stays on the membership of the post its holder was elected to."""
+
+    ELECTED_BY_VOTERS = "elected_by_voters"
+    ELECTED_BY_MEMBERS = "elected_by_members"
+    APPOINTED = "appointed"
+
+
 class Role(BaseModel):
     # id is a slug ("council-member"), not a uuid — stable identity, immutable
     # through a label rename. label is display only.
@@ -480,6 +491,7 @@ class Role(BaseModel):
     status: RoleStatus = RoleStatus.ACTIVE
     is_unique: bool | None = None
     priority: int | None = None
+    selection_method: SelectionMethod = SelectionMethod.ELECTED_BY_VOTERS
     aliases: List[str] = []
 
 

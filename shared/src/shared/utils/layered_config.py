@@ -2,7 +2,7 @@ import re
 from enum import StrEnum
 
 from pydantic import BaseModel, model_validator
-from shared.schemas import GovernmentForm, JurisdictionLevel, Role, RoleConfig
+from shared.schemas import GovernmentForm, JurisdictionLevel, Role, RoleConfig, SelectionMethod
 from shared.utils.government_forms import DerivedOrganization, name_suffix
 from shared.utils.taxonomy import lookup_key
 
@@ -23,6 +23,8 @@ class ConfigRole(BaseModel):
     id: str
     label: str
     is_unique: bool = False
+    # Before `aliases` to match the file's key order, so a role edit does not reorder lines.
+    selection_method: SelectionMethod = SelectionMethod.ELECTED_BY_VOTERS
     aliases: list[str] = []
 
 
@@ -188,6 +190,12 @@ def in_standard_order(government_forms) -> list[GovernmentForm]:
     return sorted(government_forms, key=order.index)
 
 
+def level_government_forms(config: MergedConfig) -> list[GovernmentForm]:
+    """Every form a jurisdiction at this state and level may have: the country's, plus any the
+    state defines for itself (Vermont's village_board)."""
+    return in_standard_order({*config.country_government_forms, *config.state_government_forms})
+
+
 def government_form_organizations(config: MergedConfig, government_form: GovernmentForm) -> list[DerivedOrganization]:
     state_form = config.state_government_forms.get(government_form)
     if state_form is not None and state_form.organizations:
@@ -211,7 +219,7 @@ def derived_organizations(
     config: MergedConfig, government_form: GovernmentForm | None
 ) -> list[DerivedOrganization]:
     """Nothing until the government form is known, or for one saved at the wrong level."""
-    if government_form is None or government_form not in config.country_government_forms:
+    if government_form is None or government_form not in level_government_forms(config):
         return []
     return government_form_organizations(config, government_form)
 
@@ -243,6 +251,7 @@ def _role(config_role: ConfigRole, priority: int) -> Role:
         label=config_role.label,
         is_unique=config_role.is_unique,
         priority=priority,
+        selection_method=config_role.selection_method,
         aliases=config_role.aliases,
     )
 
@@ -274,9 +283,13 @@ def _check_country_government_forms(government_forms: GovernmentFormsConfig) -> 
 
 
 def _check_state_government_forms(state_government_forms: GovernmentFormsConfig, country_government_forms: GovernmentFormsConfig) -> None:
-    for government_form in state_government_forms:
-        if government_form not in country_government_forms:
-            raise ValueError(f"{government_form.value} is not a government form at this level")
+    """A state form narrows or renames a country form, or is the state's own and says in full
+    what organizations it has."""
+    for government_form, form_config in state_government_forms.items():
+        if government_form not in country_government_forms and not form_config.organizations:
+            raise ValueError(
+                f"{government_form.value} is not a government form at this level, and the state lists no organizations for it"
+            )
 
 
 def _check_role_labels_resolve(config: MergedConfig) -> None:

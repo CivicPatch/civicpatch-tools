@@ -13,6 +13,7 @@ The decision, not its rendering: `projection.posts` turns this into posts, and
 
 from pydantic import BaseModel
 
+from shared.schemas import SelectionMethod
 from shared.utils.label_parser import ParsedLabel, division_ocdid, parse_label
 from shared.utils.taxonomy import Taxonomy
 
@@ -47,28 +48,58 @@ def derive_roles(
     """The derivation across every label one person was seen under. Never stored — pure, so
     the answer is recomputed rather than kept."""
     parsed = [parse_label(label, taxonomy) for label in labels]
+    roles = _unique([role for p in parsed for role in p.roles])
     return DerivedRoles(
         labels=labels,
         parts=[
             LabelPart(label=label, parsed=part)
             for label, part in zip(labels, parsed)
         ],
-        role=_winning_role(parsed, taxonomy),
-        roles=_unique([role for p in parsed for role in p.roles]),
+        role=_winning_role(roles, taxonomy),
+        roles=roles,
         division_ocdid=_division_ocdid(parsed, jurisdiction_ocdid),
         other_designations=_unique([d for p in parsed for d in p.other_designations]),
         unmatched=_unique([term for p in parsed for term in p.unmatched]),
     )
 
 
-def _winning_role(parsed: list[ParsedLabel], taxonomy: Taxonomy) -> str | None:
-    """The role published after the usurp — highest priority across every label."""
-    roles = [p.role for p in parsed if p.role]
+def is_elected_by_voters(role: str, taxonomy: Taxonomy) -> bool:
+    return _selection_method(role, taxonomy) == SelectionMethod.ELECTED_BY_VOTERS
+
+
+def names_only_elected_by_members_roles(derived: DerivedRoles, taxonomy: Taxonomy) -> bool:
+    """ "Vice Mayor": yes. "Mayor Pro Tem, District 3 Council Member": no, it names a post's role."""
+    if not derived.roles:
+        return False
+    return all(_selection_method(role, taxonomy) == SelectionMethod.ELECTED_BY_MEMBERS for role in derived.roles)
+
+
+def has_division(derived: DerivedRoles) -> bool:
+    return any(part.parsed.division for part in derived.parts)
+
+
+def _selection_method(role: str, taxonomy: Taxonomy) -> SelectionMethod:
+    # A role the taxonomy has no method for keeps today's behaviour: it may be a post's role.
+    return taxonomy.selection_methods.get(role, SelectionMethod.ELECTED_BY_VOTERS)
+
+
+_SELECTION_METHOD_RANK = {
+    SelectionMethod.ELECTED_BY_VOTERS: 0,
+    SelectionMethod.ELECTED_BY_MEMBERS: 1,
+    SelectionMethod.APPOINTED: 2,
+}
+
+
+def _winning_role(roles: list[str], taxonomy: Taxonomy) -> str | None:
+    """Elected by voters, then by members, then appointed; config priority within each.
+    "Mayor Pro Tem, District 3 Council Member" is a Council Member."""
     if not roles:
         return None
-    return min(
-        roles, key=lambda role: (taxonomy.role_priority.get(role, 1_000_000), role)
-    )
+
+    def rank(role: str) -> tuple:
+        return (_SELECTION_METHOD_RANK[_selection_method(role, taxonomy)], taxonomy.role_priority.get(role, 1_000_000), role)
+
+    return min(roles, key=rank)
 
 
 def _division_ocdid(parsed: list[ParsedLabel], jurisdiction_ocdid: str) -> str:

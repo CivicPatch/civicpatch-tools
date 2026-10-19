@@ -65,6 +65,7 @@ def _fields_changed(path: str, role: ConfigRole, stored: StoredRole) -> bool:
     return (
         role.label != stored.label
         or role.is_unique != bool(stored.is_unique)
+        or role.selection_method != stored.selection_method
         or stored.status != RoleStatus.ACTIVE
         or stored.config_path != path
     )

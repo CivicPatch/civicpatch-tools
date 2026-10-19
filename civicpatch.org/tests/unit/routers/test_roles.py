@@ -68,6 +68,7 @@ def test_get_roles_happy():
             "status": "active",
             "is_unique": False,
             "priority": None,
+            "selection_method": "elected_by_voters",
             "aliases": ["mayor"],
         }
     ]

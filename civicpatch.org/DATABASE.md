@@ -31,7 +31,7 @@ erDiagram
         int_null        population          "240: the entry's population, written by the sync"
         text_null       geoid               "240: the entry's geoid, written by the sync"
         text_null       wiki_url            "240: the entry's wiki_url, written by the sync"
-        text_null       extras_government_form "cp.org's own, set by a person or a scrape, never by the open-data sync; check: the seven GovernmentForm values; null = the config files decide"
+        text_null       extras_government_form "cp.org's own, set by a person or a scrape, never by the open-data sync; check: the eight GovernmentForm values (251 added village_board, a state's own form); null = the config files decide"
         jsonb_null      extras_governing_law "247: what law governs the place (charter, general law, none found), as the governing_law_collector last found it; shape is shared.schemas.GoverningLaw, which points at its governing_law_source_pages rows by id; its collected_at is the collector's early-exit check; null = never collected"
         timestamptz_null updated_at
     }
@@ -273,6 +273,7 @@ erDiagram
         text            status              "check: active|inactive"
         bool            is_unique           "default: false"
         int_null        priority            "NULL = unranked, sorts last"
+        text            selection_method    "250: check: elected_by_voters|elected_by_members|appointed, mirrors SelectionMethod; default elected_by_voters; written by the config sync. Only elected_by_voters roles win a post"
         timestamptz     created_at
         text_null       config_path         "the open-data config file defining it; NULL = unmatched"
     }

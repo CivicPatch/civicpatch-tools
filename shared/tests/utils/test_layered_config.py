@@ -1,6 +1,6 @@
 import pytest
 from pydantic import ValidationError
-from shared.schemas import GovernmentForm, JurisdictionLevel
+from shared.schemas import GovernmentForm, JurisdictionLevel, SelectionMethod
 from shared.utils.government_forms import DerivedOrganization
 from shared.utils.layered_config import (
     COUNTRY_ROLES_PATH,
@@ -16,6 +16,7 @@ from shared.utils.layered_config import (
     derived_organizations,
     government_form_organizations,
     jurisdiction_config,
+    level_government_forms,
     merged_config,
     resolve_classification,
     resolve_government_form,
@@ -52,6 +53,20 @@ def test_state_roles_follow_the_country_roles_in_priority():
         ("select-board-member", 2),
         ("assessor", 3),
     ]
+
+
+def test_a_role_without_a_selection_method_is_popularly_elected():
+    roles = merged_config(_COUNTRY_ROLES, _COUNTRY_FORMS, None).roles.roles
+
+    assert {role.selection_method for role in roles} == {SelectionMethod.ELECTED_BY_VOTERS}
+
+
+def test_a_roles_selection_method_carries_into_the_merged_config():
+    state = ConfigFile(roles=[ConfigRole(id="vice-mayor", label="Vice Mayor", selection_method=SelectionMethod.ELECTED_BY_MEMBERS)])
+
+    roles = merged_config(_COUNTRY_ROLES, _COUNTRY_FORMS, state).roles.roles
+
+    assert roles[-1].selection_method == SelectionMethod.ELECTED_BY_MEMBERS
 
 
 def test_no_state_file_is_the_country_alone():
@@ -123,6 +138,27 @@ def test_a_state_form_must_be_a_country_form():
 
     with pytest.raises(ValueError, match="commission is not a government form at this level"):
         merged_config(_COUNTRY_ROLES, _COUNTRY_FORMS, state)
+
+
+_TRUSTEES = DerivedOrganization(name="Board of Trustees", role_labels=["Council Member"])
+
+
+def test_a_state_may_define_a_form_of_its_own_with_its_organizations():
+    state = ConfigFile(
+        government_forms={GovernmentForm.VILLAGE_BOARD: GovernmentFormConfig(suffixes=["village"], organizations=[_TRUSTEES])}
+    )
+    config = merged_config(_COUNTRY_ROLES, _COUNTRY_FORMS, state)
+
+    assert allowed_government_forms(config, "Hyde Park village") == [GovernmentForm.VILLAGE_BOARD]
+    assert derived_organizations(config, GovernmentForm.VILLAGE_BOARD) == [_TRUSTEES]
+    assert GovernmentForm.VILLAGE_BOARD in level_government_forms(config)
+
+
+def test_a_states_own_form_is_offered_nowhere_else():
+    config = merged_config(_COUNTRY_ROLES, _COUNTRY_FORMS, None)
+
+    assert GovernmentForm.VILLAGE_BOARD not in level_government_forms(config)
+    assert derived_organizations(config, GovernmentForm.VILLAGE_BOARD) == []
 
 
 def test_a_country_form_needs_organizations():

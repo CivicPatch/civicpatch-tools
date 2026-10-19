@@ -28,7 +28,7 @@ from shared.utils.government_forms import (
 )
 from shared.utils.layered_config import (
     MergedConfig,
-    in_standard_order,
+    level_government_forms,
     derived_organizations,
     jurisdiction_config,
     resolve_government_form,
@@ -63,8 +63,8 @@ async def government_form_options(jurisdiction_ocdid: str) -> list[GovernmentFor
     if parsed.level == JurisdictionLevel.STATE:
         return []
     configs = await jurisdiction_configs_db.get_jurisdiction_configs()
-    level_forms = jurisdiction_config(configs, parsed.state, parsed.level).country_government_forms
-    return [_summary(government_form) for government_form in in_standard_order(level_forms)]
+    level_forms = level_government_forms(jurisdiction_config(configs, parsed.state, parsed.level))
+    return [_summary(government_form) for government_form in level_forms]
 
 
 def _summary(government_form: GovernmentForm) -> GovernmentFormSummary:

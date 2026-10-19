@@ -1,7 +1,7 @@
 from typing import NamedTuple
 
 from rapidfuzz import fuzz, process
-from shared.schemas import RoleConfig
+from shared.schemas import RoleConfig, SelectionMethod
 from shared.utils import config_utils
 
 FUZZY_SCORE_CUTOFF = 85
@@ -34,6 +34,8 @@ class Taxonomy(NamedTuple):
     # canonical role name -> role id. A match names a role by its label; every caller that
     # then wants the id used to be handed the role list a second time to build this itself.
     role_ids: dict[str, str] = {}
+    # canonical role name -> how the office is filled: the fold lets only elected_by_voters win a post.
+    selection_methods: dict[str, SelectionMethod] = {}
 
 
 def build_taxonomy(role_config: RoleConfig | None) -> Taxonomy:
@@ -47,6 +49,7 @@ def build_taxonomy(role_config: RoleConfig | None) -> Taxonomy:
         designation_aliases=designation_aliases,
         role_priority={entry.label: i for i, entry in enumerate(roles)},
         role_ids={entry.label: entry.id for entry in roles},
+        selection_methods={entry.label: entry.selection_method for entry in roles},
         designation_priority={
             lookup_key(name): i for i, name in enumerate(designations)
         },
