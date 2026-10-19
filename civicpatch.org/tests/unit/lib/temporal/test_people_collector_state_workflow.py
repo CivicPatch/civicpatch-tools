@@ -18,7 +18,7 @@ from temporalio.worker import Worker
 from core.spend_limits import Cap
 from lib.temporal.pipeline_run_workflows import (
     PeopleCollectorWorkflow,
-    StateScrapeWorkflow,
+    PeopleCollectorStateWorkflow,
 )
 from lib.temporal.types import RunConclusion
 from shared.utils.statuses import PipelineRunStatus
@@ -39,14 +39,14 @@ class Recorder:
 
 
 def _activities(rec: Recorder):
-    @activity.defn(name="budget_cap_reached")
-    async def budget_cap_reached(state: str):
+    @activity.defn(name="people_collector_month_cap_reached")
+    async def people_collector_month_cap_reached(state: str):
         if rec.cap_after is not None and len(rec.claims) >= rec.cap_after:
             return Cap.STATE_MONTH.value
         return None
 
-    @activity.defn(name="claim_jurisdictions_to_scrape")
-    async def claim_jurisdictions_to_scrape(state, num_jurisdictions=None, created_by_user_id=None):
+    @activity.defn(name="claim_jurisdictions_for_people_collector")
+    async def claim_jurisdictions_for_people_collector(state, num_jurisdictions=None, created_by_user_id=None):
         rec.claims.append(num_jurisdictions)
         take = min(num_jurisdictions or rec.pool, rec.pool)
         rec.pool -= take
@@ -60,12 +60,12 @@ def _activities(rec: Recorder):
             for _ in range(take)
         ]
 
-    @activity.defn(name="trigger_github_action")
-    async def trigger_github_action(jurisdiction_ocdid, pipeline_run_id, url=None, source_urls=None):
+    @activity.defn(name="trigger_people_collector_remote")
+    async def trigger_people_collector_remote(jurisdiction_ocdid, pipeline_run_id, url=None, source_urls=None):
         rec.dispatched.append(jurisdiction_ocdid)
 
-    @activity.defn(name="trigger_local")
-    async def trigger_local(jurisdiction_ocdid, pipeline_run_id, url=None, source_urls=None):
+    @activity.defn(name="trigger_people_collector_local")
+    async def trigger_people_collector_local(jurisdiction_ocdid, pipeline_run_id, url=None, source_urls=None):
         rec.dispatched.append(jurisdiction_ocdid)
         rec.dispatched_locally.append(jurisdiction_ocdid)
 
@@ -77,18 +77,18 @@ def _activities(rec: Recorder):
     async def update_pipeline_run_status(pipeline_run_id, status, progress=None):
         return None
 
-    @activity.defn(name="cancel_local_run")
-    async def cancel_local_run(pipeline_run_id: str):
+    @activity.defn(name="cancel_local_pipeline_run")
+    async def cancel_local_pipeline_run(pipeline_run_id: str):
         return None
 
     return [
-        budget_cap_reached,
-        claim_jurisdictions_to_scrape,
-        trigger_github_action,
-        trigger_local,
+        people_collector_month_cap_reached,
+        claim_jurisdictions_for_people_collector,
+        trigger_people_collector_remote,
+        trigger_people_collector_local,
         poll_pipeline_run_status,
         update_pipeline_run_status,
-        cancel_local_run,
+        cancel_local_pipeline_run,
     ]
 
 
@@ -98,11 +98,11 @@ async def _run_state_scrape(rec: Recorder, **kwargs) -> int:
         async with Worker(
             env.client,
             task_queue=queue,
-            workflows=[StateScrapeWorkflow, PeopleCollectorWorkflow],
+            workflows=[PeopleCollectorStateWorkflow, PeopleCollectorWorkflow],
             activities=_activities(rec),
         ):
             return await env.client.execute_workflow(
-                StateScrapeWorkflow.run,
+                PeopleCollectorStateWorkflow.run,
                 args=[
                     kwargs.get("state", "zz"),
                     kwargs.get("num_jurisdictions"),
@@ -110,7 +110,7 @@ async def _run_state_scrape(rec: Recorder, **kwargs) -> int:
                     kwargs.get("concurrency", 5),
                     kwargs.get("dispatch_mode", "remote"),
                 ],
-                id=f"state-scrape-{uuid.uuid4()}",
+                id=f"people-collector-state-{uuid.uuid4()}",
                 task_queue=queue,
             )
 
@@ -192,12 +192,12 @@ def _activities_that_stop_watching(reported: list[tuple[str, str]]):
     """`poll_pipeline_run_status` fails the way it does when GitHub has killed the job: the run
     never reports an ending, so the poller times out rather than returning a conclusion."""
 
-    @activity.defn(name="trigger_github_action")
-    async def trigger_github_action(jurisdiction_ocdid, pipeline_run_id, url=None, source_urls=None):
+    @activity.defn(name="trigger_people_collector_remote")
+    async def trigger_people_collector_remote(jurisdiction_ocdid, pipeline_run_id, url=None, source_urls=None):
         return None
 
-    @activity.defn(name="trigger_local")
-    async def trigger_local(jurisdiction_ocdid, pipeline_run_id, url=None, source_urls=None):
+    @activity.defn(name="trigger_people_collector_local")
+    async def trigger_people_collector_local(jurisdiction_ocdid, pipeline_run_id, url=None, source_urls=None):
         return None
 
     @activity.defn(name="poll_pipeline_run_status")
@@ -208,16 +208,16 @@ def _activities_that_stop_watching(reported: list[tuple[str, str]]):
     async def update_pipeline_run_status(pipeline_run_id, status, progress=None):
         reported.append((pipeline_run_id, status))
 
-    @activity.defn(name="cancel_local_run")
-    async def cancel_local_run(pipeline_run_id: str):
+    @activity.defn(name="cancel_local_pipeline_run")
+    async def cancel_local_pipeline_run(pipeline_run_id: str):
         return None
 
     return [
-        trigger_github_action,
-        trigger_local,
+        trigger_people_collector_remote,
+        trigger_people_collector_local,
         poll_pipeline_run_status,
         update_pipeline_run_status,
-        cancel_local_run,
+        cancel_local_pipeline_run,
     ]
 
 

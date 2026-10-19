@@ -53,7 +53,7 @@ def test_a_stuck_run_reports_the_attempt_and_why():
     state = summarize(
         [
             activity(
-                name="trigger_github_action",
+                name="trigger_people_collector_remote",
                 attempt=7,
                 scheduled=NOW + timedelta(seconds=42),
                 last_failure=_Failure("Activity task failed", cause=_Failure("503 from GitHub")),
@@ -62,7 +62,7 @@ def test_a_stuck_run_reports_the_attempt_and_why():
         NOW,
     )
     assert state is not None
-    assert state.activity == "trigger_github_action"
+    assert state.activity == "trigger_people_collector_remote"
     assert state.attempt == 7
     assert state.retrying is True
     assert state.next_retry_seconds == 42

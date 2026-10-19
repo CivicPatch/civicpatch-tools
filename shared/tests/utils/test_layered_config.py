@@ -4,6 +4,7 @@ from shared.schemas import GovernmentForm, JurisdictionLevel
 from shared.utils.government_forms import DerivedOrganization
 from shared.utils.layered_config import (
     COUNTRY_ROLES_PATH,
+    CharterLinkList,
     Classification,
     ConfigFile,
     ConfigRole,
@@ -281,7 +282,11 @@ def test_allowed_forms_come_back_in_the_enums_order_whatever_the_file_order():
 
 _VERMONT_GOVERNING_LAW = {
     "charter_terms": ["Charter"],
-    "charter_index_url": "https://legislature.vermont.gov/statutes/title/24APPENDIX",
+    "charter_link_list": {
+        "url": "https://legislature.vermont.gov/statutes/title/24APPENDIX",
+        "title": "Chapter {*} : {lsad} of {place}",
+        "text_link": {"old": "/statutes/chapter/", "new": "/statutes/fullchapter/"},
+    },
     "classifications": {
         "town": {
             "lsad": ["town", "city"],
@@ -366,3 +371,9 @@ def test_each_level_takes_its_own_states_governing_law():
 
     assert jurisdiction_config(configs, "tx", JurisdictionLevel.LOCAL).governing_law == local_law
     assert jurisdiction_config(configs, "tx", JurisdictionLevel.COUNTIES).governing_law == county_law
+
+
+def test_a_charter_index_title_names_the_place():
+    with pytest.raises(ValidationError, match="has no {place}"):
+        CharterLinkList(url="https://example.gov/charters", title="{lsad} charter")
+

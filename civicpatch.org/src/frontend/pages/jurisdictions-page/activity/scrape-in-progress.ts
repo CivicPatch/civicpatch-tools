@@ -33,7 +33,7 @@ type ScrapeInProgressProps = {
   temporalUrl: string | null;
 };
 
-// "trigger_github_action, attempt 7, next in 42s — 503 from GitHub" — the shape a stuck run
+// "trigger_people_collector_remote, attempt 7, next in 42s — 503 from GitHub" — the shape a stuck run
 // takes. A healthy run is just the activity and its attempt, which is why the retry clause
 // and the failure are appended only when they exist.
 const describeTemporalWorkflow = (state: TemporalWorkflowState): string => {

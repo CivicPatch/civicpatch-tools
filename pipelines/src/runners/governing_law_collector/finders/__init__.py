@@ -7,6 +7,6 @@ from runners.governing_law_collector.schemas import FinderAnswer, GoverningLawCo
 
 async def find(config: GoverningLawCollectorConfig) -> FinderAnswer:
     governing_law = config.governing_law
-    if governing_law is not None and governing_law.charter_index_url is not None:
+    if governing_law is not None and governing_law.charter_link_list is not None:
         return await state_index.find(governing_law, config.name)
     return classification.find(governing_law, config.name)

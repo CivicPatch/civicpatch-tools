@@ -2,8 +2,8 @@
 
 from datetime import date, datetime, timedelta, timezone
 
-# Not the workflow instance id (`state-scrape-{state}`) — Temporal conflates them in its UI.
-_SCHEDULE_ID_PREFIX = "state-scrape-schedule-"
+# Not the workflow instance id (`people-collector-state-{state}`) — Temporal conflates them in its UI.
+_SCHEDULE_ID_PREFIX = "people-collector-state-schedule-"
 
 _EPOCH = datetime(1970, 1, 1, tzinfo=timezone.utc)
 

@@ -146,12 +146,12 @@ async def _register_state_schedules(client: Client) -> set[str]:
             schedule_id,
             Schedule(
                 # `args` is the state and nothing else: a schedule can only pass fixed
-                # arguments, and StateScrapeWorkflow.run defaults the rest deliberately so a
+                # arguments, and PeopleCollectorStateWorkflow.run defaults the rest deliberately so a
                 # scheduled scrape and a hand-started one take the same path.
                 action=ScheduleActionStartWorkflow(
-                    "StateScrapeWorkflow",
+                    "PeopleCollectorStateWorkflow",
                     args=[state],
-                    id=f"state-scrape-{state}",
+                    id=f"people-collector-state-{state}",
                     task_queue=PIPELINE_RUNS_TASK_QUEUE,
                 ),
                 spec=ScheduleSpec(
@@ -269,9 +269,9 @@ async def reconcile_state_schedule(client: Client, state: str) -> None:
         schedule_id,
         Schedule(
             action=ScheduleActionStartWorkflow(
-                "StateScrapeWorkflow",
+                "PeopleCollectorStateWorkflow",
                 args=[state],
-                id=f"state-scrape-{state}",
+                id=f"people-collector-state-{state}",
                 task_queue=PIPELINE_RUNS_TASK_QUEUE,
             ),
             spec=ScheduleSpec(

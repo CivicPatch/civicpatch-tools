@@ -69,7 +69,7 @@ def test_the_graph_ends_where_every_run_ends_and_every_state_has_a_handler():
 
 @pytest.mark.asyncio
 async def test_a_charter_is_fetched_converted_stored_and_written():
-    answer = FinderAnswer(found_by=FoundBy.STATE_INDEX, kind=GoverningLawKind.CHARTER, classification="town", urls=[_CHARTER])
+    answer = FinderAnswer(found_by=FoundBy.STATE_INDEX, classification="town", charter_urls=[_CHARTER])
     fetch = AsyncMock(return_value=_html(_CHARTER, _TEXT))
 
     context, api = await _run(answer, fetch)
@@ -85,7 +85,7 @@ async def test_a_charter_is_fetched_converted_stored_and_written():
 
 @pytest.mark.asyncio
 async def test_nothing_to_fetch_is_written_as_none_found():
-    answer = FinderAnswer(found_by=FoundBy.CLASSIFICATION, kind=GoverningLawKind.NONE_FOUND, classification=None, urls=[])
+    answer = FinderAnswer(found_by=FoundBy.CLASSIFICATION, classification=None)
     fetch = AsyncMock()
 
     context, api = await _run(answer, fetch)
@@ -97,7 +97,7 @@ async def test_nothing_to_fetch_is_written_as_none_found():
 
 @pytest.mark.asyncio
 async def test_a_refusal_skips_that_url_and_is_never_retried_by_browser():
-    answer = FinderAnswer(found_by=FoundBy.CLASSIFICATION, kind=GoverningLawKind.GENERAL_LAW, classification="town", urls=[_CHARTER, _STATUTE])
+    answer = FinderAnswer(found_by=FoundBy.STATE_INDEX, classification="town", charter_urls=[_CHARTER], general_law_urls=[_STATUTE])
 
     async def fetch(url, by_browser):
         if url == _CHARTER:
@@ -115,7 +115,7 @@ async def test_a_refusal_skips_that_url_and_is_never_retried_by_browser():
 
 @pytest.mark.asyncio
 async def test_a_thin_page_is_fetched_once_more_by_browser():
-    answer = FinderAnswer(found_by=FoundBy.STATE_INDEX, kind=GoverningLawKind.CHARTER, classification="town", urls=[_CHARTER])
+    answer = FinderAnswer(found_by=FoundBy.STATE_INDEX, classification="town", charter_urls=[_CHARTER])
 
     async def fetch(url, by_browser):
         return _html(url, _TEXT, by_browser=True) if by_browser else _html(url, "Loading…")
@@ -124,15 +124,28 @@ async def test_a_thin_page_is_fetched_once_more_by_browser():
     context, _ = await _run(answer, spy)
 
     assert [call.kwargs["by_browser"] for call in spy.await_args_list] == [False, True]
-    assert context.data.source_page_ids == ["page-1"]
+    assert context.data.charter_source_page_ids == ["page-1"]
 
 
 @pytest.mark.asyncio
 async def test_urls_none_of_which_could_be_stored_leave_it_none_found():
-    answer = FinderAnswer(found_by=FoundBy.STATE_INDEX, kind=GoverningLawKind.CHARTER, classification="town", urls=[_CHARTER])
+    answer = FinderAnswer(found_by=FoundBy.STATE_INDEX, classification="town", charter_urls=[_CHARTER])
     fetch = AsyncMock(side_effect=RefusedByHost(_CHARTER, 429))
 
     context, api = await _run(answer, fetch)
 
     assert context.current_state == PipelineRunStatus.SUCCESS
     assert api.put_governing_law.await_args.args[2].kind == GoverningLawKind.NONE_FOUND
+
+
+
+@pytest.mark.asyncio
+async def test_a_charter_with_its_general_law_is_a_charter_with_both_pages():
+    answer = FinderAnswer(found_by=FoundBy.STATE_INDEX, classification="town", charter_urls=[_CHARTER], general_law_urls=[_STATUTE])
+    fetch = AsyncMock(side_effect=lambda url, by_browser: _html(url, _TEXT))
+
+    _, api = await _run(answer, fetch)
+
+    written = api.put_governing_law.await_args.args[2]
+    assert (written.kind, written.source_page_ids) == (GoverningLawKind.CHARTER, ["page-1", "page-2"])
+

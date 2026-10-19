@@ -12,7 +12,7 @@
  * tests the client wiring only. The stub is a hand-written copy of the endpoint's shape, so it
  * cannot catch the backend changing that shape. Not ported: "a state already scraping cannot
  * be started again", since this page has no per-state busy lock; the workflow id
- * (`state-scrape-{state}`, FAIL on conflict) is the only guard now.
+ * (`people-collector-state-{state}`, FAIL on conflict) is the only guard now.
  */
 
 import { test, expect } from "../fixtures/index.js";
@@ -33,7 +33,7 @@ test("an admin must confirm before a scrape starts", async ({ adminPage: page })
     await route.fulfill({
       status: 200,
       contentType: "application/json",
-      body: JSON.stringify({ data: { workflow_id: "state-scrape-e2e", state: posted.state } }),
+      body: JSON.stringify({ data: { workflow_id: "people-collector-state-e2e", state: posted.state } }),
     });
   });
 

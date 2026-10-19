@@ -296,7 +296,7 @@ EOF
 run = """
 docker compose -f docker-compose.github-actions.yml run --rm pipelines-cicd uv run \
   python src/interfaces/cli/main.py \
-    run_pipeline \
+    people_collector \
     --jurisdiction-ocdid "ocd-jurisdiction/country:us/state:wa/place:seattle/government" \
     --name "Seattle city" \
     --url "https://www.seattle.gov" \
@@ -307,7 +307,7 @@ docker compose -f docker-compose.github-actions.yml run --rm pipelines-cicd uv r
 run = """
 docker compose -f docker-compose.github-actions.yml run --rm pipelines-cicd uv run \
   python src/interfaces/cli/main.py \
-    run_pipeline \
+    people_collector \
     --jurisdiction-ocdid "{{ option(name="jurisdiction-ocdid") }}" \
     --name "{{ option(name="name") }}" \
     --url "{{ option(name="url") }}"
@@ -327,7 +327,7 @@ docker compose -f docker-compose.github-actions.yml run --rm pipelines-cicd uv r
 run = """
 docker compose -f docker-compose.development.yml run --rm pipelines uv run \
   python src/interfaces/cli/main.py \
-    run_pipeline \
+    people_collector \
     --jurisdiction-ocdid "ocd-jurisdiction/country:us/state:wa/place:seattle/government" \
     --name "Seattle city" \
     --url "https://www.seattle.gov"

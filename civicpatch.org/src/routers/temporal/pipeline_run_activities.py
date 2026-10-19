@@ -73,7 +73,7 @@ async def _get_installation_token() -> str:
 
 
 @activity.defn
-async def trigger_github_action(
+async def trigger_people_collector_remote(
     jurisdiction_ocdid: str,
     pipeline_run_id: str,
     url: Optional[str] = None,
@@ -103,7 +103,7 @@ async def trigger_github_action(
 
 
 @activity.defn
-async def trigger_local(
+async def trigger_people_collector_local(
     jurisdiction_ocdid: str,
     pipeline_run_id: str,
     url: Optional[str] = None,
@@ -122,7 +122,7 @@ async def trigger_local(
 
 
 @activity.defn
-async def cancel_local_run(pipeline_run_id: str) -> None:
+async def cancel_local_pipeline_run(pipeline_run_id: str) -> None:
     """Stop a scrape running on the local pipelines server.
 
     Cancelling the workflow stops the poller watching the scrape, not the scrape: it carries on
@@ -203,7 +203,7 @@ async def poll_pipeline_run_status(pipeline_run_id: str) -> str:
 
 
 @activity.defn
-async def claim_jurisdictions_to_scrape(
+async def claim_jurisdictions_for_people_collector(
     state: str,
     num_jurisdictions: int | None = None,
     created_by_user_id: str | None = None,
@@ -238,7 +238,7 @@ async def claim_jurisdictions_to_scrape(
 # every other activity in this file — see workers/pipeline_runs.py: this queue's worker keeps a
 # narrow secret scope and never opens a database connection of its own.
 @activity.defn
-async def budget_cap_reached(state: str) -> Optional[str]:
+async def people_collector_month_cap_reached(state: str) -> Optional[str]:
     async with httpx.AsyncClient(headers=_API_HEADERS, timeout=15) as client:
         resp = await client.get(f"{API_URL}/api/v1/pipeline_runs/budget_cap", params={"state": state})
         resp.raise_for_status()

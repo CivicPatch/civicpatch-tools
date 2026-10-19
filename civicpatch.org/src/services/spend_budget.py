@@ -8,7 +8,7 @@ spending is running away, and a cached answer would keep dispatching for as long
 lived.
 """
 
-from core.spend_limits import Cap, cap_reached, month_cap_reached
+from core.spend_limits import Cap, cap_reached, collector_cap_reached
 from database.collector_settings import get_collector_settings
 from database.pipeline_run_spend import get_collector_month_to_date_spend, get_month_to_date_spend
 from database.state_settings import get_global_settings, get_state_settings
@@ -24,7 +24,7 @@ async def cap_reached_for_state(state: str) -> Cap | None:
     )
 
 
-async def collector_month_cap_reached(kind: PipelineRunKind) -> bool:
+async def cap_reached_for_collector(kind: PipelineRunKind) -> Cap | None:
     """Read before a collector batch dispatches more, as `cap_reached_for_state` is for a scrape."""
     settings = await get_collector_settings(kind)
-    return month_cap_reached(await get_collector_month_to_date_spend(kind), settings.monthly_cap_usd)
+    return collector_cap_reached(await get_collector_month_to_date_spend(kind), settings.monthly_cap_usd)

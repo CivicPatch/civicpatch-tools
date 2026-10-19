@@ -16,6 +16,7 @@ import routers.api.data as api_data_router
 import routers.api.elections as api_elections_router
 import routers.api.jurisdictions as api_jurisdictions_router
 import routers.api.governing_law as api_governing_law_router
+import routers.api.governing_law_collector_runs as api_governing_law_collector_runs_router
 import routers.api.governing_law_source_pages as api_governing_law_source_pages_router
 import routers.api.government_forms as api_government_forms_router
 import routers.api.leaderboard as api_leaderboard_router
@@ -160,12 +161,13 @@ app.include_router(
 )
 
 # Private: the governing law and its cached pages are read by the team and the collectors'
-# service key, never the public.
+# service key, never the public, and kept out of the public API docs.
 app.include_router(
     api_governing_law_router.get_router(),
     prefix="/api/v1/jurisdictions",
     tags=["jurisdictions"],
     dependencies=[Depends(require_route_access(RouteCategory.TEAM_REQUIRED, service_key=ServiceKey.ACCEPTED))],
+    include_in_schema=False,
 )
 
 app.include_router(
@@ -173,6 +175,7 @@ app.include_router(
     prefix="/api/v1/jurisdictions",
     tags=["jurisdictions"],
     dependencies=[Depends(require_route_access(RouteCategory.TEAM_REQUIRED, service_key=ServiceKey.ACCEPTED))],
+    include_in_schema=False,
 )
 
 app.include_router(
@@ -180,6 +183,16 @@ app.include_router(
     prefix="/api/v1/people",
     tags=["people"],
     dependencies=[Depends(require_route_access(RouteCategory.PUBLIC))],
+)
+
+# Ahead of the scrape's router: its literal paths must win over `/{pipeline_run_id}/...`. Gated
+# here as well as per route (admins start, the service key claims), so no route is ever open.
+app.include_router(
+    api_governing_law_collector_runs_router.get_router(),
+    prefix="/api/v1/pipeline_runs/governing_law_collector",
+    tags=["pipeline_runs"],
+    dependencies=[Depends(require_route_access(RouteCategory.AUTHENTICATED, service_key=ServiceKey.ACCEPTED))],
+    include_in_schema=False,
 )
 
 app.include_router(

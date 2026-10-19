@@ -4,7 +4,7 @@ from decimal import Decimal
 
 import pytest
 
-from core.spend_limits import Cap, cap_reached, month_cap_reached
+from core.spend_limits import Cap, cap_reached, collector_cap_reached
 
 pytestmark = pytest.mark.unit
 
@@ -44,7 +44,7 @@ def test_spending_up_to_but_not_over_a_cap_is_still_allowed():
 
 
 def test_a_collectors_month_stops_at_its_cap_and_never_without_one():
-    assert month_cap_reached(Decimal("4.99"), Decimal("5")) is False
-    assert month_cap_reached(Decimal("5"), Decimal("5")) is True
-    assert month_cap_reached(Decimal("0"), Decimal("0")) is True
-    assert month_cap_reached(Decimal("999"), None) is False
+    assert collector_cap_reached(Decimal("4.99"), Decimal("5")) is None
+    assert collector_cap_reached(Decimal("5"), Decimal("5")) == Cap.COLLECTOR_MONTH
+    assert collector_cap_reached(Decimal("0"), Decimal("0")) == Cap.COLLECTOR_MONTH
+    assert collector_cap_reached(Decimal("999"), None) is None
