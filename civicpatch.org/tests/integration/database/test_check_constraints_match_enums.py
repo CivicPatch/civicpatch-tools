@@ -21,7 +21,7 @@ from database.database import get_pool
 from database.review_sessions import ReviewSessionEntryStatus
 from schemas.claims import ClaimKind, EntityType
 from schemas.common import UserRole
-from shared.schemas import GovernmentForm, RoleAliasStatus, RoleStatus
+from shared.schemas import GovernmentForm, RoleAliasStatus, RoleStatus, SelectionMethod
 from shared.utils.statuses import COLLECTOR_RUN_KINDS, ChangesetKind, DismissalReason, PipelineIssueStatus, PipelineRunKind
 
 # Constraint name → the enum it copies, every member of it.
@@ -36,6 +36,7 @@ EXACT = {
     "changeset_batches_kind_check": BatchKind,
     "changeset_batches_status_check": BatchStatus,
     "roles_status_check": RoleStatus,
+    "roles_selection_method_check": SelectionMethod,
     "role_aliases_status_check": RoleAliasStatus,
     "users_role_valid": UserRole,
     "review_session_entries_status_check": ReviewSessionEntryStatus,

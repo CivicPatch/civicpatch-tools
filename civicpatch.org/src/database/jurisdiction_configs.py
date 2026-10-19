@@ -48,7 +48,7 @@ async def sync_jurisdiction_config_on(cur, version: JurisdictionConfigVersion, c
 async def _stored_roles(cur) -> list[StoredRole]:
     await cur.execute(
         """
-        SELECT r.id, r.label, r.status, r.is_unique, r.priority, r.config_path,
+        SELECT r.id, r.label, r.status, r.is_unique, r.priority, r.selection_method, r.config_path,
                COALESCE(
                    array_agg(a.label ORDER BY a.label) FILTER (WHERE a.id IS NOT NULL),
                    '{}'
@@ -66,10 +66,11 @@ async def _stored_roles(cur) -> list[StoredRole]:
             status=status,
             is_unique=is_unique,
             priority=priority,
+            selection_method=selection_method,
             config_path=config_path,
             aliases=aliases,
         )
-        for id, label, status, is_unique, priority, config_path, aliases in await cur.fetchall()
+        for id, label, status, is_unique, priority, selection_method, config_path, aliases in await cur.fetchall()
     ]
 
 
@@ -118,18 +119,18 @@ async def _write_role(cur, path: str, op: RoleOp, role: ConfigRole, priority: in
     if op is RoleOp.ADD:
         await cur.execute(
             """
-            INSERT INTO roles (id, label, status, is_unique, priority, config_path)
-            VALUES (%s, %s, %s, %s, %s, %s)
+            INSERT INTO roles (id, label, status, is_unique, priority, selection_method, config_path)
+            VALUES (%s, %s, %s, %s, %s, %s, %s)
             """,
-            (role.id, role.label, RoleStatus.ACTIVE, role.is_unique, priority, path),
+            (role.id, role.label, RoleStatus.ACTIVE, role.is_unique, priority, role.selection_method, path),
         )
         return
     await cur.execute(
         """
-        UPDATE roles SET label = %s, status = %s, is_unique = %s, priority = %s, config_path = %s
+        UPDATE roles SET label = %s, status = %s, is_unique = %s, priority = %s, selection_method = %s, config_path = %s
         WHERE id = %s
         """,
-        (role.label, RoleStatus.ACTIVE, role.is_unique, priority, path, role.id),
+        (role.label, RoleStatus.ACTIVE, role.is_unique, priority, role.selection_method, path, role.id),
     )
 
 

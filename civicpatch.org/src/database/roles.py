@@ -13,14 +13,14 @@ async def _fetch_roles(cur) -> list[Role]:
     reach the matcher."""
     await cur.execute(
         """
-        SELECT r.id, r.label, r.status, r.is_unique, r.priority,
+        SELECT r.id, r.label, r.status, r.is_unique, r.priority, r.selection_method,
                COALESCE(
                    array_agg(a.label ORDER BY a.label) FILTER (WHERE a.id IS NOT NULL),
                    '{}'
                )
         FROM roles r
         LEFT JOIN role_aliases a ON a.role_id = r.id AND a.status = %s
-        GROUP BY r.id, r.label, r.status, r.is_unique, r.priority
+        GROUP BY r.id, r.label, r.status, r.is_unique, r.priority, r.selection_method
         ORDER BY r.priority NULLS LAST, r.label
         """,
         (RoleAliasStatus.ACTIVE,),
@@ -32,9 +32,10 @@ async def _fetch_roles(cur) -> list[Role]:
             status=status,
             is_unique=is_unique,
             priority=priority,
+            selection_method=selection_method,
             aliases=aliases,
         )
-        for id, label, status, is_unique, priority, aliases in await cur.fetchall()
+        for id, label, status, is_unique, priority, selection_method, aliases in await cur.fetchall()
     ]
 
 
@@ -42,15 +43,15 @@ async def get_role(cur, role_id: str) -> Role | None:
     """One role by id, or None. Aliases come back empty — callers wanting those want the
     whole taxonomy, not a single row."""
     await cur.execute(
-        "SELECT id, label, status, is_unique, priority FROM roles WHERE id = %s",
+        "SELECT id, label, status, is_unique, priority, selection_method FROM roles WHERE id = %s",
         (role_id,),
     )
     row = await cur.fetchone()
     if row is None:
         return None
-    id, label, status, is_unique, priority = row
+    id, label, status, is_unique, priority, selection_method = row
     return Role(
-        id=id, label=label, status=status, is_unique=is_unique, priority=priority
+        id=id, label=label, status=status, is_unique=is_unique, priority=priority, selection_method=selection_method
     )
 
 

@@ -1,5 +1,5 @@
 import pytest
-from shared.schemas import Role, RoleConfig
+from shared.schemas import Role, RoleConfig, RoleStatus, SelectionMethod
 from shared.utils.taxonomy import (
     Taxonomy,
     build_taxonomy,
@@ -255,3 +255,25 @@ def test_a_label_always_names_its_own_role_whatever_the_priority():
     taxonomy = _shared_member_taxonomy(council_first=True)
 
     assert resolve_role("Select Board Member", taxonomy) == "Select Board Member"
+
+
+def test_the_taxonomy_knows_how_each_role_is_filled():
+    taxonomy = build_taxonomy(
+        RoleConfig(
+            roles=[
+                Role(id="council-member", label="Council Member"),
+                Role(id="vice-mayor", label="Vice Mayor", selection_method=SelectionMethod.ELECTED_BY_MEMBERS),
+            ]
+        )
+    )
+
+    assert taxonomy.selection_methods == {
+        "Council Member": SelectionMethod.ELECTED_BY_VOTERS,
+        "Vice Mayor": SelectionMethod.ELECTED_BY_MEMBERS,
+    }
+
+
+def test_an_inactive_role_has_no_selection_method():
+    taxonomy = build_taxonomy(RoleConfig(roles=[Role(id="warden", label="Warden", status=RoleStatus.INACTIVE)]))
+
+    assert taxonomy.selection_methods == {}

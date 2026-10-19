@@ -17,6 +17,7 @@ GOVERNMENT_FORM_DESCRIPTIONS: dict[GovernmentForm, str] = {
     GovernmentForm.OPEN_TOWN_MEETING: "a select board or board of selectmen, with an open town meeting",
     GovernmentForm.REPRESENTATIVE_TOWN_MEETING: "a select board, with elected town meeting members",
     GovernmentForm.COUNTY_EXECUTIVE: "a county board plus a separately elected county executive",
+    GovernmentForm.VILLAGE_BOARD: "an elected board of trustees with a president who sits and votes on it",
 }
 
 

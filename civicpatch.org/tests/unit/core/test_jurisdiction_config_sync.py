@@ -2,7 +2,7 @@ import pytest
 
 from core.jurisdiction_config_sync import COUNTRY_ROLES_PATH, StoredRole, role_changes
 from core.role_taxonomy import RoleOp
-from shared.schemas import RoleStatus
+from shared.schemas import RoleStatus, SelectionMethod
 from shared.utils.layered_config import ConfigRole
 
 TENNESSEE = "data_source/tn/counties/config.yml"
@@ -39,6 +39,20 @@ def test_a_new_label_on_a_known_id_is_a_rename():
     changes = role_changes(COUNTRY_ROLES_PATH, [ConfigRole(id="select-board-member", label="Select Board Member")], [stored])
 
     assert [upsert.op for upsert in changes.upserts] == [RoleOp.EDIT]
+
+
+@pytest.mark.unit
+def test_a_changed_selection_method_is_an_edit():
+    stored = _stored("vice-mayor", "Vice Mayor", priority=0)
+
+    changes = role_changes(
+        COUNTRY_ROLES_PATH,
+        [ConfigRole(id="vice-mayor", label="Vice Mayor", selection_method=SelectionMethod.ELECTED_BY_MEMBERS)],
+        [stored],
+    )
+
+    [upsert] = changes.upserts
+    assert (upsert.op, upsert.role.selection_method) == (RoleOp.EDIT, SelectionMethod.ELECTED_BY_MEMBERS)
 
 
 @pytest.mark.unit

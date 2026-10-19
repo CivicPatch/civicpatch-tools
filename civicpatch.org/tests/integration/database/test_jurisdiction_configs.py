@@ -12,8 +12,9 @@ import pytest_asyncio
 
 from database.database import get_pool
 from database.jurisdiction_configs import sync_jurisdiction_config
+from database.roles import get_roles
 from schemas.jurisdiction_configs import JurisdictionConfigVersion
-from shared.schemas import GovernmentForm
+from shared.schemas import GovernmentForm, SelectionMethod
 from shared.utils.government_forms import DerivedOrganization
 from shared.utils.layered_config import ConfigFile, ConfigRole, GovernmentFormConfig
 
@@ -90,6 +91,22 @@ async def test_a_first_sync_adds_the_roles_and_stores_the_file():
     assert sorted(changes_by_type) == ["add_role", "sync_jurisdiction_config"]
     assert changes_by_type["add_role"]["pull_request_number"] == 7
     assert changes_by_type["sync_jurisdiction_config"]["path"] == _PATH
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_a_roles_selection_method_is_written_and_read_back():
+    warden = _role("warden", "Warden")
+    await sync_jurisdiction_config(_version(), ConfigFile(roles=[warden]))
+
+    await sync_jurisdiction_config(
+        _version("def456"),
+        ConfigFile(roles=[warden.model_copy(update={"selection_method": SelectionMethod.ELECTED_BY_MEMBERS})]),
+    )
+
+    [(stored,)] = await _fetch("SELECT selection_method FROM roles WHERE id = %s", (warden.id,))
+    [read] = [role for role in await get_roles() if role.id == warden.id]
+    assert (stored, read.selection_method) == ("elected_by_members", SelectionMethod.ELECTED_BY_MEMBERS)
 
 
 @pytest.mark.asyncio

@@ -1,4 +1,5 @@
 import pytest
+from shared.schemas import SelectionMethod
 from shared.utils.layered_config import ConfigFile, ConfigRole
 from shared.utils.yaml_utils import yaml_load
 
@@ -18,16 +19,19 @@ _CONFIG = """roles:
 - id: mayor
   label: Mayor
   is_unique: true
+  selection_method: elected_by_voters
   aliases: []
 - id: council-member
   label: Council Member
   is_unique: false
+  selection_method: elected_by_voters
   aliases:
   - councilmember
   - councilman
 - id: trustee
   label: Trustee
   is_unique: false
+  selection_method: elected_by_voters
   aliases: []
 """
 
@@ -115,3 +119,15 @@ def test_an_edit_changes_only_its_own_lines_in_the_file():
 
 def test_an_unchanged_list_writes_the_file_back_as_it_was():
     assert edited_config_text(_CONFIG, lambda roles: roles) == _CONFIG
+
+
+def test_a_selection_method_is_written_as_its_value():
+    def trustee_by_elected_by_members(roles: list[ConfigRole]) -> list[ConfigRole]:
+        return [*roles[:2], roles[2].model_copy(update={"selection_method": SelectionMethod.ELECTED_BY_MEMBERS})]
+
+    text = edited_config_text(_CONFIG, trustee_by_elected_by_members)
+
+    assert text == _CONFIG.replace(
+        "label: Trustee\n  is_unique: false\n  selection_method: elected_by_voters\n",
+        "label: Trustee\n  is_unique: false\n  selection_method: elected_by_members\n",
+    )

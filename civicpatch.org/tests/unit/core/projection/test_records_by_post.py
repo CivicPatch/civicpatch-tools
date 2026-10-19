@@ -60,7 +60,7 @@ def record(
 
 
 def grouped(records):
-    return records_by_post(records, JURISDICTION, TAXONOMY)
+    return records_by_post(records, JURISDICTION, TAXONOMY, {})
 
 
 def ids_in(result, post: PostKey) -> list[str]:
