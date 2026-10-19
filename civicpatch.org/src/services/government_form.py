@@ -1,6 +1,8 @@
 
 import database.changesets as changesets_db
 import database.government_forms as government_forms_db
+import services.extras_organizations as extras_organizations_service
+import services.governing_law as governing_law_service
 import database.jurisdiction_configs as jurisdiction_configs_db
 from core.organization_derivation import (
     ExistingOrganization,
@@ -202,28 +204,13 @@ class GovernmentFormNotAtLevel(Exception):
     pass
 
 
-class GovernmentFormAlreadySet(Exception):
-    pass
-
-
-async def set_government_form(jurisdiction_ocdid: str, government_form: GovernmentForm, user_id: str) -> None:
-    """A person's choice: saved over whatever was there."""
+async def set_government_form(jurisdiction_ocdid: str, government_form: GovernmentForm, user_id: str | None) -> None:
+    """Saved over whatever was there. `user_id` is None for the service key."""
     jurisdiction = await _checked(jurisdiction_ocdid, government_form)
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await government_forms_db.save_government_form(cur, jurisdiction_ocdid, government_form)
         await _record_government_form(cur, jurisdiction, government_form, user_id)
-    await build_government_form_organizations(jurisdiction_ocdid)
-
-
-async def fill_government_form(jurisdiction_ocdid: str, government_form: GovernmentForm) -> None:
-    """A scrape's answer: saved only while none is, so it never overwrites a person's."""
-    jurisdiction = await _checked(jurisdiction_ocdid, government_form)
-    pool = await get_pool()
-    async with pool.connection() as conn, conn.cursor() as cur:
-        if not await government_forms_db.fill_government_form(cur, jurisdiction_ocdid, government_form):
-            raise GovernmentFormAlreadySet(jurisdiction_ocdid)
-        await _record_government_form(cur, jurisdiction, government_form, None)
     await build_government_form_organizations(jurisdiction_ocdid)
 
 
@@ -258,8 +245,13 @@ async def _record_government_form(
 
 async def jurisdiction_details_fields(jurisdiction_ocdid: str) -> JurisdictionDetailsFields:
     waiting = await changesets_db.get_open_jurisdiction_pull_request(jurisdiction_ocdid)
+    saved = await government_forms_db.get_government_form_inputs(jurisdiction_ocdid)
     return JurisdictionDetailsFields(
         government_form=await government_form_summary(jurisdiction_ocdid),
         government_form_options=await government_form_options(jurisdiction_ocdid),
         open_pull_request_url=waiting.pull_request_url if waiting else None,
+        # The column as saved; `government_form` is the resolved one, which config can decide.
+        extras_government_form=saved.government_form if saved else None,
+        extras_governing_law=await governing_law_service.get_governing_law(jurisdiction_ocdid),
+        extras_organizations=await extras_organizations_service.get_extras_organizations(jurisdiction_ocdid),
     )

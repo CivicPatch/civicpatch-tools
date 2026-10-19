@@ -6,7 +6,9 @@ import lib.cache as cache_service
 import services.roster_edits as roster_edits
 import services.jurisdiction_pull_request as jurisdiction_pr_service
 import services.jurisdiction_scrape_candidate as candidate_service
+import services.extras_organizations as extras_organizations_service
 import services.government_form as government_form_service
+import services.jurisdiction_extras as jurisdiction_extras_service
 import services.roster_source_urls as roster_source_urls_service
 from database.users import SYSTEM_USER_ID
 from core.jurisdiction_search import build_fuzzy_tokens, build_tsquery
@@ -26,7 +28,7 @@ from schemas.jurisdictions import (
     PaginationLinks,
 )
 from schemas.pagination import paginated_response, pagination_offset
-from shared.schemas import JurisdictionLevel
+from shared.schemas import JurisdictionExtras, JurisdictionLevel
 
 # Typeahead returns a short list plus the true match count; refinement narrows it rather
 # than paging. MAX caps what a caller can ask for.
@@ -374,5 +376,24 @@ def get_router() -> APIRouter:
     async def get_roster_source_urls_endpoint(jurisdiction_ocdid: str):
         groups = await roster_source_urls_service.get_roster_source_urls(jurisdiction_ocdid)
         return {"data": [group.model_dump() for group in groups]}
+
+    # Every edit of a jurisdiction field: maintainers and the service key (README, Permissions).
+    @router.patch("/{jurisdiction_ocdid:path}", include_in_schema=False)
+    async def patch_jurisdiction_extras_endpoint(
+        jurisdiction_ocdid: str,
+        body: JurisdictionExtras,
+        identity: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.MAINTAINERS, ServiceKey.ACCEPTED)),
+    ):
+        if not is_service_key(identity) and identity.user_id is None:
+            raise HTTPException(status_code=401, detail="Sign in to edit the jurisdiction.")
+        extras = body if is_service_key(identity) else jurisdiction_extras_service.with_maintainer_as_finder(body)
+        try:
+            await jurisdiction_extras_service.save_jurisdiction_extras(jurisdiction_ocdid, extras, identity.user_id)
+        except jurisdiction_extras_service.UNKNOWN_JURISDICTION:
+            raise HTTPException(status_code=404, detail=f"No such jurisdiction: {jurisdiction_ocdid}")
+        except (government_form_service.GovernmentFormNotAtLevel, extras_organizations_service.UnknownRole) as exc:
+            raise HTTPException(status_code=422, detail=str(exc))
+        details = await government_form_service.jurisdiction_details_fields(jurisdiction_ocdid)
+        return {"data": details.model_dump(mode="json")}
 
     return router

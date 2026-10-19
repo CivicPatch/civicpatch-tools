@@ -4,7 +4,7 @@ from decimal import Decimal
 from enum import Enum, StrEnum
 from typing import List, Optional
 
-from pydantic import BaseModel, ConfigDict, Field, field_validator
+from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
 from shared.utils.email_utils import is_valid_email
 from shared.utils.phone_utils import normalize_phone_number
 from shared.utils.url_utils import is_web_url
@@ -541,3 +541,77 @@ class GoverningLaw(BaseModel):
     collected_at: datetime
     # None when the provider stated no cost, as grounded Gemini does.
     cost_usd: Decimal | None
+
+
+# `jurisdictions.extras_organizations`: what a jurisdiction's governing law says its government is
+# made of, in Open Civic Data's Organization and Post shape; ours sits in `extras`, as OCD allows.
+
+
+class SourceExtras(BaseModel):
+    # The cached text the quote was checked against.
+    source_page_id: str
+
+
+class Source(BaseModel):
+    url: str
+    # The quote, word for word from the cached text.
+    note: str
+    extras: SourceExtras
+
+
+class GoverningLawPostExtras(BaseModel):
+    # None: the law establishes the post but the run found no clause saying how it is filled,
+    # so the role's default applies.
+    selection_method: SelectionMethod | None = None
+
+
+class GoverningLawPost(BaseModel):
+    # A role id from config ("council-member"); OCD's is free text.
+    role: str
+    maximum_memberships: int = Field(default=1, ge=1)
+    sources: List[Source] = []
+    extras: GoverningLawPostExtras = GoverningLawPostExtras()
+
+
+class GoverningLawOrganization(BaseModel):
+    name: str
+    posts: List[GoverningLawPost] = []
+
+
+class GoverningLawOrganizationsExtras(BaseModel):
+    # The `extras_governing_law.collected_at` these were read from: a newer one means read again.
+    governing_law_collected_at: datetime
+
+
+class GoverningLawOrganizations(BaseModel):
+    organizations: List[GoverningLawOrganization]
+    extras: GoverningLawOrganizationsExtras
+
+    def selection_methods(self) -> dict[str, SelectionMethod]:
+        """Role id -> how this jurisdiction's law fills it, for the posts whose clause was found."""
+        return {
+            post.role: post.extras.selection_method
+            for organization in self.organizations
+            for post in organization.posts
+            if post.extras.selection_method is not None
+        }
+
+
+class JurisdictionExtras(BaseModel):
+    """`PATCH /api/v1/jurisdictions/{ocdid}`: cp.org's own fields on a jurisdiction. A field left
+    out stays as it is; a field sent replaces what was there, and may not be null."""
+
+    model_config = ConfigDict(extra="forbid")
+
+    extras_government_form: GovernmentForm | None = None
+    extras_governing_law: GoverningLaw | None = None
+    extras_organizations: GoverningLawOrganizations | None = None
+
+    @model_validator(mode="after")
+    def _sent_fields_have_values(self) -> "JurisdictionExtras":
+        if not self.model_fields_set:
+            raise ValueError("send at least one field")
+        nulls = sorted(field for field in self.model_fields_set if getattr(self, field) is None)
+        if nulls:
+            raise ValueError(f"leave a field out to keep it, rather than sending null: {', '.join(nulls)}")
+        return self

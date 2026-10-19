@@ -1,4 +1,4 @@
-"""Saving a jurisdiction's government form: a person sets it, a scrape only fills it, and either
+"""Saving a jurisdiction's government form: a person or the service key replaces it, and either
 builds the organizations it implies. Also whether a scrape is asked for it at all."""
 
 import json
@@ -10,9 +10,7 @@ from database.database import get_pool
 from database.organizations import ensure_defaults_exist
 from database.users import SYSTEM_USER_ID
 from services.government_form import (
-    GovernmentFormAlreadySet,
     GovernmentFormNotAtLevel,
-    fill_government_form,
     government_form_choices,
     resolved_government,
     set_government_form,
@@ -118,21 +116,12 @@ async def test_a_person_overwrites_a_saved_form():
 
 @pytest.mark.integration
 @pytest.mark.asyncio
-async def test_a_scrape_fills_an_empty_form():
-    await fill_government_form(_CITY, GovernmentForm.MAYOR_COUNCIL)
-
-    assert await _saved_form() == GovernmentForm.MAYOR_COUNCIL
-
-
-@pytest.mark.integration
-@pytest.mark.asyncio
-async def test_a_scrape_never_overwrites_a_saved_form():
+async def test_the_service_key_saves_like_anyone():
     await set_government_form(_CITY, GovernmentForm.COUNCIL_MANAGER, SYSTEM_USER_ID)
 
-    with pytest.raises(GovernmentFormAlreadySet):
-        await fill_government_form(_CITY, GovernmentForm.MAYOR_COUNCIL)
+    await set_government_form(_CITY, GovernmentForm.MAYOR_COUNCIL, None)
 
-    assert await _saved_form() == GovernmentForm.COUNCIL_MANAGER
+    assert await _saved_form() == GovernmentForm.MAYOR_COUNCIL
 
 
 @pytest.mark.integration

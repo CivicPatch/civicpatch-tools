@@ -9,7 +9,7 @@ import services.civicpatch_api as civicpatch_api
 import services.google_gemini.llm as google_gemini_llm
 import services.google_gemini.prompts as google_gemini_prompt
 from runners.people_collector.schemas import PeopleCollectorContext
-from shared.schemas import GovernmentForm, JurisdictionLevel
+from shared.schemas import GovernmentForm, JurisdictionExtras, JurisdictionLevel
 from shared.utils.id_utils import parse_jurisdiction_ocdid
 
 
@@ -43,12 +43,11 @@ async def request_government_form(
         logger.warning(f"government_form: no allowed government form in the answer {answer!r}; not saving")
         return
     try:
-        saved = await civicpatch_api.fill_government_form(api_client, jurisdiction_ocdid, government_form)
+        await civicpatch_api.patch_jurisdiction_extras(
+            api_client, jurisdiction_ocdid, JurisdictionExtras(extras_government_form=government_form)
+        )
     except httpx.HTTPStatusError as exc:
         # The next run asks again; a failed save is no reason to fail the scrape.
         logger.warning(f"government_form: cp.org refused it: {exc}")
-        return
-    if not saved:
-        logger.info("government_form: a government form is already set; not saving")
         return
     logger.info(f"government_form: saved {government_form.value}")

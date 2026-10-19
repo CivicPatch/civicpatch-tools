@@ -32,11 +32,24 @@ def always_miss_cache():
 
 @pytest.fixture(autouse=True)
 def no_form_options_or_waiting_pull_request():
-    """The jurisdiction GET also asks for the form options and a waiting PR; both read the DB."""
+    """The jurisdiction GET also asks for the form options, a waiting PR and cp.org's three
+    `extras_*` columns; all of them read the DB."""
     with patch(
         "services.government_form.government_form_options", new_callable=AsyncMock, return_value=[]
     ), patch(
         "services.government_form.changesets_db.get_open_jurisdiction_pull_request",
+        new_callable=AsyncMock,
+        return_value=None,
+    ), patch(
+        "services.government_form.government_forms_db.get_government_form_inputs",
+        new_callable=AsyncMock,
+        return_value=None,
+    ), patch(
+        "services.government_form.governing_law_service.get_governing_law",
+        new_callable=AsyncMock,
+        return_value=None,
+    ), patch(
+        "services.government_form.extras_organizations_service.get_extras_organizations",
         new_callable=AsyncMock,
         return_value=None,
     ):

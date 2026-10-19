@@ -39,18 +39,6 @@ async def save_government_form(cur, jurisdiction_ocdid: str, government_form: Go
     )
 
 
-async def fill_government_form(cur, jurisdiction_ocdid: str, government_form: GovernmentForm) -> bool:
-    """Save it only while none is saved. Returns whether it was."""
-    await cur.execute(
-        """
-        UPDATE jurisdictions SET extras_government_form = %s
-        WHERE jurisdiction_ocdid = %s AND extras_government_form IS NULL
-        """,
-        (government_form, jurisdiction_ocdid),
-    )
-    return cur.rowcount > 0
-
-
 async def government_form_inputs_below_state() -> list[GovernmentFormInputs]:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:

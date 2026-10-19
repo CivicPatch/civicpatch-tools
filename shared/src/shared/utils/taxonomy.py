@@ -56,6 +56,13 @@ def build_taxonomy(role_config: RoleConfig | None) -> Taxonomy:
     )
 
 
+def with_selection_methods(taxonomy: Taxonomy, methods_by_role_id: dict[str, SelectionMethod]) -> Taxonomy:
+    """One jurisdiction's methods over the config's: its law says how it fills these roles."""
+    label_by_id = {role_id: label for label, role_id in taxonomy.role_ids.items()}
+    overrides = {label_by_id[role_id]: method for role_id, method in methods_by_role_id.items() if role_id in label_by_id}
+    return taxonomy._replace(selection_methods={**taxonomy.selection_methods, **overrides})
+
+
 def resolve_role(label: str, taxonomy: Taxonomy) -> str | None:
     """The canonical role this label names, or None if it names no known role."""
     if is_designation(label, taxonomy):

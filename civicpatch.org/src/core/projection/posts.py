@@ -32,6 +32,9 @@ class PostRole(BaseModel, frozen=True):
 
 PostRoles = Mapping[str, PostRole]
 
+# A role one person holds (a lone Clerk, Millbury 2026-10-19) is not the posts members share.
+MIN_POST_ROLE_HOLDERS = 2
+
 
 def post_role_holders(
     records: Sequence[SourceRecord], jurisdiction_ocdid: str, taxonomy: Taxonomy
@@ -49,8 +52,8 @@ def post_role_holders(
 def organization_post_roles(
     records: Sequence[SourceRecord], jurisdiction_ocdid: str, taxonomy: Taxonomy
 ) -> dict[str, PostRole]:
-    """Per organization, the role elected by voters that the most people hold, so a lone mayor
-    beside four council members is not it; ties go to the higher priority."""
+    """Per organization, the role elected by voters that the most people hold, and at least two:
+    a lone mayor or clerk beside the members is never it. Ties go to the higher priority."""
     holders = post_role_holders(records, jurisdiction_ocdid, taxonomy)
 
     def most_held_first(key: tuple[str, str]) -> tuple:
@@ -59,7 +62,7 @@ def organization_post_roles(
 
     post_roles: dict[str, PostRole] = {}
     for organization_id, role in sorted(holders, key=most_held_first):
-        if organization_id in post_roles:
+        if organization_id in post_roles or len(holders[(organization_id, role)]) < MIN_POST_ROLE_HOLDERS:
             continue
         has_divisions = any(has_division(derived) for derived in holders[(organization_id, role)])
         post_roles[organization_id] = PostRole(role=role, has_divisions=has_divisions)
