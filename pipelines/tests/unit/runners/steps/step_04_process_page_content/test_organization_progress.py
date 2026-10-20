@@ -1,14 +1,14 @@
 """Per-organization progress: how many people an organization needs, and whether it has them."""
 
 import pytest
-from runners.people_collector.schemas import OrganizationProgress, PersonSourceRecord
-from runners.people_collector.steps.step_04_process_page_content.organization_progress import (
+from runners.pipeline03_people_collector.schemas import OrganizationProgress, PersonSourceRecord
+from runners.pipeline03_people_collector.steps.step_04_process_page_content.organization_progress import (
     organization_needs,
     organizations_progress,
     is_done,
     required_to_be_done,
 )
-from runners.people_collector.schemas import ExpectedMembership
+from runners.pipeline03_people_collector.schemas import ExpectedMembership
 from shared.schemas import KnownOrganization, Role, RoleConfig
 from shared.utils.taxonomy import build_taxonomy
 

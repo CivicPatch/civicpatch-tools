@@ -7,9 +7,9 @@ because it had enough would file an issue saying it did not.
 
 import pytest
 
-from runners.people_collector.schemas import ProgressState
-from runners.people_collector.transitions.main import _collect_pipeline_heuristics
-from runners.people_collector.transitions.process_page_content_transition import (
+from runners.pipeline03_people_collector.schemas import ProgressState
+from runners.pipeline03_people_collector.transitions.main import _collect_pipeline_heuristics
+from runners.pipeline03_people_collector.transitions.process_page_content_transition import (
     DATA_REQUIREMENT_TOLERANCE,
     STOP_COST_CAP,
 )

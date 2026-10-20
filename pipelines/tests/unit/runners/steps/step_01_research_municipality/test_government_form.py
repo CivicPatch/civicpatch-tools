@@ -2,7 +2,7 @@
 
 import pytest
 
-from runners.people_collector.steps.step_01_research_municipality.government_form import answered_government_form
+from runners.pipeline03_people_collector.steps.step_01_research_municipality.government_form import answered_government_form
 from shared.schemas import GovernmentForm
 
 pytestmark = pytest.mark.unit

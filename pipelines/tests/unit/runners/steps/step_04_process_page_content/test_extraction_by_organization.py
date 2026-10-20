@@ -3,7 +3,7 @@
 from unittest.mock import AsyncMock, MagicMock, patch
 
 import pytest
-from runners.people_collector.schemas import (
+from runners.pipeline03_people_collector.schemas import (
     ExpectedMembership,
     ExtractedPersonRecord,
     Link,
@@ -12,13 +12,13 @@ from runners.people_collector.schemas import (
     PeopleArrayLLMResponseSchema,
     ProcessPageContentStep,
 )
-from runners.people_collector.steps.step_04_process_page_content.extraction_by_organization import (
+from runners.pipeline03_people_collector.steps.step_04_process_page_content.extraction_by_organization import (
     extraction_scopes,
 )
-from runners.people_collector.steps.step_04_process_page_content.heuristics_failure import (
+from runners.pipeline03_people_collector.steps.step_04_process_page_content.heuristics_failure import (
     HeuristicsFailure,
 )
-from runners.people_collector.steps.step_04_process_page_content.process_page_content import (
+from runners.pipeline03_people_collector.steps.step_04_process_page_content.process_page_content import (
     collect_page_records,
     covered_organization_ids,
 )
@@ -31,7 +31,7 @@ _OCDID = "ocd-jurisdiction/country:us/state:wa/place:seattle/government"
 _PAGE = Link(url="https://seattle.gov/elected-officials", status=LinkStatus.PREPROCESSED.value)
 _CONTENT = "Elected officials: Mayor Katie Wilson. Council Member District 1: Rob Saka."
 _RUN_PROMPT = (
-    "runners.people_collector.steps.step_04_process_page_content.process_page_content"
+    "runners.pipeline03_people_collector.steps.step_04_process_page_content.process_page_content"
     ".open_router_llm.run_prompt"
 )
 

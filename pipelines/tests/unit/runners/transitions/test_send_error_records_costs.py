@@ -1,7 +1,7 @@
 from unittest.mock import AsyncMock, MagicMock, patch
 
 import pytest
-from runners.people_collector.transitions.main import send_error_transition
+from runners.pipeline03_people_collector.transitions.main import send_error_transition
 
 pytestmark = pytest.mark.unit
 
@@ -18,8 +18,8 @@ def _context():
 
 def _patches(log_costs, send_error):
     return (
-        patch("runners.people_collector.transitions.main.cost_utils.log_costs", log_costs),
-        patch("runners.people_collector.transitions.main.send_error", send_error),
+        patch("runners.pipeline03_people_collector.transitions.main.cost_utils.log_costs", log_costs),
+        patch("runners.pipeline03_people_collector.transitions.main.send_error", send_error),
     )
 
 

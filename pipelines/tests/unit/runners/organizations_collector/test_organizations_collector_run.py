@@ -8,14 +8,14 @@ from unittest.mock import AsyncMock, MagicMock, patch
 import pytest
 
 from runners.engine import Machine, run_pipeline, terminal_states
-from runners.organizations_collector.schemas import (
+from runners.pipeline02_organizations_collector.schemas import (
     OrganizationsCollectorConfig,
     OrganizationsCollectorContext,
     OrganizationsCollectorData,
     OrganizationsCollectorStep,
 )
-from runners.organizations_collector.transitions.graph import ORGANIZATIONS_COLLECTOR_TRANSITIONS
-from runners.organizations_collector.transitions.main import TRANSITION_MAP
+from runners.pipeline02_organizations_collector.transitions.graph import ORGANIZATIONS_COLLECTOR_TRANSITIONS
+from runners.pipeline02_organizations_collector.transitions.main import TRANSITION_MAP
 from shared.schemas import FoundBy, GovernmentForm, GoverningLaw, GoverningLawKind
 from shared.utils.government_forms import DerivedOrganization
 from shared.utils.layered_config import (
@@ -79,7 +79,7 @@ def _context(governing_law: GoverningLaw | None) -> OrganizationsCollectorContex
     )
 
 
-MAIN = "runners.organizations_collector.transitions.main"
+MAIN = "runners.pipeline02_organizations_collector.transitions.main"
 _SHORT_CHARTER = "- **§ 1. Selectboard**\nThe Selectboard shall consist of five members elected at large.\n"
 _LONG_CHARTER = (
     "- **§ 1. Corporate existence**\n" + "The town continues. " * 6_000 + "\n"

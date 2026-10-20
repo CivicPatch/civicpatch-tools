@@ -6,8 +6,8 @@ from pathlib import Path
 
 import pytest
 
-from runners.governing_law_collector.converters import UnsupportedContentType, is_thin, to_markdown
-from runners.governing_law_collector.schemas import FetchedPage
+from runners.pipeline01_governing_law_collector.converters import UnsupportedContentType, is_thin, to_markdown
+from runners.pipeline01_governing_law_collector.schemas import FetchedPage
 
 pytestmark = pytest.mark.unit
 

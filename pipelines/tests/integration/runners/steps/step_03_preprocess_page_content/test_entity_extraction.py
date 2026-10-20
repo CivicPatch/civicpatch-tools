@@ -1,5 +1,5 @@
 import pytest
-from runners.people_collector.steps.step_03_preprocess_page_content.entity_extraction import extract_data, extract_data_batch
+from runners.pipeline03_people_collector.steps.step_03_preprocess_page_content.entity_extraction import extract_data, extract_data_batch
 
 pytestmark = pytest.mark.integration
 

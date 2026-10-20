@@ -11,7 +11,7 @@ first. The homepage stays queued behind it — still available for discovering f
 
 import pytest
 
-from runners.people_collector.schemas import LinkFrontier
+from runners.pipeline03_people_collector.schemas import LinkFrontier
 
 BASE = "https://seattle.gov"
 SOURCE = "https://www.seattle.gov/council"

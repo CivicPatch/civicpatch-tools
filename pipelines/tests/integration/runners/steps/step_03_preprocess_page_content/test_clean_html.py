@@ -1,6 +1,6 @@
 import os
 import pytest
-from runners.people_collector.steps.step_03_preprocess_page_content.clean_html import clean_html
+from runners.pipeline03_people_collector.steps.step_03_preprocess_page_content.clean_html import clean_html
 from pathlib import Path
 from markdownify import markdownify as md
 

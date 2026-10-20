@@ -15,7 +15,7 @@ from eval_utils import (
     record_run,
     write_comparison_report,
 )
-from runners.people_collector.schemas import (
+from runners.pipeline03_people_collector.schemas import (
     PeopleArrayLLMResponseSchema,
     ExtractedPersonRecord,
 )

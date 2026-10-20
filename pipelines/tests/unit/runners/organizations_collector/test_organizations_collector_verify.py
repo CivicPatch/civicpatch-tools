@@ -5,8 +5,8 @@ from unittest.mock import MagicMock
 
 import pytest
 
-from runners.organizations_collector.role_asks import RoleAsk
-from runners.organizations_collector.schemas import (
+from runners.pipeline02_organizations_collector.role_asks import RoleAsk
+from runners.pipeline02_organizations_collector.schemas import (
     FilledBy,
     OrganizationsCollectorConfig,
     OrganizationsCollectorContext,
@@ -15,9 +15,9 @@ from runners.organizations_collector.schemas import (
     RoleAnswer,
     RoleClaim,
 )
-from runners.organizations_collector.sections import GoverningLawPage
-from runners.organizations_collector.transitions.main import verify
-from runners.organizations_collector.verify import MAX_ROUNDS, role_outcomes
+from runners.pipeline02_organizations_collector.sections import GoverningLawPage
+from runners.pipeline02_organizations_collector.transitions.main import verify
+from runners.pipeline02_organizations_collector.verify import MAX_ROUNDS, role_outcomes
 from shared.schemas import FoundBy, GoverningLaw, GoverningLawKind, QuoteScope, SelectionMethod
 from shared.utils.layered_config import Classification, ConfigFile, GovernedBy, GoverningLawConfig, merged_config
 

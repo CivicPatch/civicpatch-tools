@@ -22,7 +22,7 @@ import yaml
 import services.open_router.llm as open_router_llm
 import services.open_router.prompts as open_router_prompts
 from eval_utils import record_history, record_run
-from runners.organizations_collector.schemas import GoverningSectionsResponse
+from runners.pipeline02_organizations_collector.schemas import GoverningSectionsResponse
 from utils import cost_utils
 
 pytestmark = [pytest.mark.evals]

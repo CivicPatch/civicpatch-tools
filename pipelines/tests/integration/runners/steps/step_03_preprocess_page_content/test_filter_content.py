@@ -1,8 +1,8 @@
 import os
 import difflib
 import pytest
-from runners.people_collector.steps.step_03_preprocess_page_content.filter_content import filter_content
-from runners.people_collector.steps.step_03_preprocess_page_content.clean_html import clean_html
+from runners.pipeline03_people_collector.steps.step_03_preprocess_page_content.filter_content import filter_content
+from runners.pipeline03_people_collector.steps.step_03_preprocess_page_content.clean_html import clean_html
 from markdownify import markdownify as md
 
 pytestmark = pytest.mark.integration

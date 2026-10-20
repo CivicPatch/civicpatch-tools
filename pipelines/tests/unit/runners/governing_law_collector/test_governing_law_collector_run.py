@@ -6,24 +6,24 @@ from unittest.mock import AsyncMock, MagicMock, patch
 import pytest
 
 from runners.engine import terminal_states
-from runners.governing_law_collector.main import MACHINE
-from runners.governing_law_collector.schemas import (
+from runners.pipeline01_governing_law_collector.main import MACHINE
+from runners.pipeline01_governing_law_collector.schemas import (
     FetchedPage,
     FinderAnswer,
     GoverningLawCollectorConfig,
     GoverningLawCollectorContext,
     GoverningLawCollectorData,
 )
-from runners.governing_law_collector.fetchers import RefusedByHost
-from runners.governing_law_collector.transitions.graph import GOVERNING_LAW_COLLECTOR_TRANSITIONS
-from runners.governing_law_collector.transitions.main import TRANSITION_MAP
+from runners.pipeline01_governing_law_collector.fetchers import RefusedByHost
+from runners.pipeline01_governing_law_collector.transitions.graph import GOVERNING_LAW_COLLECTOR_TRANSITIONS
+from runners.pipeline01_governing_law_collector.transitions.main import TRANSITION_MAP
 from runners.engine import run_pipeline
 from shared.schemas import FoundBy, GoverningLawKind
 from shared.utils.statuses import TERMINAL_PIPELINE_RUN_STATUSES, PipelineRunStatus
 
 pytestmark = pytest.mark.unit
 
-MAIN = "runners.governing_law_collector.transitions.main"
+MAIN = "runners.pipeline01_governing_law_collector.transitions.main"
 _OCDID = "ocd-jurisdiction/country:us/state:vt/place:stowe/government"
 _CHARTER = "https://legislature.vermont.gov/statutes/fullchapter/24APPENDIX/153"
 _STATUTE = "https://legislature.vermont.gov/statutes/section/17/055/02646"

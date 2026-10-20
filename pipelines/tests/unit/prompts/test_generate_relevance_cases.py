@@ -1,6 +1,6 @@
 import pytest
 
-from runners.people_collector.schemas import LinkStatus
+from runners.pipeline03_people_collector.schemas import LinkStatus
 from tests.prompts.tests.evals.generate_relevance_cases import (
     Candidate,
     PromptInputs,

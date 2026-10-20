@@ -6,7 +6,7 @@ from pathlib import Path
 
 import pytest
 
-from runners.organizations_collector.sections import (
+from runners.pipeline02_organizations_collector.sections import (
     GoverningLawPage,
     Section,
     fits_whole,

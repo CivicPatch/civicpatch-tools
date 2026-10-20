@@ -1,5 +1,5 @@
 import pytest
-from runners.people_collector.steps.step_03_preprocess_page_content.clean_html import clean_html
+from runners.pipeline03_people_collector.steps.step_03_preprocess_page_content.clean_html import clean_html
 
 pytestmark = pytest.mark.integration
 

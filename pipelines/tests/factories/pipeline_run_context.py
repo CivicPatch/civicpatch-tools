@@ -1,6 +1,6 @@
 from typing import Any, Dict, Union
 
-from runners.people_collector.schemas import (
+from runners.pipeline03_people_collector.schemas import (
     LinkFrontier,
     MaybeSendToGitHubStep,
     PeopleCollectorContext,

@@ -1,8 +1,8 @@
 """A page's verdict may be reused only while everything the LLM saw besides the text is the same."""
 
 import pytest
-from runners.people_collector.schemas import ExpectedMembership
-from runners.people_collector.steps.step_04_process_page_content.page_prompts import (
+from runners.pipeline03_people_collector.schemas import ExpectedMembership
+from runners.pipeline03_people_collector.steps.step_04_process_page_content.page_prompts import (
     prompt_hash,
 )
 from shared.schemas import GovernmentForm, KnownOrganization, PipelineRunConfig, Post

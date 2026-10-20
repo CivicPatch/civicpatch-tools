@@ -2,14 +2,14 @@ from decimal import Decimal
 
 import pytest
 
-from runners.people_collector.schemas import OrganizationProgress, PeopleCollectorState, PeopleCollectorStep, ProgressState
-from runners.people_collector.transitions.process_page_content_transition import (
+from runners.pipeline03_people_collector.schemas import OrganizationProgress, PeopleCollectorState, PeopleCollectorStep, ProgressState
+from runners.pipeline03_people_collector.transitions.process_page_content_transition import (
     STOP_COST_CAP,
     STOP_MAX_PAGES,
     STOP_MESSAGES,
     next_process_content_state,
 )
-from runners.people_collector.transitions.main import _collect_pipeline_heuristics
+from runners.pipeline03_people_collector.transitions.main import _collect_pipeline_heuristics
 from shared.schemas import PipelineRunLimits
 from shared.utils.statuses import PipelineIssueType, PipelineRunErrorType
 

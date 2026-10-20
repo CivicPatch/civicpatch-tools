@@ -6,10 +6,10 @@ These mock browser.scrape so the full pipeline can be tested without a real brow
 import os
 import pytest
 from unittest.mock import AsyncMock, MagicMock, patch
-from runners.people_collector.schemas import ExpectedMembership, LinkFrontier, LinkStatus
-from runners.people_collector.steps.step_02_scrape_page.scrape_constants import MAX_SCRAPE_ATTEMPTS
-from runners.people_collector.steps.step_02_scrape_page.scrape_page import _accordion_keywords, scrape_page
-from runners.people_collector.steps.step_02_scrape_page.scrape_exceptions import NavigationError, NavigationFailureReason
+from runners.pipeline03_people_collector.schemas import ExpectedMembership, LinkFrontier, LinkStatus
+from runners.pipeline03_people_collector.steps.step_02_scrape_page.scrape_constants import MAX_SCRAPE_ATTEMPTS
+from runners.pipeline03_people_collector.steps.step_02_scrape_page.scrape_page import _accordion_keywords, scrape_page
+from runners.pipeline03_people_collector.steps.step_02_scrape_page.scrape_exceptions import NavigationError, NavigationFailureReason
 from shared.schemas import KnownOrganization
 from tests.factories.pipeline_run_context import pipeline_run_context_factory
 
@@ -18,7 +18,7 @@ pytestmark = pytest.mark.unit
 PAGE_URL = "https://example.gov/council"
 HTML = "<html><body><p>Council members</p></body></html>"
 
-MODULE = "runners.people_collector.steps.step_02_scrape_page.scrape_page"
+MODULE = "runners.pipeline03_people_collector.steps.step_02_scrape_page.scrape_page"
 
 
 def _make_context(url: str = PAGE_URL):

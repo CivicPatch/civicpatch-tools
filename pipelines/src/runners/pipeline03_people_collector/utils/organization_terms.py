@@ -1,0 +1,117 @@
+"""What a scrape is looking for: its organizations' names, their posts' labels, the roles of
+the memberships it expects to find, and their designations ("Position 1").
+
+One source, two shapes. `search_phrases` keeps them as written, for text matched by substring
+(accordion buttons, page sections). `as_tokens` breaks phrases into distinctive words, for URL
+paths matched token by token (the frontier). A post label already carries its role and division
+("Council Member, District 3"), so the organizations cover roles without a separate list.
+"""
+
+import re
+from typing import List
+
+from runners.pipeline03_people_collector.schemas import ExpectedMembership
+from shared.schemas import KnownOrganization
+from shared.utils import name_utils
+
+# Words in an organization's name that every municipal site uses somewhere, so matching on them ranks
+# `/clerks-office` and `/city-hall-hours` alongside the roster. Dropped rather than the whole
+# name, because what is left is what distinguishes one organization from another: "School Board" keeps
+# `school`, "Office of the Mayor" keeps `mayor`.
+_GENERIC_ORGANIZATION_TOKENS = frozenset(
+    {
+        "city",
+        "town",
+        "village",
+        "borough",
+        "township",
+        "county",
+        "government",
+        "municipal",
+        "office",
+        "offices",
+        "department",
+        "departments",
+        "administration",
+        "public",
+        "general",
+    }
+)
+
+
+def organization_phrases(organizations: List[KnownOrganization]) -> List[str]:
+    phrases: List[str] = []
+    for organization in organizations:
+        phrases.append(organization.name)
+        phrases.extend(post.label for post in organization.posts)
+    return list(dict.fromkeys(phrase for phrase in phrases if phrase))
+
+
+def roles_to_look_for(
+    memberships: List[ExpectedMembership], organizations: List[KnownOrganization]
+) -> List[str]:
+    """Every expected membership's role, then each organization's role labels, so an organization
+    nobody is expected in yet (a Town Meeting and its Moderator) is still named to the prompts."""
+    organization_roles = [label for organization in organizations for label in organization.role_labels]
+    return list(dict.fromkeys(expected_roles(memberships) + organization_roles))
+
+
+def expected_roles(memberships: List[ExpectedMembership]) -> List[str]:
+    return list(dict.fromkeys(membership.role_label for membership in memberships))
+
+
+def expected_divisions(memberships: List[ExpectedMembership]) -> List[str]:
+    return list(dict.fromkeys(membership.division for membership in memberships if membership.division))
+
+
+def memberships_in(organization_id: str, memberships: List[ExpectedMembership]) -> List[ExpectedMembership]:
+    return [membership for membership in memberships if membership.organization_id == organization_id]
+
+
+def government_form_role_labels(
+    organizations: List[KnownOrganization], memberships: List[ExpectedMembership]
+) -> List[str]:
+    """What the government form says an organization nobody is expected in usually has: a guess
+    a prompt may mention, never state."""
+    return list(
+        dict.fromkeys(
+            label
+            for organization in organizations
+            if not memberships_in(organization.id, memberships)
+            for label in organization.role_labels
+        )
+    )
+
+
+def expected_designations(memberships: List[ExpectedMembership]) -> List[str]:
+    return list(
+        dict.fromkeys(
+            designation for membership in memberships for designation in membership.designations
+        )
+    )
+
+
+def search_phrases(
+    organizations: List[KnownOrganization], memberships: List[ExpectedMembership]
+) -> List[str]:
+    return list(
+        dict.fromkeys(
+            organization_phrases(organizations)
+            + expected_roles(memberships)
+            + expected_designations(memberships)
+        )
+    )
+
+
+def as_tokens(phrases: List[str]) -> List[str]:
+    """The distinctive words of these phrases: four characters or more, generic words dropped.
+
+    In source order rather than through a set: this feeds a sort key, and a term list that
+    reorders between runs makes a queue that cannot be replayed.
+    """
+    tokens: List[str] = []
+    for phrase in phrases:
+        for token in re.split(r"[^a-z0-9]", name_utils.normalize_text_for_search(phrase).lower()):
+            if len(token) >= 4 and token not in _GENERIC_ORGANIZATION_TOKENS and token not in tokens:
+                tokens.append(token)
+    return tokens

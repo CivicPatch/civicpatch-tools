@@ -8,8 +8,8 @@ measurement; this keeps the thing that prints it honest.
 
 import pytest
 
-from runners.people_collector.schemas import Link, LinkFrontier, LinkStatus
-from runners.people_collector.utils.organization_terms import as_tokens, organization_phrases
+from runners.pipeline03_people_collector.schemas import Link, LinkFrontier, LinkStatus
+from runners.pipeline03_people_collector.utils.organization_terms import as_tokens, organization_phrases
 from shared.schemas import KnownOrganization, Post
 from shared.utils.url_utils import canonical_url
 from tests.unit.runners.frontier_replay import (

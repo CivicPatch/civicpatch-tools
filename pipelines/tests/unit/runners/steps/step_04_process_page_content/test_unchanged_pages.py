@@ -3,13 +3,13 @@
 from unittest.mock import AsyncMock, patch
 
 import pytest
-from runners.people_collector.schemas import Link, LinkFrontier, LinkStatus, RelevantPageResponseSchema
-from runners.people_collector.steps.step_04_process_page_content.unchanged_pages import (
+from runners.pipeline03_people_collector.schemas import Link, LinkFrontier, LinkStatus, RelevantPageResponseSchema
+from runners.pipeline03_people_collector.steps.step_04_process_page_content.unchanged_pages import (
     is_unchanged,
     page_content_hash,
     published_source_page,
 )
-from runners.people_collector.steps.step_04_process_page_content.process_page_content import (
+from runners.pipeline03_people_collector.steps.step_04_process_page_content.process_page_content import (
     process_page_content,
 )
 from shared.schemas import PublishedSourcePage, PersonSourceRecord
@@ -18,7 +18,7 @@ from tests.factories.pipeline_run_context import pipeline_run_context_factory
 
 pytestmark = pytest.mark.unit
 
-_MODULE = "runners.people_collector.steps.step_04_process_page_content.process_page_content"
+_MODULE = "runners.pipeline03_people_collector.steps.step_04_process_page_content.process_page_content"
 _URL = "https://seattle.gov/council"
 _READ = "row-where-the-llm-read-it"
 

@@ -1,4 +1,4 @@
-from runners.people_collector.schemas import ExtractedPersonRecord
+from runners.pipeline03_people_collector.schemas import ExtractedPersonRecord
 
 
 def extracted_person_factory(name, label, **fields) -> ExtractedPersonRecord:

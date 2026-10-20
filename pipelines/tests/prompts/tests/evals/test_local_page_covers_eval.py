@@ -48,7 +48,7 @@ from eval_utils import (
     record_run,
     write_comparison_report,
 )
-from runners.people_collector.schemas import OrganizationCoverageResponseSchema
+from runners.pipeline03_people_collector.schemas import OrganizationCoverageResponseSchema
 from services.open_router.prompts import page_covers_organization_prompt
 from utils import cost_utils
 from utils.dispositions import Disposition, tally

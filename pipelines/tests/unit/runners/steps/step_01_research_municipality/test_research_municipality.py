@@ -11,13 +11,13 @@ from unittest.mock import AsyncMock, patch
 import httpx
 import pytest
 
-from runners.people_collector.steps.step_01_research_municipality.research_municipality import (
+from runners.pipeline03_people_collector.steps.step_01_research_municipality.research_municipality import (
     _post_memberships,
     _researched_memberships,
     _source_urls,
     research_municipality,
 )
-from runners.people_collector.schemas import ExpectedMembership, ResearchedPerson
+from runners.pipeline03_people_collector.schemas import ExpectedMembership, ResearchedPerson
 from shared.schemas import (
     GovernmentForm,
     KnownOrganization,
@@ -231,7 +231,7 @@ def test_an_organizations_role_wins_an_ambiguous_label_and_other_roles_are_kept(
     ]
 
 
-_STEP = "runners.people_collector.steps.step_01_research_municipality.research_municipality"
+_STEP = "runners.pipeline03_people_collector.steps.step_01_research_municipality.research_municipality"
 
 
 @pytest.mark.asyncio

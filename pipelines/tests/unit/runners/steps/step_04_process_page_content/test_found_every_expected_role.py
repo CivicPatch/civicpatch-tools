@@ -2,8 +2,8 @@
 
 import pytest
 
-from runners.people_collector.schemas import ExpectedMembership, PersonSourceRecord
-from runners.people_collector.steps.step_04_process_page_content.process_page_content import (
+from runners.pipeline03_people_collector.schemas import ExpectedMembership, PersonSourceRecord
+from runners.pipeline03_people_collector.steps.step_04_process_page_content.process_page_content import (
     found_every_expected_role,
 )
 from shared.schemas import Role, RoleConfig

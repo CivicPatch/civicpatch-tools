@@ -1,6 +1,6 @@
 import pytest
 
-from runners.governing_law_collector.finders import classification
+from runners.pipeline01_governing_law_collector.finders import classification
 from shared.schemas import FoundBy
 from shared.utils.layered_config import GoverningLawConfig
 
