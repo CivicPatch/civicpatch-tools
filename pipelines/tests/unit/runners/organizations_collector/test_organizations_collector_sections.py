@@ -1,6 +1,7 @@
 """SELECT_SECTIONS' pure part over a trimmed copy of Burlington's charter (ch. 3) as plan 1's
 converter writes it: the site's header, subchapter lines, a wrapped heading, reserved ranges."""
 
+from datetime import datetime, timezone
 from pathlib import Path
 
 import pytest
@@ -12,9 +13,12 @@ from runners.organizations_collector.sections import (
     heading_listing,
     joined,
     keyword_sections,
+    page_kind,
     picked,
     split_sections,
 )
+from shared.schemas import FoundBy, GoverningLaw, GoverningLawKind
+from shared.utils.layered_config import Classification, GovernedBy, GoverningLawConfig
 
 pytestmark = pytest.mark.unit
 
@@ -107,3 +111,41 @@ def test_the_keyword_fallback_leaves_out_reserved_sections():
 def test_most_charters_fit_whole():
     assert fits_whole("x" * 21_000)
     assert not fits_whole("x" * 374_000)
+
+
+_STATUTE_URL = "https://legislature.vermont.gov/statutes/section/24/033/00871"
+_VERMONT = GoverningLawConfig(
+    charter_terms=["charter"],
+    classifications={"town": Classification(governed_by=GovernedBy.CHARTER_OR_GENERAL_LAW, general_law=[_STATUTE_URL])},
+)
+
+
+def _law(kind: GoverningLawKind, classification: str | None = "town") -> GoverningLaw:
+    return GoverningLaw(
+        kind=kind,
+        classification=classification,
+        found_by=FoundBy.STATE_INDEX,
+        source_page_ids=["page-1"],
+        collected_at=datetime(2026, 10, 19, tzinfo=timezone.utc),
+        cost_usd=None,
+    )
+
+
+def test_a_charter_jurisdictions_page_at_its_classifications_general_law_url_is_general_law():
+    statute = GoverningLawPage(source_url=_STATUTE_URL, text="")
+
+    assert page_kind(statute, _law(GoverningLawKind.CHARTER), _VERMONT) == GoverningLawKind.GENERAL_LAW
+
+
+def test_a_charter_jurisdictions_other_pages_are_its_charter():
+    assert page_kind(BURLINGTON, _law(GoverningLawKind.CHARTER), _VERMONT) == GoverningLawKind.CHARTER
+
+
+def test_with_no_classification_every_page_of_a_charter_jurisdiction_is_its_charter():
+    statute = GoverningLawPage(source_url=_STATUTE_URL, text="")
+
+    assert page_kind(statute, _law(GoverningLawKind.CHARTER, classification=None), _VERMONT) == GoverningLawKind.CHARTER
+
+
+def test_a_general_law_jurisdictions_pages_are_general_law():
+    assert page_kind(BURLINGTON, _law(GoverningLawKind.GENERAL_LAW), _VERMONT) == GoverningLawKind.GENERAL_LAW

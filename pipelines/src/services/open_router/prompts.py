@@ -458,3 +458,57 @@ def governing_sections_prompt() -> str:
 
     Return {"sections": [...]} with the ids exactly as written, for example "H0017".
     """
+
+
+def governing_law_reader_prompt() -> str:
+    """The instructions for every question about one jurisdiction's law. The law, then one
+    question, is the content: the law stays the same across a run's questions, so it is the
+    cached prefix and only the question changes."""
+    return """
+    You read a municipal or county charter, or the state statutes that govern a municipality, and
+    answer one question about it. The law is given first, under "# Charter" and "# General law"
+    when both are present: the charter governs, and the general law applies where the charter
+    says nothing. Answer only from the text. Never answer from what such governments usually do.
+
+    How an office is filled, as the text says:
+    - elected_by_voters: the voters elect the person to that office.
+    - elected_by_members: a body chooses one of its own members for it (a chair, a mayor chosen
+      by the council).
+    - appointed: a body or officer appoints, hires or employs the person.
+    - not_stated: the text names the office but not how it is filled.
+
+    The quote must be copied exactly from the text: one continuous passage, a few words to a
+    sentence, from the clause that answers the question. Never join separate passages and never
+    shorten one with "..." or "[...]". Prefer a short quote. If the text does not answer, say so;
+    do not guess.
+
+    IMPORTANT: Return only valid JSON. Do not include any other text.
+    """
+
+
+def governing_role_question(role_label: str, organization_name: str) -> str:
+    """One role, named as the organization does; the law may write it otherwise ("Selectboard
+    member"), and the answer's label says how."""
+    return f"""
+    Question: does this law establish the office of {role_label}, by that name or another, and
+    how is it filled? It is asked for as part of the {organization_name}; an office the law makes
+    an officer of the town, city or village itself counts too.
+
+    Return {{"established": ..., "label": ..., "filled_by": ..., "maximum_memberships": ...,
+    "quote": ...}}: established false, label "", filled_by "not_stated", maximum_memberships
+    null and quote "" when the law does not establish it; otherwise label is the office's name as
+    the law writes it, and maximum_memberships the number of people who hold it when the law
+    states one, else null.
+    """
+
+
+def governing_other_offices_question(asked_labels: List[str]) -> str:
+    """The offices the law sets up beyond those already asked about, as proposals for config."""
+    return f"""
+    Question: which elected or appointed offices of the jurisdiction's government does this law
+    establish, other than these: {", ".join(asked_labels)}? Leave out boards and commissions,
+    and their members.
+
+    Return {{"offices": [{{"label": ..., "filled_by": ..., "quote": ...}}]}}, an empty list when
+    there are none.
+    """

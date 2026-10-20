@@ -1,0 +1,76 @@
+source_url: https://legislature.vermont.gov/statutes/fullchapter/24APPENDIX/108
+roles:
+- organization_name: Selectboard
+  role_id: member
+  role_label: Select Board Member
+  names:
+  - Select Board Member
+  - Member
+  - alder
+  - alderman
+  - aldermen
+  - Alderperson
+  - alderwoman
+  - board of selectmen
+  - board of selectmen member
+  - city alderman
+  - city alderwoman
+  - city commissioner
+  - city council
+  - city council alderman
+  - city council alderwoman
+  - city council member
+  - city councilman
+  - city councilmember
+  - city councilor
+  - city councilwoman
+  - Commissioner
+  - Committee Member
+  - committee person
+  - Committee Woman
+  - committeeman
+  - Committeeperson
+  - committeewoman
+  - Committeewomen
+  - council
+  - council at large
+  - Council Member
+  - council member at-large
+  - council members
+  - council person
+  - council-member
+  - councillor
+  - councilman
+  - councilman-at-large
+  - councilmember
+  - councilmembers
+  - councilmen
+  - councilor
+  - councilperson
+  - councilperson at-large
+  - councilwoman
+  - councilwoman at large
+  - councilwoman-at-large
+  - councilwomen
+  - representative
+  - select board
+  - select board representative
+  - Select Person
+  - selectboard
+  - selectboard member
+  - selectman
+  - selectmen
+  - Selectperson
+  - selectwoman
+  - town board member
+  - town council
+  - town council member
+  - town council representative
+  - town councilmember
+  - town councilor
+  - township committee member
+  - Township Trustee
+  - Trustee
+  - Trustees
+  - Village Trustee
+  expected: elected_by_voters

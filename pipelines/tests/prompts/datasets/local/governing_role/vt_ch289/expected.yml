@@ -1,0 +1,98 @@
+source_url: https://legislature.vermont.gov/statutes/fullchapter/24APPENDIX/289
+roles:
+- organization_name: Board of Trustees
+  role_id: member
+  role_label: Trustee
+  names:
+  - Trustee
+  - Member
+  - alder
+  - alderman
+  - aldermen
+  - Alderperson
+  - alderwoman
+  - board of selectmen
+  - board of selectmen member
+  - city alderman
+  - city alderwoman
+  - city commissioner
+  - city council
+  - city council alderman
+  - city council alderwoman
+  - city council member
+  - city councilman
+  - city councilmember
+  - city councilor
+  - city councilwoman
+  - Commissioner
+  - Committee Member
+  - committee person
+  - Committee Woman
+  - committeeman
+  - Committeeperson
+  - committeewoman
+  - Committeewomen
+  - council
+  - council at large
+  - Council Member
+  - council member at-large
+  - council members
+  - council person
+  - council-member
+  - councillor
+  - councilman
+  - councilman-at-large
+  - councilmember
+  - councilmembers
+  - councilmen
+  - councilor
+  - councilperson
+  - councilperson at-large
+  - councilwoman
+  - councilwoman at large
+  - councilwoman-at-large
+  - councilwomen
+  - representative
+  - select board
+  - Select Board Member
+  - select board representative
+  - Select Person
+  - selectboard
+  - selectboard member
+  - selectman
+  - selectmen
+  - Selectperson
+  - selectwoman
+  - town board member
+  - town council
+  - town council member
+  - town council representative
+  - town councilmember
+  - town councilor
+  - township committee member
+  - Township Trustee
+  - Trustees
+  - Village Trustee
+  expected: elected_by_voters
+- organization_name: Board of Trustees
+  role_id: clerk
+  role_label: Clerk
+  names:
+  - Clerk
+  - Borough Clerk
+  - City Clerk
+  - Municipal Clerk
+  - Town Clerk
+  - Township Clerk
+  - Village Clerk
+  expected: elected_by_voters
+- organization_name: Board of Trustees
+  role_id: treasurer
+  role_label: Treasurer
+  names:
+  - Treasurer
+  - City Treasurer
+  - Town Treasurer
+  - Township Treasurer
+  - Village Treasurer
+  expected: elected_by_voters

@@ -1,0 +1,36 @@
+run:
+  timestamp: '2026-10-20T18:29:00+00:00'
+  prompt_sha256: ce378d1ef447
+  prompt_file: _prompts/ce378d1ef447.txt
+cost_summary:
+  model: deepseek/deepseek-v4-flash
+  elapsed_seconds: 577.71
+  total_input_tokens: 2813863
+  total_cached_input_tokens: 2131712
+  total_output_tokens: 178411
+  total_cost_usd: 0.205144156
+roles_right: 0.9731543624161074
+single_ask_right: 0.9463087248322147
+agreement: 0.9865771812080537
+by_expected:
+  elected_by_voters:
+    right: 74
+    total: 77
+  elected_by_members:
+    right: 36
+    total: 36
+  appointed:
+    right: 29
+    total: 30
+  not_established:
+    right: 6
+    total: 6
+wrong:
+  vt_ch105:
+  - member
+  vt_ch141:
+  - member
+  vt_ch151:
+  - assessor
+  vt_ch215:
+  - member

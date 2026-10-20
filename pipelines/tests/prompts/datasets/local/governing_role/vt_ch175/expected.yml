@@ -1,0 +1,9 @@
+source_url: https://legislature.vermont.gov/statutes/fullchapter/24APPENDIX/175
+roles:
+- organization_name: Moderator's office
+  role_id: moderator
+  role_label: Moderator
+  names:
+  - Moderator
+  - Town Moderator
+  expected: elected_by_voters

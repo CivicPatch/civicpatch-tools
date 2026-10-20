@@ -1,0 +1,22 @@
+- role_id: member
+  expected: elected_by_voters
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: true
+    label: trustees
+    filled_by: elected_by_voters
+    maximum_memberships: 3
+    quote: All the officers shall be elected at the annual meeting for a term of one
+      year, except that in the case of the trustees, the term of office shall be three
+      years, one trustee to be elected at each annual meeting.
+  - established: true
+    label: trustee
+    filled_by: elected_by_voters
+    maximum_memberships: 3
+    quote: All the officers shall be elected at the annual meeting for a term of one
+      year, except that in the case of the trustees, the term of office shall be three
+      years, one trustee to be elected at each annual meeting.

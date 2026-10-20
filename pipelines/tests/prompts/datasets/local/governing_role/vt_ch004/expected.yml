@@ -1,0 +1,44 @@
+source_url: https://legislature.vermont.gov/statutes/fullchapter/24APPENDIX/004
+roles:
+- organization_name: City Council
+  role_id: council-president
+  role_label: Council President
+  names:
+  - Council President
+  - city council president
+  - council member president
+  - president
+  - president of the council
+  expected: elected_by_members
+- organization_name: City Council
+  role_id: council-vice-president
+  role_label: Council Vice President
+  names:
+  - Council Vice President
+  - council member vice president
+  - council member vice-president
+  - council vice-president
+  - vice president
+  - vice-president
+  expected: elected_by_members
+- organization_name: City Council
+  role_id: clerk
+  role_label: Clerk
+  names:
+  - Clerk
+  - Borough Clerk
+  - City Clerk
+  - Municipal Clerk
+  - Town Clerk
+  - Township Clerk
+  - Village Clerk
+  expected: elected_by_members
+- organization_name: City Manager
+  role_id: city-manager
+  role_label: City Manager
+  names:
+  - City Manager
+  - city administrator
+  - town manager
+  - village manager
+  expected: appointed

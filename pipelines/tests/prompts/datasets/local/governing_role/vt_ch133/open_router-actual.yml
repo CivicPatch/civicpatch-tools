@@ -1,0 +1,99 @@
+- role_id: member
+  expected: elected_by_voters
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: true
+    label: Selectboard member
+    filled_by: elected_by_voters
+    maximum_memberships: 5
+    quote: There shall be three Selectboard members elected for a staggered term of
+      three years, with only one of these positions vacant in any one year, and two
+      Selectboard members elected for a one-year term.
+  - established: true
+    label: Selectboard member
+    filled_by: elected_by_voters
+    maximum_memberships: 5
+    quote: There shall be three Selectboard members elected for a staggered term of
+      three years, with only one of these positions vacant in any one year, and two
+      Selectboard members elected for a one-year term.
+- role_id: chair
+  expected: elected_by_members
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: true
+    label: Chair
+    filled_by: elected_by_members
+    maximum_memberships: 1
+    quote: the Selectboard shall elect a Chair and a Vice Chair of the Selectboard
+  - established: true
+    label: Chair
+    filled_by: elected_by_members
+    maximum_memberships: 1
+    quote: the Selectboard shall elect a Chair and a Vice Chair of the Selectboard
+- role_id: vice-chair
+  expected: elected_by_members
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: true
+    label: Vice Chair
+    filled_by: elected_by_members
+    maximum_memberships: 1
+    quote: the Selectboard shall elect a Chair and a Vice Chair of the Selectboard,
+      each of whom shall be elected for a term of one year and may succeed himself
+      or herself indefinitely.
+  - established: true
+    label: Vice Chair
+    filled_by: elected_by_members
+    maximum_memberships: 1
+    quote: At their first regular meeting following the annual Town meeting, the Selectboard
+      shall elect a Chair and a Vice Chair of the Selectboard, each of whom shall
+      be elected for a term of one year and may succeed himself or herself indefinitely.
+- role_id: clerk
+  expected: elected_by_voters
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: true
+    label: Town Clerk
+    filled_by: elected_by_voters
+    maximum_memberships: 1
+    quote: The Town Clerk shall be elected for a three-year term.
+  - established: true
+    label: Town Clerk
+    filled_by: elected_by_voters
+    maximum_memberships: null
+    quote: The Town Clerk shall be elected for a three-year term.
+- role_id: treasurer
+  expected: elected_by_voters
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: true
+    label: Town Treasurer
+    filled_by: elected_by_voters
+    maximum_memberships: null
+    quote: The Town Treasurer shall be elected to a term of three years.
+  - established: true
+    label: Town Treasurer
+    filled_by: elected_by_voters
+    maximum_memberships: 1
+    quote: Town Treasurer. The Town Treasurer shall be elected to a term of three
+      years.

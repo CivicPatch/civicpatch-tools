@@ -1,0 +1,162 @@
+- role_id: member
+  expected: elected_by_voters
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: true
+    label: Select Board member
+    filled_by: elected_by_voters
+    maximum_memberships: 5
+    quote: five Select Board members elected from the Town at large at a duly warned
+      annual town meeting
+  - established: true
+    label: Select Board members
+    filled_by: elected_by_voters
+    maximum_memberships: 5
+    quote: five Select Board members elected from the Town at large at a duly warned
+      annual town meeting
+- role_id: chair
+  expected: elected_by_members
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: true
+    label: Chair
+    filled_by: elected_by_members
+    maximum_memberships: 1
+    quote: the Select Board members shall organize and elect a Chair and Vice Chair.
+  - established: true
+    label: Chair
+    filled_by: elected_by_members
+    maximum_memberships: 1
+    quote: the Select Board members shall organize and elect a Chair and Vice Chair.
+- role_id: vice-chair
+  expected: elected_by_members
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: true
+    label: Vice Chair
+    filled_by: elected_by_members
+    maximum_memberships: 1
+    quote: the Select Board members shall organize and elect a Chair and Vice Chair.
+  - established: true
+    label: Vice Chair
+    filled_by: elected_by_members
+    maximum_memberships: 1
+    quote: the Select Board members shall organize and elect a Chair and Vice Chair.
+- role_id: city-manager
+  expected: appointed
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: true
+    label: Town Manager
+    filled_by: appointed
+    maximum_memberships: 1
+    quote: The Select Board members shall appoint a Town Manager for an indefinite
+      term and upon such conditions as they may determine.
+  - established: true
+    label: Town Manager
+    filled_by: appointed
+    maximum_memberships: 1
+    quote: The Select Board members shall appoint a Town Manager for an indefinite
+      term and upon such conditions as they may determine.
+- role_id: clerk
+  expected: elected_by_voters
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: true
+    label: Town Clerk
+    filled_by: elected_by_voters
+    maximum_memberships: 1
+    quote: The elective officers of the Town shall be five Select Board members elected
+      from the Town at large at a duly warned annual town meeting; a Town Clerk; a
+      Treasurer; and a Moderator
+  - established: true
+    label: Town Clerk
+    filled_by: elected_by_voters
+    maximum_memberships: 1
+    quote: The elective officers of the Town shall be five Select Board members elected
+      from the Town at large at a duly warned annual town meeting; a Town Clerk; a
+      Treasurer; and a Moderator
+- role_id: treasurer
+  expected: elected_by_voters
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: true
+    label: Treasurer
+    filled_by: elected_by_voters
+    maximum_memberships: 1
+    quote: a Treasurer
+  - established: true
+    label: Treasurer
+    filled_by: elected_by_voters
+    maximum_memberships: 1
+    quote: The elective officers of the Town shall be five Select Board members elected
+      from the Town at large at a duly warned annual town meeting; a Town Clerk; a
+      Treasurer; and a Moderator, unless by a majority vote of the Town the Moderator
+      becomes an appointed position.
+- role_id: moderator
+  expected: elected_by_voters
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: true
+    label: Moderator
+    filled_by: elected_by_voters
+    maximum_memberships: 1
+    quote: The elective officers of the Town shall be five Select Board members elected
+      from the Town at large at a duly warned annual town meeting; a Town Clerk; a
+      Treasurer; and a Moderator, unless by a majority vote of the Town the Moderator
+      becomes an appointed position.
+  - established: true
+    label: Moderator
+    filled_by: elected_by_voters
+    maximum_memberships: 1
+    quote: The elective officers of the Town shall be five Select Board members elected
+      from the Town at large at a duly warned annual town meeting; a Town Clerk; a
+      Treasurer; and a Moderator, unless by a majority vote of the Town the Moderator
+      becomes an appointed position.
+- role_id: assessor
+  expected: appointed
+  right: false
+  each_right:
+  - false
+  - false
+  agreed: true
+  answers:
+  - established: true
+    label: Assessor
+    filled_by: appointed
+    maximum_memberships: null
+    quote: who shall be appointed by the Town Manager with the approval of the Selectboard.
+  - established: true
+    label: Assessor
+    filled_by: appointed
+    maximum_memberships: null
+    quote: The Town Manager shall appoint and remove all Town employees, including
+      ... Assessor

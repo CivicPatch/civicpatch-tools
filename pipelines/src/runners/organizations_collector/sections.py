@@ -8,6 +8,8 @@ from urllib.parse import urlparse
 
 from pydantic import BaseModel
 from runners.organizations_collector.section_formats import SECTION_FORMATS, SectionFormat
+from shared.schemas import GoverningLaw, GoverningLawKind
+from shared.utils.layered_config import GoverningLawConfig
 
 # Most charters fit (Vermont's median is 21k chars); Burlington's 374k does not.
 WHOLE_TEXT_CHARS = 110_000
@@ -27,9 +29,41 @@ _OTHER_WORDS = (
 _OTHER_BOARD = re.compile(r"board of (?!aldermen)", re.IGNORECASE)
 
 
+# The charter first: it governs, and the general law applies where it says nothing.
+PAGE_KIND_ORDER = (GoverningLawKind.CHARTER, GoverningLawKind.GENERAL_LAW)
+PAGE_KIND_TITLES = {GoverningLawKind.CHARTER: "# Charter", GoverningLawKind.GENERAL_LAW: "# General law"}
+
+
 class GoverningLawPage(BaseModel):
     source_url: str
     text: str
+
+
+def page_kind(page: GoverningLawPage, governing_law: GoverningLaw, governing_law_config: GoverningLawConfig | None) -> GoverningLawKind:
+    """A charter jurisdiction's pages are its charter, but for those at its classification's general
+    law urls; a general law jurisdiction's are all statute."""
+    if governing_law.kind != GoverningLawKind.CHARTER:
+        return GoverningLawKind.GENERAL_LAW
+    return GoverningLawKind.GENERAL_LAW if page.source_url in _general_law_urls(governing_law, governing_law_config) else GoverningLawKind.CHARTER
+
+
+def pages_by_kind(
+    pages: List[GoverningLawPage], governing_law: GoverningLaw, governing_law_config: GoverningLawConfig | None
+) -> List[tuple[GoverningLawKind, List[GoverningLawPage]]]:
+    """In `PAGE_KIND_ORDER`, each kind's pages in their stored order; a kind with none is left out."""
+    grouped: List[tuple[GoverningLawKind, List[GoverningLawPage]]] = []
+    for kind in PAGE_KIND_ORDER:
+        kind_pages = [page for page in pages if page_kind(page, governing_law, governing_law_config) == kind]
+        if kind_pages:
+            grouped.append((kind, kind_pages))
+    return grouped
+
+
+def _general_law_urls(governing_law: GoverningLaw, governing_law_config: GoverningLawConfig | None) -> List[str]:
+    if governing_law_config is None or governing_law.classification is None:
+        return []
+    classification = governing_law_config.classifications.get(governing_law.classification)
+    return classification.general_law if classification else []
 
 
 class Section(BaseModel):
