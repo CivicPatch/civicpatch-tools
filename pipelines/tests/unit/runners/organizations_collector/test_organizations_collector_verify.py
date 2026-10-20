@@ -18,7 +18,7 @@ from runners.organizations_collector.schemas import (
 from runners.organizations_collector.sections import GoverningLawPage
 from runners.organizations_collector.transitions.main import verify
 from runners.organizations_collector.verify import MAX_ROUNDS, role_outcomes
-from shared.schemas import FoundBy, GoverningLaw, GoverningLawKind, SelectionMethod
+from shared.schemas import FoundBy, GoverningLaw, GoverningLawKind, QuoteScope, SelectionMethod
 from shared.utils.layered_config import Classification, ConfigFile, GovernedBy, GoverningLawConfig, merged_config
 
 pytestmark = pytest.mark.unit
@@ -63,31 +63,34 @@ _FIVE_MEMBERS = "consist of five members elected at large"
 _NOT_IN_THE_LAW = "seven members elected by district"
 
 
-def test_one_verified_answer_of_two_verifies_the_role():
+def test_one_quoted_answer_of_two_makes_the_post():
     outcomes = _outcomes([_claim(_MEMBER, _NOT_IN_THE_LAW, FilledBy.ELECTED_BY_VOTERS), _claim(_MEMBER, _FIVE_MEMBERS, FilledBy.ELECTED_BY_VOTERS)])
 
-    [member] = outcomes.verified
-    assert member.selection_method == SelectionMethod.ELECTED_BY_VOTERS
-    assert (member.source_page_id, member.page_kind) == ("charter", GoverningLawKind.CHARTER)
-    assert member.quote == "The Selectboard shall consist of five members elected at large."
+    [member] = outcomes.posts
+    assert (member.role, member.organization_id) == ("member", "Select Board")
+    assert member.extras.selection_method == SelectionMethod.ELECTED_BY_VOTERS
+    [source] = member.sources
+    assert (source.url, source.extras.source_page_id) == (_CHARTER.source_url, "charter")
+    assert source.note == "The Selectboard shall consist of five members elected at large."
+    assert source.extras.matched_in == QuoteScope.SENTENCE
 
 
-def test_a_role_both_answers_say_is_not_established_is_not():
+def test_a_role_both_answers_say_is_not_established_has_no_post_and_is_not_asked_again():
     outcomes = _outcomes([_claim(_MEMBER, "", FilledBy.NOT_STATED, established=False)] * 2)
 
-    assert outcomes.not_established == [_MEMBER]
+    assert (outcomes.posts, outcomes.re_ask) == ([], [])
 
 
-def test_a_role_with_nothing_verified_is_asked_again():
+def test_a_role_with_no_quote_is_asked_again():
     outcomes = _outcomes([_claim(_MEMBER, _NOT_IN_THE_LAW, FilledBy.ELECTED_BY_VOTERS)] * 2)
 
     assert outcomes.re_ask == [_MEMBER]
 
 
-def test_after_the_last_round_a_role_with_nothing_verified_is_left_unverified():
+def test_after_the_last_round_a_role_with_no_quote_has_no_post():
     outcomes = _outcomes([_claim(_MEMBER, _NOT_IN_THE_LAW, FilledBy.ELECTED_BY_VOTERS)] * 2 * MAX_ROUNDS)
 
-    assert (outcomes.re_ask, outcomes.unverified) == ([], [_MEMBER])
+    assert (outcomes.posts, outcomes.re_ask) == ([], [])
 
 
 def test_the_charter_wins_over_the_general_law():
@@ -96,15 +99,16 @@ def test_the_charter_wins_over_the_general_law():
         _claim(_CLERK, "The Selectboard shall appoint a Town Clerk", FilledBy.APPOINTED),
     ])
 
-    [clerk] = outcomes.verified
-    assert (clerk.selection_method, clerk.source_page_id) == (SelectionMethod.APPOINTED, "charter")
+    [clerk] = outcomes.posts
+    assert clerk.extras.selection_method == SelectionMethod.APPOINTED
+    assert [source.extras.source_page_id for source in clerk.sources] == ["charter", "statute"]
 
 
 def test_the_general_law_answers_where_the_charter_is_silent():
     outcomes = _outcomes([_claim(_CLERK, "The town clerk shall be elected at the annual meeting", FilledBy.ELECTED_BY_VOTERS)] * 2)
 
-    [clerk] = outcomes.verified
-    assert (clerk.source_page_id, clerk.page_kind) == ("statute", GoverningLawKind.GENERAL_LAW)
+    [clerk] = outcomes.posts
+    assert [source.extras.source_page_id for source in clerk.sources] == ["statute"]
 
 
 def test_a_stated_method_wins_over_not_stated():
@@ -113,10 +117,10 @@ def test_a_stated_method_wins_over_not_stated():
         _claim(_CLERK, "The Selectboard shall appoint a Town Clerk", FilledBy.APPOINTED),
     ])
 
-    assert outcomes.verified[0].selection_method == SelectionMethod.APPOINTED
+    assert outcomes.posts[0].extras.selection_method == SelectionMethod.APPOINTED
 
 
-def test_two_methods_both_in_the_general_law_are_a_conflict():
+def test_two_methods_both_in_the_general_law_leave_the_method_to_the_default_with_both_cited():
     statute = _STATUTE.model_copy(update={"text": _STATUTE.text + "The selectboard shall appoint the town clerk.\n"})
     claims = [
         _claim(_CLERK, "The town clerk shall be elected at the annual meeting", FilledBy.ELECTED_BY_VOTERS),
@@ -125,7 +129,29 @@ def test_two_methods_both_in_the_general_law_are_a_conflict():
 
     outcomes = role_outcomes(claims, [statute], _LAW, _VERMONT, asks_per_question=2)
 
-    assert outcomes.conflicted == [_CLERK]
+    [clerk] = outcomes.posts
+    assert clerk.extras.selection_method is None
+    assert len(clerk.sources) == 2
+
+
+def test_the_same_quote_twice_is_cited_once():
+    outcomes = _outcomes([_claim(_MEMBER, _FIVE_MEMBERS, FilledBy.ELECTED_BY_VOTERS)] * 2)
+
+    assert len(outcomes.posts[0].sources) == 1
+
+
+def test_the_label_is_the_laws_name_for_the_office():
+    answer = RoleAnswer(established=True, label="Selectboard member", filled_by=FilledBy.ELECTED_BY_VOTERS, maximum_memberships=5, quote=_FIVE_MEMBERS)
+
+    [member] = _outcomes([RoleClaim(ask=_MEMBER, answer=answer)]).posts
+
+    assert (member.label, member.maximum_memberships) == ("Selectboard member", 5)
+
+
+def test_a_law_that_states_no_number_leaves_the_count_empty():
+    [member] = _outcomes([_claim(_MEMBER, _FIVE_MEMBERS, FilledBy.ELECTED_BY_VOTERS)]).posts
+
+    assert member.maximum_memberships is None
 
 
 def _context(claims: list[RoleClaim], stopped_at_cost_cap: bool = False) -> OrganizationsCollectorContext:
@@ -148,11 +174,11 @@ def _context(claims: list[RoleClaim], stopped_at_cost_cap: bool = False) -> Orga
 
 
 @pytest.mark.asyncio
-async def test_verify_sends_the_unverified_back_to_extract():
-    verified, next_state = await verify(MagicMock(), MagicMock(), _context([_claim(_MEMBER, _NOT_IN_THE_LAW, FilledBy.ELECTED_BY_VOTERS)] * 2), MagicMock())
+async def test_verify_sends_the_unquoted_back_to_extract():
+    next_context, next_state = await verify(MagicMock(), MagicMock(), _context([_claim(_MEMBER, _NOT_IN_THE_LAW, FilledBy.ELECTED_BY_VOTERS)] * 2), MagicMock())
 
     assert next_state == OrganizationsCollectorStep.EXTRACT
-    assert verified.data.pending_asks == [_MEMBER]
+    assert next_context.data.pending_asks == [_MEMBER]
 
 
 @pytest.mark.asyncio
@@ -166,7 +192,7 @@ async def test_verify_goes_to_write_once_every_role_is_decided():
 async def test_verify_asks_nothing_again_once_the_cap_stopped_extract():
     claims = [_claim(_MEMBER, _NOT_IN_THE_LAW, FilledBy.ELECTED_BY_VOTERS)] * 2
 
-    verified, next_state = await verify(MagicMock(), MagicMock(), _context(claims, stopped_at_cost_cap=True), MagicMock())
+    next_context, next_state = await verify(MagicMock(), MagicMock(), _context(claims, stopped_at_cost_cap=True), MagicMock())
 
     assert next_state == OrganizationsCollectorStep.WRITE
-    assert verified.data.outcomes is not None and verified.data.outcomes.re_ask == [_MEMBER]
+    assert next_context.data.outcomes is not None and next_context.data.outcomes.re_ask == [_MEMBER]

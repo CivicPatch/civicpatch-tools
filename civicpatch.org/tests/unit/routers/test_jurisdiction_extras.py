@@ -21,13 +21,10 @@ pytestmark = pytest.mark.unit
 OCDID = "ocd-jurisdiction/country:us/state:tn/place:nashville/government"
 URL = f"/jurisdictions/{OCDID}"
 ORGANIZATIONS = {
-    "organizations": [{
-        "name": "Metropolitan Council",
-        "posts": [{
-            "role": "vice-mayor", "label": "Vice Mayor",
-            "extras": {"selection_method": "elected_by_voters"},
-            "sources": [{"url": "https://example.gov/charter", "note": "The vice mayor shall be elected", "extras": {"source_page_id": "p1"}}],
-        }],
+    "posts": [{
+        "role": "vice-mayor", "label": "Vice Mayor", "organization_id": "Metropolitan Council",
+        "extras": {"selection_method": "elected_by_voters"},
+        "sources": [{"url": "https://example.gov/charter", "note": "The vice mayor shall be elected", "extras": {"source_page_id": "p1", "matched_in": "sentence"}}],
     }],
     "extras": {"governing_law_collected_at": "2026-10-19T00:00:00Z"},
 }

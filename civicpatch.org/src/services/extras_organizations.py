@@ -45,8 +45,7 @@ async def get_extras_organizations(jurisdiction_ocdid: str) -> GoverningLawOrgan
 
 
 def _unknown_roles(organizations: GoverningLawOrganizations, role_ids: set[str]) -> list[str]:
-    named = [post.role for organization in organizations.organizations for post in organization.posts]
-    return sorted({role for role in named if role not in role_ids})
+    return sorted({post.role for post in organizations.posts if post.role not in role_ids})
 
 
 async def _record(

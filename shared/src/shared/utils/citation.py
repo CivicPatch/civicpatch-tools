@@ -4,7 +4,8 @@ clause; the stored quote is the shortest context around it that passes, verbatim
 
 import re
 
-from shared.schemas import SelectionMethod
+from pydantic import BaseModel
+from shared.schemas import QuoteScope, SelectionMethod
 
 _WHITESPACE = re.compile(r"\s+")
 # A period ends a sentence when a capital or "(1)" follows, but not after a section number
@@ -42,7 +43,12 @@ def method_named_in_quote(quote: str, method: SelectionMethod) -> bool:
     return any(_phrase_pattern(word).search(quote) for word in METHOD_WORDS[method])
 
 
-def supporting_quote(text: str, locator: str, names: list[str], method: SelectionMethod | None) -> str | None:
+class SupportingQuote(BaseModel):
+    text: str
+    scope: QuoteScope
+
+
+def supporting_quote(text: str, locator: str, names: list[str], method: SelectionMethod | None) -> SupportingQuote | None:
     """The sentence around the locator, else its section's body, else that body under its
     heading: the first that names the role and the method. None when the locator is not in the
     text or nothing up to the widest rung passes. With no method, the law establishes the office
@@ -50,12 +56,17 @@ def supporting_quote(text: str, locator: str, names: list[str], method: Selectio
     span = _locate(text, locator)
     if span is None:
         return None
-    for rung in (_sentence(text, span), _line(text, span), _section(text, span)):
+    rungs = (
+        (QuoteScope.SENTENCE, _sentence(text, span)),
+        (QuoteScope.SECTION_BODY, _line(text, span)),
+        (QuoteScope.SECTION, _section(text, span)),
+    )
+    for scope, rung in rungs:
         quote = normalise(rung)
         if len(quote) > WIDEST_QUOTE_CHARS:
             return None
         if role_named_in_quote(quote, names) and (method is None or method_named_in_quote(quote, method)):
-            return quote
+            return SupportingQuote(text=quote, scope=scope)
     return None
 
 

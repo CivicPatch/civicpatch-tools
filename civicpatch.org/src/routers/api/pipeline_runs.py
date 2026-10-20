@@ -84,6 +84,9 @@ _is_production = os.getenv("APP_ENVIRONMENT", "").lower() == "production"
 _DISPATCH_MODE_LOCAL = "local"
 DISPATCH_MODE = "remote" if _is_production else _DISPATCH_MODE_LOCAL
 
+# What each collector run is told when it starts, by its kind.
+COLLECTOR_CONFIGS = {PipelineRunKind.GOVERNING_LAW_COLLECTOR: governing_law_service.collector_config}
+
 
 # Which of the two an admin is looking at. Separate queries and separate pages — a pipeline
 # issue is for whoever runs the scrapes, a reported one for whoever reviews rosters — but the
@@ -290,18 +293,21 @@ def get_router(api_key_header):
             ],
         }
 
-    @router.get("/{pipeline_run_id}/governing_law_collector_config", include_in_schema=False)
-    async def get_governing_law_collector_config_endpoint(
+    @router.get("/{pipeline_run_id}/collector_config", include_in_schema=False)
+    async def get_collector_config_endpoint(
         pipeline_run_id: str,
         _: Identity = Depends(require_route_access(RouteCategory.SERVICE)),
     ):
-        """The collector's counterpart of `/config`: asked for, like the scrape's, so nothing
-        between dispatch and the run has to carry it."""
+        """The collectors' counterpart of `/config`, answered by the run's own kind: asked for,
+        like the scrape's, so nothing between dispatch and the run has to carry it."""
         pipeline_run = await get_pipeline_run(pipeline_run_id)
         if not pipeline_run:
             raise HTTPException(status_code=404, detail="Pipeline run not found")
+        collector_config = COLLECTOR_CONFIGS.get(pipeline_run["kind"])
+        if collector_config is None:
+            raise HTTPException(status_code=404, detail=f"Not a collector run: {pipeline_run['kind']}")
         try:
-            config = await governing_law_service.collector_config(pipeline_run["jurisdiction_ocdid"])
+            config = await collector_config(pipeline_run["jurisdiction_ocdid"])
         except governing_law_service.UnknownJurisdiction:
             raise HTTPException(status_code=404, detail="Jurisdiction not found")
         return {**config.model_dump(mode="json"), "pipeline_run_cap_usd": pipeline_run.get("pipeline_run_cap_usd")}

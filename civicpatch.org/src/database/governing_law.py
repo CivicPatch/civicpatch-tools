@@ -77,14 +77,3 @@ async def get_collection_candidates(state: str, limit: int | None) -> list[Colle
             (state, PipelineRunKind.GOVERNING_LAW_COLLECTOR, limit),
         )
         return [CollectionCandidate(jurisdiction_ocdid=row[0], name=row[1] or "") for row in await cur.fetchall()]
-
-
-async def has_unfinished_collection(jurisdiction_ocdid: str) -> bool:
-    pool = await get_pool()
-    async with pool.connection() as conn, conn.cursor() as cur:
-        await cur.execute(
-            "SELECT EXISTS (SELECT 1 FROM pipeline_runs WHERE jurisdiction_ocdid = %s AND finished_at IS NULL AND kind = %s)",
-            (jurisdiction_ocdid, PipelineRunKind.GOVERNING_LAW_COLLECTOR),
-        )
-        row = await cur.fetchone()
-    return bool(row and row[0])

@@ -150,7 +150,7 @@ async def get_pipeline_run(run_id: str):
             """
             SELECT r.status, r.progress, r.arguments_json,
                    r.created_at, r.updated_at, c.change_url, r.changeset_id::text,
-                   r.jurisdiction_ocdid, r.pipeline_run_cap_usd
+                   r.jurisdiction_ocdid, r.pipeline_run_cap_usd, r.kind
             FROM pipeline_runs r
             LEFT JOIN changesets c ON c.id = r.changeset_id
             WHERE r.id = %s;
@@ -171,6 +171,7 @@ async def get_pipeline_run(run_id: str):
                 "pull_request_url": row[5],
                 "jurisdiction_ocdid": row[7],
                 "pipeline_run_cap_usd": row[8],
+                "kind": row[9],
             }
         return None
 
@@ -190,6 +191,17 @@ async def pipeline_run_ids_for_changesets(changeset_ids: list[str]) -> dict[str,
             (changeset_ids,),
         )
         return {changeset_id: run_id for changeset_id, run_id in await cur.fetchall()}
+
+
+async def has_unfinished_run(jurisdiction_ocdid: str, kind: PipelineRunKind) -> bool:
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "SELECT EXISTS (SELECT 1 FROM pipeline_runs WHERE jurisdiction_ocdid = %s AND finished_at IS NULL AND kind = %s)",
+            (jurisdiction_ocdid, kind),
+        )
+        row = await cur.fetchone()
+    return bool(row and row[0])
 
 
 async def jurisdiction_ocdids_with_unfinished_runs() -> set[str]:

@@ -6,7 +6,8 @@ from domain.pipeline_run_context import PipelineRunContext
 from pydantic import BaseModel, Field
 from runners.organizations_collector.role_asks import RoleAsk
 from runners.organizations_collector.sections import GoverningLawPage
-from shared.schemas import GovernmentForm, GoverningLaw, GoverningLawKind, GoverningLawOrganizations, SelectionMethod
+from shared.schemas import GovernmentForm, GoverningLaw, GoverningLawKind, GoverningLawOrganizations, GoverningLawPost, SelectionMethod
+from shared.utils.citation import SupportingQuote
 from shared.utils.layered_config import MergedConfig
 from shared.utils.statuses import PipelineRunStatus
 
@@ -76,29 +77,24 @@ class OtherOfficesAnswer(BaseModel):
     offices: List[OtherOffice]
 
 
-class VerifiedRole(BaseModel):
-    ask: RoleAsk
-    # The office's name as the law writes it.
-    label: str
-    # None: the law establishes the office without saying how it is filled.
-    selection_method: Optional[SelectionMethod]
-    maximum_memberships: Optional[int]
-    # The verifier's quote: the sentence, section body or section that supports the claim.
-    quote: str
+class Citation(BaseModel):
+    """One answer's quote as the verifier widened it, with what VERIFY needs to choose between
+    answers: which kind of page it is on, and the method it supports."""
+
+    quote: SupportingQuote
     source_page_id: str
     source_url: str
     page_kind: GoverningLawKind
+    # None when it only establishes the office.
+    selection_method: Optional[SelectionMethod]
 
 
 class RoleOutcomes(BaseModel):
-    verified: List[VerifiedRole] = []
-    not_established: List[RoleAsk] = []
-    # Verified answers that disagree on how the office is filled, with no charter answer to settle it.
-    conflicted: List[RoleAsk] = []
-    # No answer verified yet: asked again, up to `verify.MAX_ROUNDS` rounds.
+    """A role the law was quoted for is a post; one with no quote yet is asked again while rounds
+    remain; any other role has no post, and its config default applies."""
+
+    posts: List[GoverningLawPost] = []
     re_ask: List[RoleAsk] = []
-    # No answer verified in `verify.MAX_ROUNDS` rounds.
-    unverified: List[RoleAsk] = []
 
 
 class OrganizationsCollectorData(BaseModel):

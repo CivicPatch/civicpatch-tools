@@ -12,14 +12,14 @@ from interfaces.schemas import (
 )
 from runners.people_collector.schemas import PipelineRunConfig
 from shared.schemas import PublishedSourcePage
+from runners.collectors import COLLECTORS
 from runners.engine import PipelineRunError
-from runners.governing_law_collector.main import start as start_governing_law_collector
-from runners.governing_law_collector.schemas import GoverningLawCollectorConfig
 from runners.people_collector.main import start as start_people_collector
 from shared.utils import id_utils
+from shared.utils.statuses import PipelineRunKind
 from pipelines_environment import get_env_vars
 from services.civicpatch_api import (
-    fetch_governing_law_collector_config,
+    fetch_collector_config,
     fetch_pipeline_run_config,
     get_jurisdiction_info,
     register_pipeline_run,
@@ -88,15 +88,15 @@ async def _run_people_collector_async(args):
     await run_pipeline_cli(pipeline_run_id, request)
 
 
-async def _run_governing_law_collector_async(args):
-    """The remote door: `data_collect_governing_law.yml` runs this with the run cp.org registered."""
+async def _run_collector_async(kind: PipelineRunKind, args):
+    """The remote door: the kind's Actions workflow in CivicPatch/server runs its subcommand with
+    the run cp.org registered."""
+    collector = COLLECTORS[kind]
     env = get_env_vars()
     async with httpx.AsyncClient(headers={"Authorization": env["SERVICE_API_KEY"]}, timeout=30.0) as client:
-        config_data = await fetch_governing_law_collector_config(client, None, args.pipeline_run_id)
+        config_data = await fetch_collector_config(client, None, args.pipeline_run_id)
     try:
-        await start_governing_law_collector(
-            args.pipeline_run_id, args.jurisdiction_ocdid, GoverningLawCollectorConfig.model_validate(config_data)
-        )
+        await collector.start(args.pipeline_run_id, args.jurisdiction_ocdid, collector.config.model_validate(config_data))
     except PipelineRunError:
         sys.exit(1)
 
@@ -142,20 +142,19 @@ def main():
         "--source-urls", required=False, help="JSON array of specific URLs to scrape"
     )
 
-    # Subcommand: governing_law_collector
-    collect_parser = subparsers.add_parser(
-        "governing_law_collector", help="Collect a jurisdiction's governing law for a run cp.org registered"
-    )
-    # data_collect_governing_law.yml in CivicPatch/server invokes these flags by name.
-    collect_parser.add_argument("--jurisdiction-ocdid", required=True, help="Jurisdiction ID")
-    collect_parser.add_argument("--pipeline-run-id", required=True, help="The run cp.org registered")
+    # One subcommand per collector kind. The kind's Actions workflow in CivicPatch/server
+    # invokes the subcommand and these flags by name.
+    for kind in COLLECTORS:
+        collect_parser = subparsers.add_parser(kind, help=f"Run the {kind} for a run cp.org registered")
+        collect_parser.add_argument("--jurisdiction-ocdid", required=True, help="Jurisdiction ID")
+        collect_parser.add_argument("--pipeline-run-id", required=True, help="The run cp.org registered")
 
     args = parser.parse_args()
 
     if args.command == "people_collector":
         asyncio.run(_run_people_collector_async(args))
-    elif args.command == "governing_law_collector":
-        asyncio.run(_run_governing_law_collector_async(args))
+    elif args.command in COLLECTORS:
+        asyncio.run(_run_collector_async(PipelineRunKind(args.command), args))
     else:
         print(f"cli command not available: {args.command}")
 

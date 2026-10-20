@@ -20,10 +20,10 @@ def _next(context: GoverningLawCollectorContext, **data_updates) -> GoverningLaw
 
 
 def _after_url(context: GoverningLawCollectorContext, **data_updates) -> Step:
-    """Done with the url in hand: the next one, or classify what was stored."""
+    """Done with the url in hand: the next one, or write what was stored."""
     remaining = context.data.pending_urls[1:]
     next_context = _next(context, pending_urls=remaining, fetched=None, markdown=None, escalate=False, **data_updates)
-    return next_context, GoverningLawCollectorStep.FETCH_SOURCE if remaining else GoverningLawCollectorStep.CLASSIFY
+    return next_context, GoverningLawCollectorStep.FETCH_SOURCE if remaining else GoverningLawCollectorStep.WRITE_GOVERNING_LAW
 
 
 async def start(_limits: PipelineRunLimits, _logger: PipelineRunLogger, context: GoverningLawCollectorContext, _client: httpx.AsyncClient) -> Step:
@@ -79,10 +79,6 @@ def _recorded(context: GoverningLawCollectorContext, url: str, source_page_id: s
     return _after_url(context, general_law_source_page_ids=[*context.data.general_law_source_page_ids, source_page_id])
 
 
-async def classify(_limits: PipelineRunLimits, _logger: PipelineRunLogger, context: GoverningLawCollectorContext, _client: httpx.AsyncClient) -> Step:
-    return context, GoverningLawCollectorStep.WRITE_GOVERNING_LAW
-
-
 async def write_governing_law(_limits: PipelineRunLimits, _logger: PipelineRunLogger, context: GoverningLawCollectorContext, client: httpx.AsyncClient) -> Step:
     governing_law = governing_law_from(context)
     await civicpatch_api.patch_jurisdiction_extras(
@@ -123,7 +119,6 @@ TRANSITION_MAP = {
     GoverningLawCollectorStep.FETCH_SOURCE: fetch_source,
     GoverningLawCollectorStep.PREPROCESS_PAGE_CONTENT: preprocess_page_content,
     GoverningLawCollectorStep.STORE_SOURCE_PAGE: store_source_page,
-    GoverningLawCollectorStep.CLASSIFY: classify,
     GoverningLawCollectorStep.WRITE_GOVERNING_LAW: write_governing_law,
     PipelineRunStatus.SEND_ERROR: send_error,
 }

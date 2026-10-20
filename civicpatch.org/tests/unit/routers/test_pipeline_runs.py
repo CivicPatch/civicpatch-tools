@@ -1,5 +1,5 @@
 import pytest
-from shared.utils.statuses import DismissalReason
+from shared.utils.statuses import DismissalReason, PipelineRunKind
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 from unittest.mock import AsyncMock, patch
@@ -431,12 +431,12 @@ def _as(client, role):
 
 
 @pytest.mark.unit
-def test_the_governing_law_collector_is_told_its_jurisdictions_config_and_its_cap(service_client):
-    config = CollectorConfig(name="Stowe town", governing_law=None)
+def test_a_collector_run_is_told_its_kinds_config_and_its_cap(service_client):
+    collector_config = AsyncMock(return_value=CollectorConfig(name="Stowe town", governing_law=None))
     with patch("routers.api.pipeline_runs.get_pipeline_run", new_callable=AsyncMock, return_value={
-        "jurisdiction_ocdid": TEST_OCDID, "pipeline_run_cap_usd": "0.5000",
-    }), patch("services.governing_law.collector_config", new_callable=AsyncMock, return_value=config) as collector_config:
-        response = service_client.get(f"/pipeline_runs/{TEST_CHANGESET_ID}/governing_law_collector_config")
+        "jurisdiction_ocdid": TEST_OCDID, "pipeline_run_cap_usd": "0.5000", "kind": PipelineRunKind.GOVERNING_LAW_COLLECTOR,
+    }), patch.dict("routers.api.pipeline_runs.COLLECTOR_CONFIGS", {PipelineRunKind.GOVERNING_LAW_COLLECTOR: collector_config}):
+        response = service_client.get(f"/pipeline_runs/{TEST_CHANGESET_ID}/collector_config")
 
     assert response.status_code == 200, response.text
     assert response.json() == {"name": "Stowe town", "governing_law": None, "pipeline_run_cap_usd": "0.5000"}
@@ -444,8 +444,11 @@ def test_the_governing_law_collector_is_told_its_jurisdictions_config_and_its_ca
 
 
 @pytest.mark.unit
-def test_the_governing_law_collector_config_of_an_unknown_run_is_404(service_client):
+def test_the_collector_config_of_an_unknown_run_or_a_scrape_is_404(service_client):
     with patch("routers.api.pipeline_runs.get_pipeline_run", new_callable=AsyncMock, return_value=None):
-        response = service_client.get(f"/pipeline_runs/{TEST_CHANGESET_ID}/governing_law_collector_config")
+        assert service_client.get(f"/pipeline_runs/{TEST_CHANGESET_ID}/collector_config").status_code == 404
 
-    assert response.status_code == 404
+    with patch("routers.api.pipeline_runs.get_pipeline_run", new_callable=AsyncMock, return_value={
+        "jurisdiction_ocdid": TEST_OCDID, "pipeline_run_cap_usd": None, "kind": PipelineRunKind.PEOPLE_COLLECTOR,
+    }):
+        assert service_client.get(f"/pipeline_runs/{TEST_CHANGESET_ID}/collector_config").status_code == 404

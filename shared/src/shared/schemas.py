@@ -546,12 +546,23 @@ class GoverningLaw(BaseModel):
 
 
 # `jurisdictions.extras_organizations`: what a jurisdiction's governing law says its government is
-# made of, in Open Civic Data's Organization and Post shape; ours sits in `extras`, as OCD allows.
+# made of, as Open Civic Data Posts, each naming its organization as OCD's `organization_id` does;
+# what OCD has no field for sits in `extras`, as OCD allows. Flat, since every reader looks up by role.
+
+
+class QuoteScope(StrEnum):
+    """How much text around the model's quote it took to name the role and the method: the
+    narrower, the more directly the quote supports the post."""
+
+    SENTENCE = "sentence"
+    SECTION_BODY = "section_body"
+    SECTION = "section"
 
 
 class SourceExtras(BaseModel):
     # The cached text the quote was checked against.
     source_page_id: str
+    matched_in: QuoteScope
 
 
 class Source(BaseModel):
@@ -573,14 +584,14 @@ class GoverningLawPost(BaseModel):
     # The office's name as the law writes it ("Selectboard member", "Mayor-President"): what
     # readers see for this role in this organization, through `organizations.role_labels`.
     label: str
-    maximum_memberships: int = Field(default=1, ge=1)
-    sources: List[Source] = []
+    # The organization's name as config derives it ("Council"), until organizations have ids
+    # of their own; the same stand-in `role` makes for OCD's free text.
+    organization_id: str
+    # None when the law states no number.
+    maximum_memberships: int | None = Field(default=None, ge=1)
+    # A post exists here only because the law was quoted for it.
+    sources: List[Source] = Field(min_length=1)
     extras: GoverningLawPostExtras = GoverningLawPostExtras()
-
-
-class GoverningLawOrganization(BaseModel):
-    name: str
-    posts: List[GoverningLawPost] = []
 
 
 class GoverningLawOrganizationsExtras(BaseModel):
@@ -589,17 +600,12 @@ class GoverningLawOrganizationsExtras(BaseModel):
 
 
 class GoverningLawOrganizations(BaseModel):
-    organizations: List[GoverningLawOrganization]
+    posts: List[GoverningLawPost]
     extras: GoverningLawOrganizationsExtras
 
     def selection_methods(self) -> dict[str, SelectionMethod]:
         """Role id -> how this jurisdiction's law fills it, for the posts whose clause was found."""
-        return {
-            post.role: post.extras.selection_method
-            for organization in self.organizations
-            for post in organization.posts
-            if post.extras.selection_method is not None
-        }
+        return {post.role: post.extras.selection_method for post in self.posts if post.extras.selection_method is not None}
 
 
 class JurisdictionExtras(BaseModel):

@@ -939,6 +939,18 @@ async def update_jurisdiction(jurisdiction_ocdid, state, data: dict):
         )
 
 
+async def get_active_jurisdiction_name(jurisdiction_ocdid: str) -> str | None:
+    """None for an unknown or inactive jurisdiction."""
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "SELECT data->>'name' FROM jurisdictions WHERE jurisdiction_ocdid = %s AND status = 'active'",
+            (jurisdiction_ocdid,),
+        )
+        row = await cur.fetchone()
+    return (row[0] or "") if row else None
+
+
 async def get_jurisdiction_entry(jurisdiction_ocdid: str) -> dict | None:
     """The jurisdiction exactly as `jurisdictions.yml` carries it.
 

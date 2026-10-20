@@ -20,8 +20,8 @@ class UnknownJurisdiction(Exception):
 
 
 class CollectorConfig(BaseModel):
-    """What a governing_law_collector run is told when it starts: the contract of
-    `/pipeline_runs/{id}/governing_law_collector_config`."""
+    """What a governing_law_collector run is told when it starts: what
+    `/pipeline_runs/{id}/collector_config` answers for its kind."""
 
     name: str
     governing_law: GoverningLawConfig | None

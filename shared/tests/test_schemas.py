@@ -128,15 +128,18 @@ class TestJurisdictionLevel:
 
 def _organizations(*posts: dict) -> GoverningLawOrganizations:
     return GoverningLawOrganizations.model_validate({
-        "organizations": [{"name": "Council", "posts": list(posts)}],
+        "posts": [{"organization_id": "Council", "sources": [_SOURCE], **post} for post in posts],
         "extras": {"governing_law_collected_at": "2026-10-19T00:00:00Z"},
     })
+
+
+_SOURCE = {"url": "https://example.gov/charter", "note": "a quote", "extras": {"source_page_id": "p1", "matched_in": "sentence"}}
 
 
 def test_a_jurisdictions_selection_methods_come_from_posts_whose_clause_was_found():
     organizations = _organizations(
         {"role": "council-member", "label": "Council member", "maximum_memberships": 9, "extras": {"selection_method": "elected_by_voters"}},
-        {"role": "mayor", "label": "Mayor"},
+        {"role": "mayor", "label": "Mayor", "organization_id": "Office of the Mayor"},
     )
 
     assert organizations.selection_methods() == {"council-member": SelectionMethod.ELECTED_BY_VOTERS}
@@ -145,3 +148,8 @@ def test_a_jurisdictions_selection_methods_come_from_posts_whose_clause_was_foun
 def test_a_post_holds_at_least_one_person():
     with pytest.raises(ValidationError):
         _organizations({"role": "council-member", "label": "Council member", "maximum_memberships": 0})
+
+
+def test_a_post_the_law_was_not_quoted_for_is_refused():
+    with pytest.raises(ValidationError):
+        _organizations({"role": "council-member", "label": "Council member", "sources": []})

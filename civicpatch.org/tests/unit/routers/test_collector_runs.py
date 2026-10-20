@@ -3,16 +3,18 @@ from fastapi import FastAPI
 from fastapi.testclient import TestClient
 from unittest.mock import AsyncMock, patch
 
-import services.governing_law_collector_runs as collector_runs_service
+import services.collector_runs as collector_runs_service
 from lib.auth import get_optional_user
-from routers.api import governing_law_collector_runs as collector_runs_router
+from routers.api import collector_runs as collector_runs_router
 from schemas.common import Identity, UserRole
-from services.governing_law_collector_runs import AlreadyCollecting, ClaimedRun, UnknownJurisdiction
+from services.collector_runs import AlreadyCollecting, ClaimedRun, UnknownJurisdiction
+from shared.utils.statuses import PipelineRunKind
 
 pytestmark = pytest.mark.unit
 
+KIND = PipelineRunKind.GOVERNING_LAW_COLLECTOR
 OCDID = "ocd-jurisdiction/country:us/state:vt/place:stowe/government"
-URL = "/pipeline_runs/governing_law_collector"
+URL = f"/pipeline_runs/{KIND}"
 _CLAIMED = ClaimedRun(jurisdiction_ocdid=OCDID, pipeline_run_id="run-1", name="Stowe town")
 
 
@@ -31,7 +33,7 @@ def _service_key():
 @pytest.fixture
 def client():
     app = FastAPI()
-    app.include_router(collector_runs_router.get_router(), prefix=URL)
+    app.include_router(collector_runs_router.get_router(KIND), prefix=URL)
     return TestClient(app)
 
 
@@ -42,12 +44,12 @@ def _start(client, identity, raises=None):
     return response, start
 
 
-def test_an_admin_starts_one_jurisdictions_collection(client):
+def test_an_admin_starts_one_jurisdictions_collection_of_the_mounted_kind(client):
     response, start = _start(client, _admin)
 
     assert response.status_code == 200, response.text
     assert response.json()["data"]["pipeline_run_id"] == "run-1"
-    assert start.await_args.args[:2] == (OCDID, "user-1")
+    assert start.await_args.args[:3] == (KIND, OCDID, "user-1")
 
 
 def test_an_unknown_jurisdiction_is_404_and_one_already_collecting_409(client):
@@ -64,25 +66,26 @@ def test_a_maintainer_cannot_start_one(client):
 
 def test_an_admin_starts_a_states_collection(client):
     client.app.dependency_overrides[get_optional_user] = _admin
-    with patch("routers.api.governing_law_collector_runs.temporal_service.start_governing_law_collector_state_workflow", new=AsyncMock(return_value="governing-law-collector-state-vt")) as start:
+    with patch("routers.api.collector_runs.temporal_service.start_collector_state_workflow", new=AsyncMock(return_value="governing-law-collector-state-vt")) as start:
         response = client.post(f"{URL}/batch", json={"state": "vt"})
 
     assert response.status_code == 200, response.text
     assert response.json()["data"]["workflow_id"] == "governing-law-collector-state-vt"
-    assert start.await_args.args[:3] == ("vt", None, "user-1")
+    assert start.await_args.args[:4] == (KIND, "vt", None, "user-1")
 
 
 def test_only_the_service_key_claims_and_asks_the_budget(client):
     client.app.dependency_overrides[get_optional_user] = _service_key
-    with patch.object(collector_runs_service, "claim_jurisdictions_for_governing_law_collector", new=AsyncMock(return_value=[_CLAIMED])), patch(
-        "routers.api.governing_law_collector_runs.spend_budget_service.cap_reached_for_collector", new=AsyncMock(return_value=None)
-    ):
+    with patch.object(collector_runs_service, "claim_jurisdictions", new=AsyncMock(return_value=[_CLAIMED])) as claim, patch(
+        "routers.api.collector_runs.spend_budget_service.cap_reached_for_collector", new=AsyncMock(return_value=None)
+    ) as cap:
         assert client.post(f"{URL}/claim", json={"state": "vt", "num_jurisdictions": 5}).json()["data"]["jurisdictions"][0]["pipeline_run_id"] == "run-1"
         assert client.get(f"{URL}/budget_cap").json() == {"data": {"cap": None}}
+    assert claim.await_args.args[0] == KIND
+    cap.assert_awaited_once_with(KIND)
 
     client.app.dependency_overrides[get_optional_user] = _admin
     assert client.post(f"{URL}/claim", json={"state": "vt"}).status_code == 403
-
 
 
 @pytest.mark.parametrize("method, path, body", [
