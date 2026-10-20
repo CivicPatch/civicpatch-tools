@@ -35,6 +35,8 @@ PAGE_KIND_TITLES = {GoverningLawKind.CHARTER: "# Charter", GoverningLawKind.GENE
 
 
 class GoverningLawPage(BaseModel):
+    # Its `governing_law_source_pages` row: what a verified quote cites.
+    id: str
     source_url: str
     text: str
 

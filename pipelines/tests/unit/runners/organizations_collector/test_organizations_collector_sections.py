@@ -23,6 +23,7 @@ from shared.utils.layered_config import Classification, GovernedBy, GoverningLaw
 pytestmark = pytest.mark.unit
 
 BURLINGTON = GoverningLawPage(
+    id="page-1",
     source_url="https://legislature.vermont.gov/statutes/fullchapter/24APPENDIX/003",
     text=(Path(__file__).parent / "fixtures" / "vt_burlington_excerpt.md").read_text(),
 )
@@ -44,7 +45,7 @@ def test_every_section_anchor_starts_a_section():
 
 
 def test_a_page_from_a_publisher_with_no_known_format_splits_into_nothing():
-    municode = GoverningLawPage(source_url="https://library.municode.com/tn/nashville/codes/code_of_ordinances", text=BURLINGTON.text)
+    municode = GoverningLawPage(id="page-2", source_url="https://library.municode.com/tn/nashville/codes/code_of_ordinances", text=BURLINGTON.text)
 
     assert split_sections([municode]) == []
 
@@ -132,7 +133,7 @@ def _law(kind: GoverningLawKind, classification: str | None = "town") -> Governi
 
 
 def test_a_charter_jurisdictions_page_at_its_classifications_general_law_url_is_general_law():
-    statute = GoverningLawPage(source_url=_STATUTE_URL, text="")
+    statute = GoverningLawPage(id="page-3", source_url=_STATUTE_URL, text="")
 
     assert page_kind(statute, _law(GoverningLawKind.CHARTER), _VERMONT) == GoverningLawKind.GENERAL_LAW
 
@@ -142,7 +143,7 @@ def test_a_charter_jurisdictions_other_pages_are_its_charter():
 
 
 def test_with_no_classification_every_page_of_a_charter_jurisdiction_is_its_charter():
-    statute = GoverningLawPage(source_url=_STATUTE_URL, text="")
+    statute = GoverningLawPage(id="page-3", source_url=_STATUTE_URL, text="")
 
     assert page_kind(statute, _law(GoverningLawKind.CHARTER, classification=None), _VERMONT) == GoverningLawKind.CHARTER
 

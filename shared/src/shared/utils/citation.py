@@ -11,6 +11,8 @@ _WHITESPACE = re.compile(r"\s+")
 # ("§ 871."), initials ("V.S.A."), or the session-law abbreviations ("No. M-19 (Adj. Sess.)").
 _SENTENCE_END = re.compile(r"(?<![\d§])(?<!\b[A-Z])(?<!\bNo)(?<!\bAdj)(?<!\bSess)(?<!\beff)\.\s+(?=[A-Z(])")
 _SECTION_HEADING = re.compile(r"^- \*\*§")
+# What the model writes for text it left out of a quote.
+_ELISION = re.compile(r"\s*(?:\[\s*(?:\.\.\.|…)\s*\]|\.\.\.|…)\s*")
 # Past this a section says too much for its method to be about this role.
 WIDEST_QUOTE_CHARS = 1500
 
@@ -40,10 +42,11 @@ def method_named_in_quote(quote: str, method: SelectionMethod) -> bool:
     return any(_phrase_pattern(word).search(quote) for word in METHOD_WORDS[method])
 
 
-def supporting_quote(text: str, locator: str, names: list[str], method: SelectionMethod) -> str | None:
+def supporting_quote(text: str, locator: str, names: list[str], method: SelectionMethod | None) -> str | None:
     """The sentence around the locator, else its section's body, else that body under its
     heading: the first that names the role and the method. None when the locator is not in the
-    text or nothing up to the widest rung passes."""
+    text or nothing up to the widest rung passes. With no method, the law establishes the office
+    without saying how it is filled, and naming the role is enough."""
     span = _locate(text, locator)
     if span is None:
         return None
@@ -51,7 +54,7 @@ def supporting_quote(text: str, locator: str, names: list[str], method: Selectio
         quote = normalise(rung)
         if len(quote) > WIDEST_QUOTE_CHARS:
             return None
-        if role_named_in_quote(quote, names) and method_named_in_quote(quote, method):
+        if role_named_in_quote(quote, names) and (method is None or method_named_in_quote(quote, method)):
             return quote
     return None
 
@@ -66,8 +69,27 @@ def _phrase_pattern(phrase: str) -> re.Pattern[str]:
 
 
 def _locate(text: str, locator: str) -> tuple[int, int] | None:
-    words = normalise(locator).split(" ")
-    match = re.search(r"\s+".join(map(re.escape, words)), text)
+    """Where the locator is, whitespace-insensitive. One shortened with "..." is found when its
+    pieces occur in order on one line, a section's body in plan 1's markdown: the model keeps
+    eliding, and the pieces still locate the clause."""
+    pieces = [piece for piece in _ELISION.split(normalise(locator)) if piece]
+    if not pieces:
+        return None
+    first = _find(text, pieces[0], 0, len(text))
+    if first is None or len(pieces) == 1:
+        return first
+    _, line_end = _line_bounds(text, first)
+    end = first[1]
+    for piece in pieces[1:]:
+        found = _find(text, piece, end, line_end)
+        if found is None:
+            return None
+        end = found[1]
+    return first[0], end
+
+
+def _find(text: str, piece: str, start: int, end: int) -> tuple[int, int] | None:
+    match = re.compile(r"\s+".join(map(re.escape, piece.split(" ")))).search(text, start, end)
     return match.span() if match else None
 
 
