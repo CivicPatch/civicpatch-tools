@@ -1,0 +1,22 @@
+- role_id: member
+  expected: elected_by_voters
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: true
+    label: Selectboard member
+    filled_by: elected_by_voters
+    maximum_memberships: null
+    quote: All elected officials, except as provided by law or as specifically provided
+      in this charter, shall be chosen at large from the legally qualified voters
+      of the Town
+  - established: true
+    label: Member of the Selectboard
+    filled_by: elected_by_voters
+    maximum_memberships: null
+    quote: All elected officials, except as provided by law or as specifically provided
+      in this charter, shall be chosen at large from the legally qualified voters
+      of the Town

@@ -1,0 +1,120 @@
+- role_id: member
+  expected: elected_by_voters
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: true
+    label: Cemetery Commissioners
+    filled_by: elected_by_voters
+    maximum_memberships: 5
+    quote: There shall be elected five Cemetery Commissioners each to serve staggered
+      five-year terms.
+  - established: true
+    label: Cemetery Commissioner
+    filled_by: elected_by_voters
+    maximum_memberships: 5
+    quote: There shall be elected five Cemetery Commissioners each to serve staggered
+      five-year terms.
+- role_id: chair
+  expected: elected_by_members
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: true
+    label: Chair
+    filled_by: elected_by_members
+    maximum_memberships: 1
+    quote: The Selectboard shall have a Chair who shall be elected annually by a majority
+      vote of the five members.
+  - established: true
+    label: Chair
+    filled_by: elected_by_members
+    maximum_memberships: 1
+    quote: The Selectboard shall have a Chair who shall be elected annually by a majority
+      vote of the five members.
+- role_id: city-manager
+  expected: appointed
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: true
+    label: Town Manager
+    filled_by: appointed
+    maximum_memberships: 1
+    quote: The Selectboard shall appoint, with no fewer than four (4) affirmative
+      votes, a Town Manager.
+  - established: true
+    label: Town Manager
+    filled_by: appointed
+    maximum_memberships: 1
+    quote: The Selectboard shall appoint, with no fewer than four (4) affirmative
+      votes, a Town Manager.
+- role_id: clerk
+  expected: appointed
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: true
+    label: Town Clerk
+    filled_by: appointed
+    maximum_memberships: 1
+    quote: The Selectboard shall appoint and remove, on the basis of qualifications
+      and performance alone, a Town Clerk
+  - established: true
+    label: Town Clerk
+    filled_by: appointed
+    maximum_memberships: 1
+    quote: The Selectboard shall appoint and remove, on the basis of qualifications
+      and performance alone, a Town Clerk, Town Treasurer, and Town Attorney.
+- role_id: treasurer
+  expected: appointed
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: true
+    label: Town Treasurer
+    filled_by: appointed
+    maximum_memberships: 1
+    quote: The Selectboard shall appoint and remove, on the basis of qualifications
+      and performance alone, a Town Clerk, Town Treasurer, and Town Attorney.
+  - established: true
+    label: Town Treasurer
+    filled_by: appointed
+    maximum_memberships: null
+    quote: The Selectboard shall appoint and remove, on the basis of qualifications
+      and performance alone, a Town Clerk, Town Treasurer, and Town Attorney.
+- role_id: city-attorney
+  expected: appointed
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: true
+    label: Town Attorney
+    filled_by: appointed
+    maximum_memberships: null
+    quote: The Selectboard shall appoint and remove, on the basis of qualifications
+      and performance alone, a Town Clerk, Town Treasurer, and Town Attorney.
+  - established: true
+    label: Town Attorney
+    filled_by: appointed
+    maximum_memberships: 1
+    quote: The Selectboard shall appoint and remove, on the basis of qualifications
+      and performance alone, a Town Clerk, Town Treasurer, and Town Attorney.

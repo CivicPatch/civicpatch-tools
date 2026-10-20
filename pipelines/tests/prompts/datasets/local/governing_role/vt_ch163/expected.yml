@@ -1,0 +1,22 @@
+source_url: https://legislature.vermont.gov/statutes/fullchapter/24APPENDIX/163
+roles:
+- organization_name: Selectboard
+  role_id: vice-chair
+  role_label: Vice Chair
+  names:
+  - Vice Chair
+  - Vice Chairperson
+  - Vice-Chairperson
+  - commissioner deputy director
+  - council vice chair
+  - council vice chairman
+  - council vice chairwoman
+  - council vice-chair
+  - council vice-chairman
+  - council vice-chairwoman
+  - vice chairman
+  - vice chairwoman
+  - vice-chair
+  - vice-chairman
+  - vice-chairwoman
+  expected: elected_by_members

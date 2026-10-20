@@ -1,0 +1,115 @@
+- role_id: member
+  expected: elected_by_voters
+  right: true
+  each_right:
+  - true
+  - false
+  agreed: true
+  answers:
+  - established: true
+    label: member of the Selectboard
+    filled_by: elected_by_voters
+    maximum_memberships: 5
+    quote: 'The municipal officers elected by the Town shall be: (1) five members
+      of the Selectboard'
+  - established: true
+    label: members of the Selectboard
+    filled_by: elected_by_voters
+    maximum_memberships: 5
+    quote: All officers identified in section 22 of this charter shall be elected
+      by Australian ballot.
+- role_id: moderator
+  expected: elected_by_voters
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: true
+    label: Moderator
+    filled_by: elected_by_voters
+    maximum_memberships: 1
+    quote: The Moderator shall be elected annually
+  - established: true
+    label: Moderator
+    filled_by: elected_by_voters
+    maximum_memberships: 1
+    quote: The Moderator shall be elected annually
+- role_id: clerk
+  expected: elected_by_voters
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: true
+    label: Town Clerk
+    filled_by: elected_by_voters
+    maximum_memberships: 1
+    quote: The Town Clerk shall be elected for a three-year term
+  - established: true
+    label: Town Clerk
+    filled_by: elected_by_voters
+    maximum_memberships: 1
+    quote: The Town Clerk shall be elected for a three-year term
+- role_id: treasurer
+  expected: elected_by_voters
+  right: true
+  each_right:
+  - true
+  - false
+  agreed: true
+  answers:
+  - established: true
+    label: Town Treasurer
+    filled_by: elected_by_voters
+    maximum_memberships: 1
+    quote: The Town Treasurer shall be elected for a three-year term
+  - established: true
+    label: Town Treasurer
+    filled_by: elected_by_voters
+    maximum_memberships: 1
+    quote: All officers identified in section 22 of this charter shall be elected
+      by Australian ballot.
+- role_id: chair
+  expected: elected_by_members
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: true
+    label: chair
+    filled_by: elected_by_members
+    maximum_memberships: 1
+    quote: the Selectboard shall elect a chair and a vice chair by vote of the majority
+      of the entire Selectboard
+  - established: true
+    label: chair
+    filled_by: elected_by_members
+    maximum_memberships: 1
+    quote: the Selectboard shall elect a chair and a vice chair by vote of the majority
+      of the entire Selectboard.
+- role_id: vice-chair
+  expected: elected_by_members
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: true
+    label: vice chair
+    filled_by: elected_by_members
+    maximum_memberships: 1
+    quote: the Selectboard shall elect a chair and a vice chair by vote of the majority
+      of the entire Selectboard.
+  - established: true
+    label: vice chair
+    filled_by: elected_by_members
+    maximum_memberships: 1
+    quote: the Selectboard shall elect a chair and a vice chair by vote of the majority
+      of the entire Selectboard.

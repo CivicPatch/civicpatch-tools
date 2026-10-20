@@ -1,0 +1,18 @@
+- role_id: vice-chair
+  expected: elected_by_members
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: true
+    label: Vice Chair
+    filled_by: elected_by_members
+    maximum_memberships: 1
+    quote: The Selectboard shall elect a Vice Chair at its organizational meeting.
+  - established: true
+    label: Vice Chair
+    filled_by: elected_by_members
+    maximum_memberships: null
+    quote: The Selectboard shall elect a Vice Chair at its organizational meeting.

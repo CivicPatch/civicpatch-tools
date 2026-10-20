@@ -1,0 +1,60 @@
+- role_id: village-president
+  expected: elected_by_voters
+  right: true
+  each_right:
+  - false
+  - true
+  agreed: true
+  answers:
+  - established: true
+    label: Village President
+    filled_by: elected_by_voters
+    maximum_memberships: 1
+    quote: The Board of Trustees, consisting of three trustees and the Village President,
+      each of whom shall be elected by Australian ballot at the annual meeting of
+      the Village.
+  - established: true
+    label: Village President
+    filled_by: elected_by_voters
+    maximum_memberships: 1
+    quote: each of whom shall be elected by Australian ballot at the annual meeting
+      of the Village
+- role_id: member
+  expected: elected_by_voters
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: true
+    label: Trustee
+    filled_by: elected_by_voters
+    maximum_memberships: 5
+    quote: The legislative body of the Village of Swanton shall be the Board of Trustees,
+      consisting of three trustees and the Village President, each of whom shall be
+      elected by Australian ballot at the annual meeting of the Village.
+  - established: true
+    label: Trustee
+    filled_by: elected_by_voters
+    maximum_memberships: 5
+    quote: each of whom shall be elected by Australian ballot at the annual meeting
+      of the Village.
+- role_id: city-manager
+  expected: appointed
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: true
+    label: Village Manager
+    filled_by: appointed
+    maximum_memberships: null
+    quote: The Board of Trustees shall appoint a Village Manager
+  - established: true
+    label: Village Manager
+    filled_by: appointed
+    maximum_memberships: 1
+    quote: The Board of Trustees shall appoint a Village Manager

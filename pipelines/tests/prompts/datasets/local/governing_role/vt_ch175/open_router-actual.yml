@@ -1,0 +1,20 @@
+- role_id: moderator
+  expected: elected_by_voters
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: true
+    label: Moderator
+    filled_by: elected_by_voters
+    maximum_memberships: 1
+    quote: A Moderator to be elected by paper ballot from the floor, for a term of
+      one year.
+  - established: true
+    label: Moderator
+    filled_by: elected_by_voters
+    maximum_memberships: 1
+    quote: A Moderator to be elected by paper ballot from the floor, for a term of
+      one year.

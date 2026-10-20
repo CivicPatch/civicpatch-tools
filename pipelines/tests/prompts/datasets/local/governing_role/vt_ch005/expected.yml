@@ -1,0 +1,122 @@
+source_url: https://legislature.vermont.gov/statutes/fullchapter/24APPENDIX/005
+roles:
+- organization_name: City Council
+  role_id: mayor
+  role_label: Mayor
+  names:
+  - Mayor
+  expected: elected_by_voters
+- organization_name: City Council
+  role_id: member
+  role_label: Council Member
+  names:
+  - Council Member
+  - Member
+  - alder
+  - alderman
+  - aldermen
+  - Alderperson
+  - alderwoman
+  - board of selectmen
+  - board of selectmen member
+  - city alderman
+  - city alderwoman
+  - city commissioner
+  - city council
+  - city council alderman
+  - city council alderwoman
+  - city council member
+  - city councilman
+  - city councilmember
+  - city councilor
+  - city councilwoman
+  - Commissioner
+  - Committee Member
+  - committee person
+  - Committee Woman
+  - committeeman
+  - Committeeperson
+  - committeewoman
+  - Committeewomen
+  - council
+  - council at large
+  - council member at-large
+  - council members
+  - council person
+  - council-member
+  - councillor
+  - councilman
+  - councilman-at-large
+  - councilmember
+  - councilmembers
+  - councilmen
+  - councilor
+  - councilperson
+  - councilperson at-large
+  - councilwoman
+  - councilwoman at large
+  - councilwoman-at-large
+  - councilwomen
+  - representative
+  - select board
+  - Select Board Member
+  - select board representative
+  - Select Person
+  - selectboard
+  - selectboard member
+  - selectman
+  - selectmen
+  - Selectperson
+  - selectwoman
+  - town board member
+  - town council
+  - town council member
+  - town council representative
+  - town councilmember
+  - town councilor
+  - township committee member
+  - Township Trustee
+  - Trustee
+  - Trustees
+  - Village Trustee
+  expected: elected_by_voters
+- organization_name: City Council
+  role_id: council-president
+  role_label: Council President
+  names:
+  - Council President
+  - city council president
+  - council member president
+  - president
+  - president of the council
+  expected: elected_by_members
+- organization_name: City Council
+  role_id: council-vice-president
+  role_label: Council Vice President
+  names:
+  - Council Vice President
+  - council member vice president
+  - council member vice-president
+  - council vice-president
+  - vice president
+  - vice-president
+  expected: elected_by_members
+- organization_name: City Council
+  role_id: city-manager
+  role_label: City Manager
+  names:
+  - City Manager
+  - city administrator
+  - town manager
+  - village manager
+  expected: appointed
+- organization_name: City Council
+  role_id: city-attorney
+  role_label: City Attorney
+  names:
+  - City Attorney
+  - city solicitor
+  - municipal attorney
+  - town attorney
+  - village attorney
+  expected: appointed

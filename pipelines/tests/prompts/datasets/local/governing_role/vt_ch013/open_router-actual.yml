@@ -1,0 +1,122 @@
+- role_id: member
+  expected: elected_by_voters
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: true
+    label: Council members
+    filled_by: elected_by_voters
+    maximum_memberships: 5
+    quote: All Council members shall be elected at large
+  - established: true
+    label: Council member
+    filled_by: elected_by_voters
+    maximum_memberships: 5
+    quote: All Council members shall be elected at large
+- role_id: chair
+  expected: elected_by_members
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: true
+    label: Chair
+    filled_by: elected_by_members
+    maximum_memberships: 1
+    quote: the Council shall organize and elect a Chair, a Vice Chair and a Clerk
+      by a majority vote of the entire Council
+  - established: true
+    label: Chair
+    filled_by: elected_by_members
+    maximum_memberships: 1
+    quote: the Council shall organize and elect a Chair, a Vice Chair and a Clerk
+      by a majority vote of the entire Council
+- role_id: vice-chair
+  expected: elected_by_members
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: true
+    label: Vice Chair
+    filled_by: elected_by_members
+    maximum_memberships: 1
+    quote: Forthwith after its election and qualification, the Council shall organize
+      and elect a Chair, a Vice Chair and a Clerk by a majority vote of the entire
+      Council
+  - established: true
+    label: Vice Chair
+    filled_by: elected_by_members
+    maximum_memberships: 1
+    quote: Forthwith after its election and qualification, the Council shall organize
+      and elect a Chair, a Vice Chair and a Clerk by a majority vote of the entire
+      Council
+- role_id: clerk
+  expected: elected_by_members
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: true
+    label: Clerk
+    filled_by: elected_by_members
+    maximum_memberships: 1
+    quote: elect a Chair, a Vice Chair and a Clerk by a majority vote of the entire
+      Council
+  - established: true
+    label: Clerk
+    filled_by: elected_by_members
+    maximum_memberships: 1
+    quote: the Council shall organize and elect a Chair, a Vice Chair and a Clerk
+      by a majority vote of the entire Council
+- role_id: city-manager
+  expected: appointed
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: true
+    label: City Manager
+    filled_by: appointed
+    maximum_memberships: 1
+    quote: The Council shall appoint a City Manager for an indefinite term.
+  - established: true
+    label: City Manager
+    filled_by: appointed
+    maximum_memberships: 1
+    quote: The Council shall appoint a City Manager for an indefinite term.
+- role_id: city-attorney
+  expected: appointed
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: true
+    label: City Attorney
+    filled_by: appointed
+    maximum_memberships: null
+    quote: The Council by majority vote of all its members shall appoint annually
+      the City Treasurer, whose office shall be no longer elective, and the City Attorney,
+      Zoning Administrator, Auditor, First and Second Constable, Grand Juror, and
+      Trustee of Public Funds.
+  - established: true
+    label: City Attorney
+    filled_by: appointed
+    maximum_memberships: null
+    quote: The Council by majority vote of all its members shall appoint annually
+      the City Treasurer, whose office shall be no longer elective, and the City Attorney,
+      Zoning Administrator, Auditor, First and Second Constable, Grand Juror, and
+      Trustee of Public Funds.

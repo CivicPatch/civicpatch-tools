@@ -1,0 +1,31 @@
+- role_id: member
+  expected: elected_by_voters
+  right: false
+  each_right:
+  - false
+  - false
+  agreed: true
+  answers:
+  - established: true
+    label: Selectboard members
+    filled_by: elected_by_voters
+    maximum_memberships: 5
+    quote: 'The following officers of the Town and such other Town officers as are
+      provided by law and previous vote of the electorate as to number, length of
+      term, and manner of election at an annual meeting shall be elected by Australian
+      ballot, unless otherwise stated, and shall include the following: (1) a Moderator
+      to be elected from the floor, for a term of one year; (2) [Repealed.] (3) Selectboard
+      members, three of whom shall serve staggered three-year terms and two of whom
+      shall serve one-year terms; (4) such other Town officers as the Town shall order
+      as provided by law.'
+  - established: true
+    label: Selectboard members
+    filled_by: elected_by_voters
+    maximum_memberships: 5
+    quote: 'The following officers of the Town and such other Town officers as are
+      provided by law and previous vote of the electorate as to number, length of
+      term, and manner of election at an annual meeting shall be elected by Australian
+      ballot, unless otherwise stated, and shall include the following: (1) a Moderator
+      to be elected from the floor, for a term of one year; (2) [Repealed.] (3) Selectboard
+      members, three of whom shall serve staggered three-year terms and two of whom
+      shall serve one-year terms'

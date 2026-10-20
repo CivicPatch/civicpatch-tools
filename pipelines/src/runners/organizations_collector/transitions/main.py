@@ -2,6 +2,7 @@
 answers it with the next state; the engine checks the answer against the graph. Plan 2's 2.11
 to 2.15 fill in SELECT_SECTIONS, EXTRACT, VERIFY and WRITE."""
 
+import asyncio
 from typing import List
 
 import httpx
@@ -9,17 +10,25 @@ import services.civicpatch_api as civicpatch_api
 import services.open_router.llm as open_router_llm
 import services.open_router.prompts as open_router_prompts
 from runners.organizations_collector import sections
+from runners.organizations_collector.role_asks import RoleAsk, role_asks
 from runners.organizations_collector.schemas import (
     GoverningSectionsResponse,
     OrganizationsCollectorContext,
     OrganizationsCollectorState,
     OrganizationsCollectorStep,
+    OtherOffice,
+    OtherOfficesAnswer,
+    RoleAnswer,
+    RoleClaim,
 )
 from shared.schemas import PipelineRunLimits
 from shared.utils.statuses import PipelineRunStatus
+from utils import cost_utils
 from utils.log_utils import PipelineRunLogger
 
 Step = tuple[OrganizationsCollectorContext, OrganizationsCollectorState]
+# Each question twice, the verified answers' union kept: one ask's answer varied run to run.
+ASKS_PER_QUESTION = 2
 
 
 async def start(_limits: PipelineRunLimits, _logger: PipelineRunLogger, context: OrganizationsCollectorContext, _client: httpx.AsyncClient) -> Step:
@@ -37,13 +46,19 @@ async def select_sections(_limits: PipelineRunLimits, logger: PipelineRunLogger,
         )
         for page_id in governing_law.source_page_ids
     ]
-    selected_governing_law_text = await _selected_governing_law_text(context, logger, pages)
-    return _next(context, selected_governing_law_text=selected_governing_law_text), OrganizationsCollectorStep.EXTRACT
+    selected = [
+        f"{sections.PAGE_KIND_TITLES[kind]}\n\n{await _selected_governing_law_text(context, logger, kind_pages)}"
+        for kind, kind_pages in sections.pages_by_kind(pages, governing_law, context.data.config.jurisdiction_config.governing_law)
+    ]
+    config = context.data.config
+    asks = role_asks(config.jurisdiction_config, config.name, config.government_form)
+    logger.info(f"{len(asks)} roles to ask about")
+    return _next(context, selected_governing_law_text="\n\n".join(selected), pending_asks=asks), OrganizationsCollectorStep.EXTRACT
 
 
 async def _selected_governing_law_text(context: OrganizationsCollectorContext, logger: PipelineRunLogger, pages: List[sections.GoverningLawPage]) -> str:
-    """All of it when it fits; else the sections picked from their headings, else those whose
-    headings name the government; a text with no sections to pick from goes whole."""
+    """One kind's pages: all of them when they fit; else the sections picked from their headings,
+    else those whose headings name the government; pages with no sections to pick from go whole."""
     whole = "\n\n".join(page.text for page in pages)
     found = sections.split_sections(pages)
     if sections.fits_whole(whole) or not found:
@@ -69,8 +84,51 @@ def _next(context: OrganizationsCollectorContext, **data_updates) -> Organizatio
     return context.model_copy(update={"data": context.data.model_copy(update=data_updates)})
 
 
-async def extract(_limits: PipelineRunLimits, _logger: PipelineRunLogger, context: OrganizationsCollectorContext, _client: httpx.AsyncClient) -> Step:
-    return context, OrganizationsCollectorStep.VERIFY
+async def extract(limits: PipelineRunLimits, logger: PipelineRunLogger, context: OrganizationsCollectorContext, _client: httpx.AsyncClient) -> Step:
+    """Every pending question, each `ASKS_PER_QUESTION` times; on the first pass, the offices
+    nobody asked about as well. Stops before asking once the run's cap is spent."""
+    if cost_utils.total_cost(context.pipeline_run_id) >= limits.pipeline_run_cap_usd:
+        logger.warning(f"cost cap reached with {len(context.data.pending_asks)} roles unasked")
+        return _next(context, pending_asks=[], stopped_at_cost_cap=True), OrganizationsCollectorStep.VERIFY
+    asked = [ask for ask in context.data.pending_asks for _ in range(ASKS_PER_QUESTION)]
+    first_pass = not context.data.claims
+    answers = await asyncio.gather(*[_answer(context, logger, ask) for ask in asked])
+    claims = [RoleClaim(ask=ask, answer=answer) for ask, answer in zip(asked, answers) if answer is not None]
+    others = await _other_offices(context) if first_pass else context.data.other_offices
+    return _next(context, claims=[*context.data.claims, *claims], pending_asks=[], other_offices=others), OrganizationsCollectorStep.VERIFY
+
+
+async def _answer(context: OrganizationsCollectorContext, logger: PipelineRunLogger, ask: RoleAsk) -> RoleAnswer | None:
+    """None when the question still failed after `run_prompt`'s retries: the role goes unanswered
+    and VERIFY asks it again, rather than one role's failure ending the run."""
+    question = open_router_prompts.governing_role_question(ask.role_label, ask.organization_name)
+    try:
+        response = await _ask(context, "governing_role", question, RoleAnswer)
+    except Exception as error:
+        logger.warning(f"{ask.role_id} in {ask.organization_name} unanswered: {type(error).__name__}: {error}")
+        return None
+    return RoleAnswer.model_validate(response)
+
+
+async def _other_offices(context: OrganizationsCollectorContext) -> List[OtherOffice]:
+    asked_labels = list(dict.fromkeys(ask.role_label for ask in context.data.pending_asks))
+    question = open_router_prompts.governing_other_offices_question(asked_labels)
+    response = await _ask(context, "governing_other_offices", question, OtherOfficesAnswer)
+    return OtherOfficesAnswer.model_validate(response).offices
+
+
+async def _ask(context: OrganizationsCollectorContext, prompt_name: str, question: str, response_schema):
+    """The law first, the question last, so every question shares the cached law as its prefix."""
+    law = context.data.selected_governing_law_text
+    assert law is not None, "SELECT_SECTIONS always leaves the law for EXTRACT"
+    return await open_router_llm.run_prompt(
+        context.pipeline_run_id,
+        context.data.jurisdiction_ocdid,
+        open_router_prompts.governing_law_reader_prompt(),
+        prompt_name=prompt_name,
+        response_schema=response_schema,
+        content=f"{law}\n\n{question}",
+    )
 
 
 async def verify(_limits: PipelineRunLimits, _logger: PipelineRunLogger, context: OrganizationsCollectorContext, _client: httpx.AsyncClient) -> Step:

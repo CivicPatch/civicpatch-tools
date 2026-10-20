@@ -143,6 +143,12 @@ dir = "pipelines"
 run = "uv run pytest tests/prompts/tests/evals/test_find_jurisdiction_url_eval.py"
 dir = "pipelines"
 
+[tasks.evalsrole]
+description = "Role eval: how each charter says a role is filled, asked twice per role (plan 2's 2.13); about 300 calls"
+# -s: see the note on evalsm
+run = "uv run pytest -s tests/prompts/tests/evals/test_governing_role_eval.py"
+dir = "pipelines"
+
 [tasks.evalssections]
 description = "Section pick eval: which charter sections the model reads, from the headings alone (plan 2's 2.11)"
 # -s: see the note on evalsm

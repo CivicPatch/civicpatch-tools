@@ -1,0 +1,16 @@
+source_url: https://legislature.vermont.gov/statutes/fullchapter/24APPENDIX/245
+roles:
+- organization_name: chair
+  role_id: chair
+  role_label: Chair
+  names:
+  - Chair
+  - Chairperson
+  - chairman
+  - chairwoman
+  - commissioner director
+  - council chair
+  - council chairman
+  - council chairwoman
+  - town council chair
+  expected: elected_by_members

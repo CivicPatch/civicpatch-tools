@@ -1,0 +1,141 @@
+- role_id: member
+  expected: elected_by_voters
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: true
+    label: Selectboard member
+    filled_by: elected_by_voters
+    maximum_memberships: 5
+    quote: 'The elected officers of the Town of Stowe shall be: Selectboard members,
+      Moderator, and listers.'
+  - established: true
+    label: Selectboard members
+    filled_by: elected_by_voters
+    maximum_memberships: 5
+    quote: All Selectboard members shall be elected at large.
+- role_id: chair
+  expected: elected_by_members
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: true
+    label: Chair
+    filled_by: elected_by_members
+    maximum_memberships: 1
+    quote: the Selectboard shall organize and elect a Chair, Vice Chair, and Clerk
+      by a majority vote of the entire Selectboard
+  - established: true
+    label: Chair
+    filled_by: elected_by_members
+    maximum_memberships: 1
+    quote: the Selectboard shall organize and elect a Chair, Vice Chair, and Clerk
+      by a majority vote of the entire Selectboard
+- role_id: vice-chair
+  expected: elected_by_members
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: true
+    label: Vice Chair
+    filled_by: elected_by_members
+    maximum_memberships: 1
+    quote: the Selectboard shall organize and elect a Chair, Vice Chair, and Clerk
+      by a majority vote of the entire Selectboard
+  - established: true
+    label: Vice Chair
+    filled_by: elected_by_members
+    maximum_memberships: 1
+    quote: the Selectboard shall organize and elect a Chair, Vice Chair, and Clerk
+      by a majority vote of the entire Selectboard
+- role_id: city-manager
+  expected: appointed
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: true
+    label: Town Manager
+    filled_by: appointed
+    maximum_memberships: 1
+    quote: The Selectboard shall appoint a Town Manager for an indefinite term.
+  - established: true
+    label: Town Manager
+    filled_by: appointed
+    maximum_memberships: 1
+    quote: The Selectboard shall appoint a Town Manager for an indefinite term.
+- role_id: moderator
+  expected: elected_by_voters
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: true
+    label: Moderator
+    filled_by: elected_by_voters
+    maximum_memberships: 1
+    quote: 'The elected officers of the Town of Stowe shall be: Selectboard members,
+      Moderator, and listers.'
+  - established: true
+    label: Moderator
+    filled_by: elected_by_voters
+    maximum_memberships: null
+    quote: 'The elected officers of the Town of Stowe shall be: Selectboard members,
+      Moderator, and listers.'
+- role_id: clerk
+  expected: appointed
+  right: true
+  each_right:
+  - false
+  - true
+  agreed: false
+  answers:
+  - established: true
+    label: Clerk
+    filled_by: elected_by_members
+    maximum_memberships: 1
+    quote: the Selectboard shall organize and elect a Chair, Vice Chair, and Clerk
+      by a majority vote of the entire Selectboard
+  - established: true
+    label: Clerk
+    filled_by: appointed
+    maximum_memberships: 1
+    quote: the Selectboard shall organize and elect a Chair, Vice Chair, and Clerk
+      by a majority vote of the entire Selectboard
+- role_id: treasurer
+  expected: appointed
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: true
+    label: Town Treasurer
+    filled_by: appointed
+    maximum_memberships: null
+    quote: The Town Manager shall have authority to hire, appoint, fix the salary
+      of, discipline, suspend, and remove the Zoning Administrator, Town Clerk, Town
+      Treasurer, Assistant Town Clerk(s), Assistant Treasurer(s), and all other employees
+      of the Town not hired or appointed by the Selectboard
+  - established: true
+    label: Town Treasurer
+    filled_by: appointed
+    maximum_memberships: null
+    quote: The Town Manager shall have authority to hire, appoint, fix the salary
+      of, discipline, suspend, and remove the Zoning Administrator, Town Clerk, Town
+      Treasurer, Assistant Town Clerk(s), Assistant Treasurer(s), and all other employees
+      of the Town not hired or appointed by the Selectboard

@@ -1,0 +1,98 @@
+- role_id: chair
+  expected: elected_by_members
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: true
+    label: Chair
+    filled_by: elected_by_members
+    maximum_memberships: 1
+    quote: the Selectboard shall organize and elect a Chair and Vice Chair by a majority
+      vote of the entire Board
+  - established: true
+    label: Chair
+    filled_by: elected_by_members
+    maximum_memberships: 1
+    quote: the Selectboard shall organize and elect a Chair and Vice Chair by a majority
+      vote of the entire Board
+- role_id: vice-chair
+  expected: elected_by_members
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: true
+    label: Vice Chair
+    filled_by: elected_by_members
+    maximum_memberships: 1
+    quote: the Selectboard shall organize and elect a Chair and Vice Chair by a majority
+      vote of the entire Board
+  - established: true
+    label: Vice Chair
+    filled_by: elected_by_members
+    maximum_memberships: 1
+    quote: the Selectboard shall organize and elect a Chair and Vice Chair by a majority
+      vote of the entire Board
+- role_id: city-manager
+  expected: appointed
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: true
+    label: Town Manager
+    filled_by: appointed
+    maximum_memberships: null
+    quote: The Selectboard may appoint a Town Manager.
+  - established: true
+    label: Town Manager
+    filled_by: appointed
+    maximum_memberships: null
+    quote: The Selectboard may appoint a Town Manager.
+- role_id: treasurer
+  expected: appointed
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: true
+    label: Town Treasurer
+    filled_by: appointed
+    maximum_memberships: 1
+    quote: The Selectboard shall appoint, and may remove, a Town Treasurer in accordance
+      with this subchapter.
+  - established: true
+    label: Town Treasurer
+    filled_by: appointed
+    maximum_memberships: 1
+    quote: The Selectboard shall appoint, and may remove, a Town Treasurer in accordance
+      with this subchapter.
+- role_id: assessor
+  expected: appointed
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: true
+    label: Chief Assessor
+    filled_by: appointed
+    maximum_memberships: 1
+    quote: The Chief Assessor and assistants shall be appointed, and may be removed,
+      by the Selectboard in accordance with this subchapter.
+  - established: true
+    label: Chief Assessor
+    filled_by: appointed
+    maximum_memberships: 1
+    quote: The Chief Assessor and assistants shall be appointed, and may be removed,
+      by the Selectboard in accordance with this subchapter.

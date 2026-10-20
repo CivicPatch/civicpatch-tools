@@ -1,0 +1,42 @@
+- role_id: member
+  expected: elected_by_voters
+  right: false
+  each_right:
+  - false
+  - false
+  agreed: true
+  answers:
+  - established: true
+    label: Selectboard members
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: The Selectboard members of the Town of Readsboro, serving on the effective
+      date of this merger, shall continue in office and be deemed Selectboard members
+      of the merged and consolidated Town of Readsboro for the remainder of the terms
+      of their respective elected offices.
+  - established: true
+    label: Selectboard member
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: The Selectboard members of the Town of Readsboro, serving on the effective
+      date of this merger, shall continue in office and be deemed Selectboard members
+      of the merged and consolidated Town of Readsboro for the remainder of the terms
+      of their respective elected offices.
+- role_id: chair
+  expected: elected_by_members
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: true
+    label: Chair
+    filled_by: elected_by_members
+    maximum_memberships: 1
+    quote: The Board may elect one of its members as Chair
+  - established: true
+    label: Chair
+    filled_by: elected_by_members
+    maximum_memberships: 1
+    quote: The Board may elect one of its members as Chair

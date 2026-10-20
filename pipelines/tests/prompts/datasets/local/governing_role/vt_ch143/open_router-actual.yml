@@ -1,0 +1,24 @@
+- role_id: member
+  expected: elected_by_voters
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: true
+    label: Selectboard member
+    filled_by: elected_by_voters
+    maximum_memberships: 5
+    quote: The Selectboard shall consist of five persons, three of whom shall serve
+      for three-year terms and two of whom shall serve for two-year terms. At each
+      annual meeting, one Selectboard member shall be elected for a three-year term
+      and one for a two-year term.
+  - established: true
+    label: Selectboard member
+    filled_by: elected_by_voters
+    maximum_memberships: 5
+    quote: The Selectboard shall consist of five persons, three of whom shall serve
+      for three-year terms and two of whom shall serve for two-year terms. At each
+      annual meeting, one Selectboard member shall be elected for a three-year term
+      and one for a two-year term.
