@@ -51,7 +51,7 @@ def load_cases(base_dir: str) -> list[dict]:
 def _law(text: str, source_url: str) -> str:
     if sections.fits_whole(text):
         return text
-    found = sections.split_sections([sections.GoverningLawPage(source_url=source_url, text=text)])
+    found = sections.split_sections([sections.GoverningLawPage(id="eval", source_url=source_url, text=text)])
     return "# Charter\n\n" + sections.joined(sections.keyword_sections(found))
 
 

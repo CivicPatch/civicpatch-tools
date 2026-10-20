@@ -141,3 +141,51 @@ def test_a_section_past_the_widest_quote_supports_nothing():
     text = "One Village Clerk. " + "The trustees shall meet. " * 80 + "They shall appoint officers."
 
     assert supporting_quote(text, "One Village Clerk.", ["Village Clerk"], SelectionMethod.APPOINTED) is None
+
+
+LUNENBURG = (
+    "At the annual meeting of said corporation, there shall be elected, by ballot if called for, for the"
+    " ensuing year and until their successors are chosen, a Moderator, a Clerk, a Treasurer, one trustee"
+    " for a term of one year, one trustee for a term of two years, and one trustee for a term of three years.\n"
+    "- **§ 2. Meetings**\nThe trustees shall meet monthly."
+)
+
+
+def test_a_quote_shortened_with_an_ellipsis_is_found_when_its_pieces_are_in_order():
+    locator = "there shall be elected, by ballot if called for, ... one trustee for a term of one year"
+
+    quote = supporting_quote(LUNENBURG, locator, ["Trustee"], SelectionMethod.ELECTED_BY_VOTERS)
+
+    assert quote is not None
+    assert quote.startswith("At the annual meeting of said corporation")
+
+
+def test_an_ellipsis_in_brackets_counts_as_one():
+    locator = "there shall be elected [...] one trustee for a term of one year"
+
+    assert supporting_quote(LUNENBURG, locator, ["Trustee"], SelectionMethod.ELECTED_BY_VOTERS) is not None
+
+
+def test_pieces_out_of_order_locate_nothing():
+    locator = "one trustee for a term of one year ... there shall be elected"
+
+    assert supporting_quote(LUNENBURG, locator, ["Trustee"], SelectionMethod.ELECTED_BY_VOTERS) is None
+
+
+def test_pieces_from_two_sections_locate_nothing():
+    locator = "there shall be elected ... The trustees shall meet monthly"
+
+    assert supporting_quote(LUNENBURG, locator, ["Trustee"], SelectionMethod.ELECTED_BY_VOTERS) is None
+
+
+def test_with_no_method_naming_the_role_is_enough():
+    text = "The Village Clerk shall keep the records of the Board."
+
+    assert supporting_quote(text, "The Village Clerk shall keep", ["Village Clerk"], None) == text
+
+
+def test_with_no_method_the_role_must_still_be_named():
+    text = "The records of the Board shall be kept."
+
+    assert supporting_quote(text, "The records of the Board", ["Village Clerk"], None) is None
+

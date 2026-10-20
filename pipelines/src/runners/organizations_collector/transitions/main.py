@@ -10,6 +10,7 @@ import services.civicpatch_api as civicpatch_api
 import services.open_router.llm as open_router_llm
 import services.open_router.prompts as open_router_prompts
 from runners.organizations_collector import sections
+from runners.organizations_collector import verify as verify_rules
 from runners.organizations_collector.role_asks import RoleAsk, role_asks
 from runners.organizations_collector.schemas import (
     GoverningSectionsResponse,
@@ -53,7 +54,8 @@ async def select_sections(_limits: PipelineRunLimits, logger: PipelineRunLogger,
     config = context.data.config
     asks = role_asks(config.jurisdiction_config, config.name, config.government_form)
     logger.info(f"{len(asks)} roles to ask about")
-    return _next(context, selected_governing_law_text="\n\n".join(selected), pending_asks=asks), OrganizationsCollectorStep.EXTRACT
+    next_context = _next(context, governing_law_pages=pages, selected_governing_law_text="\n\n".join(selected), pending_asks=asks)
+    return next_context, OrganizationsCollectorStep.EXTRACT
 
 
 async def _selected_governing_law_text(context: OrganizationsCollectorContext, logger: PipelineRunLogger, pages: List[sections.GoverningLawPage]) -> str:
@@ -131,8 +133,25 @@ async def _ask(context: OrganizationsCollectorContext, prompt_name: str, questio
     )
 
 
-async def verify(_limits: PipelineRunLimits, _logger: PipelineRunLogger, context: OrganizationsCollectorContext, _client: httpx.AsyncClient) -> Step:
-    return context, OrganizationsCollectorStep.WRITE
+async def verify(_limits: PipelineRunLimits, logger: PipelineRunLogger, context: OrganizationsCollectorContext, _client: httpx.AsyncClient) -> Step:
+    """Decides every role from all its answers so far; those with none verified go back to
+    EXTRACT, unless the cap already stopped it."""
+    governing_law = context.data.config.governing_law
+    assert governing_law is not None, "SELECT_SECTIONS goes straight to WRITE when there is no law"
+    outcomes = verify_rules.role_outcomes(
+        context.data.claims,
+        context.data.governing_law_pages,
+        governing_law,
+        context.data.config.jurisdiction_config.governing_law,
+        ASKS_PER_QUESTION,
+    )
+    logger.info(
+        f"{len(outcomes.verified)} verified, {len(outcomes.not_established)} not established,"
+        f" {len(outcomes.conflicted)} in conflict, {len(outcomes.re_ask)} to ask again, {len(outcomes.unverified)} unverified"
+    )
+    if outcomes.re_ask and not context.data.stopped_at_cost_cap:
+        return _next(context, outcomes=outcomes, pending_asks=outcomes.re_ask), OrganizationsCollectorStep.EXTRACT
+    return _next(context, outcomes=outcomes), OrganizationsCollectorStep.WRITE
 
 
 async def write(_limits: PipelineRunLimits, _logger: PipelineRunLogger, context: OrganizationsCollectorContext, _client: httpx.AsyncClient) -> Step:
