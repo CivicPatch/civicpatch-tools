@@ -1,13 +1,13 @@
 import pytest
 from unittest.mock import AsyncMock, MagicMock, patch
 
-from runners.people_collector.steps.step_07_send_success.send_success import send_success
-from runners.people_collector.schemas import MaybeSendToGitHubStep
+from runners.pipeline03_people_collector.steps.step_07_send_success.send_success import send_success
+from runners.pipeline03_people_collector.schemas import MaybeSendToGitHubStep
 from tests.factories.pipeline_run_context import pipeline_run_context_factory
 
 pytestmark = pytest.mark.unit
 
-MODULE = "runners.people_collector.steps.step_07_send_success.send_success"
+MODULE = "runners.pipeline03_people_collector.steps.step_07_send_success.send_success"
 
 _ENV = {"SERVICE_API_KEY": "token", "CIVICPATCH_ORG_URL": "https://civicpatch.org"}
 

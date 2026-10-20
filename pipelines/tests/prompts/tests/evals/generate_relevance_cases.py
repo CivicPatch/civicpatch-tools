@@ -23,7 +23,7 @@ from enum import Enum
 
 import yaml
 from pydantic import BaseModel
-from runners.people_collector.schemas import LinkStatus
+from runners.pipeline03_people_collector.schemas import LinkStatus
 from shared.schemas import JurisdictionLevel
 from shared.utils.layered_config import (
     CONFIG_PATH,

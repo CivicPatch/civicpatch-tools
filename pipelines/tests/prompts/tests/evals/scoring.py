@@ -20,7 +20,7 @@ from accuracy import (
     normalize_field,
 )
 from aggregation import mean_by_key
-from runners.people_collector.schemas import ExtractedPersonRecord
+from runners.pipeline03_people_collector.schemas import ExtractedPersonRecord
 from shared.utils.label_parser import ParsedLabel, parse_label
 
 EVAL_TAXONOMY = build_eval_taxonomy()

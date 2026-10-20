@@ -2,7 +2,7 @@
 
 import pytest
 
-from runners.organizations_collector.role_asks import role_asks
+from runners.pipeline02_organizations_collector.role_asks import role_asks
 from shared.schemas import GovernmentForm, SelectionMethod
 from shared.utils.government_forms import DerivedOrganization
 from shared.utils.layered_config import ConfigFile, ConfigRole, GovernmentFormConfig, merged_config

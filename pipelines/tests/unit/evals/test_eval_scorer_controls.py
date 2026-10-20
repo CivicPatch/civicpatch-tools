@@ -20,7 +20,7 @@ from scoring import (
 from test_local_municipal_officials_eval import make_together_prompt
 from test_local_relevant_page_eval import page_dispositions, score_page
 
-from runners.people_collector.schemas import ExtractedPersonRecord
+from runners.pipeline03_people_collector.schemas import ExtractedPersonRecord
 from shared.utils.label_parser import parse_label
 from tests.factories.extracted_person import extracted_person_factory
 

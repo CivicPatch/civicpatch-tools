@@ -6,8 +6,8 @@ from unittest.mock import AsyncMock, MagicMock, patch
 
 import pytest
 
-from runners.organizations_collector.role_asks import RoleAsk
-from runners.organizations_collector.schemas import (
+from runners.pipeline02_organizations_collector.role_asks import RoleAsk
+from runners.pipeline02_organizations_collector.schemas import (
     FilledBy,
     OrganizationsCollectorConfig,
     OrganizationsCollectorContext,
@@ -16,13 +16,13 @@ from runners.organizations_collector.schemas import (
     RoleAnswer,
     RoleClaim,
 )
-from runners.organizations_collector.transitions.main import ASKS_PER_QUESTION, extract
+from runners.pipeline02_organizations_collector.transitions.main import ASKS_PER_QUESTION, extract
 from shared.schemas import PipelineRunLimits
 from shared.utils.layered_config import ConfigFile, merged_config
 
 pytestmark = pytest.mark.unit
 
-MAIN = "runners.organizations_collector.transitions.main"
+MAIN = "runners.pipeline02_organizations_collector.transitions.main"
 _LAW = "# Charter\n\n- **§ 1. Selectboard**\nThe Selectboard shall consist of five members elected at large.\n"
 _MEMBER = RoleAsk(organization_name="Select Board", role_id="member", role_label="Select Board Member", names=["Select Board Member"])
 _CHAIR = RoleAsk(organization_name="Select Board", role_id="chair", role_label="Chair", names=["Chair"])

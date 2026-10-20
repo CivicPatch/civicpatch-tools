@@ -1,7 +1,7 @@
 from unittest.mock import AsyncMock, patch
 
 import pytest
-from runners.people_collector.schemas import (
+from runners.pipeline03_people_collector.schemas import (
     Link,
     LinkFrontier,
     LinkStatus,
@@ -11,14 +11,14 @@ from runners.people_collector.schemas import (
     ExtractedPersonRecord,
     RelevantPageResponseSchema,
 )
-from runners.people_collector.steps.step_04_process_page_content.heuristics import (
+from runners.pipeline03_people_collector.steps.step_04_process_page_content.heuristics import (
     check_page_heuristics,
     without_unverified_emails,
 )
-from runners.people_collector.steps.step_04_process_page_content.heuristics_failure import (
+from runners.pipeline03_people_collector.steps.step_04_process_page_content.heuristics_failure import (
     HeuristicsFailure,
 )
-from runners.people_collector.steps.step_04_process_page_content.process_page_content import (
+from runners.pipeline03_people_collector.steps.step_04_process_page_content.process_page_content import (
     _resolve_candidate_urls,
     _split_content_into_chunks,
     check_page_relevance,
@@ -26,13 +26,13 @@ from runners.people_collector.steps.step_04_process_page_content.process_page_co
     process_with_llm,
 )
 from shared.utils.content_hash import content_hash
-from runners.people_collector.utils.link_discovery import (
+from runners.pipeline03_people_collector.utils.link_discovery import (
     _pending_sort_key,
     add_relevant_urls,
     anchor_texts,
     has_role_and_contact_info,
 )
-from runners.people_collector.utils.organization_terms import as_tokens, search_phrases
+from runners.pipeline03_people_collector.utils.organization_terms import as_tokens, search_phrases
 from shared.schemas import KnownOrganization, Post, RoleConfig, Role
 from tests.factories.pipeline_run_context import pipeline_run_context_factory
 from shared.utils.taxonomy import build_taxonomy
@@ -924,7 +924,7 @@ async def test_check_page_relevance_filters_cross_domain_relevant_urls():
     )
 
     with patch(
-        "runners.people_collector.steps.step_04_process_page_content.process_page_content.open_router_llm.run_prompt",
+        "runners.pipeline03_people_collector.steps.step_04_process_page_content.process_page_content.open_router_llm.run_prompt",
         new=AsyncMock(return_value=llm_response.model_dump()),
     ):
         result_frontier, _ = await check_page_relevance(
@@ -936,7 +936,7 @@ async def test_check_page_relevance_filters_cross_domain_relevant_urls():
     assert "https://seattle.gov/city-council" in result_pending_urls
 
 
-_LLM = "runners.people_collector.steps.step_04_process_page_content.process_page_content"
+_LLM = "runners.pipeline03_people_collector.steps.step_04_process_page_content.process_page_content"
 
 
 def _context_with_page(page: Link):
@@ -1033,7 +1033,7 @@ async def test_process_with_llm_reorders_inverted_names():
     )
 
     with patch(
-        "runners.people_collector.steps.step_04_process_page_content.process_page_content.open_router_llm.run_prompt",
+        "runners.pipeline03_people_collector.steps.step_04_process_page_content.process_page_content.open_router_llm.run_prompt",
         new=AsyncMock(return_value=llm_response),
     ):
         records = await process_with_llm(
@@ -1057,7 +1057,7 @@ async def test_process_with_llm_resolves_a_shortened_url_against_its_page():
     )
 
     with patch(
-        "runners.people_collector.steps.step_04_process_page_content.process_page_content.open_router_llm.run_prompt",
+        "runners.pipeline03_people_collector.steps.step_04_process_page_content.process_page_content.open_router_llm.run_prompt",
         new=AsyncMock(return_value=llm_response),
     ):
         records = await process_with_llm(
@@ -1091,7 +1091,7 @@ async def test_process_with_llm_keeps_only_downloaded_images():
     )
 
     with patch(
-        "runners.people_collector.steps.step_04_process_page_content.process_page_content.open_router_llm.run_prompt",
+        "runners.pipeline03_people_collector.steps.step_04_process_page_content.process_page_content.open_router_llm.run_prompt",
         new=AsyncMock(return_value=llm_response),
     ):
         records = await process_with_llm(

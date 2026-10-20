@@ -1,6 +1,6 @@
 import pytest
 
-from runners.people_collector.steps.step_02_scrape_page.browser import _failure_detail
+from runners.pipeline03_people_collector.steps.step_02_scrape_page.browser import _failure_detail
 
 # Shape of a real patchright navigation timeout: the reason, then a "Call log:" block.
 TIMEOUT_ERROR = (

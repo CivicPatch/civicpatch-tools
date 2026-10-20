@@ -5,14 +5,14 @@ from unittest.mock import AsyncMock, MagicMock, patch
 
 import pytest
 
-from runners.organizations_collector.schemas import (
+from runners.pipeline02_organizations_collector.schemas import (
     OrganizationsCollectorConfig,
     OrganizationsCollectorContext,
     OrganizationsCollectorData,
     OrganizationsCollectorStep,
     RoleOutcomes,
 )
-from runners.organizations_collector.transitions.main import write
+from runners.pipeline02_organizations_collector.transitions.main import write
 from shared.schemas import (
     FoundBy,
     GoverningLaw,
@@ -56,7 +56,7 @@ def _context(governing_law: GoverningLaw | None, outcomes: RoleOutcomes | None) 
 
 async def _write(context: OrganizationsCollectorContext):
     patch_extras = AsyncMock()
-    with patch("runners.organizations_collector.transitions.main.civicpatch_api.patch_jurisdiction_extras", new=patch_extras):
+    with patch("runners.pipeline02_organizations_collector.transitions.main.civicpatch_api.patch_jurisdiction_extras", new=patch_extras):
         written, state = await write(MagicMock(), MagicMock(), context, MagicMock())
     return written, state, patch_extras
 

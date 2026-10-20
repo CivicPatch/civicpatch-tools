@@ -12,7 +12,7 @@ nobody to be placed in either.
 
 import pytest
 
-from runners.people_collector.steps.step_04_process_page_content.process_page_content import (
+from runners.pipeline03_people_collector.steps.step_04_process_page_content.process_page_content import (
     DIVISION_REQUIREMENT_TOLERANCE,
     required_division_count,
 )

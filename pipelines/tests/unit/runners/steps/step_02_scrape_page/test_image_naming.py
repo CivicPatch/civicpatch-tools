@@ -3,7 +3,7 @@ import os
 import pytest
 from unittest.mock import AsyncMock, MagicMock
 
-from runners.people_collector.steps.step_02_scrape_page.scrape_images import (
+from runners.pipeline03_people_collector.steps.step_02_scrape_page.scrape_images import (
     _register_image,
     hash_file,
 )

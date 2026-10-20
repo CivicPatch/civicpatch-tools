@@ -1,8 +1,8 @@
 import os
 import pytest
 from unittest.mock import patch
-from runners.people_collector.schemas import Link, LinkStatus
-from runners.people_collector.steps.step_03_preprocess_page_content.preprocess_page_content import preprocess_page_content
+from runners.pipeline03_people_collector.schemas import Link, LinkStatus
+from runners.pipeline03_people_collector.steps.step_03_preprocess_page_content.preprocess_page_content import preprocess_page_content
 from shared.utils.url_utils import canonical_url
 from shared.schemas import KnownOrganization
 from tests.factories.pipeline_run_context import pipeline_run_context_factory
@@ -18,7 +18,7 @@ def _make_context(tmp_path, extra_links=None):
     if extra_links:
         links.update(extra_links)
     ctx = pipeline_run_context_factory(steps={})
-    from runners.people_collector.schemas import LinkFrontier
+    from runners.pipeline03_people_collector.schemas import LinkFrontier
     frontier = LinkFrontier(links=links, queue=[])
     return ctx.model_copy(update={"data": ctx.data.model_copy(update={"frontier": frontier})})
 
@@ -30,8 +30,8 @@ def _run(tmp_path, html: str):
     ctx = _make_context(tmp_path)
     page = ctx.data.frontier.get(PAGE_URL)
     with (
-        patch("runners.people_collector.steps.step_03_preprocess_page_content.preprocess_page_content.data_path_utils.get_cache_path", return_value=str(tmp_path)),
-        patch("runners.people_collector.steps.step_03_preprocess_page_content.preprocess_page_content.filter_content", side_effect=lambda logger, identities, html, **kw: html),
+        patch("runners.pipeline03_people_collector.steps.step_03_preprocess_page_content.preprocess_page_content.data_path_utils.get_cache_path", return_value=str(tmp_path)),
+        patch("runners.pipeline03_people_collector.steps.step_03_preprocess_page_content.preprocess_page_content.filter_content", side_effect=lambda logger, identities, html, **kw: html),
     ):
         return preprocess_page_content(ctx, page)
 
@@ -47,7 +47,7 @@ def test_preprocess_sets_status_to_no_content_when_empty(tmp_path):
 
 
 def test_preprocess_does_not_affect_other_links(tmp_path):
-    from runners.people_collector.schemas import LinkFrontier
+    from runners.pipeline03_people_collector.schemas import LinkFrontier
     other_url = "https://seattle.gov/mayor"
     page_dir = tmp_path / FOLDER
     page_dir.mkdir(exist_ok=True)
@@ -60,8 +60,8 @@ def test_preprocess_does_not_affect_other_links(tmp_path):
     page = frontier.get(PAGE_URL)
 
     with (
-        patch("runners.people_collector.steps.step_03_preprocess_page_content.preprocess_page_content.data_path_utils.get_cache_path", return_value=str(tmp_path)),
-        patch("runners.people_collector.steps.step_03_preprocess_page_content.preprocess_page_content.filter_content", side_effect=lambda logger, identities, html, **kw: html),
+        patch("runners.pipeline03_people_collector.steps.step_03_preprocess_page_content.preprocess_page_content.data_path_utils.get_cache_path", return_value=str(tmp_path)),
+        patch("runners.pipeline03_people_collector.steps.step_03_preprocess_page_content.preprocess_page_content.filter_content", side_effect=lambda logger, identities, html, **kw: html),
     ):
         frontier_out, _ = preprocess_page_content(ctx, page)
 
@@ -101,9 +101,9 @@ def test_body_names_are_keywords_for_the_content_filter(tmp_path):
 
     seen = {}
     with (
-        patch("runners.people_collector.steps.step_03_preprocess_page_content.preprocess_page_content.data_path_utils.get_cache_path", return_value=str(tmp_path)),
+        patch("runners.pipeline03_people_collector.steps.step_03_preprocess_page_content.preprocess_page_content.data_path_utils.get_cache_path", return_value=str(tmp_path)),
         patch(
-            "runners.people_collector.steps.step_03_preprocess_page_content.preprocess_page_content.filter_content",
+            "runners.pipeline03_people_collector.steps.step_03_preprocess_page_content.preprocess_page_content.filter_content",
             side_effect=lambda logger, identities, html, **kw: seen.update(kw) or html,
         ),
     ):

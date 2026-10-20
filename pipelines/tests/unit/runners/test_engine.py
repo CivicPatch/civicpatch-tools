@@ -12,8 +12,8 @@ from unittest.mock import AsyncMock, MagicMock, patch
 import pytest
 
 from runners.engine import IllegalTransition, Machine, run_pipeline
-from runners.people_collector.schemas import PeopleCollectorState, PeopleCollectorStep
-from runners.people_collector.transitions.graph import PEOPLE_COLLECTOR_TRANSITIONS
+from runners.pipeline03_people_collector.schemas import PeopleCollectorState, PeopleCollectorStep
+from runners.pipeline03_people_collector.transitions.graph import PEOPLE_COLLECTOR_TRANSITIONS
 from shared.utils.statuses import TERMINAL_PIPELINE_RUN_STATUSES, PipelineRunStatus
 from tests.factories.pipeline_run_context import pipeline_run_context_factory
 
@@ -154,7 +154,7 @@ def test_every_state_the_engine_handles_is_in_the_graph_and_vice_versa():
     """`TRANSITION_MAP` says who runs a state; `PEOPLE_COLLECTOR_TRANSITIONS` says where it may go.
     Adding one without the other is the drift this pins — a handler with no declared edges
     raises on its first transition, and an edge with no handler is a KeyError mid-run."""
-    from runners.people_collector.transitions.main import TRANSITION_MAP
+    from runners.pipeline03_people_collector.transitions.main import TRANSITION_MAP
 
     # PENDING and RUNNING are civicpatch.org's; the engine starts at INIT.
     before_the_engine = {PipelineRunStatus.PENDING, PipelineRunStatus.RUNNING}
@@ -180,8 +180,8 @@ def test_the_people_collectors_graph_ends_where_every_run_ends():
 def test_no_pipelines_step_reuses_a_lifecycle_name():
     """A step named SUCCESS or INIT would be the lifecycle state as far as the engine and
     civicpatch.org can tell, since both compare by value."""
-    from runners.governing_law_collector.schemas import GoverningLawCollectorStep
-    from runners.organizations_collector.schemas import OrganizationsCollectorStep
+    from runners.pipeline01_governing_law_collector.schemas import GoverningLawCollectorStep
+    from runners.pipeline02_organizations_collector.schemas import OrganizationsCollectorStep
 
     lifecycle = {status.value for status in PipelineRunStatus}
     for steps in (PeopleCollectorStep, GoverningLawCollectorStep, OrganizationsCollectorStep):

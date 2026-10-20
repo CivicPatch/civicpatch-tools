@@ -2,7 +2,7 @@
 
 import pytest
 
-from runners.people_collector.utils.organization_terms import (
+from runners.pipeline03_people_collector.utils.organization_terms import (
     as_tokens,
     organization_phrases,
     expected_divisions,
@@ -10,7 +10,7 @@ from runners.people_collector.utils.organization_terms import (
     roles_to_look_for,
     search_phrases,
 )
-from runners.people_collector.schemas import ExpectedMembership
+from runners.pipeline03_people_collector.schemas import ExpectedMembership
 from shared.schemas import KnownOrganization, Post
 
 pytestmark = pytest.mark.unit

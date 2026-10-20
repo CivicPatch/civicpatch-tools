@@ -13,16 +13,16 @@ import json
 import pathlib
 from typing import Callable, Iterable
 
-from runners.people_collector.schemas import Link, LinkFrontier, LinkStatus, OrganizationNeed
+from runners.pipeline03_people_collector.schemas import Link, LinkFrontier, LinkStatus, OrganizationNeed
 from shared.utils.url_utils import canonical_url
-from runners.people_collector.steps.step_04_process_page_content.organization_progress import (
+from runners.pipeline03_people_collector.steps.step_04_process_page_content.organization_progress import (
     required_to_be_done,
 )
-from runners.people_collector.utils.link_discovery import (
+from runners.pipeline03_people_collector.utils.link_discovery import (
     _compute_link_signals,
     _pending_sort_key,
 )
-from runners.people_collector.utils.organization_terms import as_tokens
+from runners.pipeline03_people_collector.utils.organization_terms import as_tokens
 from shared.utils import url_utils
 
 DATA_SOURCE = pathlib.Path("data_source")

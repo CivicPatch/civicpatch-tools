@@ -20,9 +20,9 @@ import yaml
 import services.open_router.llm as open_router_llm
 import services.open_router.prompts as open_router_prompts
 from eval_utils import record_history, record_run
-from runners.organizations_collector import sections
-from runners.organizations_collector.schemas import RoleAnswer
-from runners.organizations_collector.transitions.main import ASKS_PER_QUESTION
+from runners.pipeline02_organizations_collector import sections
+from runners.pipeline02_organizations_collector.schemas import RoleAnswer
+from runners.pipeline02_organizations_collector.transitions.main import ASKS_PER_QUESTION
 from shared.schemas import SelectionMethod
 from shared.utils.citation import supporting_quote
 from utils import cost_utils

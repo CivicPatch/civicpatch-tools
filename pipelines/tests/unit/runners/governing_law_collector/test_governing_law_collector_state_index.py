@@ -5,7 +5,7 @@ from pathlib import Path
 
 import pytest
 
-from runners.governing_law_collector.finders.state_index import charter_links, charter_title_matches
+from runners.pipeline01_governing_law_collector.finders.state_index import charter_links, charter_title_matches
 from shared.utils.layered_config import CharterLinkList
 
 pytestmark = pytest.mark.unit

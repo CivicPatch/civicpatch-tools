@@ -80,7 +80,7 @@ def test_officials_eval_fixtures_validate():
     """The eval loads these with `ExtractedPersonRecord(**person)`, so a fixture carrying the
     old `roles:`/`designations:` pair fails there and nowhere else — under an API key and a
     bill. The record shape has already changed once."""
-    from runners.people_collector.schemas import ExtractedPersonRecord
+    from runners.pipeline03_people_collector.schemas import ExtractedPersonRecord
 
     cases = sorted(pathlib.Path("tests/prompts/datasets/local/municipal_officials").iterdir())
     fixtures = [case / "expected.yml" for case in cases if (case / "expected.yml").exists()]
