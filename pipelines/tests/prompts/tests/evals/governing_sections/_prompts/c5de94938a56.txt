@@ -1,0 +1,13 @@
+
+    Below are the section headings of a municipal or county charter or statute, one per line, each
+    after an id like H0017 (the id is not the section number), grouped under their subchapters.
+
+    Which sections say how the governing body is composed and elected, how the chief executive is
+    chosen, how the governing body picks its presiding officers, and how the jurisdiction's other
+    officers are elected or appointed? Appointments are often listed under the powers and duties
+    of the governing body, the chief executive or the manager, so include those sections, and any
+    section whose heading names an office (Clerk, Treasurer, Assessor, Attorney). Include a
+    section when in doubt. Leave out finance, utilities, boards and commissions, and procedure.
+
+    Return {"sections": [...]} with the ids exactly as written, for example "H0017".
+    

@@ -1,0 +1,47 @@
+Subchapter 001: Village Officers Responsible to Citizens; Village Meetings
+  H0001: § 1. Authority of citizens
+  H0002: § 2. Village meetings
+  H0003: § 3. Postponement and combining of Village meetings
+  H0004: § 4. Australian ballots
+  H0005: § 5. Warnings
+  H0006: § 6. Conduct
+  H0007: § 7. Reconsideration of actions taken
+  H0008: § 8. Board of Civil Authority
+  H0009: § 9. Nomination of candidates
+Subchapter 003: Boundaries and Powers of the Village
+  H0010: § 31. General powers
+  H0011: § 32. Boundaries
+Subchapter 005: Elected Officers
+  H0012: § 51. Elected officers
+  H0013: § 52. Trustees
+  H0014: § 53. Auditors
+  H0015: § 54. Bliss Fund trustees
+  H0016: § 55. President
+Subchapter 007: Appointed Officers
+  H0017: § 71. Appointed officers
+  H0018: § 72. Village Clerk
+  H0019: § 73. Village Treasurer
+  H0020: § 74. Delinquent Tax Collector
+  H0021: § 75. Constable
+Subchapter 009: Financial
+  H0022: § 91. Fiscal year
+  H0023: § 92. Appropriations
+  H0024: § 93. Taxes
+  H0025: § 94. Tax abatements
+  H0026: § 95. Indemnification
+Subchapter 011: Procedural Matters
+  H0027: § 111. Ordinances
+  H0028: § 112. Compensation and fees
+Subchapter 013: Hyde Park Electric Utility
+  H0029: § 131. Electric utility
+Subchapter 015: Hyde Park Water and Sewer
+  H0030: § 151. Water and sewer utility
+Subchapter 017: General Provisions
+  H0031: § 171. Application of general law
+  H0032: § 172. Severability
+  H0033: § 173. Officers; appointive
+  H0034: § 174. Terms of office
+  H0035: § 175. Construction
+  H0036: § 176. Amendment or repeal
+  H0037: § 177. Effective date
+  H0038: § 178. Definitions

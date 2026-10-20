@@ -1,0 +1,15 @@
+jurisdiction_ocdid: ocd-jurisdiction/country:us/state:vt/place:montpelier/government
+name: Montpelier city
+source_url: https://legislature.vermont.gov/statutes/fullchapter/24APPENDIX/005
+chars: 85720
+sections: 150
+covering:
+  mayor:
+  - § 401. Election and tenure of Mayor
+  council-member:
+  - § 302. City Council composition and term of office
+  council-president:
+  - § 304. Election of President, Vice President, and Parliamentarian
+  council-vice-president:
+  - § 304. Election of President, Vice President, and Parliamentarian
+known_misses: {}

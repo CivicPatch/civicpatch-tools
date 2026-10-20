@@ -1,0 +1,16 @@
+  H0001: § 1. Village boundaries; residents; Town inhabitants
+  H0002: § 2. Corporate existence; assessment
+  H0003: § 3. Annual meeting; election of officers
+  H0004: § 4. Election of officers; enactment of bylaws
+  H0005: § 5. Breach of bylaws; fines and forfeitures
+  H0006: § 6. Clerk; Treasurer; Collector
+  H0007: § 7. Clerk; duties
+  H0008: § 8. Trustees; duties
+  H0009: § 9. Fire wardens
+  H0010: § 10. Hiring of money
+  H0011: § 11. Contract with aqueduct company
+  H0012: § 12. Construction; sidewalks; sewers; drains
+  H0013: § 13. Highway district; construction agents
+  H0014: § 14. Highway taxes
+  H0015: § 15. Sewer system
+  H0016: § 16. Legislative authority

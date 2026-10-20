@@ -1,0 +1,43 @@
+  H0001: § 1. Establishment of City
+  H0002: § 2. \[Transitional provisions relating to the governance of the Towns of Newport and Derby; the City of Newport and the process for acceptance of the charter; § 2 of No. 273 of the Laws of 1917.\]
+  H0003: § 3. City boundaries and corporate powers
+  H0004: § 4. Voter qualifications
+  H0005: § 5. Warning and convening of annual meeting
+  H0006: § 6. Elections of officers at annual meeting
+  H0007: § 7. Mayor and Board of Aldermen as City Council
+  H0008: § 8. Officers appointed by City Council
+  H0009: § 9. Powers of Mayor; City Council to establish water rates
+  H0010: § 10. Mayoral approval and Board of Aldermen reconsideration of vetoed actions
+  H0011: § 11. Police officers
+  H0012: § 12. Board of Civil Authority and Board of Abatement
+  H0013: § 13. City Clerk
+  H0014: § 14. City Treasurer
+  H0015: § 14a. Collector of Taxes
+  H0016: § 15. Constable
+  H0017: § 16. Department of Assessment
+  H0018: § 17. Auditors
+  H0019: § 18. City grand jurors
+  H0020: § 19. Overseer of the Poor
+  H0021: § 20. Superintendent of Streets
+  H0022: § 21. City Attorney
+  H0023: § 22. Board of Fire Wardens
+  H0024: § 23. City Council powers
+  H0025: § 24. Fines
+  H0026: § 25. Streets and sidewalks
+  H0027: § 26. Water system
+  H0028: § 27. Sale or lease of City owned property
+  H0029: § 28. City expenditures
+  H0030: § 29. Assessment of taxes on grand list
+  H0031: § 30. Revenues credit and appropriations
+  H0032: § 31. \[Transitional provisions related to the financial obligations of the Villages of Newport and West Derby; 1917 Acts and Resolves No. 273, § 31.\]
+  H0033: § 32. Bonds of City officers
+  H0034: § 33. \[Transitional provisions related to the financial assets and liabilities of the Villages of Newport and West Derby; 1917 Acts and Resolves No. 273, § 33.\]
+  H0035: § 34. Pledge of credit
+  H0036: § 35. \[Transitional provisions related to the financial liabilities and assets of the Towns of Newport and Derby; 1917 Acts and Resolves No. 273, § 35.\]
+  H0037: § 36. \[Transitional provisions related to the books and records of the Town of Newport; 1917 Acts and Resolves No. 273, § 36.\]
+  H0038: § 37. \[Transitional provisions related to the books and records of the Town of Derby; 1917 Acts and Resolves No. 273, § 37.\]
+  H0039: § 38. Paupers
+  H0040: § 39. Public schools and school property
+  H0041: § 40. City Manager
+  H0042: § 41. City Council election of City officers
+  H0043: § 42. \[Transitional provisions related to effective date.\]

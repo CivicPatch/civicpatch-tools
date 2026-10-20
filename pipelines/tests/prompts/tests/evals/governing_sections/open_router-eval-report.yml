@@ -1,0 +1,68 @@
+run:
+  timestamp: '2026-10-20T01:54:50+00:00'
+  prompt_sha256: 206d0e00f827
+  prompt_file: _prompts/206d0e00f827.txt
+cost_summary:
+  model: deepseek/deepseek-v4-flash
+  elapsed_seconds: 344.6
+  total_input_tokens: 24252
+  total_output_tokens: 65115
+  total_cost_usd: 0.02162748
+roles_covered: 54/55
+sections_kept: 0.273
+cases:
+  vt_brattleboro:
+    roles: 10
+    covered: 10
+    missed: []
+    picked: 24
+    listed: 53
+  vt_burlington:
+    roles: 4
+    covered: 4
+    missed: []
+    picked: 86
+    listed: 365
+  vt_hartford:
+    roles: 7
+    covered: 7
+    missed: []
+    picked: 5
+    listed: 10
+  vt_hyde_park_village:
+    roles: 5
+    covered: 4
+    missed:
+    - president-pro-tempore
+    picked: 14
+    listed: 38
+  vt_montpelier:
+    roles: 4
+    covered: 4
+    missed: []
+    picked: 29
+    listed: 150
+  vt_newport:
+    roles: 8
+    covered: 8
+    missed: []
+    picked: 17
+    listed: 43
+  vt_stowe:
+    roles: 7
+    covered: 7
+    missed: []
+    picked: 14
+    listed: 47
+  vt_winooski:
+    roles: 7
+    covered: 7
+    missed: []
+    picked: 23
+    listed: 81
+  vt_woodstock_village:
+    roles: 3
+    covered: 3
+    missed: []
+    picked: 7
+    listed: 16

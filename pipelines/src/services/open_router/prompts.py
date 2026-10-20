@@ -437,3 +437,24 @@ def page_covers_organization_prompt(
 {listed_note}
     IMPORTANT: Return only valid JSON, {{"covers": true}} or {{"covers": false}}.
     """
+
+
+def governing_sections_prompt() -> str:
+    """Which sections of a long charter or statute to read: asked of the headings alone, sent as
+    the content, one per line after an id like H0017 and grouped under their subchapters. The id
+    is not the section number: shown a list index, the model answered with the § number."""
+    return """
+    Below are the section headings of a municipal or county charter or statute, one per line, each
+    after an id like H0017 (the id is not the section number), grouped under their subchapters.
+
+    Which sections say how the governing body is composed and elected, how the chief executive is
+    chosen, how the governing body picks its presiding officers, who presides at a town or village
+    meeting, and how the jurisdiction's other officers are elected or appointed? Appointments are
+    often listed under the powers and duties of the governing body, the chief executive or the
+    manager, so include those sections; include any section whose heading names an office (Clerk,
+    Treasurer, Assessor, Attorney), and every section of a subchapter about officers, whatever its
+    heading. Include a section when in doubt. Leave out finance, utilities, boards and
+    commissions, and other procedure.
+
+    Return {"sections": [...]} with the ids exactly as written, for example "H0017".
+    """

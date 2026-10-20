@@ -1,0 +1,101 @@
+runs:
+- timestamp: '2026-10-20T01:07:17+00:00'
+  provider: open_router
+  model: deepseek/deepseek-v4-flash
+  prompt_sha256: fe43737adfd6
+  cost_usd: 0.0077175
+  elapsed_seconds: 95.32
+  scores:
+    roles_covered: 0.7636363636363637
+    sections_kept: 0.10834371108343711
+  cases:
+    vt_brattleboro: 0.5
+    vt_burlington: 0.75
+    vt_hartford: 0.5714285714285714
+    vt_hyde_park_village: 0.8
+    vt_montpelier: 1.0
+    vt_newport: 1.0
+    vt_stowe: 0.8571428571428571
+    vt_winooski: 0.7142857142857143
+    vt_woodstock_village: 1.0
+  dispositions: {}
+- timestamp: '2026-10-20T01:12:24+00:00'
+  provider: open_router
+  model: deepseek/deepseek-v4-flash
+  prompt_sha256: fe43737adfd6
+  cost_usd: 0.012574296
+  elapsed_seconds: 264.89
+  scores:
+    roles_covered: 0.8363636363636363
+    sections_kept: 0.11083437110834371
+  cases:
+    vt_brattleboro: 0.9
+    vt_burlington: 0.75
+    vt_hartford: 0.5714285714285714
+    vt_hyde_park_village: 0.8
+    vt_montpelier: 1.0
+    vt_newport: 1.0
+    vt_stowe: 0.8571428571428571
+    vt_winooski: 0.7142857142857143
+    vt_woodstock_village: 1.0
+  dispositions: {}
+- timestamp: '2026-10-20T01:41:43+00:00'
+  provider: open_router
+  model: deepseek/deepseek-v4-flash
+  prompt_sha256: c5de94938a56
+  cost_usd: 0.0184954
+  elapsed_seconds: 214.45
+  scores:
+    roles_covered: 0.9090909090909091
+    sections_kept: 0.21544209215442092
+  cases:
+    vt_brattleboro: 0.7
+    vt_burlington: 0.75
+    vt_hartford: 1.0
+    vt_hyde_park_village: 0.8
+    vt_montpelier: 1.0
+    vt_newport: 1.0
+    vt_stowe: 1.0
+    vt_winooski: 1.0
+    vt_woodstock_village: 1.0
+  dispositions: {}
+- timestamp: '2026-10-20T01:44:10+00:00'
+  provider: open_router
+  model: deepseek/deepseek-v4-flash
+  prompt_sha256: c5de94938a56
+  cost_usd: 0.007256928
+  elapsed_seconds: 142.71
+  scores:
+    roles_covered: 0.9636363636363636
+    sections_kept: 0.23163138231631383
+  cases:
+    vt_brattleboro: 1.0
+    vt_burlington: 0.75
+    vt_hartford: 1.0
+    vt_hyde_park_village: 0.8
+    vt_montpelier: 1.0
+    vt_newport: 1.0
+    vt_stowe: 1.0
+    vt_winooski: 1.0
+    vt_woodstock_village: 1.0
+  dispositions: {}
+- timestamp: '2026-10-20T01:54:50+00:00'
+  provider: open_router
+  model: deepseek/deepseek-v4-flash
+  prompt_sha256: 206d0e00f827
+  cost_usd: 0.02162748
+  elapsed_seconds: 344.6
+  scores:
+    roles_covered: 0.9818181818181818
+    sections_kept: 0.2727272727272727
+  cases:
+    vt_brattleboro: 1.0
+    vt_burlington: 1.0
+    vt_hartford: 1.0
+    vt_hyde_park_village: 0.8
+    vt_montpelier: 1.0
+    vt_newport: 1.0
+    vt_stowe: 1.0
+    vt_winooski: 1.0
+    vt_woodstock_village: 1.0
+  dispositions: {}

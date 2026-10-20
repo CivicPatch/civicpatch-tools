@@ -1,0 +1,81 @@
+  H0001: § 101. Corporate existence retained; form of government
+  H0002: § 102. Powers of the City
+  H0003: § 103. Construction
+  H0004: § 104. Intergovernmental relations
+  H0005: § 105. Power over water resources
+  H0006: § 201. City meetings
+  H0007: § 202. Qualified voters
+  H0008: § 203. Special meetings
+  H0009: § 204. Reconsideration and rescission
+  H0010: § 205. Nominations in general
+  H0011: § 206. Nomination of incumbent
+  H0012: § 207. Voting machines
+  H0013: § 301. Composition; eligibility; election and terms
+  H0014: § 302. Compensation; expenses
+  H0015: § 303. Mayor and Deputy Mayor; election, terms, and duties
+  H0016: § 304. General powers and duties
+  H0017: § 305. Prohibitions; conflict of interest
+  H0018: § 306. Vacancies; forfeiture of office; filling of vacancies
+  H0019: § 307. Judge of qualification
+  H0020: § 308. Clerk of the City Council
+  H0021: § 309. Investigations
+  H0022: § 310. Independent audit
+  H0023: § 311. Procedure
+  H0024: § 401. Action requiring an ordinance
+  H0025: § 402. Ordinances in general
+  H0026: § 403. Emergency ordinances
+  H0027: § 404. Codes of technical regulations
+  H0028: § 405. Authentication and recording; codification; printing
+  H0029: § 406. Ordinance; enforcement
+  H0030: § 407. Court authorized to order abatement
+  H0031: § 408. Offenders may be liable in damages
+  H0032: § 409. City Council to establish penalty
+  H0033: § 410. General authority for initiative and referendum
+  H0034: § 411. Commencement of proceedings; affidavit
+  H0035: § 412. Petitions
+  H0036: § 413. Procedure after filing
+  H0037: § 414. Referendum petitions; suspension of effect of ordinance
+  H0038: § 415. Action on petitions
+  H0039: § 416. Results of election
+  H0040: § 501. Appointment; qualifications; compensation of City Manager
+  H0041: § 502. Acting City Manager
+  H0042: § 503. Removal of City Manager
+  H0043: § 504. Powers and duties of the City Manager
+  H0044: § 505. City Manager; vacancy in office of
+  H0045: § 506. City officers; appointment of
+  H0046: § 601. Organization
+  H0047: § 602. Resident engagement
+  H0048: § 603. Personnel system
+  H0049: § 604. Repealed. 2015, No. M-19 (Adj. Sess.), § 2, eff. May 17, 2016.
+  H0050: § 605. Surety bonds
+  H0051: § 701. Fiscal year
+  H0052: § 702. Submission of budget and budget message
+  H0053: § 703. Budget message
+  H0054: § 704. Budget
+  H0055: § 705. Capital improvement plan
+  H0056: § 706. Council and annual meeting action on budget
+  H0057: § 707. Public records
+  H0058: § 708. Amendments after adoption
+  H0059: § 709. Lapse of appropriations
+  H0060: § 710. Administration of budget
+  H0061: § 711. Bonds
+  H0062: § 712. Warrants for payment
+  H0063: § 713. Tax levy; authority for
+  H0064: § 714. Credit of the City for current expenses
+  H0065: § 715. Expenditures not to exceed revenues
+  H0066: § 716. Authority to pledge credit of City
+  H0067: § 717. Tax classification
+  H0068: § 718. Tax increment financing
+  H0069: § 719. Local option tax
+  H0070: §§ 801-807. Repealed. 2015, No. M-19 (Adj. Sess.), § 3, eff. May 17, 2016.
+  H0071: § 901. Personal financial interest
+  H0072: § 902. Separability
+  H0073: § 903. Oath of office
+  H0074: § 904. Savings clause
+  H0075: § 905. Title of charter
+  H0076: § 906. Continuation in office
+  H0077: § 907. Amendment of the charter
+  H0078: § 908. Penalties; forfeitures or suits not affected
+  H0079: § 909. Continuation of acts not amended
+  H0080: § 910. Application of State statutes
+  H0081: § 911. Charter effective

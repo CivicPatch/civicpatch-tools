@@ -1,0 +1,63 @@
+Subchapter 002: Organization of Town Government
+  H0001: § 2.1. Definitions
+  H0002: § 2.2. Elected officers
+  H0003: § 2.3. Manner of election
+  H0004: § 2.3a. Early voting
+  H0005: § 2.4. Representative Town Meeting
+  H0006: § 2.5. Selectboard
+  H0007: § 2.6. Board of School Directors
+  H0008: § 2.7. Board of Library Trustees
+  H0009: § 2.8. Consolidation of services
+  H0010: § 2.9. Conflict of interest
+  H0011: § 2.10. Limits on terms of office
+  H0012: § 2.11. Elected youth voter; authority
+Subchapter 003: Powers of the People
+  H0013: § 3.1. Powers
+  H0014: § 3.2. Initiative
+  H0015: § 3.3. Repealed. 2013, No. M-7, § 3, effective May 24, 2013.
+  H0016: § 3.4. Referendum
+  H0017: § 3.5. Recall
+Subchapter 004: Powers and Responsibilities of the Selectboard
+  H0018: § 4.1. Composition; eligibility; elections; terms
+  H0019: § 4.2. Compensation
+  H0020: § 4.3. Prohibitions
+  H0021: § 4.4. Vacancies
+  H0022: § 4.5. Appointments
+  H0023: § 4.6. General powers, duties, and responsibilities of the Selectboard
+Subchapter 005: Powers and Responsibilities of the Town Manager
+  H0024: § 5.1. General powers; duties; responsibilities of the Town Manager
+Subchapter 006: Powers and Responsibilities of the School Directors
+  H0025: § 6.1. Composition; eligibility; elections; terms
+  H0026: § 6.2. Compensation
+  H0027: § 6.3. Prohibitions
+  H0028: § 6.4. Vacancies
+  H0029: § 6.5. Appointments
+  H0030: § 6.6. General powers and responsibilities of the School Directors
+Subchapter 007: Finances
+  H0031: § 7.1. Capital expenditures
+  H0032: § 7.2. Capital Grant Review Board
+  H0033: § 7.3. Revenue
+  H0034: § 7.4. Reappraisal of property
+  H0035: § 7.5. Lapse of appropriation
+  H0036: § 7.6. Independent audit
+  H0037: § 7.7. Borrowing in anticipation of taxes
+  H0038: § 7.8. Office of Assessment
+Subchapter 008: Amendment
+  H0039: § 8.1. Charter amendments
+Subchapter 009: Transitional Provision
+  H0040: §§ 9.1-9.3. \[Transitional provisions.\]
+Subchapter 010: Addendum A; Representative Town Meetings
+  H0041: § 10.1. Representative Town Meeting; authorized
+  H0042: § 10.2. Districts; report of Selectboard; meetings; voting
+  H0043: § 10.3. Election of Town Meeting members; certification of voters; Town Meeting membership;
+  H0044: § 10.4. Nomination of candidates; preparation and delivery of ballots; return of unused ballots
+  H0045: § 10.5. Resignation or disqualification of members; vacancies; how filled
+  H0046: § 10.6. Voting; members to receive no compensation; quorum; warning
+  H0047: § 10.7. Articles in warning; action on
+  H0048: § 10.8. Referendum
+  H0049: § 10.9. Interpretation of Town acts
+  H0050: § 10.10. Limitation
+  H0051: §§ 10.11-10.12. \[Transitional provisions.\]
+Subchapter 011: Addendum C: Description of Officers, Officials, Boards, Commissions, and Committees
+  H0052: § 11.1. Description of officers, officials, boards, commissions, and committees
+  H0053: § 11.2. Bus Service Advisory Committee

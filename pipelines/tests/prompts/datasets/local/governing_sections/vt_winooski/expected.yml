@@ -1,0 +1,21 @@
+jurisdiction_ocdid: ocd-jurisdiction/country:us/state:vt/place:winooski/government
+name: Winooski city
+source_url: https://legislature.vermont.gov/statutes/fullchapter/24APPENDIX/019
+chars: 73962
+sections: 81
+covering:
+  mayor:
+  - § 303. Mayor and Deputy Mayor; election, terms, and duties
+  council-member:
+  - § 301. Composition; eligibility; election and terms
+  deputy-mayor:
+  - § 303. Mayor and Deputy Mayor; election, terms, and duties
+  city-manager:
+  - § 501. Appointment; qualifications; compensation of City Manager
+  assessor:
+  - § 506. City officers; appointment of
+  city-attorney:
+  - § 304. General powers and duties
+  treasurer:
+  - § 304. General powers and duties
+known_misses: {}
