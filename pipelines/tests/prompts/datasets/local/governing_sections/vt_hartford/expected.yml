@@ -1,0 +1,21 @@
+jurisdiction_ocdid: ocd-jurisdiction/country:us/state:vt/place:hartford/government
+name: Hartford town
+source_url: https://legislature.vermont.gov/statutes/fullchapter/24APPENDIX/123A
+chars: 31531
+sections: 10
+covering:
+  select-board-member:
+  - § 202. Elected officers
+  chair:
+  - § 203. Duties of elected officers
+  vice-chair:
+  - § 203. Duties of elected officers
+  city-manager:
+  - § 301. Appointed officers
+  moderator:
+  - § 202. Elected officers
+  treasurer:
+  - § 202. Elected officers
+  clerk:
+  - § 203. Duties of elected officers
+known_misses: {}

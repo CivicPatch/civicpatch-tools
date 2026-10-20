@@ -1,0 +1,27 @@
+jurisdiction_ocdid: ocd-jurisdiction/country:us/state:vt/place:brattleboro/government
+name: Brattleboro town
+source_url: https://legislature.vermont.gov/statutes/fullchapter/24APPENDIX/107
+chars: 71113
+sections: 53
+covering:
+  town-meeting-member:
+  - § 2.3. Manner of election
+  moderator:
+  - § 2.2. Elected officers
+  clerk:
+  - § 2.4. Representative Town Meeting
+  treasurer:
+  - § 2.4. Representative Town Meeting
+  select-board-member:
+  - § 2.5. Selectboard
+  chair:
+  - § 4.5. Appointments
+  vice-chair:
+  - § 4.5. Appointments
+  city-attorney:
+  - § 2.4. Representative Town Meeting
+  city-manager:
+  - § 4.5. Appointments
+  assessor:
+  - § 7.8. Office of Assessment
+known_misses: {}

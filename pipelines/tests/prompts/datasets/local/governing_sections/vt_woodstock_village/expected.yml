@@ -1,0 +1,13 @@
+jurisdiction_ocdid: ocd-jurisdiction/country:us/state:vt/place:woodstock_village/government
+name: Woodstock village
+source_url: https://legislature.vermont.gov/statutes/fullchapter/24APPENDIX/291
+chars: 10971
+sections: 16
+covering:
+  clerk:
+  - § 3. Annual meeting; election of officers
+  trustee:
+  - § 3. Annual meeting; election of officers
+  treasurer:
+  - § 3. Annual meeting; election of officers
+known_misses: {}

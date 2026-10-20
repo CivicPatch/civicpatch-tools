@@ -1,0 +1,23 @@
+jurisdiction_ocdid: ocd-jurisdiction/country:us/state:vt/place:stowe/government
+name: Stowe town
+source_url: https://legislature.vermont.gov/statutes/fullchapter/24APPENDIX/153
+chars: 49350
+sections: 47
+covering:
+  select-board-member:
+  - § 401. Officers generally; elected officers; recall
+  moderator:
+  - § 301. Application of general law
+  - § 401. Officers generally; elected officers; recall
+  chair:
+  - § 403. Organization of Selectboard
+  vice-chair:
+  - § 403. Organization of Selectboard
+  city-manager:
+  - § 701. Town Manager; appointment; qualifications; term
+  clerk:
+  - § 703. Powers and duties
+  - § 403. Organization of Selectboard
+  treasurer:
+  - § 703. Powers and duties
+known_misses: {}

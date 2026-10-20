@@ -10,7 +10,7 @@ from collections.abc import Sequence
 from shared.utils.taxonomy import MEMBER_ROLE_ID, UNMATCHED_ROLE_ID, Taxonomy
 
 from core.membership_label import MembershipLabel, render
-from core.people_roles import derive_roles, is_elected_by_members
+from core.people_roles import derive_roles, holds_a_member_post
 from core.projection.facts import PostKey, SourceRecord, latest_first
 from core.projection.membership_details import LabelDetails, MembershipRecords
 
@@ -21,14 +21,15 @@ def parse_labels(
     """One batch's labels, read once: the post they put their person in, and everything else
     they said. Both answers come out of the same parse, which is why they are one call.
 
-    A role the organization's members elect ("Vice Mayor", "Chair") is held by a member: its
-    post is the organization's Member post at the division the label names."""
+    A role the organization's members elect ("Vice Mayor", "Chair"), or an office with one holder
+    named with a division ("Mayor District 5"), is held by a member: its post is the
+    organization's Member post at the division the label names."""
     labels = list(
         dict.fromkeys(record.label for record in sorted(records, key=latest_first))
     )
     parsed = derive_roles(labels, jurisdiction_ocdid, taxonomy)
     ids_by_label = taxonomy.role_ids
-    if parsed.role and is_elected_by_members(parsed.role, taxonomy):
+    if holds_a_member_post(parsed, taxonomy):
         winner_id = MEMBER_ROLE_ID
     else:
         winner_id = ids_by_label.get(parsed.role) if parsed.role else None

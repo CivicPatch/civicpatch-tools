@@ -1,0 +1,18 @@
+jurisdiction_ocdid: ocd-jurisdiction/country:us/state:vt/place:hyde_park_village/government
+name: Hyde Park village
+source_url: https://legislature.vermont.gov/statutes/fullchapter/24APPENDIX/225
+chars: 37125
+sections: 38
+covering:
+  trustee:
+  - § 51. Elected officers
+  chair:
+  - § 52. Trustees
+  - § 8. Board of Civil Authority
+  clerk:
+  - § 72. Village Clerk
+  - § 71. Appointed officers
+  treasurer:
+  - § 73. Village Treasurer
+  - § 71. Appointed officers
+known_misses: {}

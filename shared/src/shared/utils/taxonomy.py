@@ -38,6 +38,8 @@ class Taxonomy(NamedTuple):
     role_ids: dict[str, str] = {}
     # canonical role name -> how the office is filled: the fold lets only elected_by_voters win a post.
     selection_methods: dict[str, SelectionMethod] = {}
+    # canonical role names with one holder per organization (Mayor, Clerk).
+    unique_roles: frozenset[str] = frozenset()
 
 
 def build_taxonomy(role_config: RoleConfig | None) -> Taxonomy:
@@ -52,6 +54,7 @@ def build_taxonomy(role_config: RoleConfig | None) -> Taxonomy:
         role_priority={entry.label: i for i, entry in enumerate(roles)},
         role_ids={entry.label: entry.id for entry in roles},
         selection_methods={entry.label: entry.selection_method for entry in roles},
+        unique_roles=frozenset(entry.label for entry in roles if entry.is_unique),
         designation_priority={
             lookup_key(name): i for i, name in enumerate(designations)
         },

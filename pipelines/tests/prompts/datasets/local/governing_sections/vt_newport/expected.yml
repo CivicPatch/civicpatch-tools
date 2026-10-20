@@ -1,0 +1,23 @@
+jurisdiction_ocdid: ocd-jurisdiction/country:us/state:vt/place:newport_city/government
+name: Newport city
+source_url: https://legislature.vermont.gov/statutes/fullchapter/24APPENDIX/007
+chars: 54001
+sections: 43
+covering:
+  mayor:
+  - § 6. Elections of officers at annual meeting
+  alderperson:
+  - § 6. Elections of officers at annual meeting
+  council-president:
+  - § 7. Mayor and Board of Aldermen as City Council
+  clerk:
+  - § 6. Elections of officers at annual meeting
+  treasurer:
+  - § 6. Elections of officers at annual meeting
+  city-attorney:
+  - § 8. Officers appointed by City Council
+  city-manager:
+  - § 40. City Manager
+  assessor:
+  - § 16. Department of Assessment
+known_misses: {}

@@ -181,7 +181,8 @@ def test_no_pipelines_step_reuses_a_lifecycle_name():
     """A step named SUCCESS or INIT would be the lifecycle state as far as the engine and
     civicpatch.org can tell, since both compare by value."""
     from runners.governing_law_collector.schemas import GoverningLawCollectorStep
+    from runners.organizations_collector.schemas import OrganizationsCollectorStep
 
     lifecycle = {status.value for status in PipelineRunStatus}
-    for steps in (PeopleCollectorStep, GoverningLawCollectorStep):
+    for steps in (PeopleCollectorStep, GoverningLawCollectorStep, OrganizationsCollectorStep):
         assert lifecycle.isdisjoint(step.value for step in steps), steps.__name__

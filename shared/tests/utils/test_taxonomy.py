@@ -275,6 +275,14 @@ def test_the_taxonomy_knows_how_each_role_is_filled():
     }
 
 
+def test_the_taxonomy_knows_which_roles_have_one_holder():
+    taxonomy = build_taxonomy(
+        RoleConfig(roles=[Role(id="mayor", label="Mayor", is_unique=True), Role(id="member", label="Member")])
+    )
+
+    assert taxonomy.unique_roles == {"Mayor"}
+
+
 def test_an_inactive_role_has_no_selection_method():
     taxonomy = build_taxonomy(RoleConfig(roles=[Role(id="warden", label="Warden", status=RoleStatus.INACTIVE)]))
 

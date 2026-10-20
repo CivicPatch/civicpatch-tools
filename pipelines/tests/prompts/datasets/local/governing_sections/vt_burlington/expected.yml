@@ -1,0 +1,18 @@
+jurisdiction_ocdid: ocd-jurisdiction/country:us/state:vt/place:burlington/government
+name: Burlington city
+source_url: https://legislature.vermont.gov/statutes/fullchapter/24APPENDIX/003
+chars: 373778
+sections: 365
+covering:
+  mayor:
+  - § 3. Election of Mayor and City Councilors
+  assessor:
+  - § 122. Enumerated
+  council-member:
+  - § 3. Election of Mayor and City Councilors
+  council-president:
+  - § 36. Administration; vested in Mayor and City Council; selection and terms of
+    same
+known_misses:
+  assessor: § 122's heading is 'Enumerated'; only its subchapter, Officers, says what
+    it holds

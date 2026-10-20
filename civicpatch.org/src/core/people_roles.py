@@ -63,8 +63,14 @@ def derive_roles(
     )
 
 
-def is_elected_by_members(role: str, taxonomy: Taxonomy) -> bool:
-    return _selection_method(role, taxonomy) == SelectionMethod.ELECTED_BY_MEMBERS
+def holds_a_member_post(derived: DerivedRoles, taxonomy: Taxonomy) -> bool:
+    """The winning role is the members' pick ("Vice Mayor"), or an office with one holder named
+    with a division ("Mayor District 5"): a council member from there, chosen for the office."""
+    if not derived.role:
+        return False
+    if _selection_method(derived.role, taxonomy) == SelectionMethod.ELECTED_BY_MEMBERS:
+        return True
+    return derived.role in taxonomy.unique_roles and any(part.parsed.division for part in derived.parts)
 
 
 def _selection_method(role: str, taxonomy: Taxonomy) -> SelectionMethod:
