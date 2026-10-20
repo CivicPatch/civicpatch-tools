@@ -1,6 +1,5 @@
 """One handler per state of ORGANIZATIONS_COLLECTOR_TRANSITIONS. Each takes the context and
-answers it with the next state; the engine checks the answer against the graph. Plan 2's 2.11
-to 2.15 fill in SELECT_SECTIONS, EXTRACT, VERIFY and WRITE."""
+answers it with the next state; the engine checks the answer against the graph."""
 
 import asyncio
 from typing import List
@@ -22,7 +21,7 @@ from runners.organizations_collector.schemas import (
     RoleAnswer,
     RoleClaim,
 )
-from shared.schemas import PipelineRunLimits
+from shared.schemas import GoverningLawOrganizations, GoverningLawOrganizationsExtras, JurisdictionExtras, PipelineRunLimits
 from shared.utils.statuses import PipelineRunStatus
 from utils import cost_utils
 from utils.log_utils import PipelineRunLogger
@@ -134,7 +133,7 @@ async def _ask(context: OrganizationsCollectorContext, prompt_name: str, questio
 
 
 async def verify(_limits: PipelineRunLimits, logger: PipelineRunLogger, context: OrganizationsCollectorContext, _client: httpx.AsyncClient) -> Step:
-    """Decides every role from all its answers so far; those with none verified go back to
+    """Decides every role from all its answers so far; those with no quote yet go back to
     EXTRACT, unless the cap already stopped it."""
     governing_law = context.data.config.governing_law
     assert governing_law is not None, "SELECT_SECTIONS goes straight to WRITE when there is no law"
@@ -145,17 +144,32 @@ async def verify(_limits: PipelineRunLimits, logger: PipelineRunLogger, context:
         context.data.config.jurisdiction_config.governing_law,
         ASKS_PER_QUESTION,
     )
-    logger.info(
-        f"{len(outcomes.verified)} verified, {len(outcomes.not_established)} not established,"
-        f" {len(outcomes.conflicted)} in conflict, {len(outcomes.re_ask)} to ask again, {len(outcomes.unverified)} unverified"
-    )
+    asked = {claim.ask.role_id for claim in context.data.claims}
+    logger.info(f"{len(outcomes.posts)} of {len(asked)} roles quoted from the law, {len(outcomes.re_ask)} to ask again")
     if outcomes.re_ask and not context.data.stopped_at_cost_cap:
         return _next(context, outcomes=outcomes, pending_asks=outcomes.re_ask), OrganizationsCollectorStep.EXTRACT
     return _next(context, outcomes=outcomes), OrganizationsCollectorStep.WRITE
 
 
-async def write(_limits: PipelineRunLimits, _logger: PipelineRunLogger, context: OrganizationsCollectorContext, _client: httpx.AsyncClient) -> Step:
-    return context, PipelineRunStatus.SUCCESS
+async def write(_limits: PipelineRunLimits, logger: PipelineRunLogger, context: OrganizationsCollectorContext, client: httpx.AsyncClient) -> Step:
+    """No law read, nothing written: an empty list would claim the law establishes no posts."""
+    outcomes = context.data.outcomes
+    governing_law = context.data.config.governing_law
+    if outcomes is None or governing_law is None:
+        logger.info("no law was read, so nothing is written")
+        return context, PipelineRunStatus.SUCCESS
+    if context.data.stopped_at_cost_cap:
+        logger.warning(f"cost cap reached: writing {len(outcomes.posts)} posts, some roles unasked")
+    if context.data.other_offices:
+        logger.info(f"offices outside config: {', '.join(office.label for office in context.data.other_offices)}")
+    organizations = GoverningLawOrganizations(
+        posts=outcomes.posts,
+        extras=GoverningLawOrganizationsExtras(governing_law_collected_at=governing_law.collected_at),
+    )
+    await civicpatch_api.patch_jurisdiction_extras(
+        client, context.data.jurisdiction_ocdid, JurisdictionExtras(extras_organizations=organizations)
+    )
+    return _next(context, organizations=organizations), PipelineRunStatus.SUCCESS
 
 
 async def send_error(_limits: PipelineRunLimits, _logger: PipelineRunLogger, context: OrganizationsCollectorContext, _client: httpx.AsyncClient) -> Step:

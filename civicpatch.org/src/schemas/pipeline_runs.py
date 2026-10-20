@@ -39,10 +39,10 @@ class BatchPipelineRunRequest(BaseModel):
     created_by_user_id: Optional[str] = None
 
 
-# ── POST /api/v1/pipeline_runs/governing_law_collector ───────────────────────
+# ── POST /api/v1/pipeline_runs/<collector kind> ──────────────────────────────
 # Its batch and claim take `BatchPipelineRunRequest`, the scrape's, field for field.
 
-class StartGoverningLawCollectionRequest(BaseModel):
+class StartCollectionRequest(BaseModel):
     jurisdiction_ocdid: str
 
 

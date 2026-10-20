@@ -1,7 +1,7 @@
 """Clauses from plan 1's markdown of the Vermont charters (Newport ch. 7, Winooski ch. 19, Hyde
 Park ch. 225, Montpelier ch. 5) and Michigan's MCL 62.1 (Armada)."""
 
-from shared.schemas import SelectionMethod
+from shared.schemas import QuoteScope, SelectionMethod
 from shared.utils.citation import (
     method_named_in_quote,
     quote_in_text,
@@ -75,23 +75,25 @@ def test_a_bare_name_in_a_list_gets_its_whole_sentence():
     quote = supporting_quote(NEWPORT, "four aldermen", ALDERMEN, SelectionMethod.ELECTED_BY_VOTERS)
 
     assert quote is not None
-    assert quote.startswith("At the annual meeting the said corporations shall elect")
+    assert quote.text.startswith("At the annual meeting the said corporations shall elect")
+    assert quote.scope == QuoteScope.SENTENCE
 
 
 def test_a_list_item_gets_its_lead_in_from_the_same_sentence():
     quote = supporting_quote(HYDE_PARK, "One Village Clerk.", ["Village Clerk"], SelectionMethod.APPOINTED)
 
     assert quote is not None
-    assert quote.startswith("(a) Within 14 days")
-    assert quote.endswith("(1) One Village Clerk.")
+    assert quote.text.startswith("(a) Within 14 days")
+    assert quote.text.endswith("(1) One Village Clerk.")
 
 
 def test_a_list_item_past_the_lead_in_sentence_gets_the_section_body():
     quote = supporting_quote(HYDE_PARK, "(2) One Village Treasurer.", ["Village Treasurer"], SelectionMethod.APPOINTED)
 
     assert quote is not None
-    assert quote.startswith("(a) Within 14 days")
-    assert "(Adj. Sess.)" in quote
+    assert quote.text.startswith("(a) Within 14 days")
+    assert "(Adj. Sess.)" in quote.text
+    assert quote.scope == QuoteScope.SECTION_BODY
 
 
 def test_a_body_without_the_method_gets_its_heading():
@@ -100,7 +102,8 @@ def test_a_body_without_the_method_gets_its_heading():
     quote = supporting_quote(text, "four aldermen", ALDERMEN, SelectionMethod.ELECTED_BY_VOTERS)
 
     assert quote is not None
-    assert quote.startswith("- **§ 6. Elections of officers")
+    assert quote.text.startswith("- **§ 6. Elections of officers")
+    assert quote.scope == QuoteScope.SECTION
 
 
 def test_a_sentence_does_not_end_at_a_section_number_or_session_law():
@@ -108,21 +111,22 @@ def test_a_sentence_does_not_end_at_a_section_number_or_session_law():
 
     quote = supporting_quote(text, "Elected as provided", ["Trustee"], SelectionMethod.ELECTED_BY_VOTERS)
 
-    assert quote == "Elected as provided in 24 V.S.A. § 871. Each trustee shall serve one year."
+    assert quote is not None
+    assert quote.text == "Elected as provided in 24 V.S.A. § 871. Each trustee shall serve one year."
 
 
 def test_an_appointment_named_in_an_enumeration_of_powers():
     quote = supporting_quote(WINOOSKI, "a City Attorney or firm", ["City Attorney"], SelectionMethod.APPOINTED)
 
     assert quote is not None
-    assert quote.startswith("(10) To appoint")
+    assert quote.text.startswith("(10) To appoint")
 
 
 def test_a_locator_beside_the_claim_gets_the_sentence_that_makes_it():
     quote = supporting_quote(MONTPELIER, "a Mayor for a term of two years", ["Council Member"], SelectionMethod.ELECTED_BY_VOTERS)
 
     assert quote is not None
-    assert "a City Council member from each district" in quote
+    assert "a City Council member from each district" in quote.text
 
 
 def test_a_statutes_bare_president_does_not_name_the_village_president():
@@ -157,7 +161,7 @@ def test_a_quote_shortened_with_an_ellipsis_is_found_when_its_pieces_are_in_orde
     quote = supporting_quote(LUNENBURG, locator, ["Trustee"], SelectionMethod.ELECTED_BY_VOTERS)
 
     assert quote is not None
-    assert quote.startswith("At the annual meeting of said corporation")
+    assert quote.text.startswith("At the annual meeting of said corporation")
 
 
 def test_an_ellipsis_in_brackets_counts_as_one():
@@ -181,7 +185,10 @@ def test_pieces_from_two_sections_locate_nothing():
 def test_with_no_method_naming_the_role_is_enough():
     text = "The Village Clerk shall keep the records of the Board."
 
-    assert supporting_quote(text, "The Village Clerk shall keep", ["Village Clerk"], None) == text
+    quote = supporting_quote(text, "The Village Clerk shall keep", ["Village Clerk"], None)
+
+    assert quote is not None
+    assert quote.text == text
 
 
 def test_with_no_method_the_role_must_still_be_named():

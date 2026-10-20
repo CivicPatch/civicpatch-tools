@@ -16,19 +16,18 @@ GOVERNING_LAW_COLLECTOR_TRANSITIONS: Transitions = {
         GoverningLawCollectorStep.PREPROCESS_PAGE_CONTENT,
         # The host refused this url; on to the next, or done.
         GoverningLawCollectorStep.FETCH_SOURCE,
-        GoverningLawCollectorStep.CLASSIFY,
+        GoverningLawCollectorStep.WRITE_GOVERNING_LAW,
     }),
     GoverningLawCollectorStep.PREPROCESS_PAGE_CONTENT: frozenset({
         GoverningLawCollectorStep.STORE_SOURCE_PAGE,
         # Thin by plain GET: the same url again, by browser. Thin even then: the next url.
         GoverningLawCollectorStep.FETCH_SOURCE,
-        GoverningLawCollectorStep.CLASSIFY,
+        GoverningLawCollectorStep.WRITE_GOVERNING_LAW,
     }),
     GoverningLawCollectorStep.STORE_SOURCE_PAGE: frozenset({
         GoverningLawCollectorStep.FETCH_SOURCE,
-        GoverningLawCollectorStep.CLASSIFY,
+        GoverningLawCollectorStep.WRITE_GOVERNING_LAW,
     }),
-    GoverningLawCollectorStep.CLASSIFY: frozenset({GoverningLawCollectorStep.WRITE_GOVERNING_LAW}),
     GoverningLawCollectorStep.WRITE_GOVERNING_LAW: frozenset({PipelineRunStatus.SUCCESS}),
     PipelineRunStatus.SEND_ERROR: frozenset({PipelineRunStatus.ERROR}),
     PipelineRunStatus.SUCCESS: frozenset(),

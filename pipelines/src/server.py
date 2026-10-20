@@ -9,15 +9,15 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 
 from pipelines_environment import get_env_vars
+from fastapi import HTTPException
+from runners.collectors import COLLECTORS
 from runners.engine import PipelineRunError
-from runners.governing_law_collector.main import start as start_governing_law_collector
-from runners.governing_law_collector.schemas import GoverningLawCollectorConfig
 from runners.people_collector.main import start_threaded
 from runners.people_collector.schemas import PipelineRunConfig
 from shared.schemas import PublishedSourcePage
 import services.civicpatch_api as civicpatch_api
 from services.civicpatch_api import update_pipeline_run_status
-from shared.utils.statuses import PipelineRunStatus
+from shared.utils.statuses import PipelineRunKind, PipelineRunStatus
 
 logger = logging.getLogger(__name__)
 
@@ -106,34 +106,34 @@ async def start_pipeline_run(req: StartPipelineRunRequest) -> PipelineRunStatusR
     return PipelineRunStatusResponse(pipeline_run_id=req.pipeline_run_id, status=PipelineRunStatus.PENDING)
 
 
-class StartGoverningLawCollectorRunRequest(BaseModel):
+class StartCollectorRunRequest(BaseModel):
     pipeline_run_id: str
     jurisdiction_ocdid: str
 
 
-async def _run_governing_law_collector(pipeline_run_id: str, jurisdiction_ocdid: str) -> None:
+async def _run_collector(kind: PipelineRunKind, pipeline_run_id: str, jurisdiction_ocdid: str) -> None:
+    collector = COLLECTORS[kind]
     env = get_env_vars()
     headers = {"Authorization": env["SERVICE_API_KEY"]}
     try:
         async with httpx.AsyncClient(headers=headers, timeout=30.0) as client:
-            config_data = await civicpatch_api.fetch_governing_law_collector_config(client, logger, pipeline_run_id)
-        await start_governing_law_collector(
-            pipeline_run_id, jurisdiction_ocdid, GoverningLawCollectorConfig.model_validate(config_data)
-        )
+            config_data = await civicpatch_api.fetch_collector_config(client, logger, pipeline_run_id)
+        await collector.start(pipeline_run_id, jurisdiction_ocdid, collector.config.model_validate(config_data))
     except PipelineRunError:
         pass
     except Exception:
-        logger.exception("governing law collector run %s failed", pipeline_run_id)
+        logger.exception("%s run %s failed", kind, pipeline_run_id)
         async with httpx.AsyncClient(headers=headers, timeout=30.0) as client:
             await update_pipeline_run_status(client, logger, pipeline_run_id, jurisdiction_ocdid, PipelineRunStatus.ERROR, 0)
 
 
-# One door per pipeline, named by its kind: the route says which, so nothing carries a kind.
-@app.post("/pipeline_runs/governing_law_collector", response_model=PipelineRunStatusResponse)
-async def start_governing_law_collector_run(req: StartGoverningLawCollectorRunRequest) -> PipelineRunStatusResponse:
-    _track(req.pipeline_run_id, asyncio.create_task(
-        _run_governing_law_collector(req.pipeline_run_id, req.jurisdiction_ocdid)
-    ))
+# The collectors' door, named by kind as cp.org's `collector_activities.local_path` builds it.
+# After the scrape's literal route above, which keeps winning for `people_collector`.
+@app.post("/pipeline_runs/{kind}", response_model=PipelineRunStatusResponse)
+async def start_collector_run(kind: PipelineRunKind, req: StartCollectorRunRequest) -> PipelineRunStatusResponse:
+    if kind not in COLLECTORS:
+        raise HTTPException(status_code=404, detail=f"No collector of kind {kind}")
+    _track(req.pipeline_run_id, asyncio.create_task(_run_collector(kind, req.pipeline_run_id, req.jurisdiction_ocdid)))
     return PipelineRunStatusResponse(pipeline_run_id=req.pipeline_run_id, status=PipelineRunStatus.PENDING)
 
 

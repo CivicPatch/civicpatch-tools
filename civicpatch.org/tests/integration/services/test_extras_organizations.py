@@ -17,14 +17,11 @@ _ROLE = "zz-test-trustee"
 
 def _organizations(role: str, maximum_memberships: int = 5) -> GoverningLawOrganizations:
     return GoverningLawOrganizations.model_validate({
-        "organizations": [{
-            "name": "Board of Trustees",
-            "posts": [{
-                "role": role, "label": "Trustee",
-                "maximum_memberships": maximum_memberships,
-                "extras": {"selection_method": "elected_by_voters"},
-                "sources": [{"url": "https://example.gov/24/039", "note": "five trustees", "extras": {"source_page_id": "p1"}}],
-            }],
+        "posts": [{
+            "role": role, "label": "Trustee", "organization_id": "Board of Trustees",
+            "maximum_memberships": maximum_memberships,
+            "extras": {"selection_method": "elected_by_voters"},
+            "sources": [{"url": "https://example.gov/24/039", "note": "five trustees", "extras": {"source_page_id": "p1", "matched_in": "sentence"}}],
         }],
         "extras": {"governing_law_collected_at": "2026-10-19T00:00:00Z"},
     })

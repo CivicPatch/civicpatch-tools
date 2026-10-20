@@ -16,7 +16,6 @@ class GoverningLawCollectorStep(StrEnum):
     FETCH_SOURCE = "FETCH_SOURCE"
     PREPROCESS_PAGE_CONTENT = "PREPROCESS_PAGE_CONTENT"
     STORE_SOURCE_PAGE = "STORE_SOURCE_PAGE"
-    CLASSIFY = "CLASSIFY"
     WRITE_GOVERNING_LAW = "WRITE_GOVERNING_LAW"
 
 
@@ -24,7 +23,7 @@ GoverningLawCollectorState = PipelineRunStatus | GoverningLawCollectorStep
 
 
 class GoverningLawCollectorConfig(BaseModel):
-    """What cp.org answers at `/pipeline_runs/{id}/governing_law_collector_config`."""
+    """What cp.org answers at `/pipeline_runs/{id}/collector_config` for this kind."""
 
     name: str
     # Read by the engine, as the scrape's is; None inherits `pipeline.yml`'s default.

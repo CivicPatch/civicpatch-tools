@@ -14,13 +14,15 @@ from lib.temporal.sink_workflows import (
     WriteSheetRosterWorkflow,
 )
 from lib.temporal.types import (
-    GOVERNING_LAW_COLLECTOR_EXECUTION_TIMEOUT,
+    COLLECTOR_EXECUTION_TIMEOUT,
     PEOPLE_COLLECTOR_EXECUTION_TIMEOUT,
-    governing_law_collector_workflow_id,
+    collector_state_workflow_id,
+    collector_workflow_id,
     PIPELINE_RUNS_TASK_QUEUE,
     SINKS_TASK_QUEUE,
     OpenDataBatchCommitRequest,
 )
+from shared.utils.statuses import PipelineRunKind
 from environment import get_env_vars
 
 _client: Client | None = None
@@ -204,30 +206,30 @@ async def cancel_workflow(jurisdiction_ocdid: str) -> None:
         raise
 
 
-async def start_governing_law_collector_workflow(
-    jurisdiction_ocdid: str, pipeline_run_id: str, dispatch_mode: str = "remote"
+async def start_collector_workflow(
+    kind: PipelineRunKind, jurisdiction_ocdid: str, pipeline_run_id: str, dispatch_mode: str = "remote"
 ) -> str:
     client = await get_client()
     handle = await client.start_workflow(
-        "GoverningLawCollectorWorkflow",
-        args=[jurisdiction_ocdid, pipeline_run_id, dispatch_mode],
-        id=governing_law_collector_workflow_id(jurisdiction_ocdid),
+        "CollectorWorkflow",
+        args=[kind, jurisdiction_ocdid, pipeline_run_id, dispatch_mode],
+        id=collector_workflow_id(kind, jurisdiction_ocdid),
         task_queue=PIPELINE_RUNS_TASK_QUEUE,
         id_conflict_policy=WorkflowIDConflictPolicy.TERMINATE_EXISTING,
-        execution_timeout=GOVERNING_LAW_COLLECTOR_EXECUTION_TIMEOUT,
+        execution_timeout=COLLECTOR_EXECUTION_TIMEOUT,
     )
     return handle.id
 
 
-async def start_governing_law_collector_state_workflow(
-    state: str, num_jurisdictions: int | None, created_by_user_id: str | None, dispatch_mode: str = "remote"
+async def start_collector_state_workflow(
+    kind: PipelineRunKind, state: str, num_jurisdictions: int | None, created_by_user_id: str | None, dispatch_mode: str = "remote"
 ) -> str:
-    """Keyed on the state alone, like the scrape's: a second start is an error, not a duplicate."""
+    """Keyed on the kind and state alone, like the scrape's: a second start is an error, not a duplicate."""
     client = await get_client()
     handle = await client.start_workflow(
-        "GoverningLawCollectorStateWorkflow",
-        args=[state, num_jurisdictions, created_by_user_id, _pipeline_run_concurrency(), dispatch_mode],
-        id=f"governing-law-collector-state-{state}",
+        "CollectorStateWorkflow",
+        args=[kind, state, num_jurisdictions, created_by_user_id, _pipeline_run_concurrency(), dispatch_mode],
+        id=collector_state_workflow_id(kind, state),
         task_queue=PIPELINE_RUNS_TASK_QUEUE,
         id_conflict_policy=WorkflowIDConflictPolicy.FAIL,
     )

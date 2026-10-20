@@ -18,15 +18,19 @@ MAPS_TASK_QUEUE = "civicpatch-maps"  # building and uploading pmtiles
 # Covers the full run including any retry after human_approval.
 PEOPLE_COLLECTOR_EXECUTION_TIMEOUT = timedelta(hours=2)
 
-# A governing_law_collector run is a few plain fetches, minutes at most.
-GOVERNING_LAW_COLLECTOR_EXECUTION_TIMEOUT = timedelta(minutes=30)
+# A collector run is a few plain fetches or a few dozen short model calls, minutes at most.
+COLLECTOR_EXECUTION_TIMEOUT = timedelta(minutes=30)
 
 
-def governing_law_collector_workflow_id(jurisdiction_ocdid: str) -> str:
+def collector_workflow_id(kind: str, jurisdiction_ocdid: str) -> str:
     """Here because both the API, which starts one, and the state workflow, which starts its
     children, name it, and the API must not import the workflow module's activities."""
     safe = jurisdiction_ocdid.replace("/", "-").replace(":", "-")
-    return f"governing-law-collector-{safe}"
+    return f"{kind.replace('_', '-')}-{safe}"
+
+
+def collector_state_workflow_id(kind: str, state: str) -> str:
+    return f"{kind.replace('_', '-')}-state-{state}"
 
 # The whitelist. Running work on any other queue is work whose worker is gone: nothing polls it,
 # and `terminate_undeclared_workflows` is scoped per queue, so nothing sweeps it either. Dropping

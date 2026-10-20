@@ -16,21 +16,18 @@ import os
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+from lib.temporal.collector_workflows import CollectorStateWorkflow, CollectorWorkflow
 from lib.temporal.connection import connect_with_retry, run_worker
-from lib.temporal.governing_law_collector_workflows import (
-    GoverningLawCollectorWorkflow,
-    GoverningLawCollectorStateWorkflow,
-)
 from lib.temporal.pipeline_run_workflows import (
     PeopleCollectorWorkflow,
     PeopleCollectorStateWorkflow,
 )
 from lib.temporal.types import PIPELINE_RUNS_TASK_QUEUE
-from routers.temporal.governing_law_collector_activities import (
-    claim_jurisdictions_for_governing_law_collector,
-    governing_law_collector_month_cap_reached,
-    trigger_governing_law_collector_local,
-    trigger_governing_law_collector_remote,
+from routers.temporal.collector_activities import (
+    claim_jurisdictions_for_collector,
+    collector_month_cap_reached,
+    trigger_collector_local,
+    trigger_collector_remote,
 )
 from routers.temporal.pipeline_run_activities import (
     people_collector_month_cap_reached,
@@ -48,8 +45,8 @@ TEMPORAL_NAMESPACE = os.environ.get("TEMPORAL_NAMESPACE", "default")
 WORKFLOWS = [
     PeopleCollectorWorkflow,
     PeopleCollectorStateWorkflow,
-    GoverningLawCollectorWorkflow,
-    GoverningLawCollectorStateWorkflow,
+    CollectorWorkflow,
+    CollectorStateWorkflow,
 ]
 
 ACTIVITIES = [
@@ -60,10 +57,10 @@ ACTIVITIES = [
     poll_pipeline_run_status,
     update_pipeline_run_status,
     claim_jurisdictions_for_people_collector,
-    claim_jurisdictions_for_governing_law_collector,
-    governing_law_collector_month_cap_reached,
-    trigger_governing_law_collector_local,
-    trigger_governing_law_collector_remote,
+    claim_jurisdictions_for_collector,
+    collector_month_cap_reached,
+    trigger_collector_local,
+    trigger_collector_remote,
 ]
 
 # Deliberately uncapped, unlike `sinks.py`: `poll_pipeline_run_status` holds a slot for up to

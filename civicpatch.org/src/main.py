@@ -15,7 +15,7 @@ import routers.api.coverage as api_coverage_router
 import routers.api.data as api_data_router
 import routers.api.elections as api_elections_router
 import routers.api.jurisdictions as api_jurisdictions_router
-import routers.api.governing_law_collector_runs as api_governing_law_collector_runs_router
+import routers.api.collector_runs as api_collector_runs_router
 import routers.api.governing_law_source_pages as api_governing_law_source_pages_router
 import routers.api.leaderboard as api_leaderboard_router
 import routers.api.claims as api_claims_router
@@ -35,6 +35,7 @@ import routers.api.summary as api_summary_router
 import routers.api.user as api_user_router
 import routers.webhooks.blog_sync as blog_sync_webhook_router
 import routers.webhooks.github as github_webhook_router
+import services.collector_runs as collector_runs_service
 from database.database import (
     close_pool,
     get_pool,
@@ -169,15 +170,17 @@ app.include_router(
     dependencies=[Depends(require_route_access(RouteCategory.PUBLIC))],
 )
 
-# Ahead of the scrape's router: its literal paths must win over `/{pipeline_run_id}/...`. Gated
-# here as well as per route (admins start, the service key claims), so no route is ever open.
-app.include_router(
-    api_governing_law_collector_runs_router.get_router(),
-    prefix="/api/v1/pipeline_runs/governing_law_collector",
-    tags=["pipeline_runs"],
-    dependencies=[Depends(require_route_access(RouteCategory.AUTHENTICATED, service_key=ServiceKey.ACCEPTED))],
-    include_in_schema=False,
-)
+# One mount per collector kind, ahead of the scrape's router: the literal paths must win over
+# `/{pipeline_run_id}/...`. Gated here as well as per route (admins start, the service key
+# claims), so no route is ever open.
+for collector_kind in collector_runs_service.CANDIDATES:
+    app.include_router(
+        api_collector_runs_router.get_router(collector_kind),
+        prefix=f"/api/v1/pipeline_runs/{collector_kind}",
+        tags=["pipeline_runs"],
+        dependencies=[Depends(require_route_access(RouteCategory.AUTHENTICATED, service_key=ServiceKey.ACCEPTED))],
+        include_in_schema=False,
+    )
 
 app.include_router(
     api_pipeline_runs_router.get_router(api_key_header),

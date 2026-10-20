@@ -278,11 +278,12 @@ async def get_governing_law_source_page(client: httpx.AsyncClient, jurisdiction_
     return response.json()["data"]
 
 
-async def fetch_governing_law_collector_config(client: httpx.AsyncClient, logger, pipeline_run_id: str) -> dict:
+async def fetch_collector_config(client: httpx.AsyncClient, logger, pipeline_run_id: str) -> dict:
+    """What the run is told at its start; cp.org answers by the run's kind."""
     async def _fetch():
         env = get_env_vars()
         resp = await client.get(
-            f"{env['CIVICPATCH_ORG_URL']}/api/v1/pipeline_runs/{pipeline_run_id}/governing_law_collector_config"
+            f"{env['CIVICPATCH_ORG_URL']}/api/v1/pipeline_runs/{pipeline_run_id}/collector_config"
         )
         resp.raise_for_status()
         return resp.json()

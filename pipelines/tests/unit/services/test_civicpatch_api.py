@@ -4,7 +4,7 @@ import pytest
 from unittest.mock import AsyncMock, MagicMock, patch
 
 from services.civicpatch_api import (
-    fetch_governing_law_collector_config,
+    fetch_collector_config,
     get_governing_law_source_page,
     get_organizations,
     patch_jurisdiction_extras,
@@ -128,10 +128,10 @@ async def test_the_collector_asks_for_its_config_and_patches_in_what_it_found():
     client.patch = AsyncMock(return_value=_response({}))
 
     with patch(f"{MODULE}.get_env_vars", return_value=_ENV):
-        config = await fetch_governing_law_collector_config(client, MagicMock(), "run-1")
+        config = await fetch_collector_config(client, MagicMock(), "run-1")
         await patch_jurisdiction_extras(client, _OCDID, JurisdictionExtras(extras_governing_law=found))
 
-    client.get.assert_awaited_once_with("https://civicpatch.org/api/v1/pipeline_runs/run-1/governing_law_collector_config")
+    client.get.assert_awaited_once_with("https://civicpatch.org/api/v1/pipeline_runs/run-1/collector_config")
     assert config["name"] == "Stowe town"
     # Only the field set is sent: the PATCH leaves the jurisdiction's other fields alone.
     client.patch.assert_awaited_once_with(

@@ -10,7 +10,8 @@ import pytest
 import pytest_asyncio
 
 from database.database import get_pool
-from database.governing_law import get_collection_candidates, has_unfinished_collection
+from database.governing_law import get_collection_candidates
+from database.pipeline_runs import has_unfinished_run
 from shared.utils.statuses import PipelineRunKind
 from tests.integration import factories
 
@@ -64,8 +65,8 @@ async def test_a_collection_in_flight_is_not_a_candidate_and_a_scrape_does_not_c
     await factories.start_run(_STALE)
 
     assert [c.jurisdiction_ocdid for c in await get_collection_candidates("zz", None)] == [_STALE]
-    assert await has_unfinished_collection(_NEVER)
-    assert not await has_unfinished_collection(_STALE)
+    assert await has_unfinished_run(_NEVER, PipelineRunKind.GOVERNING_LAW_COLLECTOR)
+    assert not await has_unfinished_run(_STALE, PipelineRunKind.GOVERNING_LAW_COLLECTOR)
 
 
 @pytest.mark.integration
