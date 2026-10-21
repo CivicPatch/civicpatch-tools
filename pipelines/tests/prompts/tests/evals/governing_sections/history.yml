@@ -99,3 +99,23 @@ runs:
     vt_winooski: 1.0
     vt_woodstock_village: 1.0
   dispositions: {}
+- timestamp: '2026-10-21T03:08:04+00:00'
+  provider: open_router
+  model: deepseek/deepseek-v4-flash
+  prompt_sha256: 206d0e00f827
+  cost_usd: 0.01406524
+  elapsed_seconds: 292.52
+  scores:
+    roles_covered: 1.0
+    sections_kept: 0.29265255292652553
+  cases:
+    vt_brattleboro: 1.0
+    vt_burlington: 1.0
+    vt_hartford: 1.0
+    vt_hyde_park_village: 1.0
+    vt_montpelier: 1.0
+    vt_newport: 1.0
+    vt_stowe: 1.0
+    vt_winooski: 1.0
+    vt_woodstock_village: 1.0
+  dispositions: {}

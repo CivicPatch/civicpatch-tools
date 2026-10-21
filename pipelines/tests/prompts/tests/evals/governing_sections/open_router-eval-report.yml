@@ -1,68 +1,79 @@
 run:
-  timestamp: '2026-10-20T01:54:50+00:00'
+  timestamp: '2026-10-21T03:08:04+00:00'
   prompt_sha256: 206d0e00f827
   prompt_file: _prompts/206d0e00f827.txt
 cost_summary:
   model: deepseek/deepseek-v4-flash
-  elapsed_seconds: 344.6
-  total_input_tokens: 24252
-  total_output_tokens: 65115
-  total_cost_usd: 0.02162748
-roles_covered: 54/55
-sections_kept: 0.273
+  elapsed_seconds: 292.52
+  total_input_tokens: 19636
+  total_output_tokens: 40415
+  total_cost_usd: 0.01406524
+total_cases: 9
+passed_cases: 9
+failed_cases: []
+roles_covered: 54/54
+sections_kept: 0.293
 cases:
   vt_brattleboro:
     roles: 10
     covered: 10
     missed: []
-    picked: 24
+    unexpected_misses: []
+    picked: 22
     listed: 53
   vt_burlington:
     roles: 4
     covered: 4
     missed: []
-    picked: 86
+    unexpected_misses: []
+    picked: 116
     listed: 365
   vt_hartford:
     roles: 7
     covered: 7
     missed: []
+    unexpected_misses: []
     picked: 5
     listed: 10
   vt_hyde_park_village:
-    roles: 5
+    roles: 4
     covered: 4
-    missed:
-    - president-pro-tempore
-    picked: 14
+    missed: []
+    unexpected_misses: []
+    picked: 13
     listed: 38
   vt_montpelier:
     roles: 4
     covered: 4
     missed: []
-    picked: 29
+    unexpected_misses: []
+    picked: 25
     listed: 150
   vt_newport:
     roles: 8
     covered: 8
     missed: []
-    picked: 17
+    unexpected_misses: []
+    picked: 18
     listed: 43
   vt_stowe:
     roles: 7
     covered: 7
     missed: []
+    unexpected_misses: []
     picked: 14
     listed: 47
   vt_winooski:
     roles: 7
     covered: 7
     missed: []
-    picked: 23
+    unexpected_misses: []
+    picked: 15
     listed: 81
   vt_woodstock_village:
     roles: 3
     covered: 3
     missed: []
+    unexpected_misses: []
     picked: 7
     listed: 16

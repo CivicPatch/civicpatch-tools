@@ -3,22 +3,23 @@
   presiding: false
   right: true
   each_right:
-  - false
   - true
+  - false
   agreed: false
   answers:
-  - established: true
-    label: Selectboard member
-    filled_by: not_stated
-    maximum_memberships: 5
-    quote: there shall be added to the existing three members of the Selectboard an
-      additional two members for a total of five.
   - established: true
     label: member of the Selectboard
     filled_by: elected_by_voters
     maximum_memberships: 5
-    quote: However, there shall be added to the existing three members of the Selectboard
-      an additional two members for a total of five. The two additional members shall
+    quote: there shall be added to the existing three members of the Selectboard an
+      additional two members for a total of five. The two additional members shall
+      be first elected at the 1995 Bristol annual Town meeting.
+  - established: true
+    label: members of the Selectboard
+    filled_by: not_stated
+    maximum_memberships: 5
+    quote: there shall be added to the existing three members of the Selectboard an
+      additional two members for a total of five. The two additional members shall
       be first elected at the 1995 Bristol annual Town meeting.
 - role_id: commission-president
   expected: probably_not_established

@@ -1,24 +1,30 @@
 run:
-  timestamp: '2026-10-21T02:34:30+00:00'
+  timestamp: '2026-10-21T03:20:20+00:00'
   prompt_sha256: ce378d1ef447
   prompt_file: _prompts/ce378d1ef447.txt
 cost_summary:
   model: deepseek/deepseek-v4-flash
-  elapsed_seconds: 728.23
-  total_input_tokens: 2844018
-  total_cached_input_tokens: 2071424
-  total_output_tokens: 241122
-  total_cost_usd: 0.233677192
+  elapsed_seconds: 655.75
+  total_input_tokens: 2774856
+  total_cached_input_tokens: 2019584
+  total_output_tokens: 215318
+  total_cost_usd: 0.222575472
+total_cases: 44
+passed_cases: 43
+failed_cases:
+- case_id: vt_ch126
+  wrong_roles:
+  - member
 roles_right: 0.9932885906040269
-single_ask_right: 0.959731543624161
-agreement: 0.9798657718120806
+single_ask_right: 0.9530201342281879
+agreement: 0.9731543624161074
 presiding_gold_right: 35 of 35
 candidates_asked: 625
 candidates_verified: 6
 by_expected:
   elected_by_voters:
-    right: 76
-    total: 77
+    right: 75
+    total: 76
   elected_by_members:
     right: 36
     total: 36
@@ -28,9 +34,9 @@ by_expected:
   not_established:
     right: 6
     total: 6
-wrong:
-  vt_ch141:
-  - member
+  not_stated:
+    right: 1
+    total: 1
 candidates_to_read:
   vt_ch101:
   - role_id: chair
@@ -39,26 +45,26 @@ candidates_to_read:
       label: Chair
       filled_by: elected_by_members
       maximum_memberships: 1
-      quote: The Selectboard shall meet within seven business days after the annual
-        Town election to elect a Chair and a Vice Chair and to designate a Clerk.
+      quote: elect a Chair and a Vice Chair
     - established: true
       label: Chair
       filled_by: elected_by_members
       maximum_memberships: 1
-      quote: elect a Chair and a Vice Chair
+      quote: The Selectboard shall meet within seven business days after the annual
+        Town election to elect a Chair and a Vice Chair and to designate a Clerk.
   - role_id: vice-chair
     answers:
     - established: true
       label: Vice Chair
       filled_by: elected_by_members
       maximum_memberships: 1
-      quote: The Selectboard shall meet within seven business days after the annual
-        Town election to elect a Chair and a Vice Chair and to designate a Clerk.
+      quote: elect a Chair and a Vice Chair
     - established: true
       label: Vice Chair
       filled_by: elected_by_members
       maximum_memberships: 1
-      quote: elect a Chair and a Vice Chair
+      quote: The Selectboard shall meet within seven business days after the annual
+        Town election to elect a Chair and a Vice Chair and to designate a Clerk.
   vt_ch207:
   - role_id: council-president
     answers:
@@ -67,7 +73,8 @@ candidates_to_read:
       filled_by: elected_by_voters
       maximum_memberships: 1
       quote: All officers of said Village shall be residents and elected at the annual
-        meeting of said Village
+        meeting of said Village, except Collector of Taxes, who shall be appointed
+        by the Board of Trustees.
     - established: true
       label: President
       filled_by: elected_by_voters
@@ -102,19 +109,20 @@ candidates_to_read:
       filled_by: elected_by_members
       maximum_memberships: 1
       quote: The trustees shall elect one trustee to serve as President.
-  vt_ch279:
+  vt_ch239:
   - role_id: council-president
     answers:
     - established: true
-      label: Village President
+      label: President
       filled_by: elected_by_voters
       maximum_memberships: 1
-      quote: each of whom shall be elected by Australian ballot at the annual meeting
-        of the Village
+      quote: the Village shall, by ballot, if called for by three or more legal voters
+        in the meeting, elect for the ensuing year, and, until their successors are
+        chosen; a President
     - established: true
-      label: Village President
+      label: President
       filled_by: elected_by_voters
       maximum_memberships: 1
-      quote: The legislative body of the Village of Swanton shall be the Board of
-        Trustees, consisting of three trustees and the Village President, each of
-        whom shall be elected by Australian ballot at the annual meeting of the Village.
+      quote: the Village shall, by ballot, if called for by three or more legal voters
+        in the meeting, elect for the ensuing year, and, until their successors are
+        chosen; a President

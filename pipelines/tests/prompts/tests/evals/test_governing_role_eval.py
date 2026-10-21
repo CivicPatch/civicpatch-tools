@@ -27,6 +27,7 @@ from runners.pipeline02_organizations_collector import sections
 from runners.pipeline02_organizations_collector.role_asks import RoleAsk
 from runners.pipeline02_organizations_collector.schemas import FilledBy, PresidingAnswer, RoleAnswer
 from runners.pipeline02_organizations_collector.transitions.main import ASKS_PER_QUESTION, presiding_claims
+from runners.pipeline02_organizations_collector.verify import MAX_ROUNDS
 from shared.schemas import SelectionMethod
 from shared.utils.citation import supporting_quote
 from utils import cost_utils
@@ -104,18 +105,41 @@ async def ask(case: dict, role: dict) -> RoleAnswer | None:
 
 async def run_role(case: dict, role: dict) -> dict:
     answers = await asyncio.gather(*[ask(case, role) for _ in range(ASKS_PER_QUESTION)])
-    return _result(case, role, list(answers))
+    return await _result(case, role, list(answers))
 
 
-def _result(case: dict, role: dict, answers: list[RoleAnswer | None]) -> dict:
+def _is_cited(law: str, role: dict, answer: RoleAnswer) -> bool:
+    """What VERIFY keeps as a post: the office found and a quote naming it (and its method, if stated)."""
+    if not answer.established:
+        return False
+    method = None if answer.filled_by == FilledBy.NOT_STATED else SelectionMethod(answer.filled_by.value)
+    return supporting_quote(law, answer.quote, role["names"], method) is not None
+
+
+async def _re_asked(case: dict, role: dict, answers: list[RoleAnswer | None]) -> list[RoleAnswer | None]:
+    """VERIFY's re-ask: no answer cited but one found the office, up to MAX_ROUNDS rounds, each on its own question."""
+    rounds = 1
+    while rounds < MAX_ROUNDS:
+        given = [answer for answer in answers if answer is not None]
+        if any(_is_cited(case["law"], role, answer) for answer in given) or not any(answer.established for answer in given):
+            break
+        answers = [*answers, *await asyncio.gather(*[ask(case, role) for _ in range(ASKS_PER_QUESTION)])]
+        rounds += 1
+    return answers
+
+
+async def _result(case: dict, role: dict, first_round: list[RoleAnswer | None]) -> dict:
+    """`right` over every round, as a run would end; one ask and agreement over the first round only."""
+    answers = await _re_asked(case, role, first_round)
     rights = [answer is not None and is_right(case["law"], role, answer) for answer in answers]
     return {
         "role_id": role["role_id"],
         "expected": role["expected"],
         "presiding": bool(role.get("presiding")),
         "right": any(rights),
-        "each_right": rights,
-        "agreed": len({(answer.established, answer.filled_by) if answer else None for answer in answers}) == 1,
+        "rounds": len(answers) // ASKS_PER_QUESTION,
+        "each_right": rights[:ASKS_PER_QUESTION],
+        "agreed": len({(answer.established, answer.filled_by) if answer else None for answer in first_round}) == 1,
         "answers": [answer.model_dump(mode="json") if answer else None for answer in answers],
     }
 
@@ -144,10 +168,11 @@ async def run_presiding(case: dict, roles: list[dict]) -> list[dict]:
     responses = await asyncio.gather(*[ask_presiding(case, roles) for _ in range(ASKS_PER_QUESTION)])
     asks = [RoleAsk(organization_name=role["organization_name"], role_id=role["role_id"], role_label=role["role_label"], names=role["names"]) for role in roles]
     per_ask = [presiding_claims(asks, response) if response else None for response in responses]
-    return [
-        _result(case, role, [claims[index].answer if claims else None for claims in per_ask])
-        for index, role in enumerate(roles)
-    ]
+    return list(
+        await asyncio.gather(
+            *[_result(case, role, [claims[index].answer if claims else None for claims in per_ask]) for index, role in enumerate(roles)]
+        )
+    )
 
 
 async def run_case(case: dict) -> list[dict]:
@@ -182,6 +207,7 @@ def _write_report(results_by_case: dict[str, list[dict]], elapsed_seconds: float
         "single_ask_right": sum(sum(result["each_right"]) for result in roles) / (len(roles) * ASKS_PER_QUESTION),
         "agreement": sum(result["agreed"] for result in roles) / len(roles),
         "presiding_gold_right": f"{sum(r['right'] for r in roles if r['presiding'])} of {sum(r['presiding'] for r in roles)}",
+        "roles_re_asked": sum(result["rounds"] > 1 for result in every_role),
         "candidates_asked": len(candidates),
         "candidates_verified": sum(not result["right"] for result in candidates),
     }

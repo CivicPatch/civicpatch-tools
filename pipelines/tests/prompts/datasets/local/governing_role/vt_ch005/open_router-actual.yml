@@ -30,14 +30,14 @@
     label: Council member
     filled_by: elected_by_voters
     maximum_memberships: 6
-    quote: Members shall be elected by the voters of each respective district.
+    quote: The City Council shall consist of the Mayor and two Council members from
+      each voting district. Members shall be elected by the voters of each respective
+      district.
   - established: true
     label: Council member
     filled_by: elected_by_voters
     maximum_memberships: 6
-    quote: The City Council shall consist of the Mayor and two Council members from
-      each voting district. Members shall be elected by the voters of each respective
-      district.
+    quote: Members shall be elected by the voters of each respective district.
 - role_id: city-manager
   expected: appointed
   presiding: false
@@ -50,7 +50,7 @@
   - established: true
     label: City Manager
     filled_by: appointed
-    maximum_memberships: null
+    maximum_memberships: 1
     quote: The City Manager shall be chosen and appointed by majority vote of the
       City Council
   - established: true
@@ -78,7 +78,8 @@
     label: City attorneys
     filled_by: appointed
     maximum_memberships: null
-    quote: 'The City Council shall appoint the following officers: ... (C) City attorneys.'
+    quote: 'The City Council shall appoint the following officers: (A) City Manager;
+      (B) City Treasurer; and (C) City attorneys.'
 - role_id: council-president
   expected: elected_by_members
   presiding: true
@@ -279,20 +280,19 @@
   right: true
   each_right:
   - true
-  - false
-  agreed: false
+  - true
+  agreed: true
   answers:
   - established: false
     label: ''
     filled_by: not_stated
     maximum_memberships: null
     quote: ''
-  - established: true
-    label: Chair
-    filled_by: elected_by_members
-    maximum_memberships: 1
-    quote: the members of the Board shall elect one of their members as Chair of the
-      Board
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
 - role_id: vice-chair
   expected: probably_not_established
   presiding: true

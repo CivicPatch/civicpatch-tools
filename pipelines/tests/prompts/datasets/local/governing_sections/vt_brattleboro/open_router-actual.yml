@@ -1,16 +1,18 @@
 picked_ids:
 - H0002
 - H0003
-- H0004
 - H0005
 - H0006
 - H0011
-- H0012
 - H0018
 - H0021
 - H0022
 - H0023
 - H0024
+- H0025
+- H0028
+- H0029
+- H0030
 - H0038
 - H0041
 - H0042
@@ -22,5 +24,6 @@ picked_ids:
 roles: 10
 covered: 10
 missed: []
-picked: 20
+unexpected_misses: []
+picked: 22
 listed: 53

@@ -12,22 +12,17 @@
     filled_by: elected_by_voters
     maximum_memberships: 1
     quote: the Village shall, by ballot, if called for by three or more legal voters
-      in the meeting, elect for the ensuing year, and, until their successors are
-      chosen; a President, who shall preside at all Village meetings, and be vested
-      with the powers of a moderator at town meeting and who shall be, by virtue of
-      this office, one of the trustees of the Village and President of the Board of
-      Trustees; a Clerk
+      in the meeting, elect for the ensuing year... a Clerk
   - established: true
     label: Clerk
     filled_by: elected_by_voters
     maximum_memberships: 1
-    quote: At the annual meeting to be held on the second Monday of July, the Village
-      shall, by ballot, if called for by three or more legal voters in the meeting,
-      elect for the ensuing year, and, until their successors are chosen; a President,
-      who shall preside at all Village meetings, and be vested with the powers of
-      a moderator at town meeting and who shall be, by virtue of this office, one
-      of the trustees of the Village and President of the Board of Trustees; a Clerk;
-      a Treasurer; and a Tax Collector
+    quote: the Village shall, by ballot, if called for by three or more legal voters
+      in the meeting, elect for the ensuing year, and, until their successors are
+      chosen; a President, who shall preside at all Village meetings, and be vested
+      with the powers of a moderator at town meeting and who shall be, by virtue of
+      this office, one of the trustees of the Village and President of the Board of
+      Trustees; a Clerk; a Treasurer; and a Tax Collector
 - role_id: treasurer
   expected: elected_by_voters
   presiding: false
@@ -41,13 +36,12 @@
     label: Treasurer
     filled_by: elected_by_voters
     maximum_memberships: 1
-    quote: At the annual meeting to be held on the second Monday of July, the Village
-      shall, by ballot, if called for by three or more legal voters in the meeting,
-      elect for the ensuing year, and, until their successors are chosen; a President,
-      who shall preside at all Village meetings, and be vested with the powers of
-      a moderator at town meeting and who shall be, by virtue of this office, one
-      of the trustees of the Village and President of the Board of Trustees; a Clerk;
-      a Treasurer; and a Tax Collector
+    quote: the Village shall, by ballot, if called for by three or more legal voters
+      in the meeting, elect for the ensuing year, and, until their successors are
+      chosen; a President, who shall preside at all Village meetings, and be vested
+      with the powers of a moderator at town meeting and who shall be, by virtue of
+      this office, one of the trustees of the Village and President of the Board of
+      Trustees; a Clerk; a Treasurer; and a Tax Collector
   - established: true
     label: Treasurer
     filled_by: elected_by_voters
@@ -57,7 +51,7 @@
       chosen; a President, who shall preside at all Village meetings, and be vested
       with the powers of a moderator at town meeting and who shall be, by virtue of
       this office, one of the trustees of the Village and President of the Board of
-      Trustees; a Clerk; a Treasurer; and a Tax Collector
+      Trustees; a Clerk; a Treasurer
 - role_id: member
   expected: elected_by_voters
   presiding: false
@@ -68,7 +62,7 @@
   agreed: true
   answers:
   - established: true
-    label: trustee
+    label: Trustee
     filled_by: elected_by_voters
     maximum_memberships: null
     quote: the corporation at each annual meeting shall elect two trustees for a term
@@ -177,11 +171,11 @@
 - role_id: council-president
   expected: probably_not_established
   presiding: true
-  right: true
+  right: false
   each_right:
   - false
-  - true
-  agreed: false
+  - false
+  agreed: true
   answers:
   - established: true
     label: President
@@ -189,15 +183,14 @@
     maximum_memberships: 1
     quote: the Village shall, by ballot, if called for by three or more legal voters
       in the meeting, elect for the ensuing year, and, until their successors are
-      chosen; a President, who shall preside at all Village meetings, and be vested
-      with the powers of a moderator at town meeting and who shall be, by virtue of
-      this office, one of the trustees of the Village and President of the Board of
-      Trustees
-  - established: false
-    label: ''
-    filled_by: not_stated
-    maximum_memberships: null
-    quote: ''
+      chosen; a President
+  - established: true
+    label: President
+    filled_by: elected_by_voters
+    maximum_memberships: 1
+    quote: the Village shall, by ballot, if called for by three or more legal voters
+      in the meeting, elect for the ensuing year, and, until their successors are
+      chosen; a President
 - role_id: council-vice-president
   expected: probably_not_established
   presiding: true
@@ -281,21 +274,18 @@
   each_right:
   - true
   - true
-  agreed: false
+  agreed: true
   answers:
   - established: false
     label: ''
     filled_by: not_stated
     maximum_memberships: null
     quote: ''
-  - established: true
-    label: President of the Board of Trustees
-    filled_by: elected_by_voters
-    maximum_memberships: 1
-    quote: elect ... a President, who shall preside at all Village meetings, and be
-      vested with the powers of a moderator at town meeting and who shall be, by virtue
-      of this office, one of the trustees of the Village and President of the Board
-      of Trustees
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
 - role_id: vice-chair
   expected: probably_not_established
   presiding: true

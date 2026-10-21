@@ -18,7 +18,7 @@
     filled_by: elected_by_voters
     maximum_memberships: 1
     quote: the legal voters of the City shall, from among the legal voters thereof,
-      elect a Mayor
+      elect a Mayor.
 - role_id: member
   expected: elected_by_voters
   presiding: false
@@ -34,14 +34,14 @@
     maximum_memberships: 12
     quote: the legal voters of each of the South, Central, East, and North City Districts
       shall, from among the legal voters of their respective district, elect a City
-      Councilor
+      Councilor for a two-year term.
   - established: true
     label: City Councilor
     filled_by: elected_by_voters
     maximum_memberships: 12
     quote: the legal voters of each of the South, Central, East, and North City Districts
       shall, from among the legal voters of their respective district, elect a City
-      Councilor for a two-year term.
+      Councilor
 - role_id: council-president
   expected: elected_by_members
   presiding: true

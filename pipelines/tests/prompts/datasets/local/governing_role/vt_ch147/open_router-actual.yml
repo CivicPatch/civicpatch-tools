@@ -10,7 +10,7 @@
   - established: true
     label: Town Manager
     filled_by: appointed
-    maximum_memberships: 1
+    maximum_memberships: null
     quote: The Selectboard may appoint a Town Manager.
   - established: true
     label: Town Manager
@@ -80,7 +80,10 @@
     label: Chair
     filled_by: elected_by_members
     maximum_memberships: 1
-    quote: elect a Chair and Vice Chair by a majority vote of the entire Board
+    quote: Forthwith after their election and qualification, the Selectboard shall
+      organize and elect a Chair and Vice Chair by a majority vote of the entire Board
+      and file a certificate of such election for record in the office of the Town
+      Clerk.
 - role_id: vice-chair
   expected: elected_by_members
   presiding: true
@@ -100,7 +103,10 @@
     label: Vice Chair
     filled_by: elected_by_members
     maximum_memberships: 1
-    quote: elect a Chair and Vice Chair by a majority vote of the entire Board
+    quote: Forthwith after their election and qualification, the Selectboard shall
+      organize and elect a Chair and Vice Chair by a majority vote of the entire Board
+      and file a certificate of such election for record in the office of the Town
+      Clerk.
 - role_id: commission-president
   expected: probably_not_established
   presiding: true

@@ -1,24 +1,24 @@
 - role_id: member
   expected: elected_by_voters
   presiding: false
-  right: true
+  right: false
   each_right:
-  - true
-  - true
+  - false
+  - false
   agreed: true
   answers:
   - established: true
     label: member of the Selectboard
     filled_by: elected_by_voters
     maximum_memberships: 5
-    quote: 'The municipal officers elected by the Town shall be: (1) five members
-      of the Selectboard;'
+    quote: All officers identified in section 22 of this charter shall be elected
+      by Australian ballot.
   - established: true
     label: member of the Selectboard
     filled_by: elected_by_voters
     maximum_memberships: 5
-    quote: 'The municipal officers elected by the Town shall be: (1) five members
-      of the Selectboard;'
+    quote: All officers identified in section 22 of this charter shall be elected
+      by Australian ballot.
 - role_id: moderator
   expected: elected_by_voters
   presiding: false
@@ -37,7 +37,8 @@
     label: Moderator
     filled_by: elected_by_voters
     maximum_memberships: 1
-    quote: The Moderator shall be elected annually
+    quote: The Moderator shall be elected annually and shall perform those duties
+      prescribed by State law.
 - role_id: clerk
   expected: elected_by_voters
   presiding: false
@@ -51,12 +52,7 @@
     label: Town Clerk
     filled_by: elected_by_voters
     maximum_memberships: 1
-    quote: 'The municipal officers elected by the Town shall be: (1) five members
-      of the Selectboard; (2) one Moderator; (3) five Trustees of the Cobleigh Library;
-      (4) three, four, or five listers, as determined by the Selectboard; (5) one
-      Town Agent; (6) one Town Clerk; (7) three Trustees of the Sanborn School Fund;
-      (8) Justices of the peace, the number of which shall be determined in accordance
-      with the Vermont Constitution; and (9) one Town Treasurer.'
+    quote: The Town Clerk shall be elected for a three-year term
   - established: true
     label: Town Clerk
     filled_by: elected_by_voters
@@ -67,7 +63,7 @@
   presiding: false
   right: true
   each_right:
-  - true
+  - false
   - true
   agreed: true
   answers:
@@ -75,12 +71,13 @@
     label: Town Treasurer
     filled_by: elected_by_voters
     maximum_memberships: 1
-    quote: (9) one Town Treasurer.
+    quote: All officers identified in section 22 of this charter shall be elected
+      by Australian ballot.
   - established: true
     label: Town Treasurer
     filled_by: elected_by_voters
     maximum_memberships: 1
-    quote: one Town Treasurer
+    quote: The Town Treasurer shall be elected for a three-year term
 - role_id: chair
   expected: elected_by_members
   presiding: true
@@ -94,35 +91,31 @@
     label: chair
     filled_by: elected_by_members
     maximum_memberships: 1
-    quote: the Selectboard shall elect a chair and a vice chair by vote of the majority
-      of the entire Selectboard.
+    quote: the Selectboard shall elect a chair and a vice chair
   - established: true
     label: chair
     filled_by: elected_by_members
     maximum_memberships: 1
-    quote: the Selectboard shall elect a chair and a vice chair by vote of the majority
-      of the entire Selectboard.
+    quote: the Selectboard shall elect a chair
 - role_id: vice-chair
   expected: elected_by_members
   presiding: true
   right: true
   each_right:
   - true
-  - true
+  - false
   agreed: true
   answers:
   - established: true
     label: vice chair
     filled_by: elected_by_members
     maximum_memberships: 1
-    quote: the Selectboard shall elect a chair and a vice chair by vote of the majority
-      of the entire Selectboard.
+    quote: the Selectboard shall elect a chair and a vice chair
   - established: true
     label: vice chair
     filled_by: elected_by_members
     maximum_memberships: 1
-    quote: the Selectboard shall elect a chair and a vice chair by vote of the majority
-      of the entire Selectboard.
+    quote: the Selectboard shall elect a vice chair
 - role_id: commission-president
   expected: probably_not_established
   presiding: true

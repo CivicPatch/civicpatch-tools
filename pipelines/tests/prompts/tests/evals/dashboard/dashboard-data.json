@@ -25455,6 +25455,516 @@
    "latest_case_prompts": {}
   },
   {
+   "eval_name": "governing_sections",
+   "dataset_dir": "../../../datasets/local/governing_sections",
+   "verdicts": [
+    {
+     "provider": "open_router",
+     "blocked": false,
+     "gate_failures": [],
+     "failed_case_ids": [],
+     "cases_passed": 9,
+     "cases_total": 9,
+     "priority_scores": {},
+     "cost_usd": 0.01406524,
+     "ran_at": "2026-10-21T03:08:04+00:00"
+    }
+   ],
+   "matrix": {
+    "lineages": [
+     {
+      "model": "deepseek/deepseek-v4-flash",
+      "provider": "open_router"
+     }
+    ],
+    "rows": [
+     {
+      "prompt_sha256": "206d0e00f827",
+      "cells": [
+       {
+        "mean_score": 0.9888888888888889,
+        "run_count": 2,
+        "mean_cost_usd": 0.01784636
+       }
+      ]
+     },
+     {
+      "prompt_sha256": "c5de94938a56",
+      "cells": [
+       {
+        "mean_score": 0.9333333333333333,
+        "run_count": 2,
+        "mean_cost_usd": 0.012876163999999999
+       }
+      ]
+     },
+     {
+      "prompt_sha256": "fe43737adfd6",
+      "cells": [
+       {
+        "mean_score": 0.8214285714285714,
+        "run_count": 2,
+        "mean_cost_usd": 0.010145898
+       }
+      ]
+     }
+    ]
+   },
+   "comparison": null,
+   "trends": {
+    "providers": [
+     "open_router"
+    ],
+    "charts": [
+     {
+      "metric": "roles_covered",
+      "is_priority": false,
+      "gate_floor": null,
+      "series": [
+       {
+        "provider": "open_router",
+        "points": [
+         {
+          "timestamp": "2026-10-20T01:07:17+00:00",
+          "prompt_sha256": "fe43737adfd6",
+          "score": 0.7636363636363637
+         },
+         {
+          "timestamp": "2026-10-20T01:12:24+00:00",
+          "prompt_sha256": "fe43737adfd6",
+          "score": 0.8363636363636363
+         },
+         {
+          "timestamp": "2026-10-20T01:41:43+00:00",
+          "prompt_sha256": "c5de94938a56",
+          "score": 0.9090909090909091
+         },
+         {
+          "timestamp": "2026-10-20T01:44:10+00:00",
+          "prompt_sha256": "c5de94938a56",
+          "score": 0.9636363636363636
+         },
+         {
+          "timestamp": "2026-10-20T01:54:50+00:00",
+          "prompt_sha256": "206d0e00f827",
+          "score": 0.9818181818181818
+         },
+         {
+          "timestamp": "2026-10-21T03:08:04+00:00",
+          "prompt_sha256": "206d0e00f827",
+          "score": 1.0
+         }
+        ]
+       }
+      ]
+     },
+     {
+      "metric": "sections_kept",
+      "is_priority": false,
+      "gate_floor": null,
+      "series": [
+       {
+        "provider": "open_router",
+        "points": [
+         {
+          "timestamp": "2026-10-20T01:07:17+00:00",
+          "prompt_sha256": "fe43737adfd6",
+          "score": 0.10834371108343711
+         },
+         {
+          "timestamp": "2026-10-20T01:12:24+00:00",
+          "prompt_sha256": "fe43737adfd6",
+          "score": 0.11083437110834371
+         },
+         {
+          "timestamp": "2026-10-20T01:41:43+00:00",
+          "prompt_sha256": "c5de94938a56",
+          "score": 0.21544209215442092
+         },
+         {
+          "timestamp": "2026-10-20T01:44:10+00:00",
+          "prompt_sha256": "c5de94938a56",
+          "score": 0.23163138231631383
+         },
+         {
+          "timestamp": "2026-10-20T01:54:50+00:00",
+          "prompt_sha256": "206d0e00f827",
+          "score": 0.2727272727272727
+         },
+         {
+          "timestamp": "2026-10-21T03:08:04+00:00",
+          "prompt_sha256": "206d0e00f827",
+          "score": 0.29265255292652553
+         }
+        ]
+       }
+      ]
+     }
+    ],
+    "run_count": 6
+   },
+   "prompt_versions": [
+    {
+     "prompt_sha256": "206d0e00f827",
+     "text": "\n    Below are the section headings of a municipal or county charter or statute, one per line, each\n    after an id like H0017 (the id is not the section number), grouped under their subchapters.\n\n    Which sections say how the governing body is composed and elected, how the chief executive is\n    chosen, how the governing body picks its presiding officers, who presides at a town or village\n    meeting, and how the jurisdiction's other officers are elected or appointed? Appointments are\n    often listed under the powers and duties of the governing body, the chief executive or the\n    manager, so include those sections; include any section whose heading names an office (Clerk,\n    Treasurer, Assessor, Attorney), and every section of a subchapter about officers, whatever its\n    heading. Include a section when in doubt. Leave out finance, utilities, boards and\n    commissions, and other procedure.\n\n    Return {\"sections\": [...]} with the ids exactly as written, for example \"H0017\".\n    ",
+     "first_run_at": "2026-10-20T01:54:50+00:00",
+     "last_run_at": "2026-10-21T03:08:04+00:00",
+     "providers": [
+      "open_router"
+     ],
+     "runs": [
+      {
+       "timestamp": "2026-10-21T03:08:04+00:00",
+       "provider": "open_router",
+       "scores": {
+        "roles_covered": 1.0,
+        "sections_kept": 0.29265255292652553
+       }
+      },
+      {
+       "timestamp": "2026-10-20T01:54:50+00:00",
+       "provider": "open_router",
+       "scores": {
+        "roles_covered": 0.9818181818181818,
+        "sections_kept": 0.2727272727272727
+       }
+      }
+     ],
+     "previous_sha256": "c5de94938a56",
+     "diff": [
+      {
+       "kind": "context",
+       "text": "     Which sections say how the governing body is composed and elected, how the chief executive is"
+      },
+      {
+       "kind": "removed",
+       "text": "-    chosen, how the governing body picks its presiding officers, and how the jurisdiction's other"
+      },
+      {
+       "kind": "removed",
+       "text": "-    officers are elected or appointed? Appointments are often listed under the powers and duties"
+      },
+      {
+       "kind": "removed",
+       "text": "-    of the governing body, the chief executive or the manager, so include those sections, and any"
+      },
+      {
+       "kind": "removed",
+       "text": "-    section whose heading names an office (Clerk, Treasurer, Assessor, Attorney). Include a"
+      },
+      {
+       "kind": "removed",
+       "text": "-    section when in doubt. Leave out finance, utilities, boards and commissions, and procedure."
+      },
+      {
+       "kind": "added",
+       "text": "+    chosen, how the governing body picks its presiding officers, who presides at a town or village"
+      },
+      {
+       "kind": "added",
+       "text": "+    meeting, and how the jurisdiction's other officers are elected or appointed? Appointments are"
+      },
+      {
+       "kind": "added",
+       "text": "+    often listed under the powers and duties of the governing body, the chief executive or the"
+      },
+      {
+       "kind": "added",
+       "text": "+    manager, so include those sections; include any section whose heading names an office (Clerk,"
+      },
+      {
+       "kind": "added",
+       "text": "+    Treasurer, Assessor, Attorney), and every section of a subchapter about officers, whatever its"
+      },
+      {
+       "kind": "added",
+       "text": "+    heading. Include a section when in doubt. Leave out finance, utilities, boards and"
+      },
+      {
+       "kind": "added",
+       "text": "+    commissions, and other procedure."
+      },
+      {
+       "kind": "context",
+       "text": " "
+      }
+     ]
+    },
+    {
+     "prompt_sha256": "c5de94938a56",
+     "text": "\n    Below are the section headings of a municipal or county charter or statute, one per line, each\n    after an id like H0017 (the id is not the section number), grouped under their subchapters.\n\n    Which sections say how the governing body is composed and elected, how the chief executive is\n    chosen, how the governing body picks its presiding officers, and how the jurisdiction's other\n    officers are elected or appointed? Appointments are often listed under the powers and duties\n    of the governing body, the chief executive or the manager, so include those sections, and any\n    section whose heading names an office (Clerk, Treasurer, Assessor, Attorney). Include a\n    section when in doubt. Leave out finance, utilities, boards and commissions, and procedure.\n\n    Return {\"sections\": [...]} with the ids exactly as written, for example \"H0017\".\n    ",
+     "first_run_at": "2026-10-20T01:41:43+00:00",
+     "last_run_at": "2026-10-20T01:44:10+00:00",
+     "providers": [
+      "open_router"
+     ],
+     "runs": [
+      {
+       "timestamp": "2026-10-20T01:44:10+00:00",
+       "provider": "open_router",
+       "scores": {
+        "roles_covered": 0.9636363636363636,
+        "sections_kept": 0.23163138231631383
+       }
+      },
+      {
+       "timestamp": "2026-10-20T01:41:43+00:00",
+       "provider": "open_router",
+       "scores": {
+        "roles_covered": 0.9090909090909091,
+        "sections_kept": 0.21544209215442092
+       }
+      }
+     ],
+     "previous_sha256": "fe43737adfd6",
+     "diff": [
+      {
+       "kind": "context",
+       "text": "     chosen, how the governing body picks its presiding officers, and how the jurisdiction's other"
+      },
+      {
+       "kind": "removed",
+       "text": "-    officers are elected or appointed? Include a section when in doubt. Leave out finance,"
+      },
+      {
+       "kind": "removed",
+       "text": "-    utilities, boards and commissions, and procedure."
+      },
+      {
+       "kind": "added",
+       "text": "+    officers are elected or appointed? Appointments are often listed under the powers and duties"
+      },
+      {
+       "kind": "added",
+       "text": "+    of the governing body, the chief executive or the manager, so include those sections, and any"
+      },
+      {
+       "kind": "added",
+       "text": "+    section whose heading names an office (Clerk, Treasurer, Assessor, Attorney). Include a"
+      },
+      {
+       "kind": "added",
+       "text": "+    section when in doubt. Leave out finance, utilities, boards and commissions, and procedure."
+      },
+      {
+       "kind": "context",
+       "text": " "
+      }
+     ]
+    },
+    {
+     "prompt_sha256": "fe43737adfd6",
+     "text": "\n    Below are the section headings of a municipal or county charter or statute, one per line, each\n    after an id like H0017 (the id is not the section number), grouped under their subchapters.\n\n    Which sections say how the governing body is composed and elected, how the chief executive is\n    chosen, how the governing body picks its presiding officers, and how the jurisdiction's other\n    officers are elected or appointed? Include a section when in doubt. Leave out finance,\n    utilities, boards and commissions, and procedure.\n\n    Return {\"sections\": [...]} with the ids exactly as written, for example \"H0017\".\n    ",
+     "first_run_at": "2026-10-20T01:07:17+00:00",
+     "last_run_at": "2026-10-20T01:12:24+00:00",
+     "providers": [
+      "open_router"
+     ],
+     "runs": [
+      {
+       "timestamp": "2026-10-20T01:12:24+00:00",
+       "provider": "open_router",
+       "scores": {
+        "roles_covered": 0.8363636363636363,
+        "sections_kept": 0.11083437110834371
+       }
+      },
+      {
+       "timestamp": "2026-10-20T01:07:17+00:00",
+       "provider": "open_router",
+       "scores": {
+        "roles_covered": 0.7636363636363637,
+        "sections_kept": 0.10834371108343711
+       }
+      }
+     ],
+     "previous_sha256": null,
+     "diff": []
+    }
+   ],
+   "detail": {
+    "providers": [
+     "open_router"
+    ],
+    "metric_rows": [
+     {
+      "metric": "cases passed",
+      "cells": [
+       {
+        "score": 1.0,
+        "swing_is_wide": false,
+        "half_swing": 0.0,
+        "missing_count": null
+       }
+      ]
+     }
+    ],
+    "case_providers": [
+     "open_router"
+    ],
+    "case_rows": [
+     {
+      "case_id": "vt_brattleboro",
+      "scores": [
+       1.0
+      ],
+      "stability": "moves"
+     },
+     {
+      "case_id": "vt_burlington",
+      "scores": [
+       1.0
+      ],
+      "stability": "moves"
+     },
+     {
+      "case_id": "vt_hartford",
+      "scores": [
+       1.0
+      ],
+      "stability": "moves"
+     },
+     {
+      "case_id": "vt_hyde_park_village",
+      "scores": [
+       1.0
+      ],
+      "stability": "moves"
+     },
+     {
+      "case_id": "vt_montpelier",
+      "scores": [
+       1.0
+      ],
+      "stability": "steady"
+     },
+     {
+      "case_id": "vt_newport",
+      "scores": [
+       1.0
+      ],
+      "stability": "steady"
+     },
+     {
+      "case_id": "vt_stowe",
+      "scores": [
+       1.0
+      ],
+      "stability": "moves"
+     },
+     {
+      "case_id": "vt_winooski",
+      "scores": [
+       1.0
+      ],
+      "stability": "moves"
+     },
+     {
+      "case_id": "vt_woodstock_village",
+      "scores": [
+       1.0
+      ],
+      "stability": "steady"
+     }
+    ],
+    "movements": [
+     {
+      "provider": "open_router",
+      "regressed": [],
+      "improved": [
+       "vt_hyde_park_village"
+      ]
+     }
+    ]
+   },
+   "latest_mismatches": {},
+   "case_inputs": {
+    "vt_brattleboro": {
+     "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:vt/place:brattleboro/government",
+     "name": "Brattleboro town",
+     "source_url": "https://legislature.vermont.gov/statutes/fullchapter/24APPENDIX/107",
+     "chars": "71113",
+     "sections": "53",
+     "covering": "{\"town-meeting-member\": [\"§ 2.3. Manner of election\"], \"moderator\": [\"§ 2.2. Elected officers\"], \"clerk\": [\"§ 2.4. Representative Town Meeting\"], \"treasurer\": [\"§ 2.4. Representative Town Meeting\"], \"select-board-member\": [\"§ 2.5. Selectboard\"], \"chair\": [\"§ 4.5. Appointments\"], \"vice-chair\": [\"§ 4.5. Appointments\"], \"city-attorney\": [\"§ 2.4. Representative Town Meeting\"], \"city-manager\": [\"§ 4.5. Appointments\"], \"assessor\": [\"§ 7.8. Office of Assessment\"]}",
+     "known_misses": "{}"
+    },
+    "vt_burlington": {
+     "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:vt/place:burlington/government",
+     "name": "Burlington city",
+     "source_url": "https://legislature.vermont.gov/statutes/fullchapter/24APPENDIX/003",
+     "chars": "373778",
+     "sections": "365",
+     "covering": "{\"mayor\": [\"§ 3. Election of Mayor and City Councilors\"], \"assessor\": [\"§ 122. Enumerated\"], \"council-member\": [\"§ 3. Election of Mayor and City Councilors\"], \"council-president\": [\"§ 36. Administration; vested in Mayor and City Council; selection and terms of same\"]}",
+     "known_misses": "{\"assessor\": \"§ 122's heading is 'Enumerated'; only its subchapter, Officers, says what it holds\"}"
+    },
+    "vt_hartford": {
+     "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:vt/place:hartford/government",
+     "name": "Hartford town",
+     "source_url": "https://legislature.vermont.gov/statutes/fullchapter/24APPENDIX/123A",
+     "chars": "31531",
+     "sections": "10",
+     "covering": "{\"select-board-member\": [\"§ 202. Elected officers\"], \"chair\": [\"§ 203. Duties of elected officers\"], \"vice-chair\": [\"§ 203. Duties of elected officers\"], \"city-manager\": [\"§ 301. Appointed officers\"], \"moderator\": [\"§ 202. Elected officers\"], \"treasurer\": [\"§ 202. Elected officers\"], \"clerk\": [\"§ 203. Duties of elected officers\"]}",
+     "known_misses": "{}"
+    },
+    "vt_hyde_park_village": {
+     "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:vt/place:hyde_park_village/government",
+     "name": "Hyde Park village",
+     "source_url": "https://legislature.vermont.gov/statutes/fullchapter/24APPENDIX/225",
+     "chars": "37125",
+     "sections": "38",
+     "covering": "{\"trustee\": [\"§ 51. Elected officers\"], \"chair\": [\"§ 52. Trustees\", \"§ 8. Board of Civil Authority\"], \"clerk\": [\"§ 72. Village Clerk\", \"§ 71. Appointed officers\"], \"treasurer\": [\"§ 73. Village Treasurer\", \"§ 71. Appointed officers\"]}",
+     "known_misses": "{}"
+    },
+    "vt_montpelier": {
+     "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:vt/place:montpelier/government",
+     "name": "Montpelier city",
+     "source_url": "https://legislature.vermont.gov/statutes/fullchapter/24APPENDIX/005",
+     "chars": "85720",
+     "sections": "150",
+     "covering": "{\"mayor\": [\"§ 401. Election and tenure of Mayor\"], \"council-member\": [\"§ 302. City Council composition and term of office\"], \"council-president\": [\"§ 304. Election of President, Vice President, and Parliamentarian\"], \"council-vice-president\": [\"§ 304. Election of President, Vice President, and Parliamentarian\"]}",
+     "known_misses": "{}"
+    },
+    "vt_newport": {
+     "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:vt/place:newport_city/government",
+     "name": "Newport city",
+     "source_url": "https://legislature.vermont.gov/statutes/fullchapter/24APPENDIX/007",
+     "chars": "54001",
+     "sections": "43",
+     "covering": "{\"mayor\": [\"§ 6. Elections of officers at annual meeting\"], \"alderperson\": [\"§ 6. Elections of officers at annual meeting\"], \"council-president\": [\"§ 7. Mayor and Board of Aldermen as City Council\"], \"clerk\": [\"§ 6. Elections of officers at annual meeting\"], \"treasurer\": [\"§ 6. Elections of officers at annual meeting\"], \"city-attorney\": [\"§ 8. Officers appointed by City Council\"], \"city-manager\": [\"§ 40. City Manager\"], \"assessor\": [\"§ 16. Department of Assessment\"]}",
+     "known_misses": "{}"
+    },
+    "vt_stowe": {
+     "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:vt/place:stowe/government",
+     "name": "Stowe town",
+     "source_url": "https://legislature.vermont.gov/statutes/fullchapter/24APPENDIX/153",
+     "chars": "49350",
+     "sections": "47",
+     "covering": "{\"select-board-member\": [\"§ 401. Officers generally; elected officers; recall\"], \"moderator\": [\"§ 301. Application of general law\", \"§ 401. Officers generally; elected officers; recall\"], \"chair\": [\"§ 403. Organization of Selectboard\"], \"vice-chair\": [\"§ 403. Organization of Selectboard\"], \"city-manager\": [\"§ 701. Town Manager; appointment; qualifications; term\"], \"clerk\": [\"§ 703. Powers and duties\", \"§ 403. Organization of Selectboard\"], \"treasurer\": [\"§ 703. Powers and duties\"]}",
+     "known_misses": "{}"
+    },
+    "vt_winooski": {
+     "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:vt/place:winooski/government",
+     "name": "Winooski city",
+     "source_url": "https://legislature.vermont.gov/statutes/fullchapter/24APPENDIX/019",
+     "chars": "73962",
+     "sections": "81",
+     "covering": "{\"mayor\": [\"§ 303. Mayor and Deputy Mayor; election, terms, and duties\"], \"council-member\": [\"§ 301. Composition; eligibility; election and terms\"], \"deputy-mayor\": [\"§ 303. Mayor and Deputy Mayor; election, terms, and duties\"], \"city-manager\": [\"§ 501. Appointment; qualifications; compensation of City Manager\"], \"assessor\": [\"§ 506. City officers; appointment of\"], \"city-attorney\": [\"§ 304. General powers and duties\"], \"treasurer\": [\"§ 304. General powers and duties\"]}",
+     "known_misses": "{}"
+    },
+    "vt_woodstock_village": {
+     "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:vt/place:woodstock_village/government",
+     "name": "Woodstock village",
+     "source_url": "https://legislature.vermont.gov/statutes/fullchapter/24APPENDIX/291",
+     "chars": "10971",
+     "sections": "16",
+     "covering": "{\"clerk\": [\"§ 3. Annual meeting; election of officers\"], \"trustee\": [\"§ 3. Annual meeting; election of officers\"], \"treasurer\": [\"§ 3. Annual meeting; election of officers\"]}",
+     "known_misses": "{}"
+    }
+   },
+   "prompts_dir": "../governing_sections/_prompts",
+   "latest_case_prompts": {}
+  },
+  {
    "eval_name": "government_form",
    "dataset_dir": "../../../datasets/local/government_form",
    "verdicts": [

@@ -4,7 +4,7 @@
   right: true
   each_right:
   - true
-  - true
+  - false
   agreed: true
   answers:
   - established: true
@@ -16,8 +16,7 @@
     label: Council member
     filled_by: elected_by_voters
     maximum_memberships: 5
-    quote: All Council members shall be elected at large, and shall hold no other
-      City or School District office, except as provided otherwise in this charter.
+    quote: All Council members shall be elected at large.
 - role_id: clerk
   expected: elected_by_members
   presiding: false
@@ -31,7 +30,8 @@
     label: Clerk
     filled_by: elected_by_members
     maximum_memberships: 1
-    quote: the Council shall organize and elect a Chair, a Vice Chair and a Clerk
+    quote: elect a Chair, a Vice Chair and a Clerk by a majority vote of the entire
+      Council
   - established: true
     label: Clerk
     filled_by: elected_by_members
@@ -55,7 +55,7 @@
   - established: true
     label: City Manager
     filled_by: appointed
-    maximum_memberships: 1
+    maximum_memberships: null
     quote: The Council shall appoint a City Manager for an indefinite term.
 - role_id: city-attorney
   expected: appointed
@@ -95,16 +95,14 @@
     label: Chair
     filled_by: elected_by_members
     maximum_memberships: 1
-    quote: the Council shall organize and elect a Chair, a Vice Chair and a Clerk
-      by a majority vote of the entire Council
+    quote: elect a Chair, a Vice Chair and a Clerk by a majority vote of the entire
+      Council
   - established: true
     label: Chair
     filled_by: elected_by_members
     maximum_memberships: 1
-    quote: Forthwith after its election and qualification, the Council shall organize
-      and elect a Chair, a Vice Chair and a Clerk by a majority vote of the entire
-      Council and file a certificate of such election for record in the Office Of
-      the City Clerk.
+    quote: the Council shall organize and elect a Chair, a Vice Chair and a Clerk
+      by a majority vote of the entire Council
 - role_id: vice-chair
   expected: elected_by_members
   presiding: true
@@ -118,16 +116,14 @@
     label: Vice Chair
     filled_by: elected_by_members
     maximum_memberships: 1
-    quote: the Council shall organize and elect a Chair, a Vice Chair and a Clerk
-      by a majority vote of the entire Council
+    quote: elect a Chair, a Vice Chair and a Clerk by a majority vote of the entire
+      Council
   - established: true
     label: Vice Chair
     filled_by: elected_by_members
     maximum_memberships: 1
-    quote: Forthwith after its election and qualification, the Council shall organize
-      and elect a Chair, a Vice Chair and a Clerk by a majority vote of the entire
-      Council and file a certificate of such election for record in the Office Of
-      the City Clerk.
+    quote: the Council shall organize and elect a Chair, a Vice Chair and a Clerk
+      by a majority vote of the entire Council
 - role_id: commission-president
   expected: probably_not_established
   presiding: true

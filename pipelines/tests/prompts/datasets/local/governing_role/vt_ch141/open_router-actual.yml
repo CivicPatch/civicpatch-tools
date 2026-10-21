@@ -1,10 +1,10 @@
 - role_id: member
-  expected: elected_by_voters
+  expected: not_stated
   presiding: false
-  right: false
+  right: true
   each_right:
-  - false
-  - false
+  - true
+  - true
   agreed: true
   answers:
   - established: true
@@ -16,7 +16,7 @@
       of the merged and consolidated Town of Readsboro for the remainder of the terms
       of their respective elected offices.
   - established: true
-    label: Selectboard member
+    label: Selectboard members
     filled_by: not_stated
     maximum_memberships: null
     quote: The Selectboard members of the Town of Readsboro, serving on the effective

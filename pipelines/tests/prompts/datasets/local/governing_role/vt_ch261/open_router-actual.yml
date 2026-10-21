@@ -4,24 +4,21 @@
   right: true
   each_right:
   - true
-  - false
+  - true
   agreed: true
   answers:
   - established: true
-    label: trustee
+    label: trustees
     filled_by: elected_by_voters
     maximum_memberships: 3
-    quote: said trustees shall be elected by ballot
+    quote: The officers of said corporation shall consist of a Moderator, Clerk, three
+      trustees, ... said trustees shall be elected by ballot
   - established: true
     label: trustee
     filled_by: elected_by_voters
     maximum_memberships: 3
     quote: The officers of said corporation shall consist of a Moderator, Clerk, three
-      trustees, Treasurer, Collector of Taxes, a Chief Engineer, and two assistant
-      engineers, all of whom, with the exception of the trustees, shall be elected
-      annually and shall hold their respective offices for the term of one year and
-      until others are chosen in their places; said trustees shall be elected by ballot,
-      and, except the first two elected, shall hold office for the term of three years.
+      trustees, ... said trustees shall be elected by ballot
 - role_id: commission-president
   expected: probably_not_established
   presiding: true

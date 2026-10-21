@@ -1,9 +1,9 @@
 picked_ids:
+- H0002
 - H0009
 - H0012
 - H0013
 - H0014
-- H0015
 - H0016
 - H0017
 - H0018
@@ -11,9 +11,10 @@ picked_ids:
 - H0020
 - H0021
 - H0033
-roles: 5
+- H0034
+roles: 4
 covered: 4
-missed:
-- president-pro-tempore
-picked: 12
+missed: []
+unexpected_misses: []
+picked: 13
 listed: 38

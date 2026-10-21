@@ -8,7 +8,7 @@
   agreed: true
   answers:
   - established: true
-    label: trustee
+    label: Trustee
     filled_by: elected_by_voters
     maximum_memberships: 3
     quote: At the annual meeting of said corporation, there shall be elected, by ballot
@@ -16,18 +16,13 @@
       one trustee for a term of one year, one trustee for a term of two years, and
       one trustee for a term of three years
   - established: true
-    label: Trustee
+    label: trustee
     filled_by: elected_by_voters
     maximum_memberships: 3
     quote: At the annual meeting of said corporation, there shall be elected, by ballot
       if called for, for the ensuing year and until their successors are chosen, a
-      Moderator, who shall preside at all meetings of said corporation, with powers
-      of moderators at town meetings; a Clerk who shall keep a record of the proceedings
-      of said meetings of said corporation, with power to certify to copies of the
-      same, and who shall perform all the usual duties of a clerk; one trustee for
-      a term of one year, one trustee for a term of two years, and one trustee for
-      a term of three years, and thereafter at each annual meeting one trustee for
-      a term of three years
+      Moderator, ... one trustee for a term of one year, one trustee for a term of
+      two years, and one trustee for a term of three years
 - role_id: moderator
   expected: elected_by_voters
   presiding: false
@@ -47,8 +42,10 @@
     label: Moderator
     filled_by: elected_by_voters
     maximum_memberships: 1
-    quote: there shall be elected, by ballot if called for, for the ensuing year and
-      until their successors are chosen, a Moderator
+    quote: At the annual meeting of said corporation, there shall be elected, by ballot
+      if called for, for the ensuing year and until their successors are chosen, a
+      Moderator, who shall preside at all meetings of said corporation, with powers
+      of moderators at town meetings;
 - role_id: clerk
   expected: elected_by_voters
   presiding: false
@@ -62,22 +59,15 @@
     label: Clerk
     filled_by: elected_by_voters
     maximum_memberships: 1
-    quote: At the annual meeting of said corporation, there shall be elected, by ballot
-      if called for, for the ensuing year and until their successors are chosen, a
-      Moderator, who shall preside at all meetings of said corporation, with powers
-      of moderators at town meetings; a Clerk who shall keep a record of the proceedings
-      of said meetings of said corporation, with power to certify to copies of the
-      same, and who shall perform all the usual duties of a clerk;
+    quote: there shall be elected, by ballot if called for, for the ensuing year and
+      until their successors are chosen, a Moderator, who shall preside at all meetings
+      of said corporation, with powers of moderators at town meetings; a Clerk
   - established: true
     label: Clerk
     filled_by: elected_by_voters
     maximum_memberships: 1
-    quote: At the annual meeting of said corporation, there shall be elected, by ballot
-      if called for, for the ensuing year and until their successors are chosen, a
-      Moderator, who shall preside at all meetings of said corporation, with powers
-      of moderators at town meetings; a Clerk who shall keep a record of the proceedings
-      of said meetings of said corporation, with power to certify to copies of the
-      same, and who shall perform all the usual duties of a clerk;
+    quote: a Clerk who shall keep a record of the proceedings of said meetings of
+      said corporation
 - role_id: treasurer
   expected: elected_by_voters
   presiding: false
@@ -103,24 +93,17 @@
       corporation with the necessary powers for that purpose, who may fill vacancies
       in the offices of said corporation, who may act by a majority, and of whom the
       oldest in office present at any meeting of said corporation shall preside when
-      the Moderator is absent; a Treasurer and a Collector
+      the Moderator is absent; a Treasurer and a Collector, who shall be sworn, and
+      who shall discharge the usual duties of such officers; and such other officers,
+      as said corporation by its bylaws require who shall have all the powers necessary
+      for the purposes of their office.
   - established: true
     label: Treasurer
     filled_by: elected_by_voters
     maximum_memberships: 1
     quote: At the annual meeting of said corporation, there shall be elected, by ballot
-      if called for, for the ensuing year and until their successors are chosen, a
-      Moderator, who shall preside at all meetings of said corporation, with powers
-      of moderators at town meetings; a Clerk who shall keep a record of the proceedings
-      of said meetings of said corporation, with power to certify to copies of the
-      same, and who shall perform all the usual duties of a clerk; one trustee for
-      a term of one year, one trustee for a term of two years, and one trustee for
-      a term of three years, and thereafter at each annual meeting one trustee for
-      a term of three years, who shall have the management of the affairs of said
-      corporation with the necessary powers for that purpose, who may fill vacancies
-      in the offices of said corporation, who may act by a majority, and of whom the
-      oldest in office present at any meeting of said corporation shall preside when
-      the Moderator is absent; a Treasurer and a Collector
+      if called for, for the ensuing year and until their successors are chosen, ...
+      a Treasurer
 - role_id: commission-president
   expected: probably_not_established
   presiding: true

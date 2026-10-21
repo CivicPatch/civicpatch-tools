@@ -18,9 +18,7 @@
     label: Trustee
     filled_by: elected_by_voters
     maximum_memberships: 5
-    quote: At each annual meeting, the corporation shall elect, by ballot, such number
-      of trustees for three-year terms as there are trustees whose terms expire in
-      the year in which the annual meeting is held.
+    quote: the corporation shall elect, by ballot, such number of trustees
 - role_id: commission-president
   expected: probably_not_established
   presiding: true

@@ -1,6 +1,4 @@
 picked_ids:
-- H0002
-- H0003
 - H0005
 - H0006
 - H0007
@@ -9,5 +7,6 @@ picked_ids:
 roles: 7
 covered: 7
 missed: []
-picked: 7
+unexpected_misses: []
+picked: 5
 listed: 10
