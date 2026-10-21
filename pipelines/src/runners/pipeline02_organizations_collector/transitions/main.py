@@ -17,8 +17,6 @@ from ..schemas import (
     OrganizationsCollectorContext,
     OrganizationsCollectorState,
     OrganizationsCollectorStep,
-    OtherOffice,
-    OtherOfficesAnswer,
     PresidingAnswer,
     PresidingOffice,
     RoleAnswer,
@@ -92,8 +90,8 @@ def _next(context: OrganizationsCollectorContext, **data_updates) -> Organizatio
 
 
 async def extract(limits: PipelineRunLimits, logger: PipelineRunLogger, context: OrganizationsCollectorContext, _client: httpx.AsyncClient) -> Step:
-    """Every pending question, each `ASKS_PER_QUESTION` times; on the first pass, the offices
-    nobody asked about as well. Stops before asking once the run's cap is spent."""
+    """Every pending question, each `ASKS_PER_QUESTION` times; on the first pass, the presiding
+    candidates as well. Stops before asking once the run's cap is spent."""
     if cost_utils.total_cost(context.pipeline_run_id) >= limits.pipeline_run_cap_usd:
         logger.warning(f"cost cap reached with {len(context.data.pending_asks)} roles unasked")
         return _next(context, pending_asks=[], stopped_at_cost_cap=True), OrganizationsCollectorStep.VERIFY
@@ -102,9 +100,8 @@ async def extract(limits: PipelineRunLimits, logger: PipelineRunLogger, context:
     answers = await asyncio.gather(*[_answer(context, logger, ask) for ask in asked])
     claims = [RoleClaim(ask=ask, answer=answer) for ask, answer in zip(asked, answers) if answer is not None]
     presiding = await _presiding(context, logger) if first_pass else []
-    others = await _other_offices(context) if first_pass else context.data.other_offices
     all_claims = [*context.data.claims, *claims, *presiding]
-    return _next(context, claims=all_claims, pending_asks=[], other_offices=others), OrganizationsCollectorStep.VERIFY
+    return _next(context, claims=all_claims, pending_asks=[]), OrganizationsCollectorStep.VERIFY
 
 
 async def _answer(context: OrganizationsCollectorContext, logger: PipelineRunLogger, ask: RoleAsk) -> RoleAnswer | None:
@@ -152,14 +149,6 @@ def _presiding_answer(office: PresidingOffice | None) -> RoleAnswer:
     )
 
 
-async def _other_offices(context: OrganizationsCollectorContext) -> List[OtherOffice]:
-    asked = [*context.data.pending_asks, *context.data.presiding_asks]
-    asked_labels = list(dict.fromkeys(ask.role_label for ask in asked))
-    question = open_router_prompts.governing_other_offices_question(asked_labels)
-    response = await _ask(context, "governing_other_offices", question, OtherOfficesAnswer)
-    return OtherOfficesAnswer.model_validate(response).offices
-
-
 async def _ask(context: OrganizationsCollectorContext, prompt_name: str, question: str, response_schema):
     """The law first, the question last, so every question shares the cached law as its prefix."""
     law = context.data.selected_governing_law_text
@@ -202,8 +191,6 @@ async def write(_limits: PipelineRunLimits, logger: PipelineRunLogger, context: 
         return context, PipelineRunStatus.SUCCESS
     if context.data.stopped_at_cost_cap:
         logger.warning(f"cost cap reached: writing {len(outcomes.posts)} posts, some roles unasked")
-    if context.data.other_offices:
-        logger.info(f"offices outside config: {', '.join(office.label for office in context.data.other_offices)}")
     organizations = GoverningLawOrganizations(
         posts=outcomes.posts,
         extras=GoverningLawOrganizationsExtras(governing_law_collected_at=governing_law.collected_at),
