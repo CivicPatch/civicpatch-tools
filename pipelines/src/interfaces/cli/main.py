@@ -10,11 +10,11 @@ from interfaces.schemas import (
     PeopleCollectorRequest,
     validate_people_request
 )
-from runners.people_collector.schemas import PipelineRunConfig
+from runners.pipeline03_people_collector.schemas import PipelineRunConfig
 from shared.schemas import PublishedSourcePage
 from runners.collectors import COLLECTORS
 from runners.engine import PipelineRunError
-from runners.people_collector.main import start as start_people_collector
+from runners.pipeline03_people_collector.main import start as start_people_collector
 from shared.utils import id_utils
 from shared.utils.statuses import PipelineRunKind
 from pipelines_environment import get_env_vars
