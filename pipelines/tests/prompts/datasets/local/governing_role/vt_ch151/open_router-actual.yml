@@ -1,5 +1,6 @@
 - role_id: member
   expected: elected_by_voters
+  presiding: false
   right: true
   each_right:
   - true
@@ -10,52 +11,17 @@
     label: Select Board member
     filled_by: elected_by_voters
     maximum_memberships: 5
-    quote: five Select Board members elected from the Town at large at a duly warned
-      annual town meeting
+    quote: The elective officers of the Town shall be five Select Board members elected
+      from the Town at large at a duly warned annual town meeting
   - established: true
     label: Select Board members
     filled_by: elected_by_voters
     maximum_memberships: 5
     quote: five Select Board members elected from the Town at large at a duly warned
       annual town meeting
-- role_id: chair
-  expected: elected_by_members
-  right: true
-  each_right:
-  - true
-  - true
-  agreed: true
-  answers:
-  - established: true
-    label: Chair
-    filled_by: elected_by_members
-    maximum_memberships: 1
-    quote: the Select Board members shall organize and elect a Chair and Vice Chair.
-  - established: true
-    label: Chair
-    filled_by: elected_by_members
-    maximum_memberships: 1
-    quote: the Select Board members shall organize and elect a Chair and Vice Chair.
-- role_id: vice-chair
-  expected: elected_by_members
-  right: true
-  each_right:
-  - true
-  - true
-  agreed: true
-  answers:
-  - established: true
-    label: Vice Chair
-    filled_by: elected_by_members
-    maximum_memberships: 1
-    quote: the Select Board members shall organize and elect a Chair and Vice Chair.
-  - established: true
-    label: Vice Chair
-    filled_by: elected_by_members
-    maximum_memberships: 1
-    quote: the Select Board members shall organize and elect a Chair and Vice Chair.
 - role_id: city-manager
   expected: appointed
+  presiding: false
   right: true
   each_right:
   - true
@@ -76,6 +42,7 @@
       term and upon such conditions as they may determine.
 - role_id: clerk
   expected: elected_by_voters
+  presiding: false
   right: true
   each_right:
   - true
@@ -98,6 +65,7 @@
       Treasurer; and a Moderator
 - role_id: treasurer
   expected: elected_by_voters
+  presiding: false
   right: true
   each_right:
   - true
@@ -107,18 +75,20 @@
   - established: true
     label: Treasurer
     filled_by: elected_by_voters
-    maximum_memberships: 1
-    quote: a Treasurer
+    maximum_memberships: null
+    quote: The elective officers of the Town shall be five Select Board members elected
+      from the Town at large at a duly warned annual town meeting; a Town Clerk; a
+      Treasurer; and a Moderator
   - established: true
     label: Treasurer
     filled_by: elected_by_voters
     maximum_memberships: 1
     quote: The elective officers of the Town shall be five Select Board members elected
       from the Town at large at a duly warned annual town meeting; a Town Clerk; a
-      Treasurer; and a Moderator, unless by a majority vote of the Town the Moderator
-      becomes an appointed position.
+      Treasurer; and a Moderator
 - role_id: moderator
   expected: elected_by_voters
+  presiding: false
   right: true
   each_right:
   - true
@@ -143,20 +113,315 @@
       becomes an appointed position.
 - role_id: assessor
   expected: appointed
-  right: false
+  presiding: false
+  right: true
   each_right:
-  - false
-  - false
+  - true
+  - true
   agreed: true
   answers:
   - established: true
     label: Assessor
     filled_by: appointed
     maximum_memberships: null
-    quote: who shall be appointed by the Town Manager with the approval of the Selectboard.
+    quote: the Town Manager shall appoint and remove all Town employees, including
+      Chief of the Fire Department, Chief of Police, Director of Public Works, Assistant
+      Town Manager, Finance Director, Zoning Administrator, Assessor, Code Compliance
+      Officer, Health Officer, Parks Director and Tree Warden, Recreation Director,
+      and all other officers and employees as may be required by general law of the
+      State, by this charter, or by the Select Board.
   - established: true
     label: Assessor
     filled_by: appointed
     maximum_memberships: null
-    quote: The Town Manager shall appoint and remove all Town employees, including
-      ... Assessor
+    quote: the Town Manager shall appoint and remove all Town employees, including
+      Chief of the Fire Department, Chief of Police, Director of Public Works, Assistant
+      Town Manager, Finance Director, Zoning Administrator, Assessor, Code Compliance
+      Officer, Health Officer, Parks Director and Tree Warden, Recreation Director,
+      and all other officers and employees as may be required by general law of the
+      State, by this charter, or by the Select Board.
+- role_id: chair
+  expected: elected_by_members
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: true
+    label: Chair
+    filled_by: elected_by_members
+    maximum_memberships: 1
+    quote: elect a Chair
+  - established: true
+    label: Chair
+    filled_by: elected_by_members
+    maximum_memberships: 1
+    quote: the Select Board members shall organize and elect a Chair and Vice Chair
+- role_id: vice-chair
+  expected: elected_by_members
+  presiding: true
+  right: true
+  each_right:
+  - false
+  - true
+  agreed: true
+  answers:
+  - established: true
+    label: Vice Chair
+    filled_by: elected_by_members
+    maximum_memberships: 1
+    quote: elect a Vice Chair
+  - established: true
+    label: Vice Chair
+    filled_by: elected_by_members
+    maximum_memberships: 1
+    quote: the Select Board members shall organize and elect a Chair and Vice Chair
+- role_id: commission-president
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: vice-mayor
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: assistant-mayor
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: mayor-pro-tempore
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: deputy-mayor-pro-tempore
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: council-president
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: council-vice-president
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: council-president-pro-tem
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: deputy-council-president
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: president-pro-tempore
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: commissioner-vice-president
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: chair-pro-tem
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: deputy-supervisor
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''

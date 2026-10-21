@@ -14,22 +14,32 @@ from eval_records import (
 )
 
 EVALS = pathlib.Path("tests/prompts/tests/evals")
-EVAL_DIRS = {
-    "officials": EVALS / "municipal_officials",
-    "relevant_page": EVALS / "relevant_page",
-    "page_covers": EVALS / "page_covers",
-    "find_jurisdiction_url": EVALS / "find_jurisdiction_url",
-    "research_municipality": EVALS / "research_municipality",
-}
-# Relative to dashboard/, since the page links to them.
-DATASET_DIRS = {
-    "officials": "../../../datasets/local/municipal_officials",
-    "relevant_page": "../../../datasets/local/relevant_page",
-    "page_covers": "../../../datasets/local/page_covers",
-    "find_jurisdiction_url": "../../../datasets/local/find_jurisdiction_url",
-    "research_municipality": "../../../datasets/local/research_municipality",
-}
+# The one eval not found by its report: F1 per field from comparison.yml, named apart from its folder.
+OFFICIALS = "officials"
+OFFICIALS_DIR = "municipal_officials"
+# Relative to dashboard/, since the page links to them; a dataset folder shares its eval's name.
+DATASETS = "../../../datasets/local"
 REPORT_SUFFIX = "-eval-report.yml"
+PASS_FAIL_KEY = "failed_cases"
+
+
+def eval_dirs() -> dict[str, pathlib.Path]:
+    """Every eval the dashboard shows: officials, then each folder whose report is pass/fail
+    (`write_pass_fail_report`'s shape), so a new eval shows up without being listed here."""
+    found = {
+        directory.name: directory
+        for directory in sorted(EVALS.iterdir())
+        if directory.is_dir() and directory.name != OFFICIALS_DIR and _is_pass_fail(directory)
+    }
+    return {OFFICIALS: EVALS / OFFICIALS_DIR, **found}
+
+
+def dataset_dir(eval_name: str) -> str:
+    return f"{DATASETS}/{OFFICIALS_DIR if eval_name == OFFICIALS else eval_name}"
+
+
+def _is_pass_fail(directory: pathlib.Path) -> bool:
+    return any(PASS_FAIL_KEY in report for _, report in _reports(directory))
 
 
 def _load_yaml(path: pathlib.Path) -> dict:
@@ -112,7 +122,7 @@ def _metric_results(eval_name: str, provider: str, report: dict, cost_usd: float
 
 
 def read_officials_results() -> EvalResults:
-    directory = EVAL_DIRS["officials"]
+    directory = EVALS / OFFICIALS_DIR
     comparison = _load_yaml(directory / "comparison.yml").get("providers") or {}
     return EvalResults(metrics=[
         result
@@ -144,7 +154,7 @@ def _as_text(value) -> str:
 def read_case_inputs(eval_name: str) -> dict[str, dict[str, str]]:
     """Each case's own prompt inputs, from its expected.yml: what fills the prompt's placeholders."""
     inputs = {}
-    for expected_path in sorted((_DASHBOARD_DIR / DATASET_DIRS[eval_name]).glob("*/expected.yml")):
+    for expected_path in sorted((_DASHBOARD_DIR / dataset_dir(eval_name)).glob("*/expected.yml")):
         expected = _load_yaml(expected_path)
         inputs[expected_path.parent.name] = {
             key: _as_text(value) for key, value in expected.items() if key not in _NOT_PROMPT_INPUTS
@@ -164,10 +174,9 @@ def _case_tally(eval_name: str, provider: str, report: dict, comparison: dict) -
                      cost_usd=_report_cost(report), ran_at=_ran_at(report))
 
 
-def read_pass_fail_results(eval_name: str) -> EvalResults:
-    directory = EVAL_DIRS[eval_name]
+def read_pass_fail_results(eval_name: str, directory: pathlib.Path) -> EvalResults:
     comparison = _load_yaml(directory / "comparison.yml").get("providers") or {}
-    reports = [(_report_provider(path), report) for path, report in _reports(directory) if "failed_cases" in report]
+    reports = [(_report_provider(path), report) for path, report in _reports(directory) if PASS_FAIL_KEY in report]
     return EvalResults(
         metrics=[
             result
@@ -178,11 +187,8 @@ def read_pass_fail_results(eval_name: str) -> EvalResults:
     )
 
 
-def read_results() -> dict[str, EvalResults]:
+def read_results(dirs: dict[str, pathlib.Path]) -> dict[str, EvalResults]:
     return {
-        "officials": read_officials_results(),
-        "relevant_page": read_pass_fail_results("relevant_page"),
-        "page_covers": read_pass_fail_results("page_covers"),
-        "find_jurisdiction_url": read_pass_fail_results("find_jurisdiction_url"),
-        "research_municipality": read_pass_fail_results("research_municipality"),
+        name: read_officials_results() if name == OFFICIALS else read_pass_fail_results(name, directory)
+        for name, directory in dirs.items()
     }

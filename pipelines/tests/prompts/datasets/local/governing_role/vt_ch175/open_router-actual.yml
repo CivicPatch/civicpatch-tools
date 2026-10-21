@@ -1,5 +1,6 @@
 - role_id: moderator
   expected: elected_by_voters
+  presiding: false
   right: true
   each_right:
   - true
@@ -10,11 +11,295 @@
     label: Moderator
     filled_by: elected_by_voters
     maximum_memberships: 1
-    quote: A Moderator to be elected by paper ballot from the floor, for a term of
-      one year.
+    quote: A Moderator to be elected by paper ballot from the floor
   - established: true
     label: Moderator
     filled_by: elected_by_voters
     maximum_memberships: 1
     quote: A Moderator to be elected by paper ballot from the floor, for a term of
       one year.
+- role_id: commission-president
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: vice-mayor
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: assistant-mayor
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: mayor-pro-tempore
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: deputy-mayor-pro-tempore
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: council-president
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: council-vice-president
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: council-president-pro-tem
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: deputy-council-president
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: president-pro-tempore
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: chair
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: vice-chair
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: commissioner-vice-president
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: chair-pro-tem
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: deputy-supervisor
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''

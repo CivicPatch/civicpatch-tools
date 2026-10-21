@@ -502,6 +502,24 @@ def governing_role_question(role_label: str, organization_name: str) -> str:
     """
 
 
+def governing_presiding_question(organization_name: str, candidates: List[tuple[str, List[str]]]) -> str:
+    """Offices most laws never set up, asked together: one question for all of them, not one
+    each. `candidates` is each office's id and the names the law may write it by."""
+    listed = "\n".join(f"    - {role_id}: {', '.join(names)}" for role_id, names in candidates)
+    return f"""
+    Question: which of these offices of the {organization_name} does this law establish, and how
+    is each filled? An office the law makes an officer of the town, city or village itself counts
+    too. Each is listed as its id, then the names it may go by:
+{listed}
+
+    Return {{"offices": [{{"role_id": ..., "label": ..., "filled_by": ..., "maximum_memberships":
+    ..., "quote": ...}}]}}, one entry per office the law establishes and none for the others, an
+    empty list when it establishes none. role_id is the id listed above; label is the office's
+    name as the law writes it; maximum_memberships the number of people who hold it when the law
+    states one, else null. Each quote is its own office's clause.
+    """
+
+
 def governing_other_offices_question(asked_labels: List[str]) -> str:
     """The offices the law sets up beyond those already asked about, as proposals for config."""
     return f"""

@@ -1,36 +1,120 @@
 run:
-  timestamp: '2026-10-20T18:29:00+00:00'
+  timestamp: '2026-10-21T02:34:30+00:00'
   prompt_sha256: ce378d1ef447
   prompt_file: _prompts/ce378d1ef447.txt
 cost_summary:
   model: deepseek/deepseek-v4-flash
-  elapsed_seconds: 577.71
-  total_input_tokens: 2813863
-  total_cached_input_tokens: 2131712
-  total_output_tokens: 178411
-  total_cost_usd: 0.205144156
-roles_right: 0.9731543624161074
-single_ask_right: 0.9463087248322147
-agreement: 0.9865771812080537
+  elapsed_seconds: 728.23
+  total_input_tokens: 2844018
+  total_cached_input_tokens: 2071424
+  total_output_tokens: 241122
+  total_cost_usd: 0.233677192
+roles_right: 0.9932885906040269
+single_ask_right: 0.959731543624161
+agreement: 0.9798657718120806
+presiding_gold_right: 35 of 35
+candidates_asked: 625
+candidates_verified: 6
 by_expected:
   elected_by_voters:
-    right: 74
+    right: 76
     total: 77
   elected_by_members:
     right: 36
     total: 36
   appointed:
-    right: 29
+    right: 30
     total: 30
   not_established:
     right: 6
     total: 6
 wrong:
-  vt_ch105:
-  - member
   vt_ch141:
   - member
-  vt_ch151:
-  - assessor
-  vt_ch215:
-  - member
+candidates_to_read:
+  vt_ch101:
+  - role_id: chair
+    answers:
+    - established: true
+      label: Chair
+      filled_by: elected_by_members
+      maximum_memberships: 1
+      quote: The Selectboard shall meet within seven business days after the annual
+        Town election to elect a Chair and a Vice Chair and to designate a Clerk.
+    - established: true
+      label: Chair
+      filled_by: elected_by_members
+      maximum_memberships: 1
+      quote: elect a Chair and a Vice Chair
+  - role_id: vice-chair
+    answers:
+    - established: true
+      label: Vice Chair
+      filled_by: elected_by_members
+      maximum_memberships: 1
+      quote: The Selectboard shall meet within seven business days after the annual
+        Town election to elect a Chair and a Vice Chair and to designate a Clerk.
+    - established: true
+      label: Vice Chair
+      filled_by: elected_by_members
+      maximum_memberships: 1
+      quote: elect a Chair and a Vice Chair
+  vt_ch207:
+  - role_id: council-president
+    answers:
+    - established: true
+      label: President
+      filled_by: elected_by_voters
+      maximum_memberships: 1
+      quote: All officers of said Village shall be residents and elected at the annual
+        meeting of said Village
+    - established: true
+      label: President
+      filled_by: elected_by_voters
+      maximum_memberships: 1
+      quote: All officers of said Village shall be residents and elected at the annual
+        meeting of said Village, except Collector of Taxes, who shall be appointed
+        by the Board of Trustees.
+  - role_id: chair
+    answers:
+    - established: true
+      label: chair
+      filled_by: elected_by_members
+      maximum_memberships: 1
+      quote: In the absence of the President, the Trustees shall elect a chair from
+        among their number.
+    - established: true
+      label: chair
+      filled_by: elected_by_members
+      maximum_memberships: 1
+      quote: In the absence of the President, the Trustees shall elect a chair from
+        among their number.
+  vt_ch227:
+  - role_id: council-president
+    answers:
+    - established: true
+      label: President
+      filled_by: elected_by_members
+      maximum_memberships: 1
+      quote: The trustees shall elect one trustee to serve as President.
+    - established: true
+      label: President
+      filled_by: elected_by_members
+      maximum_memberships: 1
+      quote: The trustees shall elect one trustee to serve as President.
+  vt_ch279:
+  - role_id: council-president
+    answers:
+    - established: true
+      label: Village President
+      filled_by: elected_by_voters
+      maximum_memberships: 1
+      quote: each of whom shall be elected by Australian ballot at the annual meeting
+        of the Village
+    - established: true
+      label: Village President
+      filled_by: elected_by_voters
+      maximum_memberships: 1
+      quote: The legislative body of the Village of Swanton shall be the Board of
+        Trustees, consisting of three trustees and the Village President, each of
+        whom shall be elected by Australian ballot at the annual meeting of the Village.

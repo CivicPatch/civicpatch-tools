@@ -21,7 +21,7 @@ import yaml
 
 import services.open_router.llm as open_router_llm
 import services.open_router.prompts as open_router_prompts
-from eval_utils import record_history, record_run
+from eval_utils import record_history, record_run, write_pass_fail_report
 from runners.pipeline02_organizations_collector.schemas import GoverningSectionsResponse
 from utils import cost_utils
 
@@ -114,18 +114,17 @@ def _write_report(results: list[dict], elapsed_seconds: float) -> None:
         accuracy={},
         mismatches=None,
     )
-    with open(os.path.join(EVALS_DIR, f"{MODEL_NAME}-eval-report.yml"), "w", encoding="utf-8") as f:
-        yaml.safe_dump(
-            {
-                "run": run,
-                "cost_summary": cost_summary,
-                "roles_covered": f"{covered}/{roles}",
-                "sections_kept": round(kept, 3),
-                "cases": {case_id: {k: v for k, v in result.items() if k != "picked_ids"} for case_id, result in by_case.items()},
-            },
-            f,
-            sort_keys=False,
-        )
+    write_pass_fail_report(
+        EVALS_DIR,
+        MODEL_NAME,
+        run,
+        cost_summary,
+        total_cases=len(by_case),
+        failed_cases=[{"case_id": case_id, "missed": result["unexpected_misses"]} for case_id, result in by_case.items() if result["unexpected_misses"]],
+        roles_covered=f"{covered}/{roles}",
+        sections_kept=round(kept, 3),
+        cases={case_id: {k: v for k, v in result.items() if k != "picked_ids"} for case_id, result in by_case.items()},
+    )
 
 
 @pytest.mark.asyncio

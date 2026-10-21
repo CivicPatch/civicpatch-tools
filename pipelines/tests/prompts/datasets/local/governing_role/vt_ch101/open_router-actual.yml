@@ -1,5 +1,6 @@
 - role_id: member
   expected: elected_by_voters
+  presiding: false
   right: true
   each_right:
   - true
@@ -12,7 +13,7 @@
     maximum_memberships: 5
     quote: 'The following officers shall be elected by the legal voters of the Town
       of Barre and voting for the officers shall be by Australian ballot: (1) five
-      Selectboard members;'
+      Selectboard members'
   - established: true
     label: Selectboard member
     filled_by: elected_by_voters
@@ -22,6 +23,7 @@
       Selectboard members;'
 - role_id: city-manager
   expected: appointed
+  presiding: false
   right: true
   each_right:
   - true
@@ -32,9 +34,298 @@
     label: Town Manager
     filled_by: appointed
     maximum_memberships: 1
-    quote: He or she shall be appointed by a majority of the full Selectboard.
+    quote: A Town Manager shall be the Chief Administrative Officer of the Town. He
+      or she shall be appointed by a majority of the full Selectboard.
   - established: true
     label: Town Manager
     filled_by: appointed
     maximum_memberships: 1
-    quote: He or she shall be appointed by a majority of the full Selectboard.
+    quote: A Town Manager shall be the Chief Administrative Officer of the Town. He
+      or she shall be appointed by a majority of the full Selectboard.
+- role_id: commission-president
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: vice-mayor
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: assistant-mayor
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: mayor-pro-tempore
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: deputy-mayor-pro-tempore
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: council-president
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: council-vice-president
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: council-president-pro-tem
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: deputy-council-president
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: president-pro-tempore
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: chair
+  expected: probably_not_established
+  presiding: true
+  right: false
+  each_right:
+  - false
+  - false
+  agreed: true
+  answers:
+  - established: true
+    label: Chair
+    filled_by: elected_by_members
+    maximum_memberships: 1
+    quote: The Selectboard shall meet within seven business days after the annual
+      Town election to elect a Chair and a Vice Chair and to designate a Clerk.
+  - established: true
+    label: Chair
+    filled_by: elected_by_members
+    maximum_memberships: 1
+    quote: elect a Chair and a Vice Chair
+- role_id: vice-chair
+  expected: probably_not_established
+  presiding: true
+  right: false
+  each_right:
+  - false
+  - false
+  agreed: true
+  answers:
+  - established: true
+    label: Vice Chair
+    filled_by: elected_by_members
+    maximum_memberships: 1
+    quote: The Selectboard shall meet within seven business days after the annual
+      Town election to elect a Chair and a Vice Chair and to designate a Clerk.
+  - established: true
+    label: Vice Chair
+    filled_by: elected_by_members
+    maximum_memberships: 1
+    quote: elect a Chair and a Vice Chair
+- role_id: commissioner-vice-president
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: chair-pro-tem
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: deputy-supervisor
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''

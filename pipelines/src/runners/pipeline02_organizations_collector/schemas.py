@@ -67,6 +67,21 @@ class RoleClaim(BaseModel):
     answer: RoleAnswer
 
 
+class PresidingOffice(BaseModel):
+    # One of the candidates' ids the question listed; any other is dropped.
+    role_id: str
+    label: str
+    filled_by: FilledBy
+    maximum_memberships: Optional[int]
+    quote: str
+
+
+class PresidingAnswer(BaseModel):
+    """Only the offices the law establishes: a candidate left out is not established."""
+
+    offices: List[PresidingOffice]
+
+
 class OtherOffice(BaseModel):
     label: str
     filled_by: FilledBy
@@ -106,6 +121,8 @@ class OrganizationsCollectorData(BaseModel):
     selected_governing_law_text: Optional[str] = Field(default=None, exclude=True)
     # The questions EXTRACT still has to ask: every role at first, then those VERIFY sends back.
     pending_asks: List[RoleAsk] = []
+    # Asked together on EXTRACT's first pass; one VERIFY sends back is re-asked on its own.
+    presiding_asks: List[RoleAsk] = []
     claims: List[RoleClaim] = []
     other_offices: List[OtherOffice] = []
     # The run's cap was reached before every question was asked; WRITE reports it.

@@ -17,7 +17,7 @@ import time
 import pytest
 import yaml
 from accuracy import build_eval_taxonomy
-from eval_utils import record_history, record_run
+from eval_utils import record_history, record_run, write_pass_fail_report
 
 import services.google_gemini.llm as gemini_llm
 import services.google_gemini.prompts as gemini_prompts
@@ -185,19 +185,7 @@ def _write_report(failed_cases, elapsed_seconds, total_cases, body, name_match, 
         accuracy={},
         mismatches=None,
     )
-    report_path = os.path.join(EVALS_DIR, f"{MODEL_NAME}-eval-report.yml")
-    with open(report_path, "w", encoding="utf-8") as f:
-        yaml.safe_dump(
-            {
-                "run": run,
-                "cost_summary": cost_summary,
-                "total_cases": total_cases,
-                "passed_cases": passed,
-                "failed_cases": failed_cases,
-            },
-            f,
-            sort_keys=False,
-        )
+    report_path = write_pass_fail_report(EVALS_DIR, MODEL_NAME, run, cost_summary, total_cases, failed_cases)
     print(f"Saved evaluation report to {report_path}")
     return cost_summary
 

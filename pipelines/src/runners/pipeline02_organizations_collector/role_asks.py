@@ -5,6 +5,7 @@ from typing import List
 
 from pydantic import BaseModel
 from shared.schemas import GovernmentForm, Role, SelectionMethod
+from shared.utils.government_forms import DerivedOrganization
 from shared.utils.layered_config import MergedConfig, allowed_government_forms, derived_organizations
 from shared.utils.taxonomy import build_taxonomy, lookup_key
 
@@ -21,22 +22,36 @@ class RoleAsk(BaseModel):
 
 def role_asks(config: MergedConfig, name: str, government_form: GovernmentForm | None) -> List[RoleAsk]:
     """Every role the jurisdiction's form gives its organizations; with no form set yet, those of
-    every form its name allows. Then every role a body may choose from its members, under the
-    first organization. A role asked once, in the first organization naming it."""
-    forms = [government_form] if government_form is not None else allowed_government_forms(config, name)
-    organizations = [organization for form in forms for organization in derived_organizations(config, form)]
+    every form its name allows. A role asked once, in the first organization naming it."""
     taxonomy = build_taxonomy(config.roles)
     roles_by_id = {role.id: role for role in config.roles.roles}
     asks: List[RoleAsk] = []
-    for organization in organizations:
+    for organization in _organizations(config, name, government_form):
         for role_label in organization.role_labels:
             canonical = taxonomy.role_aliases.get(lookup_key(role_label))
             role_id = taxonomy.role_ids.get(canonical) if canonical else None
             if role_id is not None:
                 asks = _with_ask(asks, organization.name, roles_by_id[role_id], role_label)
-    for role in _presiding_candidates(config) if organizations else []:
-        asks = _with_ask(asks, organizations[0].name, role, role.label)
     return asks
+
+
+def presiding_asks(config: MergedConfig, name: str, government_form: GovernmentForm | None) -> List[RoleAsk]:
+    """The roles the first organization may choose from its members, beyond those `role_asks` has:
+    asked together in one question, since most of them a given law never sets up."""
+    organizations = _organizations(config, name, government_form)
+    if not organizations:
+        return []
+    asked = {ask.role_id for ask in role_asks(config, name, government_form)}
+    asks: List[RoleAsk] = []
+    for role in _presiding_candidates(config):
+        if role.id not in asked:
+            asks = _with_ask(asks, organizations[0].name, role, role.label)
+    return asks
+
+
+def _organizations(config: MergedConfig, name: str, government_form: GovernmentForm | None) -> List[DerivedOrganization]:
+    forms = [government_form] if government_form is not None else allowed_government_forms(config, name)
+    return [organization for form in forms for organization in derived_organizations(config, form)]
 
 
 # The config marks no role as presiding; a default of chosen-by-members is what such offices share.

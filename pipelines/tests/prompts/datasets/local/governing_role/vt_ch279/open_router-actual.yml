@@ -1,8 +1,9 @@
 - role_id: village-president
   expected: elected_by_voters
+  presiding: false
   right: true
   each_right:
-  - false
+  - true
   - true
   agreed: true
   answers:
@@ -10,17 +11,17 @@
     label: Village President
     filled_by: elected_by_voters
     maximum_memberships: 1
-    quote: The Board of Trustees, consisting of three trustees and the Village President,
+    quote: The Village President shall be elected for a term of one year.
+  - established: true
+    label: Village President
+    filled_by: elected_by_voters
+    maximum_memberships: 1
+    quote: the Board of Trustees, consisting of three trustees and the Village President,
       each of whom shall be elected by Australian ballot at the annual meeting of
       the Village.
-  - established: true
-    label: Village President
-    filled_by: elected_by_voters
-    maximum_memberships: 1
-    quote: each of whom shall be elected by Australian ballot at the annual meeting
-      of the Village
 - role_id: member
   expected: elected_by_voters
+  presiding: false
   right: true
   each_right:
   - true
@@ -30,18 +31,18 @@
   - established: true
     label: Trustee
     filled_by: elected_by_voters
-    maximum_memberships: 5
-    quote: The legislative body of the Village of Swanton shall be the Board of Trustees,
-      consisting of three trustees and the Village President, each of whom shall be
-      elected by Australian ballot at the annual meeting of the Village.
+    maximum_memberships: null
+    quote: each of whom shall be elected by Australian ballot at the annual meeting
+      of the Village.
   - established: true
     label: Trustee
     filled_by: elected_by_voters
-    maximum_memberships: 5
+    maximum_memberships: 3
     quote: each of whom shall be elected by Australian ballot at the annual meeting
       of the Village.
 - role_id: city-manager
   expected: appointed
+  presiding: false
   right: true
   each_right:
   - true
@@ -58,3 +59,291 @@
     filled_by: appointed
     maximum_memberships: 1
     quote: The Board of Trustees shall appoint a Village Manager
+- role_id: commission-president
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: vice-mayor
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: assistant-mayor
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: mayor-pro-tempore
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: deputy-mayor-pro-tempore
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: council-president
+  expected: probably_not_established
+  presiding: true
+  right: false
+  each_right:
+  - false
+  - false
+  agreed: true
+  answers:
+  - established: true
+    label: Village President
+    filled_by: elected_by_voters
+    maximum_memberships: 1
+    quote: each of whom shall be elected by Australian ballot at the annual meeting
+      of the Village
+  - established: true
+    label: Village President
+    filled_by: elected_by_voters
+    maximum_memberships: 1
+    quote: The legislative body of the Village of Swanton shall be the Board of Trustees,
+      consisting of three trustees and the Village President, each of whom shall be
+      elected by Australian ballot at the annual meeting of the Village.
+- role_id: council-vice-president
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: council-president-pro-tem
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: deputy-council-president
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: president-pro-tempore
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: chair
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: vice-chair
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: commissioner-vice-president
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: chair-pro-tem
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: deputy-supervisor
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''

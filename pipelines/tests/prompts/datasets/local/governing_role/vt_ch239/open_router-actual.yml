@@ -1,21 +1,12 @@
 - role_id: clerk
   expected: elected_by_voters
+  presiding: false
   right: true
   each_right:
   - true
   - true
   agreed: true
   answers:
-  - established: true
-    label: Clerk
-    filled_by: elected_by_voters
-    maximum_memberships: 1
-    quote: At the annual meeting to be held on the second Monday of July, the Village
-      shall, by ballot, if called for by three or more legal voters in the meeting,
-      elect for the ensuing year, and, until their successors are chosen; a President,
-      who shall preside at all Village meetings, and be vested with the powers of
-      a moderator at town meeting and who shall be, by virtue of this office, one
-      of the trustees of the Village and President of the Board of Trustees; a Clerk
   - established: true
     label: Clerk
     filled_by: elected_by_voters
@@ -26,8 +17,20 @@
       with the powers of a moderator at town meeting and who shall be, by virtue of
       this office, one of the trustees of the Village and President of the Board of
       Trustees; a Clerk
+  - established: true
+    label: Clerk
+    filled_by: elected_by_voters
+    maximum_memberships: 1
+    quote: At the annual meeting to be held on the second Monday of July, the Village
+      shall, by ballot, if called for by three or more legal voters in the meeting,
+      elect for the ensuing year, and, until their successors are chosen; a President,
+      who shall preside at all Village meetings, and be vested with the powers of
+      a moderator at town meeting and who shall be, by virtue of this office, one
+      of the trustees of the Village and President of the Board of Trustees; a Clerk;
+      a Treasurer; and a Tax Collector
 - role_id: treasurer
   expected: elected_by_voters
+  presiding: false
   right: true
   each_right:
   - true
@@ -38,7 +41,9 @@
     label: Treasurer
     filled_by: elected_by_voters
     maximum_memberships: 1
-    quote: elect for the ensuing year, and, until their successors are chosen; a President,
+    quote: At the annual meeting to be held on the second Monday of July, the Village
+      shall, by ballot, if called for by three or more legal voters in the meeting,
+      elect for the ensuing year, and, until their successors are chosen; a President,
       who shall preside at all Village meetings, and be vested with the powers of
       a moderator at town meeting and who shall be, by virtue of this office, one
       of the trustees of the Village and President of the Board of Trustees; a Clerk;
@@ -55,6 +60,7 @@
       Trustees; a Clerk; a Treasurer; and a Tax Collector
 - role_id: member
   expected: elected_by_voters
+  presiding: false
   right: true
   each_right:
   - true
@@ -73,3 +79,296 @@
     maximum_memberships: null
     quote: the corporation at each annual meeting shall elect two trustees for a term
       of two years
+- role_id: commission-president
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: vice-mayor
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: assistant-mayor
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: mayor-pro-tempore
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: deputy-mayor-pro-tempore
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: council-president
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - false
+  - true
+  agreed: false
+  answers:
+  - established: true
+    label: President
+    filled_by: elected_by_voters
+    maximum_memberships: 1
+    quote: the Village shall, by ballot, if called for by three or more legal voters
+      in the meeting, elect for the ensuing year, and, until their successors are
+      chosen; a President, who shall preside at all Village meetings, and be vested
+      with the powers of a moderator at town meeting and who shall be, by virtue of
+      this office, one of the trustees of the Village and President of the Board of
+      Trustees
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: council-vice-president
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: council-president-pro-tem
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: deputy-council-president
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: president-pro-tempore
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: chair
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: false
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: true
+    label: President of the Board of Trustees
+    filled_by: elected_by_voters
+    maximum_memberships: 1
+    quote: elect ... a President, who shall preside at all Village meetings, and be
+      vested with the powers of a moderator at town meeting and who shall be, by virtue
+      of this office, one of the trustees of the Village and President of the Board
+      of Trustees
+- role_id: vice-chair
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: commissioner-vice-president
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: chair-pro-tem
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: deputy-supervisor
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''

@@ -2,7 +2,7 @@
 
 import pytest
 
-from runners.pipeline02_organizations_collector.role_asks import role_asks
+from runners.pipeline02_organizations_collector.role_asks import presiding_asks, role_asks
 from shared.schemas import GovernmentForm, SelectionMethod
 from shared.utils.government_forms import DerivedOrganization
 from shared.utils.layered_config import ConfigFile, ConfigRole, GovernmentFormConfig, merged_config
@@ -49,12 +49,13 @@ def test_a_set_form_asks_about_its_organizations_roles():
     ]
 
 
-def test_a_role_chosen_by_members_is_asked_under_the_first_organization_though_no_form_lists_it():
-    assert _asked(role_asks(CONFIG, "Burlington city", GovernmentForm.MAYOR_COUNCIL)) == [
-        ("Council", "member", "Council Member"),
-        ("Office of the Mayor", "mayor", "Mayor"),
-        ("Council", "chair", "Chair"),
-    ]
+def test_a_role_chosen_by_members_is_a_presiding_candidate_of_the_first_organization_though_no_form_lists_it():
+    assert _asked(presiding_asks(CONFIG, "Burlington city", GovernmentForm.MAYOR_COUNCIL)) == [("Council", "chair", "Chair")]
+    assert "chair" not in [ask.role_id for ask in role_asks(CONFIG, "Burlington city", GovernmentForm.MAYOR_COUNCIL)]
+
+
+def test_a_candidate_the_form_already_lists_is_asked_on_its_own_not_again_with_the_candidates():
+    assert presiding_asks(CONFIG, "Stowe town", GovernmentForm.OPEN_TOWN_MEETING) == []
 
 
 def test_with_no_form_set_the_forms_its_name_allows_are_asked_about():

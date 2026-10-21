@@ -1,5 +1,6 @@
 - role_id: member
   expected: elected_by_voters
+  presiding: false
   right: true
   each_right:
   - true
@@ -20,6 +21,7 @@
       of the Selectboard;'
 - role_id: moderator
   expected: elected_by_voters
+  presiding: false
   right: true
   each_right:
   - true
@@ -38,25 +40,31 @@
     quote: The Moderator shall be elected annually
 - role_id: clerk
   expected: elected_by_voters
+  presiding: false
   right: true
   each_right:
   - true
-  - false
+  - true
   agreed: true
   answers:
   - established: true
     label: Town Clerk
     filled_by: elected_by_voters
     maximum_memberships: 1
-    quote: The Town Clerk shall be elected for a three-year term
+    quote: 'The municipal officers elected by the Town shall be: (1) five members
+      of the Selectboard; (2) one Moderator; (3) five Trustees of the Cobleigh Library;
+      (4) three, four, or five listers, as determined by the Selectboard; (5) one
+      Town Agent; (6) one Town Clerk; (7) three Trustees of the Sanborn School Fund;
+      (8) Justices of the peace, the number of which shall be determined in accordance
+      with the Vermont Constitution; and (9) one Town Treasurer.'
   - established: true
     label: Town Clerk
     filled_by: elected_by_voters
     maximum_memberships: 1
-    quote: All officers identified in section 22 of this charter shall be elected
-      by Australian ballot.
+    quote: The Town Clerk shall be elected for a three-year term
 - role_id: treasurer
   expected: elected_by_voters
+  presiding: false
   right: true
   each_right:
   - true
@@ -67,7 +75,7 @@
     label: Town Treasurer
     filled_by: elected_by_voters
     maximum_memberships: 1
-    quote: one Town Treasurer
+    quote: (9) one Town Treasurer.
   - established: true
     label: Town Treasurer
     filled_by: elected_by_voters
@@ -75,6 +83,7 @@
     quote: one Town Treasurer
 - role_id: chair
   expected: elected_by_members
+  presiding: true
   right: true
   each_right:
   - true
@@ -85,7 +94,8 @@
     label: chair
     filled_by: elected_by_members
     maximum_memberships: 1
-    quote: the Selectboard shall elect a chair and a vice chair
+    quote: the Selectboard shall elect a chair and a vice chair by vote of the majority
+      of the entire Selectboard.
   - established: true
     label: chair
     filled_by: elected_by_members
@@ -94,6 +104,7 @@
       of the entire Selectboard.
 - role_id: vice-chair
   expected: elected_by_members
+  presiding: true
   right: true
   each_right:
   - true
@@ -104,8 +115,8 @@
     label: vice chair
     filled_by: elected_by_members
     maximum_memberships: 1
-    quote: Immediately after the annual Town meeting, the Selectboard shall elect
-      a chair and a vice chair by vote of the majority of the entire Selectboard.
+    quote: the Selectboard shall elect a chair and a vice chair by vote of the majority
+      of the entire Selectboard.
   - established: true
     label: vice chair
     filled_by: elected_by_members
@@ -114,6 +125,7 @@
       of the entire Selectboard.
 - role_id: commission-president
   expected: probably_not_established
+  presiding: true
   right: true
   each_right:
   - true
@@ -132,25 +144,26 @@
     quote: ''
 - role_id: vice-mayor
   expected: probably_not_established
+  presiding: true
   right: true
   each_right:
   - true
   - true
-  agreed: false
+  agreed: true
   answers:
   - established: false
     label: ''
     filled_by: not_stated
     maximum_memberships: null
     quote: ''
-  - established: true
-    label: vice chair
-    filled_by: elected_by_members
-    maximum_memberships: 1
-    quote: the Selectboard shall elect a chair and a vice chair by vote of the majority
-      of the entire Selectboard.
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
 - role_id: assistant-mayor
   expected: probably_not_established
+  presiding: true
   right: true
   each_right:
   - true
@@ -169,17 +182,18 @@
     quote: ''
 - role_id: mayor-pro-tempore
   expected: probably_not_established
+  presiding: true
   right: true
   each_right:
   - true
   - true
-  agreed: false
+  agreed: true
   answers:
-  - established: true
-    label: Vice Chair
-    filled_by: elected_by_members
-    maximum_memberships: 1
-    quote: the Selectboard shall elect a chair and a vice chair
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
   - established: false
     label: ''
     filled_by: not_stated
@@ -187,6 +201,7 @@
     quote: ''
 - role_id: deputy-mayor-pro-tempore
   expected: probably_not_established
+  presiding: true
   right: true
   each_right:
   - true
@@ -205,65 +220,64 @@
     quote: ''
 - role_id: council-president
   expected: probably_not_established
+  presiding: true
   right: true
   each_right:
   - true
   - true
   agreed: true
-  answers:
-  - established: true
-    label: chair
-    filled_by: elected_by_members
-    maximum_memberships: 1
-    quote: the Selectboard shall elect a chair and a vice chair by vote of the majority
-      of the entire Selectboard.
-  - established: true
-    label: chair
-    filled_by: elected_by_members
-    maximum_memberships: 1
-    quote: the Selectboard shall elect a chair and a vice chair by vote of the majority
-      of the entire Selectboard.
-- role_id: council-vice-president
-  expected: probably_not_established
-  right: true
-  each_right:
-  - true
-  - true
-  agreed: true
-  answers:
-  - established: true
-    label: Vice Chair
-    filled_by: elected_by_members
-    maximum_memberships: 1
-    quote: Immediately after the annual Town meeting, the Selectboard shall elect
-      a chair and a vice chair by vote of the majority of the entire Selectboard.
-  - established: true
-    label: Vice Chair
-    filled_by: elected_by_members
-    maximum_memberships: 1
-    quote: the Selectboard shall elect a chair and a vice chair by vote of the majority
-      of the entire Selectboard.
-- role_id: council-president-pro-tem
-  expected: probably_not_established
-  right: true
-  each_right:
-  - true
-  - true
-  agreed: false
   answers:
   - established: false
     label: ''
     filled_by: not_stated
     maximum_memberships: null
     quote: ''
-  - established: true
-    label: Vice Chair
-    filled_by: elected_by_members
-    maximum_memberships: 1
-    quote: Immediately after the annual Town meeting, the Selectboard shall elect
-      a chair and a vice chair by vote of the majority of the entire Selectboard.
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: council-vice-president
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: council-president-pro-tem
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
 - role_id: deputy-council-president
   expected: probably_not_established
+  presiding: true
   right: true
   each_right:
   - true
@@ -282,6 +296,7 @@
     quote: ''
 - role_id: president-pro-tempore
   expected: probably_not_established
+  presiding: true
   right: true
   each_right:
   - true
@@ -300,6 +315,7 @@
     quote: ''
 - role_id: commissioner-vice-president
   expected: probably_not_established
+  presiding: true
   right: true
   each_right:
   - true
@@ -318,6 +334,7 @@
     quote: ''
 - role_id: chair-pro-tem
   expected: probably_not_established
+  presiding: true
   right: true
   each_right:
   - true
@@ -336,6 +353,7 @@
     quote: ''
 - role_id: deputy-supervisor
   expected: probably_not_established
+  presiding: true
   right: true
   each_right:
   - true

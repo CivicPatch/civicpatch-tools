@@ -90,6 +90,7 @@ roles:
   - president
   - president of the council
   expected: elected_by_members
+  presiding: true
 - organization_name: City Council
   role_id: commission-president
   role_label: Commission President
@@ -97,6 +98,7 @@ roles:
   - Commission President
   - commissioner president
   expected: probably_not_established
+  presiding: true
 - organization_name: City Council
   role_id: vice-mayor
   role_label: Vice Mayor
@@ -104,12 +106,14 @@ roles:
   - Vice Mayor
   - vice-mayor
   expected: probably_not_established
+  presiding: true
 - organization_name: City Council
   role_id: assistant-mayor
   role_label: Assistant Mayor
   names:
   - Assistant Mayor
   expected: probably_not_established
+  presiding: true
 - organization_name: City Council
   role_id: mayor-pro-tempore
   role_label: Mayor Pro Tempore
@@ -124,6 +128,7 @@ roles:
   - mayor protemp
   - mayor-pro tem
   expected: probably_not_established
+  presiding: true
 - organization_name: City Council
   role_id: deputy-mayor-pro-tempore
   role_label: Deputy Mayor Pro Tempore
@@ -133,6 +138,7 @@ roles:
   - deputy mayor pro tempore
   - deputy mayor pro-tem
   expected: probably_not_established
+  presiding: true
 - organization_name: City Council
   role_id: council-vice-president
   role_label: Council Vice President
@@ -144,6 +150,7 @@ roles:
   - vice president
   - vice-president
   expected: probably_not_established
+  presiding: true
 - organization_name: City Council
   role_id: council-president-pro-tem
   role_label: Council President Pro Tem
@@ -152,12 +159,14 @@ roles:
   - council president pro tempore
   - council president pro-tem
   expected: probably_not_established
+  presiding: true
 - organization_name: City Council
   role_id: deputy-council-president
   role_label: Deputy Council President
   names:
   - Deputy Council President
   expected: probably_not_established
+  presiding: true
 - organization_name: City Council
   role_id: president-pro-tempore
   role_label: President Pro Tempore
@@ -166,6 +175,7 @@ roles:
   - president pro tem
   - village president pro tem
   expected: probably_not_established
+  presiding: true
 - organization_name: City Council
   role_id: chair
   role_label: Chair
@@ -180,6 +190,7 @@ roles:
   - council chairwoman
   - town council chair
   expected: probably_not_established
+  presiding: true
 - organization_name: City Council
   role_id: vice-chair
   role_label: Vice Chair
@@ -200,6 +211,7 @@ roles:
   - vice-chairman
   - vice-chairwoman
   expected: probably_not_established
+  presiding: true
 - organization_name: City Council
   role_id: commissioner-vice-president
   role_label: Commissioner Vice President
@@ -210,15 +222,18 @@ roles:
   - commissioner vice-president
   - commissioner-vice president
   expected: probably_not_established
+  presiding: true
 - organization_name: City Council
   role_id: chair-pro-tem
   role_label: Chair Pro Tem
   names:
   - Chair Pro Tem
   expected: probably_not_established
+  presiding: true
 - organization_name: City Council
   role_id: deputy-supervisor
   role_label: Deputy Supervisor
   names:
   - Deputy Supervisor
   expected: probably_not_established
+  presiding: true

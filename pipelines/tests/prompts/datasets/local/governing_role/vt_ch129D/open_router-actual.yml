@@ -1,5 +1,6 @@
 - role_id: member
   expected: elected_by_voters
+  presiding: false
   right: true
   each_right:
   - false
@@ -13,13 +14,14 @@
     quote: The Town shall have a five-member Selectboard elected for terms of two
       and three years.
   - established: true
-    label: Selectboard members
+    label: Selectboard member
     filled_by: elected_by_voters
     maximum_memberships: 5
     quote: The Town shall have a five-member Selectboard elected for terms of two
       and three years.
 - role_id: commission-president
   expected: probably_not_established
+  presiding: true
   right: true
   each_right:
   - true
@@ -38,6 +40,7 @@
     quote: ''
 - role_id: vice-mayor
   expected: probably_not_established
+  presiding: true
   right: true
   each_right:
   - true
@@ -56,6 +59,7 @@
     quote: ''
 - role_id: assistant-mayor
   expected: probably_not_established
+  presiding: true
   right: true
   each_right:
   - true
@@ -74,6 +78,7 @@
     quote: ''
 - role_id: mayor-pro-tempore
   expected: probably_not_established
+  presiding: true
   right: true
   each_right:
   - true
@@ -92,6 +97,7 @@
     quote: ''
 - role_id: deputy-mayor-pro-tempore
   expected: probably_not_established
+  presiding: true
   right: true
   each_right:
   - true
@@ -110,6 +116,7 @@
     quote: ''
 - role_id: council-president
   expected: probably_not_established
+  presiding: true
   right: true
   each_right:
   - true
@@ -128,6 +135,7 @@
     quote: ''
 - role_id: council-vice-president
   expected: probably_not_established
+  presiding: true
   right: true
   each_right:
   - true
@@ -146,6 +154,7 @@
     quote: ''
 - role_id: council-president-pro-tem
   expected: probably_not_established
+  presiding: true
   right: true
   each_right:
   - true
@@ -164,6 +173,7 @@
     quote: ''
 - role_id: deputy-council-president
   expected: probably_not_established
+  presiding: true
   right: true
   each_right:
   - true
@@ -182,6 +192,7 @@
     quote: ''
 - role_id: president-pro-tempore
   expected: probably_not_established
+  presiding: true
   right: true
   each_right:
   - true
@@ -200,6 +211,7 @@
     quote: ''
 - role_id: chair
   expected: probably_not_established
+  presiding: true
   right: true
   each_right:
   - true
@@ -218,6 +230,7 @@
     quote: ''
 - role_id: vice-chair
   expected: probably_not_established
+  presiding: true
   right: true
   each_right:
   - true
@@ -236,6 +249,7 @@
     quote: ''
 - role_id: commissioner-vice-president
   expected: probably_not_established
+  presiding: true
   right: true
   each_right:
   - true
@@ -254,6 +268,7 @@
     quote: ''
 - role_id: chair-pro-tem
   expected: probably_not_established
+  presiding: true
   right: true
   each_right:
   - true
@@ -272,6 +287,7 @@
     quote: ''
 - role_id: deputy-supervisor
   expected: probably_not_established
+  presiding: true
   right: true
   each_right:
   - true

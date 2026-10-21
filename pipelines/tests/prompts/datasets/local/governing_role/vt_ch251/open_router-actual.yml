@@ -1,5 +1,6 @@
 - role_id: member
   expected: elected_by_voters
+  presiding: false
   right: true
   each_right:
   - true
@@ -7,20 +8,21 @@
   agreed: true
   answers:
   - established: true
-    label: Trustee
-    filled_by: elected_by_voters
-    maximum_memberships: 5
-    quote: The Village shall, at every annual meeting elect a Moderator, Clerk, Treasurer,
-      three auditors, and the number of trustees as are necessary to fill vacancies
-      where terms of office have expired or a member has resigned, died, or been removed
-      in order to make a full board of five trustees.
-  - established: true
-    label: trustee
+    label: trustees
     filled_by: elected_by_voters
     maximum_memberships: 5
     quote: The trustees shall be elected by ballot
+  - established: true
+    label: trustees
+    filled_by: elected_by_voters
+    maximum_memberships: 5
+    quote: The Village shall, at every annual meeting elect a Moderator, Clerk, Treasurer,
+      three auditors, and the number of trustees as are necessary to fill vacancies
+      where terms of office have expired or a member has resigned, died, or been removed
+      in order to make a full board of five trustees.
 - role_id: clerk
   expected: elected_by_voters
+  presiding: false
   right: true
   each_right:
   - true
@@ -32,19 +34,16 @@
     filled_by: elected_by_voters
     maximum_memberships: 1
     quote: The Village shall, at every annual meeting elect a Moderator, Clerk, Treasurer,
-      three auditors, and the number of trustees as are necessary to fill vacancies
-      where terms of office have expired or a member has resigned, died, or been removed
-      in order to make a full board of five trustees.
+      three auditors
   - established: true
     label: Clerk
     filled_by: elected_by_voters
     maximum_memberships: 1
     quote: The Village shall, at every annual meeting elect a Moderator, Clerk, Treasurer,
       three auditors, and the number of trustees as are necessary to fill vacancies
-      where terms of office have expired or a member has resigned, died, or been removed
-      in order to make a full board of five trustees.
 - role_id: treasurer
   expected: elected_by_voters
+  presiding: false
   right: true
   each_right:
   - true
@@ -57,8 +56,6 @@
     maximum_memberships: 1
     quote: The Village shall, at every annual meeting elect a Moderator, Clerk, Treasurer,
       three auditors, and the number of trustees as are necessary to fill vacancies
-      where terms of office have expired or a member has resigned, died, or been removed
-      in order to make a full board of five trustees.
   - established: true
     label: Treasurer
     filled_by: elected_by_voters
@@ -69,6 +66,7 @@
       in order to make a full board of five trustees.
 - role_id: moderator
   expected: elected_by_voters
+  presiding: false
   right: true
   each_right:
   - true
@@ -87,6 +85,7 @@
     quote: The Village shall, at every annual meeting elect a Moderator
 - role_id: chair
   expected: elected_by_members
+  presiding: true
   right: true
   each_right:
   - true
@@ -107,6 +106,7 @@
       from its number a Chairperson and Vice Chairperson.
 - role_id: vice-chair
   expected: elected_by_members
+  presiding: true
   right: true
   each_right:
   - true
@@ -125,3 +125,250 @@
     maximum_memberships: 1
     quote: The Board of Trustees shall annually, at its first regular meeting, elect
       from its number a Chairperson and Vice Chairperson.
+- role_id: commission-president
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: vice-mayor
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: assistant-mayor
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: mayor-pro-tempore
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: deputy-mayor-pro-tempore
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: council-president
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: council-vice-president
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: council-president-pro-tem
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: deputy-council-president
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: president-pro-tempore
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: commissioner-vice-president
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: chair-pro-tem
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: deputy-supervisor
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
