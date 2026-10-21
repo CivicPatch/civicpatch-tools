@@ -183,8 +183,9 @@ def test_a_second_known_role_is_an_extra_role_and_the_winner_is_not():
 
 
 @pytest.mark.unit
-def test_residue_beside_a_known_role_is_not_unmatched_text():
-    assert details("Council Member, Liaison to Parks").unmatched_text == ()
+def test_residue_beside_a_known_role_is_unmatched_text_too():
+    assert details("Council Member, Liaison to Parks").unmatched_text == ("Liaison to Parks",)
+    assert details("Council Member East").unmatched_text == ("East",)
 
 
 @pytest.mark.unit

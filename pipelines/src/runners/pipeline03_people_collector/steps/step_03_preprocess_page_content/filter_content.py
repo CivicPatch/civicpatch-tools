@@ -8,6 +8,10 @@ BLACKLISTED_CLASSES = [ # Warning -- these need to be carefully curated
     "language" # Google Translate
 ]
 
+# Divisions are often named by direction alone ("Central", "East District"): a heading naming one
+# is the person's division. Whole words, unlike the keywords, or "east" would keep "least".
+DIRECTION_WORDS = re.compile(r"\b(north|south|east|west|central|northeast|northwest|southeast|southwest)\b")
+
 BLACKLISTED_URL_SUFFIXES = [
     ".pdf",
     ".doc",
@@ -58,6 +62,8 @@ def has_relevant_content(identities: Dict[str, List[str]], text: str, spacy_cach
     text_lc = text.lower()
 
     if not people_only:
+        if DIRECTION_WORDS.search(text_lc):
+            return True
         for kw in (extra_keywords or []):
             if not kw:
                 continue
