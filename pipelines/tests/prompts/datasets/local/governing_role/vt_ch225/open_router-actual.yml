@@ -2,6 +2,7 @@
   expected: elected_by_voters
   presiding: false
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -11,20 +12,21 @@
     label: trustees
     filled_by: elected_by_voters
     maximum_memberships: 5
-    quote: all the powers of the Village shall be entrusted to and exercised by the
-      trustees consisting of five members chosen by the voters of the Village of Hyde
-      Park.
+    quote: the trustees consisting of five members chosen by the voters of the Village
+      of Hyde Park.
   - established: true
     label: trustees
     filled_by: elected_by_voters
     maximum_memberships: 5
-    quote: Except as otherwise provided in this charter, all the powers of the Village
-      shall be entrusted to and exercised by the trustees consisting of five members
-      chosen by the voters of the Village of Hyde Park.
+    quote: At the annual meeting, the following officers shall be elected by the voters
+      of the Village of Hyde Park, and unless the voters have previously voted to
+      proceed by Australian ballot pursuant to 17 V.S.A. § 2680, voting for all such
+      officers shall be by paper ballot. (1) Five trustees.
 - role_id: clerk
   expected: appointed
   presiding: false
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -41,13 +43,13 @@
     label: Village Clerk
     filled_by: appointed
     maximum_memberships: 1
-    quote: 'Within 14 days following the annual Village meeting, the Board of Trustees
-      shall meet and, by a majority vote, shall appoint other Village officers as
-      allowed by law, including the following: (1) One Village Clerk.'
+    quote: 'shall appoint other Village officers as allowed by law, including the
+      following: (1) One Village Clerk.'
 - role_id: treasurer
   expected: appointed
   presiding: false
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -64,13 +66,13 @@
     label: Village Treasurer
     filled_by: appointed
     maximum_memberships: 1
-    quote: 'the Board of Trustees shall meet and, by a majority vote, shall appoint
-      other Village officers as allowed by law, including the following: ... (2) One
-      Village Treasurer.'
+    quote: The Village Treasurer shall be appointed by the Board of Trustees for a
+      one year term
 - role_id: chair
   expected: elected_by_members
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -81,17 +83,20 @@
     filled_by: elected_by_members
     maximum_memberships: 1
     quote: The trustees shall meet within 14 business days after the annual election
-      to elect a Chair
+      to elect a Chair and to designate one of their Board or the Village Clerk as
+      Clerk of the Board.
   - established: true
     label: Chair
     filled_by: elected_by_members
     maximum_memberships: 1
     quote: The trustees shall meet within 14 business days after the annual election
-      to elect a Chair
+      to elect a Chair and to designate one of their Board or the Village Clerk as
+      Clerk of the Board.
 - role_id: commission-president
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -111,6 +116,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -130,6 +136,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -149,6 +156,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -168,6 +176,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -187,6 +196,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -206,6 +216,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -225,6 +236,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -244,6 +256,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -263,6 +276,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -282,6 +296,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -301,6 +316,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -320,6 +336,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -339,6 +356,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true

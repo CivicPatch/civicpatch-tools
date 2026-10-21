@@ -2,6 +2,7 @@
   expected: elected_by_voters
   presiding: false
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -11,22 +12,21 @@
     label: Trustee
     filled_by: elected_by_voters
     maximum_memberships: 3
-    quote: The officers of said corporation shall be a Board of three trustees, a
-      Clerk, a Treasurer, a Collector of Taxes, an Auditor, and a Fire Marshal, all
-      of which officers shall be chosen by ballot at each annual meeting of the legal
-      voters of the said corporation or at a special meeting as hereafter provided.
+    quote: all of which officers shall be chosen by ballot at each annual meeting
+      of the legal voters
   - established: true
-    label: trustees
+    label: Trustee
     filled_by: elected_by_voters
     maximum_memberships: 3
     quote: The officers of said corporation shall be a Board of three trustees, a
       Clerk, a Treasurer, a Collector of Taxes, an Auditor, and a Fire Marshal, all
       of which officers shall be chosen by ballot at each annual meeting of the legal
-      voters of the said corporation or at a special meeting as hereafter provided.
+      voters of the said corporation
 - role_id: clerk
   expected: elected_by_voters
   presiding: false
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -36,10 +36,9 @@
     label: Clerk
     filled_by: elected_by_voters
     maximum_memberships: 1
-    quote: The officers of said corporation shall be a Board of three trustees, a
-      Clerk, a Treasurer, a Collector of Taxes, an Auditor, and a Fire Marshal, all
-      of which officers shall be chosen by ballot at each annual meeting of the legal
-      voters of the said corporation or at a special meeting as hereafter provided.
+    quote: all of which officers shall be chosen by ballot at each annual meeting
+      of the legal voters of the said corporation or at a special meeting as hereafter
+      provided.
   - established: true
     label: Clerk
     filled_by: elected_by_voters
@@ -52,6 +51,7 @@
   expected: elected_by_voters
   presiding: false
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -61,9 +61,9 @@
     label: Treasurer
     filled_by: elected_by_voters
     maximum_memberships: 1
-    quote: all of which officers shall be chosen by ballot at each annual meeting
-      of the legal voters of the said corporation or at a special meeting as hereafter
-      provided.
+    quote: a Clerk, a Treasurer, a Collector of Taxes, an Auditor, and a Fire Marshal,
+      all of which officers shall be chosen by ballot at each annual meeting of the
+      legal voters
   - established: true
     label: Treasurer
     filled_by: elected_by_voters
@@ -76,6 +76,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -95,6 +96,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -114,6 +116,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -133,6 +136,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -152,6 +156,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -171,6 +176,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -190,6 +196,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -209,6 +216,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -228,6 +236,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -247,6 +256,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -266,6 +276,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -285,6 +296,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -304,6 +316,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -323,6 +336,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -342,6 +356,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true

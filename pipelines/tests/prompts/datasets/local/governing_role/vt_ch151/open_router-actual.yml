@@ -2,6 +2,7 @@
   expected: elected_by_voters
   presiding: false
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -11,18 +12,19 @@
     label: Select Board members
     filled_by: elected_by_voters
     maximum_memberships: 5
-    quote: five Select Board members elected from the Town at large at a duly warned
-      annual town meeting
+    quote: The elective officers of the Town shall be five Select Board members elected
+      from the Town at large at a duly warned annual town meeting
   - established: true
-    label: Select Board members
+    label: Select Board member
     filled_by: elected_by_voters
     maximum_memberships: 5
-    quote: five Select Board members elected from the Town at large at a duly warned
-      annual town meeting
+    quote: The elective officers of the Town shall be five Select Board members elected
+      from the Town at large at a duly warned annual town meeting
 - role_id: city-manager
   expected: appointed
   presiding: false
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -39,13 +41,14 @@
     filled_by: appointed
     maximum_memberships: 1
     quote: The Select Board members shall appoint a Town Manager for an indefinite
-      term
+      term and upon such conditions as they may determine.
 - role_id: clerk
   expected: elected_by_voters
   presiding: false
   right: true
+  rounds: 1
   each_right:
-  - true
+  - false
   - true
   agreed: true
   answers:
@@ -53,7 +56,7 @@
     label: Town Clerk
     filled_by: elected_by_voters
     maximum_memberships: 1
-    quote: The elective officers of the Town shall be five Select Board members elected
+    quote: the elective officers of the Town shall be five Select Board members elected
       from the Town at large at a duly warned annual town meeting; a Town Clerk; a
       Treasurer; and a Moderator
   - established: true
@@ -62,11 +65,13 @@
     maximum_memberships: 1
     quote: The elective officers of the Town shall be five Select Board members elected
       from the Town at large at a duly warned annual town meeting; a Town Clerk; a
-      Treasurer; and a Moderator
+      Treasurer; and a Moderator, unless by a majority vote of the Town the Moderator
+      becomes an appointed position.
 - role_id: treasurer
   expected: elected_by_voters
   presiding: false
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -85,11 +90,13 @@
     maximum_memberships: 1
     quote: The elective officers of the Town shall be five Select Board members elected
       from the Town at large at a duly warned annual town meeting; a Town Clerk; a
-      Treasurer; and a Moderator
+      Treasurer; and a Moderator, unless by a majority vote of the Town the Moderator
+      becomes an appointed position.
 - role_id: moderator
   expected: elected_by_voters
   presiding: false
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -106,13 +113,14 @@
   - established: true
     label: Moderator
     filled_by: elected_by_voters
-    maximum_memberships: 1
+    maximum_memberships: null
     quote: a Moderator, unless by a majority vote of the Town the Moderator becomes
       an appointed position.
 - role_id: assessor
   expected: appointed
   presiding: false
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -132,16 +140,18 @@
     label: Assessor
     filled_by: appointed
     maximum_memberships: null
-    quote: the Town Manager shall appoint and remove all Town employees, including
-      Chief of the Fire Department, Chief of Police, Director of Public Works, Assistant
-      Town Manager, Finance Director, Zoning Administrator, Assessor, Code Compliance
-      Officer, Health Officer, Parks Director and Tree Warden, Recreation Director,
-      and all other officers and employees as may be required by general law of the
-      State, by this charter, or by the Select Board.
+    quote: Except for those appointments made by the Select Board as provided for
+      in this charter, the Town Manager shall appoint and remove all Town employees,
+      including Chief of the Fire Department, Chief of Police, Director of Public
+      Works, Assistant Town Manager, Finance Director, Zoning Administrator, Assessor,
+      Code Compliance Officer, Health Officer, Parks Director and Tree Warden, Recreation
+      Director, and all other officers and employees as may be required by general
+      law of the State, by this charter, or by the Select Board.
 - role_id: chair
   expected: elected_by_members
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -156,11 +166,12 @@
     label: Chair
     filled_by: elected_by_members
     maximum_memberships: 1
-    quote: the Select Board members shall organize and elect a Chair and Vice Chair
+    quote: the Select Board members shall organize and elect a Chair and Vice Chair.
 - role_id: vice-chair
   expected: elected_by_members
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -175,11 +186,12 @@
     label: Vice Chair
     filled_by: elected_by_members
     maximum_memberships: 1
-    quote: the Select Board members shall organize and elect a Chair and Vice Chair
+    quote: the Select Board members shall organize and elect a Chair and Vice Chair.
 - role_id: commission-president
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -199,6 +211,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -218,6 +231,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -237,6 +251,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -256,6 +271,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -275,6 +291,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -294,6 +311,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -313,6 +331,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -332,6 +351,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -351,6 +371,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -370,6 +391,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -389,6 +411,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -408,6 +431,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true

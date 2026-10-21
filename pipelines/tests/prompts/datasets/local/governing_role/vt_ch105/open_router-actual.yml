@@ -2,21 +2,12 @@
   expected: elected_by_voters
   presiding: false
   right: true
+  rounds: 1
   each_right:
-  - true
   - false
+  - true
   agreed: true
   answers:
-  - established: true
-    label: Selectboard members
-    filled_by: elected_by_voters
-    maximum_memberships: 5
-    quote: 'The following officers of the Town and such other Town officers as are
-      provided by law and previous vote of the electorate as to number, length of
-      term, and manner of election at an annual meeting shall be elected by Australian
-      ballot, unless otherwise stated, and shall include the following: ... (3) Selectboard
-      members, three of whom shall serve staggered three-year terms and two of whom
-      shall serve one-year terms'
   - established: true
     label: Selectboard members
     filled_by: elected_by_voters
@@ -28,10 +19,19 @@
       to be elected from the floor, for a term of one year; (2) [Repealed.] (3) Selectboard
       members, three of whom shall serve staggered three-year terms and two of whom
       shall serve one-year terms'
+  - established: true
+    label: Selectboard members
+    filled_by: elected_by_voters
+    maximum_memberships: 5
+    quote: 'The following officers of the Town ... shall be elected by Australian
+      ballot, unless otherwise stated, and shall include the following: ... (3) Selectboard
+      members, three of whom shall serve staggered three-year terms and two of whom
+      shall serve one-year terms'
 - role_id: commission-president
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -51,6 +51,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -70,6 +71,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -89,6 +91,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -108,6 +111,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -127,6 +131,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -146,6 +151,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -165,6 +171,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -184,6 +191,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -203,6 +211,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -222,6 +231,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -241,6 +251,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -260,6 +271,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -279,6 +291,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -298,6 +311,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true

@@ -2,6 +2,7 @@
   expected: elected_by_voters
   presiding: false
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -11,18 +12,17 @@
     label: Selectboard member
     filled_by: elected_by_voters
     maximum_memberships: 5
-    quote: The elected officers of the Town of Essex shall be Selectboard members
-      and Moderator.
+    quote: All Selectboard members shall be elected at large.
   - established: true
-    label: Selectboard members
+    label: Selectboard member
     filled_by: elected_by_voters
     maximum_memberships: 5
-    quote: The elected officers of the Town of Essex shall be Selectboard members
-      and Moderator.
+    quote: All Selectboard members shall be elected at large.
 - role_id: chair
   expected: elected_by_members
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -44,6 +44,7 @@
   expected: elected_by_members
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -65,6 +66,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -84,6 +86,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -103,6 +106,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -122,6 +126,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -141,6 +146,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -160,6 +166,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -179,6 +186,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -198,6 +206,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -217,6 +226,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -236,6 +246,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -255,6 +266,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -274,6 +286,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -293,6 +306,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true

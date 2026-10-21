@@ -2,6 +2,7 @@
   expected: elected_by_voters
   presiding: false
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -16,12 +17,14 @@
     label: trustees
     filled_by: elected_by_voters
     maximum_memberships: 5
-    quote: for the purpose of electing a Clerk, five trustees, a Treasurer, and a
-      Collector of Taxes
+    quote: A meeting of the inhabitants shall be held annually on the third Tuesday
+      in March for the purpose of electing a Clerk, five trustees, a Treasurer, and
+      a Collector of Taxes
 - role_id: clerk
   expected: elected_by_voters
   presiding: false
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -31,8 +34,7 @@
     label: Clerk
     filled_by: elected_by_voters
     maximum_memberships: 1
-    quote: for the purpose of electing a Clerk, five trustees, a Treasurer, and a
-      Collector of Taxes
+    quote: for the purpose of electing a Clerk
   - established: true
     label: Clerk
     filled_by: elected_by_voters
@@ -42,6 +44,7 @@
   expected: elected_by_voters
   presiding: false
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -51,18 +54,19 @@
     label: Treasurer
     filled_by: elected_by_voters
     maximum_memberships: 1
-    quote: for the purpose of electing a Clerk, five trustees, a Treasurer, and a
-      Collector of Taxes
+    quote: A meeting of the inhabitants shall be held annually on the third Tuesday
+      in March for the purpose of electing a Clerk, five trustees, a Treasurer, and
+      a Collector of Taxes
   - established: true
     label: Treasurer
     filled_by: elected_by_voters
     maximum_memberships: 1
-    quote: for the purpose of electing a Clerk, five trustees, a Treasurer, and a
-      Collector of Taxes
+    quote: electing a Clerk, five trustees, a Treasurer, and a Collector of Taxes
 - role_id: commission-president
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -82,6 +86,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -101,6 +106,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -120,6 +126,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -139,6 +146,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -158,6 +166,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -177,6 +186,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -196,6 +206,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -215,6 +226,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -234,6 +246,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -253,6 +266,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -272,6 +286,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -291,6 +306,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -310,6 +326,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -329,6 +346,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true

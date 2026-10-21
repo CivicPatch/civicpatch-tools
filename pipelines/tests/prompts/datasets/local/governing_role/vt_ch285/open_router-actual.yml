@@ -2,6 +2,7 @@
   expected: elected_by_voters
   presiding: false
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -11,28 +12,21 @@
     label: trustees
     filled_by: elected_by_voters
     maximum_memberships: 3
-    quote: The elective officers of the Village shall be a President, a Clerk, a Treasurer,
-      a Collector of Taxes, three auditors, three trustees, and a Chief Engineer of
-      the Fire Department, together with such other officers as the public interest
-      may require and the laws of this State may permit. All the officers shall be
-      elected at the annual meeting for a term of one year, except that in the case
-      of the trustees, the term of office shall be three years, one trustee to be
-      elected at each annual meeting.
+    quote: All the officers shall be elected at the annual meeting for a term of one
+      year, except that in the case of the trustees, the term of office shall be three
+      years, one trustee to be elected at each annual meeting.
   - established: true
-    label: trustees
+    label: trustee
     filled_by: elected_by_voters
     maximum_memberships: 3
-    quote: The elective officers of the Village shall be a President, a Clerk, a Treasurer,
-      a Collector of Taxes, three auditors, three trustees, and a Chief Engineer of
-      the Fire Department, together with such other officers as the public interest
-      may require and the laws of this State may permit. All the officers shall be
-      elected at the annual meeting for a term of one year, except that in the case
-      of the trustees, the term of office shall be three years, one trustee to be
-      elected at each annual meeting.
+    quote: All the officers shall be elected at the annual meeting for a term of one
+      year, except that in the case of the trustees, the term of office shall be three
+      years, one trustee to be elected at each annual meeting.
 - role_id: commission-president
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -52,6 +46,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -71,6 +66,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -90,6 +86,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -109,6 +106,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -128,6 +126,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -147,6 +146,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -166,6 +166,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -185,6 +186,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -204,6 +206,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -223,6 +226,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -242,6 +246,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -261,6 +266,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -280,6 +286,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -299,6 +306,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true

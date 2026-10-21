@@ -2,6 +2,7 @@
   expected: elected_by_voters
   presiding: false
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -21,6 +22,7 @@
   expected: elected_by_voters
   presiding: false
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -42,6 +44,7 @@
   expected: appointed
   presiding: false
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -50,7 +53,7 @@
   - established: true
     label: City Manager
     filled_by: appointed
-    maximum_memberships: 1
+    maximum_memberships: null
     quote: The City Manager shall be chosen and appointed by majority vote of the
       City Council
   - established: true
@@ -63,6 +66,7 @@
   expected: appointed
   presiding: false
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -72,18 +76,17 @@
     label: City attorneys
     filled_by: appointed
     maximum_memberships: null
-    quote: 'The City Council shall appoint the following officers: (A) City Manager;
-      (B) City Treasurer; and (C) City attorneys.'
+    quote: City attorneys
   - established: true
     label: City attorneys
     filled_by: appointed
     maximum_memberships: null
-    quote: 'The City Council shall appoint the following officers: (A) City Manager;
-      (B) City Treasurer; and (C) City attorneys.'
+    quote: City attorneys
 - role_id: council-president
   expected: elected_by_members
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -93,8 +96,8 @@
     label: President
     filled_by: elected_by_members
     maximum_memberships: 1
-    quote: the City Council shall elect from its members a President, Vice President,
-      and Parliamentarian.
+    quote: Following the annual meeting, the City Council shall elect from its members
+      a President, Vice President, and Parliamentarian.
   - established: true
     label: President
     filled_by: elected_by_members
@@ -105,6 +108,7 @@
   expected: elected_by_members
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -114,8 +118,8 @@
     label: Vice President
     filled_by: elected_by_members
     maximum_memberships: 1
-    quote: the City Council shall elect from its members a President, Vice President,
-      and Parliamentarian.
+    quote: Following the annual meeting, the City Council shall elect from its members
+      a President, Vice President, and Parliamentarian.
   - established: true
     label: Vice President
     filled_by: elected_by_members
@@ -126,6 +130,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -145,6 +150,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -164,6 +170,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -183,6 +190,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -202,6 +210,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -221,6 +230,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -240,6 +250,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -259,6 +270,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -278,6 +290,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -297,6 +310,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -316,6 +330,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -335,6 +350,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -354,6 +370,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true

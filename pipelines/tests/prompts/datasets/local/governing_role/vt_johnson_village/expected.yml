@@ -90,7 +90,6 @@ roles:
   - village board president
   - village president
   expected: elected_by_voters
-  presiding: true
 - organization_name: Board of Trustees
   role_id: chair
   role_label: Chair

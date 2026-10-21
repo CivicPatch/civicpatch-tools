@@ -2,13 +2,14 @@
   expected: elected_by_voters
   presiding: false
   right: true
+  rounds: 1
   each_right:
   - true
   - true
   agreed: true
   answers:
   - established: true
-    label: Cemetery Commissioner
+    label: Cemetery Commissioners
     filled_by: elected_by_voters
     maximum_memberships: 5
     quote: There shall be elected five Cemetery Commissioners each to serve staggered
@@ -23,6 +24,7 @@
   expected: appointed
   presiding: false
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -44,6 +46,7 @@
   expected: appointed
   presiding: false
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -54,17 +57,18 @@
     filled_by: appointed
     maximum_memberships: 1
     quote: The Selectboard shall appoint and remove, on the basis of qualifications
-      and performance alone, a Town Clerk, Town Treasurer, and Town Attorney.
+      and performance alone, a Town Clerk
   - established: true
     label: Town Clerk
     filled_by: appointed
-    maximum_memberships: 1
+    maximum_memberships: null
     quote: The Selectboard shall appoint and remove, on the basis of qualifications
-      and performance alone, a Town Clerk
+      and performance alone, a Town Clerk, Town Treasurer, and Town Attorney.
 - role_id: treasurer
   expected: appointed
   presiding: false
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -73,7 +77,7 @@
   - established: true
     label: Town Treasurer
     filled_by: appointed
-    maximum_memberships: null
+    maximum_memberships: 1
     quote: The Selectboard shall appoint and remove, on the basis of qualifications
       and performance alone, a Town Clerk, Town Treasurer, and Town Attorney.
   - established: true
@@ -86,6 +90,7 @@
   expected: appointed
   presiding: false
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -94,19 +99,20 @@
   - established: true
     label: Town Attorney
     filled_by: appointed
-    maximum_memberships: null
+    maximum_memberships: 1
     quote: The Selectboard shall appoint and remove, on the basis of qualifications
       and performance alone, a Town Clerk, Town Treasurer, and Town Attorney.
   - established: true
     label: Town Attorney
     filled_by: appointed
-    maximum_memberships: null
+    maximum_memberships: 1
     quote: The Selectboard shall appoint and remove, on the basis of qualifications
       and performance alone, a Town Clerk, Town Treasurer, and Town Attorney.
 - role_id: chair
   expected: elected_by_members
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -128,6 +134,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -147,6 +154,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -166,6 +174,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -185,6 +194,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -204,6 +214,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -223,6 +234,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -242,6 +254,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -261,6 +274,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -280,6 +294,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -299,6 +314,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -318,6 +334,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 3
   each_right:
   - true
   - true
@@ -335,10 +352,35 @@
     maximum_memberships: 1
     quote: The Board shall, in a similar manner, choose a Vice Chair to serve in the
       absence or disability of the Chair.
+  - established: true
+    label: Vice Chair
+    filled_by: elected_by_members
+    maximum_memberships: 1
+    quote: The Board shall, in a similar manner, choose a Vice Chair to serve in the
+      absence or disability of the Chair.
+  - established: true
+    label: Vice Chair
+    filled_by: elected_by_members
+    maximum_memberships: 1
+    quote: The Board shall, in a similar manner, choose a Vice Chair to serve in the
+      absence or disability of the Chair.
+  - established: true
+    label: Vice Chair
+    filled_by: elected_by_members
+    maximum_memberships: 1
+    quote: The Board shall, in a similar manner, choose a Vice Chair to serve in the
+      absence or disability of the Chair.
+  - established: true
+    label: Vice Chair
+    filled_by: elected_by_members
+    maximum_memberships: 1
+    quote: The Board shall, in a similar manner, choose a Vice Chair to serve in the
+      absence or disability of the Chair.
 - role_id: commissioner-vice-president
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -358,6 +400,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -377,6 +420,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true

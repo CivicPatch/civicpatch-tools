@@ -2,14 +2,15 @@
   expected: elected_by_members
   presiding: false
   right: true
+  rounds: 1
   each_right:
+  - false
   - true
-  - true
-  agreed: true
+  agreed: false
   answers:
   - established: true
     label: Clerk
-    filled_by: elected_by_members
+    filled_by: appointed
     maximum_memberships: 1
     quote: the Council shall organize and elect a President, Vice President, and Clerk
       by a majority vote of the entire Council
@@ -17,12 +18,13 @@
     label: Clerk
     filled_by: elected_by_members
     maximum_memberships: 1
-    quote: the Council shall organize and elect a President, Vice President, and Clerk
-      by a majority vote of the entire Council
+    quote: elect a President, Vice President, and Clerk by a majority vote of the
+      entire Council
 - role_id: city-manager
   expected: appointed
   presiding: false
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -31,18 +33,18 @@
   - established: true
     label: City Manager
     filled_by: appointed
-    maximum_memberships: 1
+    maximum_memberships: null
     quote: The Council shall appoint a City Manager
   - established: true
     label: City Manager
     filled_by: appointed
     maximum_memberships: 1
-    quote: The Council shall appoint a City Manager under and in accordance with Vermont
-      Statutes Annotated.
+    quote: The Council shall appoint a City Manager
 - role_id: council-president
   expected: elected_by_members
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -64,6 +66,7 @@
   expected: elected_by_members
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -85,6 +88,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -104,6 +108,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -123,6 +128,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -142,6 +148,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -161,6 +168,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -180,6 +188,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -199,6 +208,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -218,6 +228,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -237,6 +248,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -256,6 +268,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -275,6 +288,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -294,6 +308,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -313,6 +328,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true

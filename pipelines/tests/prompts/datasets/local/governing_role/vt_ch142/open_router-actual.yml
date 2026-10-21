@@ -2,29 +2,30 @@
   expected: elected_by_voters
   presiding: false
   right: true
+  rounds: 1
   each_right:
   - true
-  - true
-  agreed: true
+  - false
+  agreed: false
   answers:
   - established: true
-    label: Selectboard
+    label: Selectboard member
     filled_by: elected_by_voters
     maximum_memberships: null
     quote: All elected officials, except as provided by law or as specifically provided
       in this charter, shall be chosen at large from the legally qualified voters
-      of the Town
-  - established: true
-    label: Selectboard
-    filled_by: elected_by_voters
+      of the Town and shall hold office for the term specified and until their successors
+      are elected and qualified.
+  - established: false
+    label: ''
+    filled_by: not_stated
     maximum_memberships: null
-    quote: All elected officials, except as provided by law or as specifically provided
-      in this charter, shall be chosen at large from the legally qualified voters
-      of the Town
+    quote: ''
 - role_id: commission-president
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -44,6 +45,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -63,6 +65,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -82,6 +85,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -101,6 +105,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -120,6 +125,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -139,6 +145,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -158,6 +165,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -177,6 +185,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -196,6 +205,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -215,6 +225,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -234,6 +245,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -253,6 +265,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -272,6 +285,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -291,6 +305,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true

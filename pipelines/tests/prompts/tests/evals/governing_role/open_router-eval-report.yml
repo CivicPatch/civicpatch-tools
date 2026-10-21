@@ -1,35 +1,39 @@
 run:
-  timestamp: '2026-10-21T03:20:20+00:00'
-  prompt_sha256: ce378d1ef447
-  prompt_file: _prompts/ce378d1ef447.txt
+  timestamp: '2026-10-21T19:23:29+00:00'
+  prompt_sha256: 675dae39275b
+  prompt_file: _prompts/675dae39275b.txt
 cost_summary:
   model: deepseek/deepseek-v4-flash
-  elapsed_seconds: 655.75
-  total_input_tokens: 2774856
-  total_cached_input_tokens: 2019584
-  total_output_tokens: 215318
-  total_cost_usd: 0.222575472
-total_cases: 44
+  elapsed_seconds: 639.86
+  total_input_tokens: 2957064
+  total_cached_input_tokens: 2160876
+  total_output_tokens: 222169
+  total_cost_usd: 0.234178168
+total_cases: 45
 passed_cases: 43
 failed_cases:
-- case_id: vt_ch126
+- case_id: vt_ch113
   wrong_roles:
-  - member
-roles_right: 0.9932885906040269
-single_ask_right: 0.9530201342281879
-agreement: 0.9731543624161074
-presiding_gold_right: 35 of 35
+  - treasurer
+- case_id: vt_johnson_village
+  wrong_roles:
+  - president
+roles_right: 0.9868421052631579
+single_ask_right: 0.944078947368421
+agreement: 0.9671052631578947
+presiding_gold_right: 36 of 37
+roles_re_asked: 2
 candidates_asked: 625
 candidates_verified: 6
 by_expected:
   elected_by_voters:
-    right: 75
-    total: 76
+    right: 77
+    total: 78
   elected_by_members:
-    right: 36
-    total: 36
+    right: 37
+    total: 37
   appointed:
-    right: 30
+    right: 29
     total: 30
   not_established:
     right: 6
@@ -38,6 +42,19 @@ by_expected:
     right: 1
     total: 1
 candidates_to_read:
+  vt_ch007:
+  - role_id: council-president
+    answers:
+    - established: true
+      label: President of the Board of Aldermen
+      filled_by: elected_by_members
+      maximum_memberships: 1
+      quote: who shall elect one of their number President of said Board
+    - established: true
+      label: President of the Board of Aldermen
+      filled_by: elected_by_members
+      maximum_memberships: 1
+      quote: who shall elect one of their number President of said Board
   vt_ch101:
   - role_id: chair
     answers:
@@ -82,20 +99,6 @@ candidates_to_read:
       quote: All officers of said Village shall be residents and elected at the annual
         meeting of said Village, except Collector of Taxes, who shall be appointed
         by the Board of Trustees.
-  - role_id: chair
-    answers:
-    - established: true
-      label: chair
-      filled_by: elected_by_members
-      maximum_memberships: 1
-      quote: In the absence of the President, the Trustees shall elect a chair from
-        among their number.
-    - established: true
-      label: chair
-      filled_by: elected_by_members
-      maximum_memberships: 1
-      quote: In the absence of the President, the Trustees shall elect a chair from
-        among their number.
   vt_ch227:
   - role_id: council-president
     answers:
@@ -113,16 +116,22 @@ candidates_to_read:
   - role_id: council-president
     answers:
     - established: true
-      label: President
+      label: President of the Board of Trustees
       filled_by: elected_by_voters
       maximum_memberships: 1
       quote: the Village shall, by ballot, if called for by three or more legal voters
         in the meeting, elect for the ensuing year, and, until their successors are
-        chosen; a President
+        chosen; a President, who shall preside at all Village meetings, and be vested
+        with the powers of a moderator at town meeting and who shall be, by virtue
+        of this office, one of the trustees of the Village and President of the Board
+        of Trustees
     - established: true
       label: President
       filled_by: elected_by_voters
       maximum_memberships: 1
       quote: the Village shall, by ballot, if called for by three or more legal voters
         in the meeting, elect for the ensuing year, and, until their successors are
-        chosen; a President
+        chosen; a President, who shall preside at all Village meetings, and be vested
+        with the powers of a moderator at town meeting and who shall be, by virtue
+        of this office, one of the trustees of the Village and President of the Board
+        of Trustees

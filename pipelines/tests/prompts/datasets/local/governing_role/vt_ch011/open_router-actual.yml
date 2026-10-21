@@ -2,13 +2,14 @@
   expected: elected_by_voters
   presiding: false
   right: true
+  rounds: 1
   each_right:
   - true
   - true
   agreed: true
   answers:
   - established: true
-    label: member of the City Council
+    label: City Council member
     filled_by: elected_by_voters
     maximum_memberships: 6
     quote: There shall be elected six members of the City Council, one from each ward,
@@ -25,6 +26,7 @@
   expected: elected_by_voters
   presiding: false
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -40,11 +42,13 @@
     label: Mayor
     filled_by: elected_by_voters
     maximum_memberships: 1
-    quote: The legal voters of the City shall elect a Mayor
+    quote: The legal voters of the City shall elect a Mayor who shall be a legal voter
+      in the City.
 - role_id: city-manager
   expected: appointed
   presiding: false
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -53,19 +57,20 @@
   - established: true
     label: City Manager
     filled_by: appointed
-    maximum_memberships: 1
+    maximum_memberships: null
     quote: The City Manager shall be chosen and appointed by majority vote of the
       City Council
   - established: true
     label: City Manager
     filled_by: appointed
-    maximum_memberships: 1
+    maximum_memberships: null
     quote: The City Manager shall be chosen and appointed by majority vote of the
       City Council
 - role_id: clerk
   expected: appointed
   presiding: false
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -85,6 +90,7 @@
   expected: appointed
   presiding: false
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -93,7 +99,7 @@
   - established: true
     label: City Treasurer
     filled_by: appointed
-    maximum_memberships: null
+    maximum_memberships: 1
     quote: The City Council shall appoint a City Treasurer.
   - established: true
     label: City Treasurer
@@ -104,6 +110,7 @@
   expected: elected_by_members
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -125,6 +132,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -144,6 +152,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -163,6 +172,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -182,6 +192,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -201,6 +212,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -220,6 +232,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -239,6 +252,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -258,6 +272,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -277,6 +292,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -296,6 +312,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -315,6 +332,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -334,6 +352,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -353,6 +372,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -372,6 +392,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
