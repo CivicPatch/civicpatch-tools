@@ -2,6 +2,7 @@
   expected: elected_by_voters
   presiding: false
   right: true
+  rounds: 1
   each_right:
   - true
   - false
@@ -13,35 +14,39 @@
     maximum_memberships: 5
     quote: All Council members shall be elected at large
   - established: true
-    label: Council member
+    label: Council Member
     filled_by: elected_by_voters
     maximum_memberships: 5
-    quote: All Council members shall be elected at large.
+    quote: There shall be a City Council consisting of five members. All Council members
+      shall be elected at large.
 - role_id: clerk
   expected: elected_by_members
   presiding: false
   right: true
+  rounds: 1
   each_right:
   - true
   - true
   agreed: true
   answers:
-  - established: true
-    label: Clerk
-    filled_by: elected_by_members
-    maximum_memberships: 1
-    quote: elect a Chair, a Vice Chair and a Clerk by a majority vote of the entire
-      Council
   - established: true
     label: Clerk
     filled_by: elected_by_members
     maximum_memberships: 1
     quote: the Council shall organize and elect a Chair, a Vice Chair and a Clerk
-      by a majority vote of the entire Council
+  - established: true
+    label: Clerk
+    filled_by: elected_by_members
+    maximum_memberships: 1
+    quote: Forthwith after its election and qualification, the Council shall organize
+      and elect a Chair, a Vice Chair and a Clerk by a majority vote of the entire
+      Council and file a certificate of such election for record in the Office Of
+      the City Clerk.
 - role_id: city-manager
   expected: appointed
   presiding: false
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -55,12 +60,13 @@
   - established: true
     label: City Manager
     filled_by: appointed
-    maximum_memberships: null
+    maximum_memberships: 1
     quote: The Council shall appoint a City Manager for an indefinite term.
 - role_id: city-attorney
   expected: appointed
   presiding: false
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -86,6 +92,7 @@
   expected: elected_by_members
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -95,8 +102,8 @@
     label: Chair
     filled_by: elected_by_members
     maximum_memberships: 1
-    quote: elect a Chair, a Vice Chair and a Clerk by a majority vote of the entire
-      Council
+    quote: the Council shall organize and elect a Chair, a Vice Chair and a Clerk
+      by a majority vote of the entire Council
   - established: true
     label: Chair
     filled_by: elected_by_members
@@ -107,6 +114,7 @@
   expected: elected_by_members
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -116,8 +124,8 @@
     label: Vice Chair
     filled_by: elected_by_members
     maximum_memberships: 1
-    quote: elect a Chair, a Vice Chair and a Clerk by a majority vote of the entire
-      Council
+    quote: the Council shall organize and elect a Chair, a Vice Chair and a Clerk
+      by a majority vote of the entire Council
   - established: true
     label: Vice Chair
     filled_by: elected_by_members
@@ -128,6 +136,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -147,6 +156,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -166,6 +176,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -185,6 +196,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -204,6 +216,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -223,6 +236,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -242,6 +256,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -261,6 +276,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -280,6 +296,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -299,6 +316,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -318,6 +336,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -337,6 +356,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -356,6 +376,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true

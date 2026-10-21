@@ -2,6 +2,7 @@
   expected: appointed
   presiding: false
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -21,6 +22,7 @@
   expected: appointed
   presiding: false
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -42,6 +44,7 @@
   expected: appointed
   presiding: false
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -51,8 +54,10 @@
     label: Chief Assessor
     filled_by: appointed
     maximum_memberships: 1
-    quote: The Chief Assessor and assistants shall be appointed, and may be removed,
-      by the Selectboard in accordance with this subchapter.
+    quote: There shall be an Assessing Department, which shall consist of a Chief
+      Assessor and such assistants as are deemed necessary by the Town Manager with
+      the approval of the Selectboard. The Chief Assessor and assistants shall be
+      appointed, and may be removed, by the Selectboard in accordance with this subchapter.
   - established: true
     label: Chief Assessor
     filled_by: appointed
@@ -65,6 +70,7 @@
   expected: elected_by_members
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -80,14 +86,13 @@
     label: Chair
     filled_by: elected_by_members
     maximum_memberships: 1
-    quote: Forthwith after their election and qualification, the Selectboard shall
-      organize and elect a Chair and Vice Chair by a majority vote of the entire Board
-      and file a certificate of such election for record in the office of the Town
-      Clerk.
+    quote: the Selectboard shall organize and elect a Chair and Vice Chair by a majority
+      vote of the entire Board
 - role_id: vice-chair
   expected: elected_by_members
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -103,14 +108,13 @@
     label: Vice Chair
     filled_by: elected_by_members
     maximum_memberships: 1
-    quote: Forthwith after their election and qualification, the Selectboard shall
-      organize and elect a Chair and Vice Chair by a majority vote of the entire Board
-      and file a certificate of such election for record in the office of the Town
-      Clerk.
+    quote: the Selectboard shall organize and elect a Chair and Vice Chair by a majority
+      vote of the entire Board
 - role_id: commission-president
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -130,6 +134,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -149,6 +154,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -168,6 +174,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -187,6 +194,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -206,6 +214,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -225,6 +234,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -244,6 +254,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -263,6 +274,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -282,6 +294,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -301,6 +314,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -320,6 +334,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -339,6 +354,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true

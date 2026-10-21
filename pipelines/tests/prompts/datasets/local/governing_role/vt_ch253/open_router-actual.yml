@@ -2,20 +2,20 @@
   expected: elected_by_voters
   presiding: false
   right: true
+  rounds: 1
   each_right:
   - true
   - true
   agreed: true
   answers:
   - established: true
-    label: trustees
+    label: trustee
     filled_by: elected_by_voters
     maximum_memberships: 3
-    quote: the qualified electors of the Village shall, by ballot if called for, elect
-      from their number a Moderator, a Clerk, a Treasurer, a Collector of Taxes, three
-      trustees, three fire wardens, and an Attorney.
+    quote: elect from their number a Moderator, a Clerk, a Treasurer, a Collector
+      of Taxes, three trustees, three fire wardens, and an Attorney.
   - established: true
-    label: trustee
+    label: trustees
     filled_by: elected_by_voters
     maximum_memberships: 3
     quote: the qualified electors of the Village shall, by ballot if called for, elect
@@ -25,6 +25,7 @@
   expected: elected_by_voters
   presiding: false
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -34,7 +35,10 @@
     label: Moderator
     filled_by: elected_by_voters
     maximum_memberships: 1
-    quote: elect from their number a Moderator
+    quote: At every annual meeting of the Village, the qualified electors of the Village
+      shall, by ballot if called for, elect from their number a Moderator, a Clerk,
+      a Treasurer, a Collector of Taxes, three trustees, three fire wardens, and an
+      Attorney.
   - established: true
     label: Moderator
     filled_by: elected_by_voters
@@ -44,6 +48,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -63,6 +68,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -82,6 +88,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -101,6 +108,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -120,6 +128,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -139,6 +148,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -158,6 +168,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -177,6 +188,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -196,6 +208,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -215,6 +228,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -234,6 +248,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -253,6 +268,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -272,6 +288,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -291,6 +308,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -310,6 +328,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true

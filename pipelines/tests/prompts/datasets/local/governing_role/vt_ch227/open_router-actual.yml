@@ -2,6 +2,7 @@
   expected: elected_by_voters
   presiding: false
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -25,6 +26,7 @@
   expected: elected_by_voters
   presiding: false
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -43,12 +45,12 @@
     maximum_memberships: 1
     quote: At the annual meeting there shall be elected, by ballot if called for by
       three voters, a Clerk, a Treasurer, a Chief Engineer, First and Second Assistant
-      Engineers, a Collector, and five trustees, who shall serve until their successors
-      are elected.
+      Engineers, a Collector, and five trustees
 - role_id: member
   expected: elected_by_voters
   presiding: false
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -65,13 +67,14 @@
     label: trustee
     filled_by: elected_by_voters
     maximum_memberships: 5
-    quote: there shall be elected, by ballot if called for by three voters, a Clerk,
-      a Treasurer, a Chief Engineer, First and Second Assistant Engineers, a Collector,
-      and five trustees
+    quote: At the annual meeting there shall be elected, by ballot if called for by
+      three voters, a Clerk, a Treasurer, a Chief Engineer, First and Second Assistant
+      Engineers, a Collector, and five trustees
 - role_id: commission-president
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -91,6 +94,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -110,6 +114,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -129,6 +134,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -148,6 +154,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -167,6 +174,7 @@
   expected: probably_not_established
   presiding: true
   right: false
+  rounds: 1
   each_right:
   - false
   - false
@@ -186,6 +194,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -205,6 +214,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -224,6 +234,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -243,6 +254,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -262,6 +274,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -281,6 +294,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -300,6 +314,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -319,6 +334,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -338,6 +354,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true

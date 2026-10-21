@@ -2,57 +2,56 @@
   expected: elected_by_voters
   presiding: false
   right: true
+  rounds: 1
   each_right:
   - true
-  - false
+  - true
   agreed: true
   answers:
   - established: true
-    label: library trustees
+    label: library trustees and school trustees
     filled_by: elected_by_voters
-    maximum_memberships: 5
-    quote: five library trustees
+    maximum_memberships: null
+    quote: '(a) Officers. The officers elected at its annual meeting shall be: (1)
+      five selectpersons; (2) Town Clerk; (3) Town Treasurer; (4) five library trustees;
+      (5) five school trustees; and (6) Champlain Water District (CWD) Representative.'
   - established: true
-    label: library trustees
+    label: library trustees and school trustees
     filled_by: elected_by_voters
-    maximum_memberships: 5
-    quote: All elected officers shall be chosen at large from the legally qualified
-      voters at a legally warned Town meeting using the Australian ballot system.
+    maximum_memberships: null
+    quote: five library trustees; (5) five school trustees
 - role_id: city-manager
   expected: appointed
   presiding: false
   right: true
+  rounds: 1
   each_right:
   - true
   - true
   agreed: true
   answers:
-  - established: true
-    label: Town Manager
-    filled_by: appointed
-    maximum_memberships: 1
-    quote: The Town Manager shall be the Chief Administrative Officer of the Town
-      and shall be appointed by a majority of the Selectboard.
   - established: true
     label: Town Manager
     filled_by: appointed
     maximum_memberships: null
     quote: The Town Manager shall be the Chief Administrative Officer of the Town
       and shall be appointed by a majority of the Selectboard.
+  - established: true
+    label: Town Manager
+    filled_by: appointed
+    maximum_memberships: 1
+    quote: The Town Manager shall be the Chief Administrative Officer of the Town
+      and shall be appointed by a majority of the Selectboard.
 - role_id: clerk
   expected: elected_by_voters
   presiding: false
   right: true
+  rounds: 1
   each_right:
   - true
   - true
   agreed: true
   answers:
-  - established: true
-    label: Town Clerk
-    filled_by: elected_by_voters
-    maximum_memberships: 1
-    quote: The Town Clerk shall be elected for a three-year term.
   - established: true
     label: Town Clerk
     filled_by: elected_by_voters
@@ -60,10 +59,16 @@
     quote: 'The officers elected at its annual meeting shall be: (1) five selectpersons;
       (2) Town Clerk; (3) Town Treasurer; (4) five library trustees; (5) five school
       trustees; and (6) Champlain Water District (CWD) Representative.'
+  - established: true
+    label: Town Clerk
+    filled_by: elected_by_voters
+    maximum_memberships: 1
+    quote: The Town Clerk shall be elected for a three-year term.
 - role_id: treasurer
   expected: elected_by_voters
   presiding: false
   right: true
+  rounds: 1
   each_right:
   - false
   - true
@@ -78,13 +83,12 @@
     label: Town Treasurer
     filled_by: elected_by_voters
     maximum_memberships: 1
-    quote: 'The officers elected at its annual meeting shall be: (1) five selectpersons;
-      (2) Town Clerk; (3) Town Treasurer; (4) five library trustees; (5) five school
-      trustees; and (6) Champlain Water District (CWD) Representative.'
+    quote: The Town Treasurer shall be elected for a three-year term
 - role_id: chair
   expected: elected_by_members
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -94,20 +98,21 @@
     label: Chair
     filled_by: elected_by_members
     maximum_memberships: 1
-    quote: the Selectboard shall organize and elect a Chair, a Vice Chair, and Clerk
-      by a majority vote of the entire Selectboard.
+    quote: elect a Chair
   - established: true
     label: Chair
     filled_by: elected_by_members
     maximum_memberships: 1
-    quote: the Selectboard shall organize and elect a Chair, a Vice Chair, and Clerk
-      by a majority vote of the entire Selectboard.
+    quote: After their election and qualification, the Selectboard shall organize
+      and elect a Chair, a Vice Chair, and Clerk by a majority vote of the entire
+      Selectboard.
 - role_id: vice-chair
   expected: elected_by_members
   presiding: true
   right: true
+  rounds: 1
   each_right:
-  - true
+  - false
   - true
   agreed: true
   answers:
@@ -115,18 +120,19 @@
     label: Vice Chair
     filled_by: elected_by_members
     maximum_memberships: 1
-    quote: the Selectboard shall organize and elect a Chair, a Vice Chair, and Clerk
-      by a majority vote of the entire Selectboard.
+    quote: elect a Vice Chair
   - established: true
     label: Vice Chair
     filled_by: elected_by_members
     maximum_memberships: 1
-    quote: the Selectboard shall organize and elect a Chair, a Vice Chair, and Clerk
-      by a majority vote of the entire Selectboard.
+    quote: After their election and qualification, the Selectboard shall organize
+      and elect a Chair, a Vice Chair, and Clerk by a majority vote of the entire
+      Selectboard.
 - role_id: commission-president
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -146,6 +152,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -165,6 +172,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -184,6 +192,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -203,6 +212,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -222,6 +232,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -241,6 +252,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -260,6 +272,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -279,6 +292,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -298,6 +312,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -317,6 +332,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -336,6 +352,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -355,6 +372,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true

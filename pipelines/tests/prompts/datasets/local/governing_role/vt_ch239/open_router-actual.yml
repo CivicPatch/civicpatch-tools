@@ -2,6 +2,7 @@
   expected: elected_by_voters
   presiding: false
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -12,7 +13,8 @@
     filled_by: elected_by_voters
     maximum_memberships: 1
     quote: the Village shall, by ballot, if called for by three or more legal voters
-      in the meeting, elect for the ensuing year... a Clerk
+      in the meeting, elect for the ensuing year, and, until their successors are
+      chosen; a President, ... a Clerk; ...
   - established: true
     label: Clerk
     filled_by: elected_by_voters
@@ -27,6 +29,7 @@
   expected: elected_by_voters
   presiding: false
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -46,25 +49,25 @@
     label: Treasurer
     filled_by: elected_by_voters
     maximum_memberships: 1
-    quote: the Village shall, by ballot, if called for by three or more legal voters
-      in the meeting, elect for the ensuing year, and, until their successors are
-      chosen; a President, who shall preside at all Village meetings, and be vested
-      with the powers of a moderator at town meeting and who shall be, by virtue of
-      this office, one of the trustees of the Village and President of the Board of
-      Trustees; a Clerk; a Treasurer
+    quote: elect for the ensuing year, and, until their successors are chosen; a President,
+      who shall preside at all Village meetings, and be vested with the powers of
+      a moderator at town meeting and who shall be, by virtue of this office, one
+      of the trustees of the Village and President of the Board of Trustees; a Clerk;
+      a Treasurer; and a Tax Collector
 - role_id: member
   expected: elected_by_voters
   presiding: false
   right: true
+  rounds: 1
   each_right:
   - true
   - true
   agreed: true
   answers:
   - established: true
-    label: Trustee
+    label: trustee
     filled_by: elected_by_voters
-    maximum_memberships: null
+    maximum_memberships: 3
     quote: the corporation at each annual meeting shall elect two trustees for a term
       of two years
   - established: true
@@ -77,6 +80,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -96,6 +100,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -115,6 +120,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -134,6 +140,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -153,6 +160,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -172,29 +180,37 @@
   expected: probably_not_established
   presiding: true
   right: false
+  rounds: 1
   each_right:
   - false
   - false
   agreed: true
   answers:
   - established: true
-    label: President
+    label: President of the Board of Trustees
     filled_by: elected_by_voters
     maximum_memberships: 1
     quote: the Village shall, by ballot, if called for by three or more legal voters
       in the meeting, elect for the ensuing year, and, until their successors are
-      chosen; a President
+      chosen; a President, who shall preside at all Village meetings, and be vested
+      with the powers of a moderator at town meeting and who shall be, by virtue of
+      this office, one of the trustees of the Village and President of the Board of
+      Trustees
   - established: true
     label: President
     filled_by: elected_by_voters
     maximum_memberships: 1
     quote: the Village shall, by ballot, if called for by three or more legal voters
       in the meeting, elect for the ensuing year, and, until their successors are
-      chosen; a President
+      chosen; a President, who shall preside at all Village meetings, and be vested
+      with the powers of a moderator at town meeting and who shall be, by virtue of
+      this office, one of the trustees of the Village and President of the Board of
+      Trustees
 - role_id: council-vice-president
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -214,6 +230,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -233,6 +250,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -252,6 +270,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -271,6 +290,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -290,6 +310,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -309,6 +330,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -328,6 +350,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -347,6 +370,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true

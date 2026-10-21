@@ -2,20 +2,20 @@
   expected: elected_by_voters
   presiding: false
   right: true
+  rounds: 1
   each_right:
   - true
   - true
   agreed: true
   answers:
   - established: true
-    label: Trustees
+    label: Trustee
     filled_by: elected_by_voters
     maximum_memberships: 4
-    quote: At each annual meeting of said Village, there shall be elected two Trustees
-      who shall hold office for the term of two years and until their successors shall
-      be elected and qualified.
+    quote: All officers of said Village shall be residents and elected at the annual
+      meeting of said Village
   - established: true
-    label: Trustees
+    label: Trustee
     filled_by: elected_by_voters
     maximum_memberships: 4
     quote: All officers of said Village shall be residents and elected at the annual
@@ -25,6 +25,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -44,6 +45,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -63,6 +65,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -82,6 +85,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -101,6 +105,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -120,6 +125,7 @@
   expected: probably_not_established
   presiding: true
   right: false
+  rounds: 1
   each_right:
   - false
   - false
@@ -143,6 +149,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -162,6 +169,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -181,6 +189,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -200,6 +209,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -218,28 +228,28 @@
 - role_id: chair
   expected: probably_not_established
   presiding: true
-  right: false
+  right: true
+  rounds: 1
   each_right:
-  - false
-  - false
+  - true
+  - true
   agreed: true
   answers:
-  - established: true
-    label: chair
-    filled_by: elected_by_members
-    maximum_memberships: 1
-    quote: In the absence of the President, the Trustees shall elect a chair from
-      among their number.
-  - established: true
-    label: chair
-    filled_by: elected_by_members
-    maximum_memberships: 1
-    quote: In the absence of the President, the Trustees shall elect a chair from
-      among their number.
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
 - role_id: vice-chair
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -259,6 +269,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -278,6 +289,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -297,6 +309,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true

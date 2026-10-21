@@ -2,13 +2,14 @@
   expected: elected_by_voters
   presiding: false
   right: true
+  rounds: 1
   each_right:
   - true
   - true
   agreed: true
   answers:
   - established: true
-    label: Trustee
+    label: trustee
     filled_by: elected_by_voters
     maximum_memberships: 5
     quote: The Village shall, at every annual meeting elect a Moderator, Clerk, Treasurer,
@@ -16,17 +17,15 @@
       where terms of office have expired or a member has resigned, died, or been removed
       in order to make a full board of five trustees.
   - established: true
-    label: Trustee
+    label: trustees
     filled_by: elected_by_voters
     maximum_memberships: 5
-    quote: The Village shall, at every annual meeting elect a Moderator, Clerk, Treasurer,
-      three auditors, and the number of trustees as are necessary to fill vacancies
-      where terms of office have expired or a member has resigned, died, or been removed
-      in order to make a full board of five trustees.
+    quote: The trustees shall be elected by ballot
 - role_id: clerk
   expected: elected_by_voters
   presiding: false
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -36,11 +35,12 @@
     label: Clerk
     filled_by: elected_by_voters
     maximum_memberships: 1
-    quote: elect a Moderator, Clerk, Treasurer, three auditors
+    quote: The Village shall, at every annual meeting elect a Moderator, Clerk, Treasurer,
+      three auditors
   - established: true
     label: Clerk
     filled_by: elected_by_voters
-    maximum_memberships: null
+    maximum_memberships: 1
     quote: The Village shall, at every annual meeting elect a Moderator, Clerk, Treasurer,
       three auditors, and the number of trustees as are necessary to fill vacancies
       where terms of office have expired or a member has resigned, died, or been removed
@@ -49,6 +49,7 @@
   expected: elected_by_voters
   presiding: false
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -58,22 +59,18 @@
     label: Treasurer
     filled_by: elected_by_voters
     maximum_memberships: 1
-    quote: The Village shall, at every annual meeting elect a Moderator, Clerk, Treasurer,
-      three auditors, and the number of trustees as are necessary to fill vacancies
-      where terms of office have expired or a member has resigned, died, or been removed
-      in order to make a full board of five trustees.
+    quote: elect a Moderator, Clerk, Treasurer, three auditors
   - established: true
     label: Treasurer
     filled_by: elected_by_voters
     maximum_memberships: 1
     quote: The Village shall, at every annual meeting elect a Moderator, Clerk, Treasurer,
-      three auditors, and the number of trustees as are necessary to fill vacancies
-      where terms of office have expired or a member has resigned, died, or been removed
-      in order to make a full board of five trustees.
+      three auditors
 - role_id: moderator
   expected: elected_by_voters
   presiding: false
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -82,7 +79,7 @@
   - established: true
     label: Moderator
     filled_by: elected_by_voters
-    maximum_memberships: 1
+    maximum_memberships: null
     quote: The Village shall, at every annual meeting elect a Moderator
   - established: true
     label: Moderator
@@ -93,6 +90,7 @@
   expected: elected_by_members
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -108,12 +106,12 @@
     label: Chairperson
     filled_by: elected_by_members
     maximum_memberships: 1
-    quote: The Board of Trustees shall annually, at its first regular meeting, elect
-      from its number a Chairperson and Vice Chairperson.
+    quote: elect from its number a Chairperson
 - role_id: vice-chair
   expected: elected_by_members
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -129,12 +127,12 @@
     label: Vice Chairperson
     filled_by: elected_by_members
     maximum_memberships: 1
-    quote: The Board of Trustees shall annually, at its first regular meeting, elect
-      from its number a Chairperson and Vice Chairperson.
+    quote: and Vice Chairperson
 - role_id: commission-president
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -154,6 +152,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -173,6 +172,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -192,6 +192,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -211,6 +212,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -230,6 +232,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -249,6 +252,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -268,6 +272,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -287,6 +292,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -306,6 +312,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -325,6 +332,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -344,6 +352,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -363,6 +372,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true

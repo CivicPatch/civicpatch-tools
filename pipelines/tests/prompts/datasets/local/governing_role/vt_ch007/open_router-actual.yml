@@ -2,6 +2,7 @@
   expected: elected_by_voters
   presiding: false
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -11,8 +12,7 @@
     label: Mayor
     filled_by: elected_by_voters
     maximum_memberships: 1
-    quote: the said corporations shall elect from among the legal voters of said City
-      a Mayor
+    quote: elect from among the legal voters of said City a Mayor
   - established: true
     label: Mayor
     filled_by: elected_by_voters
@@ -22,27 +22,28 @@
   expected: elected_by_voters
   presiding: false
   right: true
+  rounds: 1
   each_right:
   - true
   - true
   agreed: true
   answers:
   - established: true
-    label: alderman
+    label: Alderman
     filled_by: elected_by_voters
     maximum_memberships: 4
-    quote: the said corporations shall elect from among the legal voters of said City
-      a Mayor, City Clerk, four aldermen
+    quote: four aldermen
   - established: true
     label: alderman
     filled_by: elected_by_voters
     maximum_memberships: 4
-    quote: the said corporations shall elect from among the legal voters of said City
-      a Mayor, City Clerk, four aldermen
+    quote: elect from among the legal voters of said City a Mayor, City Clerk, four
+      aldermen
 - role_id: city-attorney
   expected: appointed
   presiding: false
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -54,24 +55,19 @@
     maximum_memberships: 1
     quote: 'The City Council shall appoint, and may remove at its pleasure and appoint
       others in their stead, the following officers, none of whom shall be members
-      of the City Council, viz: a Collector of Taxes, a Superintendent of Streets
-      and Waterworks, a City Attorney, a Board of Fire Wardens, consisting of one
-      Chief and a first and second Assistant Engineer, and such other officers not
-      herein otherwise provided for as are required by law.'
+      of the City Council, viz: ... a City Attorney'
   - established: true
     label: City Attorney
     filled_by: appointed
     maximum_memberships: 1
     quote: 'The City Council shall appoint, and may remove at its pleasure and appoint
       others in their stead, the following officers, none of whom shall be members
-      of the City Council, viz: a Collector of Taxes, a Superintendent of Streets
-      and Waterworks, a City Attorney, a Board of Fire Wardens, consisting of one
-      Chief and a first and second Assistant Engineer, and such other officers not
-      herein otherwise provided for as are required by law.'
+      of the City Council, viz: ... a City Attorney'
 - role_id: city-manager
   expected: appointed
   presiding: false
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -80,19 +76,19 @@
   - established: true
     label: City Manager
     filled_by: appointed
-    maximum_memberships: null
+    maximum_memberships: 1
     quote: The Council may, when the City so votes at any annual meeting, appoint
       a City Manager
   - established: true
     label: City Manager
     filled_by: appointed
     maximum_memberships: 1
-    quote: The Council may, when the City so votes at any annual meeting, appoint
-      a City Manager
+    quote: appoint a City Manager
 - role_id: commission-president
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -112,6 +108,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -131,6 +128,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -150,6 +148,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -169,6 +168,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -187,26 +187,28 @@
 - role_id: council-president
   expected: probably_not_established
   presiding: true
-  right: true
+  right: false
+  rounds: 1
   each_right:
-  - true
-  - true
+  - false
+  - false
   agreed: true
   answers:
-  - established: false
-    label: ''
-    filled_by: not_stated
-    maximum_memberships: null
-    quote: ''
-  - established: false
-    label: ''
-    filled_by: not_stated
-    maximum_memberships: null
-    quote: ''
+  - established: true
+    label: President of the Board of Aldermen
+    filled_by: elected_by_members
+    maximum_memberships: 1
+    quote: who shall elect one of their number President of said Board
+  - established: true
+    label: President of the Board of Aldermen
+    filled_by: elected_by_members
+    maximum_memberships: 1
+    quote: who shall elect one of their number President of said Board
 - role_id: council-vice-president
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -226,6 +228,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -245,6 +248,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -264,6 +268,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -283,6 +288,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -302,6 +308,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -321,6 +328,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -340,6 +348,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -359,6 +368,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true

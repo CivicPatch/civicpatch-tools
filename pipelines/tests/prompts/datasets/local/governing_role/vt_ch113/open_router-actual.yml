@@ -2,6 +2,7 @@
   expected: elected_by_voters
   presiding: false
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -23,6 +24,7 @@
   expected: appointed
   presiding: false
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -31,64 +33,77 @@
   - established: true
     label: Town Manager
     filled_by: appointed
-    maximum_memberships: 1
-    quote: The Selectboard shall appoint a Town Manager
+    maximum_memberships: null
+    quote: The Selectboard shall appoint a Town Manager pursuant to 24 V.S.A. chapter
+      37.
   - established: true
     label: Town Manager
     filled_by: appointed
-    maximum_memberships: null
-    quote: The Selectboard shall appoint a Town Manager
+    maximum_memberships: 1
+    quote: The Selectboard shall appoint a Town Manager pursuant to 24 V.S.A. chapter
+      37.
 - role_id: treasurer
   expected: appointed
   presiding: false
-  right: true
+  right: false
+  rounds: 1
   each_right:
-  - true
-  - true
+  - false
+  - false
   agreed: true
   answers:
-  - established: true
-    label: Treasurer
-    filled_by: appointed
+  - established: false
+    label: ''
+    filled_by: not_stated
     maximum_memberships: null
-    quote: The Town Manager shall have authority to appoint, fix the salary of, suspend,
-      and remove all employees of the Town, including the Town Clerk and Treasurer
-  - established: true
-    label: Town Treasurer
-    filled_by: appointed
-    maximum_memberships: 1
-    quote: The Town Manager shall have authority to appoint, fix the salary of, suspend,
-      and remove all employees of the Town, including the Town Clerk and Treasurer,
-      subject to the provisions of this charter. The Town Manager shall obtain the
-      advice and consent of a majority of the Selectboard before appointing or fixing
-      the salary of the head of any department, including the Town Clerk and Treasurer.
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
 - role_id: moderator
   expected: elected_by_voters
   presiding: false
   right: true
+  rounds: 1
   each_right:
   - true
-  - false
+  - true
   agreed: true
   answers:
   - established: true
     label: Moderator
     filled_by: elected_by_voters
     maximum_memberships: 1
-    quote: At the annual meeting, the Town shall elect by Australian ballot from among
-      the legally qualified voters thereof the following Town officers, who shall
-      serve until the next annual meeting or until others are chosen. ... (2) A Moderator.
+    quote: '(a) At the annual meeting, the Town shall elect by Australian ballot from
+      among the legally qualified voters thereof the following Town officers, who
+      shall serve until the next annual meeting or until others are chosen. (1) Selectboard,
+      number, terms of office, election: (A) There shall be a Selectboard consisting
+      of five members, and all Selectboard members shall be elected at large. (B)
+      Three members of the Selectboard shall have terms of office of three years;
+      two members shall have terms of office of two years. At each election, one Selectboard
+      member shall be elected for a three-year term and one for a two-year term. (2)
+      A Moderator. (3) One Lister for a term of three years. (4) A Library Trustee
+      for a term of five years.'
   - established: true
     label: Moderator
     filled_by: elected_by_voters
     maximum_memberships: 1
-    quote: At the annual meeting, the Town shall elect by Australian ballot from among
-      the legally qualified voters thereof the following Town officers, who shall
-      serve until the next annual meeting or until others are chosen. (2) A Moderator.
+    quote: 'At the annual meeting, the Town shall elect by Australian ballot from
+      among the legally qualified voters thereof the following Town officers, who
+      shall serve until the next annual meeting or until others are chosen. (1) Selectboard,
+      number, terms of office, election: (A) There shall be a Selectboard consisting
+      of five members, and all Selectboard members shall be elected at large. (B)
+      Three members of the Selectboard shall have terms of office of three years;
+      two members shall have terms of office of two years. At each election, one Selectboard
+      member shall be elected for a three-year term and one for a two-year term. (2)
+      A Moderator.'
 - role_id: chair
   expected: elected_by_members
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -98,8 +113,7 @@
     label: Chair
     filled_by: elected_by_members
     maximum_memberships: 1
-    quote: the Selectboard shall organize and elect a Chair, Vice Chair, and a Clerk
-      by a majority vote of the entire Selectboard
+    quote: elect a Chair
   - established: true
     label: Chair
     filled_by: elected_by_members
@@ -110,6 +124,7 @@
   expected: elected_by_members
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -119,8 +134,7 @@
     label: Vice Chair
     filled_by: elected_by_members
     maximum_memberships: 1
-    quote: the Selectboard shall organize and elect a Chair, Vice Chair, and a Clerk
-      by a majority vote of the entire Selectboard
+    quote: elect a ... Vice Chair
   - established: true
     label: Vice Chair
     filled_by: elected_by_members
@@ -131,6 +145,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -150,6 +165,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -169,6 +185,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -188,6 +205,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -207,6 +225,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -226,6 +245,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -245,6 +265,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -264,6 +285,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -283,6 +305,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -302,6 +325,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -321,6 +345,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -340,6 +365,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -359,6 +385,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true

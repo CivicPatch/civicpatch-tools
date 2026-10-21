@@ -2,6 +2,7 @@
   expected: elected_by_voters
   presiding: false
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -15,7 +16,7 @@
       three years, with only one of these positions vacant in any one year, and two
       Selectboard members elected for a one-year term.
   - established: true
-    label: Selectboard member
+    label: Selectboard members
     filled_by: elected_by_voters
     maximum_memberships: 5
     quote: There shall be three Selectboard members elected for a staggered term of
@@ -25,6 +26,7 @@
   expected: elected_by_voters
   presiding: false
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -44,6 +46,7 @@
   expected: elected_by_voters
   presiding: false
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -52,18 +55,19 @@
   - established: true
     label: Town Treasurer
     filled_by: elected_by_voters
-    maximum_memberships: null
+    maximum_memberships: 1
     quote: Town Treasurer. The Town Treasurer shall be elected to a term of three
       years.
   - established: true
     label: Town Treasurer
     filled_by: elected_by_voters
-    maximum_memberships: 1
+    maximum_memberships: null
     quote: The Town Treasurer shall be elected to a term of three years.
 - role_id: chair
   expected: elected_by_members
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -73,20 +77,21 @@
     label: Chair
     filled_by: elected_by_members
     maximum_memberships: 1
-    quote: At their first regular meeting following the annual Town meeting, the Selectboard
-      shall elect a Chair and a Vice Chair of the Selectboard, each of whom shall
-      be elected for a term of one year and may succeed himself or herself indefinitely.
+    quote: the Selectboard shall elect a Chair and a Vice Chair of the Selectboard,
+      each of whom shall be elected for a term of one year and may succeed himself
+      or herself indefinitely.
   - established: true
     label: Chair
     filled_by: elected_by_members
     maximum_memberships: 1
-    quote: At their first regular meeting following the annual Town meeting, the Selectboard
-      shall elect a Chair and a Vice Chair of the Selectboard, each of whom shall
-      be elected for a term of one year and may succeed himself or herself indefinitely.
+    quote: the Selectboard shall elect a Chair and a Vice Chair of the Selectboard,
+      each of whom shall be elected for a term of one year and may succeed himself
+      or herself indefinitely.
 - role_id: vice-chair
   expected: elected_by_members
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -96,20 +101,21 @@
     label: Vice Chair
     filled_by: elected_by_members
     maximum_memberships: 1
-    quote: At their first regular meeting following the annual Town meeting, the Selectboard
-      shall elect a Chair and a Vice Chair of the Selectboard, each of whom shall
-      be elected for a term of one year and may succeed himself or herself indefinitely.
+    quote: the Selectboard shall elect a Chair and a Vice Chair of the Selectboard,
+      each of whom shall be elected for a term of one year and may succeed himself
+      or herself indefinitely.
   - established: true
     label: Vice Chair
     filled_by: elected_by_members
     maximum_memberships: 1
-    quote: At their first regular meeting following the annual Town meeting, the Selectboard
-      shall elect a Chair and a Vice Chair of the Selectboard, each of whom shall
-      be elected for a term of one year and may succeed himself or herself indefinitely.
+    quote: the Selectboard shall elect a Chair and a Vice Chair of the Selectboard,
+      each of whom shall be elected for a term of one year and may succeed himself
+      or herself indefinitely.
 - role_id: commission-president
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -129,6 +135,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -148,6 +155,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -167,6 +175,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -186,6 +195,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -205,6 +215,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -224,6 +235,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -243,6 +255,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -262,6 +275,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -281,6 +295,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -300,6 +315,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -319,6 +335,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -338,6 +355,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true

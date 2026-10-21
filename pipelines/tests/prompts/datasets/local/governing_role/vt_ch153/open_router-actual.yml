@@ -2,6 +2,7 @@
   expected: elected_by_voters
   presiding: false
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -13,7 +14,7 @@
     maximum_memberships: 5
     quote: All Selectboard members shall be elected at large.
   - established: true
-    label: Selectboard members
+    label: Selectboard member
     filled_by: elected_by_voters
     maximum_memberships: 5
     quote: All Selectboard members shall be elected at large.
@@ -21,6 +22,7 @@
   expected: appointed
   presiding: false
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -34,12 +36,13 @@
   - established: true
     label: Town Manager
     filled_by: appointed
-    maximum_memberships: 1
+    maximum_memberships: null
     quote: The Selectboard shall appoint a Town Manager for an indefinite term.
 - role_id: moderator
   expected: elected_by_voters
   presiding: false
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -54,23 +57,25 @@
   - established: true
     label: Moderator
     filled_by: elected_by_voters
-    maximum_memberships: null
+    maximum_memberships: 1
     quote: 'The elected officers of the Town of Stowe shall be: Selectboard members,
       Moderator, and listers.'
 - role_id: clerk
   expected: appointed
   presiding: false
   right: true
+  rounds: 1
   each_right:
   - false
   - true
   agreed: false
   answers:
-  - established: false
-    label: ''
-    filled_by: not_stated
-    maximum_memberships: null
-    quote: ''
+  - established: true
+    label: Clerk
+    filled_by: elected_by_members
+    maximum_memberships: 1
+    quote: the Selectboard shall organize and elect a Chair, Vice Chair, and Clerk
+      by a majority vote of the entire Selectboard
   - established: true
     label: Clerk
     filled_by: appointed
@@ -81,16 +86,12 @@
   expected: appointed
   presiding: false
   right: true
+  rounds: 1
   each_right:
-  - false
   - true
+  - false
   agreed: false
   answers:
-  - established: false
-    label: ''
-    filled_by: not_stated
-    maximum_memberships: null
-    quote: ''
   - established: true
     label: Town Treasurer
     filled_by: appointed
@@ -99,10 +100,16 @@
       of, discipline, suspend, and remove the Zoning Administrator, Town Clerk, Town
       Treasurer, Assistant Town Clerk(s), Assistant Treasurer(s), and all other employees
       of the Town not hired or appointed by the Selectboard
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
 - role_id: chair
   expected: elected_by_members
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -124,6 +131,7 @@
   expected: elected_by_members
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -145,6 +153,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -164,6 +173,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -183,6 +193,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -202,6 +213,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -221,6 +233,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -240,6 +253,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -259,6 +273,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -278,6 +293,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -297,6 +313,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -316,6 +333,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -335,6 +353,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -354,6 +373,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
@@ -373,6 +393,7 @@
   expected: probably_not_established
   presiding: true
   right: true
+  rounds: 1
   each_right:
   - true
   - true
