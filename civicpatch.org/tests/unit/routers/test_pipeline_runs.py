@@ -8,6 +8,8 @@ from core.spend_limits import Cap
 from schemas.common import Identity, UserRole
 from lib.auth import get_optional_user
 from routers.api import pipeline_runs as pipeline_runs_router
+import services.extras_organizations as extras_organizations_service
+import services.governing_law as governing_law_service
 from services.governing_law import CollectorConfig
 
 MOCK_IDENTITY = Identity(
@@ -452,3 +454,19 @@ def test_the_collector_config_of_an_unknown_run_or_a_scrape_is_404(service_clien
         "jurisdiction_ocdid": TEST_OCDID, "pipeline_run_cap_usd": None, "kind": PipelineRunKind.PEOPLE_COLLECTOR,
     }):
         assert service_client.get(f"/pipeline_runs/{TEST_CHANGESET_ID}/collector_config").status_code == 404
+
+
+@pytest.mark.unit
+@pytest.mark.parametrize("kind, unknown_jurisdiction", [
+    (PipelineRunKind.GOVERNING_LAW_COLLECTOR, governing_law_service.UnknownJurisdiction),
+    (PipelineRunKind.ORGANIZATIONS_COLLECTOR, extras_organizations_service.UnknownJurisdiction),
+])
+def test_the_collector_config_of_a_jurisdiction_gone_from_the_database_is_404(service_client, kind, unknown_jurisdiction):
+    collector_config = AsyncMock(side_effect=unknown_jurisdiction(TEST_OCDID))
+    with patch("routers.api.pipeline_runs.get_pipeline_run", new_callable=AsyncMock, return_value={
+        "jurisdiction_ocdid": TEST_OCDID, "pipeline_run_cap_usd": None, "kind": kind,
+    }), patch.dict("routers.api.pipeline_runs.COLLECTOR_CONFIGS", {kind: collector_config}):
+        response = service_client.get(f"/pipeline_runs/{TEST_CHANGESET_ID}/collector_config")
+
+    assert response.status_code == 404
+    collector_config.assert_awaited_once_with(TEST_OCDID)
