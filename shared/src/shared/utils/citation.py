@@ -21,6 +21,7 @@ METHOD_WORDS: dict[SelectionMethod, tuple[str, ...]] = {
     SelectionMethod.ELECTED_BY_VOTERS: ("elect", "elected", "election", "elections", "chosen", "vote"),
     SelectionMethod.ELECTED_BY_MEMBERS: (
         "elect", "elected", "election", "chosen", "vote", "from its number", "from among its members",
+        "from among the board", "from among themselves", "from among their number",
     ),
     SelectionMethod.APPOINTED: ("appoint", "appointed", "appointment", "appoints", "appointive"),
 }

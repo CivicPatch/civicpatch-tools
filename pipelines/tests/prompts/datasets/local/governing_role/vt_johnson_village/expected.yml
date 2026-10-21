@@ -1,0 +1,108 @@
+source_url: https://villageofjohnson.com/wp-content/uploads/2026/03/Village-Bylaws-adopted-11-27-65.pdf
+roles:
+- organization_name: Board of Trustees
+  role_id: member
+  role_label: Trustee
+  names:
+  - Trustee
+  - Member
+  - alder
+  - alderman
+  - aldermen
+  - Alderperson
+  - alderwoman
+  - board of selectmen
+  - board of selectmen member
+  - city alderman
+  - city alderwoman
+  - city commissioner
+  - city council
+  - city council alderman
+  - city council alderwoman
+  - city council member
+  - city councilman
+  - city councilmember
+  - city councilor
+  - city councilwoman
+  - Commissioner
+  - Committee Member
+  - committee person
+  - Committee Woman
+  - committeeman
+  - Committeeperson
+  - committeewoman
+  - Committeewomen
+  - council
+  - council at large
+  - Council Member
+  - council member at-large
+  - council members
+  - council person
+  - council-member
+  - councillor
+  - councilman
+  - councilman-at-large
+  - councilmember
+  - councilmembers
+  - councilmen
+  - councilor
+  - councilperson
+  - councilperson at-large
+  - councilwoman
+  - councilwoman at large
+  - councilwoman-at-large
+  - councilwomen
+  - representative
+  - select board
+  - Select Board Member
+  - select board representative
+  - Select Person
+  - selectboard
+  - selectboard member
+  - selectman
+  - selectmen
+  - Selectperson
+  - selectwoman
+  - town board member
+  - town council
+  - town council member
+  - town council representative
+  - town councilmember
+  - town councilor
+  - township committee member
+  - Township Trustee
+  - Trustees
+  - Village Trustee
+  expected: elected_by_voters
+- organization_name: Board of Trustees
+  role_id: president
+  role_label: Village President
+  names:
+  - Village President
+  - President
+  - city council president
+  - commission president
+  - commissioner president
+  - council member president
+  - council president
+  - president of the council
+  - president of the village
+  - village board president
+  - village president
+  expected: elected_by_voters
+  presiding: true
+- organization_name: Board of Trustees
+  role_id: chair
+  role_label: Chair
+  names:
+  - Chair
+  - Chairperson
+  - chairman
+  - chairwoman
+  - commissioner director
+  - council chair
+  - council chairman
+  - council chairwoman
+  - town council chair
+  expected: elected_by_members
+  presiding: true
