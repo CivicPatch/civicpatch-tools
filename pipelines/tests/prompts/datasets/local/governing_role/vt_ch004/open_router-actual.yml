@@ -35,7 +35,7 @@
   - established: true
     label: Vice President
     filled_by: elected_by_members
-    maximum_memberships: 1
+    maximum_memberships: null
     quote: the Council shall organize and elect a President, Vice President, and Clerk
       by a majority vote of the entire Council
 - role_id: clerk
@@ -56,8 +56,7 @@
     label: Clerk
     filled_by: elected_by_members
     maximum_memberships: 1
-    quote: the Council shall organize and elect a President, Vice President, and Clerk
-      by a majority vote of the entire Council
+    quote: elect a President, Vice President, and Clerk
 - role_id: city-manager
   expected: appointed
   right: true
@@ -70,9 +69,259 @@
     label: City Manager
     filled_by: appointed
     maximum_memberships: null
-    quote: The Council shall appoint a City Manager
+    quote: The Council shall appoint a City Manager under and in accordance with Vermont
+      Statutes Annotated.
   - established: true
     label: City Manager
     filled_by: appointed
+    maximum_memberships: null
+    quote: The Council shall appoint a City Manager under and in accordance with Vermont
+      Statutes Annotated.
+- role_id: commission-president
+  expected: probably_not_established
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: true
+    label: President
+    filled_by: elected_by_members
     maximum_memberships: 1
-    quote: The Council shall appoint a City Manager
+    quote: the Council shall organize and elect a President, Vice President, and Clerk
+      by a majority vote of the entire Council
+  - established: true
+    label: President
+    filled_by: elected_by_members
+    maximum_memberships: 1
+    quote: the Council shall organize and elect a President, Vice President, and Clerk
+      by a majority vote of the entire Council
+- role_id: vice-mayor
+  expected: probably_not_established
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: true
+    label: Vice President
+    filled_by: elected_by_members
+    maximum_memberships: 1
+    quote: the Council shall organize and elect a President, Vice President, and Clerk
+      by a majority vote of the entire Council
+  - established: true
+    label: Vice President
+    filled_by: elected_by_members
+    maximum_memberships: 1
+    quote: elect a President, Vice President, and Clerk
+- role_id: assistant-mayor
+  expected: probably_not_established
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: false
+  answers:
+  - established: true
+    label: Vice President
+    filled_by: elected_by_members
+    maximum_memberships: 1
+    quote: the Council shall organize and elect a President, Vice President, and Clerk
+      by a majority vote of the entire Council
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: mayor-pro-tempore
+  expected: probably_not_established
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: deputy-mayor-pro-tempore
+  expected: probably_not_established
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: council-president-pro-tem
+  expected: probably_not_established
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: deputy-council-president
+  expected: probably_not_established
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: true
+    label: Vice President
+    filled_by: elected_by_members
+    maximum_memberships: 1
+    quote: the Council shall organize and elect a President, Vice President, and Clerk
+      by a majority vote of the entire Council
+  - established: true
+    label: Vice President
+    filled_by: elected_by_members
+    maximum_memberships: 1
+    quote: the Council shall organize and elect a President, Vice President, and Clerk
+      by a majority vote of the entire Council
+- role_id: president-pro-tempore
+  expected: probably_not_established
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: chair
+  expected: probably_not_established
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: true
+    label: President of the Council
+    filled_by: elected_by_members
+    maximum_memberships: 1
+    quote: the Council shall organize and elect a President, Vice President, and Clerk
+      by a majority vote of the entire Council
+  - established: true
+    label: President of the Council
+    filled_by: elected_by_members
+    maximum_memberships: 1
+    quote: At the first meeting of the month following the annual City meeting, the
+      Council shall organize and elect a President, Vice President, and Clerk by a
+      majority vote of the entire Council
+- role_id: vice-chair
+  expected: probably_not_established
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: true
+    label: Vice President
+    filled_by: elected_by_members
+    maximum_memberships: 1
+    quote: At the first meeting of the month following the annual City meeting, the
+      Council shall organize and elect a President, Vice President, and Clerk by a
+      majority vote of the entire Council
+  - established: true
+    label: Vice President
+    filled_by: elected_by_members
+    maximum_memberships: 1
+    quote: the Council shall organize and elect a President, Vice President, and Clerk
+      by a majority vote of the entire Council
+- role_id: commissioner-vice-president
+  expected: probably_not_established
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: false
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: true
+    label: Vice President
+    filled_by: elected_by_members
+    maximum_memberships: 1
+    quote: At the first meeting of the month following the annual City meeting, the
+      Council shall organize and elect a President, Vice President, and Clerk by a
+      majority vote of the entire Council
+- role_id: chair-pro-tem
+  expected: probably_not_established
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: deputy-supervisor
+  expected: probably_not_established
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''

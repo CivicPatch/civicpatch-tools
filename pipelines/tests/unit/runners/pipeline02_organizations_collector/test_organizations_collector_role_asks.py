@@ -49,6 +49,14 @@ def test_a_set_form_asks_about_its_organizations_roles():
     ]
 
 
+def test_a_role_chosen_by_members_is_asked_under_the_first_organization_though_no_form_lists_it():
+    assert _asked(role_asks(CONFIG, "Burlington city", GovernmentForm.MAYOR_COUNCIL)) == [
+        ("Council", "member", "Council Member"),
+        ("Office of the Mayor", "mayor", "Mayor"),
+        ("Council", "chair", "Chair"),
+    ]
+
+
 def test_with_no_form_set_the_forms_its_name_allows_are_asked_about():
     assert _asked(role_asks(CONFIG, "Stowe town", None)) == _asked(role_asks(CONFIG, "Stowe town", GovernmentForm.OPEN_TOWN_MEETING))
 
