@@ -5,22 +5,25 @@
   rounds: 1
   each_right:
   - true
-  - true
+  - false
   agreed: true
   answers:
   - established: true
-    label: Trustee
-    filled_by: elected_by_voters
-    maximum_memberships: 4
-    quote: All officers of said Village shall be residents and elected at the annual
-      meeting of said Village
-  - established: true
-    label: Trustee
+    label: Trustees
     filled_by: elected_by_voters
     maximum_memberships: 4
     quote: All officers of said Village shall be residents and elected at the annual
       meeting of said Village, except Collector of Taxes, who shall be appointed by
       the Board of Trustees.
+  - established: true
+    label: Trustee
+    filled_by: elected_by_voters
+    maximum_memberships: 4
+    quote: The officers of said corporation shall be a Moderator, a President, a Clerk,
+      a Treasurer, a Collector of Taxes, four Trustees, and three Auditors of Accounts.
+      All officers of said Village shall be residents and elected at the annual meeting
+      of said Village, except Collector of Taxes, who shall be appointed by the Board
+      of Trustees.
 - role_id: commission-president
   expected: probably_not_established
   presiding: true

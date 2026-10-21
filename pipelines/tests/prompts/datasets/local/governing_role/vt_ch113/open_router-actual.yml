@@ -33,15 +33,13 @@
   - established: true
     label: Town Manager
     filled_by: appointed
-    maximum_memberships: null
-    quote: The Selectboard shall appoint a Town Manager pursuant to 24 V.S.A. chapter
-      37.
+    maximum_memberships: 1
+    quote: The Selectboard shall appoint a Town Manager
   - established: true
     label: Town Manager
     filled_by: appointed
     maximum_memberships: 1
-    quote: The Selectboard shall appoint a Town Manager pursuant to 24 V.S.A. chapter
-      37.
+    quote: The Selectboard shall appoint a Town Manager
 - role_id: treasurer
   expected: appointed
   presiding: false
@@ -66,30 +64,28 @@
   expected: elected_by_voters
   presiding: false
   right: true
-  rounds: 1
+  rounds: 2
   each_right:
-  - true
-  - true
+  - false
+  - false
   agreed: true
   answers:
   - established: true
     label: Moderator
     filled_by: elected_by_voters
     maximum_memberships: 1
-    quote: '(a) At the annual meeting, the Town shall elect by Australian ballot from
-      among the legally qualified voters thereof the following Town officers, who
-      shall serve until the next annual meeting or until others are chosen. (1) Selectboard,
-      number, terms of office, election: (A) There shall be a Selectboard consisting
-      of five members, and all Selectboard members shall be elected at large. (B)
-      Three members of the Selectboard shall have terms of office of three years;
-      two members shall have terms of office of two years. At each election, one Selectboard
-      member shall be elected for a three-year term and one for a two-year term. (2)
-      A Moderator. (3) One Lister for a term of three years. (4) A Library Trustee
-      for a term of five years.'
+    quote: 'the Town shall elect by Australian ballot from among the legally qualified
+      voters thereof the following Town officers: ... (2) A Moderator.'
   - established: true
     label: Moderator
     filled_by: elected_by_voters
     maximum_memberships: 1
+    quote: 'the Town shall elect by Australian ballot from among the legally qualified
+      voters thereof the following Town officers: ... (2) A Moderator.'
+  - established: true
+    label: Moderator
+    filled_by: elected_by_voters
+    maximum_memberships: null
     quote: 'At the annual meeting, the Town shall elect by Australian ballot from
       among the legally qualified voters thereof the following Town officers, who
       shall serve until the next annual meeting or until others are chosen. (1) Selectboard,
@@ -99,6 +95,11 @@
       two members shall have terms of office of two years. At each election, one Selectboard
       member shall be elected for a three-year term and one for a two-year term. (2)
       A Moderator.'
+  - established: true
+    label: Moderator
+    filled_by: elected_by_voters
+    maximum_memberships: 1
+    quote: A Moderator.
 - role_id: chair
   expected: elected_by_members
   presiding: true
@@ -113,13 +114,13 @@
     label: Chair
     filled_by: elected_by_members
     maximum_memberships: 1
-    quote: elect a Chair
+    quote: the Selectboard shall organize and elect a Chair, Vice Chair, and a Clerk
+      by a majority vote of the entire Selectboard
   - established: true
     label: Chair
     filled_by: elected_by_members
     maximum_memberships: 1
-    quote: the Selectboard shall organize and elect a Chair, Vice Chair, and a Clerk
-      by a majority vote of the entire Selectboard
+    quote: elect a Chair
 - role_id: vice-chair
   expected: elected_by_members
   presiding: true
@@ -127,20 +128,20 @@
   rounds: 1
   each_right:
   - true
-  - true
+  - false
   agreed: true
   answers:
   - established: true
     label: Vice Chair
     filled_by: elected_by_members
     maximum_memberships: 1
-    quote: elect a ... Vice Chair
+    quote: the Selectboard shall organize and elect a Chair, Vice Chair, and a Clerk
+      by a majority vote of the entire Selectboard
   - established: true
     label: Vice Chair
     filled_by: elected_by_members
     maximum_memberships: 1
-    quote: the Selectboard shall organize and elect a Chair, Vice Chair, and a Clerk
-      by a majority vote of the entire Selectboard
+    quote: elect a Vice Chair
 - role_id: commission-president
   expected: probably_not_established
   presiding: true

@@ -17,7 +17,7 @@
       be chosen at each annual meeting of the legal voters of the corporation or at
       a special meeting as hereinafter provided.
   - established: true
-    label: trustee
+    label: Trustee
     filled_by: elected_by_voters
     maximum_memberships: 5
     quote: The officers of the corporation shall be a Board of five trustees, a Clerk,
@@ -39,13 +39,15 @@
     filled_by: elected_by_voters
     maximum_memberships: 1
     quote: all of which officers shall be chosen at each annual meeting of the legal
-      voters
+      voters of the corporation or at a special meeting as hereinafter provided.
   - established: true
     label: Clerk
     filled_by: elected_by_voters
     maximum_memberships: 1
-    quote: all of which officers shall be chosen at each annual meeting of the legal
-      voters of the corporation or at a special meeting as hereinafter provided.
+    quote: The officers of the corporation shall be a Board of five trustees, a Clerk,
+      a Treasurer, a Collector of Taxes, and an Auditor, all of which officers shall
+      be chosen at each annual meeting of the legal voters of the corporation or at
+      a special meeting as hereinafter provided.
 - role_id: treasurer
   expected: elected_by_voters
   presiding: false
@@ -61,13 +63,15 @@
     filled_by: elected_by_voters
     maximum_memberships: 1
     quote: all of which officers shall be chosen at each annual meeting of the legal
-      voters of the corporation
+      voters of the corporation or at a special meeting as hereinafter provided.
   - established: true
     label: Treasurer
     filled_by: elected_by_voters
     maximum_memberships: 1
-    quote: all of which officers shall be chosen at each annual meeting of the legal
-      voters of the corporation or at a special meeting as hereinafter provided.
+    quote: The officers of the corporation shall be a Board of five trustees, a Clerk,
+      a Treasurer, a Collector of Taxes, and an Auditor, all of which officers shall
+      be chosen at each annual meeting of the legal voters of the corporation or at
+      a special meeting as hereinafter provided.
 - role_id: commission-president
   expected: probably_not_established
   presiding: true

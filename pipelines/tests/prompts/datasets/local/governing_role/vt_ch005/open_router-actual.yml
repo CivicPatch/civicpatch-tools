@@ -53,7 +53,7 @@
   - established: true
     label: City Manager
     filled_by: appointed
-    maximum_memberships: null
+    maximum_memberships: 1
     quote: The City Manager shall be chosen and appointed by majority vote of the
       City Council
   - established: true
@@ -61,7 +61,7 @@
     filled_by: appointed
     maximum_memberships: 1
     quote: The City Manager shall be chosen and appointed by majority vote of the
-      City Council
+      City Council for an indefinite term
 - role_id: city-attorney
   expected: appointed
   presiding: false
@@ -76,12 +76,14 @@
     label: City attorneys
     filled_by: appointed
     maximum_memberships: null
-    quote: City attorneys
+    quote: 'The City Council shall appoint the following officers: (A) City Manager;
+      (B) City Treasurer; and (C) City attorneys.'
   - established: true
     label: City attorneys
     filled_by: appointed
     maximum_memberships: null
-    quote: City attorneys
+    quote: 'The City Council shall appoint the following officers: (A) City Manager;
+      (B) City Treasurer; and (C) City attorneys.'
 - role_id: council-president
   expected: elected_by_members
   presiding: true
@@ -96,14 +98,14 @@
     label: President
     filled_by: elected_by_members
     maximum_memberships: 1
-    quote: Following the annual meeting, the City Council shall elect from its members
-      a President, Vice President, and Parliamentarian.
+    quote: the City Council shall elect from its members a President, Vice President,
+      and Parliamentarian.
   - established: true
     label: President
     filled_by: elected_by_members
     maximum_memberships: 1
-    quote: the City Council shall elect from its members a President, Vice President,
-      and Parliamentarian.
+    quote: Following the annual meeting, the City Council shall elect from its members
+      a President, Vice President, and Parliamentarian.
 - role_id: council-vice-president
   expected: elected_by_members
   presiding: true
@@ -118,14 +120,14 @@
     label: Vice President
     filled_by: elected_by_members
     maximum_memberships: 1
-    quote: Following the annual meeting, the City Council shall elect from its members
-      a President, Vice President, and Parliamentarian.
+    quote: the City Council shall elect from its members a President, Vice President,
+      and Parliamentarian.
   - established: true
     label: Vice President
     filled_by: elected_by_members
     maximum_memberships: 1
-    quote: the City Council shall elect from its members a President, Vice President,
-      and Parliamentarian.
+    quote: Following the annual meeting, the City Council shall elect from its members
+      a President, Vice President, and Parliamentarian.
 - role_id: commission-president
   expected: probably_not_established
   presiding: true

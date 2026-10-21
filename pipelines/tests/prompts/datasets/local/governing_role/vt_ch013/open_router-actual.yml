@@ -12,13 +12,12 @@
     label: Council member
     filled_by: elected_by_voters
     maximum_memberships: 5
-    quote: All Council members shall be elected at large
+    quote: There shall be a City Council consisting of five members.
   - established: true
-    label: Council Member
+    label: Council member
     filled_by: elected_by_voters
     maximum_memberships: 5
-    quote: There shall be a City Council consisting of five members. All Council members
-      shall be elected at large.
+    quote: All Council members shall be elected at large.
 - role_id: clerk
   expected: elected_by_members
   presiding: false
@@ -34,14 +33,13 @@
     filled_by: elected_by_members
     maximum_memberships: 1
     quote: the Council shall organize and elect a Chair, a Vice Chair and a Clerk
+      by a majority vote of the entire Council
   - established: true
     label: Clerk
     filled_by: elected_by_members
     maximum_memberships: 1
-    quote: Forthwith after its election and qualification, the Council shall organize
-      and elect a Chair, a Vice Chair and a Clerk by a majority vote of the entire
-      Council and file a certificate of such election for record in the Office Of
-      the City Clerk.
+    quote: the Council shall organize and elect a Chair, a Vice Chair and a Clerk
+      by a majority vote of the entire Council
 - role_id: city-manager
   expected: appointed
   presiding: false

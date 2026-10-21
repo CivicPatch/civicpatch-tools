@@ -1,33 +1,30 @@
 run:
-  timestamp: '2026-10-21T19:23:29+00:00'
-  prompt_sha256: 675dae39275b
-  prompt_file: _prompts/675dae39275b.txt
+  timestamp: '2026-10-21T21:12:55+00:00'
+  prompt_sha256: 78237d1a9cdf
+  prompt_file: _prompts/78237d1a9cdf.txt
 cost_summary:
   model: deepseek/deepseek-v4-flash
-  elapsed_seconds: 639.86
-  total_input_tokens: 2957064
-  total_cached_input_tokens: 2160876
-  total_output_tokens: 222169
-  total_cost_usd: 0.234178168
+  elapsed_seconds: 658.34
+  total_input_tokens: 2948094
+  total_cached_input_tokens: 2199424
+  total_output_tokens: 268822
+  total_cost_usd: 0.241667832
 total_cases: 45
-passed_cases: 43
+passed_cases: 44
 failed_cases:
 - case_id: vt_ch113
   wrong_roles:
   - treasurer
-- case_id: vt_johnson_village
-  wrong_roles:
-  - president
-roles_right: 0.9868421052631579
-single_ask_right: 0.944078947368421
-agreement: 0.9671052631578947
-presiding_gold_right: 36 of 37
+roles_right: 0.993421052631579
+single_ask_right: 0.9572368421052632
+agreement: 0.9802631578947368
+presiding_gold_right: 36 of 36
 roles_re_asked: 2
 candidates_asked: 625
-candidates_verified: 6
+candidates_verified: 5
 by_expected:
   elected_by_voters:
-    right: 77
+    right: 78
     total: 78
   elected_by_members:
     right: 37
@@ -42,19 +39,6 @@ by_expected:
     right: 1
     total: 1
 candidates_to_read:
-  vt_ch007:
-  - role_id: council-president
-    answers:
-    - established: true
-      label: President of the Board of Aldermen
-      filled_by: elected_by_members
-      maximum_memberships: 1
-      quote: who shall elect one of their number President of said Board
-    - established: true
-      label: President of the Board of Aldermen
-      filled_by: elected_by_members
-      maximum_memberships: 1
-      quote: who shall elect one of their number President of said Board
   vt_ch101:
   - role_id: chair
     answers:
@@ -62,7 +46,7 @@ candidates_to_read:
       label: Chair
       filled_by: elected_by_members
       maximum_memberships: 1
-      quote: elect a Chair and a Vice Chair
+      quote: elect a Chair
     - established: true
       label: Chair
       filled_by: elected_by_members
@@ -75,7 +59,7 @@ candidates_to_read:
       label: Vice Chair
       filled_by: elected_by_members
       maximum_memberships: 1
-      quote: elect a Chair and a Vice Chair
+      quote: and a Vice Chair
     - established: true
       label: Vice Chair
       filled_by: elected_by_members
@@ -126,7 +110,7 @@ candidates_to_read:
         of this office, one of the trustees of the Village and President of the Board
         of Trustees
     - established: true
-      label: President
+      label: President of the Board of Trustees
       filled_by: elected_by_voters
       maximum_memberships: 1
       quote: the Village shall, by ballot, if called for by three or more legal voters

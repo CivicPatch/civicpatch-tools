@@ -4,23 +4,23 @@
   right: true
   rounds: 1
   each_right:
-  - true
   - false
+  - true
   agreed: false
   answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
   - established: true
-    label: Selectboard member
+    label: Member of the Selectboard
     filled_by: elected_by_voters
     maximum_memberships: null
     quote: All elected officials, except as provided by law or as specifically provided
       in this charter, shall be chosen at large from the legally qualified voters
       of the Town and shall hold office for the term specified and until their successors
       are elected and qualified.
-  - established: false
-    label: ''
-    filled_by: not_stated
-    maximum_memberships: null
-    quote: ''
 - role_id: commission-president
   expected: probably_not_established
   presiding: true

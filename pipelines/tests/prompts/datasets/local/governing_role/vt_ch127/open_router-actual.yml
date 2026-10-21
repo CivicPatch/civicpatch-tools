@@ -39,7 +39,8 @@
     label: Town Manager
     filled_by: appointed
     maximum_memberships: 1
-    quote: The Selectboard shall appoint a Town Manager for an indefinite term
+    quote: The Selectboard shall appoint a Town Manager for an indefinite term, and
+      upon such conditions as they may determine.
 - role_id: chair
   expected: elected_by_members
   presiding: true

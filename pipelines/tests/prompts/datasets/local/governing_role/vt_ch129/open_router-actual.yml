@@ -5,21 +5,22 @@
   rounds: 1
   each_right:
   - true
-  - true
+  - false
   agreed: true
   answers:
   - established: true
-    label: library trustees and school trustees
+    label: library trustees
     filled_by: elected_by_voters
-    maximum_memberships: null
-    quote: '(a) Officers. The officers elected at its annual meeting shall be: (1)
-      five selectpersons; (2) Town Clerk; (3) Town Treasurer; (4) five library trustees;
-      (5) five school trustees; and (6) Champlain Water District (CWD) Representative.'
+    maximum_memberships: 5
+    quote: 'The officers elected at its annual meeting shall be: (1) five selectpersons;
+      (2) Town Clerk; (3) Town Treasurer; (4) five library trustees; (5) five school
+      trustees; and (6) Champlain Water District (CWD) Representative.'
   - established: true
-    label: library trustees and school trustees
+    label: library trustee
     filled_by: elected_by_voters
-    maximum_memberships: null
-    quote: five library trustees; (5) five school trustees
+    maximum_memberships: 5
+    quote: All elected officers shall be chosen at large from the legally qualified
+      voters at a legally warned Town meeting using the Australian ballot system.
 - role_id: city-manager
   expected: appointed
   presiding: false
@@ -33,7 +34,7 @@
   - established: true
     label: Town Manager
     filled_by: appointed
-    maximum_memberships: null
+    maximum_memberships: 1
     quote: The Town Manager shall be the Chief Administrative Officer of the Town
       and shall be appointed by a majority of the Selectboard.
   - established: true
@@ -57,13 +58,14 @@
     filled_by: elected_by_voters
     maximum_memberships: 1
     quote: 'The officers elected at its annual meeting shall be: (1) five selectpersons;
-      (2) Town Clerk; (3) Town Treasurer; (4) five library trustees; (5) five school
-      trustees; and (6) Champlain Water District (CWD) Representative.'
+      (2) Town Clerk;'
   - established: true
     label: Town Clerk
     filled_by: elected_by_voters
     maximum_memberships: 1
-    quote: The Town Clerk shall be elected for a three-year term.
+    quote: 'The officers elected at its annual meeting shall be: (1) five selectpersons;
+      (2) Town Clerk; (3) Town Treasurer; (4) five library trustees; (5) five school
+      trustees; and (6) Champlain Water District (CWD) Representative.'
 - role_id: treasurer
   expected: elected_by_voters
   presiding: false
@@ -83,7 +85,8 @@
     label: Town Treasurer
     filled_by: elected_by_voters
     maximum_memberships: 1
-    quote: The Town Treasurer shall be elected for a three-year term
+    quote: 'The officers elected at its annual meeting shall be: (1) five selectpersons;
+      (2) Town Clerk; (3) Town Treasurer;'
 - role_id: chair
   expected: elected_by_members
   presiding: true
@@ -98,7 +101,9 @@
     label: Chair
     filled_by: elected_by_members
     maximum_memberships: 1
-    quote: elect a Chair
+    quote: After their election and qualification, the Selectboard shall organize
+      and elect a Chair, a Vice Chair, and Clerk by a majority vote of the entire
+      Selectboard.
   - established: true
     label: Chair
     filled_by: elected_by_members
@@ -112,7 +117,7 @@
   right: true
   rounds: 1
   each_right:
-  - false
+  - true
   - true
   agreed: true
   answers:
@@ -120,7 +125,9 @@
     label: Vice Chair
     filled_by: elected_by_members
     maximum_memberships: 1
-    quote: elect a Vice Chair
+    quote: After their election and qualification, the Selectboard shall organize
+      and elect a Chair, a Vice Chair, and Clerk by a majority vote of the entire
+      Selectboard.
   - established: true
     label: Vice Chair
     filled_by: elected_by_members

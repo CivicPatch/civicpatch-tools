@@ -9,19 +9,19 @@
   agreed: true
   answers:
   - established: true
-    label: trustees
-    filled_by: elected_by_voters
-    maximum_memberships: 5
-    quote: the trustees consisting of five members chosen by the voters of the Village
-      of Hyde Park.
-  - established: true
-    label: trustees
+    label: Trustees
     filled_by: elected_by_voters
     maximum_memberships: 5
     quote: At the annual meeting, the following officers shall be elected by the voters
       of the Village of Hyde Park, and unless the voters have previously voted to
       proceed by Australian ballot pursuant to 17 V.S.A. § 2680, voting for all such
       officers shall be by paper ballot. (1) Five trustees.
+  - established: true
+    label: trustees
+    filled_by: elected_by_voters
+    maximum_memberships: 5
+    quote: the trustees consisting of five members chosen by the voters of the Village
+      of Hyde Park
 - role_id: clerk
   expected: appointed
   presiding: false
@@ -43,8 +43,9 @@
     label: Village Clerk
     filled_by: appointed
     maximum_memberships: 1
-    quote: 'shall appoint other Village officers as allowed by law, including the
-      following: (1) One Village Clerk.'
+    quote: 'the Board of Trustees shall meet and, by a majority vote, shall appoint
+      other Village officers as allowed by law, including the following: (1) One Village
+      Clerk.'
 - role_id: treasurer
   expected: appointed
   presiding: false
@@ -66,8 +67,9 @@
     label: Village Treasurer
     filled_by: appointed
     maximum_memberships: 1
-    quote: The Village Treasurer shall be appointed by the Board of Trustees for a
-      one year term
+    quote: 'the Board of Trustees shall meet and, by a majority vote, shall appoint
+      other Village officers as allowed by law, including the following: ... (2) One
+      Village Treasurer.'
 - role_id: chair
   expected: elected_by_members
   presiding: true
@@ -90,8 +92,7 @@
     filled_by: elected_by_members
     maximum_memberships: 1
     quote: The trustees shall meet within 14 business days after the annual election
-      to elect a Chair and to designate one of their Board or the Village Clerk as
-      Clerk of the Board.
+      to elect a Chair
 - role_id: commission-president
   expected: probably_not_established
   presiding: true

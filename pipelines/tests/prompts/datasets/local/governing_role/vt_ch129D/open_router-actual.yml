@@ -9,13 +9,13 @@
   agreed: true
   answers:
   - established: true
-    label: Selectboard members
+    label: Selectboard member
     filled_by: elected_by_voters
     maximum_memberships: 5
     quote: The Town shall have a five-member Selectboard elected for terms of two
       and three years.
   - established: true
-    label: Selectboard
+    label: Selectboard members
     filled_by: elected_by_voters
     maximum_memberships: 5
     quote: The Town shall have a five-member Selectboard elected for terms of two
