@@ -3,13 +3,13 @@ import logging
 import httpx
 from pipelines_environment import get_env_vars
 from runners.engine import Machine, PipelineRunError, run_pipeline
-from runners.pipeline01_governing_law_collector.schemas import (
+from .schemas import (
     GoverningLawCollectorConfig,
     GoverningLawCollectorContext,
     GoverningLawCollectorData,
 )
-from runners.pipeline01_governing_law_collector.transitions.graph import GOVERNING_LAW_COLLECTOR_TRANSITIONS
-from runners.pipeline01_governing_law_collector.transitions.main import TRANSITION_MAP
+from .transitions.graph import GOVERNING_LAW_COLLECTOR_TRANSITIONS
+from .transitions.main import TRANSITION_MAP
 from shared.utils.statuses import PipelineRunStatus
 from utils import log_utils
 

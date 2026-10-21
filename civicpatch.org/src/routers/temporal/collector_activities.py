@@ -20,7 +20,10 @@ from routers.temporal.pipeline_run_activities import (
 
 # The Actions workflow in CivicPatch/server whose inputs are a run's (jurisdiction_ocdid,
 # pipeline_run_id): a two-repo contract, like the scrape's, so named here and not derived.
-GITHUB_WORKFLOWS = {PipelineRunKind.GOVERNING_LAW_COLLECTOR: "data_collect_governing_law.yml"}
+GITHUB_WORKFLOWS = {
+    PipelineRunKind.GOVERNING_LAW_COLLECTOR: "data_collect_governing_law.yml",
+    PipelineRunKind.ORGANIZATIONS_COLLECTOR: "data_collect_organizations.yml",
+}
 
 
 def local_path(kind: str) -> str:

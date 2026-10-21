@@ -1,5 +1,4 @@
 import pytest
-
 from runners.pipeline01_governing_law_collector.finders import classification
 from shared.schemas import FoundBy
 from shared.utils.layered_config import GoverningLawConfig
@@ -32,3 +31,4 @@ def test_a_classification_without_statutes_gives_nothing_to_fetch():
 def test_no_classification_or_no_block_gives_nothing_to_fetch():
     assert classification.find(_VERMONT, "Averys gore").urls == []
     assert classification.find(None, "Weybridge town").urls == []
+

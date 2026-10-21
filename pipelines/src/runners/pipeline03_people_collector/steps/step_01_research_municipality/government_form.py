@@ -8,7 +8,7 @@ import httpx
 import services.civicpatch_api as civicpatch_api
 import services.google_gemini.llm as google_gemini_llm
 import services.google_gemini.prompts as google_gemini_prompt
-from runners.pipeline03_people_collector.schemas import PeopleCollectorContext
+from ...schemas import PeopleCollectorContext
 from shared.schemas import GovernmentForm, JurisdictionExtras, JurisdictionLevel
 from shared.utils.id_utils import parse_jurisdiction_ocdid
 

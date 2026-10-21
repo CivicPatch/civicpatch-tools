@@ -4,9 +4,9 @@ quote is checked against the whole cached page it came from, not the sections EX
 
 from typing import List
 
-from runners.pipeline02_organizations_collector.role_asks import RoleAsk
-from runners.pipeline02_organizations_collector.schemas import Citation, FilledBy, RoleClaim, RoleOutcomes
-from runners.pipeline02_organizations_collector.sections import GoverningLawPage, page_kind
+from .role_asks import RoleAsk
+from .schemas import Citation, FilledBy, RoleClaim, RoleOutcomes
+from .sections import GoverningLawPage, page_kind
 from shared.schemas import GoverningLaw, GoverningLawKind, GoverningLawPost, GoverningLawPostExtras, SelectionMethod, Source, SourceExtras
 from shared.utils.citation import supporting_quote
 from shared.utils.layered_config import GoverningLawConfig

@@ -3,15 +3,15 @@
 from collections import Counter
 from typing import List
 
-from runners.pipeline03_people_collector.schemas import (
+from ...schemas import (
     ExpectedMembership,
     OrganizationNeed,
     OrganizationProgress,
     PeopleByName,
     PersonSourceRecord,
 )
-from runners.pipeline03_people_collector.utils.link_discovery import has_role_and_contact_info
-from runners.pipeline03_people_collector.utils.organization_terms import as_tokens, organization_phrases
+from ...utils.link_discovery import has_role_and_contact_info
+from ...utils.organization_terms import as_tokens, organization_phrases
 from shared.schemas import KnownOrganization
 from shared.utils.label_parser import parse_label
 from shared.utils.taxonomy import Taxonomy

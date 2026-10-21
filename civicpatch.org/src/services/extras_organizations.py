@@ -5,10 +5,14 @@ import database.extras_organizations as extras_organizations_db
 from database.activity import record_change
 from database.database import get_pool
 from database.extras_organizations import ExtrasOrganizationsRow
+from database.jurisdiction_configs import get_jurisdiction_configs
 from database.roles import get_roles
+from pydantic import BaseModel
 from schemas.activity import Change, FieldChange
 from schemas.claims import EntityType
-from shared.schemas import GoverningLawOrganizations
+from shared.schemas import GoverningLaw, GovernmentForm, GoverningLawOrganizations
+from shared.utils.id_utils import parse_jurisdiction_ocdid
+from shared.utils.layered_config import MergedConfig, jurisdiction_config
 from shared.utils.statuses import ActivityType
 
 FIELD = "extras_organizations"
@@ -16,6 +20,15 @@ FIELD = "extras_organizations"
 
 class UnknownJurisdiction(Exception):
     pass
+
+
+class CollectorConfig(BaseModel):
+    """What an organizations_collector run is told when it starts."""
+
+    name: str
+    governing_law: GoverningLaw | None
+    jurisdiction_config: MergedConfig
+    government_form: GovernmentForm | None
 
 
 class UnknownRole(Exception):
@@ -42,6 +55,31 @@ async def set_extras_organizations(
 async def get_extras_organizations(jurisdiction_ocdid: str) -> GoverningLawOrganizations | None:
     row = await extras_organizations_db.get_extras_organizations_row(jurisdiction_ocdid)
     return row.extras_organizations if row else None
+
+
+async def collector_config(jurisdiction_ocdid: str) -> CollectorConfig:
+    """The jurisdiction's name, its extras_governing_law, its merged config, and its
+    government form. The caller adds the run's cap."""
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            """
+            SELECT data->>'name', extras_governing_law, extras_government_form
+            FROM jurisdictions
+            WHERE jurisdiction_ocdid = %s AND status = 'active'
+            """,
+            (jurisdiction_ocdid,),
+        )
+        row = await cur.fetchone()
+    if row is None:
+        raise UnknownJurisdiction(jurisdiction_ocdid)
+    name = row[0] or ""
+    governing_law = GoverningLaw.model_validate(row[1]) if row[1] is not None else None
+    government_form = GovernmentForm(row[2]) if row[2] else None
+    parsed = parse_jurisdiction_ocdid(jurisdiction_ocdid)
+    configs = await get_jurisdiction_configs()
+    jury_config = jurisdiction_config(configs, parsed.state, parsed.level)
+    return CollectorConfig(name=name, governing_law=governing_law, jurisdiction_config=jury_config, government_form=government_form)
 
 
 def _unknown_roles(organizations: GoverningLawOrganizations, role_ids: set[str]) -> list[str]:

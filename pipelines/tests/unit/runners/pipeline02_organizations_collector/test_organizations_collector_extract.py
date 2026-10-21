@@ -5,7 +5,6 @@ from decimal import Decimal
 from unittest.mock import AsyncMock, MagicMock, patch
 
 import pytest
-
 from runners.pipeline02_organizations_collector.role_asks import RoleAsk
 from runners.pipeline02_organizations_collector.schemas import (
     FilledBy,
@@ -16,7 +15,10 @@ from runners.pipeline02_organizations_collector.schemas import (
     RoleAnswer,
     RoleClaim,
 )
-from runners.pipeline02_organizations_collector.transitions.main import ASKS_PER_QUESTION, extract
+from runners.pipeline02_organizations_collector.transitions.main import (
+    ASKS_PER_QUESTION,
+    extract,
+)
 from shared.schemas import PipelineRunLimits
 from shared.utils.layered_config import ConfigFile, merged_config
 
@@ -130,3 +132,4 @@ async def test_a_question_that_fails_leaves_its_role_unanswered_not_the_run_ende
 
     assert [claim.ask.role_id for claim in extracted.data.claims] == ["member", "member"]
     assert next_state == OrganizationsCollectorStep.VERIFY
+

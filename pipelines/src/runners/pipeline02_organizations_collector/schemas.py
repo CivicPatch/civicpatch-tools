@@ -4,8 +4,8 @@ from typing import List, Optional
 
 from domain.pipeline_run_context import PipelineRunContext
 from pydantic import BaseModel, Field
-from runners.pipeline02_organizations_collector.role_asks import RoleAsk
-from runners.pipeline02_organizations_collector.sections import GoverningLawPage
+from .role_asks import RoleAsk
+from .sections import GoverningLawPage
 from shared.schemas import GovernmentForm, GoverningLaw, GoverningLawKind, GoverningLawOrganizations, GoverningLawPost, SelectionMethod
 from shared.utils.citation import SupportingQuote
 from shared.utils.layered_config import MergedConfig

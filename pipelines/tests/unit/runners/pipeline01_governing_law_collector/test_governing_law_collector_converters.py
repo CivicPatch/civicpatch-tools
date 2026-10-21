@@ -5,8 +5,11 @@ import re
 from pathlib import Path
 
 import pytest
-
-from runners.pipeline01_governing_law_collector.converters import UnsupportedContentType, is_thin, to_markdown
+from runners.pipeline01_governing_law_collector.converters import (
+    UnsupportedContentType,
+    is_thin,
+    to_markdown,
+)
 from runners.pipeline01_governing_law_collector.schemas import FetchedPage
 
 pytestmark = pytest.mark.unit
@@ -65,3 +68,4 @@ def test_a_tag_trafilatura_leaves_is_dropped_and_its_words_kept():
 
     assert "Notes" in markdown
     assert not _HTML_TAG.search(markdown)
+

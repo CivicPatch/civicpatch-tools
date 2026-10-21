@@ -3,8 +3,8 @@
 from typing import List
 
 from pydantic import BaseModel
-from runners.pipeline03_people_collector.schemas import ExpectedMembership
-from runners.pipeline03_people_collector.utils.organization_terms import (
+from ...schemas import ExpectedMembership
+from ...utils.organization_terms import (
     expected_divisions,
     expected_roles,
     memberships_in,

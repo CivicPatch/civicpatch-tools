@@ -1,6 +1,6 @@
 import os
 import shutil
-from runners.pipeline03_people_collector.schemas import PeopleCollectorContext, PeopleCollectorState
+from ...schemas import PeopleCollectorContext, PeopleCollectorState
 from shared.utils.data_path_utils import get_cache_path, get_images_path
 from utils import log_utils
 from shared.utils.statuses import PipelineRunStatus

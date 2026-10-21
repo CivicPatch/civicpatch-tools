@@ -6,7 +6,7 @@ from pathlib import Path
 import pytest
 
 from runners.pipeline01_governing_law_collector.finders.state_index import charter_links, charter_title_matches
-from shared.utils.layered_config import CharterLinkList
+from shared.utils.layered_config import CharterLinkList, TextLink
 
 pytestmark = pytest.mark.unit
 
@@ -16,7 +16,7 @@ FULL_TEXT = "https://legislature.vermont.gov/statutes/fullchapter/24APPENDIX/"
 VERMONT = CharterLinkList(
     url=INDEX_URL,
     title="Chapter {*} : {lsad} of {place}",
-    text_link={"old": "/statutes/chapter/", "new": "/statutes/fullchapter/"},
+    text_link=TextLink(old="/statutes/chapter/", new="/statutes/fullchapter/"),
 )
 
 

@@ -1,6 +1,6 @@
 from runners.engine import Transitions
 from shared.utils.statuses import PipelineRunStatus
-from runners.pipeline01_governing_law_collector.schemas import GoverningLawCollectorStep
+from ..schemas import GoverningLawCollectorStep
 
 # A governing_law_collector run's whole life. civicpatch.org owns the two ends before INIT.
 GOVERNING_LAW_COLLECTOR_TRANSITIONS: Transitions = {

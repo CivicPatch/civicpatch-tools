@@ -10,7 +10,10 @@ from database.governing_law import CollectionCandidate
 from pydantic import BaseModel
 from shared.utils.statuses import PipelineRunKind
 
-CANDIDATES = {PipelineRunKind.GOVERNING_LAW_COLLECTOR: governing_law_db.get_collection_candidates}
+CANDIDATES = {
+    PipelineRunKind.GOVERNING_LAW_COLLECTOR: governing_law_db.get_collection_candidates,
+    PipelineRunKind.ORGANIZATIONS_COLLECTOR: governing_law_db.get_organizations_collection_candidates,
+}
 
 
 class ClaimedRun(BaseModel):

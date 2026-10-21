@@ -1,8 +1,8 @@
 """What governs a jurisdiction, and where its texts are. The state's index first, where it has
 one; then the classification's general law."""
 
-from runners.pipeline01_governing_law_collector.finders import classification, state_index
-from runners.pipeline01_governing_law_collector.schemas import FinderAnswer, GoverningLawCollectorConfig
+from . import classification, state_index
+from ..schemas import FinderAnswer, GoverningLawCollectorConfig
 
 
 async def find(config: GoverningLawCollectorConfig) -> FinderAnswer:

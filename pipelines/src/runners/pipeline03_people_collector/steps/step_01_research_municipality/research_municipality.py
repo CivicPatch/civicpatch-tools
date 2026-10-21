@@ -14,7 +14,7 @@ import services.civicpatch_api as civicpatch_api
 import services.google_gemini.llm as google_gemini_llm
 import services.google_gemini.prompts as google_gemini_prompt
 from pipelines_environment import get_env_vars
-from runners.pipeline03_people_collector.schemas import (
+from ...schemas import (
     ExpectedMembership,
     PeopleCollectorContext,
     PeopleCollectorState,
@@ -23,7 +23,7 @@ from runners.pipeline03_people_collector.schemas import (
     ResearchedPerson,
 )
 from shared.schemas import KnownOrganization, Membership, Person, Post, RoleConfig
-from runners.pipeline03_people_collector.steps.step_01_research_municipality import government_form
+from ..step_01_research_municipality import government_form
 from shared.utils import divisions
 from shared.utils.label_parser import parse_label, parse_label_preferring
 from shared.utils.taxonomy import UNMATCHED_ROLE_ID, Taxonomy, build_taxonomy

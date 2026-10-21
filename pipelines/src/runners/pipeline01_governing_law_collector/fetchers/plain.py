@@ -1,7 +1,7 @@
 from http import HTTPStatus
 
 import httpx
-from runners.pipeline01_governing_law_collector.schemas import FetchedPage
+from ..schemas import FetchedPage
 
 # Named, so a host's operator can see who we are and how to reach us.
 USER_AGENT = "CivicPatchBot/1.0 (+https://civicpatch.org)"

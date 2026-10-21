@@ -5,7 +5,7 @@ from services.google_gemini.llm import FIND_JURISDICTION_URL_MODEL_FALLBACKS
 import services.google_gemini.prompts as google_gemini_prompts
 import services.open_router.llm as open_router_llm
 import services.open_router.prompts as open_router_prompts
-from runners.pipeline03_people_collector.schemas import (
+from ...schemas import (
     FindJurisdictionUrlStep,
     LinkStatus,
     OfficialJurisdictionUrlResponseSchema,

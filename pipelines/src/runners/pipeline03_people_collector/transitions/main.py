@@ -1,7 +1,7 @@
 import traceback
 
 import httpx
-from runners.pipeline03_people_collector.schemas import (
+from ..schemas import (
     LinkFrontier,
     LinkStatus,
     PeopleCollectorContext,
@@ -10,36 +10,36 @@ from runners.pipeline03_people_collector.schemas import (
     PeopleCollectorStep,
     ProgressState,
 )
-from runners.pipeline03_people_collector.steps.step_00_prepare_pipeline.prepare_pipeline import (
+from ..steps.step_00_prepare_pipeline.prepare_pipeline import (
     prepare_pipeline,
 )
-from runners.pipeline03_people_collector.steps.step_01_research_municipality.research_municipality import (
+from ..steps.step_01_research_municipality.research_municipality import (
     research_municipality,
 )
-from runners.pipeline03_people_collector.steps.step_02_scrape_page.scrape_page import scrape_page
-from runners.pipeline03_people_collector.steps.step_03_preprocess_page_content.preprocess_page_content import (
+from ..steps.step_02_scrape_page.scrape_page import scrape_page
+from ..steps.step_03_preprocess_page_content.preprocess_page_content import (
     preprocess_page_content,
 )
-from runners.pipeline03_people_collector.steps.step_04_process_page_content.process_page_content import (
+from ..steps.step_04_process_page_content.process_page_content import (
     process_page_content,
 )
-from runners.pipeline03_people_collector.steps.step_04a_find_jurisdiction_url.find_jurisdiction_url import (
+from ..steps.step_04a_find_jurisdiction_url.find_jurisdiction_url import (
     find_jurisdiction_url,
 )
-from runners.pipeline03_people_collector.steps.step_05_cleanup.cleanup import cleanup
-from runners.pipeline03_people_collector.steps.step_06_save_output.save_output import save_output
-from runners.pipeline03_people_collector.steps.step_07_send_error.send_error import send_error
-from runners.pipeline03_people_collector.steps.step_07_send_success.send_success import (
+from ..steps.step_05_cleanup.cleanup import cleanup
+from ..steps.step_06_save_output.save_output import save_output
+from ..steps.step_07_send_error.send_error import send_error
+from ..steps.step_07_send_success.send_success import (
     send_success,
 )
-from runners.pipeline03_people_collector.transitions.process_page_content_transition import (
+from ..transitions.process_page_content_transition import (
     STOP_COST_CAP,
     is_short_of_expected,
     STOP_MESSAGES,
     describe_progress,
     next_process_content_state,
 )
-from runners.pipeline03_people_collector.utils.links import (
+from ..utils.links import (
     get_link_status_by_url,
     get_links_with_status,
     get_next_link_with_status,

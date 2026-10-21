@@ -1,14 +1,14 @@
 from decimal import Decimal
 from typing import List
 
-from runners.pipeline03_people_collector.schemas import (
+from ..schemas import (
   PeopleCollectorState,
   ProgressState,
   Link,
   LinkStatus,
   PeopleCollectorStep,
 )
-from runners.pipeline03_people_collector.steps.step_04_process_page_content.organization_progress import is_done
+from ..steps.step_04_process_page_content.organization_progress import is_done
 from shared.schemas import PipelineRunLimits
 from shared.utils import url_utils
 from shared.utils.statuses import PipelineIssueType

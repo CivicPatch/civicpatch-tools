@@ -2,9 +2,9 @@
 out thin. A host that refuses (403, 429) is never retried another way: that is a refusal, and the
 publisher rules say stop."""
 
-from runners.pipeline01_governing_law_collector.fetchers import browser, plain
-from runners.pipeline01_governing_law_collector.fetchers.plain import RefusedByHost
-from runners.pipeline01_governing_law_collector.schemas import FetchedPage
+from . import browser, plain
+from .plain import RefusedByHost
+from ..schemas import FetchedPage
 
 __all__ = ["RefusedByHost", "fetch"]
 

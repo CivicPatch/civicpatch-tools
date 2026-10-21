@@ -1,6 +1,6 @@
 from typing import Optional
 
-from runners.pipeline01_governing_law_collector.schemas import FinderAnswer
+from ..schemas import FinderAnswer
 from shared.schemas import FoundBy
 from shared.utils.layered_config import GoverningLawConfig, resolve_classification
 

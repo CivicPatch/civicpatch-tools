@@ -77,3 +77,32 @@ async def get_collection_candidates(state: str, limit: int | None) -> list[Colle
             (state, PipelineRunKind.GOVERNING_LAW_COLLECTOR, limit),
         )
         return [CollectionCandidate(jurisdiction_ocdid=row[0], name=row[1] or "") for row in await cur.fetchall()]
+
+
+async def get_organizations_collection_candidates(state: str, limit: int | None) -> list[CollectionCandidate]:
+    """The state's active jurisdictions whose governing law's organizations haven't been
+    extracted yet, or whose governing law was refreshed since. Never-collected first.
+    No run in flight or tried in the last day."""
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            f"""
+            SELECT j.jurisdiction_ocdid, j.data->>'name'
+            FROM jurisdictions j
+            WHERE j.state = %s AND j.status = 'active' AND j.level <> 'state'
+              AND j.extras_governing_law IS NOT NULL
+              AND j.extras_governing_law->>'kind' IN ('charter', 'general_law')
+              AND (j.extras_organizations IS NULL
+                   OR (j.extras_organizations->'extras'->>'governing_law_collected_at')::timestamptz
+                      < (j.extras_governing_law->>'collected_at')::timestamptz)
+              AND NOT EXISTS (
+                  SELECT 1 FROM pipeline_runs r
+                  WHERE r.jurisdiction_ocdid = j.jurisdiction_ocdid AND r.kind = %s
+                    AND (r.finished_at IS NULL OR r.created_at >= now() - interval '{_TRIED_WITHIN}')
+              )
+            ORDER BY j.extras_organizations IS NOT NULL, j.jurisdiction_ocdid
+            LIMIT %s
+            """,
+            (state, PipelineRunKind.ORGANIZATIONS_COLLECTOR, limit),
+        )
+        return [CollectionCandidate(jurisdiction_ocdid=row[0], name=row[1] or "") for row in await cur.fetchall()]
