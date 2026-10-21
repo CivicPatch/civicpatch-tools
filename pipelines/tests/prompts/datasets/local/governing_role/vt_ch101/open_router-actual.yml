@@ -8,7 +8,7 @@
   agreed: true
   answers:
   - established: true
-    label: Selectboard member
+    label: Selectboard members
     filled_by: elected_by_voters
     maximum_memberships: 5
     quote: 'The following officers shall be elected by the legal voters of the Town
@@ -245,13 +245,13 @@
     label: Chair
     filled_by: elected_by_members
     maximum_memberships: 1
-    quote: The Selectboard shall meet within seven business days after the annual
-      Town election to elect a Chair and a Vice Chair and to designate a Clerk.
+    quote: elect a Chair and a Vice Chair
   - established: true
     label: Chair
     filled_by: elected_by_members
     maximum_memberships: 1
-    quote: elect a Chair and a Vice Chair
+    quote: The Selectboard shall meet within seven business days after the annual
+      Town election to elect a Chair and a Vice Chair and to designate a Clerk.
 - role_id: vice-chair
   expected: probably_not_established
   presiding: true
@@ -265,13 +265,13 @@
     label: Vice Chair
     filled_by: elected_by_members
     maximum_memberships: 1
-    quote: The Selectboard shall meet within seven business days after the annual
-      Town election to elect a Chair and a Vice Chair and to designate a Clerk.
+    quote: elect a Chair and a Vice Chair
   - established: true
     label: Vice Chair
     filled_by: elected_by_members
     maximum_memberships: 1
-    quote: elect a Chair and a Vice Chair
+    quote: The Selectboard shall meet within seven business days after the annual
+      Town election to elect a Chair and a Vice Chair and to designate a Clerk.
 - role_id: commissioner-vice-president
   expected: probably_not_established
   presiding: true

@@ -10,7 +10,7 @@
   - established: true
     label: Vice Chair
     filled_by: elected_by_members
-    maximum_memberships: 1
+    maximum_memberships: null
     quote: The Selectboard shall elect a Vice Chair at its organizational meeting.
   - established: true
     label: Vice Chair
@@ -217,9 +217,9 @@
   agreed: true
   answers:
   - established: true
-    label: Chair of the Selectboard
+    label: Chair
     filled_by: not_stated
-    maximum_memberships: 1
+    maximum_memberships: null
     quote: The Chair of the Selectboard shall preside at all meetings of the Selectboard.
   - established: true
     label: Chair

@@ -8,11 +8,11 @@
   agreed: true
   answers:
   - established: true
-    label: Select Board member
+    label: Select Board members
     filled_by: elected_by_voters
     maximum_memberships: 5
-    quote: The elective officers of the Town shall be five Select Board members elected
-      from the Town at large at a duly warned annual town meeting
+    quote: five Select Board members elected from the Town at large at a duly warned
+      annual town meeting
   - established: true
     label: Select Board members
     filled_by: elected_by_voters
@@ -39,7 +39,7 @@
     filled_by: appointed
     maximum_memberships: 1
     quote: The Select Board members shall appoint a Town Manager for an indefinite
-      term and upon such conditions as they may determine.
+      term
 - role_id: clerk
   expected: elected_by_voters
   presiding: false
@@ -75,7 +75,7 @@
   - established: true
     label: Treasurer
     filled_by: elected_by_voters
-    maximum_memberships: null
+    maximum_memberships: 1
     quote: The elective officers of the Town shall be five Select Board members elected
       from the Town at large at a duly warned annual town meeting; a Town Clerk; a
       Treasurer; and a Moderator
@@ -107,10 +107,8 @@
     label: Moderator
     filled_by: elected_by_voters
     maximum_memberships: 1
-    quote: The elective officers of the Town shall be five Select Board members elected
-      from the Town at large at a duly warned annual town meeting; a Town Clerk; a
-      Treasurer; and a Moderator, unless by a majority vote of the Town the Moderator
-      becomes an appointed position.
+    quote: a Moderator, unless by a majority vote of the Town the Moderator becomes
+      an appointed position.
 - role_id: assessor
   expected: appointed
   presiding: false
@@ -153,7 +151,7 @@
     label: Chair
     filled_by: elected_by_members
     maximum_memberships: 1
-    quote: elect a Chair
+    quote: the Select Board members shall organize and elect a Chair and Vice Chair.
   - established: true
     label: Chair
     filled_by: elected_by_members
@@ -164,7 +162,7 @@
   presiding: true
   right: true
   each_right:
-  - false
+  - true
   - true
   agreed: true
   answers:
@@ -172,7 +170,7 @@
     label: Vice Chair
     filled_by: elected_by_members
     maximum_memberships: 1
-    quote: elect a Vice Chair
+    quote: the Select Board members shall organize and elect a Chair and Vice Chair.
   - established: true
     label: Vice Chair
     filled_by: elected_by_members

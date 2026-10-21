@@ -11,10 +11,12 @@
     label: Trustee
     filled_by: elected_by_voters
     maximum_memberships: 3
-    quote: all of which officers shall be chosen by ballot at each annual meeting
-      of the legal voters
+    quote: The officers of said corporation shall be a Board of three trustees, a
+      Clerk, a Treasurer, a Collector of Taxes, an Auditor, and a Fire Marshal, all
+      of which officers shall be chosen by ballot at each annual meeting of the legal
+      voters of the said corporation or at a special meeting as hereafter provided.
   - established: true
-    label: Trustee
+    label: trustees
     filled_by: elected_by_voters
     maximum_memberships: 3
     quote: The officers of said corporation shall be a Board of three trustees, a
@@ -34,8 +36,10 @@
     label: Clerk
     filled_by: elected_by_voters
     maximum_memberships: 1
-    quote: all of which officers shall be chosen by ballot at each annual meeting
-      of the legal voters of the said corporation
+    quote: The officers of said corporation shall be a Board of three trustees, a
+      Clerk, a Treasurer, a Collector of Taxes, an Auditor, and a Fire Marshal, all
+      of which officers shall be chosen by ballot at each annual meeting of the legal
+      voters of the said corporation or at a special meeting as hereafter provided.
   - established: true
     label: Clerk
     filled_by: elected_by_voters
@@ -64,9 +68,10 @@
     label: Treasurer
     filled_by: elected_by_voters
     maximum_memberships: 1
-    quote: all of which officers shall be chosen by ballot at each annual meeting
-      of the legal voters of the said corporation or at a special meeting as hereafter
-      provided.
+    quote: The officers of said corporation shall be a Board of three trustees, a
+      Clerk, a Treasurer, a Collector of Taxes, an Auditor, and a Fire Marshal, all
+      of which officers shall be chosen by ballot at each annual meeting of the legal
+      voters of the said corporation or at a special meeting as hereafter provided.
 - role_id: commission-president
   expected: probably_not_established
   presiding: true

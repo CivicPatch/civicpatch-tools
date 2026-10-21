@@ -14,7 +14,7 @@
     quote: There shall be elected five Cemetery Commissioners each to serve staggered
       five-year terms.
   - established: true
-    label: Cemetery Commissioners
+    label: Cemetery Commissioner
     filled_by: elected_by_voters
     maximum_memberships: 5
     quote: There shall be elected five Cemetery Commissioners each to serve staggered
@@ -54,13 +54,13 @@
     filled_by: appointed
     maximum_memberships: 1
     quote: The Selectboard shall appoint and remove, on the basis of qualifications
-      and performance alone, a Town Clerk
+      and performance alone, a Town Clerk, Town Treasurer, and Town Attorney.
   - established: true
     label: Town Clerk
     filled_by: appointed
     maximum_memberships: 1
     quote: The Selectboard shall appoint and remove, on the basis of qualifications
-      and performance alone, a Town Clerk, Town Treasurer, and Town Attorney.
+      and performance alone, a Town Clerk
 - role_id: treasurer
   expected: appointed
   presiding: false
@@ -79,7 +79,7 @@
   - established: true
     label: Town Treasurer
     filled_by: appointed
-    maximum_memberships: null
+    maximum_memberships: 1
     quote: The Selectboard shall appoint and remove, on the basis of qualifications
       and performance alone, a Town Clerk, Town Treasurer, and Town Attorney.
 - role_id: city-attorney

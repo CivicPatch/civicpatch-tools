@@ -14,7 +14,7 @@
     quote: The officers of the corporation shall be a Board of three Trustees, a Clerk,
       a Treasurer, a Collector of Taxes, an Auditor, and a Fire Marshal, all of which
       officers shall be chosen by ballot at each annual meeting of the legal voters
-      of the corporation
+      of the corporation or at a special meeting as hereafter provided.
   - established: true
     label: Trustee
     filled_by: elected_by_voters
@@ -22,7 +22,7 @@
     quote: The officers of the corporation shall be a Board of three Trustees, a Clerk,
       a Treasurer, a Collector of Taxes, an Auditor, and a Fire Marshal, all of which
       officers shall be chosen by ballot at each annual meeting of the legal voters
-      of the corporation or at a special meeting as hereafter provided.
+      of the corporation
 - role_id: clerk
   expected: elected_by_voters
   presiding: false
@@ -36,8 +36,10 @@
     label: Clerk
     filled_by: elected_by_voters
     maximum_memberships: 1
-    quote: all of which officers shall be chosen by ballot at each annual meeting
-      of the legal voters
+    quote: The officers of the corporation shall be a Board of three Trustees, a Clerk,
+      a Treasurer, a Collector of Taxes, an Auditor, and a Fire Marshal, all of which
+      officers shall be chosen by ballot at each annual meeting of the legal voters
+      of the corporation or at a special meeting as hereafter provided.
   - established: true
     label: Clerk
     filled_by: elected_by_voters
@@ -57,10 +59,8 @@
     label: Treasurer
     filled_by: elected_by_voters
     maximum_memberships: 1
-    quote: The officers of the corporation shall be a Board of three Trustees, a Clerk,
-      a Treasurer, a Collector of Taxes, an Auditor, and a Fire Marshal, all of which
-      officers shall be chosen by ballot at each annual meeting of the legal voters
-      of the corporation or at a special meeting as hereafter provided.
+    quote: all of which officers shall be chosen by ballot at each annual meeting
+      of the legal voters of the corporation
   - established: true
     label: Treasurer
     filled_by: elected_by_voters

@@ -11,11 +11,11 @@
     label: Trustees
     filled_by: elected_by_voters
     maximum_memberships: 4
-    quote: All officers of said Village shall be residents and elected at the annual
-      meeting of said Village, except Collector of Taxes, who shall be appointed by
-      the Board of Trustees.
+    quote: At each annual meeting of said Village, there shall be elected two Trustees
+      who shall hold office for the term of two years and until their successors shall
+      be elected and qualified.
   - established: true
-    label: Trustee
+    label: Trustees
     filled_by: elected_by_voters
     maximum_memberships: 4
     quote: All officers of said Village shall be residents and elected at the annual
@@ -130,7 +130,8 @@
     filled_by: elected_by_voters
     maximum_memberships: 1
     quote: All officers of said Village shall be residents and elected at the annual
-      meeting of said Village
+      meeting of said Village, except Collector of Taxes, who shall be appointed by
+      the Board of Trustees.
   - established: true
     label: President
     filled_by: elected_by_voters

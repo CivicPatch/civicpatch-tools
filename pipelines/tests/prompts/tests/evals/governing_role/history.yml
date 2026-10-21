@@ -114,3 +114,62 @@ runs:
     vt_ch289: 1.0
     vt_ch291: 1.0
   dispositions: {}
+- timestamp: '2026-10-21T03:20:20+00:00'
+  provider: open_router
+  model: deepseek/deepseek-v4-flash
+  prompt_sha256: ce378d1ef447
+  cost_usd: 0.222575472
+  elapsed_seconds: 655.75
+  scores:
+    agreement: 0.9731543624161074
+    candidates_asked: 625
+    candidates_verified: 6
+    presiding_gold_right: 35 of 35
+    roles_right: 0.9932885906040269
+    single_ask_right: 0.9530201342281879
+  cases:
+    vt_ch003: 1.0
+    vt_ch004: 1.0
+    vt_ch005: 1.0
+    vt_ch007: 1.0
+    vt_ch011: 1.0
+    vt_ch013: 1.0
+    vt_ch101: 1.0
+    vt_ch105: 1.0
+    vt_ch108: 1.0
+    vt_ch110: 1.0
+    vt_ch113: 1.0
+    vt_ch117: 1.0
+    vt_ch126: 0.8333333333333334
+    vt_ch127: 1.0
+    vt_ch129: 1.0
+    vt_ch129D: 1.0
+    vt_ch133: 1.0
+    vt_ch141: 1.0
+    vt_ch142: 1.0
+    vt_ch143: 1.0
+    vt_ch147: 1.0
+    vt_ch149: 1.0
+    vt_ch151: 1.0
+    vt_ch153: 1.0
+    vt_ch163: 1.0
+    vt_ch175: 1.0
+    vt_ch207: 1.0
+    vt_ch213: 1.0
+    vt_ch215: 1.0
+    vt_ch219: 1.0
+    vt_ch225: 1.0
+    vt_ch227: 1.0
+    vt_ch239: 1.0
+    vt_ch245: 1.0
+    vt_ch247: 1.0
+    vt_ch249: 1.0
+    vt_ch251: 1.0
+    vt_ch253: 1.0
+    vt_ch257: 1.0
+    vt_ch261: 1.0
+    vt_ch279: 1.0
+    vt_ch285: 1.0
+    vt_ch289: 1.0
+    vt_ch291: 1.0
+  dispositions: {}

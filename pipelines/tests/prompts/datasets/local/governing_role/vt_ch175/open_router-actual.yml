@@ -11,7 +11,8 @@
     label: Moderator
     filled_by: elected_by_voters
     maximum_memberships: 1
-    quote: A Moderator to be elected by paper ballot from the floor
+    quote: A Moderator to be elected by paper ballot from the floor, for a term of
+      one year.
   - established: true
     label: Moderator
     filled_by: elected_by_voters

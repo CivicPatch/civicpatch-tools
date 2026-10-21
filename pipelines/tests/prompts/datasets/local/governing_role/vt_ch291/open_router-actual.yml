@@ -8,11 +8,10 @@
   agreed: true
   answers:
   - established: true
-    label: trustee
+    label: trustees
     filled_by: elected_by_voters
     maximum_memberships: 5
-    quote: for the purpose of electing a Clerk, five trustees, a Treasurer, and a
-      Collector of Taxes
+    quote: electing a Clerk, five trustees, a Treasurer, and a Collector of Taxes
   - established: true
     label: trustees
     filled_by: elected_by_voters

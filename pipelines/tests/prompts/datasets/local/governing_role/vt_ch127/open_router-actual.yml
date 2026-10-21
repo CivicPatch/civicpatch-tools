@@ -8,7 +8,7 @@
   agreed: true
   answers:
   - established: true
-    label: Selectboard members
+    label: Selectboard member
     filled_by: elected_by_voters
     maximum_memberships: 7
     quote: 'The officers elected by the Town at its annual meeting shall be: (1) Five
@@ -16,7 +16,7 @@
   - established: true
     label: Selectboard members
     filled_by: elected_by_voters
-    maximum_memberships: 7
+    maximum_memberships: 5
     quote: 'The officers elected by the Town at its annual meeting shall be: (1) Five
       Selectboard members.'
 - role_id: city-manager
@@ -31,8 +31,9 @@
   - established: true
     label: Town Manager
     filled_by: appointed
-    maximum_memberships: 1
-    quote: The Selectboard shall appoint a Town Manager for an indefinite term
+    maximum_memberships: null
+    quote: The Selectboard shall appoint a Town Manager for an indefinite term, and
+      upon such conditions as they may determine.
   - established: true
     label: Town Manager
     filled_by: appointed
@@ -57,8 +58,8 @@
     label: Chair
     filled_by: elected_by_members
     maximum_memberships: 1
-    quote: the Selectboard shall organize and elect a Chair and Vice Chair by a majority
-      vote of the entire Board.
+    quote: Forthwith after their election and qualification, the Selectboard shall
+      organize and elect a Chair and Vice Chair by a majority vote of the entire Board.
 - role_id: vice-chair
   expected: elected_by_members
   presiding: true
@@ -78,8 +79,8 @@
     label: Vice Chair
     filled_by: elected_by_members
     maximum_memberships: 1
-    quote: the Selectboard shall organize and elect a Chair and Vice Chair by a majority
-      vote of the entire Board.
+    quote: Forthwith after their election and qualification, the Selectboard shall
+      organize and elect a Chair and Vice Chair by a majority vote of the entire Board.
 - role_id: commission-president
   expected: probably_not_established
   presiding: true
