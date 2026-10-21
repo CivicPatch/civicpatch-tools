@@ -24,6 +24,7 @@ from database.issue_listings import (
     get_pipeline_run_issues_page,
 )
 from database.issues import resolve_issue, resolve_issues, set_issue_flagged
+from database.llm_calls import record_calls
 import database.users
 from database.publications import dismiss_changeset
 from database.source_pages import published_source_pages
@@ -61,6 +62,7 @@ from schemas.pipeline_runs import (
     FlagPipelineIssueRequest,
     GetPipelineRunStatusResponse,
     HandleSubmitPipelineRunArtifactsRequest,
+    RecordLLMCallsRequest,
     RegisterPipelineRunRequest,
     ServerDetail,
     UpdatePipelineRunStatusRequest,
@@ -315,6 +317,18 @@ def get_router(api_key_header):
         except (governing_law_service.UnknownJurisdiction, extras_organizations_service.UnknownJurisdiction):
             raise HTTPException(status_code=404, detail="Jurisdiction not found")
         return {**config.model_dump(mode="json"), "pipeline_run_cap_usd": pipeline_run.get("pipeline_run_cap_usd")}
+
+    @router.post("/{pipeline_run_id}/llm_calls", include_in_schema=False)
+    async def record_llm_calls_endpoint(
+        pipeline_run_id: str,
+        request: RecordLLMCallsRequest,
+        _: Identity = Depends(require_route_access(RouteCategory.SERVICE)),
+    ):
+        """For runs that submit no artifacts, so no `costs.json`: the collectors."""
+        if not await get_pipeline_run(pipeline_run_id):
+            raise HTTPException(status_code=404, detail="Pipeline run not found")
+        recorded = await record_calls(pipeline_run_id, [call.model_dump() for call in request.llm_calls])
+        return {"data": {"recorded": recorded}}
 
     # ── Pipeline Runs: Status & Progress ──────────────
 

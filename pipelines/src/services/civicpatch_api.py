@@ -4,7 +4,7 @@ from typing import List, Optional
 import httpx
 from fastapi import Request
 from pipelines_environment import get_env_vars
-from shared.schemas import JurisdictionExtras, KnownOrganization
+from shared.schemas import JurisdictionExtras, KnownOrganization, LLMCall
 from shared.utils.config_utils import (
     RoleConfig,
 )
@@ -289,3 +289,16 @@ async def fetch_collector_config(client: httpx.AsyncClient, logger, pipeline_run
         return resp.json()
 
     return await with_retry(logger, _fetch)
+
+
+async def record_llm_calls(client: httpx.AsyncClient, logger, pipeline_run_id: str, calls: list[LLMCall]) -> None:
+    """For a run that submits no artifacts. Safe to retry: cp.org skips a call it already holds."""
+    async def _post():
+        env = get_env_vars()
+        resp = await client.post(
+            f"{env['CIVICPATCH_ORG_URL']}/api/v1/pipeline_runs/{pipeline_run_id}/llm_calls",
+            json={"llm_calls": [call.model_dump(mode="json") for call in calls]},
+        )
+        resp.raise_for_status()
+
+    await with_retry(logger, _post)

@@ -50,14 +50,14 @@
     label: Vice Chair
     filled_by: elected_by_members
     maximum_memberships: 1
-    quote: Forthwith after their election and qualification, the Selectboard shall
-      organize and elect a Chair and Vice Chair by a majority vote of the entire Board.
+    quote: the Selectboard shall organize and elect a Chair and Vice Chair by a majority
+      vote of the entire Board.
   - established: true
     label: Vice Chair
     filled_by: elected_by_members
     maximum_memberships: 1
-    quote: Forthwith after their election and qualification, the Selectboard shall
-      organize and elect a Chair and Vice Chair by a majority vote of the entire Board.
+    quote: the Selectboard shall organize and elect a Chair and Vice Chair by a majority
+      vote of the entire Board.
 - role_id: city-manager
   expected: appointed
   right: true
@@ -69,11 +69,249 @@
   - established: true
     label: Town Manager
     filled_by: appointed
-    maximum_memberships: null
-    quote: The Selectboard shall appoint a Town Manager for an indefinite term
+    maximum_memberships: 1
+    quote: The Selectboard shall appoint a Town Manager for an indefinite term, and
+      upon such conditions as they may determine.
   - established: true
     label: Town Manager
     filled_by: appointed
     maximum_memberships: 1
-    quote: The Selectboard shall appoint a Town Manager for an indefinite term, and
-      upon such conditions as they may determine.
+    quote: The Selectboard shall appoint a Town Manager
+- role_id: commission-president
+  expected: probably_not_established
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: vice-mayor
+  expected: probably_not_established
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: assistant-mayor
+  expected: probably_not_established
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: mayor-pro-tempore
+  expected: probably_not_established
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: deputy-mayor-pro-tempore
+  expected: probably_not_established
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: council-president
+  expected: probably_not_established
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: false
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: true
+    label: Chair
+    filled_by: elected_by_members
+    maximum_memberships: 1
+    quote: the Selectboard shall organize and elect a Chair and Vice Chair by a majority
+      vote of the entire Board.
+- role_id: council-vice-president
+  expected: probably_not_established
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: true
+    label: Vice Chair
+    filled_by: elected_by_members
+    maximum_memberships: 1
+    quote: the Selectboard shall organize and elect a Chair and Vice Chair by a majority
+      vote of the entire Board.
+  - established: true
+    label: Vice Chair
+    filled_by: elected_by_members
+    maximum_memberships: 1
+    quote: the Selectboard shall organize and elect a Chair and Vice Chair by a majority
+      vote of the entire Board.
+- role_id: council-president-pro-tem
+  expected: probably_not_established
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: deputy-council-president
+  expected: probably_not_established
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: false
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: true
+    label: Vice Chair
+    filled_by: elected_by_members
+    maximum_memberships: 1
+    quote: the Selectboard shall organize and elect a Chair and Vice Chair by a majority
+      vote of the entire Board.
+- role_id: president-pro-tempore
+  expected: probably_not_established
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: commissioner-vice-president
+  expected: probably_not_established
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: chair-pro-tem
+  expected: probably_not_established
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: deputy-supervisor
+  expected: probably_not_established
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''

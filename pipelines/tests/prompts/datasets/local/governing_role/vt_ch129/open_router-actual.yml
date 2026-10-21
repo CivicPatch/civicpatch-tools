@@ -7,19 +7,15 @@
   agreed: true
   answers:
   - established: true
+    label: school trustees
+    filled_by: elected_by_voters
+    maximum_memberships: 5
+    quote: five school trustees
+  - established: true
     label: library trustees
     filled_by: elected_by_voters
     maximum_memberships: 5
-    quote: 'The officers elected at its annual meeting shall be: (1) five selectpersons;
-      (2) Town Clerk; (3) Town Treasurer; (4) five library trustees; (5) five school
-      trustees; and (6) Champlain Water District (CWD) Representative.'
-  - established: true
-    label: library trustee
-    filled_by: elected_by_voters
-    maximum_memberships: 5
-    quote: 'The officers elected at its annual meeting shall be: (1) five selectpersons;
-      (2) Town Clerk; (3) Town Treasurer; (4) five library trustees; (5) five school
-      trustees; and (6) Champlain Water District (CWD) Representative.'
+    quote: five library trustees
 - role_id: chair
   expected: elected_by_members
   right: true
@@ -38,9 +34,8 @@
     label: Chair
     filled_by: elected_by_members
     maximum_memberships: 1
-    quote: After their election and qualification, the Selectboard shall organize
-      and elect a Chair, a Vice Chair, and Clerk by a majority vote of the entire
-      Selectboard.
+    quote: the Selectboard shall organize and elect a Chair, a Vice Chair, and Clerk
+      by a majority vote of the entire Selectboard.
 - role_id: vice-chair
   expected: elected_by_members
   right: true
@@ -53,8 +48,9 @@
     label: Vice Chair
     filled_by: elected_by_members
     maximum_memberships: 1
-    quote: the Selectboard shall organize and elect a Chair, a Vice Chair, and Clerk
-      by a majority vote of the entire Selectboard.
+    quote: After their election and qualification, the Selectboard shall organize
+      and elect a Chair, a Vice Chair, and Clerk by a majority vote of the entire
+      Selectboard.
   - established: true
     label: Vice Chair
     filled_by: elected_by_members
@@ -78,8 +74,9 @@
   - established: true
     label: Town Manager
     filled_by: appointed
-    maximum_memberships: null
-    quote: shall be appointed by a majority of the Selectboard
+    maximum_memberships: 1
+    quote: The Town Manager shall be the Chief Administrative Officer of the Town
+      and shall be appointed by a majority of the Selectboard.
 - role_id: clerk
   expected: elected_by_voters
   right: true
@@ -100,25 +97,257 @@
     filled_by: elected_by_voters
     maximum_memberships: 1
     quote: 'The officers elected at its annual meeting shall be: (1) five selectpersons;
-      (2) Town Clerk; (3) Town Treasurer; (4) five library trustees; (5) five school
-      trustees; and (6) Champlain Water District (CWD) Representative.'
+      (2) Town Clerk;'
 - role_id: treasurer
   expected: elected_by_voters
   right: true
   each_right:
-  - true
   - false
+  - true
   agreed: true
   answers:
   - established: true
     label: Town Treasurer
     filled_by: elected_by_voters
     maximum_memberships: 1
-    quote: 'The officers elected at its annual meeting shall be: (1) five selectpersons;
-      (2) Town Clerk; (3) Town Treasurer; (4) five library trustees; (5) five school
-      trustees; and (6) Champlain Water District (CWD) Representative.'
+    quote: The Town Treasurer shall be elected for a three-year term.
   - established: true
     label: Town Treasurer
     filled_by: elected_by_voters
     maximum_memberships: 1
-    quote: The Town Treasurer shall be elected for a three-year term.
+    quote: 'The officers elected at its annual meeting shall be: (1) five selectpersons;
+      (2) Town Clerk; (3) Town Treasurer;'
+- role_id: commission-president
+  expected: probably_not_established
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: vice-mayor
+  expected: probably_not_established
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: assistant-mayor
+  expected: probably_not_established
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: mayor-pro-tempore
+  expected: probably_not_established
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: deputy-mayor-pro-tempore
+  expected: probably_not_established
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: council-president
+  expected: probably_not_established
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: council-vice-president
+  expected: probably_not_established
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: council-president-pro-tem
+  expected: probably_not_established
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: deputy-council-president
+  expected: probably_not_established
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: president-pro-tempore
+  expected: probably_not_established
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: commissioner-vice-president
+  expected: probably_not_established
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: chair-pro-tem
+  expected: probably_not_established
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: deputy-supervisor
+  expected: probably_not_established
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''

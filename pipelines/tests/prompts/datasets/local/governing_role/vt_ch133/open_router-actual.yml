@@ -32,7 +32,7 @@
     label: Chair
     filled_by: elected_by_members
     maximum_memberships: 1
-    quote: the Selectboard shall elect a Chair and a Vice Chair of the Selectboard
+    quote: the Selectboard shall elect a Chair
   - established: true
     label: Chair
     filled_by: elected_by_members
@@ -50,16 +50,14 @@
     label: Vice Chair
     filled_by: elected_by_members
     maximum_memberships: 1
-    quote: the Selectboard shall elect a Chair and a Vice Chair of the Selectboard,
-      each of whom shall be elected for a term of one year and may succeed himself
-      or herself indefinitely.
+    quote: At their first regular meeting following the annual Town meeting, the Selectboard
+      shall elect a Chair and a Vice Chair of the Selectboard, each of whom shall
+      be elected for a term of one year and may succeed himself or herself indefinitely.
   - established: true
     label: Vice Chair
     filled_by: elected_by_members
     maximum_memberships: 1
-    quote: At their first regular meeting following the annual Town meeting, the Selectboard
-      shall elect a Chair and a Vice Chair of the Selectboard, each of whom shall
-      be elected for a term of one year and may succeed himself or herself indefinitely.
+    quote: the Selectboard shall elect a Chair and a Vice Chair of the Selectboard
 - role_id: clerk
   expected: elected_by_voters
   right: true
@@ -76,10 +74,47 @@
   - established: true
     label: Town Clerk
     filled_by: elected_by_voters
-    maximum_memberships: null
+    maximum_memberships: 1
     quote: The Town Clerk shall be elected for a three-year term.
 - role_id: treasurer
   expected: elected_by_voters
+  right: true
+  each_right:
+  - true
+  - false
+  agreed: true
+  answers:
+  - established: true
+    label: Town Treasurer
+    filled_by: elected_by_voters
+    maximum_memberships: 1
+    quote: Town Treasurer. The Town Treasurer shall be elected to a term of three
+      years.
+  - established: true
+    label: Town Treasurer
+    filled_by: elected_by_voters
+    maximum_memberships: 1
+    quote: Town Treasurer. The Town Treasurer shall be elected for a three-year term.
+- role_id: commission-president
+  expected: probably_not_established
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: vice-mayor
+  expected: probably_not_established
   right: true
   each_right:
   - true
@@ -87,13 +122,214 @@
   agreed: true
   answers:
   - established: true
-    label: Town Treasurer
-    filled_by: elected_by_voters
-    maximum_memberships: null
-    quote: The Town Treasurer shall be elected to a term of three years.
-  - established: true
-    label: Town Treasurer
-    filled_by: elected_by_voters
+    label: Vice Chair
+    filled_by: elected_by_members
     maximum_memberships: 1
-    quote: Town Treasurer. The Town Treasurer shall be elected to a term of three
-      years.
+    quote: the Selectboard shall elect a Chair and a Vice Chair of the Selectboard
+  - established: true
+    label: Vice Chair
+    filled_by: elected_by_members
+    maximum_memberships: 1
+    quote: the Selectboard shall elect a Chair and a Vice Chair of the Selectboard
+- role_id: assistant-mayor
+  expected: probably_not_established
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: mayor-pro-tempore
+  expected: probably_not_established
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: deputy-mayor-pro-tempore
+  expected: probably_not_established
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: council-president
+  expected: probably_not_established
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: true
+    label: Chair of the Selectboard
+    filled_by: elected_by_members
+    maximum_memberships: 1
+    quote: the Selectboard shall elect a Chair and a Vice Chair of the Selectboard,
+      each of whom shall be elected for a term of one year and may succeed himself
+      or herself indefinitely.
+  - established: true
+    label: Chair
+    filled_by: elected_by_members
+    maximum_memberships: 1
+    quote: the Selectboard shall elect a Chair and a Vice Chair of the Selectboard
+- role_id: council-vice-president
+  expected: probably_not_established
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: true
+    label: Vice Chair of the Selectboard
+    filled_by: elected_by_members
+    maximum_memberships: 1
+    quote: the Selectboard shall elect a Chair and a Vice Chair of the Selectboard
+  - established: true
+    label: Vice Chair
+    filled_by: elected_by_members
+    maximum_memberships: 1
+    quote: the Selectboard shall elect a Chair and a Vice Chair of the Selectboard,
+      each of whom shall be elected for a term of one year and may succeed himself
+      or herself indefinitely.
+- role_id: council-president-pro-tem
+  expected: probably_not_established
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: deputy-council-president
+  expected: probably_not_established
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: false
+  answers:
+  - established: true
+    label: Vice Chair of the Selectboard
+    filled_by: elected_by_members
+    maximum_memberships: 1
+    quote: the Selectboard shall elect a Chair and a Vice Chair of the Selectboard
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: president-pro-tempore
+  expected: probably_not_established
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: commissioner-vice-president
+  expected: probably_not_established
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: chair-pro-tem
+  expected: probably_not_established
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: deputy-supervisor
+  expected: probably_not_established
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''

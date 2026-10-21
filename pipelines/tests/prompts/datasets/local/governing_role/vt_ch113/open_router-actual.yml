@@ -13,7 +13,7 @@
     quote: There shall be a Selectboard consisting of five members, and all Selectboard
       members shall be elected at large.
   - established: true
-    label: Selectboard
+    label: Selectboard member
     filled_by: elected_by_voters
     maximum_memberships: 5
     quote: There shall be a Selectboard consisting of five members, and all Selectboard
@@ -50,7 +50,8 @@
     label: Vice Chair
     filled_by: elected_by_members
     maximum_memberships: 1
-    quote: elect a Chair, Vice Chair, and a Clerk
+    quote: the Selectboard shall organize and elect a Chair, Vice Chair, and a Clerk
+      by a majority vote of the entire Selectboard
   - established: true
     label: Vice Chair
     filled_by: elected_by_members
@@ -68,39 +69,45 @@
   - established: true
     label: Town Manager
     filled_by: appointed
-    maximum_memberships: 1
+    maximum_memberships: null
     quote: The Selectboard shall appoint a Town Manager
   - established: true
     label: Town Manager
     filled_by: appointed
-    maximum_memberships: null
+    maximum_memberships: 1
     quote: The Selectboard shall appoint a Town Manager
 - role_id: treasurer
   expected: appointed
   right: true
   each_right:
-  - false
   - true
-  agreed: false
+  - true
+  agreed: true
   answers:
-  - established: false
-    label: ''
-    filled_by: not_stated
+  - established: true
+    label: Town Treasurer
+    filled_by: appointed
     maximum_memberships: null
-    quote: ''
+    quote: The Town Manager shall have authority to appoint, fix the salary of, suspend,
+      and remove all employees of the Town, including the Town Clerk and Treasurer,
+      subject to the provisions of this charter. The Town Manager shall obtain the
+      advice and consent of a majority of the Selectboard before appointing or fixing
+      the salary of the head of any department, including the Town Clerk and Treasurer.
   - established: true
     label: Treasurer
     filled_by: appointed
     maximum_memberships: null
     quote: The Town Manager shall have authority to appoint, fix the salary of, suspend,
       and remove all employees of the Town, including the Town Clerk and Treasurer,
-      subject to the provisions of this charter.
+      subject to the provisions of this charter. The Town Manager shall obtain the
+      advice and consent of a majority of the Selectboard before appointing or fixing
+      the salary of the head of any department, including the Town Clerk and Treasurer.
 - role_id: moderator
   expected: elected_by_voters
   right: true
   each_right:
   - true
-  - false
+  - true
   agreed: true
   answers:
   - established: true
@@ -120,5 +127,250 @@
     label: Moderator
     filled_by: elected_by_voters
     maximum_memberships: 1
-    quote: the Town shall elect by Australian ballot from among the legally qualified
-      voters thereof the following Town officers... (2) A Moderator.
+    quote: 'At the annual meeting, the Town shall elect by Australian ballot from
+      among the legally qualified voters thereof the following Town officers, who
+      shall serve until the next annual meeting or until others are chosen. (1) Selectboard,
+      number, terms of office, election: (A) There shall be a Selectboard consisting
+      of five members, and all Selectboard members shall be elected at large. (B)
+      Three members of the Selectboard shall have terms of office of three years;
+      two members shall have terms of office of two years. At each election, one Selectboard
+      member shall be elected for a three-year term and one for a two-year term. (2)
+      A Moderator.'
+- role_id: commission-president
+  expected: probably_not_established
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: false
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: true
+    label: Chair
+    filled_by: elected_by_members
+    maximum_memberships: 1
+    quote: the Selectboard shall organize and elect a Chair, Vice Chair, and a Clerk
+      by a majority vote of the entire Selectboard
+- role_id: vice-mayor
+  expected: probably_not_established
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: false
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: true
+    label: Vice Chair
+    filled_by: elected_by_members
+    maximum_memberships: 1
+    quote: elect a Chair, Vice Chair, and a Clerk by a majority vote of the entire
+      Selectboard
+- role_id: assistant-mayor
+  expected: probably_not_established
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: mayor-pro-tempore
+  expected: probably_not_established
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: deputy-mayor-pro-tempore
+  expected: probably_not_established
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: council-president
+  expected: probably_not_established
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: false
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: true
+    label: Chair
+    filled_by: elected_by_members
+    maximum_memberships: 1
+    quote: the Selectboard shall organize and elect a Chair, Vice Chair, and a Clerk
+      by a majority vote of the entire Selectboard
+- role_id: council-vice-president
+  expected: probably_not_established
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: true
+    label: Vice Chair
+    filled_by: elected_by_members
+    maximum_memberships: 1
+    quote: the Selectboard shall organize and elect a Chair, Vice Chair, and a Clerk
+      by a majority vote of the entire Selectboard
+  - established: true
+    label: Vice Chair
+    filled_by: elected_by_members
+    maximum_memberships: 1
+    quote: the Selectboard shall organize and elect a Chair, Vice Chair, and a Clerk
+- role_id: council-president-pro-tem
+  expected: probably_not_established
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: deputy-council-president
+  expected: probably_not_established
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: president-pro-tempore
+  expected: probably_not_established
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: commissioner-vice-president
+  expected: probably_not_established
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: chair-pro-tem
+  expected: probably_not_established
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: deputy-supervisor
+  expected: probably_not_established
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''

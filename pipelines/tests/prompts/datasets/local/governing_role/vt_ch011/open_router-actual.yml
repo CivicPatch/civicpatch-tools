@@ -57,7 +57,8 @@
     label: Mayor
     filled_by: elected_by_voters
     maximum_memberships: 1
-    quote: The legal voters of the City shall elect a Mayor
+    quote: The legal voters of the City shall elect a Mayor who shall be a legal voter
+      in the City.
 - role_id: city-manager
   expected: appointed
   right: true
@@ -69,7 +70,7 @@
   - established: true
     label: City Manager
     filled_by: appointed
-    maximum_memberships: null
+    maximum_memberships: 1
     quote: The City Manager shall be chosen and appointed by majority vote of the
       City Council for an indefinite term
   - established: true
@@ -89,7 +90,7 @@
   - established: true
     label: City Clerk
     filled_by: appointed
-    maximum_memberships: null
+    maximum_memberships: 1
     quote: The City Council shall appoint a City Clerk.
   - established: true
     label: City Clerk
@@ -107,10 +108,269 @@
   - established: true
     label: City Treasurer
     filled_by: appointed
-    maximum_memberships: 1
+    maximum_memberships: null
     quote: The City Council shall appoint a City Treasurer.
   - established: true
     label: City Treasurer
     filled_by: appointed
     maximum_memberships: null
     quote: The City Council shall appoint a City Treasurer.
+- role_id: commission-president
+  expected: probably_not_established
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: true
+    label: President of the City Council
+    filled_by: elected_by_members
+    maximum_memberships: 1
+    quote: The City Council shall elect one of their number President of the City
+      Council.
+  - established: true
+    label: President of the City Council
+    filled_by: elected_by_members
+    maximum_memberships: 1
+    quote: The City Council shall elect one of their number President of the City
+      Council.
+- role_id: vice-mayor
+  expected: probably_not_established
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: true
+    label: President of the City Council
+    filled_by: elected_by_members
+    maximum_memberships: 1
+    quote: The City Council shall elect one of their number President of the City
+      Council.
+  - established: true
+    label: President of the City Council
+    filled_by: elected_by_members
+    maximum_memberships: 1
+    quote: The City Council shall elect one of their number President of the City
+      Council.
+- role_id: assistant-mayor
+  expected: probably_not_established
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: mayor-pro-tempore
+  expected: probably_not_established
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: false
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: true
+    label: President of the City Council
+    filled_by: elected_by_members
+    maximum_memberships: 1
+    quote: The City Council shall elect one of their number President of the City
+      Council.
+- role_id: deputy-mayor-pro-tempore
+  expected: probably_not_established
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: council-vice-president
+  expected: probably_not_established
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: council-president-pro-tem
+  expected: probably_not_established
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: deputy-council-president
+  expected: probably_not_established
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: president-pro-tempore
+  expected: probably_not_established
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: chair
+  expected: probably_not_established
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: true
+    label: President of the City Council
+    filled_by: elected_by_members
+    maximum_memberships: 1
+    quote: The City Council shall elect one of their number President of the City
+      Council.
+  - established: true
+    label: President of the City Council
+    filled_by: elected_by_members
+    maximum_memberships: 1
+    quote: The City Council shall elect one of their number President of the City
+      Council.
+- role_id: vice-chair
+  expected: probably_not_established
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: commissioner-vice-president
+  expected: probably_not_established
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: chair-pro-tem
+  expected: probably_not_established
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: deputy-supervisor
+  expected: probably_not_established
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''

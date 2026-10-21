@@ -89,3 +89,145 @@ roles:
   - Moderator
   - Town Moderator
   expected: not_established
+- organization_name: Board of Trustees
+  role_id: commission-president
+  role_label: Commission President
+  names:
+  - Commission President
+  - commissioner president
+  expected: probably_not_established
+- organization_name: Board of Trustees
+  role_id: vice-mayor
+  role_label: Vice Mayor
+  names:
+  - Vice Mayor
+  - vice-mayor
+  expected: probably_not_established
+- organization_name: Board of Trustees
+  role_id: assistant-mayor
+  role_label: Assistant Mayor
+  names:
+  - Assistant Mayor
+  expected: probably_not_established
+- organization_name: Board of Trustees
+  role_id: mayor-pro-tempore
+  role_label: Mayor Pro Tempore
+  names:
+  - Mayor Pro Tempore
+  - mayor pro tem
+  - mayor pro temp
+  - mayor pro-tem
+  - mayor pro-temp
+  - mayor pro-tempore
+  - mayor protem
+  - mayor protemp
+  - mayor-pro tem
+  expected: probably_not_established
+- organization_name: Board of Trustees
+  role_id: deputy-mayor-pro-tempore
+  role_label: Deputy Mayor Pro Tempore
+  names:
+  - Deputy Mayor Pro Tempore
+  - deputy mayor pro tem
+  - deputy mayor pro tempore
+  - deputy mayor pro-tem
+  expected: probably_not_established
+- organization_name: Board of Trustees
+  role_id: council-president
+  role_label: Council President
+  names:
+  - Council President
+  - city council president
+  - council member president
+  - president
+  - president of the council
+  expected: probably_not_established
+- organization_name: Board of Trustees
+  role_id: council-vice-president
+  role_label: Council Vice President
+  names:
+  - Council Vice President
+  - council member vice president
+  - council member vice-president
+  - council vice-president
+  - vice president
+  - vice-president
+  expected: probably_not_established
+- organization_name: Board of Trustees
+  role_id: council-president-pro-tem
+  role_label: Council President Pro Tem
+  names:
+  - Council President Pro Tem
+  - council president pro tempore
+  - council president pro-tem
+  expected: probably_not_established
+- organization_name: Board of Trustees
+  role_id: deputy-council-president
+  role_label: Deputy Council President
+  names:
+  - Deputy Council President
+  expected: probably_not_established
+- organization_name: Board of Trustees
+  role_id: president-pro-tempore
+  role_label: President Pro Tempore
+  names:
+  - President Pro Tempore
+  - president pro tem
+  - village president pro tem
+  expected: probably_not_established
+- organization_name: Board of Trustees
+  role_id: chair
+  role_label: Chair
+  names:
+  - Chair
+  - Chairperson
+  - chairman
+  - chairwoman
+  - commissioner director
+  - council chair
+  - council chairman
+  - council chairwoman
+  - town council chair
+  expected: probably_not_established
+- organization_name: Board of Trustees
+  role_id: vice-chair
+  role_label: Vice Chair
+  names:
+  - Vice Chair
+  - Vice Chairperson
+  - Vice-Chairperson
+  - commissioner deputy director
+  - council vice chair
+  - council vice chairman
+  - council vice chairwoman
+  - council vice-chair
+  - council vice-chairman
+  - council vice-chairwoman
+  - vice chairman
+  - vice chairwoman
+  - vice-chair
+  - vice-chairman
+  - vice-chairwoman
+  expected: probably_not_established
+- organization_name: Board of Trustees
+  role_id: commissioner-vice-president
+  role_label: Commissioner Vice President
+  names:
+  - Commissioner Vice President
+  - commission vice president
+  - commission vice-president
+  - commissioner vice-president
+  - commissioner-vice president
+  expected: probably_not_established
+- organization_name: Board of Trustees
+  role_id: chair-pro-tem
+  role_label: Chair Pro Tem
+  names:
+  - Chair Pro Tem
+  expected: probably_not_established
+- organization_name: Board of Trustees
+  role_id: deputy-supervisor
+  role_label: Deputy Supervisor
+  names:
+  - Deputy Supervisor
+  expected: probably_not_established

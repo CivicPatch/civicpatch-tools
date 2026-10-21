@@ -10,8 +10,9 @@ from .schemas import (
 )
 from .transitions.graph import ORGANIZATIONS_COLLECTOR_TRANSITIONS
 from .transitions.main import TRANSITION_MAP
+import services.civicpatch_api as civicpatch_api
 from shared.utils.statuses import PipelineRunStatus
-from utils import log_utils
+from utils import cost_utils, log_utils
 
 logger = logging.getLogger(__name__)
 
@@ -28,9 +29,13 @@ async def start(
         data=OrganizationsCollectorData(jurisdiction_ocdid=jurisdiction_ocdid, config=config),
     )
     env = get_env_vars()
+    run_logger = log_utils.get_pipeline_run_logger(jurisdiction_ocdid)
     async with httpx.AsyncClient(headers={"Authorization": env["SERVICE_API_KEY"]}, timeout=60.0) as api_client:
         try:
-            return await run_pipeline(context, log_utils.get_pipeline_run_logger(jurisdiction_ocdid), MACHINE, api_client)
+            return await run_pipeline(context, run_logger, MACHINE, api_client)
         except PipelineRunError as e:
             logger.error(f"Organizations collection failed for {e.jurisdiction_ocdid}: {e}")
             raise
+        finally:
+            await civicpatch_api.record_llm_calls(api_client, run_logger, pipeline_run_id, cost_utils.get_cost_tracker(pipeline_run_id))
+            cost_utils.reset_cost_tracker(pipeline_run_id)
