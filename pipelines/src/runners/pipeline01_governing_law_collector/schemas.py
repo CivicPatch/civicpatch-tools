@@ -62,7 +62,7 @@ class GoverningLawCollectorData(BaseModel):
     # The raw page and its markdown live only between their steps, and never in a saved context.
     fetched: Optional[FetchedPage] = Field(default=None, exclude=True)
     markdown: Optional[str] = Field(default=None, exclude=True)
-    # The url in hand was thin by plain GET, so the next fetch of it is by browser.
+    # The url in hand was nearly empty by plain GET, so the next fetch of it is by browser.
     escalate: bool = False
     charter_source_page_ids: List[str] = []
     general_law_source_page_ids: List[str] = []

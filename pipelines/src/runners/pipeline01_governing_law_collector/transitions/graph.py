@@ -20,7 +20,7 @@ GOVERNING_LAW_COLLECTOR_TRANSITIONS: Transitions = {
     }),
     GoverningLawCollectorStep.PREPROCESS_PAGE_CONTENT: frozenset({
         GoverningLawCollectorStep.STORE_SOURCE_PAGE,
-        # Thin by plain GET: the same url again, by browser. Thin even then: the next url.
+        # Nearly empty by plain GET: the same url again, by browser. Still nearly empty: the next url.
         GoverningLawCollectorStep.FETCH_SOURCE,
         GoverningLawCollectorStep.WRITE_GOVERNING_LAW,
     }),

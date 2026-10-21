@@ -1,5 +1,5 @@
 """Turning a url into raw bytes. A plain GET first; the browser only when the plain page turned
-out thin. A host that refuses (403, 429) is never retried another way: that is a refusal, and the
+out nearly empty. A host that refuses (403, 429) is never retried another way: that is a refusal, and the
 publisher rules say stop."""
 
 from . import browser, plain

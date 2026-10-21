@@ -117,7 +117,7 @@ async def test_a_refusal_skips_that_url_and_is_never_retried_by_browser():
 
 
 @pytest.mark.asyncio
-async def test_a_thin_page_is_fetched_once_more_by_browser():
+async def test_a_nearly_empty_page_is_fetched_once_more_by_browser():
     answer = FinderAnswer(found_by=FoundBy.STATE_INDEX, classification="town", charter_urls=[_CHARTER])
 
     async def fetch(url, by_browser):

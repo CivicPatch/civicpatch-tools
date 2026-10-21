@@ -57,6 +57,20 @@ git -C "$TEST_DIR" push --force test-open-data main
 echo "✓ test-open-data updated locally at $TEST_DIR and on GitHub ($(git -C "$TEST_DIR" rev-parse --short HEAD))"
 """
 
+[tasks.sync_dev_configs]
+description = "Sync every config file on test-open-data's main into the local database, as open-data's merge Action does for prod. Run after refresh_test_open_data."
+run = """
+set -eu
+SHA=$(git ls-remote https://github.com/CivicPatch/test-open-data.git refs/heads/main | cut -f1)
+PATHS=$(curl -fsS "https://api.github.com/repos/CivicPatch/test-open-data/git/trees/$SHA?recursive=1" \
+  | jq -c '[.tree[].path | select(test("^data_source/(([a-z]{2}/)?(local|counties)/)?config\\\\.yml$"))]')
+echo "→ Syncing $(echo "$PATHS" | jq length) config files at $SHA"
+curl --fail-with-body -sS -X POST "http://localhost:8000/api/admin/jurisdiction_configs/sync" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: $SERVICE_API_KEY" \
+  -d "{\\"commit_sha\\": \\"$SHA\\", \\"paths\\": $PATHS}"
+echo
+"""
 
 [tasks.clear_dashboard_cache]
 description = "Drop the cached dashboard data (local). Prod: cp-infrastructure's prod-clear-dashboard-cache"
@@ -96,6 +110,11 @@ run = """
 [tasks.pytest-shared]
 run = "uv run pytest"
 dir = "shared"
+
+[tasks.check-law-urls]
+description = "Fetch every law url in the state configs as pipeline 1 would; flags nearly empty, refused or failed pages. Usage: mise run check-law-urls -- <open-data data_source dir>"
+run = "uv run python -m runners.pipeline01_governing_law_collector.url_check"
+dir = "pipelines/src"
 
 [tasks.tpipes]
 run = "uv run pytest tests/unit"
