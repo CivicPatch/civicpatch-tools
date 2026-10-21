@@ -40,11 +40,11 @@ def parse_labels(
         division_ocdid=parsed.division_ocdid,
     )
     designations = tuple(parsed.other_designations)
+    # Beside a role too: "Council Member East" and "Commissioner of Police" keep what they say.
     unmatched_text = tuple(
         dict.fromkeys(
             term
             for part in parsed.parts
-            if not part.parsed.role
             for term in part.parsed.unmatched
         )
     )

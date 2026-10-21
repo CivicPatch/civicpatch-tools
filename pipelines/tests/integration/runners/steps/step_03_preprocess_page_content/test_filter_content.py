@@ -448,6 +448,24 @@ def test_filter_content_keeps_images_in_kept_table_with_relevant_content():
     """
     assert_markdown_equal({}, original, expected)
 
+def test_a_heading_naming_a_division_by_direction_is_kept():
+    """Burlington's council page: each district councilor under a one-word heading."""
+    original = """
+    <html><body>
+        <div><h2>Ward 8</h2><p><span>Marek Broderick</span><br>mbroderick@burlingtonvt.gov</p></div>
+        <div><h2>Central</h2><p><span>Melo Grant</span><br>megrant@burlingtonvt.gov</p></div>
+        <div><h2>North East</h2><p><span>Allie Schachter</span><br>aschachter@burlingtonvt.gov</p></div>
+        <div><h2>Feast</h2><p>Read the latest news.</p></div>
+    </body></html>
+    """
+
+    kept = to_markdown(filter_content(logger, {}, original))
+
+    assert kept.index("Ward 8") < kept.index("Marek Broderick") < kept.index("Central") < kept.index("Melo Grant")
+    assert kept.index("North East") < kept.index("Allie Schachter")
+    assert "Feast" not in kept
+
+
 def test_filter_content_keeps_relevant_content_with_case_insensitive_match():
     """Content containing case-insensitive matches of identities should be preserved"""
     identities = {
