@@ -12,8 +12,8 @@ from pipelines_environment import get_env_vars
 from fastapi import HTTPException
 from runners.collectors import COLLECTORS
 from runners.engine import PipelineRunError
-from runners.people_collector.main import start_threaded
-from runners.people_collector.schemas import PipelineRunConfig
+from runners.pipeline03_people_collector.main import start_threaded
+from runners.pipeline03_people_collector.schemas import PipelineRunConfig
 from shared.schemas import PublishedSourcePage
 import services.civicpatch_api as civicpatch_api
 from services.civicpatch_api import update_pipeline_run_status

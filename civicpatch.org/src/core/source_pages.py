@@ -5,7 +5,7 @@ from typing import Optional
 from pydantic import BaseModel
 from shared.utils import id_utils
 
-# The pipeline's `LinkStatus` values (pipelines/src/runners/people_collector/schemas.py)
+# The pipeline's `LinkStatus` values (pipelines/src/runners/pipeline03_people_collector/schemas.py)
 # this module reads.
 LINK_STATUS_PENDING = "pending"
 LINK_STATUS_HEURISTICS_FAIL = "processed_heuristics_fail"

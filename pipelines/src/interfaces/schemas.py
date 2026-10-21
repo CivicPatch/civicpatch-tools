@@ -1,4 +1,4 @@
-from runners.people_collector.schemas import PeopleCollectorState, PipelineRunConfig
+from runners.pipeline03_people_collector.schemas import PeopleCollectorState, PipelineRunConfig
 from pydantic import BaseModel
 from shared.utils import id_utils
 from typing import List, Literal, Optional
