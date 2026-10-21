@@ -87,7 +87,8 @@
     filled_by: elected_by_members
     maximum_memberships: 1
     quote: the Selectboard shall organize and elect a Chair and Vice Chair by a majority
-      vote of the entire Board
+      vote of the entire Board and file a certificate of such election for record
+      in the office of the Town Clerk
 - role_id: vice-chair
   expected: elected_by_members
   presiding: true
@@ -109,7 +110,8 @@
     filled_by: elected_by_members
     maximum_memberships: 1
     quote: the Selectboard shall organize and elect a Chair and Vice Chair by a majority
-      vote of the entire Board
+      vote of the entire Board and file a certificate of such election for record
+      in the office of the Town Clerk
 - role_id: commission-president
   expected: probably_not_established
   presiding: true

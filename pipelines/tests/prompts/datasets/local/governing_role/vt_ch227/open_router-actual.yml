@@ -13,15 +13,14 @@
     filled_by: elected_by_voters
     maximum_memberships: 1
     quote: At the annual meeting there shall be elected, by ballot if called for by
-      three voters, a Clerk
+      three voters, a Clerk, a Treasurer, a Chief Engineer, First and Second Assistant
+      Engineers, a Collector, and five trustees
   - established: true
     label: Clerk
     filled_by: elected_by_voters
     maximum_memberships: 1
     quote: At the annual meeting there shall be elected, by ballot if called for by
-      three voters, a Clerk, a Treasurer, a Chief Engineer, First and Second Assistant
-      Engineers, a Collector, and five trustees, who shall serve until their successors
-      are elected.
+      three voters, a Clerk
 - role_id: treasurer
   expected: elected_by_voters
   presiding: false
@@ -38,7 +37,8 @@
     maximum_memberships: 1
     quote: At the annual meeting there shall be elected, by ballot if called for by
       three voters, a Clerk, a Treasurer, a Chief Engineer, First and Second Assistant
-      Engineers, a Collector, and five trustees
+      Engineers, a Collector, and five trustees, who shall serve until their successors
+      are elected.
   - established: true
     label: Treasurer
     filled_by: elected_by_voters
@@ -57,7 +57,7 @@
   agreed: true
   answers:
   - established: true
-    label: trustee
+    label: trustees
     filled_by: elected_by_voters
     maximum_memberships: 5
     quote: At the annual meeting there shall be elected, by ballot if called for by
@@ -69,7 +69,8 @@
     maximum_memberships: 5
     quote: At the annual meeting there shall be elected, by ballot if called for by
       three voters, a Clerk, a Treasurer, a Chief Engineer, First and Second Assistant
-      Engineers, a Collector, and five trustees
+      Engineers, a Collector, and five trustees, who shall serve until their successors
+      are elected.
 - role_id: commission-president
   expected: probably_not_established
   presiding: true

@@ -12,14 +12,16 @@
     label: Village President
     filled_by: elected_by_voters
     maximum_memberships: 1
-    quote: each of whom shall be elected by Australian ballot at the annual meeting
-      of the Village
+    quote: The legislative body of the Village of Swanton shall be the Board of Trustees,
+      consisting of three trustees and the Village President, each of whom shall be
+      elected by Australian ballot at the annual meeting of the Village.
   - established: true
     label: Village President
     filled_by: elected_by_voters
     maximum_memberships: 1
-    quote: each of whom shall be elected by Australian ballot at the annual meeting
-      of the Village
+    quote: The legislative body of the Village of Swanton shall be the Board of Trustees,
+      consisting of three trustees and the Village President, each of whom shall be
+      elected by Australian ballot at the annual meeting of the Village.
 - role_id: member
   expected: elected_by_voters
   presiding: false
@@ -34,15 +36,14 @@
     label: Trustee
     filled_by: elected_by_voters
     maximum_memberships: 3
-    quote: each of whom shall be elected by Australian ballot at the annual meeting
-      of the Village.
+    quote: consisting of three trustees and the Village President, each of whom shall
+      be elected by Australian ballot at the annual meeting of the Village.
   - established: true
     label: Trustee
     filled_by: elected_by_voters
-    maximum_memberships: 3
-    quote: The legislative body of the Village of Swanton shall be the Board of Trustees,
-      consisting of three trustees and the Village President, each of whom shall be
-      elected by Australian ballot at the annual meeting of the Village.
+    maximum_memberships: null
+    quote: consisting of three trustees and the Village President, each of whom shall
+      be elected by Australian ballot at the annual meeting of the Village.
 - role_id: city-manager
   expected: appointed
   presiding: false
@@ -56,12 +57,12 @@
   - established: true
     label: Village Manager
     filled_by: appointed
-    maximum_memberships: 1
+    maximum_memberships: null
     quote: The Board of Trustees shall appoint a Village Manager
   - established: true
     label: Village Manager
     filled_by: appointed
-    maximum_memberships: 1
+    maximum_memberships: null
     quote: The Board of Trustees shall appoint a Village Manager
 - role_id: commission-president
   expected: probably_not_established
@@ -170,21 +171,19 @@
   rounds: 1
   each_right:
   - true
-  - false
-  agreed: false
+  - true
+  agreed: true
   answers:
   - established: false
     label: ''
     filled_by: not_stated
     maximum_memberships: null
     quote: ''
-  - established: true
-    label: Village President
-    filled_by: elected_by_voters
-    maximum_memberships: 1
-    quote: the Board of Trustees, consisting of three trustees and the Village President,
-      each of whom shall be elected by Australian ballot at the annual meeting of
-      the Village.
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
 - role_id: council-vice-president
   expected: probably_not_established
   presiding: true

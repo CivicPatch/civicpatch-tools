@@ -19,7 +19,7 @@
     filled_by: elected_by_voters
     maximum_memberships: 1
     quote: the legal voters of the City shall, from among the legal voters thereof,
-      elect a Mayor.
+      elect a Mayor
 - role_id: member
   expected: elected_by_voters
   presiding: false
@@ -34,10 +34,9 @@
     label: City Councilor
     filled_by: elected_by_voters
     maximum_memberships: 12
-    quote: On the first Tuesday in March 2015 and biennially thereafter, the legal
-      voters of each of the South, Central, East, and North City Districts shall,
-      from among the legal voters of their respective district, elect a City Councilor
-      for a two-year term.
+    quote: the legal voters of each of the South, Central, East, and North City Districts
+      shall, from among the legal voters of their respective district, elect a City
+      Councilor for a two-year term.
   - established: true
     label: City Councilor
     filled_by: elected_by_voters

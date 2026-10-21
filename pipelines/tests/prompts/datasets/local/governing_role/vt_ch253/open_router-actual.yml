@@ -9,18 +9,21 @@
   agreed: true
   answers:
   - established: true
-    label: trustee
-    filled_by: elected_by_voters
-    maximum_memberships: 3
-    quote: elect from their number a Moderator, a Clerk, a Treasurer, a Collector
-      of Taxes, three trustees, three fire wardens, and an Attorney.
-  - established: true
     label: trustees
     filled_by: elected_by_voters
     maximum_memberships: 3
-    quote: the qualified electors of the Village shall, by ballot if called for, elect
-      from their number a Moderator, a Clerk, a Treasurer, a Collector of Taxes, three
-      trustees, three fire wardens, and an Attorney.
+    quote: At every annual meeting of the Village, the qualified electors of the Village
+      shall, by ballot if called for, elect from their number a Moderator, a Clerk,
+      a Treasurer, a Collector of Taxes, three trustees, three fire wardens, and an
+      Attorney.
+  - established: true
+    label: trustee
+    filled_by: elected_by_voters
+    maximum_memberships: 3
+    quote: At every annual meeting of the Village, the qualified electors of the Village
+      shall, by ballot if called for, elect from their number a Moderator, a Clerk,
+      a Treasurer, a Collector of Taxes, three trustees, three fire wardens, and an
+      Attorney.
 - role_id: moderator
   expected: elected_by_voters
   presiding: false
@@ -35,10 +38,7 @@
     label: Moderator
     filled_by: elected_by_voters
     maximum_memberships: 1
-    quote: At every annual meeting of the Village, the qualified electors of the Village
-      shall, by ballot if called for, elect from their number a Moderator, a Clerk,
-      a Treasurer, a Collector of Taxes, three trustees, three fire wardens, and an
-      Attorney.
+    quote: elect from their number a Moderator
   - established: true
     label: Moderator
     filled_by: elected_by_voters

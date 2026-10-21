@@ -12,7 +12,9 @@
     label: Chairperson
     filled_by: elected_by_members
     maximum_memberships: 1
-    quote: the Trustees shall organize and elect a Chairperson
+    quote: Forthwith, after an election and qualification, the Trustees shall organize
+      and elect a Chairperson, and file a certificate of such election for record
+      in the office of the Village Clerk.
   - established: true
     label: Chairperson
     filled_by: elected_by_members

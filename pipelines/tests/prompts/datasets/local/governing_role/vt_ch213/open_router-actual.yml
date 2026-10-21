@@ -12,8 +12,10 @@
     label: Trustee
     filled_by: elected_by_voters
     maximum_memberships: 3
-    quote: all of which officers shall be chosen by ballot at each annual meeting
-      of the legal voters of the corporation
+    quote: The officers of the corporation shall be a Board of three Trustees, a Clerk,
+      a Treasurer, a Collector of Taxes, an Auditor, and a Fire Marshal, all of which
+      officers shall be chosen by ballot at each annual meeting of the legal voters
+      of the corporation or at a special meeting as hereafter provided.
   - established: true
     label: Trustee
     filled_by: elected_by_voters
@@ -36,10 +38,8 @@
     label: Clerk
     filled_by: elected_by_voters
     maximum_memberships: 1
-    quote: The officers of the corporation shall be a Board of three Trustees, a Clerk,
-      a Treasurer, a Collector of Taxes, an Auditor, and a Fire Marshal, all of which
-      officers shall be chosen by ballot at each annual meeting of the legal voters
-      of the corporation
+    quote: all of which officers shall be chosen by ballot at each annual meeting
+      of the legal voters of the corporation
   - established: true
     label: Clerk
     filled_by: elected_by_voters
@@ -60,17 +60,17 @@
     label: Treasurer
     filled_by: elected_by_voters
     maximum_memberships: 1
-    quote: The officers of the corporation shall be a Board of three Trustees, a Clerk,
-      a Treasurer, a Collector of Taxes, an Auditor, and a Fire Marshal, all of which
-      officers shall be chosen by ballot at each annual meeting of the legal voters
-      of the corporation or at a special meeting as hereafter provided.
+    quote: a Clerk, a Treasurer, a Collector of Taxes, an Auditor, and a Fire Marshal,
+      all of which officers shall be chosen by ballot at each annual meeting of the
+      legal voters of the corporation
   - established: true
     label: Treasurer
     filled_by: elected_by_voters
     maximum_memberships: 1
-    quote: a Board of three Trustees, a Clerk, a Treasurer, a Collector of Taxes,
-      an Auditor, and a Fire Marshal, all of which officers shall be chosen by ballot
-      at each annual meeting of the legal voters of the corporation
+    quote: The officers of the corporation shall be a Board of three Trustees, a Clerk,
+      a Treasurer, a Collector of Taxes, an Auditor, and a Fire Marshal, all of which
+      officers shall be chosen by ballot at each annual meeting of the legal voters
+      of the corporation
 - role_id: commission-president
   expected: probably_not_established
   presiding: true

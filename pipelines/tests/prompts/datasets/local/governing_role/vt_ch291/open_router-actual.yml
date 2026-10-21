@@ -9,10 +9,11 @@
   agreed: true
   answers:
   - established: true
-    label: trustees
+    label: trustee
     filled_by: elected_by_voters
     maximum_memberships: 5
-    quote: electing a Clerk, five trustees, a Treasurer, and a Collector of Taxes
+    quote: for the purpose of electing a Clerk, five trustees, a Treasurer, and a
+      Collector of Taxes
   - established: true
     label: trustees
     filled_by: elected_by_voters
@@ -39,7 +40,8 @@
     label: Clerk
     filled_by: elected_by_voters
     maximum_memberships: 1
-    quote: for the purpose of electing a Clerk
+    quote: for the purpose of electing a Clerk, five trustees, a Treasurer, and a
+      Collector of Taxes
 - role_id: treasurer
   expected: elected_by_voters
   presiding: false
@@ -54,9 +56,7 @@
     label: Treasurer
     filled_by: elected_by_voters
     maximum_memberships: 1
-    quote: A meeting of the inhabitants shall be held annually on the third Tuesday
-      in March for the purpose of electing a Clerk, five trustees, a Treasurer, and
-      a Collector of Taxes
+    quote: electing a Clerk, five trustees, a Treasurer, and a Collector of Taxes
   - established: true
     label: Treasurer
     filled_by: elected_by_voters

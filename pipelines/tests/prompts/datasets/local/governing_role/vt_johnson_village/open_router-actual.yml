@@ -13,33 +13,37 @@
     filled_by: elected_by_voters
     maximum_memberships: 3
     quote: At each annual meeting the Village shall elect, by ballot if called for
-      by three legal voters, the following officers. One Trustee
+      by three legal voters, the following officers. One Trustee;
   - established: true
     label: Trustee
     filled_by: elected_by_voters
     maximum_memberships: 3
     quote: At each annual meeting the Village shall elect, by ballot if called for
-      by three legal voters, the following officers. One Trustee;
+      by three legal voters, the following officers. One Trustee
 - role_id: president
   expected: elected_by_voters
-  presiding: true
-  right: false
+  presiding: false
+  right: true
   rounds: 1
   each_right:
-  - false
-  - false
+  - true
+  - true
   agreed: true
   answers:
-  - established: false
-    label: ''
-    filled_by: not_stated
-    maximum_memberships: null
-    quote: ''
-  - established: false
-    label: ''
-    filled_by: not_stated
-    maximum_memberships: null
-    quote: ''
+  - established: true
+    label: President
+    filled_by: elected_by_voters
+    maximum_memberships: 1
+    quote: At each annual meeting the Village shall elect, by ballot if called for
+      by three legal voters, the following officers. One Trustee; one Auditor, a President,
+      a Clerk, and a Treasurer.
+  - established: true
+    label: Village President
+    filled_by: elected_by_voters
+    maximum_memberships: 1
+    quote: At each annual meeting the Village shall elect, by ballot if called for
+      by three legal voters, the following officers. One Trustee; one Auditor, a President,
+      a Clerk, and a Treasurer.
 - role_id: chair
   expected: elected_by_members
   presiding: true
@@ -55,7 +59,8 @@
     filled_by: elected_by_members
     maximum_memberships: 1
     quote: The Trustees shall immediately after the annual meeting appoint from among
-      the Board, a Chairman
+      the Board, a Chairman, and shall file such appointment with the Village Clerk
+      for record.
   - established: true
     label: Chairman
     filled_by: elected_by_members

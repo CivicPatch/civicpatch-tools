@@ -9,17 +9,18 @@
   agreed: true
   answers:
   - established: true
-    label: Selectboard members
+    label: Selectboard member
     filled_by: elected_by_voters
     maximum_memberships: 5
-    quote: The following officers shall be elected by the legal voters of the Town
-      of Barre ... (1) five Selectboard members
+    quote: a Selectboard composed of five members chosen by the voters of the Town
+      of Barre.
   - established: true
     label: Selectboard member
     filled_by: elected_by_voters
     maximum_memberships: 5
-    quote: The following officers shall be elected by the legal voters of the Town
-      of Barre ... (1) five Selectboard members
+    quote: 'The following officers shall be elected by the legal voters of the Town
+      of Barre and voting for the officers shall be by Australian ballot: (1) five
+      Selectboard members'
 - role_id: city-manager
   expected: appointed
   presiding: false
@@ -34,7 +35,8 @@
     label: Town Manager
     filled_by: appointed
     maximum_memberships: 1
-    quote: He or she shall be appointed by a majority of the full Selectboard.
+    quote: A Town Manager shall be the Chief Administrative Officer of the Town. He
+      or she shall be appointed by a majority of the full Selectboard.
   - established: true
     label: Town Manager
     filled_by: appointed
@@ -255,7 +257,7 @@
     label: Chair
     filled_by: elected_by_members
     maximum_memberships: 1
-    quote: elect a Chair and a Vice Chair
+    quote: elect a Chair
   - established: true
     label: Chair
     filled_by: elected_by_members
@@ -276,7 +278,7 @@
     label: Vice Chair
     filled_by: elected_by_members
     maximum_memberships: 1
-    quote: elect a Chair and a Vice Chair
+    quote: and a Vice Chair
   - established: true
     label: Vice Chair
     filled_by: elected_by_members
