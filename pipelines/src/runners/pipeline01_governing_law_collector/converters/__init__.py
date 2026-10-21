@@ -17,5 +17,5 @@ def to_markdown(page: FetchedPage) -> str:
     raise UnsupportedContentType(f"{page.url}: no converter for {page.content_type!r}")
 
 
-def is_thin(markdown: str) -> bool:
+def is_nearly_empty(markdown: str) -> bool:
     return len(markdown.strip()) < MIN_MARKDOWN_CHARS

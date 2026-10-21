@@ -56,12 +56,12 @@ async def preprocess_page_content(_limits: PipelineRunLimits, logger: PipelineRu
     page = context.data.fetched
     assert page is not None, "FETCH_SOURCE always leaves a page for PREPROCESS_PAGE_CONTENT"
     markdown = converters.to_markdown(page)
-    if not converters.is_thin(markdown):
+    if not converters.is_nearly_empty(markdown):
         return _next(context, fetched=None, markdown=markdown), GoverningLawCollectorStep.STORE_SOURCE_PAGE
     if not page.by_browser:
-        logger.info(f"{page.url}: thin by plain GET, fetching again by browser")
+        logger.info(f"{page.url}: nearly empty by plain GET, fetching again by browser")
         return _next(context, fetched=None, escalate=True), GoverningLawCollectorStep.FETCH_SOURCE
-    logger.warning(f"{page.url}: thin even by browser, skipped")
+    logger.warning(f"{page.url}: nearly empty even by browser, skipped")
     return _after_url(context, skipped_urls=[*context.data.skipped_urls, context.data.pending_urls[0]])
 
 

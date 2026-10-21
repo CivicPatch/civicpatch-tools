@@ -7,7 +7,7 @@ from pathlib import Path
 import pytest
 from runners.pipeline01_governing_law_collector.converters import (
     UnsupportedContentType,
-    is_thin,
+    is_nearly_empty,
     to_markdown,
 )
 from runners.pipeline01_governing_law_collector.schemas import FetchedPage
@@ -28,7 +28,7 @@ def test_a_vermont_chapter_keeps_every_section_and_no_markup():
     assert len(set(re.findall(r"§ (13\d\d)\.", markdown))) == 21
     assert "a presiding officer, a clerk, five trustees" in markdown
     assert not _HTML_TAG.search(markdown)
-    assert not is_thin(markdown)
+    assert not is_nearly_empty(markdown)
 
 
 def test_a_short_statute_is_kept_whole_and_its_site_chrome_dropped():
@@ -40,14 +40,14 @@ def test_a_short_statute_is_kept_whole_and_its_site_chrome_dropped():
     assert not _HTML_TAG.search(markdown)
 
 
-def test_a_script_rendered_shell_is_thin():
+def test_a_script_rendered_shell_is_nearly_empty():
     shell = FetchedPage(
         url="https://example.gov/app", content_type="text/html",
         body=b"<html><head><script src='app.js'></script></head><body><div id='root'></div></body></html>",
         by_browser=False,
     )
 
-    assert is_thin(to_markdown(shell))
+    assert is_nearly_empty(to_markdown(shell))
 
 
 def test_a_pdf_has_no_converter_yet():
