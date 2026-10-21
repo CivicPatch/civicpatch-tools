@@ -520,15 +520,3 @@ def governing_presiding_question(organization_name: str, candidates: List[tuple[
     name as the law writes it; maximum_memberships the number of people who hold it when the law
     states one, else null. Each quote is its own office's clause.
     """
-
-
-def governing_other_offices_question(asked_labels: List[str]) -> str:
-    """The offices the law sets up beyond those already asked about, as proposals for config."""
-    return f"""
-    Question: which elected or appointed offices of the jurisdiction's government does this law
-    establish, other than these: {", ".join(asked_labels)}? Leave out boards and commissions,
-    and their members.
-
-    Return {{"offices": [{{"label": ..., "filled_by": ..., "quote": ...}}]}}, an empty list when
-    there are none.
-    """

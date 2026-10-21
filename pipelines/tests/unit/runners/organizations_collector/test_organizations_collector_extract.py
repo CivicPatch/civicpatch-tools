@@ -8,7 +8,6 @@ import pytest
 
 from runners.pipeline02_organizations_collector.role_asks import RoleAsk
 from runners.pipeline02_organizations_collector.schemas import (
-    FilledBy,
     OrganizationsCollectorConfig,
     OrganizationsCollectorContext,
     OrganizationsCollectorData,
@@ -50,8 +49,8 @@ def _limits(cap: str) -> PipelineRunLimits:
 
 
 async def _extract(context: OrganizationsCollectorContext, spent: str = "0", cap: str = "1"):
-    async def answer(*_args, prompt_name: str, **_kwargs):
-        return {"offices": [{"label": "Town Clerk", "filled_by": "appointed", "quote": "shall appoint a Town Clerk"}]} if prompt_name == "governing_other_offices" else _ANSWER
+    async def answer(*_args, **_kwargs):
+        return _ANSWER
 
     model = AsyncMock(side_effect=answer)
     with patch(f"{MAIN}.open_router_llm.run_prompt", new=model), patch(f"{MAIN}.cost_utils.total_cost", return_value=Decimal(spent)):
@@ -90,23 +89,6 @@ async def test_the_question_comes_after_the_law():
 
 
 @pytest.mark.asyncio
-async def test_the_first_pass_also_asks_for_offices_nobody_asked_about():
-    extracted, _, model = await _extract(_context([_MEMBER]))
-
-    assert _prompt_names(model).count("governing_other_offices") == 1
-    assert [office.label for office in extracted.data.other_offices] == ["Town Clerk"]
-
-
-@pytest.mark.asyncio
-async def test_a_re_ask_does_not_ask_for_other_offices_again():
-    earlier = RoleClaim(ask=_CHAIR, answer=RoleAnswer.model_validate({**_ANSWER, "filled_by": FilledBy.NOT_STATED}))
-
-    _, _, model = await _extract(_context([_MEMBER], claims=[earlier]))
-
-    assert "governing_other_offices" not in _prompt_names(model)
-
-
-@pytest.mark.asyncio
 async def test_nothing_is_asked_once_the_cap_is_spent():
     extracted, next_state, model = await _extract(_context([_MEMBER]), spent="1", cap="1")
 
@@ -121,7 +103,7 @@ async def test_a_question_that_fails_leaves_its_role_unanswered_not_the_run_ende
     async def answer(*_args, prompt_name: str, content: str, **_kwargs):
         if prompt_name == "governing_role" and "Chair" in content[len(_LAW):]:
             raise ValueError("OpenRouter response missing 'choices'")
-        return {"offices": []} if prompt_name == "governing_other_offices" else _ANSWER
+        return _ANSWER
 
     with patch(f"{MAIN}.open_router_llm.run_prompt", new=AsyncMock(side_effect=answer)), patch(
         f"{MAIN}.cost_utils.total_cost", return_value=Decimal("0")

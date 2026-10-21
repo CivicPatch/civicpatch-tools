@@ -82,16 +82,6 @@ class PresidingAnswer(BaseModel):
     offices: List[PresidingOffice]
 
 
-class OtherOffice(BaseModel):
-    label: str
-    filled_by: FilledBy
-    quote: str
-
-
-class OtherOfficesAnswer(BaseModel):
-    offices: List[OtherOffice]
-
-
 class Citation(BaseModel):
     """One answer's quote as the verifier widened it, with what VERIFY needs to choose between
     answers: which kind of page it is on, and the method it supports."""
@@ -124,7 +114,6 @@ class OrganizationsCollectorData(BaseModel):
     # Asked together on EXTRACT's first pass; one VERIFY sends back is re-asked on its own.
     presiding_asks: List[RoleAsk] = []
     claims: List[RoleClaim] = []
-    other_offices: List[OtherOffice] = []
     # The run's cap was reached before every question was asked; WRITE reports it.
     stopped_at_cost_cap: bool = False
     # VERIFY's latest decision on every role asked.
