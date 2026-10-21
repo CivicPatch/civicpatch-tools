@@ -4,8 +4,8 @@ import argparse
 import pathlib
 
 from dashboard_data import (
-    DATASET_DIRS,
-    EVAL_DIRS,
+    dataset_dir,
+    eval_dirs,
     read_case_inputs,
     read_history,
     read_latest_case_prompts,
@@ -29,7 +29,7 @@ def _eval_section(name: str, directory: pathlib.Path, results: EvalResults, runs
     latest_mismatches = read_latest_mismatches(directory)
     return EvalSection(
         eval_name=name,
-        dataset_dir=DATASET_DIRS[name],
+        dataset_dir=dataset_dir(name),
         verdicts=provider_verdicts(results, latest_mismatches),
         matrix=matrix,
         comparison=model_comparison(runs, matrix, read_run_mismatches(directory, runs)),
@@ -45,13 +45,14 @@ def _eval_section(name: str, directory: pathlib.Path, results: EvalResults, runs
 
 def write_dashboard(output: pathlib.Path = OUTPUT) -> int:
     """Split from main() so the evals' conftest can refresh the dashboard after every run."""
-    results = read_results()
+    dirs = eval_dirs()
+    results = read_results(dirs)
     result_count = sum(len(r.metrics) + len(r.case_tallies) for r in results.values())
     if not result_count:
         return 0
-    histories = {name: read_history(directory) for name, directory in EVAL_DIRS.items()}
+    histories = {name: read_history(directory) for name, directory in dirs.items()}
     payload = DashboardPayload(
-        evals=[_eval_section(name, EVAL_DIRS[name], results[name], histories[name]) for name in EVAL_DIRS],
+        evals=[_eval_section(name, directory, results[name], histories[name]) for name, directory in dirs.items()],
         issues=issues(results, histories),
     )
     output.parent.mkdir(parents=True, exist_ok=True)

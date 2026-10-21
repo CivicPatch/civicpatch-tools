@@ -1,5 +1,6 @@
 - role_id: member
   expected: elected_by_voters
+  presiding: false
   right: true
   each_right:
   - true
@@ -7,7 +8,7 @@
   agreed: true
   answers:
   - established: true
-    label: Council members
+    label: Council member
     filled_by: elected_by_voters
     maximum_memberships: 5
     quote: All Council members shall be elected at large
@@ -15,51 +16,11 @@
     label: Council member
     filled_by: elected_by_voters
     maximum_memberships: 5
-    quote: All Council members shall be elected at large
-- role_id: chair
-  expected: elected_by_members
-  right: true
-  each_right:
-  - true
-  - true
-  agreed: true
-  answers:
-  - established: true
-    label: Chair
-    filled_by: elected_by_members
-    maximum_memberships: 1
-    quote: the Council shall organize and elect a Chair, a Vice Chair and a Clerk
-      by a majority vote of the entire Council
-  - established: true
-    label: Chair
-    filled_by: elected_by_members
-    maximum_memberships: 1
-    quote: the Council shall organize and elect a Chair, a Vice Chair and a Clerk
-      by a majority vote of the entire Council
-- role_id: vice-chair
-  expected: elected_by_members
-  right: true
-  each_right:
-  - true
-  - true
-  agreed: true
-  answers:
-  - established: true
-    label: Vice Chair
-    filled_by: elected_by_members
-    maximum_memberships: 1
-    quote: Forthwith after its election and qualification, the Council shall organize
-      and elect a Chair, a Vice Chair and a Clerk by a majority vote of the entire
-      Council
-  - established: true
-    label: Vice Chair
-    filled_by: elected_by_members
-    maximum_memberships: 1
-    quote: Forthwith after its election and qualification, the Council shall organize
-      and elect a Chair, a Vice Chair and a Clerk by a majority vote of the entire
-      Council
+    quote: All Council members shall be elected at large, and shall hold no other
+      City or School District office, except as provided otherwise in this charter.
 - role_id: clerk
   expected: elected_by_members
+  presiding: false
   right: true
   each_right:
   - true
@@ -70,8 +31,7 @@
     label: Clerk
     filled_by: elected_by_members
     maximum_memberships: 1
-    quote: elect a Chair, a Vice Chair and a Clerk by a majority vote of the entire
-      Council
+    quote: the Council shall organize and elect a Chair, a Vice Chair and a Clerk
   - established: true
     label: Clerk
     filled_by: elected_by_members
@@ -80,6 +40,7 @@
       by a majority vote of the entire Council
 - role_id: city-manager
   expected: appointed
+  presiding: false
   right: true
   each_right:
   - true
@@ -98,6 +59,7 @@
     quote: The Council shall appoint a City Manager for an indefinite term.
 - role_id: city-attorney
   expected: appointed
+  presiding: false
   right: true
   each_right:
   - true
@@ -120,3 +82,296 @@
       the City Treasurer, whose office shall be no longer elective, and the City Attorney,
       Zoning Administrator, Auditor, First and Second Constable, Grand Juror, and
       Trustee of Public Funds.
+- role_id: chair
+  expected: elected_by_members
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: true
+    label: Chair
+    filled_by: elected_by_members
+    maximum_memberships: 1
+    quote: the Council shall organize and elect a Chair, a Vice Chair and a Clerk
+      by a majority vote of the entire Council
+  - established: true
+    label: Chair
+    filled_by: elected_by_members
+    maximum_memberships: 1
+    quote: Forthwith after its election and qualification, the Council shall organize
+      and elect a Chair, a Vice Chair and a Clerk by a majority vote of the entire
+      Council and file a certificate of such election for record in the Office Of
+      the City Clerk.
+- role_id: vice-chair
+  expected: elected_by_members
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: true
+    label: Vice Chair
+    filled_by: elected_by_members
+    maximum_memberships: 1
+    quote: the Council shall organize and elect a Chair, a Vice Chair and a Clerk
+      by a majority vote of the entire Council
+  - established: true
+    label: Vice Chair
+    filled_by: elected_by_members
+    maximum_memberships: 1
+    quote: Forthwith after its election and qualification, the Council shall organize
+      and elect a Chair, a Vice Chair and a Clerk by a majority vote of the entire
+      Council and file a certificate of such election for record in the Office Of
+      the City Clerk.
+- role_id: commission-president
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: vice-mayor
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: assistant-mayor
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: mayor-pro-tempore
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: deputy-mayor-pro-tempore
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: council-president
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: council-vice-president
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: council-president-pro-tem
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: deputy-council-president
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: president-pro-tempore
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: commissioner-vice-president
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: chair-pro-tem
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: deputy-supervisor
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''

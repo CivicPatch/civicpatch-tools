@@ -1,5 +1,6 @@
 - role_id: member
   expected: elected_by_voters
+  presiding: false
   right: true
   each_right:
   - false
@@ -22,12 +23,13 @@
     label: Selectboard members
     filled_by: elected_by_voters
     maximum_memberships: 5
-    quote: 'The following officers ... shall be elected by Australian ballot, unless
-      otherwise stated, and shall include the following: ... (3) Selectboard members,
-      three of whom shall serve staggered three-year terms and two of whom shall serve
-      one-year terms'
+    quote: 'The following officers of the Town ... shall be elected by Australian
+      ballot, unless otherwise stated, and shall include the following: ... (3) Selectboard
+      members, three of whom shall serve staggered three-year terms and two of whom
+      shall serve one-year terms'
 - role_id: commission-president
   expected: probably_not_established
+  presiding: true
   right: true
   each_right:
   - true
@@ -46,6 +48,7 @@
     quote: ''
 - role_id: vice-mayor
   expected: probably_not_established
+  presiding: true
   right: true
   each_right:
   - true
@@ -64,6 +67,7 @@
     quote: ''
 - role_id: assistant-mayor
   expected: probably_not_established
+  presiding: true
   right: true
   each_right:
   - true
@@ -82,6 +86,7 @@
     quote: ''
 - role_id: mayor-pro-tempore
   expected: probably_not_established
+  presiding: true
   right: true
   each_right:
   - true
@@ -100,6 +105,7 @@
     quote: ''
 - role_id: deputy-mayor-pro-tempore
   expected: probably_not_established
+  presiding: true
   right: true
   each_right:
   - true
@@ -118,6 +124,7 @@
     quote: ''
 - role_id: council-president
   expected: probably_not_established
+  presiding: true
   right: true
   each_right:
   - true
@@ -136,6 +143,7 @@
     quote: ''
 - role_id: council-vice-president
   expected: probably_not_established
+  presiding: true
   right: true
   each_right:
   - true
@@ -154,6 +162,7 @@
     quote: ''
 - role_id: council-president-pro-tem
   expected: probably_not_established
+  presiding: true
   right: true
   each_right:
   - true
@@ -172,6 +181,7 @@
     quote: ''
 - role_id: deputy-council-president
   expected: probably_not_established
+  presiding: true
   right: true
   each_right:
   - true
@@ -190,6 +200,7 @@
     quote: ''
 - role_id: president-pro-tempore
   expected: probably_not_established
+  presiding: true
   right: true
   each_right:
   - true
@@ -208,6 +219,7 @@
     quote: ''
 - role_id: chair
   expected: probably_not_established
+  presiding: true
   right: true
   each_right:
   - true
@@ -226,6 +238,7 @@
     quote: ''
 - role_id: vice-chair
   expected: probably_not_established
+  presiding: true
   right: true
   each_right:
   - true
@@ -244,6 +257,7 @@
     quote: ''
 - role_id: commissioner-vice-president
   expected: probably_not_established
+  presiding: true
   right: true
   each_right:
   - true
@@ -262,6 +276,7 @@
     quote: ''
 - role_id: chair-pro-tem
   expected: probably_not_established
+  presiding: true
   right: true
   each_right:
   - true
@@ -280,6 +295,7 @@
     quote: ''
 - role_id: deputy-supervisor
   expected: probably_not_established
+  presiding: true
   right: true
   each_right:
   - true

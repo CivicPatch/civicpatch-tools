@@ -1,29 +1,28 @@
 - role_id: member
   expected: elected_by_voters
+  presiding: false
   right: true
   each_right:
   - true
   - true
   agreed: true
   answers:
+  - established: true
+    label: Trustee
+    filled_by: elected_by_voters
+    maximum_memberships: 5
+    quote: all of which officers shall be chosen at each annual meeting of the legal
+      voters of the corporation
   - established: true
     label: trustee
     filled_by: elected_by_voters
     maximum_memberships: 5
     quote: The officers of the corporation shall be a Board of five trustees, a Clerk,
       a Treasurer, a Collector of Taxes, and an Auditor, all of which officers shall
-      be chosen at each annual meeting of the legal voters of the corporation or at
-      a special meeting as hereinafter provided.
-  - established: true
-    label: Trustee
-    filled_by: elected_by_voters
-    maximum_memberships: 5
-    quote: The officers of the corporation shall be a Board of five trustees, a Clerk,
-      a Treasurer, a Collector of Taxes, and an Auditor, all of which officers shall
-      be chosen at each annual meeting of the legal voters of the corporation or at
-      a special meeting as hereinafter provided.
+      be chosen at each annual meeting of the legal voters of the corporation
 - role_id: clerk
   expected: elected_by_voters
+  presiding: false
   right: true
   each_right:
   - true
@@ -34,20 +33,17 @@
     label: Clerk
     filled_by: elected_by_voters
     maximum_memberships: 1
-    quote: The officers of the corporation shall be a Board of five trustees, a Clerk,
-      a Treasurer, a Collector of Taxes, and an Auditor, all of which officers shall
-      be chosen at each annual meeting of the legal voters of the corporation or at
-      a special meeting as hereinafter provided.
+    quote: a Clerk, a Treasurer, a Collector of Taxes, and an Auditor, all of which
+      officers shall be chosen at each annual meeting of the legal voters
   - established: true
     label: Clerk
     filled_by: elected_by_voters
     maximum_memberships: 1
-    quote: The officers of the corporation shall be a Board of five trustees, a Clerk,
-      a Treasurer, a Collector of Taxes, and an Auditor, all of which officers shall
-      be chosen at each annual meeting of the legal voters of the corporation or at
-      a special meeting as hereinafter provided.
+    quote: all of which officers shall be chosen at each annual meeting of the legal
+      voters of the corporation
 - role_id: treasurer
   expected: elected_by_voters
+  presiding: false
   right: true
   each_right:
   - true
@@ -58,10 +54,8 @@
     label: Treasurer
     filled_by: elected_by_voters
     maximum_memberships: 1
-    quote: The officers of the corporation shall be a Board of five trustees, a Clerk,
-      a Treasurer, a Collector of Taxes, and an Auditor, all of which officers shall
-      be chosen at each annual meeting of the legal voters of the corporation or at
-      a special meeting as hereinafter provided.
+    quote: all of which officers shall be chosen at each annual meeting of the legal
+      voters of the corporation
   - established: true
     label: Treasurer
     filled_by: elected_by_voters
@@ -70,3 +64,288 @@
       a Treasurer, a Collector of Taxes, and an Auditor, all of which officers shall
       be chosen at each annual meeting of the legal voters of the corporation or at
       a special meeting as hereinafter provided.
+- role_id: commission-president
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: vice-mayor
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: assistant-mayor
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: mayor-pro-tempore
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: deputy-mayor-pro-tempore
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: council-president
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: council-vice-president
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: council-president-pro-tem
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: deputy-council-president
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: president-pro-tempore
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: chair
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: vice-chair
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: commissioner-vice-president
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: chair-pro-tem
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: deputy-supervisor
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''

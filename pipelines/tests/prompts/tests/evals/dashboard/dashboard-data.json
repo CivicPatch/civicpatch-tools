@@ -25275,6 +25275,2045 @@
    }
   },
   {
+   "eval_name": "find_jurisdiction_url",
+   "dataset_dir": "../../../datasets/local/find_jurisdiction_url",
+   "verdicts": [
+    {
+     "provider": "gemini",
+     "blocked": false,
+     "gate_failures": [],
+     "failed_case_ids": [],
+     "cases_passed": 3,
+     "cases_total": 3,
+     "priority_scores": {},
+     "cost_usd": 0.0,
+     "ran_at": "2026-09-16T19:51:25+00:00"
+    }
+   ],
+   "matrix": {
+    "lineages": [
+     {
+      "model": "gemini-3.1-flash-lite-preview",
+      "provider": "gemini"
+     }
+    ],
+    "rows": [
+     {
+      "prompt_sha256": "2f5553c8a7d9",
+      "cells": [
+       {
+        "mean_score": 1.0,
+        "run_count": 1,
+        "mean_cost_usd": 0.0
+       }
+      ]
+     }
+    ]
+   },
+   "comparison": null,
+   "trends": {
+    "providers": [
+     "gemini"
+    ],
+    "charts": [
+     {
+      "metric": "cases_passed",
+      "is_priority": false,
+      "gate_floor": null,
+      "series": [
+       {
+        "provider": "gemini",
+        "points": [
+         {
+          "timestamp": "2026-08-15T23:42:30+00:00",
+          "prompt_sha256": "2f5553c8a7d9",
+          "score": 0.6666666666666666
+         },
+         {
+          "timestamp": "2026-08-15T23:42:59+00:00",
+          "prompt_sha256": "2f5553c8a7d9",
+          "score": 0.6666666666666666
+         },
+         {
+          "timestamp": "2026-09-16T19:51:25+00:00",
+          "prompt_sha256": "2f5553c8a7d9",
+          "score": 1.0
+         }
+        ]
+       }
+      ]
+     }
+    ],
+    "run_count": 3
+   },
+   "prompt_versions": [
+    {
+     "prompt_sha256": "2f5553c8a7d9",
+     "text": "\n    Find the official government website for this jurisdiction: Harrison city, Clare County, Michigan\n\n    Return the homepage URL of the official local government website\n    (city hall, township, village, borough, etc.) specifically for Harrison city, Clare County, Michigan.\n    Do not return news sites, Wikipedia, county portals, or unofficial directories.\n\n    Return a JSON object:\n    ```json\n    { \"url\": \"https://...\" }\n    ```\n    If you cannot find any official government website, return:\n    ```json\n    { \"url\": null }\n    ```\n\n    IMPORTANT: Return only valid JSON. Do not include any other text.\n    ",
+     "first_run_at": "2026-08-15T23:42:30+00:00",
+     "last_run_at": "2026-09-16T19:51:25+00:00",
+     "providers": [
+      "gemini"
+     ],
+     "runs": [
+      {
+       "timestamp": "2026-09-16T19:51:25+00:00",
+       "provider": "gemini",
+       "scores": {
+        "cases_passed": 1.0
+       }
+      },
+      {
+       "timestamp": "2026-08-15T23:42:59+00:00",
+       "provider": "gemini",
+       "scores": {
+        "cases_passed": 0.6666666666666666
+       }
+      },
+      {
+       "timestamp": "2026-08-15T23:42:30+00:00",
+       "provider": "gemini",
+       "scores": {
+        "cases_passed": 0.6666666666666666
+       }
+      }
+     ],
+     "previous_sha256": null,
+     "diff": []
+    }
+   ],
+   "detail": {
+    "providers": [
+     "gemini"
+    ],
+    "metric_rows": [
+     {
+      "metric": "cases passed",
+      "cells": [
+       {
+        "score": 1.0,
+        "swing_is_wide": false,
+        "half_swing": 0.0,
+        "missing_count": null
+       }
+      ]
+     }
+    ],
+    "case_providers": [
+     "gemini"
+    ],
+    "case_rows": [
+     {
+      "case_id": "harrison_mi",
+      "scores": [
+       1.0
+      ],
+      "stability": "unknown"
+     },
+     {
+      "case_id": "london_township_mi",
+      "scores": [
+       1.0
+      ],
+      "stability": "unknown"
+     },
+     {
+      "case_id": "milton_township_mi",
+      "scores": [
+       1.0
+      ],
+      "stability": "unknown"
+     }
+    ],
+    "movements": [
+     {
+      "provider": "gemini",
+      "regressed": [],
+      "improved": []
+     }
+    ]
+   },
+   "latest_mismatches": {},
+   "case_inputs": {
+    "harrison_mi": {
+     "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:mi/county:clare/place:harrison/government",
+     "municipality_name": "Harrison city",
+     "stale_url": "https://cityofharrisonmi.org"
+    },
+    "london_township_mi": {
+     "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:mi/county:monroe/township:london/government",
+     "municipality_name": "London Township",
+     "stale_url": "http://londontwp.org"
+    },
+    "milton_township_mi": {
+     "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:mi/county:antrim/place:milton/government",
+     "municipality_name": "Milton township",
+     "stale_url": "https://miltontownship.org/"
+    }
+   },
+   "prompts_dir": "../find_jurisdiction_url/_prompts",
+   "latest_case_prompts": {}
+  },
+  {
+   "eval_name": "government_form",
+   "dataset_dir": "../../../datasets/local/government_form",
+   "verdicts": [
+    {
+     "provider": "gemini",
+     "blocked": false,
+     "gate_failures": [],
+     "failed_case_ids": [],
+     "cases_passed": 0,
+     "cases_total": 12,
+     "priority_scores": {},
+     "cost_usd": 0.0,
+     "ran_at": "2026-09-29T04:58:33+00:00"
+    }
+   ],
+   "matrix": {
+    "lineages": [
+     {
+      "model": "gemini-2.5-flash",
+      "provider": "gemini"
+     }
+    ],
+    "rows": [
+     {
+      "prompt_sha256": "11b1f6c05b1e",
+      "cells": [
+       {
+        "mean_score": 1.0,
+        "run_count": 1,
+        "mean_cost_usd": 0.0
+       }
+      ]
+     }
+    ]
+   },
+   "comparison": null,
+   "trends": {
+    "providers": [
+     "gemini"
+    ],
+    "charts": [],
+    "run_count": 1
+   },
+   "prompt_versions": [
+    {
+     "prompt_sha256": "11b1f6c05b1e",
+     "text": "\n    Which form of government does this municipality use: Brookline town, Massachusetts\n\n    Answer with exactly one of these values:\n    - mayor_council: a council plus a separately elected mayor who does not sit on it\n    - council_manager: a council with an appointed manager; any mayor sits on the council\n    - commission: elected commissioners who together govern and each head a department\n    - township_board: one elected board whose presiding officer sits and votes on it\n    - open_town_meeting: a select board or board of selectmen, with an open town meeting\n    - representative_town_meeting: a select board, with elected town meeting members\n\n    The test between mayor_council and the one-board forms: does the chief executive sit and vote on the governing body? If they do, it is not mayor_council. Township committees, boards of supervisors or trustees, and New York towns and villages are township_board.\n\n    Return a JSON object:\n    ```json\n    { \"government_form\": \"<value>\", \"source\": \"<url you relied on>\" }\n    ```\n\n    IMPORTANT: Return only valid JSON. Do not include any other text.\n    ",
+     "first_run_at": "2026-09-29T04:58:33+00:00",
+     "last_run_at": "2026-09-29T04:58:33+00:00",
+     "providers": [
+      "gemini"
+     ],
+     "runs": [
+      {
+       "timestamp": "2026-09-29T04:58:33+00:00",
+       "provider": "gemini",
+       "scores": {
+        "cases_passed": 1.0
+       }
+      }
+     ],
+     "previous_sha256": null,
+     "diff": []
+    }
+   ],
+   "detail": {
+    "providers": [
+     "gemini"
+    ],
+    "metric_rows": [
+     {
+      "metric": "cases passed",
+      "cells": [
+       {
+        "score": 0.0,
+        "swing_is_wide": false,
+        "half_swing": 0.0,
+        "missing_count": null
+       }
+      ]
+     }
+    ],
+    "case_providers": [
+     "gemini"
+    ],
+    "case_rows": [
+     {
+      "case_id": "brookline_ma",
+      "scores": [
+       1.0
+      ],
+      "stability": "unknown"
+     },
+     {
+      "case_id": "haralson_ga",
+      "scores": [
+       1.0
+      ],
+      "stability": "unknown"
+     },
+     {
+      "case_id": "irvine_ca",
+      "scores": [
+       1.0
+      ],
+      "stability": "unknown"
+     },
+     {
+      "case_id": "jackson_tn",
+      "scores": [
+       1.0
+      ],
+      "stability": "unknown"
+     },
+     {
+      "case_id": "king_wa",
+      "scores": [
+       1.0
+      ],
+      "stability": "unknown"
+     },
+     {
+      "case_id": "mansfield_nj",
+      "scores": [
+       1.0
+      ],
+      "stability": "unknown"
+     },
+     {
+      "case_id": "maui_hi",
+      "scores": [
+       1.0
+      ],
+      "stability": "unknown"
+     },
+     {
+      "case_id": "milford_mi",
+      "scores": [
+       1.0
+      ],
+      "stability": "unknown"
+     },
+     {
+      "case_id": "millbury_ma",
+      "scores": [
+       1.0
+      ],
+      "stability": "unknown"
+     },
+     {
+      "case_id": "nashua_nh",
+      "scores": [
+       1.0
+      ],
+      "stability": "unknown"
+     },
+     {
+      "case_id": "seattle_wa",
+      "scores": [
+       1.0
+      ],
+      "stability": "unknown"
+     },
+     {
+      "case_id": "travis_tx",
+      "scores": [
+       1.0
+      ],
+      "stability": "unknown"
+     }
+    ],
+    "movements": []
+   },
+   "latest_mismatches": {},
+   "case_inputs": {
+    "awendaw_sc": {
+     "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:sc/place:awendaw/government",
+     "name": "Awendaw town",
+     "government_form": "council_manager"
+    },
+    "brookline_ma": {
+     "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:ma/place:brookline/government",
+     "name": "Brookline town",
+     "government_form": "representative_town_meeting"
+    },
+    "haralson_ga": {
+     "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:ga/county:haralson/government",
+     "name": "Haralson County",
+     "government_form": "commission"
+    },
+    "irvine_ca": {
+     "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:ca/place:irvine/government",
+     "name": "Irvine city",
+     "government_form": "council_manager"
+    },
+    "jackson_tn": {
+     "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:tn/place:jackson/government",
+     "name": "Jackson city",
+     "government_form": "mayor_council"
+    },
+    "king_wa": {
+     "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:wa/county:king/government",
+     "name": "King County",
+     "government_form": "county_executive"
+    },
+    "mansfield_nj": {
+     "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:nj/county:warren/place:mansfield/government",
+     "name": "Mansfield township",
+     "government_form": "township_board"
+    },
+    "maui_hi": {
+     "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:hi/county:maui/government",
+     "name": "Maui County",
+     "government_form": "county_executive"
+    },
+    "milford_mi": {
+     "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:mi/place:milford/government",
+     "name": "Milford village",
+     "government_form": "council_manager"
+    },
+    "millbury_ma": {
+     "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:ma/place:millbury/government",
+     "name": "Millbury town",
+     "government_form": "open_town_meeting"
+    },
+    "nashua_nh": {
+     "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:nh/place:nashua/government",
+     "name": "Nashua city",
+     "government_form": "mayor_council"
+    },
+    "seattle_wa": {
+     "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:wa/place:seattle/government",
+     "name": "Seattle city",
+     "government_form": "mayor_council"
+    },
+    "travis_tx": {
+     "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:tx/county:travis/government",
+     "name": "Travis County",
+     "government_form": "commission"
+    }
+   },
+   "prompts_dir": "../government_form/_prompts",
+   "latest_case_prompts": {}
+  },
+  {
+   "eval_name": "page_covers",
+   "dataset_dir": "../../../datasets/local/page_covers",
+   "verdicts": [
+    {
+     "provider": "Alibaba",
+     "blocked": false,
+     "gate_failures": [],
+     "failed_case_ids": [],
+     "cases_passed": 11,
+     "cases_total": 11,
+     "priority_scores": {},
+     "cost_usd": 0.0242496048,
+     "ran_at": "2026-09-29T00:56:43+00:00"
+    },
+    {
+     "provider": "AtlasCloud",
+     "blocked": false,
+     "gate_failures": [],
+     "failed_case_ids": [],
+     "cases_passed": 11,
+     "cases_total": 11,
+     "priority_scores": {},
+     "cost_usd": 0.01507159248,
+     "ran_at": "2026-09-29T00:56:43+00:00"
+    },
+    {
+     "provider": "DigitalOcean",
+     "blocked": true,
+     "gate_failures": [],
+     "failed_case_ids": [
+      "jackson_mayors_office"
+     ],
+     "cases_passed": 10,
+     "cases_total": 11,
+     "priority_scores": {},
+     "cost_usd": 0.0173382384,
+     "ran_at": "2026-09-29T00:56:43+00:00"
+    }
+   ],
+   "matrix": {
+    "lineages": [
+     {
+      "model": "deepseek/deepseek-v4-flash",
+      "provider": "Alibaba"
+     },
+     {
+      "model": "deepseek/deepseek-v4-flash",
+      "provider": "AtlasCloud"
+     },
+     {
+      "model": "deepseek/deepseek-v4-flash",
+      "provider": "DigitalOcean"
+     },
+     {
+      "model": "deepseek/deepseek-v4-flash",
+      "provider": "NextBit"
+     }
+    ],
+    "rows": [
+     {
+      "prompt_sha256": "f0cf44bcb9bb",
+      "cells": [
+       {
+        "mean_score": 1.0,
+        "run_count": 1,
+        "mean_cost_usd": 0.0242496048
+       },
+       {
+        "mean_score": 1.0,
+        "run_count": 1,
+        "mean_cost_usd": 0.01507159248
+       },
+       {
+        "mean_score": 0.9090909090909091,
+        "run_count": 1,
+        "mean_cost_usd": 0.0173382384
+       },
+       null
+      ]
+     },
+     {
+      "prompt_sha256": "24c2e1e9ef29",
+      "cells": [
+       {
+        "mean_score": 1.0,
+        "run_count": 1,
+        "mean_cost_usd": 0.024431148
+       },
+       {
+        "mean_score": 1.0,
+        "run_count": 1,
+        "mean_cost_usd": 0.01505031472
+       },
+       {
+        "mean_score": 0.8181818181818182,
+        "run_count": 1,
+        "mean_cost_usd": 0.0173623072
+       },
+       null
+      ]
+     },
+     {
+      "prompt_sha256": "d318f76e0deb",
+      "cells": [
+       {
+        "mean_score": 1.0,
+        "run_count": 1,
+        "mean_cost_usd": 0.0230908264
+       },
+       {
+        "mean_score": 1.0,
+        "run_count": 1,
+        "mean_cost_usd": 0.022829352
+       },
+       {
+        "mean_score": 0.8888888888888888,
+        "run_count": 1,
+        "mean_cost_usd": 0.0165445952
+       },
+       {
+        "mean_score": 1.0,
+        "run_count": 1,
+        "mean_cost_usd": 0.02287369
+       }
+      ]
+     },
+     {
+      "prompt_sha256": "8dd4a1880ce5",
+      "cells": [
+       {
+        "mean_score": 0.9,
+        "run_count": 2,
+        "mean_cost_usd": 0.013443831400000002
+       },
+       {
+        "mean_score": 0.9,
+        "run_count": 2,
+        "mean_cost_usd": 0.013260702000000001
+       },
+       {
+        "mean_score": 0.9285714285714286,
+        "run_count": 2,
+        "mean_cost_usd": 0.013294689799999999
+       },
+       {
+        "mean_score": 0.9,
+        "run_count": 2,
+        "mean_cost_usd": 0.011301465
+       }
+      ]
+     },
+     {
+      "prompt_sha256": "0749e3b84f81",
+      "cells": [
+       {
+        "mean_score": 0.8,
+        "run_count": 2,
+        "mean_cost_usd": 0.015591355599999999
+       },
+       {
+        "mean_score": 0.8,
+        "run_count": 2,
+        "mean_cost_usd": 0.014865872
+       },
+       {
+        "mean_score": 1.0,
+        "run_count": 2,
+        "mean_cost_usd": 0.01242003
+       },
+       {
+        "mean_score": 0.8,
+        "run_count": 2,
+        "mean_cost_usd": 0.016611905
+       }
+      ]
+     },
+     {
+      "prompt_sha256": "1ae867f897aa",
+      "cells": [
+       {
+        "mean_score": 0.8,
+        "run_count": 1,
+        "mean_cost_usd": 0.01721699
+       },
+       {
+        "mean_score": 0.8,
+        "run_count": 1,
+        "mean_cost_usd": 0.01801758
+       },
+       {
+        "mean_score": 1.0,
+        "run_count": 1,
+        "mean_cost_usd": 0.012344178
+       },
+       {
+        "mean_score": 0.8,
+        "run_count": 1,
+        "mean_cost_usd": 0.01803944
+       }
+      ]
+     }
+    ]
+   },
+   "comparison": {
+    "default_baseline_index": 1,
+    "default_candidate_index": 0,
+    "pairs": [
+     {
+      "baseline_index": 0,
+      "candidate_index": 1,
+      "prompt_sha256": "f0cf44bcb9bb",
+      "baseline": {
+       "mean_score": 1.0,
+       "run_count": 1,
+       "mean_cost_usd": 0.0242496048
+      },
+      "candidate": {
+       "mean_score": 1.0,
+       "run_count": 1,
+       "mean_cost_usd": 0.01507159248
+      },
+      "regressed": [],
+      "improved": [],
+      "unchanged_count": 11,
+      "has_value_detail": true,
+      "newly_wrong": [],
+      "fixed": []
+     },
+     {
+      "baseline_index": 0,
+      "candidate_index": 2,
+      "prompt_sha256": "f0cf44bcb9bb",
+      "baseline": {
+       "mean_score": 1.0,
+       "run_count": 1,
+       "mean_cost_usd": 0.0242496048
+      },
+      "candidate": {
+       "mean_score": 0.9090909090909091,
+       "run_count": 1,
+       "mean_cost_usd": 0.0173382384
+      },
+      "regressed": [
+       {
+        "case_id": "jackson_mayors_office",
+        "baseline_score": 1.0,
+        "candidate_score": 0.0
+       }
+      ],
+      "improved": [],
+      "unchanged_count": 10,
+      "has_value_detail": true,
+      "newly_wrong": [
+       {
+        "case_id": "jackson_mayors_office",
+        "subject": "Office of the Mayor",
+        "field": "covers",
+        "expected": true,
+        "actual": false
+       }
+      ],
+      "fixed": []
+     },
+     {
+      "baseline_index": 0,
+      "candidate_index": 3,
+      "prompt_sha256": "d318f76e0deb",
+      "baseline": {
+       "mean_score": 1.0,
+       "run_count": 1,
+       "mean_cost_usd": 0.0230908264
+      },
+      "candidate": {
+       "mean_score": 1.0,
+       "run_count": 1,
+       "mean_cost_usd": 0.02287369
+      },
+      "regressed": [],
+      "improved": [],
+      "unchanged_count": 9,
+      "has_value_detail": true,
+      "newly_wrong": [],
+      "fixed": []
+     },
+     {
+      "baseline_index": 1,
+      "candidate_index": 0,
+      "prompt_sha256": "f0cf44bcb9bb",
+      "baseline": {
+       "mean_score": 1.0,
+       "run_count": 1,
+       "mean_cost_usd": 0.01507159248
+      },
+      "candidate": {
+       "mean_score": 1.0,
+       "run_count": 1,
+       "mean_cost_usd": 0.0242496048
+      },
+      "regressed": [],
+      "improved": [],
+      "unchanged_count": 11,
+      "has_value_detail": true,
+      "newly_wrong": [],
+      "fixed": []
+     },
+     {
+      "baseline_index": 1,
+      "candidate_index": 2,
+      "prompt_sha256": "f0cf44bcb9bb",
+      "baseline": {
+       "mean_score": 1.0,
+       "run_count": 1,
+       "mean_cost_usd": 0.01507159248
+      },
+      "candidate": {
+       "mean_score": 0.9090909090909091,
+       "run_count": 1,
+       "mean_cost_usd": 0.0173382384
+      },
+      "regressed": [
+       {
+        "case_id": "jackson_mayors_office",
+        "baseline_score": 1.0,
+        "candidate_score": 0.0
+       }
+      ],
+      "improved": [],
+      "unchanged_count": 10,
+      "has_value_detail": true,
+      "newly_wrong": [
+       {
+        "case_id": "jackson_mayors_office",
+        "subject": "Office of the Mayor",
+        "field": "covers",
+        "expected": true,
+        "actual": false
+       }
+      ],
+      "fixed": []
+     },
+     {
+      "baseline_index": 1,
+      "candidate_index": 3,
+      "prompt_sha256": "d318f76e0deb",
+      "baseline": {
+       "mean_score": 1.0,
+       "run_count": 1,
+       "mean_cost_usd": 0.022829352
+      },
+      "candidate": {
+       "mean_score": 1.0,
+       "run_count": 1,
+       "mean_cost_usd": 0.02287369
+      },
+      "regressed": [],
+      "improved": [],
+      "unchanged_count": 9,
+      "has_value_detail": true,
+      "newly_wrong": [],
+      "fixed": []
+     },
+     {
+      "baseline_index": 2,
+      "candidate_index": 0,
+      "prompt_sha256": "f0cf44bcb9bb",
+      "baseline": {
+       "mean_score": 0.9090909090909091,
+       "run_count": 1,
+       "mean_cost_usd": 0.0173382384
+      },
+      "candidate": {
+       "mean_score": 1.0,
+       "run_count": 1,
+       "mean_cost_usd": 0.0242496048
+      },
+      "regressed": [],
+      "improved": [
+       {
+        "case_id": "jackson_mayors_office",
+        "baseline_score": 0.0,
+        "candidate_score": 1.0
+       }
+      ],
+      "unchanged_count": 10,
+      "has_value_detail": true,
+      "newly_wrong": [],
+      "fixed": [
+       {
+        "case_id": "jackson_mayors_office",
+        "subject": "Office of the Mayor",
+        "field": "covers",
+        "expected": true,
+        "actual": false
+       }
+      ]
+     },
+     {
+      "baseline_index": 2,
+      "candidate_index": 1,
+      "prompt_sha256": "f0cf44bcb9bb",
+      "baseline": {
+       "mean_score": 0.9090909090909091,
+       "run_count": 1,
+       "mean_cost_usd": 0.0173382384
+      },
+      "candidate": {
+       "mean_score": 1.0,
+       "run_count": 1,
+       "mean_cost_usd": 0.01507159248
+      },
+      "regressed": [],
+      "improved": [
+       {
+        "case_id": "jackson_mayors_office",
+        "baseline_score": 0.0,
+        "candidate_score": 1.0
+       }
+      ],
+      "unchanged_count": 10,
+      "has_value_detail": true,
+      "newly_wrong": [],
+      "fixed": [
+       {
+        "case_id": "jackson_mayors_office",
+        "subject": "Office of the Mayor",
+        "field": "covers",
+        "expected": true,
+        "actual": false
+       }
+      ]
+     },
+     {
+      "baseline_index": 2,
+      "candidate_index": 3,
+      "prompt_sha256": "d318f76e0deb",
+      "baseline": {
+       "mean_score": 0.8888888888888888,
+       "run_count": 1,
+       "mean_cost_usd": 0.0165445952
+      },
+      "candidate": {
+       "mean_score": 1.0,
+       "run_count": 1,
+       "mean_cost_usd": 0.02287369
+      },
+      "regressed": [],
+      "improved": [
+       {
+        "case_id": "irvine_council_roster",
+        "baseline_score": 0.0,
+        "candidate_score": 1.0
+       }
+      ],
+      "unchanged_count": 8,
+      "has_value_detail": true,
+      "newly_wrong": [],
+      "fixed": [
+       {
+        "case_id": "irvine_council_roster",
+        "subject": "Office of the Mayor",
+        "field": "covers",
+        "expected": true,
+        "actual": false
+       }
+      ]
+     },
+     {
+      "baseline_index": 3,
+      "candidate_index": 0,
+      "prompt_sha256": "d318f76e0deb",
+      "baseline": {
+       "mean_score": 1.0,
+       "run_count": 1,
+       "mean_cost_usd": 0.02287369
+      },
+      "candidate": {
+       "mean_score": 1.0,
+       "run_count": 1,
+       "mean_cost_usd": 0.0230908264
+      },
+      "regressed": [],
+      "improved": [],
+      "unchanged_count": 9,
+      "has_value_detail": true,
+      "newly_wrong": [],
+      "fixed": []
+     },
+     {
+      "baseline_index": 3,
+      "candidate_index": 1,
+      "prompt_sha256": "d318f76e0deb",
+      "baseline": {
+       "mean_score": 1.0,
+       "run_count": 1,
+       "mean_cost_usd": 0.02287369
+      },
+      "candidate": {
+       "mean_score": 1.0,
+       "run_count": 1,
+       "mean_cost_usd": 0.022829352
+      },
+      "regressed": [],
+      "improved": [],
+      "unchanged_count": 9,
+      "has_value_detail": true,
+      "newly_wrong": [],
+      "fixed": []
+     },
+     {
+      "baseline_index": 3,
+      "candidate_index": 2,
+      "prompt_sha256": "d318f76e0deb",
+      "baseline": {
+       "mean_score": 1.0,
+       "run_count": 1,
+       "mean_cost_usd": 0.02287369
+      },
+      "candidate": {
+       "mean_score": 0.8888888888888888,
+       "run_count": 1,
+       "mean_cost_usd": 0.0165445952
+      },
+      "regressed": [
+       {
+        "case_id": "irvine_council_roster",
+        "baseline_score": 1.0,
+        "candidate_score": 0.0
+       }
+      ],
+      "improved": [],
+      "unchanged_count": 8,
+      "has_value_detail": true,
+      "newly_wrong": [
+       {
+        "case_id": "irvine_council_roster",
+        "subject": "Office of the Mayor",
+        "field": "covers",
+        "expected": true,
+        "actual": false
+       }
+      ],
+      "fixed": []
+     }
+    ]
+   },
+   "trends": {
+    "providers": [
+     "Alibaba",
+     "AtlasCloud",
+     "DigitalOcean",
+     "NextBit"
+    ],
+    "charts": [
+     {
+      "metric": "covers",
+      "is_priority": false,
+      "gate_floor": null,
+      "series": [
+       {
+        "provider": "Alibaba",
+        "points": [
+         {
+          "timestamp": "2026-09-18T01:30:21+00:00",
+          "prompt_sha256": "1ae867f897aa",
+          "score": 0.9
+         },
+         {
+          "timestamp": "2026-09-18T01:45:28+00:00",
+          "prompt_sha256": "0749e3b84f81",
+          "score": 0.9
+         },
+         {
+          "timestamp": "2026-09-18T02:11:48+00:00",
+          "prompt_sha256": "0749e3b84f81",
+          "score": 0.9
+         },
+         {
+          "timestamp": "2026-09-18T02:23:43+00:00",
+          "prompt_sha256": "8dd4a1880ce5",
+          "score": 0.9
+         },
+         {
+          "timestamp": "2026-09-18T02:39:21+00:00",
+          "prompt_sha256": "8dd4a1880ce5",
+          "score": 1.0
+         },
+         {
+          "timestamp": "2026-09-18T02:51:34+00:00",
+          "prompt_sha256": "d318f76e0deb",
+          "score": 1.0
+         },
+         {
+          "timestamp": "2026-09-29T00:27:55+00:00",
+          "prompt_sha256": "24c2e1e9ef29",
+          "score": 1.0
+         },
+         {
+          "timestamp": "2026-09-29T00:56:43+00:00",
+          "prompt_sha256": "f0cf44bcb9bb",
+          "score": 1.0
+         }
+        ]
+       },
+       {
+        "provider": "AtlasCloud",
+        "points": [
+         {
+          "timestamp": "2026-09-18T01:30:21+00:00",
+          "prompt_sha256": "1ae867f897aa",
+          "score": 0.9
+         },
+         {
+          "timestamp": "2026-09-18T01:45:28+00:00",
+          "prompt_sha256": "0749e3b84f81",
+          "score": 0.9
+         },
+         {
+          "timestamp": "2026-09-18T02:11:48+00:00",
+          "prompt_sha256": "0749e3b84f81",
+          "score": 0.9
+         },
+         {
+          "timestamp": "2026-09-18T02:23:43+00:00",
+          "prompt_sha256": "8dd4a1880ce5",
+          "score": 0.9
+         },
+         {
+          "timestamp": "2026-09-18T02:39:21+00:00",
+          "prompt_sha256": "8dd4a1880ce5",
+          "score": 1.0
+         },
+         {
+          "timestamp": "2026-09-18T02:51:34+00:00",
+          "prompt_sha256": "d318f76e0deb",
+          "score": 1.0
+         },
+         {
+          "timestamp": "2026-09-29T00:27:54+00:00",
+          "prompt_sha256": "24c2e1e9ef29",
+          "score": 1.0
+         },
+         {
+          "timestamp": "2026-09-29T00:56:43+00:00",
+          "prompt_sha256": "f0cf44bcb9bb",
+          "score": 1.0
+         }
+        ]
+       },
+       {
+        "provider": "DigitalOcean",
+        "points": [
+         {
+          "timestamp": "2026-09-18T01:30:21+00:00",
+          "prompt_sha256": "1ae867f897aa",
+          "score": 1.0
+         },
+         {
+          "timestamp": "2026-09-18T01:45:28+00:00",
+          "prompt_sha256": "0749e3b84f81",
+          "score": 1.0
+         },
+         {
+          "timestamp": "2026-09-18T02:11:48+00:00",
+          "prompt_sha256": "0749e3b84f81",
+          "score": 1.0
+         },
+         {
+          "timestamp": "2026-09-18T02:23:43+00:00",
+          "prompt_sha256": "8dd4a1880ce5",
+          "score": 1.0
+         },
+         {
+          "timestamp": "2026-09-18T02:39:21+00:00",
+          "prompt_sha256": "8dd4a1880ce5",
+          "score": 0.9285714285714286
+         },
+         {
+          "timestamp": "2026-09-18T02:51:34+00:00",
+          "prompt_sha256": "d318f76e0deb",
+          "score": 0.9444444444444444
+         },
+         {
+          "timestamp": "2026-09-29T00:27:54+00:00",
+          "prompt_sha256": "24c2e1e9ef29",
+          "score": 0.9090909090909091
+         },
+         {
+          "timestamp": "2026-09-29T00:56:43+00:00",
+          "prompt_sha256": "f0cf44bcb9bb",
+          "score": 0.9545454545454546
+         }
+        ]
+       },
+       {
+        "provider": "NextBit",
+        "points": [
+         {
+          "timestamp": "2026-09-18T01:30:21+00:00",
+          "prompt_sha256": "1ae867f897aa",
+          "score": 0.8
+         },
+         {
+          "timestamp": "2026-09-18T01:45:28+00:00",
+          "prompt_sha256": "0749e3b84f81",
+          "score": 0.9
+         },
+         {
+          "timestamp": "2026-09-18T02:11:48+00:00",
+          "prompt_sha256": "0749e3b84f81",
+          "score": 0.9
+         },
+         {
+          "timestamp": "2026-09-18T02:23:43+00:00",
+          "prompt_sha256": "8dd4a1880ce5",
+          "score": 0.9
+         },
+         {
+          "timestamp": "2026-09-18T02:39:21+00:00",
+          "prompt_sha256": "8dd4a1880ce5",
+          "score": 1.0
+         },
+         {
+          "timestamp": "2026-09-18T02:51:34+00:00",
+          "prompt_sha256": "d318f76e0deb",
+          "score": 1.0
+         }
+        ]
+       }
+      ]
+     }
+    ],
+    "run_count": 30
+   },
+   "prompt_versions": [
+    {
+     "prompt_sha256": "f0cf44bcb9bb",
+     "text": "\n    Decide whether the provided page content carries people who currently hold office in one\n    specific governing body.\n\n    Body: <body, per case>\n    Municipality: <jurisdiction, per case>\n    Offices in it:\n      - <its posts, per case>\n\n    Answer true only if this page presents a person holding office in that body as one of its\n    officials — a roster entry, a directory row, a profile, or a contact block naming them.\n\n    The test: would this page tell a reader who currently holds the office, if they had never\n    heard of the person? A listing, a profile or a contact block answers that. A sentence about\n    something that happened assumes you already know, and names the person in passing.\n\n    All of these are false, however prominently the body or its people appear, and however many\n    times a name is repeated:\n    - a link to the body, or its name in the site navigation, including a heading such as\n      \"Connect with Elected Officials\" that links elsewhere\n    - a mention of the body in prose, or a meeting agenda or minutes naming it\n    - news stories, press releases and announcements. \"Mayor Wilson Signs Junk Fee Legislation\n      into Law\" names the mayor and their office and is still a report of an event: the page\n      exists to say what happened, not who holds the office. A homepage carrying six such\n      headlines is a newsfeed, not a roster.\n\n    Judge the page's own content. A block that would be identical on every page of the site —\n    a menu, a footer, a sidebar list of members repeated across a section — is furniture, and\n    counting it would make every page of a site cover every body, which is no answer at all. The\n    same list in the body of a page, as what that page exists to present, does count.\n\n    Only people who hold office in that body count. Once the page shows they are in it, their\n    title may be one not listed above; the list says what holding office in this body looks like,\n    not every title it has. \n\n    IMPORTANT: Return only valid JSON, {\"covers\": true} or {\"covers\": false}.\n    ",
+     "first_run_at": "2026-09-29T00:56:43+00:00",
+     "last_run_at": "2026-09-29T00:56:43+00:00",
+     "providers": [
+      "Alibaba",
+      "AtlasCloud",
+      "DigitalOcean"
+     ],
+     "runs": [
+      {
+       "timestamp": "2026-09-29T00:56:43+00:00",
+       "provider": "Alibaba",
+       "scores": {
+        "covers": 1.0
+       }
+      },
+      {
+       "timestamp": "2026-09-29T00:56:43+00:00",
+       "provider": "AtlasCloud",
+       "scores": {
+        "covers": 1.0
+       }
+      },
+      {
+       "timestamp": "2026-09-29T00:56:43+00:00",
+       "provider": "DigitalOcean",
+       "scores": {
+        "covers": 0.9545454545454546
+       }
+      }
+     ],
+     "previous_sha256": "24c2e1e9ef29",
+     "diff": [
+      {
+       "kind": "context",
+       "text": "     Municipality: <jurisdiction, per case>"
+      },
+      {
+       "kind": "removed",
+       "text": "-    Offices in it: <its posts, per case>"
+      },
+      {
+       "kind": "added",
+       "text": "+    Offices in it:"
+      },
+      {
+       "kind": "added",
+       "text": "+      - <its posts, per case>"
+      },
+      {
+       "kind": "context",
+       "text": " "
+      }
+     ]
+    },
+    {
+     "prompt_sha256": "24c2e1e9ef29",
+     "text": "\n    Decide whether the provided page content carries people who currently hold office in one\n    specific governing body.\n\n    Body: <body, per case>\n    Municipality: <jurisdiction, per case>\n    Offices in it: <its posts, per case>\n\n    Answer true only if this page presents a person holding office in that body as one of its\n    officials — a roster entry, a directory row, a profile, or a contact block naming them.\n\n    The test: would this page tell a reader who currently holds the office, if they had never\n    heard of the person? A listing, a profile or a contact block answers that. A sentence about\n    something that happened assumes you already know, and names the person in passing.\n\n    All of these are false, however prominently the body or its people appear, and however many\n    times a name is repeated:\n    - a link to the body, or its name in the site navigation, including a heading such as\n      \"Connect with Elected Officials\" that links elsewhere\n    - a mention of the body in prose, or a meeting agenda or minutes naming it\n    - news stories, press releases and announcements. \"Mayor Wilson Signs Junk Fee Legislation\n      into Law\" names the mayor and their office and is still a report of an event: the page\n      exists to say what happened, not who holds the office. A homepage carrying six such\n      headlines is a newsfeed, not a roster.\n\n    Judge the page's own content. A block that would be identical on every page of the site —\n    a menu, a footer, a sidebar list of members repeated across a section — is furniture, and\n    counting it would make every page of a site cover every body, which is no answer at all. The\n    same list in the body of a page, as what that page exists to present, does count.\n\n    Only people who hold office in that body count. Once the page shows they are in it, their\n    title may be one not listed above; the list says what holding office in this body looks like,\n    not every title it has. \n\n    IMPORTANT: Return only valid JSON, {\"covers\": true} or {\"covers\": false}.\n    ",
+     "first_run_at": "2026-09-29T00:27:54+00:00",
+     "last_run_at": "2026-09-29T00:27:55+00:00",
+     "providers": [
+      "Alibaba",
+      "AtlasCloud",
+      "DigitalOcean"
+     ],
+     "runs": [
+      {
+       "timestamp": "2026-09-29T00:27:55+00:00",
+       "provider": "Alibaba",
+       "scores": {
+        "covers": 1.0
+       }
+      },
+      {
+       "timestamp": "2026-09-29T00:27:54+00:00",
+       "provider": "AtlasCloud",
+       "scores": {
+        "covers": 1.0
+       }
+      },
+      {
+       "timestamp": "2026-09-29T00:27:54+00:00",
+       "provider": "DigitalOcean",
+       "scores": {
+        "covers": 0.9090909090909091
+       }
+      }
+     ],
+     "previous_sha256": "d318f76e0deb",
+     "diff": [
+      {
+       "kind": "context",
+       "text": " "
+      },
+      {
+       "kind": "removed",
+       "text": "-    Someone who holds office in that body counts even if the page gives them a title that is not"
+      },
+      {
+       "kind": "removed",
+       "text": "-    among the offices listed above; the list is there to say what holding office in this body"
+      },
+      {
+       "kind": "removed",
+       "text": "-    looks like, not to limit it."
+      },
+      {
+       "kind": "added",
+       "text": "+    Only people who hold office in that body count. Once the page shows they are in it, their"
+      },
+      {
+       "kind": "added",
+       "text": "+    title may be one not listed above; the list says what holding office in this body looks like,"
+      },
+      {
+       "kind": "added",
+       "text": "+    not every title it has. "
+      },
+      {
+       "kind": "context",
+       "text": " "
+      }
+     ]
+    },
+    {
+     "prompt_sha256": "d318f76e0deb",
+     "text": "\n    Decide whether the provided page content carries people who currently hold office in one\n    specific governing body.\n\n    Body: <body, per case>\n    Municipality: <jurisdiction, per case>\n    Offices in it: <its posts, per case>\n\n    Answer true only if this page presents a person holding office in that body as one of its\n    officials — a roster entry, a directory row, a profile, or a contact block naming them.\n\n    The test: would this page tell a reader who currently holds the office, if they had never\n    heard of the person? A listing, a profile or a contact block answers that. A sentence about\n    something that happened assumes you already know, and names the person in passing.\n\n    All of these are false, however prominently the body or its people appear, and however many\n    times a name is repeated:\n    - a link to the body, or its name in the site navigation, including a heading such as\n      \"Connect with Elected Officials\" that links elsewhere\n    - a mention of the body in prose, or a meeting agenda or minutes naming it\n    - news stories, press releases and announcements. \"Mayor Wilson Signs Junk Fee Legislation\n      into Law\" names the mayor and their office and is still a report of an event: the page\n      exists to say what happened, not who holds the office. A homepage carrying six such\n      headlines is a newsfeed, not a roster.\n\n    Judge the page's own content. A block that would be identical on every page of the site —\n    a menu, a footer, a sidebar list of members repeated across a section — is furniture, and\n    counting it would make every page of a site cover every body, which is no answer at all. The\n    same list in the body of a page, as what that page exists to present, does count.\n\n    Someone who holds office in that body counts even if the page gives them a title that is not\n    among the offices listed above; the list is there to say what holding office in this body\n    looks like, not to limit it.\n\n    IMPORTANT: Return only valid JSON, {\"covers\": true} or {\"covers\": false}.\n    ",
+     "first_run_at": "2026-09-18T02:51:34+00:00",
+     "last_run_at": "2026-09-18T02:51:34+00:00",
+     "providers": [
+      "Alibaba",
+      "AtlasCloud",
+      "DigitalOcean",
+      "NextBit"
+     ],
+     "runs": [
+      {
+       "timestamp": "2026-09-18T02:51:34+00:00",
+       "provider": "Alibaba",
+       "scores": {
+        "covers": 1.0
+       }
+      },
+      {
+       "timestamp": "2026-09-18T02:51:34+00:00",
+       "provider": "AtlasCloud",
+       "scores": {
+        "covers": 1.0
+       }
+      },
+      {
+       "timestamp": "2026-09-18T02:51:34+00:00",
+       "provider": "DigitalOcean",
+       "scores": {
+        "covers": 0.9444444444444444
+       }
+      },
+      {
+       "timestamp": "2026-09-18T02:51:34+00:00",
+       "provider": "NextBit",
+       "scores": {
+        "covers": 1.0
+       }
+      }
+     ],
+     "previous_sha256": "8dd4a1880ce5",
+     "diff": [
+      {
+       "kind": "context",
+       "text": " "
+      },
+      {
+       "kind": "added",
+       "text": "+    Judge the page's own content. A block that would be identical on every page of the site —"
+      },
+      {
+       "kind": "added",
+       "text": "+    a menu, a footer, a sidebar list of members repeated across a section — is furniture, and"
+      },
+      {
+       "kind": "added",
+       "text": "+    counting it would make every page of a site cover every body, which is no answer at all. The"
+      },
+      {
+       "kind": "added",
+       "text": "+    same list in the body of a page, as what that page exists to present, does count."
+      },
+      {
+       "kind": "added",
+       "text": "+"
+      },
+      {
+       "kind": "context",
+       "text": "     Someone who holds office in that body counts even if the page gives them a title that is not"
+      }
+     ]
+    },
+    {
+     "prompt_sha256": "8dd4a1880ce5",
+     "text": "\n    Decide whether the provided page content carries people who currently hold office in one\n    specific governing body.\n\n    Body: <body, per case>\n    Municipality: <jurisdiction, per case>\n    Offices in it: <its posts, per case>\n\n    Answer true only if this page presents a person holding office in that body as one of its\n    officials — a roster entry, a directory row, a profile, or a contact block naming them.\n\n    The test: would this page tell a reader who currently holds the office, if they had never\n    heard of the person? A listing, a profile or a contact block answers that. A sentence about\n    something that happened assumes you already know, and names the person in passing.\n\n    All of these are false, however prominently the body or its people appear, and however many\n    times a name is repeated:\n    - a link to the body, or its name in the site navigation, including a heading such as\n      \"Connect with Elected Officials\" that links elsewhere\n    - a mention of the body in prose, or a meeting agenda or minutes naming it\n    - news stories, press releases and announcements. \"Mayor Wilson Signs Junk Fee Legislation\n      into Law\" names the mayor and their office and is still a report of an event: the page\n      exists to say what happened, not who holds the office. A homepage carrying six such\n      headlines is a newsfeed, not a roster.\n\n    Someone who holds office in that body counts even if the page gives them a title that is not\n    among the offices listed above; the list is there to say what holding office in this body\n    looks like, not to limit it.\n\n    IMPORTANT: Return only valid JSON, {\"covers\": true} or {\"covers\": false}.\n    ",
+     "first_run_at": "2026-09-18T02:23:43+00:00",
+     "last_run_at": "2026-09-18T02:39:21+00:00",
+     "providers": [
+      "Alibaba",
+      "AtlasCloud",
+      "DigitalOcean",
+      "NextBit"
+     ],
+     "runs": [
+      {
+       "timestamp": "2026-09-18T02:39:21+00:00",
+       "provider": "Alibaba",
+       "scores": {
+        "covers": 1.0
+       }
+      },
+      {
+       "timestamp": "2026-09-18T02:39:21+00:00",
+       "provider": "AtlasCloud",
+       "scores": {
+        "covers": 1.0
+       }
+      },
+      {
+       "timestamp": "2026-09-18T02:39:21+00:00",
+       "provider": "DigitalOcean",
+       "scores": {
+        "covers": 0.9285714285714286
+       }
+      },
+      {
+       "timestamp": "2026-09-18T02:39:21+00:00",
+       "provider": "NextBit",
+       "scores": {
+        "covers": 1.0
+       }
+      },
+      {
+       "timestamp": "2026-09-18T02:23:43+00:00",
+       "provider": "Alibaba",
+       "scores": {
+        "covers": 0.9
+       }
+      },
+      {
+       "timestamp": "2026-09-18T02:23:43+00:00",
+       "provider": "AtlasCloud",
+       "scores": {
+        "covers": 0.9
+       }
+      },
+      {
+       "timestamp": "2026-09-18T02:23:43+00:00",
+       "provider": "DigitalOcean",
+       "scores": {
+        "covers": 1.0
+       }
+      },
+      {
+       "timestamp": "2026-09-18T02:23:43+00:00",
+       "provider": "NextBit",
+       "scores": {
+        "covers": 0.9
+       }
+      }
+     ],
+     "previous_sha256": "0749e3b84f81",
+     "diff": [
+      {
+       "kind": "context",
+       "text": " "
+      },
+      {
+       "kind": "removed",
+       "text": "-    All of these are false, however prominently the body or its people appear:"
+      },
+      {
+       "kind": "removed",
+       "text": "-    - a link to the body, or its name in the site navigation"
+      },
+      {
+       "kind": "added",
+       "text": "+    The test: would this page tell a reader who currently holds the office, if they had never"
+      },
+      {
+       "kind": "added",
+       "text": "+    heard of the person? A listing, a profile or a contact block answers that. A sentence about"
+      },
+      {
+       "kind": "added",
+       "text": "+    something that happened assumes you already know, and names the person in passing."
+      },
+      {
+       "kind": "added",
+       "text": "+"
+      },
+      {
+       "kind": "added",
+       "text": "+    All of these are false, however prominently the body or its people appear, and however many"
+      },
+      {
+       "kind": "added",
+       "text": "+    times a name is repeated:"
+      },
+      {
+       "kind": "added",
+       "text": "+    - a link to the body, or its name in the site navigation, including a heading such as"
+      },
+      {
+       "kind": "added",
+       "text": "+      \"Connect with Elected Officials\" that links elsewhere"
+      },
+      {
+       "kind": "context",
+       "text": "     - a mention of the body in prose, or a meeting agenda or minutes naming it"
+      },
+      {
+       "kind": "removed",
+       "text": "-    - a news story, press release or announcement about something an official said or did."
+      },
+      {
+       "kind": "removed",
+       "text": "-      A page reporting on the mayor is not a page that lists the mayor, and a homepage carrying"
+      },
+      {
+       "kind": "removed",
+       "text": "-      headlines about officials is reporting, not listing."
+      },
+      {
+       "kind": "added",
+       "text": "+    - news stories, press releases and announcements. \"Mayor Wilson Signs Junk Fee Legislation"
+      },
+      {
+       "kind": "added",
+       "text": "+      into Law\" names the mayor and their office and is still a report of an event: the page"
+      },
+      {
+       "kind": "added",
+       "text": "+      exists to say what happened, not who holds the office. A homepage carrying six such"
+      },
+      {
+       "kind": "added",
+       "text": "+      headlines is a newsfeed, not a roster."
+      },
+      {
+       "kind": "context",
+       "text": " "
+      }
+     ]
+    },
+    {
+     "prompt_sha256": "0749e3b84f81",
+     "text": "\n    Decide whether the provided page content carries people who currently hold office in one\n    specific governing body.\n\n    Body: <body, per case>\n    Municipality: <jurisdiction, per case>\n    Offices in it: <its posts, per case>\n\n    Answer true only if this page presents a person holding office in that body as one of its\n    officials — a roster entry, a directory row, a profile, or a contact block naming them.\n\n    All of these are false, however prominently the body or its people appear:\n    - a link to the body, or its name in the site navigation\n    - a mention of the body in prose, or a meeting agenda or minutes naming it\n    - a news story, press release or announcement about something an official said or did.\n      A page reporting on the mayor is not a page that lists the mayor, and a homepage carrying\n      headlines about officials is reporting, not listing.\n\n    Someone who holds office in that body counts even if the page gives them a title that is not\n    among the offices listed above; the list is there to say what holding office in this body\n    looks like, not to limit it.\n\n    IMPORTANT: Return only valid JSON, {\"covers\": true} or {\"covers\": false}.\n    ",
+     "first_run_at": "2026-09-18T01:45:28+00:00",
+     "last_run_at": "2026-09-18T02:11:48+00:00",
+     "providers": [
+      "Alibaba",
+      "AtlasCloud",
+      "DigitalOcean",
+      "NextBit"
+     ],
+     "runs": [
+      {
+       "timestamp": "2026-09-18T02:11:48+00:00",
+       "provider": "Alibaba",
+       "scores": {
+        "covers": 0.9
+       }
+      },
+      {
+       "timestamp": "2026-09-18T02:11:48+00:00",
+       "provider": "AtlasCloud",
+       "scores": {
+        "covers": 0.9
+       }
+      },
+      {
+       "timestamp": "2026-09-18T02:11:48+00:00",
+       "provider": "DigitalOcean",
+       "scores": {
+        "covers": 1.0
+       }
+      },
+      {
+       "timestamp": "2026-09-18T02:11:48+00:00",
+       "provider": "NextBit",
+       "scores": {
+        "covers": 0.9
+       }
+      },
+      {
+       "timestamp": "2026-09-18T01:45:28+00:00",
+       "provider": "Alibaba",
+       "scores": {
+        "covers": 0.9
+       }
+      },
+      {
+       "timestamp": "2026-09-18T01:45:28+00:00",
+       "provider": "AtlasCloud",
+       "scores": {
+        "covers": 0.9
+       }
+      },
+      {
+       "timestamp": "2026-09-18T01:45:28+00:00",
+       "provider": "DigitalOcean",
+       "scores": {
+        "covers": 1.0
+       }
+      },
+      {
+       "timestamp": "2026-09-18T01:45:28+00:00",
+       "provider": "NextBit",
+       "scores": {
+        "covers": 0.9
+       }
+      }
+     ],
+     "previous_sha256": "1ae867f897aa",
+     "diff": [
+      {
+       "kind": "context",
+       "text": " "
+      },
+      {
+       "kind": "removed",
+       "text": "-    Answer true only if a person holding office in that body appears on this page, named. A link"
+      },
+      {
+       "kind": "removed",
+       "text": "-    to the body, its name in the navigation, a mention of it in prose, or a meeting agenda that"
+      },
+      {
+       "kind": "removed",
+       "text": "-    names it are all false — the question is whether the page lists its people."
+      },
+      {
+       "kind": "added",
+       "text": "+    Answer true only if this page presents a person holding office in that body as one of its"
+      },
+      {
+       "kind": "added",
+       "text": "+    officials — a roster entry, a directory row, a profile, or a contact block naming them."
+      },
+      {
+       "kind": "added",
+       "text": "+"
+      },
+      {
+       "kind": "added",
+       "text": "+    All of these are false, however prominently the body or its people appear:"
+      },
+      {
+       "kind": "added",
+       "text": "+    - a link to the body, or its name in the site navigation"
+      },
+      {
+       "kind": "added",
+       "text": "+    - a mention of the body in prose, or a meeting agenda or minutes naming it"
+      },
+      {
+       "kind": "added",
+       "text": "+    - a news story, press release or announcement about something an official said or did."
+      },
+      {
+       "kind": "added",
+       "text": "+      A page reporting on the mayor is not a page that lists the mayor, and a homepage carrying"
+      },
+      {
+       "kind": "added",
+       "text": "+      headlines about officials is reporting, not listing."
+      },
+      {
+       "kind": "context",
+       "text": " "
+      }
+     ]
+    },
+    {
+     "prompt_sha256": "1ae867f897aa",
+     "text": "\n    Decide whether the provided page content carries people who currently hold office in one\n    specific governing body.\n\n    Body: <body, per case>\n    Municipality: <jurisdiction, per case>\n    Offices in it: <its posts, per case>\n\n    Answer true only if a person holding office in that body appears on this page, named. A link\n    to the body, its name in the navigation, a mention of it in prose, or a meeting agenda that\n    names it are all false — the question is whether the page lists its people.\n\n    Someone who holds office in that body counts even if the page gives them a title that is not\n    among the offices listed above; the list is there to say what holding office in this body\n    looks like, not to limit it.\n\n    IMPORTANT: Return only valid JSON, {\"covers\": true} or {\"covers\": false}.\n    ",
+     "first_run_at": "2026-09-18T01:30:21+00:00",
+     "last_run_at": "2026-09-18T01:30:21+00:00",
+     "providers": [
+      "Alibaba",
+      "AtlasCloud",
+      "DigitalOcean",
+      "NextBit"
+     ],
+     "runs": [
+      {
+       "timestamp": "2026-09-18T01:30:21+00:00",
+       "provider": "Alibaba",
+       "scores": {
+        "covers": 0.9
+       }
+      },
+      {
+       "timestamp": "2026-09-18T01:30:21+00:00",
+       "provider": "AtlasCloud",
+       "scores": {
+        "covers": 0.9
+       }
+      },
+      {
+       "timestamp": "2026-09-18T01:30:21+00:00",
+       "provider": "DigitalOcean",
+       "scores": {
+        "covers": 1.0
+       }
+      },
+      {
+       "timestamp": "2026-09-18T01:30:21+00:00",
+       "provider": "NextBit",
+       "scores": {
+        "covers": 0.8
+       }
+      }
+     ],
+     "previous_sha256": null,
+     "diff": []
+    }
+   ],
+   "detail": {
+    "providers": [
+     "Alibaba",
+     "AtlasCloud",
+     "DigitalOcean"
+    ],
+    "metric_rows": [
+     {
+      "metric": "covers",
+      "cells": [
+       {
+        "score": 1.0,
+        "swing_is_wide": false,
+        "half_swing": 0.04999999999999999,
+        "missing_count": 0
+       },
+       {
+        "score": 1.0,
+        "swing_is_wide": false,
+        "half_swing": 0.04999999999999999,
+        "missing_count": 0
+       },
+       {
+        "score": 0.9545454545454546,
+        "swing_is_wide": false,
+        "half_swing": 0.04545454545454547,
+        "missing_count": 0
+       }
+      ]
+     },
+     {
+      "metric": "cases passed",
+      "cells": [
+       {
+        "score": 1.0,
+        "swing_is_wide": false,
+        "half_swing": 0.0,
+        "missing_count": null
+       },
+       {
+        "score": 1.0,
+        "swing_is_wide": false,
+        "half_swing": 0.0,
+        "missing_count": null
+       },
+       {
+        "score": 0.9090909090909091,
+        "swing_is_wide": false,
+        "half_swing": 0.0,
+        "missing_count": null
+       }
+      ]
+     }
+    ],
+    "case_providers": [
+     "Alibaba",
+     "AtlasCloud",
+     "DigitalOcean",
+     "NextBit"
+    ],
+    "case_rows": [
+     {
+      "case_id": "jackson_mayors_office",
+      "scores": [
+       1.0,
+       1.0,
+       0.0,
+       1.0
+      ],
+      "stability": "moves"
+     },
+     {
+      "case_id": "irvine_council_roster",
+      "scores": [
+       1.0,
+       1.0,
+       1.0,
+       1.0
+      ],
+      "stability": "moves"
+     },
+     {
+      "case_id": "irvine_councilmember_bio",
+      "scores": [
+       1.0,
+       1.0,
+       1.0,
+       1.0
+      ],
+      "stability": "moves"
+     },
+     {
+      "case_id": "jackson_council_agendas",
+      "scores": [
+       1.0,
+       1.0,
+       1.0,
+       1.0
+      ],
+      "stability": "steady"
+     },
+     {
+      "case_id": "jackson_council_member_bio",
+      "scores": [
+       1.0,
+       1.0,
+       1.0,
+       1.0
+      ],
+      "stability": "steady"
+     },
+     {
+      "case_id": "jackson_mayor_staff_directory",
+      "scores": [
+       1.0,
+       1.0,
+       1.0,
+       1.0
+      ],
+      "stability": "steady"
+     },
+     {
+      "case_id": "jackson_meet_the_council",
+      "scores": [
+       1.0,
+       1.0,
+       1.0,
+       1.0
+      ],
+      "stability": "steady"
+     },
+     {
+      "case_id": "millbury_board_of_selectmen",
+      "scores": [
+       1.0,
+       1.0,
+       1.0,
+       null
+      ],
+      "stability": "steady"
+     },
+     {
+      "case_id": "millbury_school_committee",
+      "scores": [
+       1.0,
+       1.0,
+       1.0,
+       null
+      ],
+      "stability": "steady"
+     },
+     {
+      "case_id": "quitaque_city_officials",
+      "scores": [
+       1.0,
+       1.0,
+       1.0,
+       1.0
+      ],
+      "stability": "steady"
+     },
+     {
+      "case_id": "seattle_mayor_page",
+      "scores": [
+       1.0,
+       1.0,
+       1.0,
+       1.0
+      ],
+      "stability": "steady"
+     }
+    ],
+    "movements": [
+     {
+      "provider": "Alibaba",
+      "regressed": [],
+      "improved": []
+     },
+     {
+      "provider": "AtlasCloud",
+      "regressed": [],
+      "improved": []
+     },
+     {
+      "provider": "DigitalOcean",
+      "regressed": [],
+      "improved": [
+       "irvine_councilmember_bio"
+      ]
+     },
+     {
+      "provider": "NextBit",
+      "regressed": [],
+      "improved": []
+     }
+    ]
+   },
+   "latest_mismatches": {
+    "DigitalOcean": {
+     "jackson_mayors_office": [
+      {
+       "subject": "Office of the Mayor",
+       "field": "covers",
+       "expected": true,
+       "actual": false,
+       "expected_label": null,
+       "actual_label": null
+      }
+     ]
+    }
+   },
+   "case_inputs": {
+    "irvine_council_roster": {
+     "page_url": "https://cityofirvine.gov/city-council",
+     "jurisdiction_name": "Irvine city",
+     "organizations": "[{\"name\": \"Office of the Mayor\", \"role_labels\": [\"Mayor\"]}, {\"name\": \"City Council\", \"role_labels\": [\"Vice Mayor\", \"Council Member\"], \"divisions\": [\"district 1\", \"district 2\", \"district 4\", \"district 5\"]}]"
+    },
+    "irvine_councilmember_bio": {
+     "page_url": "https://cityofirvine.gov/city-council/councilmember-william-go-district-2",
+     "jurisdiction_name": "Irvine city",
+     "organizations": "[{\"name\": \"Office of the Mayor\", \"role_labels\": [\"Mayor\"]}, {\"name\": \"City Council\", \"role_labels\": [\"Vice Mayor\", \"Council Member\"], \"divisions\": [\"district 1\", \"district 2\", \"district 4\", \"district 5\"]}]"
+    },
+    "jackson_council_agendas": {
+     "page_url": "https://www.jacksontn.gov/government/citycouncil/agendaandminutes",
+     "jurisdiction_name": "Jackson city",
+     "organizations": "[{\"name\": \"Office of the Mayor\", \"role_labels\": [\"Mayor\"]}, {\"name\": \"City Council\", \"role_labels\": [\"Council Member\"], \"divisions\": [\"district 1\", \"district 2\", \"district 3\", \"district 4\", \"district 5\", \"district 6\", \"district 7\", \"district 8\", \"district 9\"]}]"
+    },
+    "jackson_council_member_bio": {
+     "page_url": "https://www.jacksontn.gov/government/citycouncil/meetthecouncil/district4_donnell",
+     "jurisdiction_name": "Jackson city",
+     "organizations": "[{\"name\": \"Office of the Mayor\", \"role_labels\": [\"Mayor\"]}, {\"name\": \"City Council\", \"role_labels\": [\"Council Member\"], \"divisions\": [\"district 1\", \"district 2\", \"district 3\", \"district 4\", \"district 5\", \"district 6\", \"district 7\", \"district 8\", \"district 9\"]}]"
+    },
+    "jackson_mayor_staff_directory": {
+     "page_url": "https://www.jacksontn.gov/government/mayorsoffice/staffdirectory",
+     "jurisdiction_name": "Jackson city",
+     "organizations": "[{\"name\": \"Office of the Mayor\", \"role_labels\": [\"Mayor\"]}, {\"name\": \"City Council\", \"role_labels\": [\"Council Member\"], \"divisions\": [\"district 1\", \"district 2\", \"district 3\", \"district 4\", \"district 5\", \"district 6\", \"district 7\", \"district 8\", \"district 9\"]}]"
+    },
+    "jackson_mayors_office": {
+     "page_url": "https://www.jacksontn.gov/government/mayorsoffice",
+     "jurisdiction_name": "Jackson city",
+     "organizations": "[{\"name\": \"Office of the Mayor\", \"role_labels\": [\"Mayor\"]}, {\"name\": \"City Council\", \"role_labels\": [\"Council Member\"], \"divisions\": [\"district 1\", \"district 2\", \"district 3\", \"district 4\", \"district 5\", \"district 6\", \"district 7\", \"district 8\", \"district 9\"]}]"
+    },
+    "jackson_meet_the_council": {
+     "page_url": "https://www.jacksontn.gov/government/citycouncil/meetthecouncil",
+     "jurisdiction_name": "Jackson city",
+     "organizations": "[{\"name\": \"Office of the Mayor\", \"role_labels\": [\"Mayor\"]}, {\"name\": \"City Council\", \"role_labels\": [\"Council Member\"], \"divisions\": [\"district 1\", \"district 2\", \"district 3\", \"district 4\", \"district 5\", \"district 6\", \"district 7\", \"district 8\", \"district 9\"]}]"
+    },
+    "millbury_board_of_selectmen": {
+     "page_url": "https://www.millburyma.gov/1506/Board-of-Selectmen",
+     "jurisdiction_name": "Millbury town",
+     "organizations": "[{\"name\": \"Select Board\", \"role_labels\": [\"Select Board Member\", \"Chair\", \"Vice Chair\"]}, {\"name\": \"Town Meeting\", \"role_labels\": [\"Moderator\"]}]"
+    },
+    "millbury_school_committee": {
+     "page_url": "https://www.millburyma.gov/1655/School-Committee",
+     "jurisdiction_name": "Millbury town",
+     "organizations": "[{\"name\": \"Select Board\", \"role_labels\": [\"Select Board Member\", \"Chair\", \"Vice Chair\"]}, {\"name\": \"Town Meeting\", \"role_labels\": [\"Moderator\"]}]"
+    },
+    "quitaque_city_officials": {
+     "page_url": "https://quitaque.us",
+     "jurisdiction_name": "Quitaque city",
+     "organizations": "[{\"name\": \"Office of the Mayor\", \"role_labels\": [\"Mayor\", \"Mayor Pro Tempore\"]}, {\"name\": \"City Council\", \"role_labels\": [\"Council Member\"]}]"
+    },
+    "seattle_mayor_page": {
+     "page_url": "https://seattle.gov/mayor",
+     "jurisdiction_name": "Seattle city",
+     "organizations": "[{\"name\": \"Office of the Mayor\", \"role_labels\": [\"Mayor\"]}, {\"name\": \"City Council\", \"role_labels\": [\"Council President\", \"Council Member\"], \"divisions\": [\"district 1\", \"district 2\", \"district 3\"]}]"
+    }
+   },
+   "prompts_dir": "../page_covers/_prompts",
+   "latest_case_prompts": {
+    "Alibaba": {
+     "template_sha256": "f0cf44bcb9bb",
+     "prompts": {
+      "irvine_council_roster|City Council": "5ca65fd6b6f3",
+      "irvine_council_roster|Office of the Mayor": "69b7c23b5a2b",
+      "irvine_councilmember_bio|City Council": "5ca65fd6b6f3",
+      "irvine_councilmember_bio|Office of the Mayor": "69b7c23b5a2b",
+      "jackson_council_agendas|City Council": "12f2e70dc158",
+      "jackson_council_agendas|Office of the Mayor": "ea8a0d3c5413",
+      "jackson_council_member_bio|City Council": "12f2e70dc158",
+      "jackson_council_member_bio|Office of the Mayor": "ea8a0d3c5413",
+      "jackson_mayor_staff_directory|City Council": "12f2e70dc158",
+      "jackson_mayor_staff_directory|Office of the Mayor": "ea8a0d3c5413",
+      "jackson_mayors_office|City Council": "12f2e70dc158",
+      "jackson_mayors_office|Office of the Mayor": "ea8a0d3c5413",
+      "jackson_meet_the_council|City Council": "12f2e70dc158",
+      "jackson_meet_the_council|Office of the Mayor": "ea8a0d3c5413",
+      "millbury_board_of_selectmen|Select Board": "cd0593849f0a",
+      "millbury_board_of_selectmen|Town Meeting": "1b1da1d5d1be",
+      "millbury_school_committee|Select Board": "cd0593849f0a",
+      "millbury_school_committee|Town Meeting": "1b1da1d5d1be",
+      "quitaque_city_officials|City Council": "ea7531b953f1",
+      "quitaque_city_officials|Office of the Mayor": "e45993dd2e98",
+      "seattle_mayor_page|City Council": "9cc0fd5bb885",
+      "seattle_mayor_page|Office of the Mayor": "95a9475c2b3d"
+     }
+    },
+    "AtlasCloud": {
+     "template_sha256": "f0cf44bcb9bb",
+     "prompts": {
+      "irvine_council_roster|City Council": "5ca65fd6b6f3",
+      "irvine_council_roster|Office of the Mayor": "69b7c23b5a2b",
+      "irvine_councilmember_bio|City Council": "5ca65fd6b6f3",
+      "irvine_councilmember_bio|Office of the Mayor": "69b7c23b5a2b",
+      "jackson_council_agendas|City Council": "12f2e70dc158",
+      "jackson_council_agendas|Office of the Mayor": "ea8a0d3c5413",
+      "jackson_council_member_bio|City Council": "12f2e70dc158",
+      "jackson_council_member_bio|Office of the Mayor": "ea8a0d3c5413",
+      "jackson_mayor_staff_directory|City Council": "12f2e70dc158",
+      "jackson_mayor_staff_directory|Office of the Mayor": "ea8a0d3c5413",
+      "jackson_mayors_office|City Council": "12f2e70dc158",
+      "jackson_mayors_office|Office of the Mayor": "ea8a0d3c5413",
+      "jackson_meet_the_council|City Council": "12f2e70dc158",
+      "jackson_meet_the_council|Office of the Mayor": "ea8a0d3c5413",
+      "millbury_board_of_selectmen|Select Board": "cd0593849f0a",
+      "millbury_board_of_selectmen|Town Meeting": "1b1da1d5d1be",
+      "millbury_school_committee|Select Board": "cd0593849f0a",
+      "millbury_school_committee|Town Meeting": "1b1da1d5d1be",
+      "quitaque_city_officials|City Council": "ea7531b953f1",
+      "quitaque_city_officials|Office of the Mayor": "e45993dd2e98",
+      "seattle_mayor_page|City Council": "9cc0fd5bb885",
+      "seattle_mayor_page|Office of the Mayor": "95a9475c2b3d"
+     }
+    },
+    "DigitalOcean": {
+     "template_sha256": "f0cf44bcb9bb",
+     "prompts": {
+      "irvine_council_roster|City Council": "5ca65fd6b6f3",
+      "irvine_council_roster|Office of the Mayor": "69b7c23b5a2b",
+      "irvine_councilmember_bio|City Council": "5ca65fd6b6f3",
+      "irvine_councilmember_bio|Office of the Mayor": "69b7c23b5a2b",
+      "jackson_council_agendas|City Council": "12f2e70dc158",
+      "jackson_council_agendas|Office of the Mayor": "ea8a0d3c5413",
+      "jackson_council_member_bio|City Council": "12f2e70dc158",
+      "jackson_council_member_bio|Office of the Mayor": "ea8a0d3c5413",
+      "jackson_mayor_staff_directory|City Council": "12f2e70dc158",
+      "jackson_mayor_staff_directory|Office of the Mayor": "ea8a0d3c5413",
+      "jackson_mayors_office|City Council": "12f2e70dc158",
+      "jackson_mayors_office|Office of the Mayor": "ea8a0d3c5413",
+      "jackson_meet_the_council|City Council": "12f2e70dc158",
+      "jackson_meet_the_council|Office of the Mayor": "ea8a0d3c5413",
+      "millbury_board_of_selectmen|Select Board": "cd0593849f0a",
+      "millbury_board_of_selectmen|Town Meeting": "1b1da1d5d1be",
+      "millbury_school_committee|Select Board": "cd0593849f0a",
+      "millbury_school_committee|Town Meeting": "1b1da1d5d1be",
+      "quitaque_city_officials|City Council": "ea7531b953f1",
+      "quitaque_city_officials|Office of the Mayor": "e45993dd2e98",
+      "seattle_mayor_page|City Council": "9cc0fd5bb885",
+      "seattle_mayor_page|Office of the Mayor": "95a9475c2b3d"
+     }
+    }
+   }
+  },
+  {
    "eval_name": "relevant_page",
    "dataset_dir": "../../../datasets/local/relevant_page",
    "verdicts": [
@@ -31194,1800 +33233,6 @@
      }
     }
    }
-  },
-  {
-   "eval_name": "page_covers",
-   "dataset_dir": "../../../datasets/local/page_covers",
-   "verdicts": [
-    {
-     "provider": "Alibaba",
-     "blocked": false,
-     "gate_failures": [],
-     "failed_case_ids": [],
-     "cases_passed": 11,
-     "cases_total": 11,
-     "priority_scores": {},
-     "cost_usd": 0.0242496048,
-     "ran_at": "2026-09-29T00:56:43+00:00"
-    },
-    {
-     "provider": "AtlasCloud",
-     "blocked": false,
-     "gate_failures": [],
-     "failed_case_ids": [],
-     "cases_passed": 11,
-     "cases_total": 11,
-     "priority_scores": {},
-     "cost_usd": 0.01507159248,
-     "ran_at": "2026-09-29T00:56:43+00:00"
-    },
-    {
-     "provider": "DigitalOcean",
-     "blocked": true,
-     "gate_failures": [],
-     "failed_case_ids": [
-      "jackson_mayors_office"
-     ],
-     "cases_passed": 10,
-     "cases_total": 11,
-     "priority_scores": {},
-     "cost_usd": 0.0173382384,
-     "ran_at": "2026-09-29T00:56:43+00:00"
-    }
-   ],
-   "matrix": {
-    "lineages": [
-     {
-      "model": "deepseek/deepseek-v4-flash",
-      "provider": "Alibaba"
-     },
-     {
-      "model": "deepseek/deepseek-v4-flash",
-      "provider": "AtlasCloud"
-     },
-     {
-      "model": "deepseek/deepseek-v4-flash",
-      "provider": "DigitalOcean"
-     },
-     {
-      "model": "deepseek/deepseek-v4-flash",
-      "provider": "NextBit"
-     }
-    ],
-    "rows": [
-     {
-      "prompt_sha256": "f0cf44bcb9bb",
-      "cells": [
-       {
-        "mean_score": 1.0,
-        "run_count": 1,
-        "mean_cost_usd": 0.0242496048
-       },
-       {
-        "mean_score": 1.0,
-        "run_count": 1,
-        "mean_cost_usd": 0.01507159248
-       },
-       {
-        "mean_score": 0.9090909090909091,
-        "run_count": 1,
-        "mean_cost_usd": 0.0173382384
-       },
-       null
-      ]
-     },
-     {
-      "prompt_sha256": "24c2e1e9ef29",
-      "cells": [
-       {
-        "mean_score": 1.0,
-        "run_count": 1,
-        "mean_cost_usd": 0.024431148
-       },
-       {
-        "mean_score": 1.0,
-        "run_count": 1,
-        "mean_cost_usd": 0.01505031472
-       },
-       {
-        "mean_score": 0.8181818181818182,
-        "run_count": 1,
-        "mean_cost_usd": 0.0173623072
-       },
-       null
-      ]
-     },
-     {
-      "prompt_sha256": "d318f76e0deb",
-      "cells": [
-       {
-        "mean_score": 1.0,
-        "run_count": 1,
-        "mean_cost_usd": 0.0230908264
-       },
-       {
-        "mean_score": 1.0,
-        "run_count": 1,
-        "mean_cost_usd": 0.022829352
-       },
-       {
-        "mean_score": 0.8888888888888888,
-        "run_count": 1,
-        "mean_cost_usd": 0.0165445952
-       },
-       {
-        "mean_score": 1.0,
-        "run_count": 1,
-        "mean_cost_usd": 0.02287369
-       }
-      ]
-     },
-     {
-      "prompt_sha256": "8dd4a1880ce5",
-      "cells": [
-       {
-        "mean_score": 0.9,
-        "run_count": 2,
-        "mean_cost_usd": 0.013443831400000002
-       },
-       {
-        "mean_score": 0.9,
-        "run_count": 2,
-        "mean_cost_usd": 0.013260702000000001
-       },
-       {
-        "mean_score": 0.9285714285714286,
-        "run_count": 2,
-        "mean_cost_usd": 0.013294689799999999
-       },
-       {
-        "mean_score": 0.9,
-        "run_count": 2,
-        "mean_cost_usd": 0.011301465
-       }
-      ]
-     },
-     {
-      "prompt_sha256": "0749e3b84f81",
-      "cells": [
-       {
-        "mean_score": 0.8,
-        "run_count": 2,
-        "mean_cost_usd": 0.015591355599999999
-       },
-       {
-        "mean_score": 0.8,
-        "run_count": 2,
-        "mean_cost_usd": 0.014865872
-       },
-       {
-        "mean_score": 1.0,
-        "run_count": 2,
-        "mean_cost_usd": 0.01242003
-       },
-       {
-        "mean_score": 0.8,
-        "run_count": 2,
-        "mean_cost_usd": 0.016611905
-       }
-      ]
-     },
-     {
-      "prompt_sha256": "1ae867f897aa",
-      "cells": [
-       {
-        "mean_score": 0.8,
-        "run_count": 1,
-        "mean_cost_usd": 0.01721699
-       },
-       {
-        "mean_score": 0.8,
-        "run_count": 1,
-        "mean_cost_usd": 0.01801758
-       },
-       {
-        "mean_score": 1.0,
-        "run_count": 1,
-        "mean_cost_usd": 0.012344178
-       },
-       {
-        "mean_score": 0.8,
-        "run_count": 1,
-        "mean_cost_usd": 0.01803944
-       }
-      ]
-     }
-    ]
-   },
-   "comparison": {
-    "default_baseline_index": 1,
-    "default_candidate_index": 0,
-    "pairs": [
-     {
-      "baseline_index": 0,
-      "candidate_index": 1,
-      "prompt_sha256": "f0cf44bcb9bb",
-      "baseline": {
-       "mean_score": 1.0,
-       "run_count": 1,
-       "mean_cost_usd": 0.0242496048
-      },
-      "candidate": {
-       "mean_score": 1.0,
-       "run_count": 1,
-       "mean_cost_usd": 0.01507159248
-      },
-      "regressed": [],
-      "improved": [],
-      "unchanged_count": 11,
-      "has_value_detail": true,
-      "newly_wrong": [],
-      "fixed": []
-     },
-     {
-      "baseline_index": 0,
-      "candidate_index": 2,
-      "prompt_sha256": "f0cf44bcb9bb",
-      "baseline": {
-       "mean_score": 1.0,
-       "run_count": 1,
-       "mean_cost_usd": 0.0242496048
-      },
-      "candidate": {
-       "mean_score": 0.9090909090909091,
-       "run_count": 1,
-       "mean_cost_usd": 0.0173382384
-      },
-      "regressed": [
-       {
-        "case_id": "jackson_mayors_office",
-        "baseline_score": 1.0,
-        "candidate_score": 0.0
-       }
-      ],
-      "improved": [],
-      "unchanged_count": 10,
-      "has_value_detail": true,
-      "newly_wrong": [
-       {
-        "case_id": "jackson_mayors_office",
-        "subject": "Office of the Mayor",
-        "field": "covers",
-        "expected": true,
-        "actual": false
-       }
-      ],
-      "fixed": []
-     },
-     {
-      "baseline_index": 0,
-      "candidate_index": 3,
-      "prompt_sha256": "d318f76e0deb",
-      "baseline": {
-       "mean_score": 1.0,
-       "run_count": 1,
-       "mean_cost_usd": 0.0230908264
-      },
-      "candidate": {
-       "mean_score": 1.0,
-       "run_count": 1,
-       "mean_cost_usd": 0.02287369
-      },
-      "regressed": [],
-      "improved": [],
-      "unchanged_count": 9,
-      "has_value_detail": true,
-      "newly_wrong": [],
-      "fixed": []
-     },
-     {
-      "baseline_index": 1,
-      "candidate_index": 0,
-      "prompt_sha256": "f0cf44bcb9bb",
-      "baseline": {
-       "mean_score": 1.0,
-       "run_count": 1,
-       "mean_cost_usd": 0.01507159248
-      },
-      "candidate": {
-       "mean_score": 1.0,
-       "run_count": 1,
-       "mean_cost_usd": 0.0242496048
-      },
-      "regressed": [],
-      "improved": [],
-      "unchanged_count": 11,
-      "has_value_detail": true,
-      "newly_wrong": [],
-      "fixed": []
-     },
-     {
-      "baseline_index": 1,
-      "candidate_index": 2,
-      "prompt_sha256": "f0cf44bcb9bb",
-      "baseline": {
-       "mean_score": 1.0,
-       "run_count": 1,
-       "mean_cost_usd": 0.01507159248
-      },
-      "candidate": {
-       "mean_score": 0.9090909090909091,
-       "run_count": 1,
-       "mean_cost_usd": 0.0173382384
-      },
-      "regressed": [
-       {
-        "case_id": "jackson_mayors_office",
-        "baseline_score": 1.0,
-        "candidate_score": 0.0
-       }
-      ],
-      "improved": [],
-      "unchanged_count": 10,
-      "has_value_detail": true,
-      "newly_wrong": [
-       {
-        "case_id": "jackson_mayors_office",
-        "subject": "Office of the Mayor",
-        "field": "covers",
-        "expected": true,
-        "actual": false
-       }
-      ],
-      "fixed": []
-     },
-     {
-      "baseline_index": 1,
-      "candidate_index": 3,
-      "prompt_sha256": "d318f76e0deb",
-      "baseline": {
-       "mean_score": 1.0,
-       "run_count": 1,
-       "mean_cost_usd": 0.022829352
-      },
-      "candidate": {
-       "mean_score": 1.0,
-       "run_count": 1,
-       "mean_cost_usd": 0.02287369
-      },
-      "regressed": [],
-      "improved": [],
-      "unchanged_count": 9,
-      "has_value_detail": true,
-      "newly_wrong": [],
-      "fixed": []
-     },
-     {
-      "baseline_index": 2,
-      "candidate_index": 0,
-      "prompt_sha256": "f0cf44bcb9bb",
-      "baseline": {
-       "mean_score": 0.9090909090909091,
-       "run_count": 1,
-       "mean_cost_usd": 0.0173382384
-      },
-      "candidate": {
-       "mean_score": 1.0,
-       "run_count": 1,
-       "mean_cost_usd": 0.0242496048
-      },
-      "regressed": [],
-      "improved": [
-       {
-        "case_id": "jackson_mayors_office",
-        "baseline_score": 0.0,
-        "candidate_score": 1.0
-       }
-      ],
-      "unchanged_count": 10,
-      "has_value_detail": true,
-      "newly_wrong": [],
-      "fixed": [
-       {
-        "case_id": "jackson_mayors_office",
-        "subject": "Office of the Mayor",
-        "field": "covers",
-        "expected": true,
-        "actual": false
-       }
-      ]
-     },
-     {
-      "baseline_index": 2,
-      "candidate_index": 1,
-      "prompt_sha256": "f0cf44bcb9bb",
-      "baseline": {
-       "mean_score": 0.9090909090909091,
-       "run_count": 1,
-       "mean_cost_usd": 0.0173382384
-      },
-      "candidate": {
-       "mean_score": 1.0,
-       "run_count": 1,
-       "mean_cost_usd": 0.01507159248
-      },
-      "regressed": [],
-      "improved": [
-       {
-        "case_id": "jackson_mayors_office",
-        "baseline_score": 0.0,
-        "candidate_score": 1.0
-       }
-      ],
-      "unchanged_count": 10,
-      "has_value_detail": true,
-      "newly_wrong": [],
-      "fixed": [
-       {
-        "case_id": "jackson_mayors_office",
-        "subject": "Office of the Mayor",
-        "field": "covers",
-        "expected": true,
-        "actual": false
-       }
-      ]
-     },
-     {
-      "baseline_index": 2,
-      "candidate_index": 3,
-      "prompt_sha256": "d318f76e0deb",
-      "baseline": {
-       "mean_score": 0.8888888888888888,
-       "run_count": 1,
-       "mean_cost_usd": 0.0165445952
-      },
-      "candidate": {
-       "mean_score": 1.0,
-       "run_count": 1,
-       "mean_cost_usd": 0.02287369
-      },
-      "regressed": [],
-      "improved": [
-       {
-        "case_id": "irvine_council_roster",
-        "baseline_score": 0.0,
-        "candidate_score": 1.0
-       }
-      ],
-      "unchanged_count": 8,
-      "has_value_detail": true,
-      "newly_wrong": [],
-      "fixed": [
-       {
-        "case_id": "irvine_council_roster",
-        "subject": "Office of the Mayor",
-        "field": "covers",
-        "expected": true,
-        "actual": false
-       }
-      ]
-     },
-     {
-      "baseline_index": 3,
-      "candidate_index": 0,
-      "prompt_sha256": "d318f76e0deb",
-      "baseline": {
-       "mean_score": 1.0,
-       "run_count": 1,
-       "mean_cost_usd": 0.02287369
-      },
-      "candidate": {
-       "mean_score": 1.0,
-       "run_count": 1,
-       "mean_cost_usd": 0.0230908264
-      },
-      "regressed": [],
-      "improved": [],
-      "unchanged_count": 9,
-      "has_value_detail": true,
-      "newly_wrong": [],
-      "fixed": []
-     },
-     {
-      "baseline_index": 3,
-      "candidate_index": 1,
-      "prompt_sha256": "d318f76e0deb",
-      "baseline": {
-       "mean_score": 1.0,
-       "run_count": 1,
-       "mean_cost_usd": 0.02287369
-      },
-      "candidate": {
-       "mean_score": 1.0,
-       "run_count": 1,
-       "mean_cost_usd": 0.022829352
-      },
-      "regressed": [],
-      "improved": [],
-      "unchanged_count": 9,
-      "has_value_detail": true,
-      "newly_wrong": [],
-      "fixed": []
-     },
-     {
-      "baseline_index": 3,
-      "candidate_index": 2,
-      "prompt_sha256": "d318f76e0deb",
-      "baseline": {
-       "mean_score": 1.0,
-       "run_count": 1,
-       "mean_cost_usd": 0.02287369
-      },
-      "candidate": {
-       "mean_score": 0.8888888888888888,
-       "run_count": 1,
-       "mean_cost_usd": 0.0165445952
-      },
-      "regressed": [
-       {
-        "case_id": "irvine_council_roster",
-        "baseline_score": 1.0,
-        "candidate_score": 0.0
-       }
-      ],
-      "improved": [],
-      "unchanged_count": 8,
-      "has_value_detail": true,
-      "newly_wrong": [
-       {
-        "case_id": "irvine_council_roster",
-        "subject": "Office of the Mayor",
-        "field": "covers",
-        "expected": true,
-        "actual": false
-       }
-      ],
-      "fixed": []
-     }
-    ]
-   },
-   "trends": {
-    "providers": [
-     "Alibaba",
-     "AtlasCloud",
-     "DigitalOcean",
-     "NextBit"
-    ],
-    "charts": [
-     {
-      "metric": "covers",
-      "is_priority": false,
-      "gate_floor": null,
-      "series": [
-       {
-        "provider": "Alibaba",
-        "points": [
-         {
-          "timestamp": "2026-09-18T01:30:21+00:00",
-          "prompt_sha256": "1ae867f897aa",
-          "score": 0.9
-         },
-         {
-          "timestamp": "2026-09-18T01:45:28+00:00",
-          "prompt_sha256": "0749e3b84f81",
-          "score": 0.9
-         },
-         {
-          "timestamp": "2026-09-18T02:11:48+00:00",
-          "prompt_sha256": "0749e3b84f81",
-          "score": 0.9
-         },
-         {
-          "timestamp": "2026-09-18T02:23:43+00:00",
-          "prompt_sha256": "8dd4a1880ce5",
-          "score": 0.9
-         },
-         {
-          "timestamp": "2026-09-18T02:39:21+00:00",
-          "prompt_sha256": "8dd4a1880ce5",
-          "score": 1.0
-         },
-         {
-          "timestamp": "2026-09-18T02:51:34+00:00",
-          "prompt_sha256": "d318f76e0deb",
-          "score": 1.0
-         },
-         {
-          "timestamp": "2026-09-29T00:27:55+00:00",
-          "prompt_sha256": "24c2e1e9ef29",
-          "score": 1.0
-         },
-         {
-          "timestamp": "2026-09-29T00:56:43+00:00",
-          "prompt_sha256": "f0cf44bcb9bb",
-          "score": 1.0
-         }
-        ]
-       },
-       {
-        "provider": "AtlasCloud",
-        "points": [
-         {
-          "timestamp": "2026-09-18T01:30:21+00:00",
-          "prompt_sha256": "1ae867f897aa",
-          "score": 0.9
-         },
-         {
-          "timestamp": "2026-09-18T01:45:28+00:00",
-          "prompt_sha256": "0749e3b84f81",
-          "score": 0.9
-         },
-         {
-          "timestamp": "2026-09-18T02:11:48+00:00",
-          "prompt_sha256": "0749e3b84f81",
-          "score": 0.9
-         },
-         {
-          "timestamp": "2026-09-18T02:23:43+00:00",
-          "prompt_sha256": "8dd4a1880ce5",
-          "score": 0.9
-         },
-         {
-          "timestamp": "2026-09-18T02:39:21+00:00",
-          "prompt_sha256": "8dd4a1880ce5",
-          "score": 1.0
-         },
-         {
-          "timestamp": "2026-09-18T02:51:34+00:00",
-          "prompt_sha256": "d318f76e0deb",
-          "score": 1.0
-         },
-         {
-          "timestamp": "2026-09-29T00:27:54+00:00",
-          "prompt_sha256": "24c2e1e9ef29",
-          "score": 1.0
-         },
-         {
-          "timestamp": "2026-09-29T00:56:43+00:00",
-          "prompt_sha256": "f0cf44bcb9bb",
-          "score": 1.0
-         }
-        ]
-       },
-       {
-        "provider": "DigitalOcean",
-        "points": [
-         {
-          "timestamp": "2026-09-18T01:30:21+00:00",
-          "prompt_sha256": "1ae867f897aa",
-          "score": 1.0
-         },
-         {
-          "timestamp": "2026-09-18T01:45:28+00:00",
-          "prompt_sha256": "0749e3b84f81",
-          "score": 1.0
-         },
-         {
-          "timestamp": "2026-09-18T02:11:48+00:00",
-          "prompt_sha256": "0749e3b84f81",
-          "score": 1.0
-         },
-         {
-          "timestamp": "2026-09-18T02:23:43+00:00",
-          "prompt_sha256": "8dd4a1880ce5",
-          "score": 1.0
-         },
-         {
-          "timestamp": "2026-09-18T02:39:21+00:00",
-          "prompt_sha256": "8dd4a1880ce5",
-          "score": 0.9285714285714286
-         },
-         {
-          "timestamp": "2026-09-18T02:51:34+00:00",
-          "prompt_sha256": "d318f76e0deb",
-          "score": 0.9444444444444444
-         },
-         {
-          "timestamp": "2026-09-29T00:27:54+00:00",
-          "prompt_sha256": "24c2e1e9ef29",
-          "score": 0.9090909090909091
-         },
-         {
-          "timestamp": "2026-09-29T00:56:43+00:00",
-          "prompt_sha256": "f0cf44bcb9bb",
-          "score": 0.9545454545454546
-         }
-        ]
-       },
-       {
-        "provider": "NextBit",
-        "points": [
-         {
-          "timestamp": "2026-09-18T01:30:21+00:00",
-          "prompt_sha256": "1ae867f897aa",
-          "score": 0.8
-         },
-         {
-          "timestamp": "2026-09-18T01:45:28+00:00",
-          "prompt_sha256": "0749e3b84f81",
-          "score": 0.9
-         },
-         {
-          "timestamp": "2026-09-18T02:11:48+00:00",
-          "prompt_sha256": "0749e3b84f81",
-          "score": 0.9
-         },
-         {
-          "timestamp": "2026-09-18T02:23:43+00:00",
-          "prompt_sha256": "8dd4a1880ce5",
-          "score": 0.9
-         },
-         {
-          "timestamp": "2026-09-18T02:39:21+00:00",
-          "prompt_sha256": "8dd4a1880ce5",
-          "score": 1.0
-         },
-         {
-          "timestamp": "2026-09-18T02:51:34+00:00",
-          "prompt_sha256": "d318f76e0deb",
-          "score": 1.0
-         }
-        ]
-       }
-      ]
-     }
-    ],
-    "run_count": 30
-   },
-   "prompt_versions": [
-    {
-     "prompt_sha256": "f0cf44bcb9bb",
-     "text": "\n    Decide whether the provided page content carries people who currently hold office in one\n    specific governing body.\n\n    Body: <body, per case>\n    Municipality: <jurisdiction, per case>\n    Offices in it:\n      - <its posts, per case>\n\n    Answer true only if this page presents a person holding office in that body as one of its\n    officials — a roster entry, a directory row, a profile, or a contact block naming them.\n\n    The test: would this page tell a reader who currently holds the office, if they had never\n    heard of the person? A listing, a profile or a contact block answers that. A sentence about\n    something that happened assumes you already know, and names the person in passing.\n\n    All of these are false, however prominently the body or its people appear, and however many\n    times a name is repeated:\n    - a link to the body, or its name in the site navigation, including a heading such as\n      \"Connect with Elected Officials\" that links elsewhere\n    - a mention of the body in prose, or a meeting agenda or minutes naming it\n    - news stories, press releases and announcements. \"Mayor Wilson Signs Junk Fee Legislation\n      into Law\" names the mayor and their office and is still a report of an event: the page\n      exists to say what happened, not who holds the office. A homepage carrying six such\n      headlines is a newsfeed, not a roster.\n\n    Judge the page's own content. A block that would be identical on every page of the site —\n    a menu, a footer, a sidebar list of members repeated across a section — is furniture, and\n    counting it would make every page of a site cover every body, which is no answer at all. The\n    same list in the body of a page, as what that page exists to present, does count.\n\n    Only people who hold office in that body count. Once the page shows they are in it, their\n    title may be one not listed above; the list says what holding office in this body looks like,\n    not every title it has. \n\n    IMPORTANT: Return only valid JSON, {\"covers\": true} or {\"covers\": false}.\n    ",
-     "first_run_at": "2026-09-29T00:56:43+00:00",
-     "last_run_at": "2026-09-29T00:56:43+00:00",
-     "providers": [
-      "Alibaba",
-      "AtlasCloud",
-      "DigitalOcean"
-     ],
-     "runs": [
-      {
-       "timestamp": "2026-09-29T00:56:43+00:00",
-       "provider": "Alibaba",
-       "scores": {
-        "covers": 1.0
-       }
-      },
-      {
-       "timestamp": "2026-09-29T00:56:43+00:00",
-       "provider": "AtlasCloud",
-       "scores": {
-        "covers": 1.0
-       }
-      },
-      {
-       "timestamp": "2026-09-29T00:56:43+00:00",
-       "provider": "DigitalOcean",
-       "scores": {
-        "covers": 0.9545454545454546
-       }
-      }
-     ],
-     "previous_sha256": "24c2e1e9ef29",
-     "diff": [
-      {
-       "kind": "context",
-       "text": "     Municipality: <jurisdiction, per case>"
-      },
-      {
-       "kind": "removed",
-       "text": "-    Offices in it: <its posts, per case>"
-      },
-      {
-       "kind": "added",
-       "text": "+    Offices in it:"
-      },
-      {
-       "kind": "added",
-       "text": "+      - <its posts, per case>"
-      },
-      {
-       "kind": "context",
-       "text": " "
-      }
-     ]
-    },
-    {
-     "prompt_sha256": "24c2e1e9ef29",
-     "text": "\n    Decide whether the provided page content carries people who currently hold office in one\n    specific governing body.\n\n    Body: <body, per case>\n    Municipality: <jurisdiction, per case>\n    Offices in it: <its posts, per case>\n\n    Answer true only if this page presents a person holding office in that body as one of its\n    officials — a roster entry, a directory row, a profile, or a contact block naming them.\n\n    The test: would this page tell a reader who currently holds the office, if they had never\n    heard of the person? A listing, a profile or a contact block answers that. A sentence about\n    something that happened assumes you already know, and names the person in passing.\n\n    All of these are false, however prominently the body or its people appear, and however many\n    times a name is repeated:\n    - a link to the body, or its name in the site navigation, including a heading such as\n      \"Connect with Elected Officials\" that links elsewhere\n    - a mention of the body in prose, or a meeting agenda or minutes naming it\n    - news stories, press releases and announcements. \"Mayor Wilson Signs Junk Fee Legislation\n      into Law\" names the mayor and their office and is still a report of an event: the page\n      exists to say what happened, not who holds the office. A homepage carrying six such\n      headlines is a newsfeed, not a roster.\n\n    Judge the page's own content. A block that would be identical on every page of the site —\n    a menu, a footer, a sidebar list of members repeated across a section — is furniture, and\n    counting it would make every page of a site cover every body, which is no answer at all. The\n    same list in the body of a page, as what that page exists to present, does count.\n\n    Only people who hold office in that body count. Once the page shows they are in it, their\n    title may be one not listed above; the list says what holding office in this body looks like,\n    not every title it has. \n\n    IMPORTANT: Return only valid JSON, {\"covers\": true} or {\"covers\": false}.\n    ",
-     "first_run_at": "2026-09-29T00:27:54+00:00",
-     "last_run_at": "2026-09-29T00:27:55+00:00",
-     "providers": [
-      "Alibaba",
-      "AtlasCloud",
-      "DigitalOcean"
-     ],
-     "runs": [
-      {
-       "timestamp": "2026-09-29T00:27:55+00:00",
-       "provider": "Alibaba",
-       "scores": {
-        "covers": 1.0
-       }
-      },
-      {
-       "timestamp": "2026-09-29T00:27:54+00:00",
-       "provider": "AtlasCloud",
-       "scores": {
-        "covers": 1.0
-       }
-      },
-      {
-       "timestamp": "2026-09-29T00:27:54+00:00",
-       "provider": "DigitalOcean",
-       "scores": {
-        "covers": 0.9090909090909091
-       }
-      }
-     ],
-     "previous_sha256": "d318f76e0deb",
-     "diff": [
-      {
-       "kind": "context",
-       "text": " "
-      },
-      {
-       "kind": "removed",
-       "text": "-    Someone who holds office in that body counts even if the page gives them a title that is not"
-      },
-      {
-       "kind": "removed",
-       "text": "-    among the offices listed above; the list is there to say what holding office in this body"
-      },
-      {
-       "kind": "removed",
-       "text": "-    looks like, not to limit it."
-      },
-      {
-       "kind": "added",
-       "text": "+    Only people who hold office in that body count. Once the page shows they are in it, their"
-      },
-      {
-       "kind": "added",
-       "text": "+    title may be one not listed above; the list says what holding office in this body looks like,"
-      },
-      {
-       "kind": "added",
-       "text": "+    not every title it has. "
-      },
-      {
-       "kind": "context",
-       "text": " "
-      }
-     ]
-    },
-    {
-     "prompt_sha256": "d318f76e0deb",
-     "text": "\n    Decide whether the provided page content carries people who currently hold office in one\n    specific governing body.\n\n    Body: <body, per case>\n    Municipality: <jurisdiction, per case>\n    Offices in it: <its posts, per case>\n\n    Answer true only if this page presents a person holding office in that body as one of its\n    officials — a roster entry, a directory row, a profile, or a contact block naming them.\n\n    The test: would this page tell a reader who currently holds the office, if they had never\n    heard of the person? A listing, a profile or a contact block answers that. A sentence about\n    something that happened assumes you already know, and names the person in passing.\n\n    All of these are false, however prominently the body or its people appear, and however many\n    times a name is repeated:\n    - a link to the body, or its name in the site navigation, including a heading such as\n      \"Connect with Elected Officials\" that links elsewhere\n    - a mention of the body in prose, or a meeting agenda or minutes naming it\n    - news stories, press releases and announcements. \"Mayor Wilson Signs Junk Fee Legislation\n      into Law\" names the mayor and their office and is still a report of an event: the page\n      exists to say what happened, not who holds the office. A homepage carrying six such\n      headlines is a newsfeed, not a roster.\n\n    Judge the page's own content. A block that would be identical on every page of the site —\n    a menu, a footer, a sidebar list of members repeated across a section — is furniture, and\n    counting it would make every page of a site cover every body, which is no answer at all. The\n    same list in the body of a page, as what that page exists to present, does count.\n\n    Someone who holds office in that body counts even if the page gives them a title that is not\n    among the offices listed above; the list is there to say what holding office in this body\n    looks like, not to limit it.\n\n    IMPORTANT: Return only valid JSON, {\"covers\": true} or {\"covers\": false}.\n    ",
-     "first_run_at": "2026-09-18T02:51:34+00:00",
-     "last_run_at": "2026-09-18T02:51:34+00:00",
-     "providers": [
-      "Alibaba",
-      "AtlasCloud",
-      "DigitalOcean",
-      "NextBit"
-     ],
-     "runs": [
-      {
-       "timestamp": "2026-09-18T02:51:34+00:00",
-       "provider": "Alibaba",
-       "scores": {
-        "covers": 1.0
-       }
-      },
-      {
-       "timestamp": "2026-09-18T02:51:34+00:00",
-       "provider": "AtlasCloud",
-       "scores": {
-        "covers": 1.0
-       }
-      },
-      {
-       "timestamp": "2026-09-18T02:51:34+00:00",
-       "provider": "DigitalOcean",
-       "scores": {
-        "covers": 0.9444444444444444
-       }
-      },
-      {
-       "timestamp": "2026-09-18T02:51:34+00:00",
-       "provider": "NextBit",
-       "scores": {
-        "covers": 1.0
-       }
-      }
-     ],
-     "previous_sha256": "8dd4a1880ce5",
-     "diff": [
-      {
-       "kind": "context",
-       "text": " "
-      },
-      {
-       "kind": "added",
-       "text": "+    Judge the page's own content. A block that would be identical on every page of the site —"
-      },
-      {
-       "kind": "added",
-       "text": "+    a menu, a footer, a sidebar list of members repeated across a section — is furniture, and"
-      },
-      {
-       "kind": "added",
-       "text": "+    counting it would make every page of a site cover every body, which is no answer at all. The"
-      },
-      {
-       "kind": "added",
-       "text": "+    same list in the body of a page, as what that page exists to present, does count."
-      },
-      {
-       "kind": "added",
-       "text": "+"
-      },
-      {
-       "kind": "context",
-       "text": "     Someone who holds office in that body counts even if the page gives them a title that is not"
-      }
-     ]
-    },
-    {
-     "prompt_sha256": "8dd4a1880ce5",
-     "text": "\n    Decide whether the provided page content carries people who currently hold office in one\n    specific governing body.\n\n    Body: <body, per case>\n    Municipality: <jurisdiction, per case>\n    Offices in it: <its posts, per case>\n\n    Answer true only if this page presents a person holding office in that body as one of its\n    officials — a roster entry, a directory row, a profile, or a contact block naming them.\n\n    The test: would this page tell a reader who currently holds the office, if they had never\n    heard of the person? A listing, a profile or a contact block answers that. A sentence about\n    something that happened assumes you already know, and names the person in passing.\n\n    All of these are false, however prominently the body or its people appear, and however many\n    times a name is repeated:\n    - a link to the body, or its name in the site navigation, including a heading such as\n      \"Connect with Elected Officials\" that links elsewhere\n    - a mention of the body in prose, or a meeting agenda or minutes naming it\n    - news stories, press releases and announcements. \"Mayor Wilson Signs Junk Fee Legislation\n      into Law\" names the mayor and their office and is still a report of an event: the page\n      exists to say what happened, not who holds the office. A homepage carrying six such\n      headlines is a newsfeed, not a roster.\n\n    Someone who holds office in that body counts even if the page gives them a title that is not\n    among the offices listed above; the list is there to say what holding office in this body\n    looks like, not to limit it.\n\n    IMPORTANT: Return only valid JSON, {\"covers\": true} or {\"covers\": false}.\n    ",
-     "first_run_at": "2026-09-18T02:23:43+00:00",
-     "last_run_at": "2026-09-18T02:39:21+00:00",
-     "providers": [
-      "Alibaba",
-      "AtlasCloud",
-      "DigitalOcean",
-      "NextBit"
-     ],
-     "runs": [
-      {
-       "timestamp": "2026-09-18T02:39:21+00:00",
-       "provider": "Alibaba",
-       "scores": {
-        "covers": 1.0
-       }
-      },
-      {
-       "timestamp": "2026-09-18T02:39:21+00:00",
-       "provider": "AtlasCloud",
-       "scores": {
-        "covers": 1.0
-       }
-      },
-      {
-       "timestamp": "2026-09-18T02:39:21+00:00",
-       "provider": "DigitalOcean",
-       "scores": {
-        "covers": 0.9285714285714286
-       }
-      },
-      {
-       "timestamp": "2026-09-18T02:39:21+00:00",
-       "provider": "NextBit",
-       "scores": {
-        "covers": 1.0
-       }
-      },
-      {
-       "timestamp": "2026-09-18T02:23:43+00:00",
-       "provider": "Alibaba",
-       "scores": {
-        "covers": 0.9
-       }
-      },
-      {
-       "timestamp": "2026-09-18T02:23:43+00:00",
-       "provider": "AtlasCloud",
-       "scores": {
-        "covers": 0.9
-       }
-      },
-      {
-       "timestamp": "2026-09-18T02:23:43+00:00",
-       "provider": "DigitalOcean",
-       "scores": {
-        "covers": 1.0
-       }
-      },
-      {
-       "timestamp": "2026-09-18T02:23:43+00:00",
-       "provider": "NextBit",
-       "scores": {
-        "covers": 0.9
-       }
-      }
-     ],
-     "previous_sha256": "0749e3b84f81",
-     "diff": [
-      {
-       "kind": "context",
-       "text": " "
-      },
-      {
-       "kind": "removed",
-       "text": "-    All of these are false, however prominently the body or its people appear:"
-      },
-      {
-       "kind": "removed",
-       "text": "-    - a link to the body, or its name in the site navigation"
-      },
-      {
-       "kind": "added",
-       "text": "+    The test: would this page tell a reader who currently holds the office, if they had never"
-      },
-      {
-       "kind": "added",
-       "text": "+    heard of the person? A listing, a profile or a contact block answers that. A sentence about"
-      },
-      {
-       "kind": "added",
-       "text": "+    something that happened assumes you already know, and names the person in passing."
-      },
-      {
-       "kind": "added",
-       "text": "+"
-      },
-      {
-       "kind": "added",
-       "text": "+    All of these are false, however prominently the body or its people appear, and however many"
-      },
-      {
-       "kind": "added",
-       "text": "+    times a name is repeated:"
-      },
-      {
-       "kind": "added",
-       "text": "+    - a link to the body, or its name in the site navigation, including a heading such as"
-      },
-      {
-       "kind": "added",
-       "text": "+      \"Connect with Elected Officials\" that links elsewhere"
-      },
-      {
-       "kind": "context",
-       "text": "     - a mention of the body in prose, or a meeting agenda or minutes naming it"
-      },
-      {
-       "kind": "removed",
-       "text": "-    - a news story, press release or announcement about something an official said or did."
-      },
-      {
-       "kind": "removed",
-       "text": "-      A page reporting on the mayor is not a page that lists the mayor, and a homepage carrying"
-      },
-      {
-       "kind": "removed",
-       "text": "-      headlines about officials is reporting, not listing."
-      },
-      {
-       "kind": "added",
-       "text": "+    - news stories, press releases and announcements. \"Mayor Wilson Signs Junk Fee Legislation"
-      },
-      {
-       "kind": "added",
-       "text": "+      into Law\" names the mayor and their office and is still a report of an event: the page"
-      },
-      {
-       "kind": "added",
-       "text": "+      exists to say what happened, not who holds the office. A homepage carrying six such"
-      },
-      {
-       "kind": "added",
-       "text": "+      headlines is a newsfeed, not a roster."
-      },
-      {
-       "kind": "context",
-       "text": " "
-      }
-     ]
-    },
-    {
-     "prompt_sha256": "0749e3b84f81",
-     "text": "\n    Decide whether the provided page content carries people who currently hold office in one\n    specific governing body.\n\n    Body: <body, per case>\n    Municipality: <jurisdiction, per case>\n    Offices in it: <its posts, per case>\n\n    Answer true only if this page presents a person holding office in that body as one of its\n    officials — a roster entry, a directory row, a profile, or a contact block naming them.\n\n    All of these are false, however prominently the body or its people appear:\n    - a link to the body, or its name in the site navigation\n    - a mention of the body in prose, or a meeting agenda or minutes naming it\n    - a news story, press release or announcement about something an official said or did.\n      A page reporting on the mayor is not a page that lists the mayor, and a homepage carrying\n      headlines about officials is reporting, not listing.\n\n    Someone who holds office in that body counts even if the page gives them a title that is not\n    among the offices listed above; the list is there to say what holding office in this body\n    looks like, not to limit it.\n\n    IMPORTANT: Return only valid JSON, {\"covers\": true} or {\"covers\": false}.\n    ",
-     "first_run_at": "2026-09-18T01:45:28+00:00",
-     "last_run_at": "2026-09-18T02:11:48+00:00",
-     "providers": [
-      "Alibaba",
-      "AtlasCloud",
-      "DigitalOcean",
-      "NextBit"
-     ],
-     "runs": [
-      {
-       "timestamp": "2026-09-18T02:11:48+00:00",
-       "provider": "Alibaba",
-       "scores": {
-        "covers": 0.9
-       }
-      },
-      {
-       "timestamp": "2026-09-18T02:11:48+00:00",
-       "provider": "AtlasCloud",
-       "scores": {
-        "covers": 0.9
-       }
-      },
-      {
-       "timestamp": "2026-09-18T02:11:48+00:00",
-       "provider": "DigitalOcean",
-       "scores": {
-        "covers": 1.0
-       }
-      },
-      {
-       "timestamp": "2026-09-18T02:11:48+00:00",
-       "provider": "NextBit",
-       "scores": {
-        "covers": 0.9
-       }
-      },
-      {
-       "timestamp": "2026-09-18T01:45:28+00:00",
-       "provider": "Alibaba",
-       "scores": {
-        "covers": 0.9
-       }
-      },
-      {
-       "timestamp": "2026-09-18T01:45:28+00:00",
-       "provider": "AtlasCloud",
-       "scores": {
-        "covers": 0.9
-       }
-      },
-      {
-       "timestamp": "2026-09-18T01:45:28+00:00",
-       "provider": "DigitalOcean",
-       "scores": {
-        "covers": 1.0
-       }
-      },
-      {
-       "timestamp": "2026-09-18T01:45:28+00:00",
-       "provider": "NextBit",
-       "scores": {
-        "covers": 0.9
-       }
-      }
-     ],
-     "previous_sha256": "1ae867f897aa",
-     "diff": [
-      {
-       "kind": "context",
-       "text": " "
-      },
-      {
-       "kind": "removed",
-       "text": "-    Answer true only if a person holding office in that body appears on this page, named. A link"
-      },
-      {
-       "kind": "removed",
-       "text": "-    to the body, its name in the navigation, a mention of it in prose, or a meeting agenda that"
-      },
-      {
-       "kind": "removed",
-       "text": "-    names it are all false — the question is whether the page lists its people."
-      },
-      {
-       "kind": "added",
-       "text": "+    Answer true only if this page presents a person holding office in that body as one of its"
-      },
-      {
-       "kind": "added",
-       "text": "+    officials — a roster entry, a directory row, a profile, or a contact block naming them."
-      },
-      {
-       "kind": "added",
-       "text": "+"
-      },
-      {
-       "kind": "added",
-       "text": "+    All of these are false, however prominently the body or its people appear:"
-      },
-      {
-       "kind": "added",
-       "text": "+    - a link to the body, or its name in the site navigation"
-      },
-      {
-       "kind": "added",
-       "text": "+    - a mention of the body in prose, or a meeting agenda or minutes naming it"
-      },
-      {
-       "kind": "added",
-       "text": "+    - a news story, press release or announcement about something an official said or did."
-      },
-      {
-       "kind": "added",
-       "text": "+      A page reporting on the mayor is not a page that lists the mayor, and a homepage carrying"
-      },
-      {
-       "kind": "added",
-       "text": "+      headlines about officials is reporting, not listing."
-      },
-      {
-       "kind": "context",
-       "text": " "
-      }
-     ]
-    },
-    {
-     "prompt_sha256": "1ae867f897aa",
-     "text": "\n    Decide whether the provided page content carries people who currently hold office in one\n    specific governing body.\n\n    Body: <body, per case>\n    Municipality: <jurisdiction, per case>\n    Offices in it: <its posts, per case>\n\n    Answer true only if a person holding office in that body appears on this page, named. A link\n    to the body, its name in the navigation, a mention of it in prose, or a meeting agenda that\n    names it are all false — the question is whether the page lists its people.\n\n    Someone who holds office in that body counts even if the page gives them a title that is not\n    among the offices listed above; the list is there to say what holding office in this body\n    looks like, not to limit it.\n\n    IMPORTANT: Return only valid JSON, {\"covers\": true} or {\"covers\": false}.\n    ",
-     "first_run_at": "2026-09-18T01:30:21+00:00",
-     "last_run_at": "2026-09-18T01:30:21+00:00",
-     "providers": [
-      "Alibaba",
-      "AtlasCloud",
-      "DigitalOcean",
-      "NextBit"
-     ],
-     "runs": [
-      {
-       "timestamp": "2026-09-18T01:30:21+00:00",
-       "provider": "Alibaba",
-       "scores": {
-        "covers": 0.9
-       }
-      },
-      {
-       "timestamp": "2026-09-18T01:30:21+00:00",
-       "provider": "AtlasCloud",
-       "scores": {
-        "covers": 0.9
-       }
-      },
-      {
-       "timestamp": "2026-09-18T01:30:21+00:00",
-       "provider": "DigitalOcean",
-       "scores": {
-        "covers": 1.0
-       }
-      },
-      {
-       "timestamp": "2026-09-18T01:30:21+00:00",
-       "provider": "NextBit",
-       "scores": {
-        "covers": 0.8
-       }
-      }
-     ],
-     "previous_sha256": null,
-     "diff": []
-    }
-   ],
-   "detail": {
-    "providers": [
-     "Alibaba",
-     "AtlasCloud",
-     "DigitalOcean"
-    ],
-    "metric_rows": [
-     {
-      "metric": "covers",
-      "cells": [
-       {
-        "score": 1.0,
-        "swing_is_wide": false,
-        "half_swing": 0.04999999999999999,
-        "missing_count": 0
-       },
-       {
-        "score": 1.0,
-        "swing_is_wide": false,
-        "half_swing": 0.04999999999999999,
-        "missing_count": 0
-       },
-       {
-        "score": 0.9545454545454546,
-        "swing_is_wide": false,
-        "half_swing": 0.04545454545454547,
-        "missing_count": 0
-       }
-      ]
-     },
-     {
-      "metric": "cases passed",
-      "cells": [
-       {
-        "score": 1.0,
-        "swing_is_wide": false,
-        "half_swing": 0.0,
-        "missing_count": null
-       },
-       {
-        "score": 1.0,
-        "swing_is_wide": false,
-        "half_swing": 0.0,
-        "missing_count": null
-       },
-       {
-        "score": 0.9090909090909091,
-        "swing_is_wide": false,
-        "half_swing": 0.0,
-        "missing_count": null
-       }
-      ]
-     }
-    ],
-    "case_providers": [
-     "Alibaba",
-     "AtlasCloud",
-     "DigitalOcean",
-     "NextBit"
-    ],
-    "case_rows": [
-     {
-      "case_id": "jackson_mayors_office",
-      "scores": [
-       1.0,
-       1.0,
-       0.0,
-       1.0
-      ],
-      "stability": "moves"
-     },
-     {
-      "case_id": "irvine_council_roster",
-      "scores": [
-       1.0,
-       1.0,
-       1.0,
-       1.0
-      ],
-      "stability": "moves"
-     },
-     {
-      "case_id": "irvine_councilmember_bio",
-      "scores": [
-       1.0,
-       1.0,
-       1.0,
-       1.0
-      ],
-      "stability": "moves"
-     },
-     {
-      "case_id": "jackson_council_agendas",
-      "scores": [
-       1.0,
-       1.0,
-       1.0,
-       1.0
-      ],
-      "stability": "steady"
-     },
-     {
-      "case_id": "jackson_council_member_bio",
-      "scores": [
-       1.0,
-       1.0,
-       1.0,
-       1.0
-      ],
-      "stability": "steady"
-     },
-     {
-      "case_id": "jackson_mayor_staff_directory",
-      "scores": [
-       1.0,
-       1.0,
-       1.0,
-       1.0
-      ],
-      "stability": "steady"
-     },
-     {
-      "case_id": "jackson_meet_the_council",
-      "scores": [
-       1.0,
-       1.0,
-       1.0,
-       1.0
-      ],
-      "stability": "steady"
-     },
-     {
-      "case_id": "millbury_board_of_selectmen",
-      "scores": [
-       1.0,
-       1.0,
-       1.0,
-       null
-      ],
-      "stability": "steady"
-     },
-     {
-      "case_id": "millbury_school_committee",
-      "scores": [
-       1.0,
-       1.0,
-       1.0,
-       null
-      ],
-      "stability": "steady"
-     },
-     {
-      "case_id": "quitaque_city_officials",
-      "scores": [
-       1.0,
-       1.0,
-       1.0,
-       1.0
-      ],
-      "stability": "steady"
-     },
-     {
-      "case_id": "seattle_mayor_page",
-      "scores": [
-       1.0,
-       1.0,
-       1.0,
-       1.0
-      ],
-      "stability": "steady"
-     }
-    ],
-    "movements": [
-     {
-      "provider": "Alibaba",
-      "regressed": [],
-      "improved": []
-     },
-     {
-      "provider": "AtlasCloud",
-      "regressed": [],
-      "improved": []
-     },
-     {
-      "provider": "DigitalOcean",
-      "regressed": [],
-      "improved": [
-       "irvine_councilmember_bio"
-      ]
-     },
-     {
-      "provider": "NextBit",
-      "regressed": [],
-      "improved": []
-     }
-    ]
-   },
-   "latest_mismatches": {
-    "DigitalOcean": {
-     "jackson_mayors_office": [
-      {
-       "subject": "Office of the Mayor",
-       "field": "covers",
-       "expected": true,
-       "actual": false,
-       "expected_label": null,
-       "actual_label": null
-      }
-     ]
-    }
-   },
-   "case_inputs": {
-    "irvine_council_roster": {
-     "page_url": "https://cityofirvine.gov/city-council",
-     "jurisdiction_name": "Irvine city",
-     "organizations": "[{\"name\": \"Office of the Mayor\", \"role_labels\": [\"Mayor\"]}, {\"name\": \"City Council\", \"role_labels\": [\"Vice Mayor\", \"Council Member\"], \"divisions\": [\"district 1\", \"district 2\", \"district 4\", \"district 5\"]}]"
-    },
-    "irvine_councilmember_bio": {
-     "page_url": "https://cityofirvine.gov/city-council/councilmember-william-go-district-2",
-     "jurisdiction_name": "Irvine city",
-     "organizations": "[{\"name\": \"Office of the Mayor\", \"role_labels\": [\"Mayor\"]}, {\"name\": \"City Council\", \"role_labels\": [\"Vice Mayor\", \"Council Member\"], \"divisions\": [\"district 1\", \"district 2\", \"district 4\", \"district 5\"]}]"
-    },
-    "jackson_council_agendas": {
-     "page_url": "https://www.jacksontn.gov/government/citycouncil/agendaandminutes",
-     "jurisdiction_name": "Jackson city",
-     "organizations": "[{\"name\": \"Office of the Mayor\", \"role_labels\": [\"Mayor\"]}, {\"name\": \"City Council\", \"role_labels\": [\"Council Member\"], \"divisions\": [\"district 1\", \"district 2\", \"district 3\", \"district 4\", \"district 5\", \"district 6\", \"district 7\", \"district 8\", \"district 9\"]}]"
-    },
-    "jackson_council_member_bio": {
-     "page_url": "https://www.jacksontn.gov/government/citycouncil/meetthecouncil/district4_donnell",
-     "jurisdiction_name": "Jackson city",
-     "organizations": "[{\"name\": \"Office of the Mayor\", \"role_labels\": [\"Mayor\"]}, {\"name\": \"City Council\", \"role_labels\": [\"Council Member\"], \"divisions\": [\"district 1\", \"district 2\", \"district 3\", \"district 4\", \"district 5\", \"district 6\", \"district 7\", \"district 8\", \"district 9\"]}]"
-    },
-    "jackson_mayor_staff_directory": {
-     "page_url": "https://www.jacksontn.gov/government/mayorsoffice/staffdirectory",
-     "jurisdiction_name": "Jackson city",
-     "organizations": "[{\"name\": \"Office of the Mayor\", \"role_labels\": [\"Mayor\"]}, {\"name\": \"City Council\", \"role_labels\": [\"Council Member\"], \"divisions\": [\"district 1\", \"district 2\", \"district 3\", \"district 4\", \"district 5\", \"district 6\", \"district 7\", \"district 8\", \"district 9\"]}]"
-    },
-    "jackson_mayors_office": {
-     "page_url": "https://www.jacksontn.gov/government/mayorsoffice",
-     "jurisdiction_name": "Jackson city",
-     "organizations": "[{\"name\": \"Office of the Mayor\", \"role_labels\": [\"Mayor\"]}, {\"name\": \"City Council\", \"role_labels\": [\"Council Member\"], \"divisions\": [\"district 1\", \"district 2\", \"district 3\", \"district 4\", \"district 5\", \"district 6\", \"district 7\", \"district 8\", \"district 9\"]}]"
-    },
-    "jackson_meet_the_council": {
-     "page_url": "https://www.jacksontn.gov/government/citycouncil/meetthecouncil",
-     "jurisdiction_name": "Jackson city",
-     "organizations": "[{\"name\": \"Office of the Mayor\", \"role_labels\": [\"Mayor\"]}, {\"name\": \"City Council\", \"role_labels\": [\"Council Member\"], \"divisions\": [\"district 1\", \"district 2\", \"district 3\", \"district 4\", \"district 5\", \"district 6\", \"district 7\", \"district 8\", \"district 9\"]}]"
-    },
-    "millbury_board_of_selectmen": {
-     "page_url": "https://www.millburyma.gov/1506/Board-of-Selectmen",
-     "jurisdiction_name": "Millbury town",
-     "organizations": "[{\"name\": \"Select Board\", \"role_labels\": [\"Select Board Member\", \"Chair\", \"Vice Chair\"]}, {\"name\": \"Town Meeting\", \"role_labels\": [\"Moderator\"]}]"
-    },
-    "millbury_school_committee": {
-     "page_url": "https://www.millburyma.gov/1655/School-Committee",
-     "jurisdiction_name": "Millbury town",
-     "organizations": "[{\"name\": \"Select Board\", \"role_labels\": [\"Select Board Member\", \"Chair\", \"Vice Chair\"]}, {\"name\": \"Town Meeting\", \"role_labels\": [\"Moderator\"]}]"
-    },
-    "quitaque_city_officials": {
-     "page_url": "https://quitaque.us",
-     "jurisdiction_name": "Quitaque city",
-     "organizations": "[{\"name\": \"Office of the Mayor\", \"role_labels\": [\"Mayor\", \"Mayor Pro Tempore\"]}, {\"name\": \"City Council\", \"role_labels\": [\"Council Member\"]}]"
-    },
-    "seattle_mayor_page": {
-     "page_url": "https://seattle.gov/mayor",
-     "jurisdiction_name": "Seattle city",
-     "organizations": "[{\"name\": \"Office of the Mayor\", \"role_labels\": [\"Mayor\"]}, {\"name\": \"City Council\", \"role_labels\": [\"Council President\", \"Council Member\"], \"divisions\": [\"district 1\", \"district 2\", \"district 3\"]}]"
-    }
-   },
-   "prompts_dir": "../page_covers/_prompts",
-   "latest_case_prompts": {
-    "Alibaba": {
-     "template_sha256": "f0cf44bcb9bb",
-     "prompts": {
-      "irvine_council_roster|City Council": "5ca65fd6b6f3",
-      "irvine_council_roster|Office of the Mayor": "69b7c23b5a2b",
-      "irvine_councilmember_bio|City Council": "5ca65fd6b6f3",
-      "irvine_councilmember_bio|Office of the Mayor": "69b7c23b5a2b",
-      "jackson_council_agendas|City Council": "12f2e70dc158",
-      "jackson_council_agendas|Office of the Mayor": "ea8a0d3c5413",
-      "jackson_council_member_bio|City Council": "12f2e70dc158",
-      "jackson_council_member_bio|Office of the Mayor": "ea8a0d3c5413",
-      "jackson_mayor_staff_directory|City Council": "12f2e70dc158",
-      "jackson_mayor_staff_directory|Office of the Mayor": "ea8a0d3c5413",
-      "jackson_mayors_office|City Council": "12f2e70dc158",
-      "jackson_mayors_office|Office of the Mayor": "ea8a0d3c5413",
-      "jackson_meet_the_council|City Council": "12f2e70dc158",
-      "jackson_meet_the_council|Office of the Mayor": "ea8a0d3c5413",
-      "millbury_board_of_selectmen|Select Board": "cd0593849f0a",
-      "millbury_board_of_selectmen|Town Meeting": "1b1da1d5d1be",
-      "millbury_school_committee|Select Board": "cd0593849f0a",
-      "millbury_school_committee|Town Meeting": "1b1da1d5d1be",
-      "quitaque_city_officials|City Council": "ea7531b953f1",
-      "quitaque_city_officials|Office of the Mayor": "e45993dd2e98",
-      "seattle_mayor_page|City Council": "9cc0fd5bb885",
-      "seattle_mayor_page|Office of the Mayor": "95a9475c2b3d"
-     }
-    },
-    "AtlasCloud": {
-     "template_sha256": "f0cf44bcb9bb",
-     "prompts": {
-      "irvine_council_roster|City Council": "5ca65fd6b6f3",
-      "irvine_council_roster|Office of the Mayor": "69b7c23b5a2b",
-      "irvine_councilmember_bio|City Council": "5ca65fd6b6f3",
-      "irvine_councilmember_bio|Office of the Mayor": "69b7c23b5a2b",
-      "jackson_council_agendas|City Council": "12f2e70dc158",
-      "jackson_council_agendas|Office of the Mayor": "ea8a0d3c5413",
-      "jackson_council_member_bio|City Council": "12f2e70dc158",
-      "jackson_council_member_bio|Office of the Mayor": "ea8a0d3c5413",
-      "jackson_mayor_staff_directory|City Council": "12f2e70dc158",
-      "jackson_mayor_staff_directory|Office of the Mayor": "ea8a0d3c5413",
-      "jackson_mayors_office|City Council": "12f2e70dc158",
-      "jackson_mayors_office|Office of the Mayor": "ea8a0d3c5413",
-      "jackson_meet_the_council|City Council": "12f2e70dc158",
-      "jackson_meet_the_council|Office of the Mayor": "ea8a0d3c5413",
-      "millbury_board_of_selectmen|Select Board": "cd0593849f0a",
-      "millbury_board_of_selectmen|Town Meeting": "1b1da1d5d1be",
-      "millbury_school_committee|Select Board": "cd0593849f0a",
-      "millbury_school_committee|Town Meeting": "1b1da1d5d1be",
-      "quitaque_city_officials|City Council": "ea7531b953f1",
-      "quitaque_city_officials|Office of the Mayor": "e45993dd2e98",
-      "seattle_mayor_page|City Council": "9cc0fd5bb885",
-      "seattle_mayor_page|Office of the Mayor": "95a9475c2b3d"
-     }
-    },
-    "DigitalOcean": {
-     "template_sha256": "f0cf44bcb9bb",
-     "prompts": {
-      "irvine_council_roster|City Council": "5ca65fd6b6f3",
-      "irvine_council_roster|Office of the Mayor": "69b7c23b5a2b",
-      "irvine_councilmember_bio|City Council": "5ca65fd6b6f3",
-      "irvine_councilmember_bio|Office of the Mayor": "69b7c23b5a2b",
-      "jackson_council_agendas|City Council": "12f2e70dc158",
-      "jackson_council_agendas|Office of the Mayor": "ea8a0d3c5413",
-      "jackson_council_member_bio|City Council": "12f2e70dc158",
-      "jackson_council_member_bio|Office of the Mayor": "ea8a0d3c5413",
-      "jackson_mayor_staff_directory|City Council": "12f2e70dc158",
-      "jackson_mayor_staff_directory|Office of the Mayor": "ea8a0d3c5413",
-      "jackson_mayors_office|City Council": "12f2e70dc158",
-      "jackson_mayors_office|Office of the Mayor": "ea8a0d3c5413",
-      "jackson_meet_the_council|City Council": "12f2e70dc158",
-      "jackson_meet_the_council|Office of the Mayor": "ea8a0d3c5413",
-      "millbury_board_of_selectmen|Select Board": "cd0593849f0a",
-      "millbury_board_of_selectmen|Town Meeting": "1b1da1d5d1be",
-      "millbury_school_committee|Select Board": "cd0593849f0a",
-      "millbury_school_committee|Town Meeting": "1b1da1d5d1be",
-      "quitaque_city_officials|City Council": "ea7531b953f1",
-      "quitaque_city_officials|Office of the Mayor": "e45993dd2e98",
-      "seattle_mayor_page|City Council": "9cc0fd5bb885",
-      "seattle_mayor_page|Office of the Mayor": "95a9475c2b3d"
-     }
-    }
-   }
-  },
-  {
-   "eval_name": "find_jurisdiction_url",
-   "dataset_dir": "../../../datasets/local/find_jurisdiction_url",
-   "verdicts": [
-    {
-     "provider": "gemini",
-     "blocked": false,
-     "gate_failures": [],
-     "failed_case_ids": [],
-     "cases_passed": 3,
-     "cases_total": 3,
-     "priority_scores": {},
-     "cost_usd": 0.0,
-     "ran_at": "2026-09-16T19:51:25+00:00"
-    }
-   ],
-   "matrix": {
-    "lineages": [
-     {
-      "model": "gemini-3.1-flash-lite-preview",
-      "provider": "gemini"
-     }
-    ],
-    "rows": [
-     {
-      "prompt_sha256": "2f5553c8a7d9",
-      "cells": [
-       {
-        "mean_score": 1.0,
-        "run_count": 1,
-        "mean_cost_usd": 0.0
-       }
-      ]
-     }
-    ]
-   },
-   "comparison": null,
-   "trends": {
-    "providers": [
-     "gemini"
-    ],
-    "charts": [
-     {
-      "metric": "cases_passed",
-      "is_priority": false,
-      "gate_floor": null,
-      "series": [
-       {
-        "provider": "gemini",
-        "points": [
-         {
-          "timestamp": "2026-08-15T23:42:30+00:00",
-          "prompt_sha256": "2f5553c8a7d9",
-          "score": 0.6666666666666666
-         },
-         {
-          "timestamp": "2026-08-15T23:42:59+00:00",
-          "prompt_sha256": "2f5553c8a7d9",
-          "score": 0.6666666666666666
-         },
-         {
-          "timestamp": "2026-09-16T19:51:25+00:00",
-          "prompt_sha256": "2f5553c8a7d9",
-          "score": 1.0
-         }
-        ]
-       }
-      ]
-     }
-    ],
-    "run_count": 3
-   },
-   "prompt_versions": [
-    {
-     "prompt_sha256": "2f5553c8a7d9",
-     "text": "\n    Find the official government website for this jurisdiction: Harrison city, Clare County, Michigan\n\n    Return the homepage URL of the official local government website\n    (city hall, township, village, borough, etc.) specifically for Harrison city, Clare County, Michigan.\n    Do not return news sites, Wikipedia, county portals, or unofficial directories.\n\n    Return a JSON object:\n    ```json\n    { \"url\": \"https://...\" }\n    ```\n    If you cannot find any official government website, return:\n    ```json\n    { \"url\": null }\n    ```\n\n    IMPORTANT: Return only valid JSON. Do not include any other text.\n    ",
-     "first_run_at": "2026-08-15T23:42:30+00:00",
-     "last_run_at": "2026-09-16T19:51:25+00:00",
-     "providers": [
-      "gemini"
-     ],
-     "runs": [
-      {
-       "timestamp": "2026-09-16T19:51:25+00:00",
-       "provider": "gemini",
-       "scores": {
-        "cases_passed": 1.0
-       }
-      },
-      {
-       "timestamp": "2026-08-15T23:42:59+00:00",
-       "provider": "gemini",
-       "scores": {
-        "cases_passed": 0.6666666666666666
-       }
-      },
-      {
-       "timestamp": "2026-08-15T23:42:30+00:00",
-       "provider": "gemini",
-       "scores": {
-        "cases_passed": 0.6666666666666666
-       }
-      }
-     ],
-     "previous_sha256": null,
-     "diff": []
-    }
-   ],
-   "detail": {
-    "providers": [
-     "gemini"
-    ],
-    "metric_rows": [
-     {
-      "metric": "cases passed",
-      "cells": [
-       {
-        "score": 1.0,
-        "swing_is_wide": false,
-        "half_swing": 0.0,
-        "missing_count": null
-       }
-      ]
-     }
-    ],
-    "case_providers": [
-     "gemini"
-    ],
-    "case_rows": [
-     {
-      "case_id": "harrison_mi",
-      "scores": [
-       1.0
-      ],
-      "stability": "unknown"
-     },
-     {
-      "case_id": "london_township_mi",
-      "scores": [
-       1.0
-      ],
-      "stability": "unknown"
-     },
-     {
-      "case_id": "milton_township_mi",
-      "scores": [
-       1.0
-      ],
-      "stability": "unknown"
-     }
-    ],
-    "movements": [
-     {
-      "provider": "gemini",
-      "regressed": [],
-      "improved": []
-     }
-    ]
-   },
-   "latest_mismatches": {},
-   "case_inputs": {
-    "harrison_mi": {
-     "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:mi/county:clare/place:harrison/government",
-     "municipality_name": "Harrison city",
-     "stale_url": "https://cityofharrisonmi.org"
-    },
-    "london_township_mi": {
-     "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:mi/county:monroe/township:london/government",
-     "municipality_name": "London Township",
-     "stale_url": "http://londontwp.org"
-    },
-    "milton_township_mi": {
-     "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:mi/county:antrim/place:milton/government",
-     "municipality_name": "Milton township",
-     "stale_url": "https://miltontownship.org/"
-    }
-   },
-   "prompts_dir": "../find_jurisdiction_url/_prompts",
-   "latest_case_prompts": {}
   },
   {
    "eval_name": "research_municipality",

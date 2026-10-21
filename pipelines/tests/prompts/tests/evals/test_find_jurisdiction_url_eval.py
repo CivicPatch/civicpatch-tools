@@ -10,7 +10,7 @@ import services.google_gemini.llm as gemini_llm
 from services.google_gemini.llm import FIND_JURISDICTION_URL_MODEL_FALLBACKS
 import services.google_gemini.prompts as gemini_prompts
 from shared.utils.url_utils import same_domain
-from eval_utils import record_history, record_run
+from eval_utils import record_history, record_run, write_pass_fail_report
 from utils import cost_utils
 
 pytestmark = [pytest.mark.evals]
@@ -109,23 +109,7 @@ def _write_report(failed_cases, elapsed_seconds, total_cases):
         accuracy={},
         mismatches=None,
     )
-    report_path = os.path.join(EVALS_DIR, f"{MODEL_NAME}-eval-report.yml")
-    with open(report_path, "w", encoding="utf-8") as f:
-        # total_cases is recorded because the report cannot be read without it. This eval
-        # has no provider-comparison test and so writes no comparison.yml, which is where
-        # every other eval's case count lives — leaving a fully passing run indistinguishable
-        # from one that ran nothing at all.
-        yaml.safe_dump(
-            {
-                "run": run,
-                "cost_summary": cost_summary,
-                "total_cases": total_cases,
-                "passed_cases": total_cases - len(failed_cases),
-                "failed_cases": failed_cases,
-            },
-            f,
-            sort_keys=False,
-        )
+    report_path = write_pass_fail_report(EVALS_DIR, MODEL_NAME, run, cost_summary, total_cases, failed_cases)
     print(f"Saved evaluation report to {report_path}")
     return cost_summary
 

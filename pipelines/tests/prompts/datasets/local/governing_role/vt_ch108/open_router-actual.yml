@@ -1,27 +1,28 @@
 - role_id: member
   expected: elected_by_voters
+  presiding: false
   right: true
   each_right:
-  - true
   - false
+  - true
   agreed: false
   answers:
-  - established: true
-    label: Selectboard
-    filled_by: elected_by_voters
-    maximum_memberships: 5
-    quote: there shall be added to the existing three members of the Selectboard an
-      additional two members for a total of five. The two additional members shall
-      be first elected at the 1995 Bristol annual Town meeting.
   - established: true
     label: Selectboard member
     filled_by: not_stated
     maximum_memberships: 5
     quote: there shall be added to the existing three members of the Selectboard an
-      additional two members for a total of five. The two additional members shall
+      additional two members for a total of five.
+  - established: true
+    label: member of the Selectboard
+    filled_by: elected_by_voters
+    maximum_memberships: 5
+    quote: However, there shall be added to the existing three members of the Selectboard
+      an additional two members for a total of five. The two additional members shall
       be first elected at the 1995 Bristol annual Town meeting.
 - role_id: commission-president
   expected: probably_not_established
+  presiding: true
   right: true
   each_right:
   - true
@@ -40,6 +41,7 @@
     quote: ''
 - role_id: vice-mayor
   expected: probably_not_established
+  presiding: true
   right: true
   each_right:
   - true
@@ -58,6 +60,7 @@
     quote: ''
 - role_id: assistant-mayor
   expected: probably_not_established
+  presiding: true
   right: true
   each_right:
   - true
@@ -76,6 +79,7 @@
     quote: ''
 - role_id: mayor-pro-tempore
   expected: probably_not_established
+  presiding: true
   right: true
   each_right:
   - true
@@ -94,6 +98,7 @@
     quote: ''
 - role_id: deputy-mayor-pro-tempore
   expected: probably_not_established
+  presiding: true
   right: true
   each_right:
   - true
@@ -112,6 +117,7 @@
     quote: ''
 - role_id: council-president
   expected: probably_not_established
+  presiding: true
   right: true
   each_right:
   - true
@@ -130,6 +136,7 @@
     quote: ''
 - role_id: council-vice-president
   expected: probably_not_established
+  presiding: true
   right: true
   each_right:
   - true
@@ -148,6 +155,7 @@
     quote: ''
 - role_id: council-president-pro-tem
   expected: probably_not_established
+  presiding: true
   right: true
   each_right:
   - true
@@ -166,6 +174,7 @@
     quote: ''
 - role_id: deputy-council-president
   expected: probably_not_established
+  presiding: true
   right: true
   each_right:
   - true
@@ -184,6 +193,7 @@
     quote: ''
 - role_id: president-pro-tempore
   expected: probably_not_established
+  presiding: true
   right: true
   each_right:
   - true
@@ -202,6 +212,7 @@
     quote: ''
 - role_id: chair
   expected: probably_not_established
+  presiding: true
   right: true
   each_right:
   - true
@@ -220,6 +231,7 @@
     quote: ''
 - role_id: vice-chair
   expected: probably_not_established
+  presiding: true
   right: true
   each_right:
   - true
@@ -238,6 +250,7 @@
     quote: ''
 - role_id: commissioner-vice-president
   expected: probably_not_established
+  presiding: true
   right: true
   each_right:
   - true
@@ -256,6 +269,7 @@
     quote: ''
 - role_id: chair-pro-tem
   expected: probably_not_established
+  presiding: true
   right: true
   each_right:
   - true
@@ -274,6 +288,7 @@
     quote: ''
 - role_id: deputy-supervisor
   expected: probably_not_established
+  presiding: true
   right: true
   each_right:
   - true

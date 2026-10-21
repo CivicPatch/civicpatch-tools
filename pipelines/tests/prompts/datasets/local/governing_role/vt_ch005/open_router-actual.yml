@@ -1,5 +1,6 @@
 - role_id: mayor
   expected: elected_by_voters
+  presiding: false
   right: true
   each_right:
   - true
@@ -9,15 +10,16 @@
   - established: true
     label: Mayor
     filled_by: elected_by_voters
-    maximum_memberships: null
+    maximum_memberships: 1
     quote: The Mayor shall be elected by and from the qualified voters of Montpelier.
   - established: true
     label: Mayor
     filled_by: elected_by_voters
-    maximum_memberships: null
+    maximum_memberships: 1
     quote: The Mayor shall be elected by and from the qualified voters of Montpelier.
 - role_id: member
   expected: elected_by_voters
+  presiding: false
   right: true
   each_right:
   - true
@@ -28,9 +30,7 @@
     label: Council member
     filled_by: elected_by_voters
     maximum_memberships: 6
-    quote: The City Council shall consist of the Mayor and two Council members from
-      each voting district. Members shall be elected by the voters of each respective
-      district.
+    quote: Members shall be elected by the voters of each respective district.
   - established: true
     label: Council member
     filled_by: elected_by_voters
@@ -38,48 +38,9 @@
     quote: The City Council shall consist of the Mayor and two Council members from
       each voting district. Members shall be elected by the voters of each respective
       district.
-- role_id: council-president
-  expected: elected_by_members
-  right: true
-  each_right:
-  - true
-  - true
-  agreed: true
-  answers:
-  - established: true
-    label: President
-    filled_by: elected_by_members
-    maximum_memberships: 1
-    quote: the City Council shall elect from its members a President, Vice President,
-      and Parliamentarian.
-  - established: true
-    label: President
-    filled_by: elected_by_members
-    maximum_memberships: 1
-    quote: Following the annual meeting, the City Council shall elect from its members
-      a President, Vice President, and Parliamentarian.
-- role_id: council-vice-president
-  expected: elected_by_members
-  right: true
-  each_right:
-  - true
-  - true
-  agreed: true
-  answers:
-  - established: true
-    label: Vice President
-    filled_by: elected_by_members
-    maximum_memberships: 1
-    quote: the City Council shall elect from its members a President, Vice President,
-      and Parliamentarian.
-  - established: true
-    label: Vice President
-    filled_by: elected_by_members
-    maximum_memberships: 1
-    quote: the City Council shall elect from its members a President, Vice President,
-      and Parliamentarian.
 - role_id: city-manager
   expected: appointed
+  presiding: false
   right: true
   each_right:
   - true
@@ -95,11 +56,12 @@
   - established: true
     label: City Manager
     filled_by: appointed
-    maximum_memberships: null
+    maximum_memberships: 1
     quote: The City Manager shall be chosen and appointed by majority vote of the
       City Council
 - role_id: city-attorney
   expected: appointed
+  presiding: false
   right: true
   each_right:
   - true
@@ -116,5 +78,294 @@
     label: City attorneys
     filled_by: appointed
     maximum_memberships: null
-    quote: 'The City Council shall appoint the following officers: (A) City Manager;
-      (B) City Treasurer; and (C) City attorneys.'
+    quote: 'The City Council shall appoint the following officers: ... (C) City attorneys.'
+- role_id: council-president
+  expected: elected_by_members
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: true
+    label: President
+    filled_by: elected_by_members
+    maximum_memberships: 1
+    quote: the City Council shall elect from its members a President, Vice President,
+      and Parliamentarian.
+  - established: true
+    label: President
+    filled_by: elected_by_members
+    maximum_memberships: 1
+    quote: the City Council shall elect from its members a President, Vice President,
+      and Parliamentarian.
+- role_id: council-vice-president
+  expected: elected_by_members
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: true
+    label: Vice President
+    filled_by: elected_by_members
+    maximum_memberships: 1
+    quote: the City Council shall elect from its members a President, Vice President,
+      and Parliamentarian.
+  - established: true
+    label: Vice President
+    filled_by: elected_by_members
+    maximum_memberships: 1
+    quote: the City Council shall elect from its members a President, Vice President,
+      and Parliamentarian.
+- role_id: commission-president
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: vice-mayor
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: assistant-mayor
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: mayor-pro-tempore
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: deputy-mayor-pro-tempore
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: council-president-pro-tem
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: deputy-council-president
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: president-pro-tempore
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: chair
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - false
+  agreed: false
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: true
+    label: Chair
+    filled_by: elected_by_members
+    maximum_memberships: 1
+    quote: the members of the Board shall elect one of their members as Chair of the
+      Board
+- role_id: vice-chair
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: commissioner-vice-president
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: chair-pro-tem
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: deputy-supervisor
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''

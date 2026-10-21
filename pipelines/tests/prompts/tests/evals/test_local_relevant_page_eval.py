@@ -22,6 +22,7 @@ from eval_utils import (
     sample_generated_cases,
     sample_settings,
     write_comparison_report,
+    write_pass_fail_report,
 )
 from utils.dispositions import Disposition, classify_membership, tally
 from shared.schemas import GovernmentForm
@@ -274,23 +275,20 @@ def _write_report(model_client, failed_cases, elapsed_seconds, dispositions=(), 
         mismatches=mismatches or {},
         case_prompts=case_prompts,
     )
-    report_path = os.path.join(evals_dir, f"{model_client['name']}-eval-report.yml")
-    with open(report_path, "w", encoding="utf-8") as f:
-        yaml.safe_dump(
-            {
-                "run": run,
-                "cost_summary": cost_summary,
-                "accuracy": accuracy,
-                "failed_cases": failed_cases,
-                # The dashboard's per-case detail reads this from the report, not from history:
-                # `dashboard_data.read_latest_mismatches` globs the report files.
-                "mismatches": mismatches or {},
-                # Case id -> hash of the exact prompt it was sent, in `_prompts/`.
-                "case_prompts": case_prompts or {},
-            },
-            f,
-            sort_keys=False,
-        )
+    report_path = write_pass_fail_report(
+        evals_dir,
+        model_client["name"],
+        run,
+        cost_summary,
+        len(case_ids),
+        failed_cases,
+        accuracy=accuracy,
+        # The dashboard's per-case detail reads this from the report, not from history:
+        # `dashboard_data.read_latest_mismatches` globs the report files.
+        mismatches=mismatches or {},
+        # Case id -> hash of the exact prompt it was sent, in `_prompts/`.
+        case_prompts=case_prompts or {},
+    )
     print(f"Saved evaluation report to {report_path}")
     return cost_summary
 

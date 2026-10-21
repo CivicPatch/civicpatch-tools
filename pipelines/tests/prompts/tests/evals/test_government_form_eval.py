@@ -15,7 +15,7 @@ import yaml
 
 import services.google_gemini.llm as gemini_llm
 import services.google_gemini.prompts as gemini_prompts
-from eval_utils import record_history, record_run
+from eval_utils import record_history, record_run, write_pass_fail_report
 from shared.schemas import GovernmentForm, JurisdictionLevel
 from shared.utils.id_utils import parse_jurisdiction_ocdid
 from utils import cost_utils
@@ -108,18 +108,7 @@ def _write_report(failed_cases: list[dict], elapsed_seconds: float) -> None:
         accuracy={},
         mismatches=None,
     )
-    with open(os.path.join(EVALS_DIR, f"{MODEL_NAME}-eval-report.yml"), "w", encoding="utf-8") as f:
-        yaml.safe_dump(
-            {
-                "run": run,
-                "cost_summary": cost_summary,
-                "by_level": by_level,
-                "total_cases": len(_eval_cases),
-                "failed_cases": failed_cases,
-            },
-            f,
-            sort_keys=False,
-        )
+    write_pass_fail_report(EVALS_DIR, MODEL_NAME, run, cost_summary, len(_eval_cases), failed_cases, by_level=by_level)
 
 
 @pytest.mark.asyncio

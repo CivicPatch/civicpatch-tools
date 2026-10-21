@@ -12,12 +12,14 @@ from runners.pipeline02_organizations_collector.schemas import (
     OrganizationsCollectorContext,
     OrganizationsCollectorData,
     OrganizationsCollectorStep,
+    PresidingAnswer,
     RoleAnswer,
     RoleClaim,
 )
 from runners.pipeline02_organizations_collector.transitions.main import (
     ASKS_PER_QUESTION,
     extract,
+    presiding_claims,
 )
 from shared.schemas import PipelineRunLimits
 from shared.utils.layered_config import ConfigFile, merged_config
@@ -31,7 +33,11 @@ _CHAIR = RoleAsk(organization_name="Select Board", role_id="chair", role_label="
 _ANSWER = {"established": True, "label": "Selectboard member", "filled_by": "elected_by_voters", "maximum_memberships": 5, "quote": "five members elected at large"}
 
 
-def _context(pending: list[RoleAsk], claims: list[RoleClaim] | None = None) -> OrganizationsCollectorContext:
+_VICE_CHAIR = RoleAsk(organization_name="Select Board", role_id="vice-chair", role_label="Vice Chair", names=["Vice Chair"])
+_PRESIDING = {"offices": [{"role_id": "chair", "label": "Chair", "filled_by": "elected_by_members", "maximum_memberships": 1, "quote": "elect a Chair"}]}
+
+
+def _context(pending: list[RoleAsk], claims: list[RoleClaim] | None = None, presiding: list[RoleAsk] | None = None) -> OrganizationsCollectorContext:
     return OrganizationsCollectorContext(
         pipeline_run_id="run-1",
         current_state=OrganizationsCollectorStep.EXTRACT,
@@ -42,6 +48,7 @@ def _context(pending: list[RoleAsk], claims: list[RoleClaim] | None = None) -> O
             ),
             selected_governing_law_text=_LAW,
             pending_asks=pending,
+            presiding_asks=presiding or [],
             claims=claims or [],
         ),
     )
@@ -53,6 +60,8 @@ def _limits(cap: str) -> PipelineRunLimits:
 
 async def _extract(context: OrganizationsCollectorContext, spent: str = "0", cap: str = "1"):
     async def answer(*_args, prompt_name: str, **_kwargs):
+        if prompt_name == "governing_presiding":
+            return _PRESIDING
         return {"offices": [{"label": "Town Clerk", "filled_by": "appointed", "quote": "shall appoint a Town Clerk"}]} if prompt_name == "governing_other_offices" else _ANSWER
 
     model = AsyncMock(side_effect=answer)
@@ -106,6 +115,31 @@ async def test_a_re_ask_does_not_ask_for_other_offices_again():
     _, _, model = await _extract(_context([_MEMBER], claims=[earlier]))
 
     assert "governing_other_offices" not in _prompt_names(model)
+
+
+@pytest.mark.asyncio
+async def test_the_presiding_candidates_are_one_question_asked_twice_each_answering_every_candidate():
+    extracted, _, model = await _extract(_context([_MEMBER], presiding=[_CHAIR, _VICE_CHAIR]))
+
+    assert _prompt_names(model).count("governing_presiding") == ASKS_PER_QUESTION
+    presiding = [(claim.ask.role_id, claim.answer.established) for claim in extracted.data.claims if claim.ask.role_id != "member"]
+    assert presiding == [("chair", True), ("vice-chair", False)] * ASKS_PER_QUESTION
+
+
+@pytest.mark.asyncio
+async def test_a_re_ask_does_not_ask_the_presiding_question_again():
+    earlier = RoleClaim(ask=_MEMBER, answer=RoleAnswer.model_validate(_ANSWER))
+
+    _, _, model = await _extract(_context([_CHAIR], claims=[earlier], presiding=[_CHAIR, _VICE_CHAIR]))
+
+    assert "governing_presiding" not in _prompt_names(model)
+    assert _prompt_names(model).count("governing_role") == ASKS_PER_QUESTION
+
+
+def test_an_office_the_question_did_not_list_is_dropped():
+    answer = PresidingAnswer.model_validate({"offices": [{**_PRESIDING["offices"][0], "role_id": "town-moderator"}]})
+
+    assert [(claim.ask.role_id, claim.answer.established) for claim in presiding_claims([_CHAIR], answer)] == [("chair", False)]
 
 
 @pytest.mark.asyncio

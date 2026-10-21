@@ -117,6 +117,30 @@ async def gather_capped(tasks, limit: int = PROVIDER_CONCURRENCY):
     return await asyncio.gather(*(run(t) for t in tasks), return_exceptions=True)
 
 
+REPORT_SUFFIX = "-eval-report.yml"
+
+
+def write_pass_fail_report(
+    evals_dir: str, model_name: str, run: dict, cost_summary: dict, total_cases: int, failed_cases: list[dict], **extra
+) -> str:
+    """The report the dashboard finds an eval by: `dashboard_data.eval_dirs` shows any folder
+    whose report has `failed_cases`, so writing through here is what puts an eval on it. Each
+    failed case is a dict with at least `case_id`; `extra` is the eval's own fields."""
+    path = os.path.join(evals_dir, f"{model_name}{REPORT_SUFFIX}")
+    report = {
+        "run": run,
+        "cost_summary": cost_summary,
+        "total_cases": total_cases,
+        # Distinct ids: an eval may list one case once per field it got wrong.
+        "passed_cases": total_cases - len({failed["case_id"] for failed in failed_cases}),
+        "failed_cases": failed_cases,
+        **extra,
+    }
+    with open(path, "w", encoding="utf-8") as f:
+        yaml.safe_dump(report, f, sort_keys=False, allow_unicode=True)
+    return path
+
+
 def record_provider_failure(evals_dir: str, provider: str, error: str) -> None:
     """Append a run that produced no numbers, so the gap is visible as a failure rather than
     as a provider that quietly stopped appearing.

@@ -1,5 +1,6 @@
 - role_id: clerk
   expected: elected_by_voters
+  presiding: false
   right: true
   each_right:
   - true
@@ -12,15 +13,19 @@
     maximum_memberships: 1
     quote: At the annual meeting there shall be elected, by ballot if called for by
       three voters, a Clerk, a Treasurer, a Chief Engineer, First and Second Assistant
-      Engineers, a Collector, and five trustees
+      Engineers, a Collector, and five trustees, who shall serve until their successors
+      are elected.
   - established: true
     label: Clerk
     filled_by: elected_by_voters
     maximum_memberships: 1
     quote: At the annual meeting there shall be elected, by ballot if called for by
-      three voters, a Clerk
+      three voters, a Clerk, a Treasurer, a Chief Engineer, First and Second Assistant
+      Engineers, a Collector, and five trustees, who shall serve until their successors
+      are elected.
 - role_id: treasurer
   expected: elected_by_voters
+  presiding: false
   right: true
   each_right:
   - true
@@ -33,21 +38,30 @@
     maximum_memberships: 1
     quote: At the annual meeting there shall be elected, by ballot if called for by
       three voters, a Clerk, a Treasurer, a Chief Engineer, First and Second Assistant
-      Engineers, a Collector, and five trustees
+      Engineers, a Collector, and five trustees, who shall serve until their successors
+      are elected.
   - established: true
     label: Treasurer
     filled_by: elected_by_voters
     maximum_memberships: 1
-    quote: a Clerk, a Treasurer, a Chief Engineer, First and Second Assistant Engineers,
-      a Collector, and five trustees
+    quote: At the annual meeting there shall be elected, by ballot if called for by
+      three voters, a Clerk, a Treasurer
 - role_id: member
   expected: elected_by_voters
+  presiding: false
   right: true
   each_right:
   - true
   - true
   agreed: true
   answers:
+  - established: true
+    label: trustee
+    filled_by: elected_by_voters
+    maximum_memberships: 5
+    quote: At the annual meeting there shall be elected, by ballot if called for by
+      three voters, a Clerk, a Treasurer, a Chief Engineer, First and Second Assistant
+      Engineers, a Collector, and five trustees
   - established: true
     label: trustees
     filled_by: elected_by_voters
@@ -56,10 +70,288 @@
       three voters, a Clerk, a Treasurer, a Chief Engineer, First and Second Assistant
       Engineers, a Collector, and five trustees, who shall serve until their successors
       are elected.
+- role_id: commission-president
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: vice-mayor
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: assistant-mayor
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: mayor-pro-tempore
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: deputy-mayor-pro-tempore
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: council-president
+  expected: probably_not_established
+  presiding: true
+  right: false
+  each_right:
+  - false
+  - false
+  agreed: true
+  answers:
   - established: true
-    label: trustee
-    filled_by: elected_by_voters
-    maximum_memberships: 5
-    quote: At the annual meeting there shall be elected, by ballot if called for by
-      three voters, a Clerk, a Treasurer, a Chief Engineer, First and Second Assistant
-      Engineers, a Collector, and five trustees
+    label: President
+    filled_by: elected_by_members
+    maximum_memberships: 1
+    quote: The trustees shall elect one trustee to serve as President.
+  - established: true
+    label: President
+    filled_by: elected_by_members
+    maximum_memberships: 1
+    quote: The trustees shall elect one trustee to serve as President.
+- role_id: council-vice-president
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: council-president-pro-tem
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: deputy-council-president
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: president-pro-tempore
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: chair
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: vice-chair
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: commissioner-vice-president
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: chair-pro-tem
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: deputy-supervisor
+  expected: probably_not_established
+  presiding: true
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''

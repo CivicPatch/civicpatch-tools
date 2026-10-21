@@ -1,23 +1,29 @@
 - role_id: member
   expected: elected_by_voters
-  right: false
+  presiding: false
+  right: true
   each_right:
-  - false
-  - false
+  - true
+  - true
   agreed: true
   answers:
-  - established: false
-    label: ''
-    filled_by: not_stated
+  - established: true
+    label: Member of the Selectboard
+    filled_by: elected_by_voters
     maximum_memberships: null
-    quote: ''
-  - established: false
-    label: ''
-    filled_by: not_stated
+    quote: All elected officials, except as provided by law or as specifically provided
+      in this charter, shall be chosen at large from the legally qualified voters
+      of the Town
+  - established: true
+    label: Selectboard member
+    filled_by: elected_by_voters
     maximum_memberships: null
-    quote: ''
+    quote: All elected officials, except as provided by law or as specifically provided
+      in this charter, shall be chosen at large from the legally qualified voters
+      of the Town
 - role_id: commission-president
   expected: probably_not_established
+  presiding: true
   right: true
   each_right:
   - true
@@ -36,6 +42,7 @@
     quote: ''
 - role_id: vice-mayor
   expected: probably_not_established
+  presiding: true
   right: true
   each_right:
   - true
@@ -54,6 +61,7 @@
     quote: ''
 - role_id: assistant-mayor
   expected: probably_not_established
+  presiding: true
   right: true
   each_right:
   - true
@@ -72,6 +80,7 @@
     quote: ''
 - role_id: mayor-pro-tempore
   expected: probably_not_established
+  presiding: true
   right: true
   each_right:
   - true
@@ -90,6 +99,7 @@
     quote: ''
 - role_id: deputy-mayor-pro-tempore
   expected: probably_not_established
+  presiding: true
   right: true
   each_right:
   - true
@@ -108,6 +118,7 @@
     quote: ''
 - role_id: council-president
   expected: probably_not_established
+  presiding: true
   right: true
   each_right:
   - true
@@ -126,6 +137,7 @@
     quote: ''
 - role_id: council-vice-president
   expected: probably_not_established
+  presiding: true
   right: true
   each_right:
   - true
@@ -144,6 +156,7 @@
     quote: ''
 - role_id: council-president-pro-tem
   expected: probably_not_established
+  presiding: true
   right: true
   each_right:
   - true
@@ -162,6 +175,7 @@
     quote: ''
 - role_id: deputy-council-president
   expected: probably_not_established
+  presiding: true
   right: true
   each_right:
   - true
@@ -180,6 +194,7 @@
     quote: ''
 - role_id: president-pro-tempore
   expected: probably_not_established
+  presiding: true
   right: true
   each_right:
   - true
@@ -198,6 +213,7 @@
     quote: ''
 - role_id: chair
   expected: probably_not_established
+  presiding: true
   right: true
   each_right:
   - true
@@ -216,6 +232,7 @@
     quote: ''
 - role_id: vice-chair
   expected: probably_not_established
+  presiding: true
   right: true
   each_right:
   - true
@@ -234,6 +251,7 @@
     quote: ''
 - role_id: commissioner-vice-president
   expected: probably_not_established
+  presiding: true
   right: true
   each_right:
   - true
@@ -252,6 +270,7 @@
     quote: ''
 - role_id: chair-pro-tem
   expected: probably_not_established
+  presiding: true
   right: true
   each_right:
   - true
@@ -270,6 +289,7 @@
     quote: ''
 - role_id: deputy-supervisor
   expected: probably_not_established
+  presiding: true
   right: true
   each_right:
   - true

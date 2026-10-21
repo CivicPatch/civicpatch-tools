@@ -10,14 +10,17 @@ import services.open_router.llm as open_router_llm
 import services.open_router.prompts as open_router_prompts
 from runners.pipeline02_organizations_collector import sections
 from runners.pipeline02_organizations_collector import verify as verify_rules
-from ..role_asks import RoleAsk, role_asks
+from ..role_asks import RoleAsk, presiding_asks, role_asks
 from ..schemas import (
+    FilledBy,
     GoverningSectionsResponse,
     OrganizationsCollectorContext,
     OrganizationsCollectorState,
     OrganizationsCollectorStep,
     OtherOffice,
     OtherOfficesAnswer,
+    PresidingAnswer,
+    PresidingOffice,
     RoleAnswer,
     RoleClaim,
 )
@@ -52,8 +55,11 @@ async def select_sections(_limits: PipelineRunLimits, logger: PipelineRunLogger,
     ]
     config = context.data.config
     asks = role_asks(config.jurisdiction_config, config.name, config.government_form)
-    logger.info(f"{len(asks)} roles to ask about")
-    next_context = _next(context, governing_law_pages=pages, selected_governing_law_text="\n\n".join(selected), pending_asks=asks)
+    presiding = presiding_asks(config.jurisdiction_config, config.name, config.government_form)
+    logger.info(f"{len(asks)} roles to ask about, {len(presiding)} presiding candidates in one question")
+    next_context = _next(
+        context, governing_law_pages=pages, selected_governing_law_text="\n\n".join(selected), pending_asks=asks, presiding_asks=presiding
+    )
     return next_context, OrganizationsCollectorStep.EXTRACT
 
 
@@ -95,8 +101,10 @@ async def extract(limits: PipelineRunLimits, logger: PipelineRunLogger, context:
     first_pass = not context.data.claims
     answers = await asyncio.gather(*[_answer(context, logger, ask) for ask in asked])
     claims = [RoleClaim(ask=ask, answer=answer) for ask, answer in zip(asked, answers) if answer is not None]
+    presiding = await _presiding(context, logger) if first_pass else []
     others = await _other_offices(context) if first_pass else context.data.other_offices
-    return _next(context, claims=[*context.data.claims, *claims], pending_asks=[], other_offices=others), OrganizationsCollectorStep.VERIFY
+    all_claims = [*context.data.claims, *claims, *presiding]
+    return _next(context, claims=all_claims, pending_asks=[], other_offices=others), OrganizationsCollectorStep.VERIFY
 
 
 async def _answer(context: OrganizationsCollectorContext, logger: PipelineRunLogger, ask: RoleAsk) -> RoleAnswer | None:
@@ -111,8 +119,42 @@ async def _answer(context: OrganizationsCollectorContext, logger: PipelineRunLog
     return RoleAnswer.model_validate(response)
 
 
+async def _presiding(context: OrganizationsCollectorContext, logger: PipelineRunLogger) -> List[RoleClaim]:
+    """Each ask of the one question answers every candidate: an office it returns, or one it
+    leaves out, which is not established. An ask that failed after retries answers none."""
+    asks = context.data.presiding_asks
+    if not asks:
+        return []
+    organization_name = asks[0].organization_name
+    question = open_router_prompts.governing_presiding_question(organization_name, [(ask.role_id, ask.names) for ask in asks])
+    responses = await asyncio.gather(
+        *[_ask(context, "governing_presiding", question, PresidingAnswer) for _ in range(ASKS_PER_QUESTION)], return_exceptions=True
+    )
+    claims: List[RoleClaim] = []
+    for response in responses:
+        if isinstance(response, BaseException):
+            logger.warning(f"presiding candidates in {organization_name} unanswered: {type(response).__name__}: {response}")
+            continue
+        claims = [*claims, *presiding_claims(asks, PresidingAnswer.model_validate(response))]
+    return claims
+
+
+def presiding_claims(asks: List[RoleAsk], answer: PresidingAnswer) -> List[RoleClaim]:
+    offices = {office.role_id: office for office in answer.offices}
+    return [RoleClaim(ask=ask, answer=_presiding_answer(offices.get(ask.role_id))) for ask in asks]
+
+
+def _presiding_answer(office: PresidingOffice | None) -> RoleAnswer:
+    if office is None:
+        return RoleAnswer(established=False, label="", filled_by=FilledBy.NOT_STATED, maximum_memberships=None, quote="")
+    return RoleAnswer(
+        established=True, label=office.label, filled_by=office.filled_by, maximum_memberships=office.maximum_memberships, quote=office.quote
+    )
+
+
 async def _other_offices(context: OrganizationsCollectorContext) -> List[OtherOffice]:
-    asked_labels = list(dict.fromkeys(ask.role_label for ask in context.data.pending_asks))
+    asked = [*context.data.pending_asks, *context.data.presiding_asks]
+    asked_labels = list(dict.fromkeys(ask.role_label for ask in asked))
     question = open_router_prompts.governing_other_offices_question(asked_labels)
     response = await _ask(context, "governing_other_offices", question, OtherOfficesAnswer)
     return OtherOfficesAnswer.model_validate(response).offices

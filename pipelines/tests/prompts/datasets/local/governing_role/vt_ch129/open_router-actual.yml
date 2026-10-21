@@ -1,5 +1,6 @@
 - role_id: member
   expected: elected_by_voters
+  presiding: false
   right: true
   each_right:
   - true
@@ -7,17 +8,85 @@
   agreed: true
   answers:
   - established: true
-    label: school trustees
+    label: library trustee
     filled_by: elected_by_voters
     maximum_memberships: 5
-    quote: five school trustees
+    quote: 'The officers elected at its annual meeting shall be: (1) five selectpersons;
+      (2) Town Clerk; (3) Town Treasurer; (4) five library trustees; (5) five school
+      trustees; and (6) Champlain Water District (CWD) Representative.'
   - established: true
-    label: library trustees
+    label: library trustee
     filled_by: elected_by_voters
     maximum_memberships: 5
-    quote: five library trustees
+    quote: 'The officers elected at its annual meeting shall be: (1) five selectpersons;
+      (2) Town Clerk; (3) Town Treasurer; (4) five library trustees; (5) five school
+      trustees; and (6) Champlain Water District (CWD) Representative.'
+- role_id: city-manager
+  expected: appointed
+  presiding: false
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: true
+    label: Town Manager
+    filled_by: appointed
+    maximum_memberships: 1
+    quote: The Town Manager shall be the Chief Administrative Officer of the Town
+      and shall be appointed by a majority of the Selectboard.
+  - established: true
+    label: Town Manager
+    filled_by: appointed
+    maximum_memberships: 1
+    quote: The Town Manager shall be the Chief Administrative Officer of the Town
+      and shall be appointed by a majority of the Selectboard.
+- role_id: clerk
+  expected: elected_by_voters
+  presiding: false
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: true
+    label: Town Clerk
+    filled_by: elected_by_voters
+    maximum_memberships: 1
+    quote: 'The officers elected at its annual meeting shall be: ... (2) Town Clerk;'
+  - established: true
+    label: Town Clerk
+    filled_by: elected_by_voters
+    maximum_memberships: 1
+    quote: 'The officers elected at its annual meeting shall be: (1) five selectpersons;
+      (2) Town Clerk;'
+- role_id: treasurer
+  expected: elected_by_voters
+  presiding: false
+  right: true
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: true
+    label: Town Treasurer
+    filled_by: elected_by_voters
+    maximum_memberships: 1
+    quote: 'The officers elected at its annual meeting shall be: (1) five selectpersons;
+      (2) Town Clerk; (3) Town Treasurer; (4) five library trustees; (5) five school
+      trustees; and (6) Champlain Water District (CWD) Representative.'
+  - established: true
+    label: Town Treasurer
+    filled_by: elected_by_voters
+    maximum_memberships: 1
+    quote: 'The officers elected at its annual meeting shall be: (1) five selectpersons;
+      (2) Town Clerk; (3) Town Treasurer;'
 - role_id: chair
   expected: elected_by_members
+  presiding: true
   right: true
   each_right:
   - true
@@ -28,16 +97,19 @@
     label: Chair
     filled_by: elected_by_members
     maximum_memberships: 1
-    quote: the Selectboard shall organize and elect a Chair, a Vice Chair, and Clerk
-      by a majority vote of the entire Selectboard.
+    quote: After their election and qualification, the Selectboard shall organize
+      and elect a Chair, a Vice Chair, and Clerk by a majority vote of the entire
+      Selectboard.
   - established: true
     label: Chair
     filled_by: elected_by_members
     maximum_memberships: 1
-    quote: the Selectboard shall organize and elect a Chair, a Vice Chair, and Clerk
-      by a majority vote of the entire Selectboard.
+    quote: After their election and qualification, the Selectboard shall organize
+      and elect a Chair, a Vice Chair, and Clerk by a majority vote of the entire
+      Selectboard.
 - role_id: vice-chair
   expected: elected_by_members
+  presiding: true
   right: true
   each_right:
   - true
@@ -55,70 +127,12 @@
     label: Vice Chair
     filled_by: elected_by_members
     maximum_memberships: 1
-    quote: the Selectboard shall organize and elect a Chair, a Vice Chair, and Clerk
-      by a majority vote of the entire Selectboard.
-- role_id: city-manager
-  expected: appointed
-  right: true
-  each_right:
-  - true
-  - true
-  agreed: true
-  answers:
-  - established: true
-    label: Town Manager
-    filled_by: appointed
-    maximum_memberships: null
-    quote: The Town Manager shall be the Chief Administrative Officer of the Town
-      and shall be appointed by a majority of the Selectboard.
-  - established: true
-    label: Town Manager
-    filled_by: appointed
-    maximum_memberships: 1
-    quote: The Town Manager shall be the Chief Administrative Officer of the Town
-      and shall be appointed by a majority of the Selectboard.
-- role_id: clerk
-  expected: elected_by_voters
-  right: true
-  each_right:
-  - true
-  - true
-  agreed: true
-  answers:
-  - established: true
-    label: Town Clerk
-    filled_by: elected_by_voters
-    maximum_memberships: 1
-    quote: 'The officers elected at its annual meeting shall be: (1) five selectpersons;
-      (2) Town Clerk; (3) Town Treasurer; (4) five library trustees; (5) five school
-      trustees; and (6) Champlain Water District (CWD) Representative.'
-  - established: true
-    label: Town Clerk
-    filled_by: elected_by_voters
-    maximum_memberships: 1
-    quote: 'The officers elected at its annual meeting shall be: (1) five selectpersons;
-      (2) Town Clerk;'
-- role_id: treasurer
-  expected: elected_by_voters
-  right: true
-  each_right:
-  - false
-  - true
-  agreed: true
-  answers:
-  - established: true
-    label: Town Treasurer
-    filled_by: elected_by_voters
-    maximum_memberships: 1
-    quote: The Town Treasurer shall be elected for a three-year term.
-  - established: true
-    label: Town Treasurer
-    filled_by: elected_by_voters
-    maximum_memberships: 1
-    quote: 'The officers elected at its annual meeting shall be: (1) five selectpersons;
-      (2) Town Clerk; (3) Town Treasurer;'
+    quote: After their election and qualification, the Selectboard shall organize
+      and elect a Chair, a Vice Chair, and Clerk by a majority vote of the entire
+      Selectboard.
 - role_id: commission-president
   expected: probably_not_established
+  presiding: true
   right: true
   each_right:
   - true
@@ -137,6 +151,7 @@
     quote: ''
 - role_id: vice-mayor
   expected: probably_not_established
+  presiding: true
   right: true
   each_right:
   - true
@@ -155,6 +170,7 @@
     quote: ''
 - role_id: assistant-mayor
   expected: probably_not_established
+  presiding: true
   right: true
   each_right:
   - true
@@ -173,6 +189,7 @@
     quote: ''
 - role_id: mayor-pro-tempore
   expected: probably_not_established
+  presiding: true
   right: true
   each_right:
   - true
@@ -191,6 +208,7 @@
     quote: ''
 - role_id: deputy-mayor-pro-tempore
   expected: probably_not_established
+  presiding: true
   right: true
   each_right:
   - true
@@ -209,6 +227,7 @@
     quote: ''
 - role_id: council-president
   expected: probably_not_established
+  presiding: true
   right: true
   each_right:
   - true
@@ -227,6 +246,7 @@
     quote: ''
 - role_id: council-vice-president
   expected: probably_not_established
+  presiding: true
   right: true
   each_right:
   - true
@@ -245,6 +265,7 @@
     quote: ''
 - role_id: council-president-pro-tem
   expected: probably_not_established
+  presiding: true
   right: true
   each_right:
   - true
@@ -263,6 +284,7 @@
     quote: ''
 - role_id: deputy-council-president
   expected: probably_not_established
+  presiding: true
   right: true
   each_right:
   - true
@@ -281,6 +303,7 @@
     quote: ''
 - role_id: president-pro-tempore
   expected: probably_not_established
+  presiding: true
   right: true
   each_right:
   - true
@@ -299,6 +322,7 @@
     quote: ''
 - role_id: commissioner-vice-president
   expected: probably_not_established
+  presiding: true
   right: true
   each_right:
   - true
@@ -317,6 +341,7 @@
     quote: ''
 - role_id: chair-pro-tem
   expected: probably_not_established
+  presiding: true
   right: true
   each_right:
   - true
@@ -335,6 +360,7 @@
     quote: ''
 - role_id: deputy-supervisor
   expected: probably_not_established
+  presiding: true
   right: true
   each_right:
   - true

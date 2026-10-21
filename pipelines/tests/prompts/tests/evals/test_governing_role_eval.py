@@ -2,7 +2,9 @@
 agreed on and the verifier supports, and repealed charters that establish nothing.
 
 A case is one Vermont charter and the roles to ask about, plus the presiding candidates EXTRACT
-also asks (`probably_not_established` when the gold lacks them, scored apart and never failed). Each role is asked `ASKS_PER_QUESTION`
+also asks (`probably_not_established` when the gold lacks them, scored apart and never failed).
+Every role marked `presiding`, gold or candidate, is asked in EXTRACT's one presiding question
+instead of on its own; `presiding_gold_right` is the number to compare with per-role asking. Each role is asked `ASKS_PER_QUESTION`
 times, as EXTRACT does, and is right when any answer gives the expected method with a quote
 shared's verifier supports, or, expected "not_established", says the office is not established.
 Agreement between a role's answers is reported beside accuracy: the open "list every role" ask
@@ -20,10 +22,11 @@ import yaml
 
 import services.open_router.llm as open_router_llm
 import services.open_router.prompts as open_router_prompts
-from eval_utils import record_history, record_run
+from eval_utils import gather_capped, record_history, record_run, write_pass_fail_report
 from runners.pipeline02_organizations_collector import sections
-from runners.pipeline02_organizations_collector.schemas import FilledBy, RoleAnswer
-from runners.pipeline02_organizations_collector.transitions.main import ASKS_PER_QUESTION
+from runners.pipeline02_organizations_collector.role_asks import RoleAsk
+from runners.pipeline02_organizations_collector.schemas import FilledBy, PresidingAnswer, RoleAnswer
+from runners.pipeline02_organizations_collector.transitions.main import ASKS_PER_QUESTION, presiding_claims
 from shared.schemas import SelectionMethod
 from shared.utils.citation import supporting_quote
 from utils import cost_utils
@@ -33,6 +36,8 @@ pytestmark = [pytest.mark.evals]
 EVAL_CASES_DIR = "tests/prompts/datasets/local/governing_role"
 EVALS_DIR = "tests/prompts/tests/evals/governing_role"
 MODEL_NAME = "open_router"
+# Charters at a time, each sending its own questions at once: all 44 together got AtlasCloud's throttling.
+CASES_AT_ONCE = 4
 _EVAL_RUN_ID = "run-eval"
 NOT_ESTABLISHED = "not_established"
 # A presiding candidate the gold lacks: listed for a person when it verifies, never failed on.
@@ -70,6 +75,9 @@ def is_verified_post(law: str, role: dict, answer: RoleAnswer) -> bool:
 def is_right(law: str, role: dict, answer: RoleAnswer) -> bool:
     if role["expected"] == NOT_ESTABLISHED:
         return not answer.established
+    if role["expected"] == FilledBy.NOT_STATED:
+        # As VERIFY keeps it: a post with no method, its quote only naming the office.
+        return answer.established and answer.filled_by == FilledBy.NOT_STATED and supporting_quote(law, answer.quote, role["names"], None) is not None
     if role["expected"] == PROBABLY_NOT_ESTABLISHED:
         return not is_verified_post(law, role, answer)
     return answer.filled_by.value == role["expected"] and is_verified_post(law, role, answer)
@@ -96,10 +104,15 @@ async def ask(case: dict, role: dict) -> RoleAnswer | None:
 
 async def run_role(case: dict, role: dict) -> dict:
     answers = await asyncio.gather(*[ask(case, role) for _ in range(ASKS_PER_QUESTION)])
+    return _result(case, role, list(answers))
+
+
+def _result(case: dict, role: dict, answers: list[RoleAnswer | None]) -> dict:
     rights = [answer is not None and is_right(case["law"], role, answer) for answer in answers]
     return {
         "role_id": role["role_id"],
         "expected": role["expected"],
+        "presiding": bool(role.get("presiding")),
         "right": any(rights),
         "each_right": rights,
         "agreed": len({(answer.established, answer.filled_by) if answer else None for answer in answers}) == 1,
@@ -107,8 +120,44 @@ async def run_role(case: dict, role: dict) -> dict:
     }
 
 
+async def ask_presiding(case: dict, roles: list[dict]) -> PresidingAnswer | None:
+    question = open_router_prompts.governing_presiding_question(roles[0]["organization_name"], [(role["role_id"], role["names"]) for role in roles])
+    try:
+        response = await open_router_llm.run_prompt(
+            _EVAL_RUN_ID,
+            _LOG_JURISDICTION,
+            open_router_prompts.governing_law_reader_prompt(),
+            prompt_name="governing_presiding",
+            response_schema=PresidingAnswer,
+            content=f"{case['law']}\n\n{question}",
+        )
+    except Exception as error:
+        print(f"Case '{case['id']}' presiding: unanswered, {type(error).__name__}: {error}")
+        return None
+    return PresidingAnswer.model_validate(response)
+
+
+async def run_presiding(case: dict, roles: list[dict]) -> list[dict]:
+    """The candidates in one question, as EXTRACT asks them; each scored as its own role."""
+    if not roles:
+        return []
+    responses = await asyncio.gather(*[ask_presiding(case, roles) for _ in range(ASKS_PER_QUESTION)])
+    asks = [RoleAsk(organization_name=role["organization_name"], role_id=role["role_id"], role_label=role["role_label"], names=role["names"]) for role in roles]
+    per_ask = [presiding_claims(asks, response) if response else None for response in responses]
+    return [
+        _result(case, role, [claims[index].answer if claims else None for claims in per_ask])
+        for index, role in enumerate(roles)
+    ]
+
+
 async def run_case(case: dict) -> list[dict]:
-    results = await asyncio.gather(*[run_role(case, role) for role in case["expected"]["roles"]])
+    roles = case["expected"]["roles"]
+    asked_alone = [role for role in roles if not role.get("presiding")]
+    alone, presiding = await asyncio.gather(
+        asyncio.gather(*[run_role(case, role) for role in asked_alone]),
+        run_presiding(case, [role for role in roles if role.get("presiding")]),
+    )
+    results = [*alone, *presiding]
     with open(f"{case['case_path']}/{MODEL_NAME}-actual.yml", "w", encoding="utf-8") as f:
         yaml.safe_dump(results, f, sort_keys=False, allow_unicode=True)
     return results
@@ -132,6 +181,7 @@ def _write_report(results_by_case: dict[str, list[dict]], elapsed_seconds: float
         "roles_right": sum(result["right"] for result in roles) / len(roles),
         "single_ask_right": sum(sum(result["each_right"]) for result in roles) / (len(roles) * ASKS_PER_QUESTION),
         "agreement": sum(result["agreed"] for result in roles) / len(roles),
+        "presiding_gold_right": f"{sum(r['right'] for r in roles if r['presiding'])} of {sum(r['presiding'] for r in roles)}",
         "candidates_asked": len(candidates),
         "candidates_verified": sum(not result["right"] for result in candidates),
     }
@@ -163,26 +213,32 @@ def _write_report(results_by_case: dict[str, list[dict]], elapsed_seconds: float
         ]
         for case_id, results in results_by_case.items()
     }
-    with open(os.path.join(EVALS_DIR, f"{MODEL_NAME}-eval-report.yml"), "w", encoding="utf-8") as f:
-        yaml.safe_dump(
-            {
-                "run": run, "cost_summary": cost_summary, **summary, "by_expected": by_expected,
-                "wrong": {k: v for k, v in wrong.items() if v},
-                "candidates_to_read": {k: v for k, v in to_read.items() if v},
-            },
-            f,
-            sort_keys=False,
-        )
+    write_pass_fail_report(
+        EVALS_DIR,
+        MODEL_NAME,
+        run,
+        cost_summary,
+        total_cases=len(results_by_case),
+        failed_cases=[{"case_id": case_id, "wrong_roles": roles} for case_id, roles in wrong.items() if roles],
+        **summary,
+        by_expected=by_expected,
+        candidates_to_read={k: v for k, v in to_read.items() if v},
+    )
     return summary
 
 
 @pytest.mark.asyncio
 async def test_governing_role_eval():
     start_time = time.time()
-    results = await asyncio.gather(*[run_case(case) for case in _eval_cases])
+    results = await gather_capped([lambda case=case: run_case(case) for case in _eval_cases], limit=CASES_AT_ONCE)
     elapsed_seconds = round(time.time() - start_time, 2)
+    case_results: list[list[dict]] = []
+    for result in results:
+        if isinstance(result, BaseException):
+            raise result
+        case_results.append(result)
 
-    summary = _write_report({case["id"]: result for case, result in zip(_eval_cases, results)}, elapsed_seconds)
+    summary = _write_report({case["id"]: result for case, result in zip(_eval_cases, case_results)}, elapsed_seconds)
     print(f"roles right {summary['roles_right']:.0%}, one ask right {summary['single_ask_right']:.0%}, agreement {summary['agreement']:.0%}")
-    print(f"presiding candidates: {summary['candidates_verified']} of {summary['candidates_asked']} came back as a verified post, listed under candidates_to_read")
+    print(f"presiding in one question: gold {summary['presiding_gold_right']} right; {summary['candidates_verified']} of {summary['candidates_asked']} candidates came back as a verified post, listed under candidates_to_read")
     assert summary["roles_right"] == 1.0, f"Roles answered wrong: see {EVALS_DIR}/{MODEL_NAME}-eval-report.yml"
