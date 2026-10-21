@@ -9,6 +9,7 @@ import lib.files as file_utils
 import lib.buckets as buckets
 import lib.storage as storage_service
 import lib.temporal.client as temporal_service
+import services.extras_organizations as extras_organizations_service
 import services.governing_law as governing_law_service
 import services.government_form as government_form_service
 import services.jurisdiction_scrape_candidate as candidate_service
@@ -85,7 +86,10 @@ _DISPATCH_MODE_LOCAL = "local"
 DISPATCH_MODE = "remote" if _is_production else _DISPATCH_MODE_LOCAL
 
 # What each collector run is told when it starts, by its kind.
-COLLECTOR_CONFIGS = {PipelineRunKind.GOVERNING_LAW_COLLECTOR: governing_law_service.collector_config}
+COLLECTOR_CONFIGS = {
+    PipelineRunKind.GOVERNING_LAW_COLLECTOR: governing_law_service.collector_config,
+    PipelineRunKind.ORGANIZATIONS_COLLECTOR: extras_organizations_service.collector_config,
+}
 
 
 # Which of the two an admin is looking at. Separate queries and separate pages — a pipeline
@@ -308,7 +312,7 @@ def get_router(api_key_header):
             raise HTTPException(status_code=404, detail=f"Not a collector run: {pipeline_run['kind']}")
         try:
             config = await collector_config(pipeline_run["jurisdiction_ocdid"])
-        except governing_law_service.UnknownJurisdiction:
+        except (governing_law_service.UnknownJurisdiction, extras_organizations_service.UnknownJurisdiction):
             raise HTTPException(status_code=404, detail="Jurisdiction not found")
         return {**config.model_dump(mode="json"), "pipeline_run_cap_usd": pipeline_run.get("pipeline_run_cap_usd")}
 

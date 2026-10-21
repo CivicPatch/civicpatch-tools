@@ -4,8 +4,8 @@ the fetcher and cp.org. What is under test is the walk through its graph."""
 from unittest.mock import AsyncMock, MagicMock, patch
 
 import pytest
-
-from runners.engine import terminal_states
+from runners.engine import run_pipeline, terminal_states
+from runners.pipeline01_governing_law_collector.fetchers import RefusedByHost
 from runners.pipeline01_governing_law_collector.main import MACHINE
 from runners.pipeline01_governing_law_collector.schemas import (
     FetchedPage,
@@ -14,10 +14,10 @@ from runners.pipeline01_governing_law_collector.schemas import (
     GoverningLawCollectorContext,
     GoverningLawCollectorData,
 )
-from runners.pipeline01_governing_law_collector.fetchers import RefusedByHost
-from runners.pipeline01_governing_law_collector.transitions.graph import GOVERNING_LAW_COLLECTOR_TRANSITIONS
+from runners.pipeline01_governing_law_collector.transitions.graph import (
+    GOVERNING_LAW_COLLECTOR_TRANSITIONS,
+)
 from runners.pipeline01_governing_law_collector.transitions.main import TRANSITION_MAP
-from runners.engine import run_pipeline
 from shared.schemas import FoundBy, GoverningLawKind
 from shared.utils.statuses import TERMINAL_PIPELINE_RUN_STATUSES, PipelineRunStatus
 
@@ -165,3 +165,4 @@ async def test_a_page_another_run_stored_today_is_not_fetched_again():
     assert [call.args for call in fetch.await_args_list] == [(_CHARTER,)]
     assert context.data.general_law_source_page_ids == ["stowes-statute"]
     assert api.patch_jurisdiction_extras.await_args.args[2].extras_governing_law.source_page_ids == ["page-1", "stowes-statute"]
+

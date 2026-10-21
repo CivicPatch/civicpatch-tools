@@ -1,5 +1,5 @@
 from runners.engine import Transitions
-from runners.pipeline02_organizations_collector.schemas import OrganizationsCollectorStep
+from ..schemas import OrganizationsCollectorStep
 from shared.utils.statuses import PipelineRunStatus
 
 # An organizations_collector run's whole life. civicpatch.org owns the two ends before INIT.

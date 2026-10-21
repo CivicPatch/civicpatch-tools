@@ -1,7 +1,7 @@
 import os
 from typing import List
 from shared.schemas import PersonSourceRecord
-from runners.pipeline03_people_collector.schemas import (
+from ...schemas import (
   PeopleCollectorState,
   PeopleCollectorContext,
   PeopleCollectorStep,

@@ -6,7 +6,7 @@ from datetime import datetime, timezone
 import httpx
 import services.civicpatch_api as civicpatch_api
 from runners.pipeline01_governing_law_collector import converters, fetchers, finders
-from runners.pipeline01_governing_law_collector.schemas import GoverningLawCollectorContext, GoverningLawCollectorState, GoverningLawCollectorStep
+from ..schemas import GoverningLawCollectorContext, GoverningLawCollectorState, GoverningLawCollectorStep
 from shared.schemas import GoverningLaw, GoverningLawKind, JurisdictionExtras, PipelineRunLimits
 from shared.utils.statuses import PipelineRunStatus
 from utils import cost_utils

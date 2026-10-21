@@ -10,8 +10,8 @@ import services.open_router.llm as open_router_llm
 import services.open_router.prompts as open_router_prompts
 from runners.pipeline02_organizations_collector import sections
 from runners.pipeline02_organizations_collector import verify as verify_rules
-from runners.pipeline02_organizations_collector.role_asks import RoleAsk, role_asks
-from runners.pipeline02_organizations_collector.schemas import (
+from ..role_asks import RoleAsk, role_asks
+from ..schemas import (
     GoverningSectionsResponse,
     OrganizationsCollectorContext,
     OrganizationsCollectorState,

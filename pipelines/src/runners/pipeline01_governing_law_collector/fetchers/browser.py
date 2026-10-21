@@ -1,4 +1,4 @@
-from runners.pipeline01_governing_law_collector.schemas import FetchedPage
+from ..schemas import FetchedPage
 
 
 async def fetch(url: str) -> FetchedPage:

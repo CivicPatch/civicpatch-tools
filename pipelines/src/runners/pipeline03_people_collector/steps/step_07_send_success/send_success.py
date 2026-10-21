@@ -4,7 +4,7 @@ import httpx
 from pipelines_environment import get_env_vars
 
 import services.civicpatch_api
-from runners.pipeline03_people_collector.schemas import MaybeSendToGitHubStep, PeopleCollectorContext, PeopleCollectorState, PeopleCollectorStep
+from ...schemas import MaybeSendToGitHubStep, PeopleCollectorContext, PeopleCollectorState, PeopleCollectorStep
 from shared.utils.statuses import PipelineRunStatus
 from utils import log_utils, file_utils
 

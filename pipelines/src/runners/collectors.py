@@ -5,8 +5,10 @@ from dataclasses import dataclass
 from typing import Any, Awaitable, Callable
 
 from pydantic import BaseModel
-from runners.governing_law_collector import main as governing_law_collector
-from runners.governing_law_collector.schemas import GoverningLawCollectorConfig
+from runners.pipeline01_governing_law_collector import main as governing_law_collector
+from runners.pipeline01_governing_law_collector.schemas import GoverningLawCollectorConfig
+from runners.pipeline02_organizations_collector import main as organizations_collector
+from runners.pipeline02_organizations_collector.schemas import OrganizationsCollectorConfig
 from shared.utils.statuses import PipelineRunKind
 
 
@@ -18,4 +20,5 @@ class Collector:
 
 COLLECTORS: dict[PipelineRunKind, Collector] = {
     PipelineRunKind.GOVERNING_LAW_COLLECTOR: Collector(start=governing_law_collector.start, config=GoverningLawCollectorConfig),
+    PipelineRunKind.ORGANIZATIONS_COLLECTOR: Collector(start=organizations_collector.start, config=OrganizationsCollectorConfig),
 }

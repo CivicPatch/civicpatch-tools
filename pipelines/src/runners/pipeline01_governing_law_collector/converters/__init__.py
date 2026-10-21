@@ -1,7 +1,7 @@
 """Turning a fetched page into markdown, chosen by content type. Only markdown leaves the process."""
 
-from runners.pipeline01_governing_law_collector.converters import html
-from runners.pipeline01_governing_law_collector.schemas import FetchedPage
+from ..schemas import FetchedPage
+from . import html
 
 # Shorter than this after conversion, a page is a shell: script-rendered, or a frameset.
 MIN_MARKDOWN_CHARS = 200

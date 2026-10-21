@@ -5,14 +5,14 @@ import traceback
 import httpx
 from pipelines_environment import get_env_vars
 from runners.engine import Machine, PipelineRunError, run_pipeline
-from runners.pipeline03_people_collector.schemas import (
+from .schemas import (
     PeopleCollectorContext,
     PeopleCollectorData,
     PipelineRunConfig,
     PeopleCollectorState,
 )
-from runners.pipeline03_people_collector.transitions.graph import PEOPLE_COLLECTOR_TRANSITIONS
-from runners.pipeline03_people_collector.transitions.main import TRANSITION_MAP
+from .transitions.graph import PEOPLE_COLLECTOR_TRANSITIONS
+from .transitions.main import TRANSITION_MAP
 from services.browser import resolve_redirect
 from services.civicpatch_api import get_role_config
 from shared.utils import data_path_utils

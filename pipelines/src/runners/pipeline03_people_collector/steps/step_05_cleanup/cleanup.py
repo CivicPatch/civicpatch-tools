@@ -3,7 +3,7 @@ import os
 import shutil
 from typing import List
 
-from runners.pipeline03_people_collector.schemas import PeopleCollectorContext, PeopleCollectorState, PeopleCollectorStep
+from ...schemas import PeopleCollectorContext, PeopleCollectorState, PeopleCollectorStep
 from shared.schemas import LOCAL_IMAGE_PREFIX, PersonSourceRecord
 from shared.utils import url_utils
 from shared.utils.data_path_utils import get_data_source_path_for_jurisdiction_ocdid

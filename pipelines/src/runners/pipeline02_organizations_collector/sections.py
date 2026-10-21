@@ -7,7 +7,7 @@ from typing import List
 from urllib.parse import urlparse
 
 from pydantic import BaseModel
-from runners.pipeline02_organizations_collector.section_formats import SECTION_FORMATS, SectionFormat
+from .section_formats import SECTION_FORMATS, SectionFormat
 from shared.schemas import GoverningLaw, GoverningLawKind
 from shared.utils.layered_config import GoverningLawConfig
 

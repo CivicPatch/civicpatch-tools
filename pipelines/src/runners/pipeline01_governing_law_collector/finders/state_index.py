@@ -5,8 +5,8 @@ import re
 from urllib.parse import urljoin
 
 from bs4 import BeautifulSoup
-from runners.pipeline01_governing_law_collector.fetchers import plain
-from runners.pipeline01_governing_law_collector.schemas import FinderAnswer
+from ..fetchers import plain
+from ..schemas import FinderAnswer
 from shared.schemas import FoundBy
 from shared.utils.government_forms import name_suffix
 from shared.utils.layered_config import PLACE_PLACEHOLDER, CharterLinkList, GoverningLawConfig, resolve_classification

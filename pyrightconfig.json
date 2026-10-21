@@ -16,8 +16,23 @@
     "open-data"
   ],
   "executionEnvironments": [
-    {"root": "civicpatch.org", "extraPaths": ["civicpatch.org/src"]},
-    {"root": "pipelines", "extraPaths": ["pipelines/src"]},
-    {"root": "shared", "extraPaths": ["shared/src"]}
+    {
+      "root": "civicpatch.org",
+      "extraPaths": [
+        "civicpatch.org/src"
+      ]
+    },
+    {
+      "root": "pipelines",
+      "extraPaths": [
+        "pipelines/src"
+      ]
+    },
+    {
+      "root": "shared",
+      "extraPaths": [
+        "shared/src"
+      ]
+    }
   ]
 }

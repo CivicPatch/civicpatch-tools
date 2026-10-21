@@ -1,6 +1,6 @@
 from runners.engine import Transitions
 from shared.utils.statuses import PipelineRunStatus
-from runners.pipeline03_people_collector.schemas import PeopleCollectorStep
+from ..schemas import PeopleCollectorStep
 
 # A people collector run's whole life. The engine walks the middle, civicpatch.org owns the ends.
 PEOPLE_COLLECTOR_TRANSITIONS: Transitions = {

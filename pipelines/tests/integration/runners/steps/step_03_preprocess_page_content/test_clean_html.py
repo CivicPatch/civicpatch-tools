@@ -71,7 +71,7 @@ def test_nested_images_in_table_cells():
     assert ''.join(cleaned_html.split()) == ''.join(expected_output_html.split())
 
 def test_with_fixture():
-    with open(FIXTURE_DIR / "garland_nested_images" / "input.html", "r", encoding="utf-8") as f:
+    with open(FIXTURE_DIR / "garland_nested_images" / "input.html", encoding="utf-8") as f:
         input_html = f.read()
     cleaned_html = clean_html(None, input_html)
     with open(FIXTURE_DIR / "garland_nested_images" / "expected_clean_html.html", "w", encoding="utf-8") as f:
@@ -81,7 +81,7 @@ def test_with_fixture():
     #assert ''.join(cleaned_html.split()) == ''.join(expected_output.split())
 
 def test_with_read_more_fixture():
-    with open(os.path.join(FIXTURE_DIR, "la_joya_read_more", "input.html"), "r", encoding="utf-8") as f:
+    with open(os.path.join(FIXTURE_DIR, "la_joya_read_more", "input.html"), encoding="utf-8") as f:
         input_html = f.read()
     cleaned_html = clean_html(None, input_html)
     with open(FIXTURE_DIR / "la_joya_read_more" / "expected_clean_html.html", "w", encoding="utf-8") as f:
@@ -186,3 +186,4 @@ def test_tmm_email_links_survive_clean_html_to_markdown():
         expected = f.read()
     assert result == expected
     assert "mailto:tleverentz@oakleaftexas.org" in result, "mailto link lost after clean_html → markdownify"
+
