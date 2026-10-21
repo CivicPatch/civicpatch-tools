@@ -473,8 +473,9 @@ def governing_law_reader_prompt() -> str:
     How an office is filled, as the text says:
     - elected_by_voters: the voters elect the person to that office.
     - elected_by_members: a body chooses one of its own members for it (a chair, a mayor chosen
-      by the council).
-    - appointed: a body or officer appoints, hires or employs the person.
+      by the council), whatever verb the text uses: "appoint from among the board" is this.
+    - appointed: a body or officer appoints, hires or employs the person, who need not be one of
+      its members.
     - not_stated: the text names the office but not how it is filled.
 
     The quote must be copied exactly from the text: one continuous passage, a few words to a

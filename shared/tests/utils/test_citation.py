@@ -71,6 +71,13 @@ def test_the_word_voters_alone_does_not_name_an_election():
     assert not method_named_in_quote("a meeting of the voters of the City", SelectionMethod.ELECTED_BY_VOTERS)
 
 
+def test_appointing_from_among_the_board_names_a_choice_by_its_members():
+    """Johnson village's 1965 bylaws: the trustees pick their chairman from among themselves."""
+    quote = "The Trustees shall immediately after the annual meeting appoint from among the Board, a Chairman"
+
+    assert method_named_in_quote(quote, SelectionMethod.ELECTED_BY_MEMBERS)
+
+
 def test_a_bare_name_in_a_list_gets_its_whole_sentence():
     quote = supporting_quote(NEWPORT, "four aldermen", ALDERMEN, SelectionMethod.ELECTED_BY_VOTERS)
 
