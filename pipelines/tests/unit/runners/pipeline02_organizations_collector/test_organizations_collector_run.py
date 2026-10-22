@@ -102,7 +102,7 @@ async def _walk(context: OrganizationsCollectorContext, pages: dict[str, str] | 
     engine_api.update_pipeline_run_status = AsyncMock()
     api = MagicMock()
     api.get_governing_law_source_page = AsyncMock(
-        side_effect=lambda _client, _ocdid, page_id: {"id": page_id, "source_url": f"{_CHAPTERS}/{page_id}", "text": pages[page_id]}
+        side_effect=lambda _client, _logger, _ocdid, page_id: {"id": page_id, "source_url": f"{_CHAPTERS}/{page_id}", "text": pages[page_id]}
     )
     api.patch_jurisdiction_extras = AsyncMock()
     pick = AsyncMock(return_value={"sections": picked or []})

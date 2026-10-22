@@ -43,7 +43,7 @@ async def select_sections(_limits: PipelineRunLimits, logger: PipelineRunLogger,
         return context, OrganizationsCollectorStep.WRITE
     pages = [
         sections.GoverningLawPage.model_validate(
-            await civicpatch_api.get_governing_law_source_page(client, context.data.jurisdiction_ocdid, page_id)
+            await civicpatch_api.get_governing_law_source_page(client, logger, context.data.jurisdiction_ocdid, page_id)
         )
         for page_id in governing_law.source_page_ids
     ]

@@ -6,7 +6,7 @@ split and nothing to resolve — the test for compound office names went with th
 """
 
 from types import SimpleNamespace
-from unittest.mock import AsyncMock, patch
+from unittest.mock import AsyncMock, MagicMock, patch
 
 import httpx
 import pytest
@@ -192,7 +192,7 @@ def _config(source_urls: list[str] | None = None):
 async def test_a_configured_list_wins_without_asking_cp_org():
     """A human naming the pages means they know something the last scrape did not."""
     async with httpx.AsyncClient(base_url="http://cp-org.invalid") as client:
-        seeds = await _source_urls(_config(["https://zz.gov/only-this"]), client, _OCDID)
+        seeds = await _source_urls(_config(["https://zz.gov/only-this"]), client, MagicMock(), _OCDID)
 
     assert seeds == ["https://zz.gov/only-this"]
 

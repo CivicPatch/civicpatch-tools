@@ -1,5 +1,6 @@
 from datetime import datetime, timezone
 
+import httpx
 import pytest
 from unittest.mock import AsyncMock, MagicMock, patch
 
@@ -7,6 +8,7 @@ from services.civicpatch_api import (
     fetch_collector_config,
     get_governing_law_source_page,
     get_organizations,
+    get_roster_source_urls,
     patch_jurisdiction_extras,
     store_governing_law_source_page,
 )
@@ -20,7 +22,7 @@ _ENV = {"CIVICPATCH_ORG_URL": "https://civicpatch.org"}
 _OCDID = "ocd-jurisdiction/country:us/state:wa/place:seattle/government"
 
 
-def _response(data: dict) -> MagicMock:
+def _response(data: dict | list) -> MagicMock:
     response = MagicMock()
     response.json.return_value = {"data": data}
     response.raise_for_status = MagicMock()
@@ -50,7 +52,7 @@ async def test_get_organizations_reads_the_organizations_endpoint():
     client.get = AsyncMock(return_value=_response({"organizations": []}))
 
     with patch(f"{MODULE}.get_env_vars", return_value=_ENV):
-        await get_organizations(client, _OCDID)
+        await get_organizations(client, MagicMock(), _OCDID)
 
     client.get.assert_awaited_once_with(
         f"https://civicpatch.org/api/v1/organizations/{_OCDID}"
@@ -86,7 +88,7 @@ async def test_get_organizations_keeps_each_bodys_posts_under_it():
     )
 
     with patch(f"{MODULE}.get_env_vars", return_value=_ENV):
-        organizations = await get_organizations(client, _OCDID)
+        organizations = await get_organizations(client, MagicMock(), _OCDID)
 
     assert [(o.name, o.meta_is_default, [p.id for p in o.posts]) for o in organizations] == [
         ("Office of the Mayor", True, ["p1"]),
@@ -103,7 +105,7 @@ async def test_a_governing_law_source_page_is_stored_through_cp_org_and_read_bac
 
     with patch(f"{MODULE}.get_env_vars", return_value=_ENV):
         stored = await store_governing_law_source_page(client, _OCDID, "https://x.gov/charter", "§ 1.")
-        found = await get_governing_law_source_page(client, _OCDID, "row-1")
+        found = await get_governing_law_source_page(client, MagicMock(), _OCDID, "row-1")
 
     client.post.assert_awaited_once_with(
         f"https://civicpatch.org/api/v1/jurisdictions/{_OCDID}/governing_law_source_pages",
@@ -137,3 +139,28 @@ async def test_the_collector_asks_for_its_config_and_patches_in_what_it_found():
     client.patch.assert_awaited_once_with(
         f"https://civicpatch.org/api/v1/jurisdictions/{_OCDID}", json={"extras_governing_law": found.model_dump(mode="json")}
     )
+
+
+@pytest.mark.asyncio
+async def test_a_read_on_a_connection_closed_during_a_long_llm_call_is_retried():
+    client = MagicMock()
+    client.get = AsyncMock(side_effect=[httpx.ReadError("closed"), _response([{"urls": ["https://x.gov/board"]}])])
+
+    with patch(f"{MODULE}.get_env_vars", return_value=_ENV), patch("utils.request_utils.asyncio.sleep", new=AsyncMock()):
+        urls = await get_roster_source_urls(client, MagicMock(), _OCDID)
+
+    assert urls == ["https://x.gov/board"]
+    assert client.get.await_count == 2
+
+
+@pytest.mark.asyncio
+async def test_a_read_cp_org_refuses_is_not_retried():
+    refused = _response([])
+    refused.raise_for_status = MagicMock(side_effect=httpx.HTTPStatusError("422", request=MagicMock(), response=MagicMock()))
+    client = MagicMock()
+    client.get = AsyncMock(return_value=refused)
+
+    with patch(f"{MODULE}.get_env_vars", return_value=_ENV), pytest.raises(httpx.HTTPStatusError):
+        await get_roster_source_urls(client, MagicMock(), _OCDID)
+
+    assert client.get.await_count == 1

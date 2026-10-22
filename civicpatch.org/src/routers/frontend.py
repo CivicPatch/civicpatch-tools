@@ -383,7 +383,7 @@ def get_router(templates: Jinja2Templates) -> APIRouter:
                 "jurisdiction_ocdid": jurisdiction_ocdid,
                 # The same fields the jurisdiction GET adds, so the page needs no second request.
                 "jurisdiction_data": json.dumps(
-                    {**jurisdiction, **(await jurisdiction_details_fields(jurisdiction_ocdid)).model_dump()}
+                    {**jurisdiction, **(await jurisdiction_details_fields(jurisdiction_ocdid)).model_dump(mode="json")}
                 ),
                 "user": user,
             },
