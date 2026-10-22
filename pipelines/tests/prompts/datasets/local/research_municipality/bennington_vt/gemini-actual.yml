@@ -1,0 +1,22 @@
+people:
+- name: Tom Haley
+  label: Chair
+  organization: Select Board
+- name: Jim Sullivan
+  label: Vice Chair
+  organization: Select Board
+- name: Clark Adams
+  label: Select Board Member
+  organization: Select Board
+- name: Jackie Matts
+  label: Select Board Member
+  organization: Select Board
+- name: Sarah Perrin
+  label: Select Board Member
+  organization: Select Board
+- name: Nancy White
+  label: Select Board Member
+  organization: Select Board
+- name: Ed Woods
+  label: Select Board Member
+  organization: Select Board

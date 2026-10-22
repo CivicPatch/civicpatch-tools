@@ -22,7 +22,7 @@ from ...schemas import (
     ResearchMunicipalityStep,
     ResearchedPerson,
 )
-from shared.schemas import KnownOrganization, Membership, Person, Post, RoleConfig
+from shared.schemas import GoverningLawPost, KnownOrganization, Membership, Person, Post, RoleConfig
 from ..step_01_research_municipality import government_form
 from shared.utils import divisions
 from shared.utils.label_parser import parse_label, parse_label_preferring
@@ -52,6 +52,7 @@ async def research_municipality(
     # After the form: a form saved just now has already built its organizations.
     organizations = await civicpatch_api.get_organizations(api_client, logger, jurisdiction_ocdid)
     posts = [post for organization in organizations for post in organization.posts]
+    governing_law_posts = context.data.config.governing_law_posts
 
     researched: List[ResearchedPerson] = []
     if posts:
@@ -60,25 +61,55 @@ async def research_municipality(
         researched = await _research_roster(context, organizations, logger) if _can_research() else []
 
     taxonomy = build_taxonomy(context.data.role_config)
+    expected = _post_memberships(
+        posts,
+        [membership for person in existing for membership in Person(**person).memberships],
+        context.data.role_config,
+        jurisdiction_ocdid,
+    ) or _researched_memberships(researched, organizations, taxonomy)
+    for name in _unknown_organization_names(governing_law_posts, organizations):
+        logger.warning(f"research_municipality: governing law names an organization cp.org lacks: {name}")
     return ResearchMunicipalityStep(
         researched=researched,
         known_organizations=organizations,
-        expected_memberships=(
-            _post_memberships(
-                posts,
-                [membership for person in existing for membership in Person(**person).memberships],
-                context.data.role_config,
-                jurisdiction_ocdid,
-            )
-            or _researched_memberships(
-                researched, organizations, taxonomy
-            )
-        ),
+        expected_memberships=expected
+        + _expected_from_governing_law_posts(governing_law_posts, organizations, expected, taxonomy),
         # Whoever cp.org has published, else whoever research named. Separate from the offices
         # above: a jurisdiction can have posts and nobody accepted onto them yet.
         identities=_identities(existing, researched),
         source_urls=await _source_urls(context.data.config, api_client, logger, jurisdiction_ocdid),
     )
+
+
+def _expected_from_governing_law_posts(
+    governing_law_posts: List[GoverningLawPost],
+    organizations: List[KnownOrganization],
+    expected: List[ExpectedMembership],
+    taxonomy: Taxonomy,
+) -> List[ExpectedMembership]:
+    """The law's posts that `expected` lacks, each as many times as its `maximum_memberships`
+    (one when the law states none). The law says which posts exist; the roster, who holds them."""
+    organization_ids = {organization.name.casefold(): organization.id for organization in organizations}
+    role_labels = {role_id: label for label, role_id in taxonomy.role_ids.items()}
+    already_expected = {(membership.organization_id, membership.role_label) for membership in expected}
+    found = []
+    for post in governing_law_posts:
+        organization_id = organization_ids.get(post.organization_id.casefold())
+        role_label = role_labels.get(post.role)
+        if organization_id is None or role_label is None or (organization_id, role_label) in already_expected:
+            continue
+        found.extend(
+            ExpectedMembership(organization_id=organization_id, role_label=role_label)
+            for _ in range(post.maximum_memberships or 1)
+        )
+    return found
+
+
+def _unknown_organization_names(
+    governing_law_posts: List[GoverningLawPost], organizations: List[KnownOrganization]
+) -> List[str]:
+    known = {organization.name.casefold() for organization in organizations}
+    return list(dict.fromkeys(post.organization_id for post in governing_law_posts if post.organization_id.casefold() not in known))
 
 
 def _identities(existing: List[dict], researched: List[ResearchedPerson]) -> Dict[str, List[str]]:

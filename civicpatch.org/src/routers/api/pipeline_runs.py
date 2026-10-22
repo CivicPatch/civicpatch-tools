@@ -277,6 +277,9 @@ def get_router(api_key_header):
         government = await government_form_service.resolved_government(
             pipeline_run["jurisdiction_ocdid"]
         )
+        governing_law_organizations = await extras_organizations_service.get_extras_organizations(
+            pipeline_run["jurisdiction_ocdid"]
+        )
         return {
             "name": args.get("name"),
             "url": args.get("url"),
@@ -297,6 +300,11 @@ def get_router(api_key_header):
                 page.model_dump()
                 for page in await published_source_pages(pipeline_run["jurisdiction_ocdid"])
             ],
+            # The posts its governing law establishes (the organizations collector's); empty
+            # until that has run.
+            "governing_law_posts": [
+                post.model_dump(mode="json") for post in governing_law_organizations.posts
+            ] if governing_law_organizations else [],
         }
 
     @router.get("/{pipeline_run_id}/collector_config", include_in_schema=False)

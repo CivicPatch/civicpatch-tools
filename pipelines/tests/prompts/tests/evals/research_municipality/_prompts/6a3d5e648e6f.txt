@@ -1,0 +1,41 @@
+
+    Provide the current elected officials for the specified city, including the Mayor (if applicable)
+    and other elected members of the local government. Format the response as a JSON object.
+
+    Municipality: Addison town, Vermont
+
+    Its government probably has these bodies and offices. Check them: list the offices that actually exist, even ones not named here.
+    - Selectboard: usually Select Board Member, Chair, Vice Chair
+    - Town Meeting: usually Moderator
+
+    Its governing law (charter or statute) establishes these offices. Find who holds each now, and list every other official you find as well.
+    - Selectboard: selectboard member (elected by voters); chair (1, chosen by the body from its members)
+    - Town Meeting: Moderator (1, elected by voters)
+
+    Instructions:
+    1. Identify the elected officials in the local government,
+       including the Mayor (if applicable).
+       1.1. For each official, extract only:
+            - name: Full name only (no titles)
+            - label: The office they hold, exactly as the municipality writes it
+              ("Council Member, Ward 3"). One string, not split into parts.
+            - organization: The body they sit on ("City Council"); if it is one of the
+              bodies listed above, use that name
+    3. Create a JSON object with the following structure:
+       ```json
+       {
+         "people": [
+           {
+             "name": "Name of the official",
+             "label": "Office as written",
+             "organization": "Body they sit on"
+           }
+         ]
+       }
+       ```
+
+    IMPORTANT: If the response contains anything other than a valid JSON object,
+    it will be considered incorrect. Ensure the response is strictly JSON.
+    Verify that the response is valid JSON before returning it.
+    If it is not valid JSON, retry the generation.
+    

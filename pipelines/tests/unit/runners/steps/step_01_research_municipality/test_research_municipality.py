@@ -12,19 +12,25 @@ import httpx
 import pytest
 
 from runners.pipeline03_people_collector.steps.step_01_research_municipality.research_municipality import (
+    _expected_from_governing_law_posts,
     _post_memberships,
     _researched_memberships,
     _source_urls,
+    _unknown_organization_names,
     research_municipality,
 )
 from runners.pipeline03_people_collector.schemas import ExpectedMembership, ResearchedPerson
 from shared.schemas import (
+    GoverningLawPost,
     GovernmentForm,
     KnownOrganization,
     Membership,
     Post,
+    QuoteScope,
     Role,
     RoleConfig,
+    Source,
+    SourceExtras,
 )
 from shared.utils.taxonomy import UNMATCHED_ROLE_ID, build_taxonomy
 from tests.factories.pipeline_run_context import pipeline_run_context_factory
@@ -264,3 +270,85 @@ async def test_a_form_saved_during_the_run_reaches_that_runs_research_hint():
 
     prompt = ask.call_args.args[2]
     assert "- Office of the Mayor: usually Mayor" in prompt
+
+
+# --- _expected_from_governing_law_posts: the law's posts the roster lacks ---
+
+_COUNCIL = KnownOrganization(id="council", name="City Council", meta_is_default=True)
+_MAYOR = KnownOrganization(id="mayor", name="Office of the Mayor")
+
+
+def _law_post(role: str, organization_name: str, maximum_memberships: int | None = None) -> GoverningLawPost:
+    return GoverningLawPost(
+        role=role, label=role, organization_id=organization_name, maximum_memberships=maximum_memberships,
+        sources=[Source(url="https://x.gov/charter", note="quoted", extras=SourceExtras(source_page_id="charter", matched_in=QuoteScope.SENTENCE))],
+    )
+
+
+def test_a_law_post_is_expected_as_many_times_as_its_maximum_memberships():
+    expected = _expected_from_governing_law_posts(
+        [_law_post("council-member", "city council", 5)], [_COUNCIL, _MAYOR], [], build_taxonomy(_ROLE_CONFIG)
+    )
+
+    assert expected == [ExpectedMembership(organization_id="council", role_label="Council Member")] * 5
+
+
+def test_a_law_post_stating_no_number_is_expected_once():
+    expected = _expected_from_governing_law_posts(
+        [_law_post("mayor", "Office of the Mayor")], [_COUNCIL, _MAYOR], [], build_taxonomy(_ROLE_CONFIG)
+    )
+
+    assert expected == [ExpectedMembership(organization_id="mayor", role_label="Mayor")]
+
+
+def test_a_law_post_the_roster_already_expects_adds_nothing():
+    """The roster's post stays as it is: a human may have corrected it."""
+    roster = [ExpectedMembership(organization_id="council", role_label="Council Member", division="ward 2")]
+
+    expected = _expected_from_governing_law_posts(
+        [_law_post("council-member", "City Council", 5), _law_post("mayor", "Office of the Mayor")],
+        [_COUNCIL, _MAYOR],
+        roster,
+        build_taxonomy(_ROLE_CONFIG),
+    )
+
+    assert expected == [ExpectedMembership(organization_id="mayor", role_label="Mayor")]
+
+
+def test_a_law_post_in_an_unknown_organization_or_role_is_not_expected_and_the_organization_is_named():
+    posts = [_law_post("mayor", "Board of Aldermen"), _law_post("moderator", "City Council")]
+
+    assert _expected_from_governing_law_posts(posts, [_COUNCIL, _MAYOR], [], build_taxonomy(_ROLE_CONFIG)) == []
+    assert _unknown_organization_names(posts, [_COUNCIL, _MAYOR]) == ["Board of Aldermen"]
+
+
+@pytest.mark.asyncio
+async def test_a_first_scrape_still_researches_and_the_law_adds_the_posts_research_missed():
+    """Research names the members and so their number, which the law mostly does not state."""
+    context = pipeline_run_context_factory({})
+    context.data.role_config = _ROLE_CONFIG
+    context.data.config.governing_law_posts = [
+        _law_post("council-member", "City Council"),
+        _law_post("mayor", "Office of the Mayor"),
+    ]
+    researched = {"people": [
+        {"name": "Ann Lee", "label": "Council Member", "organization": "City Council"},
+        {"name": "Bo Diaz", "label": "Council Member", "organization": "City Council"},
+    ]}
+
+    with (
+        patch(f"{_STEP}._can_research", return_value=True),
+        patch(f"{_STEP}.civicpatch_api.get_active_people", new=AsyncMock(return_value=[])),
+        patch(f"{_STEP}.civicpatch_api.get_organizations", new=AsyncMock(return_value=[_COUNCIL, _MAYOR])),
+        patch(f"{_STEP}.civicpatch_api.get_roster_source_urls", new=AsyncMock(return_value=[])),
+        patch(f"{_STEP}.google_gemini_llm.run_prompt", new=AsyncMock(return_value=researched)) as ask,
+    ):
+        async with httpx.AsyncClient(base_url="http://cp-org.invalid") as client:
+            step = await research_municipality(context, client)
+
+    ask.assert_awaited_once()
+    assert step.expected_memberships == [
+        ExpectedMembership(organization_id="council", role_label="Council Member"),
+        ExpectedMembership(organization_id="council", role_label="Council Member"),
+        ExpectedMembership(organization_id="mayor", role_label="Mayor"),
+    ]

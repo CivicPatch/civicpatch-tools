@@ -1,0 +1,36 @@
+jurisdiction_ocdid: >-
+  ocd-jurisdiction/country:us/state:vt/place:addison/government
+name: Addison town
+organizations:
+  - name: Selectboard
+    role_labels: [Select Board Member, Chair, Vice Chair]
+    meta_is_default: true
+  - name: Town Meeting
+    role_labels: [Moderator]
+people:
+  - name: Jeffrey Kauffman Sr.
+    label: Selectboard Chair
+    organization: Selectboard
+  - name: Geoffrey Grant
+    label: Selectboard Vice Chair
+    organization: Selectboard
+  - name: Christopher Carella
+    label: Selectboard Member
+    organization: Selectboard
+  - name: Peter Briggs
+    label: Selectboard Member
+    organization: Selectboard
+  - name: Roger Waterman
+    label: Selectboard Member
+    organization: Selectboard
+  - name: Tim Buskey
+    label: Moderator
+    organization: Town Meeting
+source: https://addisonvt.gov/selectboard/
+thoughts: >-
+  Checked 2026-10-22: the 2026 official return of votes (Buskey moderator by write-in), the
+  officers page ("updated as of October 2026"), the Addison Independent of 2026-03-04 (Carella,
+  Waterman), the 2026-10-06 minutes (all five present). Grant as vice chair rests on the undated
+  selectboard page (the 2025 report had Waterman; the March 2026 reorganization minutes are not
+  posted). General-law town: the statute names the Selectboard, its chair and the Moderator,
+  and states no number of members.

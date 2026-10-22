@@ -436,6 +436,8 @@ class PipelineRunConfig(BaseModel):
     # Kept out of the saved run context: it is a whole jurisdiction's records, and each reused
     # row already names where its verdict came from.
     published_source_pages: List[PublishedSourcePage] = Field(default=[], exclude=True)
+    # The posts the jurisdiction's governing law establishes, as cp.org holds them at the start.
+    governing_law_posts: List["GoverningLawPost"] = []
 
 
 class IssueCode(str, Enum):
