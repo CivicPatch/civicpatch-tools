@@ -14,7 +14,7 @@ from runners.collectors import COLLECTORS
 from runners.engine import PipelineRunError
 from runners.pipeline03_people_collector.main import start_threaded
 from runners.pipeline03_people_collector.schemas import PipelineRunConfig
-from shared.schemas import PublishedSourcePage
+from shared.schemas import GoverningLawPost, PublishedSourcePage
 import services.civicpatch_api as civicpatch_api
 from services.civicpatch_api import update_pipeline_run_status
 from shared.utils.statuses import PipelineRunKind, PipelineRunStatus
@@ -77,6 +77,9 @@ async def _run(pipeline_run_id: str, jurisdiction_ocdid: str, url: Optional[str]
             government_form_choices=config_data.get("government_form_choices") or [],
             published_source_pages=[
                 PublishedSourcePage.model_validate(page) for page in config_data.get("published_source_pages") or []
+            ],
+            governing_law_posts=[
+                GoverningLawPost.model_validate(post) for post in config_data.get("governing_law_posts") or []
             ],
         )
     except Exception:
