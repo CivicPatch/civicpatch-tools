@@ -34,3 +34,219 @@ runs:
     pierce_county_wa: 1.0
     seattle_wa: 1.0
   dispositions: {}
+- timestamp: '2026-10-22T21:29:16+00:00'
+  provider: gemini
+  model: gemini-2.5-flash
+  prompt_sha256: 1f69a1143b83
+  cost_usd: 0.0
+  elapsed_seconds: 136.32
+  scores:
+    body: 1.0
+    cases_passed: 1.0
+    name_match: 0.6454545454545454
+    recall: 0.9453463203463204
+  cases:
+    addison_vt: 1.0
+    andover_vt: 1.0
+    barton_village_vt: 1.0
+    bellows_falls_vt: 1.0
+    bennington_vt: 1.0
+    brandon_vt: 1.0
+    conroe_tx: 1.0
+    milford_mi: 1.0
+    millbury_ma: 1.0
+    pierce_county_wa: 1.0
+    seattle_wa: 1.0
+  dispositions: {}
+- timestamp: '2026-10-22T21:33:11+00:00'
+  provider: gemini
+  model: gemini-2.5-flash
+  prompt_sha256: 1f69a1143b83
+  cost_usd: 0.0
+  elapsed_seconds: 137.85
+  scores:
+    body: 1.0
+    cases_passed: 1.0
+    name_match: 0.5545454545454546
+    recall: 0.9301948051948052
+  cases:
+    addison_vt: 1.0
+    andover_vt: 1.0
+    barton_village_vt: 1.0
+    bellows_falls_vt: 1.0
+    bennington_vt: 1.0
+    brandon_vt: 1.0
+    conroe_tx: 1.0
+    milford_mi: 1.0
+    millbury_ma: 1.0
+    pierce_county_wa: 1.0
+    seattle_wa: 1.0
+  dispositions: {}
+- timestamp: '2026-10-22T21:42:37+00:00'
+  provider: gemini
+  model: gemini-2.5-flash
+  prompt_sha256: cbff758c2088
+  cost_usd: 0.0
+  elapsed_seconds: 297.13
+  scores:
+    body: 1.0
+    cases_passed: 1.0
+    name_match: 0.6454545454545454
+    recall: 0.9431818181818182
+  cases:
+    addison_vt: 1.0
+    andover_vt: 1.0
+    barton_village_vt: 1.0
+    bellows_falls_vt: 1.0
+    bennington_vt: 1.0
+    brandon_vt: 1.0
+    conroe_tx: 1.0
+    milford_mi: 1.0
+    millbury_ma: 1.0
+    pierce_county_wa: 1.0
+    seattle_wa: 1.0
+  dispositions: {}
+- timestamp: '2026-10-22T21:59:05+00:00'
+  provider: gemini
+  model: gemini-2.5-flash
+  prompt_sha256: 1f69a1143b83
+  cost_usd: 0.0
+  elapsed_seconds: 129.82
+  scores:
+    body: 1.0
+    cases_passed: 1.0
+    name_match: 0.6454545454545454
+    recall: 0.9215367965367967
+  cases:
+    addison_vt: 1.0
+    andover_vt: 1.0
+    barton_village_vt: 1.0
+    bellows_falls_vt: 1.0
+    bennington_vt: 1.0
+    brandon_vt: 1.0
+    conroe_tx: 1.0
+    milford_mi: 1.0
+    millbury_ma: 1.0
+    pierce_county_wa: 1.0
+    seattle_wa: 1.0
+  dispositions: {}
+- timestamp: '2026-10-22T22:01:57+00:00'
+  provider: gemini
+  model: gemini-2.5-flash
+  prompt_sha256: 6a3d5e648e6f
+  cost_usd: 0.0
+  elapsed_seconds: 170.22
+  scores:
+    body: 1.0
+    cases_passed: 1.0
+    name_match: 0.6454545454545454
+    recall: 0.9301948051948052
+  cases:
+    addison_vt: 1.0
+    andover_vt: 1.0
+    barton_village_vt: 1.0
+    bellows_falls_vt: 1.0
+    bennington_vt: 1.0
+    brandon_vt: 1.0
+    conroe_tx: 1.0
+    milford_mi: 1.0
+    millbury_ma: 1.0
+    pierce_county_wa: 1.0
+    seattle_wa: 1.0
+  dispositions: {}
+- timestamp: '2026-10-22T22:04:40+00:00'
+  provider: gemini
+  model: gemini-2.5-flash
+  prompt_sha256: 1f69a1143b83
+  cost_usd: 0.0
+  elapsed_seconds: 161.23
+  scores:
+    body: 1.0
+    cases_passed: 1.0
+    name_match: 0.5545454545454546
+    recall: 0.8652597402597402
+  cases:
+    addison_vt: 1.0
+    andover_vt: 1.0
+    barton_village_vt: 1.0
+    bellows_falls_vt: 1.0
+    bennington_vt: 1.0
+    brandon_vt: 1.0
+    conroe_tx: 1.0
+    milford_mi: 1.0
+    millbury_ma: 1.0
+    pierce_county_wa: 1.0
+    seattle_wa: 1.0
+  dispositions: {}
+- timestamp: '2026-10-22T22:06:56+00:00'
+  provider: gemini
+  model: gemini-2.5-flash
+  prompt_sha256: 6a3d5e648e6f
+  cost_usd: 0.0
+  elapsed_seconds: 133.96
+  scores:
+    body: 1.0
+    cases_passed: 1.0
+    name_match: 0.6454545454545454
+    recall: 0.9215367965367967
+  cases:
+    addison_vt: 1.0
+    andover_vt: 1.0
+    barton_village_vt: 1.0
+    bellows_falls_vt: 1.0
+    bennington_vt: 1.0
+    brandon_vt: 1.0
+    conroe_tx: 1.0
+    milford_mi: 1.0
+    millbury_ma: 1.0
+    pierce_county_wa: 1.0
+    seattle_wa: 1.0
+  dispositions: {}
+- timestamp: '2026-10-22T22:09:43+00:00'
+  provider: gemini
+  model: gemini-2.5-flash
+  prompt_sha256: 1f69a1143b83
+  cost_usd: 0.0
+  elapsed_seconds: 165.49
+  scores:
+    body: 1.0
+    cases_passed: 1.0
+    name_match: 0.5545454545454546
+    recall: 0.9431818181818182
+  cases:
+    addison_vt: 1.0
+    andover_vt: 1.0
+    barton_village_vt: 1.0
+    bellows_falls_vt: 1.0
+    bennington_vt: 1.0
+    brandon_vt: 1.0
+    conroe_tx: 1.0
+    milford_mi: 1.0
+    millbury_ma: 1.0
+    pierce_county_wa: 1.0
+    seattle_wa: 1.0
+  dispositions: {}
+- timestamp: '2026-10-22T22:12:07+00:00'
+  provider: gemini
+  model: gemini-2.5-flash
+  prompt_sha256: 6a3d5e648e6f
+  cost_usd: 0.0
+  elapsed_seconds: 142.8
+  scores:
+    body: 1.0
+    cases_passed: 1.0
+    name_match: 0.4636363636363636
+    recall: 0.8955627705627706
+  cases:
+    addison_vt: 1.0
+    andover_vt: 1.0
+    barton_village_vt: 1.0
+    bellows_falls_vt: 1.0
+    bennington_vt: 1.0
+    brandon_vt: 1.0
+    conroe_tx: 1.0
+    milford_mi: 1.0
+    millbury_ma: 1.0
+    pierce_county_wa: 1.0
+    seattle_wa: 1.0
+  dispositions: {}

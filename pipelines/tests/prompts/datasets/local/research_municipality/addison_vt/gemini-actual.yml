@@ -1,0 +1,19 @@
+people:
+- name: Jeffrey Kauffman, Sr.
+  label: Chair, Selectboard
+  organization: Selectboard
+- name: Geoffrey Grant
+  label: Vice Chair, Selectboard
+  organization: Selectboard
+- name: Peter Briggs
+  label: Selectboard Member
+  organization: Selectboard
+- name: Christopher Carella
+  label: Selectboard Member
+  organization: Selectboard
+- name: Roger Waterman
+  label: Selectboard Member
+  organization: Selectboard
+- name: Tim Buskey
+  label: Moderator
+  organization: Town Meeting

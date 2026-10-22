@@ -1,0 +1,19 @@
+people:
+- name: Regina Lyon
+  label: Chair
+  organization: Board of Trustees
+- name: Marilyn Prue
+  label: Trustee
+  organization: Board of Trustees
+- name: Ellis Merchant
+  label: Trustee
+  organization: Board of Trustees
+- name: Shelia Martin
+  label: Treasurer
+  organization: Village Officers
+- name: Shelia Martin
+  label: Delinquent Tax Collector
+  organization: Village Officers
+- name: Shelia Martin
+  label: Clerk
+  organization: Village Officers

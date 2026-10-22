@@ -1,0 +1,16 @@
+people:
+- name: Richard Pierce
+  label: Chair, Selectboard
+  organization: Selectboard
+- name: Robin Trask
+  label: Vice Chair, Selectboard
+  organization: Selectboard
+- name: Melissa Gates-Perry
+  label: Selectboard Member
+  organization: Selectboard
+- name: Susan Leader
+  label: Selectboard Member
+  organization: Selectboard
+- name: Chris Walker
+  label: Selectboard Member
+  organization: Selectboard

@@ -1,0 +1,39 @@
+jurisdiction_ocdid: >-
+  ocd-jurisdiction/country:us/state:vt/place:bennington/government
+name: Bennington town
+organizations:
+  - name: Selectboard
+    role_labels: [Select Board Member, Chair, Vice Chair]
+    meta_is_default: true
+  - name: Town Meeting
+    role_labels: [Moderator]
+people:
+  - name: Tom Haley
+    label: Select Board Chair
+    organization: Selectboard
+  - name: Jim Sullivan
+    label: Select Board Vice Chair
+    organization: Selectboard
+  - name: Clark Adams
+    label: Select Board Member
+    organization: Selectboard
+  - name: Ed Woods
+    label: Select Board Member
+    organization: Selectboard
+  - name: Jackie Matts
+    label: Select Board Member
+    organization: Selectboard
+  - name: Nancy White
+    label: Select Board Member
+    organization: Selectboard
+  - name: Sarah Perrin
+    label: Select Board Member
+    organization: Selectboard
+source: https://benningtonvt.org/government/select_board/index.php
+thoughts: >-
+  Checked 2026-10-22: the Select Board page (term ends to 3/2029, so updated after March 2026),
+  the clerk's 2026 results (Woods, Perrin), the Bennington Banner of 2026-04-15 (Haley chair,
+  Sullivan vice chair again). Moderator Morrissey elected 2025-03-04 to a three-year term
+  (charter § 201), so likely not on the 2026 ballot; no later source confirms or replaces him.
+  Charter town with a manager; the charter's seven members match.
+  Moderator Jason P. Morrissey is named on no page of the town's site (only a 2025 tally sheet filed as legislative testimony), so not expected (a miss counts only when the official is on a page).

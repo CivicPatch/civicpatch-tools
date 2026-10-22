@@ -22,6 +22,7 @@ from eval_utils import record_history, record_run, write_pass_fail_report
 import services.google_gemini.llm as gemini_llm
 import services.google_gemini.prompts as gemini_prompts
 from shared.schemas import KnownOrganization
+from shared.utils import name_utils
 from shared.utils.label_parser import parse_label_preferring
 from utils import cost_utils
 
@@ -89,6 +90,20 @@ def _resolved_organization(
     return default
 
 
+def _returned_for(name: str, returned: list[dict]) -> dict | None:
+    """The answer naming this person, linked as the pipeline links names: "Jeffrey Kauffman, Sr."
+    is "Jeffrey Kauffman Sr."."""
+    return next(
+        (
+            person
+            for person in returned
+            if name_utils.same_name(name, person.get("name") or "")
+            or name_utils.fuzzy_match(name, person.get("name") or "")
+        ),
+        None,
+    )
+
+
 def score_case(actual: dict, expected: dict) -> dict:
     """`body` and `name_match` over matched officials; `recall` over the
     whole roster."""
@@ -99,17 +114,14 @@ def score_case(actual: dict, expected: dict) -> dict:
     post_roles = [label for o in organizations for label in o.role_labels]
     taxonomy = build_eval_taxonomy()
     known_names = {o.name.strip().casefold() for o in organizations}
-    returned = {
-        (person.get("name") or "").strip().casefold(): person
-        for person in actual.get("people", [])
-    }
+    returned = actual.get("people", [])
     expected_people = expected.get("people", [])
     matched = 0
     name_matched = 0
     resolved = 0
     correct = 0
     for person in expected_people:
-        got = returned.get(person["name"].strip().casefold())
+        got = _returned_for(person["name"], returned)
         if got is None:
             continue
         matched += 1

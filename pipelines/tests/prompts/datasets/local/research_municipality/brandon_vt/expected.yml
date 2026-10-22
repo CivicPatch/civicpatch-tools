@@ -1,0 +1,35 @@
+jurisdiction_ocdid: >-
+  ocd-jurisdiction/country:us/state:vt/place:brandon/government
+name: Brandon town
+organizations:
+  - name: Selectboard
+    role_labels: [Select Board Member, Chair, Vice Chair]
+    meta_is_default: true
+  - name: Town Meeting
+    role_labels: [Moderator]
+people:
+  - name: Cecil Reniche-Smith
+    label: Selectboard Chair
+    organization: Selectboard
+  - name: Doug Bailey
+    label: Selectboard Vice Chair
+    organization: Selectboard
+  - name: Brian Coolidge
+    label: Selectboard Member
+    organization: Selectboard
+  - name: Jeff Haylon
+    label: Selectboard Member
+    organization: Selectboard
+  - name: Ralph Ethier
+    label: Selectboard Member
+    organization: Selectboard
+  - name: Bill Moore
+    label: Moderator
+    organization: Town Meeting
+source: https://www.brandonvermont.gov/1218/Selectboard
+thoughts: >-
+  Checked 2026-10-22: the 2026-03-03 election results (https://www.brandonvermont.gov/CivicAlerts.asp?AID=19:
+  "Bill Moore re-elected Moderator"; Coolidge, Reniche-Smith, Haylon re-elected), the 2026-03-09
+  reorganization minutes (Reniche-Smith chair, Bailey vice chair, Haylon board clerk; the
+  minutes' heading misdates them February 23), the 2026-07-13 minutes (all five present). The
+  Selectboard page names the five without titles, which is why the scrape found no chair.

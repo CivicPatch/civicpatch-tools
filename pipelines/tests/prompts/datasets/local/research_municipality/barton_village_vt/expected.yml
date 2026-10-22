@@ -1,0 +1,26 @@
+jurisdiction_ocdid: >-
+  ocd-jurisdiction/country:us/state:vt/place:barton_village/government
+name: Barton village
+organizations:
+  - name: Board of Trustees
+    role_labels: [Trustee, Village President]
+    meta_is_default: true
+people:
+  - name: Regina Lyon
+    label: Trustee and Chair
+    organization: Board of Trustees
+  - name: Ellis Merchant
+    label: Trustee
+    organization: Board of Trustees
+  - name: Marilyn Prue
+    label: Trustee
+    organization: Board of Trustees
+source: https://www.bartonvillagevt.gov/village-officers/
+thoughts: >-
+  Checked 2026-10-22 against the officers page (Lyon's term to March 2029, so updated after
+  the March 2026 meeting) and the draft minutes of the 2026-03-10 annual meeting
+  (https://bartonvt.com/wp-content/uploads/2026/03/Barton-Village-Annual-Minutes-03102026-DRAFT.pdf):
+  three trustees on staggered three-year terms (2027, 2028, 2029), no President; Lyon chairs.
+  The law post's five trustees is not borne out: no fourth or fifth trustee or vacancy in any
+  source, so the law's number may be stale or misread. The meeting elected Jacqueline Laurion
+  moderator; not listed here, as no meeting organization is given.

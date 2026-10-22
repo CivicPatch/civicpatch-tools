@@ -1,0 +1,32 @@
+jurisdiction_ocdid: >-
+  ocd-jurisdiction/country:us/state:vt/place:bellows_falls/government
+name: Bellows Falls village
+organizations:
+  - name: Board of Trustees
+    role_labels: [Trustee, Village President]
+    meta_is_default: true
+people:
+  - name: Wendy M. Levy
+    label: President
+    organization: Board of Trustees
+  - name: Jeff Dunbar
+    label: Trustee
+    organization: Board of Trustees
+  - name: Samantha Snow
+    label: Trustee
+    organization: Board of Trustees
+  - name: Taylor Pichette
+    label: Trustee
+    organization: Board of Trustees
+  - name: Wade Masure
+    label: Trustee
+    organization: Board of Trustees
+source: https://www.rockinghamvt.org/villagetrustees
+thoughts: >-
+  Checked 2026-10-22 against The Commons' report of the 2026-05-19 village election
+  (https://commonsnews.org/issue/867/867village_election: Levy elected President, Masure and
+  Pichette re-elected, Dunbar for the rest of the late Susan MacNeil's seat) and of 2025
+  (Snow elected). Charter village inside the town of Rockingham; the charter's four trustees
+  and voter-elected President match. The town's trustees page does not list them. Moderator
+  Dennis Harty (unopposed, 2026 result unpublished); not listed here, as no meeting
+  organization is given.

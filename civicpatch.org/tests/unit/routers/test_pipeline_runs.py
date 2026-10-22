@@ -1,4 +1,15 @@
+from datetime import datetime, timezone
+
 import pytest
+from core.organization_derivation import NOTHING_RESOLVED
+from shared.schemas import (
+    GoverningLawOrganizations,
+    GoverningLawOrganizationsExtras,
+    GoverningLawPost,
+    QuoteScope,
+    Source,
+    SourceExtras,
+)
 from shared.utils.statuses import DismissalReason, PipelineRunKind
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
@@ -443,6 +454,34 @@ def test_a_collector_run_is_told_its_kinds_config_and_its_cap(service_client):
     assert response.status_code == 200, response.text
     assert response.json() == {"name": "Stowe town", "governing_law": None, "pipeline_run_cap_usd": "0.5000"}
     collector_config.assert_awaited_once_with(TEST_OCDID)
+
+
+@pytest.mark.unit
+@pytest.mark.parametrize("collected", [True, False])
+def test_a_people_run_is_told_the_posts_its_governing_law_establishes(service_client, collected):
+    member = GoverningLawPost(
+        role="member", label="Selectboard member", organization_id="Selectboard", maximum_memberships=5,
+        sources=[Source(url="https://example.gov/charter", note="five members", extras=SourceExtras(source_page_id="charter", matched_in=QuoteScope.SENTENCE))],
+    )
+    organizations = GoverningLawOrganizations(
+        posts=[member], extras=GoverningLawOrganizationsExtras(governing_law_collected_at=datetime(2026, 10, 22, tzinfo=timezone.utc))
+    )
+    with patch("routers.api.pipeline_runs.get_pipeline_run", new_callable=AsyncMock, return_value={
+        "jurisdiction_ocdid": TEST_OCDID, "arguments_json": {}, "pipeline_run_cap_usd": None,
+    }), patch(
+        "routers.api.pipeline_runs.government_form_service.resolved_government", new_callable=AsyncMock, return_value=NOTHING_RESOLVED
+    ), patch(
+        "routers.api.pipeline_runs.government_form_service.government_form_choices", new_callable=AsyncMock, return_value=[]
+    ), patch(
+        "routers.api.pipeline_runs.published_source_pages", new_callable=AsyncMock, return_value=[]
+    ), patch(
+        "routers.api.pipeline_runs.extras_organizations_service.get_extras_organizations",
+        new_callable=AsyncMock, return_value=organizations if collected else None,
+    ):
+        response = service_client.get(f"/pipeline_runs/{TEST_CHANGESET_ID}/config")
+
+    assert response.status_code == 200, response.text
+    assert response.json()["governing_law_posts"] == ([member.model_dump(mode="json")] if collected else [])
 
 
 @pytest.mark.unit
