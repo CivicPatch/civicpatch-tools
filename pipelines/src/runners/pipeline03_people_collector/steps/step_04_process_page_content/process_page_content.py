@@ -32,6 +32,7 @@ from runners.pipeline03_people_collector.steps.step_04_process_page_content.extr
 )
 from runners.pipeline03_people_collector.steps.step_04_process_page_content.heuristics import (
     check_page_heuristics,
+    without_unnormalizable_phones,
     without_unverified_emails,
 )
 from runners.pipeline03_people_collector.steps.step_04_process_page_content.heuristics_failure import (
@@ -571,6 +572,10 @@ async def _extract_for_scope(
         )
         people_found_in_page, dropped = without_unverified_emails(
             logger, page_to_process.url, content, people_found_in_page
+        )
+        failures.extend(dropped)
+        people_found_in_page, dropped = without_unnormalizable_phones(
+            logger, page_to_process.url, people_found_in_page
         )
         failures.extend(dropped)
         failure = check_page_heuristics(

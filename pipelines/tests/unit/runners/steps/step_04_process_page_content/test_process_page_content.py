@@ -13,6 +13,7 @@ from runners.pipeline03_people_collector.schemas import (
 )
 from runners.pipeline03_people_collector.steps.step_04_process_page_content.heuristics import (
     check_page_heuristics,
+    without_unnormalizable_phones,
     without_unverified_emails,
 )
 from runners.pipeline03_people_collector.steps.step_04_process_page_content.heuristics_failure import (
@@ -310,11 +311,10 @@ def test_check_page_heuristics_passes_with_nonempty_records():
     )
 
 
-@pytest.mark.parametrize("phone", ["555-555-5555", "123-4567", "000-000-0000"])
-def test_check_page_heuristics_forces_a_retry_on_an_invalid_phone(phone):
-    """These parse and are then rejected as not-real numbers — the common failure, not the
-    exotic one. The guard used to wrap only `normalize_phone_number`'s exception, which
-    fires solely on unparseable junk, so every number here was accepted."""
+@pytest.mark.parametrize("phone", ["555-555-5555", "123-4567", "000-000-0000", "869-3268"])
+def test_an_invalid_phone_is_dropped_and_the_person_kept(phone):
+    """These parse and are then rejected as not-real numbers; "869-3268" is Athens, Vermont's,
+    written without its area code. Each used to force a retry and, after it, skip the page."""
     records = [
         PersonSourceRecord(
             name="Laura Palmer",
@@ -323,11 +323,20 @@ def test_check_page_heuristics_forces_a_retry_on_an_invalid_phone(phone):
             source_url="http://palmer.com",
         )
     ]
-    input_text = f"Laura Palmer the mayor is available at {phone}."
-    assert (
-        check_page_heuristics(dummy_logger(), "dummy-link", input_text, records)
-        == HeuristicsFailure.PHONE_NOT_NORMALIZABLE
-    )
+    [kept], failures = without_unnormalizable_phones(dummy_logger(), "dummy-link", records)
+    assert (kept.phone, kept.name, failures) == (None, "Laura Palmer", [HeuristicsFailure.PHONE_NOT_NORMALIZABLE])
+
+
+def test_a_dropped_phone_no_longer_fails_the_page():
+    records = [PersonSourceRecord(name="Laura Palmer", label="mayor", phone="869-3268", source_url="http://palmer.com")]
+    input_text = "Laura Palmer the mayor is available at 869-3268."
+    kept, _ = without_unnormalizable_phones(dummy_logger(), "dummy-link", records)
+    assert check_page_heuristics(dummy_logger(), "dummy-link", input_text, kept) is None
+
+
+def test_a_valid_phone_is_kept():
+    records = [PersonSourceRecord(name="Laura Palmer", label="mayor", phone="802-869-3268", source_url="http://palmer.com")]
+    assert without_unnormalizable_phones(dummy_logger(), "dummy-link", records) == (records, [])
 
 
 def test_check_page_heuristics_fails_on_the_name_if_input_text_empty():
@@ -539,14 +548,9 @@ def test_check_page_heuristics_fails_if_url_not_in_text():
     )
 
 
-def test_check_page_heuristics_rejects_a_compound_phone_and_forces_a_retry():
-    """Was `..._passes_with_compound_phone_in_text`, asserting the page was accepted.
-
-    It now asserts the opposite. The prompt asks for *a* phone number and states a
-    precedence — personal, then office, then general — so two numbers in one field is the
-    model ignoring that instruction. Accepting it meant a downstream repair silently kept
-    the first and discarded the second; rejecting it re-reads the page, which is what the
-    guard is for."""
+def test_a_compound_phone_is_dropped_and_the_person_kept():
+    """Two numbers in one field is the model ignoring the prompt's one-phone precedence. It
+    used to force a re-read, and a page that kept doing it was skipped; now only the field goes."""
     records = [
         PersonSourceRecord(
             name="Alice Boroughman",
@@ -558,11 +562,8 @@ def test_check_page_heuristics_rejects_a_compound_phone_and_forces_a_retry():
             source_url="http://example.com",
         )
     ]
-    input_text = "Alice Boroughman, Mayor. Phone: 856-358-2509 or 856-358-4010 Ext. 112"
-    assert (
-        check_page_heuristics(dummy_logger(), "http://example.com", input_text, records)
-        == HeuristicsFailure.PHONE_NOT_NORMALIZABLE
-    )
+    [kept], failures = without_unnormalizable_phones(dummy_logger(), "http://example.com", records)
+    assert (kept.phone, kept.name, failures) == (None, "Alice Boroughman", [HeuristicsFailure.PHONE_NOT_NORMALIZABLE])
 
 
 def test_add_relevant_urls_includes_same_domain():

@@ -14,18 +14,34 @@ def without_unverified_emails(
     """Each email the page does not show is dropped, and the rest of the person kept: a page that
     spells its emails out ("thein and the extension @cityofcamas.us") loses only the email."""
     input_text_lower = input_text.lower()
-    kept = []
-    dropped = False
-    for person in records_found:
-        if person.email and not _email_in_text(person.email, input_text_lower):
-            logger.warning(
-                f"Email not found in input text, dropping it: {person.email} under source url: {source_url}"
-            )
-            kept.append(person.model_copy(update={"email": None}))
-            dropped = True
-        else:
-            kept.append(person)
-    return kept, [HeuristicsFailure.EMAIL_NOT_IN_TEXT] if dropped else []
+    failing = [person for person in records_found if _email_fails(person, input_text_lower)]
+    for person in failing:
+        logger.warning(f"Email not found in input text, dropping it: {person.email} under source url: {source_url}")
+    kept = [
+        person.model_copy(update={"email": None}) if _email_fails(person, input_text_lower) else person
+        for person in records_found
+    ]
+    return kept, [HeuristicsFailure.EMAIL_NOT_IN_TEXT] if failing else []
+
+
+def _email_fails(person: PersonSourceRecord, input_text_lower: str) -> bool:
+    return bool(person.email) and not _email_in_text(person.email, input_text_lower)
+
+
+def without_unnormalizable_phones(
+    logger, source_url: str, records_found: List[PersonSourceRecord]
+) -> Tuple[List[PersonSourceRecord], List[HeuristicsFailure]]:
+    """Each phone that does not normalize is dropped, and the rest of the person kept: a page
+    writing "869-3268" without its area code loses only the phone, not every person on it."""
+    failing = [person for person in records_found if _phone_fails(person)]
+    for person in failing:
+        logger.warning(f"Phone not normalizable, dropping it: {person.phone} under source url: {source_url}")
+    kept = [person.model_copy(update={"phone": None}) if _phone_fails(person) else person for person in records_found]
+    return kept, [HeuristicsFailure.PHONE_NOT_NORMALIZABLE] if failing else []
+
+
+def _phone_fails(person: PersonSourceRecord) -> bool:
+    return bool(person.phone) and phone_utils.normalize_phone_number(person.phone) is None
 
 
 def check_page_heuristics(
@@ -43,17 +59,11 @@ def check_page_heuristics(
                 f"Name not found in input text: {person.name} under source url: {source_url}"
             )
             return HeuristicsFailure.NAME_NOT_IN_TEXT
-        if person.phone:
-            if not _phone_in_text(person.phone, input_text):
-                logger.warning(
-                    f"Phone not found in input text: {person.phone} under source url: {source_url}"
-                )
-                return HeuristicsFailure.PHONE_NOT_IN_TEXT
-            if phone_utils.normalize_phone_number(person.phone) is None:
-                logger.warning(
-                    f"Phone not normalizable, forcing retry: {person.phone} under source url: {source_url}"
-                )
-                return HeuristicsFailure.PHONE_NOT_NORMALIZABLE
+        if person.phone and not _phone_in_text(person.phone, input_text):
+            logger.warning(
+                f"Phone not found in input text: {person.phone} under source url: {source_url}"
+            )
+            return HeuristicsFailure.PHONE_NOT_IN_TEXT
         if person.url and not url_utils.url_in_text(person.url, input_text):
             if not url_utils.same_url(person.url, source_url):
                 logger.warning(
