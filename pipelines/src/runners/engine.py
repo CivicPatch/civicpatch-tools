@@ -90,7 +90,7 @@ async def run_pipeline(
         while ctx.current_state not in terminal:
             log_system_usage()
             try:
-                current_status = await civicpatch_api.fetch_pipeline_run_status(api_client, ctx.pipeline_run_id)
+                current_status = await civicpatch_api.fetch_pipeline_run_status(api_client, logger, ctx.pipeline_run_id)
                 if current_status == PipelineRunStatus.CANCELLED:
                     logger.info(f"Pipeline run {ctx.pipeline_run_id} cancelled — stopping.")
                     ctx = ctx.copy(

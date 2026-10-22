@@ -134,9 +134,9 @@ async def submit_job_artifacts(
 
 
 async def get_active_people(
-    client: httpx.AsyncClient, jurisdiction_ocdid: str
+    client: httpx.AsyncClient, logger, jurisdiction_ocdid: str
 ) -> List[dict]:
-    return await search_people(client, jurisdiction_ocdid, status="active")
+    return await search_people(client, logger, jurisdiction_ocdid, status="active")
 
 
 async def get_role_config(logger) -> RoleConfig:
@@ -161,6 +161,7 @@ async def get_role_config(logger) -> RoleConfig:
 
 async def search_people(
     client: httpx.AsyncClient,
+    logger,
     jurisdiction_ocdid: str,
     status: Optional[str] = None,
 ) -> List[dict]:
@@ -168,16 +169,14 @@ async def search_people(
     params: dict = {"jurisdiction_ocdid": jurisdiction_ocdid}
     if status is not None:
         params["status"] = status
-    response = await client.get(
-        f"{env['CIVICPATCH_ORG_URL']}/api/v1/people/search",
-        params=params,
-    )
+    url = f"{env['CIVICPATCH_ORG_URL']}/api/v1/people/search"
+    response = await with_retry(logger, func=lambda: client.get(url, params=params))
     response.raise_for_status()
     return response.json().get("data", [])
 
 
 async def get_organizations(
-    client: httpx.AsyncClient, jurisdiction_ocdid: str
+    client: httpx.AsyncClient, logger, jurisdiction_ocdid: str
 ) -> List[KnownOrganization]:
     """The bodies cp.org already holds for this jurisdiction, each with its posts.
 
@@ -186,31 +185,28 @@ async def get_organizations(
     known — asking a model to guess it was only ever a stand-in for having somewhere to ask.
     """
     env = get_env_vars()
-    response = await client.get(
-        f"{env['CIVICPATCH_ORG_URL']}/api/v1/organizations/{jurisdiction_ocdid}"
-    )
+    url = f"{env['CIVICPATCH_ORG_URL']}/api/v1/organizations/{jurisdiction_ocdid}"
+    response = await with_retry(logger, func=lambda: client.get(url))
     response.raise_for_status()
     organizations = response.json().get("data", {}).get("organizations", [])
     return [KnownOrganization.model_validate(organization) for organization in organizations]
 
 
-async def get_roster_source_urls(client: httpx.AsyncClient, jurisdiction_ocdid: str) -> List[str]:
+async def get_roster_source_urls(client: httpx.AsyncClient, logger, jurisdiction_ocdid: str) -> List[str]:
     """The published roster's pages, as cp.org picks them for a re-scrape to start at."""
     env = get_env_vars()
-    response = await client.get(
-        f"{env['CIVICPATCH_ORG_URL']}/api/v1/jurisdictions/{jurisdiction_ocdid}/roster-source-urls"
-    )
+    url = f"{env['CIVICPATCH_ORG_URL']}/api/v1/jurisdictions/{jurisdiction_ocdid}/roster-source-urls"
+    response = await with_retry(logger, func=lambda: client.get(url))
     response.raise_for_status()
     return [url for group in response.json()["data"] for url in group["urls"]]
 
 
 async def fetch_pipeline_run_status(
-    client: httpx.AsyncClient, pipeline_run_id: str
+    client: httpx.AsyncClient, logger, pipeline_run_id: str
 ) -> Optional[str]:
     env = get_env_vars()
-    resp = await client.get(
-        f"{env['CIVICPATCH_ORG_URL']}/api/v1/pipeline_runs/{pipeline_run_id}/status"
-    )
+    url = f"{env['CIVICPATCH_ORG_URL']}/api/v1/pipeline_runs/{pipeline_run_id}/status"
+    resp = await with_retry(logger, func=lambda: client.get(url))
     if resp.status_code == 404:
         return None
     resp.raise_for_status()
@@ -268,12 +264,11 @@ async def reuse_governing_law_source_page(client: httpx.AsyncClient, jurisdictio
     response.raise_for_status()
     return response.json()["data"]
 
-async def get_governing_law_source_page(client: httpx.AsyncClient, jurisdiction_ocdid: str, source_page_id: str) -> dict:
+async def get_governing_law_source_page(client: httpx.AsyncClient, logger, jurisdiction_ocdid: str, source_page_id: str) -> dict:
     """The row with its text."""
     env = get_env_vars()
-    response = await client.get(
-        f"{env['CIVICPATCH_ORG_URL']}/api/v1/jurisdictions/{jurisdiction_ocdid}/governing_law_source_pages/{source_page_id}"
-    )
+    url = f"{env['CIVICPATCH_ORG_URL']}/api/v1/jurisdictions/{jurisdiction_ocdid}/governing_law_source_pages/{source_page_id}"
+    response = await with_retry(logger, func=lambda: client.get(url))
     response.raise_for_status()
     return response.json()["data"]
 

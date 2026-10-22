@@ -45,12 +45,12 @@ async def research_municipality(
     logger.info(f"Step 1: {PeopleCollectorStep.RESEARCH_MUNICIPALITY.value}")
 
     jurisdiction_ocdid = context.data.jurisdiction_ocdid
-    existing = await civicpatch_api.get_active_people(api_client, jurisdiction_ocdid)
+    existing = await civicpatch_api.get_active_people(api_client, logger, jurisdiction_ocdid)
 
     if _can_research() and context.data.config.government_form_choices:
         await government_form.request_government_form(context, api_client, logger)
     # After the form: a form saved just now has already built its organizations.
-    organizations = await civicpatch_api.get_organizations(api_client, jurisdiction_ocdid)
+    organizations = await civicpatch_api.get_organizations(api_client, logger, jurisdiction_ocdid)
     posts = [post for organization in organizations for post in organization.posts]
 
     researched: List[ResearchedPerson] = []
@@ -77,7 +77,7 @@ async def research_municipality(
         # Whoever cp.org has published, else whoever research named. Separate from the offices
         # above: a jurisdiction can have posts and nobody accepted onto them yet.
         identities=_identities(existing, researched),
-        source_urls=await _source_urls(context.data.config, api_client, jurisdiction_ocdid),
+        source_urls=await _source_urls(context.data.config, api_client, logger, jurisdiction_ocdid),
     )
 
 
@@ -230,9 +230,9 @@ def _as_researched_people(people: List[dict]) -> List[ResearchedPerson]:
 
 
 async def _source_urls(
-    config, api_client: httpx.AsyncClient, jurisdiction_ocdid: str
+    config, api_client: httpx.AsyncClient, logger, jurisdiction_ocdid: str
 ) -> List[str]:
     """Where to start crawling: a configured list wins, else the published roster's pages."""
     if config.source_urls:
         return config.source_urls
-    return await civicpatch_api.get_roster_source_urls(api_client, jurisdiction_ocdid)
+    return await civicpatch_api.get_roster_source_urls(api_client, logger, jurisdiction_ocdid)

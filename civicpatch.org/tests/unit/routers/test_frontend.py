@@ -1,3 +1,4 @@
+from datetime import datetime, timezone
 from unittest.mock import AsyncMock, patch
 
 import pytest
@@ -11,7 +12,7 @@ from routers.frontend import build_permissions, get_router, needs_username, regi
 from schemas.common import Identity, UserRole
 from lib.auth import get_optional_user
 from schemas.jurisdictions import GovernmentFormSummary, JurisdictionDetailsFields
-from shared.schemas import GovernmentForm
+from shared.schemas import FoundBy, GoverningLaw, GoverningLawKind, GovernmentForm
 
 
 _LADDER_ORDER = [UserRole.DEFAULT, UserRole.CONTRIBUTORS, UserRole.MAINTAINERS, UserRole.ADMINS]
@@ -245,6 +246,35 @@ def test_the_jurisdiction_page_carries_its_government_form(permissions_client):
     assert response.status_code == 200
     assert "township_board" in response.text
     assert "https://example.test/pull/7" in response.text
+
+
+@pytest.mark.unit
+def test_the_jurisdiction_page_renders_when_its_law_has_been_collected(permissions_client):
+    """The collected law carries datetimes; embedding them used to 500 every Vermont page."""
+    permissions_client.dependency_overrides[get_optional_user] = lambda: None
+    client = TestClient(permissions_client)
+    details = JurisdictionDetailsFields(
+        government_form=None,
+        government_form_options=[],
+        open_pull_request_url=None,
+        extras_government_form=None,
+        extras_governing_law=GoverningLaw(
+            kind=GoverningLawKind.GENERAL_LAW,
+            classification="town",
+            found_by=FoundBy.CLASSIFICATION,
+            collected_at=datetime(2026, 10, 21, 18, 39, tzinfo=timezone.utc),
+            cost_usd=None,
+        ),
+        extras_organizations=None,
+    )
+    with (
+        patch("routers.frontend.get_jurisdiction", new_callable=AsyncMock, return_value={"data": {"name": "Stowe"}}),
+        patch("routers.frontend.jurisdiction_details_fields", new_callable=AsyncMock, return_value=details),
+    ):
+        response = client.get("/ocd-jurisdiction/country:us/state:vt/place:stowe/government")
+
+    assert response.status_code == 200
+    assert "2026-10-21T18:39:00Z" in response.text
 
 
 # ── GET /{path}/activity ──────────────────────────────────────────────────────
