@@ -11,7 +11,7 @@ from interfaces.schemas import (
     validate_people_request
 )
 from runners.pipeline03_people_collector.schemas import PipelineRunConfig
-from shared.schemas import PublishedSourcePage
+from shared.schemas import GoverningLawPost, PublishedSourcePage
 from runners.collectors import COLLECTORS
 from runners.engine import PipelineRunError
 from runners.pipeline03_people_collector.main import start as start_people_collector
@@ -70,6 +70,9 @@ async def _run_people_collector_async(args):
         published_source_pages = [
             PublishedSourcePage.model_validate(page) for page in config_data.get("published_source_pages") or []
         ]
+        governing_law_posts = [
+            GoverningLawPost.model_validate(post) for post in config_data.get("governing_law_posts") or []
+        ]
 
     request = PeopleCollectorRequest(
         jurisdiction_ocdid=args.jurisdiction_ocdid,
@@ -83,6 +86,7 @@ async def _run_people_collector_async(args):
             government_form=government_form,
             government_form_choices=government_form_choices,
             published_source_pages=published_source_pages,
+            governing_law_posts=governing_law_posts,
         ),
     )
     await run_pipeline_cli(pipeline_run_id, request)
