@@ -4,6 +4,8 @@ services:
       LOG_LEVEL: ${LOG_LEVEL:-WARNING}
       APP_ROOT: /app
     init: true
+    # Shares the dev stack's image instead of building a second 3.3GB copy.
+    image: civicpatch-tools-pipelines:latest
     build:
       context: ../..
       dockerfile: pipelines/Dockerfile
@@ -12,4 +14,4 @@ services:
       - ..:/app
       - ../../shared/src/shared:/app/src/shared:ro
     working_dir: /app
-    command: ["pytest", "tests/integration", "-v"]
+    command: ["pytest", "tests/integration", "-m", "not live", "-v"]
