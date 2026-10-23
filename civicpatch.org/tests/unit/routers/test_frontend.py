@@ -370,6 +370,68 @@ def test_the_changesets_page_is_closed_to_signed_out_visitors(permissions_client
     assert response.headers["location"] == "/"
 
 
+# ── GET /roster-comparisons/{id} ───────────────────────────────────────────────
+# Maintainers and above, as the API routes behind it.
+
+_RUN_ID = "11111111-1111-1111-1111-111111111111"
+
+
+@pytest.mark.unit
+def test_a_scrapes_pages_are_a_maintainer_permission():
+    assert build_permissions(CONTRIBUTOR)["can_view_scrape_pages"] is False
+    assert build_permissions(MAINTAINER)["can_view_scrape_pages"] is True
+
+
+@pytest.mark.unit
+def test_roster_comparisons_are_a_maintainer_permission():
+    assert build_permissions(CONTRIBUTOR)["can_view_roster_comparisons"] is False
+    assert build_permissions(MAINTAINER)["can_view_roster_comparisons"] is True
+
+
+@pytest.mark.unit
+def test_the_roster_comparison_page_renders_its_run_for_a_maintainer(permissions_client):
+    permissions_client.dependency_overrides[get_optional_user] = _maintainer
+    response = TestClient(permissions_client).get(f"/roster-comparisons/{_RUN_ID}")
+
+    assert response.status_code == 200
+    assert f'<roster-comparison-page run_id="{_RUN_ID}">' in response.text
+
+
+@pytest.mark.unit
+def test_the_roster_comparison_page_is_closed_to_a_contributor(permissions_client):
+    permissions_client.dependency_overrides[get_optional_user] = lambda: CONTRIBUTOR
+    client = TestClient(permissions_client, follow_redirects=False)
+    response = client.get(f"/roster-comparisons/{_RUN_ID}")
+
+    assert response.status_code == 303
+
+
+@pytest.mark.unit
+def test_the_roster_comparisons_list_renders_for_a_maintainer(permissions_client):
+    permissions_client.dependency_overrides[get_optional_user] = _maintainer
+    response = TestClient(permissions_client).get("/roster-comparisons")
+
+    assert response.status_code == 200
+    assert "<roster-comparisons-page>" in response.text
+
+
+@pytest.mark.unit
+def test_the_roster_comparisons_list_is_closed_to_a_contributor(permissions_client):
+    permissions_client.dependency_overrides[get_optional_user] = lambda: CONTRIBUTOR
+    client = TestClient(permissions_client, follow_redirects=False)
+    response = client.get("/roster-comparisons")
+
+    assert response.status_code == 303
+
+
+@pytest.mark.unit
+def test_a_roster_comparison_id_that_is_not_a_uuid_is_refused(permissions_client):
+    permissions_client.dependency_overrides[get_optional_user] = _maintainer
+    response = TestClient(permissions_client).get("/roster-comparisons/not-a-run")
+
+    assert response.status_code == 422
+
+
 # ── GET /pipelines ─────────────────────────────────────────────────────────────
 # Cadence, budget and the batch-scrape trigger — also split off the changesets page, and
 # also admin-only (`can_batch_scrape`), same reasoning as spend.
@@ -571,3 +633,15 @@ def test_index_redirects_an_account_awaiting_a_username(permissions_client):
 
     assert response.status_code == 303
     assert response.headers["location"] == "/login/username"
+
+
+# ── /settings: signed-in users only ─────────────────────────────────────────
+
+
+@pytest.mark.unit
+@pytest.mark.parametrize("path", ["/settings", "/settings/api-keys"])
+def test_settings_pages_send_the_signed_out_home(permissions_client, path):
+    permissions_client.dependency_overrides[get_optional_user] = lambda: None
+    response = TestClient(permissions_client, follow_redirects=False).get(path)
+
+    assert (response.status_code, response.headers["location"]) == (303, "/")

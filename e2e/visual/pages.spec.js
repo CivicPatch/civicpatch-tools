@@ -14,7 +14,7 @@
  */
 
 import { test, expect } from "../fixtures/index.js";
-import { SCALE_CHANGESET_ID, READ_ONLY_CHANGESET_ID } from "../fixtures/db.js";
+import { SCALE_CHANGESET_ID, READ_ONLY_CHANGESET_ID, ROSTER_COMPARISON_RUN_ID } from "../fixtures/db.js";
 
 const THEMES = ["light", "dark"];
 
@@ -87,6 +87,16 @@ const PAGES = [
     role: "maintainer",
   },
   { name: "blog-list", path: "/blog" },
+  // Opened into its people, so the outcome chips and warnings are on screen too.
+  {
+    name: "roster-comparison",
+    path: `/roster-comparisons/${ROSTER_COMPARISON_RUN_ID}`,
+    role: "maintainer",
+    open: async (page) => {
+      await page.locator(".rc-jurisdiction").click();
+      await page.locator(".rc-jurisdiction-detail .rc-table").waitFor();
+    },
+  },
   // Interaction states, which no page capture reaches on its own. Forced rather
   // than driven through a real submit — the point is to put the CSS states on
   // screen, and a failing OTP round-trip would make the baseline depend on the
