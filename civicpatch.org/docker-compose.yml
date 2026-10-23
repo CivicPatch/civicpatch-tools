@@ -13,6 +13,8 @@ services:
 
       COOKIE_INSTANCE_URL: ".civicpatch.org"
       INSTANCE_URL: "http://localhost:8000"
+      # A tunnel host /mcp should also accept, e.g. devbox.<tailnet>.ts.net:8443 for Claude.ai.
+      MCP_ALLOWED_HOSTS: ${MCP_ALLOWED_HOSTS:-}
       # Where the CDN bucket is served. The nonprod buckets have no public domain, so this
       # host does not resolve — dev image URLs are correctly shaped and will 404 in a browser.
       # That is deliberate: pointing dev at cdn.civicpatch.org would produce URLs that look
