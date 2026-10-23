@@ -260,6 +260,7 @@ type TimelineEntryProps = {
   entry: TimelineEntry;
   isAdmin: boolean;
   isSignedIn: boolean;
+  canViewScrapePages: boolean;
   jurisdictionOcdid: string;
 };
 
@@ -267,6 +268,7 @@ function CivTimelineEntry({
   entry,
   isAdmin,
   isSignedIn,
+  canViewScrapePages,
   jurisdictionOcdid,
 }: TimelineEntryProps) {
   const [isOpen, setIsOpen] = useState(false);
@@ -307,7 +309,7 @@ function CivTimelineEntry({
       </summary>
       <div class="tl-entry__body">
         ${renderChangeList(entry)} ${renderIssueDetails(entry)}
-        ${isOpen && entry.pages_total
+        ${isOpen && entry.pages_total && canViewScrapePages
           ? html`<civ-scrape-pages .changesetId=${entry.changeset_id}></civ-scrape-pages>`
           : nothing}
         ${renderActions(entry, isSignedIn, jurisdictionOcdid)}

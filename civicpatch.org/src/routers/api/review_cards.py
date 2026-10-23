@@ -28,7 +28,7 @@ from fastapi import (
 )
 from fastapi.responses import JSONResponse
 from core.source_page_outcomes import scrape_page
-from lib.auth import get_optional_user, require_route_access
+from lib.auth import require_route_access
 from pydantic import BaseModel
 from schemas.review_cards import ReviewCard
 from schemas.common import (
@@ -278,14 +278,14 @@ def get_router(api_key_header):
     ):
         return {"data": await review_summary_for_changeset(changeset_id)}
 
-    # -- The pages a scrape read: public pages, so public; the cached copies are admins' ---
+    # -- The pages a scrape read: maintainers; the cached copies are admins' ---
     @router.get("/{changeset_id}/pages")
     async def get_scrape_pages_endpoint(
         changeset_id: str,
-        identity: Identity | None = Depends(get_optional_user),
+        identity: Identity = Depends(require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.MAINTAINERS)),
     ):
         rows = await source_pages_db.get_scrape_pages(changeset_id)
-        is_admin = identity is not None and has_at_least(identity.role, UserRole.ADMINS)
+        is_admin = has_at_least(identity.role, UserRole.ADMINS)
         pages = [scrape_page_with_cached_copies(row) if is_admin else scrape_page(row) for row in rows]
         return {"data": [page.model_dump() for page in pages]}
 
