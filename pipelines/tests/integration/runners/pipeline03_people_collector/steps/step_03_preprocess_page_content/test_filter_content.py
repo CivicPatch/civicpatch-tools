@@ -14,6 +14,9 @@ class PlaceholderLogger:
 
 logger = PlaceholderLogger()
 
+# What preprocess_page_content passes in prod: the role config's labels and aliases.
+ROLE_KEYWORDS = ["mayor", "mayor pro tem", "council member", "councilwoman", "councilman", "commissioner", "alderman", "alderwoman"]
+
 def to_markdown(html: str) -> str:
     return md(html, keep_inline_images_in=['td', 'th', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6']).strip()
 
@@ -569,7 +572,7 @@ def test_markdownify_image_output():
 def test_with_read_more_fixture():
     with open(os.path.join(FIXTURE_DIR, "la_joya_read_more", "expected_clean_html.html"), "r", encoding="utf-8") as f:
         input_html = f.read()
-    filtered_content = filter_content(logger, {}, input_html)
+    filtered_content = filter_content(logger, {}, input_html, extra_keywords=ROLE_KEYWORDS)
     #with open(os.path.join(FIXTURE_DIR, "la_joya_read_more", "expected_filter_content.html"), "w", encoding="utf-8") as f:
     #    f.write(filtered_content)
     expected_html = read_fixture("expected_filter_content.html", subfolder="la_joya_read_more")
@@ -599,7 +602,7 @@ def test_with_flattened_shadow_dom():
 def test_with_divs_with_names():
     with open(os.path.join(FIXTURE_DIR, "divs_with_names", "expected_clean_html.html"), "r", encoding="utf-8") as f:
         input_html = f.read()
-    filtered_content = filter_content(logger, {"Meloday Ryan": [], "Kimberly Holiday": []}, input_html)
+    filtered_content = filter_content(logger, {"Meloday Ryan": [], "Kimberly Holiday": []}, input_html, extra_keywords=ROLE_KEYWORDS)
     #with open(os.path.join(FIXTURE_DIR, "divs_with_names", "expected_filter_content.html"), "w", encoding="utf-8") as f:
     #    f.write(filtered_content)
     expected_html = read_fixture("expected_filter_content.html", subfolder="divs_with_names")
@@ -615,7 +618,7 @@ def test_with_divs_with_names():
 def test_with_divs_with_names_2():
     with open(os.path.join(FIXTURE_DIR, "divs_with_names_2", "expected_clean_html.html"), "r", encoding="utf-8") as f:
         input_html = f.read()
-    filtered_content = filter_content(logger, {"Meloday Ryan": [], "Kimberly Holiday": []}, input_html)
+    filtered_content = filter_content(logger, {"Meloday Ryan": [], "Kimberly Holiday": []}, input_html, extra_keywords=ROLE_KEYWORDS)
     #with open(os.path.join(FIXTURE_DIR, "divs_with_names_2", "expected_filter_content.html"), "w", encoding="utf-8") as f:
     #    f.write(filtered_content)
     expected_html = read_fixture("expected_filter_content.html", subfolder="divs_with_names_2")
@@ -630,7 +633,7 @@ def test_with_divs_with_names_2():
 def test_with_board_of_aldermen():
     with open(os.path.join(FIXTURE_DIR, "board_of_aldermen", "expected_clean_html.html"), "r", encoding="utf-8") as f:
         input_html = f.read()
-    filtered_content = filter_content(logger, {"Meloday Ryan": [], "Kimberly Holiday": []}, input_html)
+    filtered_content = filter_content(logger, {"Meloday Ryan": [], "Kimberly Holiday": []}, input_html, extra_keywords=ROLE_KEYWORDS)
     #with open(os.path.join(FIXTURE_DIR, "board_of_aldermen", "expected_filter_content.html"), "w", encoding="utf-8") as f:
     #    f.write(filtered_content)
     expected_html = read_fixture("expected_filter_content.html", subfolder="board_of_aldermen")
