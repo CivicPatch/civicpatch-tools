@@ -213,6 +213,10 @@ Batak Toba
 
 Hakha Chin
 
+Ndebele (South)
+
+Sami (North)
+
 Scots Gaelic
 
 Tok Pisin
