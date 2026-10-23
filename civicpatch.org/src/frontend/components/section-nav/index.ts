@@ -53,6 +53,17 @@ export function manageSection(permissions: object, openPrCount?: number): Sectio
     items.push({ label: "roles", href: "/roles" });
     items.push({ label: "sheet import", href: "/imports" });
   }
+  if (perm(permissions, "can_view_roster_comparisons")) {
+    items.push({ label: "roster comparisons", href: "/roster-comparisons" });
+  }
+  return items;
+}
+
+export function settingsSection(permissions: object): SectionNavItem[] {
+  const items: SectionNavItem[] = [{ label: "Settings", href: "/settings" }];
+  if (perm(permissions, "can_write_config")) {
+    items.push({ label: "API keys", href: "/settings/api-keys" });
+  }
   return items;
 }
 
@@ -70,8 +81,7 @@ export function jurisdictionSection(jurisdictionPath: string, activityHref: stri
   ];
 }
 
-// API keys is disabled for now — deliberately not an item here, so it isn't reachable from
-// either the navbar's overview group or the settings page's own sidebar.
+// API keys is deliberately not here: it lives under Settings (settingsSection), not in the navbar.
 export function overviewSection(): SectionNavItem[] {
   return [
     { label: "review", href: "/review" },

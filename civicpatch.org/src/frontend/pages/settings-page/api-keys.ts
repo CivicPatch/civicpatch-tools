@@ -7,6 +7,7 @@ import {
   deleteApiKey,
 } from "../../api.js";
 import "../../components/action-btn/action-btn.css";
+import { agentSetups, exportLine, type AgentSetup, type SetupField } from "./api-key-commands.js";
 
 type ApiKey = {
   id: number;
@@ -20,11 +21,62 @@ function formatDate(value: string | null): string {
   return new Date(value).toLocaleDateString();
 }
 
+const COPIED_FOR_MS = 1500;
+
+function renderField(field: SetupField, copied: string | null, onCopy: (field: SetupField) => void) {
+  return html`
+    <div class="api-keys__field">
+      <div class="api-keys__field-head">
+        <span class="api-keys__field-label">${field.label}</span>
+        <button type="button" class="btn-ghost btn-sm" @click=${() => onCopy(field)}>
+          ${copied === field.label ? "Copied" : "Copy"}
+        </button>
+      </div>
+      <pre class="api-keys__command">${field.value}</pre>
+    </div>
+  `;
+}
+
+function renderAgentSetup(
+  setups: AgentSetup[],
+  selected: number,
+  onSelect: (index: number) => void,
+  copied: string | null,
+  onCopy: (field: SetupField) => void,
+) {
+  const setup = setups[selected];
+  return html`
+    <label class="api-keys__agent-picker">
+      Connect your agent
+      <select @change=${(e: Event) => onSelect(Number((e.target as HTMLSelectElement).value))}>
+        ${setups.map(
+          (option, index) => html`<option value=${index} .selected=${index === selected}>${option.agent}</option>`,
+        )}
+      </select>
+    </label>
+    <p>${setup.where}:</p>
+    ${setup.fields.map((field) => renderField(field, copied, onCopy))}
+  `;
+}
+
 function ApiKeys() {
   const [keys, setKeys] = useState<ApiKey[]>([]);
   const [created, setCreated] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [agentIndex, setAgentIndex] = useState(0);
+  const [copied, setCopied] = useState<string | null>(null);
+
+  const handleCopy = (field: SetupField) => {
+    navigator.clipboard.writeText(field.value);
+    setCopied(field.label);
+    setTimeout(() => setCopied(null), COPIED_FOR_MS);
+  };
+
+  const handleSelectAgent = (index: number) => {
+    setAgentIndex(index);
+    setCopied(null);
+  };
 
   const load = async () => {
     try {
@@ -121,6 +173,15 @@ function ApiKeys() {
             <div class="api-keys__created">
               <p>Copy this now — it is stored hashed and cannot be shown again.</p>
               <code class="api-keys__secret">${created}</code>
+              <p>To use it from an agent, put this line in your shell profile, not in a chat:</p>
+              <pre class="api-keys__command">${exportLine(created)}</pre>
+              ${renderAgentSetup(
+                agentSetups(window.location.origin, created),
+                agentIndex,
+                handleSelectAgent,
+                copied,
+                handleCopy,
+              )}
             </div>
           `
         : null}

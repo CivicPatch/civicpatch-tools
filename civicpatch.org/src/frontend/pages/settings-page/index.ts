@@ -2,7 +2,7 @@ import { html } from "lit-html";
 import { component, useState } from "haunted";
 import { setUsername } from "../../api.js";
 import { usernameError } from "../../components/username-utils.js";
-import { SectionNav, overviewSection } from "../../components/section-nav/index.js";
+import { SectionNav, settingsSection } from "../../components/section-nav/index.js";
 import "../../components/panel/panel.css";
 import "./settings-page.css";
 
@@ -50,7 +50,7 @@ function SettingsPage({ user }: { user: string }) {
       </div>
 
       <div class="sectioned">
-        ${SectionNav("overview", overviewSection(), "/settings")}
+        ${SectionNav("settings", settingsSection(userData.permissions ?? {}), "/settings")}
         <div class="secbody">
           <section class="panel">
             <div class="panel__cap"><b>username</b></div>
