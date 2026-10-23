@@ -120,3 +120,72 @@ async def test_every_admin_route_but_sync_refuses_a_non_admin():
             continue
         assert not await _passes(route, maintainer), f"{route.methods} {route.path}"
         assert await _passes(route, _person(UserRole.ADMINS)), f"{route.methods} {route.path}"
+
+
+# ── every route is gated, or deliberately open ───────────────────────────────
+# Every route of every type, Starlette routes and mounts included: they cannot carry the gate.
+
+_DOCS = "FastAPI's docs: lists only the public contract (test_openapi_surface)"
+
+DELIBERATELY_OPEN: dict[tuple[str, str], str] = {
+    ("GET", "/"): "home page, public",
+    ("GET", "/activity"): "redirect to /activity/all-activity, which is gated",
+    ("GET", "/api/permissions"): "the caller's own permission flags, all false when signed out",
+    ("GET", "/api/v1/me"): "the caller's own identity, or none",
+    ("GET", "/api/v1/change_logs/recent-publications"): "public per README",
+    ("GET", "/api/v1/memberships/{jurisdiction_ocdid:path}"): "public per README",
+    ("GET", "/api/v1/organizations/{jurisdiction_ocdid:path}"): "public per README",
+    ("GET", "/api/v1/roles"): "public per README",
+    ("GET", "/blog"): "public",
+    ("GET", "/blog/{slug}"): "public",
+    ("GET", "/login"): "sign-in page",
+    ("GET", "/login/username"): "a signed-in user picks a username here; the handler sends the signed-out to /login",
+    ("GET", "/{path:path}"): "jurisdiction page, public",
+    ("GET", "/{path:path}/activity"): "a jurisdiction's activity, public like its page; the scrape-pages panel inside is maintainers'",
+    ("GET", "/{state}/counties"): "public",
+    ("GET", "/{state}/municipalities"): "public",
+    ("GET", "/docs"): _DOCS,
+    ("HEAD", "/docs"): _DOCS,
+    ("GET", "/docs/oauth2-redirect"): _DOCS,
+    ("HEAD", "/docs/oauth2-redirect"): _DOCS,
+    ("GET", "/openapi.json"): _DOCS,
+    ("HEAD", "/openapi.json"): _DOCS,
+    ("GET", "/redoc"): _DOCS,
+    ("HEAD", "/redoc"): _DOCS,
+    ("POST", "/webhooks/blog-sync"): "HMAC-verified inside the handler",
+    ("POST", "/webhooks/github"): "HMAC-verified inside the handler",
+    ("*", "/ws"): "websocket; authenticates through get_ws_user",
+    ("*", "/frontend"): "static assets (the built frontend)",
+}
+# Pages redirect to / instead of refusing, through their own gate.
+# A page that redirects the signed-out (require_page_auth) or the unpermitted (require_page_permission).
+PAGE_GATES = ("require_page_permission", "require_page_auth")
+
+
+def _gated(route) -> bool:
+    if not isinstance(route, APIRoute):
+        return False
+    return bool(_gates(route.dependant)) or any(_has_dependency(route.dependant, gate) for gate in PAGE_GATES)
+
+
+def _has_dependency(dependant, name: str) -> bool:
+    return any(
+        name in getattr(dependency.call, "__qualname__", "") or _has_dependency(dependency, name)
+        for dependency in dependant.dependencies
+    )
+
+
+def _route_keys(route) -> list[tuple[str, str]]:
+    methods = sorted(getattr(route, "methods", None) or {"*"})
+    return [(method, getattr(route, "path", repr(route))) for method in methods]
+
+
+def test_every_route_is_gated_or_deliberately_open():
+    ungated = sorted(
+        key
+        for route in app.routes
+        if not _gated(route)
+        for key in _route_keys(route)
+        if key not in DELIBERATELY_OPEN
+    )
+    assert ungated == [], "\n".join(f"{method} {path}" for method, path in ungated)
