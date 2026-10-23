@@ -11,7 +11,7 @@ from unittest.mock import AsyncMock, patch
 import pytest
 from fastapi import HTTPException
 
-from lib.auth import get_user_by_cookie, require_route_access
+from lib.auth import get_user, get_user_by_cookie, header_token, require_route_access
 from schemas.common import Identity, UserRole, RouteCategory, ServiceKey
 
 
@@ -217,3 +217,38 @@ async def test_a_session_whose_user_is_gone_is_refused():
         with pytest.raises(HTTPException) as exc:
             await get_user_by_cookie(SimpleNamespace(method="GET"), "token")
     assert exc.value.status_code == 401
+
+
+# ── Authorization header ─────────────────────────────────────────────────────
+
+@pytest.mark.unit
+@pytest.mark.parametrize(
+    "authorization",
+    ["cp_key", "  cp_key  ", "Bearer cp_key", "bearer cp_key", "Bearer   cp_key "],
+)
+def test_header_token_reads_a_bare_or_bearer_key(authorization: str):
+    assert header_token(authorization) == "cp_key"
+
+
+@pytest.mark.asyncio
+@pytest.mark.unit
+@pytest.mark.parametrize("authorization", ["cp_key", "Bearer cp_key"])
+async def test_a_user_key_resolves_bare_or_as_bearer(authorization: str):
+    user = {"provider": "supabase", "provider_user_id": "sb-key", "role": "maintainers", "id": "u-1"}
+    lookup = AsyncMock(return_value=user)
+    with (
+        patch("lib.auth.environment.get_env_vars", return_value={"SERVICE_API_KEY": "service"}),
+        patch("lib.auth.database.get_user_by_api_key", new=lookup),
+    ):
+        identity = await get_user(SimpleNamespace(method="GET"), authorization=authorization, cookie=None)
+    lookup.assert_awaited_once_with("cp_key")
+    assert identity.provider_user_id == "sb-key"
+
+
+@pytest.mark.asyncio
+@pytest.mark.unit
+@pytest.mark.parametrize("authorization", ["service", "Bearer service"])
+async def test_the_service_key_resolves_bare_or_as_bearer(authorization: str):
+    with patch("lib.auth.environment.get_env_vars", return_value={"SERVICE_API_KEY": "service"}):
+        identity = await get_user(SimpleNamespace(method="GET"), authorization=authorization, cookie=None)
+    assert identity.type == "service_api_key"

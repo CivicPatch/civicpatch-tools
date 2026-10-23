@@ -16,6 +16,15 @@ API_COOKIE = APIKeyCookie(name="token", auto_error=False)
 API_HEADER = APIKeyHeader(name="Authorization", auto_error=False)
 
 UNSAFE_METHODS = {"POST", "PUT", "PATCH", "DELETE"}
+BEARER_PREFIX = "bearer "
+
+
+def header_token(authorization: str) -> str:
+    """The key from an `Authorization` header, bare or as `Bearer <key>` (what MCP clients send)."""
+    token = authorization.strip()
+    if token.lower().startswith(BEARER_PREFIX):
+        return token[len(BEARER_PREFIX):].strip()
+    return token
 
 
 async def get_user(
@@ -35,7 +44,7 @@ async def get_user(
         token_source = "cookie"
     # 2. Then check Authorization header
     elif authorization:
-        token = authorization.strip()
+        token = header_token(authorization)
         # Constant-time: a plain == leaks how much of the secret matched, and this one
         # bypasses every role check.
         if service_api_key and hmac.compare_digest(token, service_api_key):
