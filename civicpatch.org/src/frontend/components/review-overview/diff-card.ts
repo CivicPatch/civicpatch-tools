@@ -115,7 +115,7 @@ function renderMembershipLabelRow(card: PersonCard) {
   const label = membershipLabelFor(card);
   if (!label) return nothing;
   return html`<span class="pv">
-    <span class="pvk">label</span>
+    <span class="pvk">member</span>
     <span class="pvv">${label}</span>
   </span>`;
 }

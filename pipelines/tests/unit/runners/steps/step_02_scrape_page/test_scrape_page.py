@@ -201,7 +201,7 @@ def test_accordions_open_on_the_runs_organizations_and_roles():
                 KnownOrganization(id="council", name="City Council", posts=[]),
             ],
             "expected_memberships": [
-                ExpectedMembership(organization_id="council", role_label="Mayor")
+                ExpectedMembership(organization_id="council", role_id="mayor", role_label="Mayor")
             ],
         }
     )

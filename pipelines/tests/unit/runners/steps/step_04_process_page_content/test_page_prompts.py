@@ -34,8 +34,8 @@ def _organization(organization_id: str, name: str, labels: list[str]) -> KnownOr
 _COUNCIL = _organization("council", "City Council", ["Council Member District 1"])
 _MAYOR = _organization("mayor", "Office of the Mayor", ["Mayor"])
 _MEMBERSHIPS = [
-    ExpectedMembership(organization_id="council", role_label="Council Member", division="district 1"),
-    ExpectedMembership(organization_id="mayor", role_label="Mayor"),
+    ExpectedMembership(organization_id="council", role_id="council-member", role_label="Council Member", division="district 1"),
+    ExpectedMembership(organization_id="mayor", role_id="mayor", role_label="Mayor"),
 ]
 
 
@@ -67,7 +67,7 @@ def test_a_renamed_organization_moves_it():
 
 
 def test_a_new_expected_division_moves_it():
-    district_2 = ExpectedMembership(organization_id="council", role_label="Council Member", division="district 2")
+    district_2 = ExpectedMembership(organization_id="council", role_id="council-member", role_label="Council Member", division="district 2")
 
     assert _hash(memberships=[*_MEMBERSHIPS, district_2]) != _hash()
 

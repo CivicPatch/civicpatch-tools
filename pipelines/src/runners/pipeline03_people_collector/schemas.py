@@ -289,6 +289,8 @@ class ExpectedMembership(BaseModel):
     How many of them there are, their roles and their divisions are the scrape's progress target."""
 
     organization_id: str
+    # What two expected memberships are compared by: their labels can word one role two ways.
+    role_id: str
     # Canonical, the same vocabulary `parse_label(...).role` gives a found record.
     role_label: str
     # As `divisions.filter_divisions` gives it ("ward 3"); None for an at-large post.

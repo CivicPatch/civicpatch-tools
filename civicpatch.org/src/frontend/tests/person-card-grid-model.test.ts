@@ -4,6 +4,7 @@ import {
   sortByRoleRank,
   computeLeadIds,
   groupByRole,
+  roleWithLabel,
 } from "../components/people/person-card-grid-model.js";
 
 const ROLE_ORDER = ["mayor", "council-president", "council-member", "clerk"];
@@ -124,5 +125,19 @@ describe("groupByRole", () => {
       seated("a", "council-member", "Council Member, At Large"),
     ];
     expect(idsIn(people)).toEqual([["b", "a"]]);
+  });
+});
+
+describe("roleWithLabel", () => {
+  it("names the role, then what this place calls it", () => {
+    expect(roleWithLabel("Member", "Selectboard member")).toBe("Member (Selectboard member)");
+  });
+
+  it("says it once when the label is the role", () => {
+    expect(roleWithLabel("Mayor", "mayor")).toBe("Mayor");
+  });
+
+  it("is the role alone when there is no label", () => {
+    expect(roleWithLabel("Chair", "")).toBe("Chair");
   });
 });

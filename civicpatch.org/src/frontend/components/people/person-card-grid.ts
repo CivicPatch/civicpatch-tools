@@ -19,7 +19,7 @@ import {
   sourceMapFor,
   type SourceMap,
 } from "../review-preview/preview-values.js";
-import { groupByRole } from "./person-card-grid-model.js";
+import { groupByRole, roleWithLabel } from "./person-card-grid-model.js";
 
 const AVATAR_SIZE = "4rem";
 
@@ -133,8 +133,8 @@ function renderFields(record: DiffRecord, sources: SourceMap) {
 }
 
 interface Subtitle {
-  postLabel: string;
-  membershipLabel: string;
+  post: string;
+  member: string;
 }
 
 // Two lines, not one: `label` used to already include the post's own name (`render
@@ -144,12 +144,12 @@ interface Subtitle {
 function subtitleFor(record: DiffRecord): Subtitle {
   const held = (
     record?.memberships as
-      | { post_label: string; label: string | null }[]
+      | { role_label: string; post_label: string; label: string | null }[]
       | undefined
   )?.[0];
   return {
-    postLabel: held ? postName(held) : "",
-    membershipLabel: held?.label ?? "",
+    post: held ? roleWithLabel(held.role_label, postName(held)) : "",
+    member: held?.label ?? "",
   };
 }
 
@@ -160,16 +160,18 @@ function renderPerson(
 ) {
   const record = personOf(card);
   const name = record?.name || "(unnamed)";
-  const { postLabel, membershipLabel } = subtitleFor(record);
+  const { post, member } = subtitleFor(record);
   // By card key, not person id: a person on two bodies has a row in each, and only the one
   // that was clicked opens. The two are the same string for a card with no body.
   const isOpen = onOpenPerson ? cardKey(card) === openCardKey : false;
-  const ariaSubtitle = [postLabel, membershipLabel].filter(Boolean).join(", ");
-  const nameBlock = html`<span class="pc-name">${name}</span> ${postLabel
-      ? html`<span class="pc-sub">${postLabel}</span>`
+  const ariaSubtitle = [post && `post ${post}`, member && `member ${member}`]
+    .filter(Boolean)
+    .join(", ");
+  const nameBlock = html`<span class="pc-name">${name}</span> ${post
+      ? html`<span class="pc-sub"><span class="pvk">post</span>${post}</span>`
       : nothing}
-    ${membershipLabel
-      ? html`<span class="pc-sub">${membershipLabel}</span>`
+    ${member
+      ? html`<span class="pc-sub"><span class="pvk">member</span>${member}</span>`
       : nothing}`;
   return renderCardShell(
     {
