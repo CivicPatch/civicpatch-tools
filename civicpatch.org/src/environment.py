@@ -59,6 +59,8 @@ OPTIONAL_ENV_VARS = [
     "JURISDICTIONS_SYNC_APP_ID",
     "JURISDICTIONS_SYNC_APP_PRIVATE_KEY_BASE64",
     "JURISDICTIONS_SYNC_APP_INSTALLATION_ID",
+    # Extra Host headers /mcp accepts, comma-separated: a dev tunnel such as a Tailscale Funnel.
+    "MCP_ALLOWED_HOSTS",
 ]
 
 
@@ -87,3 +89,13 @@ def get_env_vars():
             f"Missing required environment variables: {', '.join(missing)}"
         )
     return env
+
+
+def instance_url() -> str:
+    """This site's own address, for absolute links in responses (`http://localhost:8000` on dev)."""
+    return get_env_vars()["INSTANCE_URL"]
+
+
+def mcp_allowed_hosts() -> list[str]:
+    value = get_env_vars()["MCP_ALLOWED_HOSTS"] or ""
+    return [host.strip() for host in value.split(",") if host.strip()]

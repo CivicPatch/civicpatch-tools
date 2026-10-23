@@ -4,8 +4,10 @@ from typing import Optional
 
 import database.jurisdictions as jurisdictions_db
 import database.people as database
+import environment
 import shared.utils.id_utils
 import shared.utils.name_utils
+from core.page_urls import jurisdiction_page_url
 from fastapi import APIRouter, Depends, HTTPException, Query
 from lib.auth import require_route_access
 from pydantic import BaseModel
@@ -32,6 +34,14 @@ def _to_people(rows: list[dict]) -> list[Person]:
     return [Person(**row) for row in rows]
 
 
+async def current_roster(jurisdiction_ocdid: str) -> dict:
+    """The public roster read; the MCP `get_jurisdiction_people` tool calls it too."""
+    people = await database.get_roster(jurisdiction_ocdid=jurisdiction_ocdid)
+    # One page for all of them: people have no page of their own, only their jurisdiction's.
+    page_url = jurisdiction_page_url(environment.instance_url(), jurisdiction_ocdid)
+    return {"data": _to_people(people), "page_url": page_url}
+
+
 def get_router() -> APIRouter:
     router = APIRouter()
 
@@ -44,8 +54,7 @@ def get_router() -> APIRouter:
         Unpaged on purpose: a roster is bounded by how many seats a government has, and the
         largest in the database is eighteen. Bulk reads belong on `/bulk`, which is paged.
         """
-        people = await database.get_roster(jurisdiction_ocdid=jurisdiction_ocdid)
-        return {"data": _to_people(people)}
+        return await current_roster(jurisdiction_ocdid)
 
     @router.get("/claims", include_in_schema=False)
     async def list_claims_endpoint(
