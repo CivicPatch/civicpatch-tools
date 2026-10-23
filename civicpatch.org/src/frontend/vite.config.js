@@ -25,6 +25,8 @@ export default defineConfig(({ command }) => ({
         "settings-api-keys": "./assets/settings-api-keys.ts",
         municipalities: "./assets/municipalities.ts",
         imports: "./assets/imports.ts",
+        "roster-comparisons": "./assets/roster-comparisons.ts",
+        "roster-comparisons-list": "./assets/roster-comparisons-list.ts",
         changesets: "./assets/changesets.ts",
         pipelines: "./assets/pipelines.ts",
         gallery: "./assets/gallery.ts",

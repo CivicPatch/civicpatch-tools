@@ -1,5 +1,6 @@
 import json
 import os
+import uuid
 from typing import cast, Optional
 
 from fastapi import APIRouter, Depends, FastAPI, HTTPException, Request
@@ -89,6 +90,10 @@ def build_permissions(identity: Optional[Identity]) -> dict:
         # A design-review tool, not a data page — gated the same as the rest of the Admin
         # menu rather than opened up, so it stays a dev aid and not a second public surface.
         "can_view_gallery_page": has_at_least(role, UserRole.ADMINS),
+        # The same gate as the /api/v1/roster-comparisons routes behind the page.
+        "can_view_roster_comparisons": has_at_least(role, UserRole.MAINTAINERS),
+        # The same gate as GET /api/v1/reviews/{changeset_id}/pages.
+        "can_view_scrape_pages": has_at_least(role, UserRole.MAINTAINERS),
     }
 
 
@@ -229,6 +234,22 @@ def get_router(templates: Jinja2Templates) -> APIRouter:
         request: Request, user: dict = Depends(require_page_permission("can_write_config"))
     ):
         return templates.TemplateResponse("pages/imports.html", {"request": request, "user": user})
+
+    @router.get("/roster-comparisons", response_class=HTMLResponse, include_in_schema=False)
+    async def roster_comparisons_page(
+        request: Request,
+        user: dict = Depends(require_page_permission("can_view_roster_comparisons")),
+    ):
+        return templates.TemplateResponse("pages/roster-comparisons.html", {"request": request, "user": user})
+
+    @router.get("/roster-comparisons/{run_id}", response_class=HTMLResponse, include_in_schema=False)
+    async def roster_comparison_page(
+        request: Request,
+        run_id: uuid.UUID,
+        user: dict = Depends(require_page_permission("can_view_roster_comparisons")),
+    ):
+        context = {"request": request, "user": user, "run_id": str(run_id)}
+        return templates.TemplateResponse("pages/roster-comparison.html", context)
 
     @router.get("/activity/calendar", response_class=HTMLResponse, include_in_schema=False)
     async def changesets_page(

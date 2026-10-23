@@ -1,0 +1,8 @@
+{% extends "layouts/base.html" %}
+{% block scripts %}<script type="module" src="{{ vite_asset('assets/roster-comparisons.ts') }}"></script>{% endblock %}
+{% block styles %}{% for href in vite_css('assets/roster-comparisons.ts') %}<link rel="stylesheet" href="{{ href }}">{% endfor %}{% endblock %} {% block title %}Roster comparison{% endblock %}
+{% block content %}
+<civ-navbar user='{{ user | tojson }}'></civ-navbar>
+
+<roster-comparison-page run_id="{{ run_id }}"></roster-comparison-page>
+{% endblock %}

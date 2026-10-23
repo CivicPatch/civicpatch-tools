@@ -96,6 +96,8 @@ A page the visitor can't view redirects to `/`.
 ### Maintainers
 
 - Delete a person.
+- See the pages a scrape read: on a jurisdiction's activity page and through
+  `GET /api/v1/reviews/{changeset_id}/pages`. Hidden from everyone below.
 - Edit a jurisdiction's published data (opens a PR), and edit the live roster directly.
 - Edit any jurisdiction field cp.org owns, saved at once with no PR, through
   `PATCH /api/v1/jurisdictions/{ocdid}`: its government form, governing law and the
@@ -106,7 +108,13 @@ A page the visitor can't view redirects to `/`.
 - Store a collected governing-law source page; the service key may too.
 - Add, edit and remove roles (each opens a PR on open-data's `data_source/config.yml`).
 - Scrape a single jurisdiction; read pipeline run details; resume a paused run.
-- Run a curated-sheet import and publish what it produced.
+- Run a curated-sheet import and publish what it produced. Starting one is paused in the UI;
+  `POST /api/v1/imports` still accepts it.
+- Compare an uploaded roster with civicpatch's (`/api/v1/roster-comparisons`) and read every
+  run, whoever started it, on `/roster-comparisons/{id}`. Read-only towards everything else.
+- Use `/mcp`, the MCP server, with their API key (see "Connect your agent"). Its tools only
+  read. The key itself still reaches every route its owner can: MCP steers an agent, it does
+  not narrow the key.
 - Manage their own API keys.
 
 ### Admins
@@ -148,6 +156,39 @@ WHERE provider='supabase' AND email='<user-email>';
 ```
 
 The session picks up the new role on the next request — no logout required.
+
+## Connect your agent
+
+Maintainers can let their own agent compare a list of officials with civicpatch's, a whole
+state at a time. Any agent that takes an API key works: Claude Code, Codex CLI, Gemini CLI,
+VS Code, and Claude.ai in the browser. ChatGPT and the Gemini app in the browser accept
+only OAuth, which civicpatch does not offer yet.
+
+1. Create a key on Settings → API keys. The page shows the key once, with the setup for each
+   agent.
+2. Put `export CIVICPATCH_API_KEY=…` in your shell profile. Never paste the key into a chat.
+3. Add the server with your agent's setup from that page. For Claude Code:
+   ```sh
+   claude mcp add --scope user --transport http civicpatch https://civicpatch.org/mcp \
+     --header 'Authorization: Bearer ${CIVICPATCH_API_KEY}'
+   ```
+   For dev, use `http://localhost:8000/mcp`. Check it with `/mcp` inside Claude Code, or with
+   `npx @modelcontextprotocol/inspector` (Streamable HTTP, same url and header). Claude.ai calls
+   from Anthropic's servers, so on dev it needs a public tunnel and that tunnel's host in
+   `MCP_ALLOWED_HOSTS`.
+4. Hand the agent your file and ask it to compare. The server's instructions tell it how: read a
+   sample and convert every row, then upload one of two ways. An agent whose shell has the key and
+   can reach civicpatch runs a local script and sends the file with `curl` to
+   `POST /api/v1/roster-comparisons`, so the rows never pass through the model. Any other agent
+   (Claude.ai, whose code sandbox reaches only package managers by default and never sees the
+   connector's key) uploads through the draft tools in batches of 500 rows, which costs it
+   tokens. Either way it replies with the run's page, `/roster-comparisons/{id}`.
+
+The tools: `find_jurisdiction`, `get_jurisdiction_people`, `list_roster_comparisons`,
+`get_roster_comparison`, `get_roster_comparison_jurisdiction`, `get_roster_comparison_field`, and
+for batched uploads `start_roster_comparison`, `add_roster_comparison_rows`,
+`finish_roster_comparison`. Each mirrors one `/api/v1/` route. A draft belongs to whoever started
+it and expires after a day.
 
 ## Local setup
 

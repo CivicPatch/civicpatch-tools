@@ -682,6 +682,7 @@ export async function seedE2eFixtures() {
         [TEST_USER_PROVIDER, user.providerUserId, user.email, user.username, user.role],
       );
     }
+    await seedRosterComparison(client);
 
     // Jurisdiction, with a prior collection so the review renders in RECONCILE mode
     // (old<->new diff panel). The baseline fixture below gets none.
@@ -1152,10 +1153,88 @@ export async function seedE2eFixtures() {
   }
 }
 
+// One saved roster comparison over the test jurisdiction, owned by the e2e maintainer: a match,
+// a nickname guess with its warning, a row only in the upload, a person only in civicpatch.
+export const ROSTER_COMPARISON_RUN_ID = "00000000-0000-0000-cccc-000000000001";
+
+const _rosterComparisonRates = {
+  outcomes: { matched: 1, possible_match: 1, only_in_uploaded_data: 1, only_in_civicpatch: 1 },
+  fields: {
+    emails: {
+      agreement: 1, one_side_has_more: 1, conflict: 0, unknown: 0,
+      uploaded_data_has_it: 1, civicpatch_has_it: 1,
+    },
+  },
+  rows_with_warnings: 1,
+};
+
+function _uploadedRow(sourceRow, name, extra = {}) {
+  return {
+    source_row: sourceRow, jurisdiction_ocdid: TEST_JURISDICTION_OCDID, name, role: null,
+    emails: [], phones: [], urls: [], start_date: null, not_compared: {}, ...extra,
+  };
+}
+
+const _rosterComparisonPeople = [
+  {
+    outcome: "matched", uploaded: _uploadedRow(2, "Jane Doe", { emails: ["jane@e2e.gov"] }),
+    person_id: JANE_PERSON_ID, person_name: "Jane Doe", candidates: [], warnings: [],
+    fields: { emails: { level: "civicpatch_has_more", uploaded: ["jane@e2e.gov"], civicpatch: ["jane@e2e.gov", "clerk@e2e.gov"] } },
+  },
+  {
+    outcome: "possible_match", uploaded: _uploadedRow(3, "Bob Smith"), person_id: null, person_name: null,
+    candidates: [{ person_id: JANE_PERSON_ID, name: "Robert Smith", reason: "nickname", already_matched_by_row: 2 }],
+    fields: {}, warnings: [{ code: "candidate_already_matched", message: "Robert Smith is already matched to row 2" }],
+  },
+  {
+    outcome: "only_in_uploaded_data", uploaded: _uploadedRow(4, "Pat Lin"), person_id: null, person_name: null,
+    candidates: [], fields: {}, warnings: [],
+  },
+  {
+    outcome: "only_in_civicpatch", uploaded: null, person_id: null, person_name: "Maria Ortiz",
+    candidates: [], fields: {}, warnings: [],
+  },
+];
+
+async function seedRosterComparison(client) {
+  await client.query(
+    `INSERT INTO roster_comparison_runs
+       (id, state, started_by_user_id, source_columns, corrections, rejected, rates, jurisdictions_not_named)
+     SELECT $1, 'nj', id, $2, $3, '[]'::jsonb, $4, 0 FROM users WHERE provider = $5 AND provider_user_id = $6
+     ON CONFLICT (id) DO NOTHING`,
+    [
+      ROSTER_COMPARISON_RUN_ID,
+      JSON.stringify({ name: ["Official"], emails: ["Work Email"] }),
+      JSON.stringify(["2 names reordered from 'Last, First'"]),
+      JSON.stringify(_rosterComparisonRates),
+      TEST_USER_PROVIDER,
+      ELEVATED_USERS[0].providerUserId,
+    ],
+  );
+  await client.query(
+    `INSERT INTO roster_comparison_jurisdictions (run_id, jurisdiction_ocdid, rates) VALUES ($1, $2, $3)
+     ON CONFLICT DO NOTHING`,
+    [ROSTER_COMPARISON_RUN_ID, TEST_JURISDICTION_OCDID, JSON.stringify(_rosterComparisonRates)],
+  );
+  for (const [position, person] of _rosterComparisonPeople.entries()) {
+    await client.query(
+      `INSERT INTO roster_comparison_people
+         (run_id, jurisdiction_ocdid, position, outcome, source_row, person_id, comparison)
+       VALUES ($1, $2, $3, $4, $5, $6, $7) ON CONFLICT DO NOTHING`,
+      [
+        ROSTER_COMPARISON_RUN_ID, TEST_JURISDICTION_OCDID, position, person.outcome,
+        person.uploaded?.source_row ?? null, person.person_id, JSON.stringify(person),
+      ],
+    );
+  }
+}
+
 export async function teardownE2eFixtures() {
   const client = makeClient();
   await client.connect();
   try {
+    // Cascades to its jurisdictions and people.
+    await client.query(`DELETE FROM roster_comparison_runs WHERE id = $1`, [ROSTER_COMPARISON_RUN_ID]);
     // Delete in reverse FK order
     await client.query(
       `DELETE FROM review_session_entries
