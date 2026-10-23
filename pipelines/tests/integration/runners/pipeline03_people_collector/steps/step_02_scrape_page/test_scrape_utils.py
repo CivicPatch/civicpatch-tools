@@ -53,6 +53,7 @@ async def test_convert_background_divs_to_imgs_preserves_children():
         await context.close()
 
 
+@pytest.mark.live
 @pytest.mark.asyncio
 async def test_scrape_with_direct_download():
     # Mock logger
