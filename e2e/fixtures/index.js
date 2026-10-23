@@ -11,8 +11,7 @@ const TEST_USER = {
 };
 
 // Separate identity used by tests that need write access to role config
-// (maintainers+). Auth resolves role from the session-cached value when there's
-// no DB row, so the user doesn't need to be seeded.
+// (maintainers+). Seeded by db.js's ELEVATED_USERS: a session with no user row is signed out.
 const MAINTAINER_USER = {
   provider: "github",
   provider_user_id: "test-maintainer-e2e",
@@ -20,8 +19,7 @@ const MAINTAINER_USER = {
   role: "maintainers",
 };
 
-// Admin-only pages (/issues) need a third identity. Same trick as the
-// maintainer: the role comes from the session-cached value, so no DB row.
+// Admin-only pages (/issues) need a third identity, seeded beside the maintainer.
 const ADMIN_USER = {
   provider: "github",
   provider_user_id: "test-admin-e2e",

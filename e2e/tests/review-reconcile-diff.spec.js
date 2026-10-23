@@ -60,7 +60,7 @@ test.describe("Review reconcile diff (populated)", () => {
     // now carries one. Naming the rows rather than counting them is what tells
     // those two cases apart.
     await expect(maria.locator(".person-editor__label")).toHaveText([
-      "Office",
+      "Post",
       "Term end",
       "Email",
       "Phone",
@@ -73,7 +73,7 @@ test.describe("Review reconcile diff (populated)", () => {
     // The post is picked, not typed, so it reads differently from every other field: the
     // selected option is the post the derivation chose, and it says that post does not exist
     // yet.
-    const post = fieldIn(maria, "Office");
+    const post = fieldIn(maria, "Post");
     // An office is picked as a role *and* a division, so the field carries two selects. This
     // asserted a single option reading "Council Member — new post"; the picker says the role
     // plainly and marks the division "(New)" where no post pairs the two yet, which is the
@@ -124,7 +124,7 @@ test.describe("Review reconcile diff (populated)", () => {
     // because the line above had just set the division to At-Large and a <select> fires no
     // change event for the value it already shows.
     await openCard(page, "Maria González");
-    const role = fieldIn(editorFor(page, "Maria González"), "Office").getByLabel(
+    const role = fieldIn(editorFor(page, "Maria González"), "Post").getByLabel(
       "Role",
       { exact: true },
     );

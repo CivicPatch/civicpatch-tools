@@ -15,6 +15,11 @@ const MARKERS_DIVISION = "ocd-division/country:us/state:me/place:e2e_markers";
 // Fixed IDs so teardown can target them precisely
 const TEST_USER_PROVIDER = "github";
 const TEST_USER_PROVIDER_ID = "test-user-e2e";
+// Must match index.js's MAINTAINER_USER and ADMIN_USER: a session with no user row is signed out.
+const ELEVATED_USERS = [
+  { providerUserId: "test-maintainer-e2e", email: "e2e-maintainer@civicpatch.org", username: "e2e-maintainer", role: "maintainers" },
+  { providerUserId: "test-admin-e2e", email: "e2e-admin@civicpatch.org", username: "e2e-admin", role: "admins" },
+];
 export const TEST_JURISDICTION_OCDID =
   "ocd-jurisdiction/country:us/state:nj/place:e2e_test/government";
 export const TEST_CHANGESET_ID = "00000000-0000-0000-eeee-000000000001";
@@ -668,6 +673,15 @@ export async function seedE2eFixtures() {
         "e2e-test-user",
       ],
     );
+    for (const user of ELEVATED_USERS) {
+      await client.query(
+        `INSERT INTO users (provider, provider_user_id, email, username, role)
+         VALUES ($1, $2, $3, $4, $5)
+         ON CONFLICT (provider, provider_user_id)
+         DO UPDATE SET email = EXCLUDED.email, role = EXCLUDED.role`,
+        [TEST_USER_PROVIDER, user.providerUserId, user.email, user.username, user.role],
+      );
+    }
 
     // Jurisdiction, with a prior collection so the review renders in RECONCILE mode
     // (old<->new diff panel). The baseline fixture below gets none.
@@ -1214,8 +1228,8 @@ export async function teardownE2eFixtures() {
       [TEST_USER_PROVIDER],
     );
     await client.query(
-      `DELETE FROM users WHERE provider = $1 AND provider_user_id = $2`,
-      [TEST_USER_PROVIDER, TEST_USER_PROVIDER_ID],
+      `DELETE FROM users WHERE provider = $1 AND provider_user_id = ANY($2)`,
+      [TEST_USER_PROVIDER, [TEST_USER_PROVIDER_ID, ...ELEVATED_USERS.map((user) => user.providerUserId)]],
     );
   } finally {
     await client.end();

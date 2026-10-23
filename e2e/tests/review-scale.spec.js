@@ -16,8 +16,8 @@ import { test, expect } from "../fixtures/index.js";
 import { SCALE_CHANGESET_ID } from "../fixtures/db.js";
 import { openEditorFor, editorFor } from "./helpers/review-card.js";
 
-// The scrape promotes these five to Council President — a role marked unique, so each one is a
-// holder of the duplicate-role issue and each lands in a seat no post row holds yet.
+// The scrape promotes these five to Council President, a unique role the members elect: each keeps
+// a Member post at a ward no post row holds yet, with Council President as a member role.
 const PROMOTED = [
   "Councillor 09 Scale",
   "Councillor 18 Scale",
@@ -47,7 +47,7 @@ test.describe("Review card at scale", () => {
         editor.locator(".person-editor__issue").filter({ hasText: "marked as unique" }),
       ).toHaveCount(1);
       await expect(
-        editor.locator(".person-editor__field").filter({ hasText: "Office" }),
+        editor.locator(".person-editor__field").filter({ hasText: "Post" }),
       ).toHaveCount(1);
       await page.keyboard.press("Escape");
     }
@@ -70,7 +70,7 @@ test.describe("Review card at scale", () => {
       ".field-control__office-group",
     );
     await expect(picker.getByLabel("Role", { exact: true }).locator("option:checked"))
-      .toContainText("Council President");
+      .toContainText("Member");
     await expect(picker.getByLabel("Division").locator("option:checked")).toContainText("(New)");
   });
 });

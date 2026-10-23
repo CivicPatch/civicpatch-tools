@@ -49,12 +49,14 @@ const PREVIEW_BODY = {
   ],
 };
 
-const progress = (status, done = 1) => ({
+const progress = (status, errors = []) => ({
   batch_id: "batch-e2e",
   status,
   items_total: 1,
-  items_done: done,
+  items_done: 1,
   error: null,
+  errors,
+  rows_read: PREVIEW_BODY.rows,
   started_at: "2026-08-28T14:02:00Z",
   finished_at: status === "running" ? null : "2026-08-28T14:02:05Z",
 });
@@ -123,7 +125,9 @@ test.describe("Import from the sheet", () => {
     maintainerPage: page,
   }) => {
     await stubIdle(page);
-    await page.route(PROGRESS, (route) => json(route, progress("succeeded")));
+    const finished = progress("succeeded", PREVIEW_BODY.errors);
+    await page.route(PROGRESS, (route) => json(route, finished));
+    await page.route(HISTORY, (route) => historyRoute(route, [finished]));
     await page.route(REVIEW, (route) => json(route, reviewBody()));
     await page.route(START, (route) =>
       route.request().method() === "POST"
@@ -142,18 +146,11 @@ test.describe("Import from the sheet", () => {
       summary.getByRole("row").filter({ hasText: "jurisdictions found" }),
     ).toContainText("1");
 
-    // The rejected row names its line, column and locality, so it is fixable in the sheet.
-    await expect(
-      page.getByRole("cell", { name: "4", exact: true }),
-    ).toBeVisible();
-    await expect(
-      page.getByRole("cell", { name: "name", exact: true }),
-    ).toBeVisible();
-    // By town name, linking to the jurisdiction — the raw ocdid is unreadable in bulk, so it
-    // moved to the link's title rather than being the cell's text.
-    const rejected = page.getByRole("link", { name: "E2e Blocked" });
-    await expect(rejected).toBeVisible();
-    await expect(rejected).toHaveAttribute("title", BLOCKED);
+    // The rejected row is listed on its finished batch, where it outlives a refresh: under the
+    // locality's name, with its line and column, so it is fixable in the sheet.
+    const errored = page.locator(".import-errored li").filter({ hasText: "E2e Blocked" });
+    await expect(errored.getByRole("link", { name: "E2e Blocked" })).toBeVisible();
+    await expect(errored).toContainText("Line 4, name: required");
   });
 
   test("links to the sheet being read", async ({ maintainerPage: page }) => {
