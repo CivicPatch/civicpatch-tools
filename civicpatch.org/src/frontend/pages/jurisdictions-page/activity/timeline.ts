@@ -214,6 +214,7 @@ function CivTimeline({ jurisdiction_ocdid, jurisdiction_name }: TimelineProps) {
                         .entry=${entry}
                         .isAdmin=${isAdmin}
                         .isSignedIn=${isSignedIn}
+                        .canViewScrapePages=${!!permissions.can_view_scrape_pages}
                         .jurisdictionOcdid=${jurisdictionOcdid}
                       ></civ-timeline-entry>`,
                     )}
