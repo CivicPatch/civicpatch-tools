@@ -68,8 +68,8 @@ def test_each_post_is_expected_once_under_its_taxonomy_label_and_division():
     posts = [_post("mayor"), _post("council-member", f"{_BASE}/ward:2")]
 
     assert _post_memberships(posts, [], _ROLE_CONFIG, _OCDID) == [
-        ExpectedMembership(organization_id="org", role_label="Mayor"),
-        ExpectedMembership(organization_id="org", role_label="Council Member", division="ward 2"),
+        ExpectedMembership(organization_id="org", role_id="mayor", role_label="Mayor"),
+        ExpectedMembership(organization_id="org", role_id="council-member", role_label="Council Member", division="ward 2"),
     ]
 
 
@@ -131,8 +131,8 @@ def test_research_is_expected_in_the_default_organization():
     )
 
     assert expected == [
-        ExpectedMembership(organization_id="government", role_label="Council Member", division="ward 3"),
-        ExpectedMembership(organization_id="government", role_label="Mayor"),
+        ExpectedMembership(organization_id="government", role_id="council-member", role_label="Council Member", division="ward 3"),
+        ExpectedMembership(organization_id="government", role_id="mayor", role_label="Mayor"),
     ]
 
 
@@ -290,7 +290,7 @@ def test_a_law_post_is_expected_as_many_times_as_its_maximum_memberships():
         [_law_post("council-member", "city council", 5)], [_COUNCIL, _MAYOR], [], build_taxonomy(_ROLE_CONFIG)
     )
 
-    assert expected == [ExpectedMembership(organization_id="council", role_label="Council Member")] * 5
+    assert expected == [ExpectedMembership(organization_id="council", role_id="council-member", role_label="Council Member")] * 5
 
 
 def test_a_law_post_stating_no_number_is_expected_once():
@@ -298,12 +298,12 @@ def test_a_law_post_stating_no_number_is_expected_once():
         [_law_post("mayor", "Office of the Mayor")], [_COUNCIL, _MAYOR], [], build_taxonomy(_ROLE_CONFIG)
     )
 
-    assert expected == [ExpectedMembership(organization_id="mayor", role_label="Mayor")]
+    assert expected == [ExpectedMembership(organization_id="mayor", role_id="mayor", role_label="Mayor")]
 
 
 def test_a_law_post_the_roster_already_expects_adds_nothing():
     """The roster's post stays as it is: a human may have corrected it."""
-    roster = [ExpectedMembership(organization_id="council", role_label="Council Member", division="ward 2")]
+    roster = [ExpectedMembership(organization_id="council", role_id="council-member", role_label="Council Member", division="ward 2")]
 
     expected = _expected_from_governing_law_posts(
         [_law_post("council-member", "City Council", 5), _law_post("mayor", "Office of the Mayor")],
@@ -312,7 +312,19 @@ def test_a_law_post_the_roster_already_expects_adds_nothing():
         build_taxonomy(_ROLE_CONFIG),
     )
 
-    assert expected == [ExpectedMembership(organization_id="mayor", role_label="Mayor")]
+    assert expected == [ExpectedMembership(organization_id="mayor", role_id="mayor", role_label="Mayor")]
+
+
+def test_a_law_post_the_roster_words_differently_is_still_the_same_post():
+    """A roster post carries its organization's label ("Select Board Member"), the law its role:
+    the same role, so nothing is added."""
+    roster = [ExpectedMembership(organization_id="council", role_id="council-member", role_label="Select Board Member")]
+
+    expected = _expected_from_governing_law_posts(
+        [_law_post("council-member", "City Council")], [_COUNCIL, _MAYOR], roster, build_taxonomy(_ROLE_CONFIG)
+    )
+
+    assert expected == []
 
 
 def test_a_law_post_in_an_unknown_organization_or_role_is_not_expected_and_the_organization_is_named():
@@ -348,7 +360,7 @@ async def test_a_first_scrape_still_researches_and_the_law_adds_the_posts_resear
 
     ask.assert_awaited_once()
     assert step.expected_memberships == [
-        ExpectedMembership(organization_id="council", role_label="Council Member"),
-        ExpectedMembership(organization_id="council", role_label="Council Member"),
-        ExpectedMembership(organization_id="mayor", role_label="Mayor"),
+        ExpectedMembership(organization_id="council", role_id="council-member", role_label="Council Member"),
+        ExpectedMembership(organization_id="council", role_id="council-member", role_label="Council Member"),
+        ExpectedMembership(organization_id="mayor", role_id="mayor", role_label="Mayor"),
     ]

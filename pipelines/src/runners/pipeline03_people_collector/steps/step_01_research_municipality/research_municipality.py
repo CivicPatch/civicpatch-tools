@@ -91,15 +91,15 @@ def _expected_from_governing_law_posts(
     (one when the law states none). The law says which posts exist; the roster, who holds them."""
     organization_ids = {organization.name.casefold(): organization.id for organization in organizations}
     role_labels = {role_id: label for label, role_id in taxonomy.role_ids.items()}
-    already_expected = {(membership.organization_id, membership.role_label) for membership in expected}
+    already_expected = {(membership.organization_id, membership.role_id) for membership in expected}
     found = []
     for post in governing_law_posts:
         organization_id = organization_ids.get(post.organization_id.casefold())
         role_label = role_labels.get(post.role)
-        if organization_id is None or role_label is None or (organization_id, role_label) in already_expected:
+        if organization_id is None or role_label is None or (organization_id, post.role) in already_expected:
             continue
         found.extend(
-            ExpectedMembership(organization_id=organization_id, role_label=role_label)
+            ExpectedMembership(organization_id=organization_id, role_id=post.role, role_label=role_label)
             for _ in range(post.maximum_memberships or 1)
         )
     return found
@@ -130,6 +130,7 @@ def _post_memberships(
     return [
         ExpectedMembership(
             organization_id=post.organization_id,
+            role_id=post.role_id,
             role_label=post.role_label,
             division=_division(post.division_ocdid, jurisdiction_ocdid),
             designations=_designations_held_on(post, held, taxonomy),
@@ -203,6 +204,7 @@ def _researched_memberships(
                 organization_id=_organization_for(
                     person.organization, parsed.role, organizations, default
                 ).id,
+                role_id=taxonomy.role_ids[parsed.role],
                 role_label=parsed.role,
                 division=_first_division(designations),
                 designations=parsed.other_designations,

@@ -23,7 +23,10 @@ _TAXONOMY = build_taxonomy(
 
 
 def _expected(*roles: str) -> list[ExpectedMembership]:
-    return [ExpectedMembership(organization_id="government", role_label=role) for role in roles]
+    return [
+        ExpectedMembership(organization_id="government", role_id=role.lower().replace(" ", "-"), role_label=role)
+        for role in roles
+    ]
 
 
 def _seen(name: str, label: str) -> list[PersonSourceRecord]:

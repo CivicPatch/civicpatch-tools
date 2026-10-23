@@ -24,7 +24,12 @@ def _organization(organization_id: str) -> KnownOrganization:
 
 
 def _member(organization_id: str, role_label: str, division: str | None = None) -> ExpectedMembership:
-    return ExpectedMembership(organization_id=organization_id, role_label=role_label, division=division)
+    return ExpectedMembership(
+        organization_id=organization_id,
+        role_id=role_label.lower().replace(" ", "-"),
+        role_label=role_label,
+        division=division,
+    )
 
 
 def _council(count: int) -> list[ExpectedMembership]:
@@ -167,7 +172,7 @@ def test_a_missing_roles_designations_steer_the_crawl_too():
     """"Seat 2" is how an at-large council's page words the member nobody has found yet."""
     [need] = organization_needs(
         [_organization("council")],
-        [ExpectedMembership(organization_id="council", role_label="Council Member", designations=["Seat 2"])],
+        [ExpectedMembership(organization_id="council", role_id="council-member", role_label="Council Member", designations=["Seat 2"])],
         {},
         _TAXONOMY,
     )

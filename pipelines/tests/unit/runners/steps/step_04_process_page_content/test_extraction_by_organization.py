@@ -133,9 +133,9 @@ def test_a_lone_placeholder_organization_runs_unscoped_but_is_stamped_with_its_i
 
 def test_several_organizations_each_get_a_scoped_run_with_their_roles_and_divisions():
     memberships = [
-        ExpectedMembership(organization_id="council", role_label="Council Member", division="district 1"),
-        ExpectedMembership(organization_id="council", role_label="Council Member", division="district 2"),
-        ExpectedMembership(organization_id="mayor", role_label="Mayor"),
+        ExpectedMembership(organization_id="council", role_id="council-member", role_label="Council Member", division="district 1"),
+        ExpectedMembership(organization_id="council", role_id="council-member", role_label="Council Member", division="district 2"),
+        ExpectedMembership(organization_id="mayor", role_id="mayor", role_label="Mayor"),
     ]
 
     scopes = extraction_scopes([_COUNCIL, _MAYOR], memberships)

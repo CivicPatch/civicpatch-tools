@@ -145,3 +145,10 @@ export function groupByRole<T extends { id: string; memberships?: PostRole[] }>(
   }
   return order.map((key) => groups.get(key)!);
 }
+
+/** A role and what this place calls it, said once when the two agree: "Member (Selectboard
+ * member)", but "Mayor". */
+export function roleWithLabel(role: string, label: string): string {
+  if (!label || label.trim().toLowerCase() === role.trim().toLowerCase()) return role;
+  return `${role} (${label})`;
+}

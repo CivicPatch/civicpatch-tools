@@ -59,7 +59,7 @@ def test_text_gets_phrases_and_urls_get_their_tokens():
         ),
     ]
 
-    memberships = [ExpectedMembership(organization_id="council", role_label="Mayor")]
+    memberships = [ExpectedMembership(organization_id="council", role_id="mayor", role_label="Mayor")]
 
     phrases = search_phrases(organizations, memberships)
 
@@ -71,9 +71,9 @@ def test_expected_roles_and_designations_are_searched_once_each():
     """"Position 8" names no division, so it is wording to search for and nothing more."""
     organizations = [KnownOrganization(id="council", name="City Council", posts=[])]
     memberships = [
-        ExpectedMembership(organization_id="council", role_label="Council Member", designations=["Position 8"]),
+        ExpectedMembership(organization_id="council", role_id="council-member", role_label="Council Member", designations=["Position 8"]),
         ExpectedMembership(
-            organization_id="council", role_label="Council Member", division="ward 2", designations=["Position 8"]
+            organization_id="council", role_id="council-member", role_label="Council Member", division="ward 2", designations=["Position 8"]
         ),
     ]
 
@@ -87,7 +87,7 @@ def test_expected_roles_and_designations_are_searched_once_each():
 def test_roles_to_look_for_names_an_organization_nobody_is_expected_in():
     select_board = KnownOrganization(id="select", name="Select Board", role_labels=["Select Board Member"])
     town_meeting = KnownOrganization(id="meeting", name="Town Meeting", role_labels=["Moderator"])
-    expected = [ExpectedMembership(organization_id="select", role_label="Select Board Member")]
+    expected = [ExpectedMembership(organization_id="select", role_id="select-board-member", role_label="Select Board Member")]
 
     assert roles_to_look_for(expected, [select_board, town_meeting]) == ["Select Board Member", "Moderator"]
 
@@ -95,16 +95,16 @@ def test_roles_to_look_for_names_an_organization_nobody_is_expected_in():
 def test_the_forms_role_labels_come_only_from_organizations_nobody_is_expected_in():
     expected_in = KnownOrganization(id="a", name="Select Board", role_labels=["Select Board Member"])
     nobody = KnownOrganization(id="b", name="Town Meeting", role_labels=["Moderator", "Town Meeting Member"])
-    memberships = [ExpectedMembership(organization_id="a", role_label="Select Board Member")]
+    memberships = [ExpectedMembership(organization_id="a", role_id="select-board-member", role_label="Select Board Member")]
 
     assert government_form_role_labels([expected_in, nobody], memberships) == ["Moderator", "Town Meeting Member"]
 
 
 def test_expected_divisions_skip_at_large_and_repeat_once():
     memberships = [
-        ExpectedMembership(organization_id="a", role_label="Council Member", division="ward 1"),
-        ExpectedMembership(organization_id="a", role_label="Council Member", division="ward 1"),
-        ExpectedMembership(organization_id="a", role_label="Mayor"),
+        ExpectedMembership(organization_id="a", role_id="council-member", role_label="Council Member", division="ward 1"),
+        ExpectedMembership(organization_id="a", role_id="council-member", role_label="Council Member", division="ward 1"),
+        ExpectedMembership(organization_id="a", role_id="mayor", role_label="Mayor"),
     ]
 
     assert expected_divisions(memberships) == ["ward 1"]
