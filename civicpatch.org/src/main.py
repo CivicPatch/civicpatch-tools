@@ -30,11 +30,13 @@ import routers.api.review_actions as api_review_actions_router
 import routers.api.review_cards as api_review_cards_router
 import routers.api.review_sessions as api_review_sessions_router
 import routers.api.roles as api_roles_router
+import routers.api.roster_comparisons as api_roster_comparisons_router
 import routers.api.scrape_settings as api_scrape_settings_router
 import routers.api.summary as api_summary_router
 import routers.api.user as api_user_router
 import routers.webhooks.blog_sync as blog_sync_webhook_router
 import routers.webhooks.github as github_webhook_router
+import routers.mcp as mcp_router
 import services.collector_runs as collector_runs_service
 from database.database import (
     close_pool,
@@ -47,6 +49,7 @@ from fastapi import (
     WebSocketDisconnect,
 )
 from fastapi.middleware.cors import CORSMiddleware
+from lib.body_limit import PathBodyLimit
 from fastapi.security import APIKeyHeader
 from fastapi.templating import Jinja2Templates
 from frontend.static import HashedAssetStaticFiles
@@ -81,6 +84,12 @@ is_production = os.getenv("APP_ENVIRONMENT", "").lower() == "production"
 api_key_header = APIKeyHeader(name="Authorization", auto_error=False)
 
 
+_instance_url = environment.instance_url()
+mcp_server = mcp_router.build_server(_instance_url)
+# Built before the lifespan runs: `session_manager` only exists once the app has been.
+mcp_app = mcp_router.build_asgi_app(mcp_server, _instance_url, environment.mcp_allowed_hosts())
+
+
 @asynccontextmanager
 async def lifespan(app):
     await get_pool()
@@ -88,7 +97,8 @@ async def lifespan(app):
     # Held separately from app.state.supabase to keep auth.admin.* calls isolated
     # from user sign-in flows. See supabase-py issue #1143.
     app.state.supabase_admin = await create_supabase_admin_client()
-    yield
+    async with mcp_server.session_manager.run():
+        yield
     for client in (app.state.supabase, app.state.supabase_admin):
         try:
             await client.auth.close()
@@ -137,6 +147,11 @@ app.add_middleware(
     allow_origins=allowed_origins,
     allow_credentials=True,
     allow_headers=["*"],
+)
+app.add_middleware(
+    PathBodyLimit,
+    path=api_roster_comparisons_router.UPLOAD_PATH,
+    max_body_size=api_roster_comparisons_router.MAX_UPLOAD_BYTES,
 )
 
 app.include_router(
@@ -260,6 +275,14 @@ app.include_router(
     prefix="/api/v1/changeset_summaries",
     tags=["changeset_summaries"],
     include_in_schema=False,
+)
+
+# An agent's upload of a state's officials, compared with civicpatch's roster and kept as a run.
+# MAINTAINERS and up; the router carries its own dependency.
+app.include_router(
+    api_roster_comparisons_router.get_router(),
+    prefix=api_roster_comparisons_router.UPLOAD_PATH,
+    tags=["roster-comparisons"],
 )
 
 # Allow you to create your api keys
@@ -429,6 +452,10 @@ async def websocket_endpoint(websocket: WebSocket):
         for task in tasks.values():
             task.cancel()
 
+
+# The MCP server: a gated route that hands the request to the SDK's app. Not a mount: a mount at
+# /mcp would not match /mcp itself, and the catch-all below would answer with a jurisdiction 404.
+app.include_router(mcp_router.get_router(mcp_app))
 
 # Must be last: contains a /{path:path} catch-all for jurisdiction pages
 app.include_router(frontend_router(templates))
