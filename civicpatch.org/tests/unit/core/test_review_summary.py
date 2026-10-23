@@ -31,10 +31,11 @@ _T = datetime(2026, 1, 1, tzinfo=timezone.utc)
 _BASE = "ocd-division/country:us/state:tx/place:alpha"
 
 
-def _membership(role_id="mayor", division=f"{_BASE}/council_district:1"):
+def _membership(role_id="mayor", division=f"{_BASE}/council_district:1", extra_roles=()):
     return Membership(
         post=PostKey(organization_id="org-1", role_id=role_id, division_ocdid=division),
         opened_at=_T,
+        extra_roles=extra_roles,
     )
 
 
@@ -117,6 +118,31 @@ def test_fold_summary_flags_duplicate_unique_roles():
     ]
     assert len(dupes) == 1
     assert set(dupes[0].person_ids) == {"a", "b"}
+
+
+def _president(person_id, name, wards):
+    memberships = tuple(
+        _membership("member", f"{_BASE}/ward:{ward}", extra_roles=("president",)) for ward in wards
+    )
+    return Person(id=person_id, name=name, memberships=memberships)
+
+
+def _duplicate_unique_role_issues(proposed_people):
+    summary = _fold_summary([], proposed_people, unique_role_ids=frozenset({"president"}))
+    return [issue for issue in summary.issues if issue.code is IssueCode.DUPLICATE_UNIQUE_ROLE]
+
+
+@pytest.mark.unit
+def test_fold_summary_flags_a_unique_member_role_held_twice():
+    dupes = _duplicate_unique_role_issues([_president("a", "Ann Lee", [1]), _president("b", "Bob Smith", [2])])
+
+    assert len(dupes) == 1
+    assert set(dupes[0].person_ids) == {"a", "b"}
+
+
+@pytest.mark.unit
+def test_fold_summary_one_person_holding_a_unique_role_twice_is_no_duplicate():
+    assert _duplicate_unique_role_issues([_president("a", "Ann Lee", [1, 2])]) == []
 
 
 @pytest.mark.unit

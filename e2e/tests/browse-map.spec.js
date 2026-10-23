@@ -1,5 +1,5 @@
 /**
- * User story: visitor browses the map and selects a state
+ * User story: a signed-in user browses the map and selects a state (the signed-out home has no map)
  *
  * Given the seeded NJ map fixtures
  * When I land on the home page
@@ -17,7 +17,7 @@
 import { test, expect } from "../fixtures/index.js";
 
 test.describe("Browse map", () => {
-  test.beforeEach(async ({ page }) => {
+  test.beforeEach(async ({ authenticatedPage: page }) => {
     // The pmtiles bucket allowlists origins for CORS — it answers `https://civicpatch.org` and
     // nobody else, so from localhost the browser blocks every range fetch and the states layer
     // silently has no features. Proxy through Node, which has no CORS, and return the bytes with
@@ -39,13 +39,18 @@ test.describe("Browse map", () => {
     await page.goto("/");
   });
 
-  test("home page renders the map and state selector", async ({ page }) => {
+  // A tile fetch still in flight when a test ends fails it at teardown, after its assertions passed.
+  test.afterEach(async ({ authenticatedPage: page }) => {
+    await page.unrouteAll({ behavior: "ignoreErrors" });
+  });
+
+  test("home page renders the map and state selector", async ({ authenticatedPage: page }) => {
     await expect(page.locator(".map-container")).toBeVisible();
     await expect(page.locator("civ-select-state select")).toBeVisible();
     await expect(page.locator(".map-reset-btn")).toHaveCount(0);
   });
 
-  test("selecting a state fetches local status and reveals the reset button", async ({ page }) => {
+  test("selecting a state fetches local status and reveals the reset button", async ({ authenticatedPage: page }) => {
     const responsePromise = page.waitForResponse(/\/api\/v1\/coverage\/nj\/local/);
     await page.locator("civ-select-state select").selectOption("nj");
     const res = await responsePromise;
@@ -55,7 +60,7 @@ test.describe("Browse map", () => {
     await expect(page.locator("civ-select-state select")).toHaveValue("nj");
   });
 
-  test("national view adds the states fill layer and applies coverage feature-state", async ({ page }) => {
+  test("national view adds the states fill layer and applies coverage feature-state", async ({ authenticatedPage: page }) => {
     // `isSourceLoaded` goes true when the source is *registered*, before any tile for the
     // current viewport has been parsed — so wait for the features themselves.
     await page.waitForFunction(() => {
@@ -82,7 +87,7 @@ test.describe("Browse map", () => {
     expect(result.withCoverageCount).toBeGreaterThan(0);
   });
 
-  test("reset clears the state selector and hides itself", async ({ page }) => {
+  test("reset clears the state selector and hides itself", async ({ authenticatedPage: page }) => {
     // The button appears when the drill level leaves `national`, which the state effect only
     // does once the style is ready — so wait for the fetch that selection kicks off, as the
     // sibling test above does. Asserting straight after `selectOption` races the map's load.
