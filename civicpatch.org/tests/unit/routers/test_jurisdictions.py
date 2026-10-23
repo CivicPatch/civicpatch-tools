@@ -215,6 +215,24 @@ def test_get_jurisdiction_returns_data(client):
 
 
 @pytest.mark.unit
+def test_get_jurisdiction_links_its_public_page(client):
+    ocdid = "ocd-jurisdiction/country:us/state:ca/place:oakland/government"
+    with patch(
+        "database.jurisdictions.get_jurisdiction",
+        new_callable=AsyncMock,
+        return_value={"data": {"id": ocdid, "name": "Oakland"}, "geo_center": None},
+    ), patch(
+        "services.government_form.government_form_summary", new_callable=AsyncMock, return_value=None
+    ), patch(
+        "routers.api.jurisdictions.environment.get_env_vars",
+        return_value={"INSTANCE_URL": "https://civicpatch.test/"},
+    ):
+        response = client.get("/jurisdictions", params={"jurisdiction_ocdid": ocdid})
+
+    assert response.json()["page_url"] == f"https://civicpatch.test/{ocdid}"
+
+
+@pytest.mark.unit
 def test_get_jurisdiction_returns_its_government_form(client):
     summary = GovernmentFormSummary(
         value=GovernmentForm.OPEN_TOWN_MEETING,

@@ -362,6 +362,45 @@ erDiagram
         timestamptz     updated_at
     }
 
+    roster_comparison_runs {
+        uuid            id                  PK "256: an uploaded roster (an agent's conversion of a state's officials) compared with civicpatch's. Kept forever, so a state's numbers can be followed across runs. Writes nothing else"
+        text            state               "idx: (state, started_at DESC)"
+        uuid            started_by_user_id  FK
+        timestamptz     started_at
+        jsonb           source_columns      "our field → the original file's column(s), as the agent reported them"
+        jsonb           corrections         "what the agent's conversion changed in jurisdiction_ocdid or name; its own account, never checked"
+        jsonb           rejected            "[{source_row, jurisdiction_ocdid, reason}]: rows with an unknown ocdid or one outside state"
+        jsonb           rates               "ComparisonRates for the state: counts only, percentages derived where shown"
+        int             jurisdictions_not_named "civicpatch jurisdictions in the state the upload never named"
+    }
+
+    roster_comparison_jurisdictions {
+        uuid            run_id              PK "FK ON DELETE CASCADE"
+        text            jurisdiction_ocdid  PK
+        jsonb           rates               "ComparisonRates for this jurisdiction"
+    }
+
+    roster_comparison_people {
+        uuid            run_id              PK "FK ON DELETE CASCADE"
+        text            jurisdiction_ocdid  PK
+        int             position            PK "order within the jurisdiction: uploaded rows first, then civicpatch-only people"
+        text            outcome             "CHECK matched|possible_match|only_in_uploaded_data|only_in_civicpatch (PersonOutcome)"
+        int_null        source_row          "row number in the original file; NULL for only_in_civicpatch"
+        uuid_null       person_id           "no FK: the run keeps what civicpatch held then, even after a delete"
+        jsonb           comparison          "the whole PersonComparison: uploaded row, candidates, per-field levels and values, warnings"
+    }
+
+    roster_comparison_drafts {
+        uuid            id                  PK "257: an upload sent in batches through MCP tools (agents whose shell cannot reach the API). Deleted when finished into a run; expires after a day"
+        uuid            owner_user_id       FK "ON DELETE CASCADE; only the owner may add rows or finish"
+        timestamptz     created_at          "idx"
+        text            state
+        jsonb           source_columns
+        jsonb           corrections
+        jsonb           rows                "UploadedRow[] appended batch by batch"
+        int             row_count           "kept beside rows so the 20,000-row cap is checked without reading them"
+    }
+
     roles ||--o{ role_aliases : "role_id"
     jurisdictions ||--o{ organizations : "jurisdiction_ocdid"
     jurisdictions ||--o{ divisions : "jurisdiction_ocdid"
@@ -403,6 +442,10 @@ erDiagram
     jurisdictions ||--o{ activity : "jurisdiction_ocdid"
     roles ||--o{ activity : "jurisdiction_ocdid"
     review_sessions ||--o{ review_session_entries : "review_session_id"
+    users ||--o{ roster_comparison_runs : "started_by_user_id"
+    roster_comparison_runs ||--o{ roster_comparison_jurisdictions : "run_id (ON DELETE CASCADE)"
+    roster_comparison_runs ||--o{ roster_comparison_people : "run_id (ON DELETE CASCADE)"
+    users ||--o{ roster_comparison_drafts : "owner_user_id (ON DELETE CASCADE)"
 ```
 
 **Notes:**

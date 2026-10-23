@@ -2,6 +2,7 @@ import urllib.parse
 
 import database.changesets as changesets
 import database.jurisdictions as database
+import environment
 import lib.cache as cache_service
 import services.roster_edits as roster_edits
 import services.jurisdiction_pull_request as jurisdiction_pr_service
@@ -11,6 +12,7 @@ import services.government_form as government_form_service
 import services.jurisdiction_extras as jurisdiction_extras_service
 import services.roster_source_urls as roster_source_urls_service
 from database.users import SYSTEM_USER_ID
+from core.page_urls import jurisdiction_page_url
 from core.jurisdiction_search import build_fuzzy_tokens, build_tsquery
 from core.people_edits import PeopleValidationError
 from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException, Query
@@ -88,6 +90,26 @@ def _empty_search_response(
     )
 
 
+async def search_in_state(
+    state: str, q: str, limit: int, offset: int
+) -> tuple[int, list[JurisdictionSearchResult]]:
+    """The state-scoped search the route serves; the MCP `find_jurisdiction` tool calls it too."""
+    total_items, jurisdictions = await database.search_jurisdictions(state, q, limit, offset)
+    results = [
+        JurisdictionSearchResult(
+            jurisdiction_ocdid=j["jurisdiction_ocdid"],
+            level="local",
+            name=j.get("name", ""),
+            display_name=j.get("display_name"),
+            population=j.get("population"),
+            url=j.get("url"),
+            parent_names=j.get("parent_names", []),
+        )
+        for j in jurisdictions
+    ]
+    return total_items, results
+
+
 def get_router() -> APIRouter:
     router = APIRouter()
 
@@ -109,6 +131,7 @@ def get_router() -> APIRouter:
         response = {
             "data": jurisdiction_data["data"],
             "last_collected_at": jurisdiction_data.get("last_collected_at"),
+            "page_url": jurisdiction_page_url(environment.instance_url(), jurisdiction_ocdid),
             **details.model_dump(),
         }
 
@@ -271,21 +294,7 @@ def get_router() -> APIRouter:
         # A `state` filter scopes the search to a single state (used by the
         # config editor's locality picker). Without it, searches nationwide.
         if state:
-            total_items, jurisdictions = await database.search_jurisdictions(
-                state, q, limit, (page - 1) * limit
-            )
-            results = [
-                JurisdictionSearchResult(
-                    jurisdiction_ocdid=j["jurisdiction_ocdid"],
-                    level="local",
-                    name=j.get("name", ""),
-                    display_name=j.get("display_name"),
-                    population=j.get("population"),
-                    url=j.get("url"),
-                    parent_names=j.get("parent_names", []),
-                )
-                for j in jurisdictions
-            ]
+            total_items, results = await search_in_state(state, q, limit, (page - 1) * limit)
             return JurisdictionSearchResponse(
                 total_items=total_items,
                 page=page,

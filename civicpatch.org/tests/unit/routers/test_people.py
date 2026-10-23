@@ -87,6 +87,19 @@ def test_the_public_read_stays_one_jurisdiction_and_unpaged(client):
 
 
 @pytest.mark.unit
+def test_the_public_read_links_the_jurisdictions_page(client):
+    with patch(
+        "routers.api.people.database.get_roster", new_callable=AsyncMock, return_value=[]
+    ), patch(
+        "routers.api.people.environment.get_env_vars",
+        return_value={"INSTANCE_URL": "https://civicpatch.test"},
+    ):
+        response = client.get(f"/people?jurisdiction_ocdid={TEST_OCDID}")
+
+    assert response.json()["page_url"] == f"https://civicpatch.test/{TEST_OCDID}"
+
+
+@pytest.mark.unit
 def test_the_public_read_withholds_what_a_reader_is_not_owed(client):
     """`labels` is server-owned input (`core.people_edits.SERVER_OWNED_FIELDS`). It was on this
     public unpaged endpoint until 2026-09-24, because the route returned `PERSON_JSON`'s dicts and

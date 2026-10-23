@@ -1,12 +1,11 @@
-"""The OpenAPI schema (`/docs`) lists only the public contract. Every other route is
-`include_in_schema=False`, so a new route fails here until someone decides whether it is public.
-"""
+"""The OpenAPI schema (`/docs`) lists only the documented contract: the public routes, plus the
+maintainer-only ones agents discover there. A new route fails here until someone decides."""
 
 import pytest
 
 from main import app
 
-PUBLIC_ROUTES = {
+DOCUMENTED_ROUTES = {
     ("GET", "/api/v1/jurisdictions"),
     ("GET", "/api/v1/jurisdictions/available"),
     ("GET", "/api/v1/jurisdictions/states"),
@@ -30,14 +29,23 @@ PUBLIC_ROUTES = {
     ("GET", "/api/v1/coverage/{state}/municipalities"),
     ("GET", "/api/v1/blog/posts"),
     ("GET", "/api/v1/elections"),
+    # Maintainers only, but documented: agents discover them here and through MCP.
+    ("POST", "/api/v1/roster-comparisons"),
+    ("GET", "/api/v1/roster-comparisons"),
+    ("POST", "/api/v1/roster-comparisons/drafts"),
+    ("POST", "/api/v1/roster-comparisons/drafts/{draft_id}/rows"),
+    ("POST", "/api/v1/roster-comparisons/drafts/{draft_id}/finish"),
+    ("GET", "/api/v1/roster-comparisons/{run_id}"),
+    ("GET", "/api/v1/roster-comparisons/{run_id}/jurisdictions/{jurisdiction_ocdid}"),
+    ("GET", "/api/v1/roster-comparisons/{run_id}/fields/{field}"),
 }
 
 
 @pytest.mark.unit
-def test_openapi_schema_lists_only_public_routes():
+def test_openapi_schema_lists_only_documented_routes():
     documented = {
         (method.upper(), path)
         for path, operations in app.openapi()["paths"].items()
         for method in operations
     }
-    assert documented == PUBLIC_ROUTES
+    assert documented == DOCUMENTED_ROUTES
