@@ -37,6 +37,9 @@ import { loadingLine } from "./loading-line.js";
 
 const POLL_INTERVAL_MS = 2000;
 const HISTORY_PER_PAGE = 10;
+// Starting an import writes changesets: off until Mango-chan turns it back on.
+const IMPORTS_PAUSED = true;
+const IMPORTS_PAUSED_HINT = "Sheet imports are paused. Past imports below stay available.";
 
 function progressPanel(batch: ImportProgress | null) {
   // Null for the moment between starting and the first poll returning.
@@ -359,10 +362,13 @@ function ImportPage() {
                         >
                       </p>`
                     : null}
+                  ${IMPORTS_PAUSED
+                    ? html`<p class="import-hint">${IMPORTS_PAUSED_HINT}</p>`
+                    : null}
                   <button
                     type="button"
                     class="import-action"
-                    ?disabled=${busy}
+                    ?disabled=${IMPORTS_PAUSED || busy}
                     @click=${handleStart}
                   >
                     ${busy ? "Importing…" : "Import"}

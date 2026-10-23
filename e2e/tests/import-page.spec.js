@@ -1,15 +1,15 @@
 /**
- * User story: a maintainer imports a curated sheet
+ * User story: a maintainer reviews past sheet imports while new ones are paused
  *
- * Given the roster sheet has rows
- * When I import, I am told what was read and what was rejected
- * And the page follows the run to completion on its own
- * Then I review what it produced and publish the localities I pick
+ * Given starting an import is paused
+ * Then the Import button is disabled and says why
+ * And a finished import still lists the rows it rejected
+ * And I can publish the localities I pick from it
  *
  * Everything the importer does crosses into Google Sheets, which the e2e stack has no
  * credentials for, so the endpoints are stubbed: this tests the client wiring — that each
- * button reaches the right endpoint and the page moves through import → progress → review →
- * publish — not the import itself. The review panel for a finished batch is rendered inline,
+ * button reaches the right endpoint and a finished batch renders its review and publishes —
+ * not the import itself. The review panel for a finished batch is rendered inline,
  * grouped under "Past imports" on the same page, once that batch appears in the paged
  * `/imports/history` response.
  *
@@ -121,33 +121,36 @@ async function stubIdle(page) {
 }
 
 test.describe("Import from the sheet", () => {
-  test("importing reports what was read and what was rejected", async ({
+  test("the Import button is disabled while imports are paused", async ({
+    maintainerPage: page,
+  }) => {
+    await stubIdle(page);
+    let started = false;
+    await page.route(START, (route) => {
+      if (route.request().method() === "POST") started = true;
+      return route.fallback();
+    });
+
+    await page.goto("/imports");
+
+    await expect(page.getByRole("button", { name: "Import" })).toBeDisabled();
+    await expect(page.getByText("Sheet imports are paused.")).toBeVisible();
+    expect(started).toBe(false);
+  });
+
+  test("a finished import lists the rows it rejected", async ({
     maintainerPage: page,
   }) => {
     await stubIdle(page);
     const finished = progress("succeeded", PREVIEW_BODY.errors);
+    await page.route(LATEST, (route) => json(route, finished));
     await page.route(PROGRESS, (route) => json(route, finished));
     await page.route(HISTORY, (route) => historyRoute(route, [finished]));
     await page.route(REVIEW, (route) => json(route, reviewBody()));
-    await page.route(START, (route) =>
-      route.request().method() === "POST"
-        ? json(route, { batch_id: "batch-e2e", preview: PREVIEW_BODY })
-        : route.fallback(),
-    );
 
     await page.goto("/imports");
-    await page.locator(".import-action").click();
 
-    const summary = page.locator(".import-summary");
-    await expect(
-      summary.getByRole("row").filter({ hasText: "rows found" }),
-    ).toContainText("3");
-    await expect(
-      summary.getByRole("row").filter({ hasText: "jurisdictions found" }),
-    ).toContainText("1");
-
-    // The rejected row is listed on its finished batch, where it outlives a refresh: under the
-    // locality's name, with its line and column, so it is fixable in the sheet.
+    // Under the locality's name, with its line and column, so it is fixable in the sheet.
     const errored = page.locator(".import-errored li").filter({ hasText: "E2e Blocked" });
     await expect(errored.getByRole("link", { name: "E2e Blocked" })).toBeVisible();
     await expect(errored).toContainText("Line 4, name: required");
@@ -160,42 +163,6 @@ test.describe("Import from the sheet", () => {
     await expect(
       page.getByRole("link", { name: "Open the sheet" }),
     ).toHaveAttribute("href", "https://docs.google.com/spreadsheets/d/e2e");
-  });
-
-  test("follows a started import through to its review without a reload", async ({
-    maintainerPage: page,
-  }) => {
-    await stubIdle(page);
-    await page.route(REVIEW, (route) => json(route, reviewBody()));
-
-    // Running on the first poll, finished on the next: the page has to keep asking. History
-    // only picks up the batch once it is finished, same as a real backend would — otherwise
-    // the review would appear regardless of whether the poll ever resolved.
-    let polls = 0;
-    let finished = false;
-    await page.route(PROGRESS, (route) => {
-      const status = polls++ === 0 ? "running" : "succeeded";
-      if (status === "succeeded") finished = true;
-      return json(route, progress(status));
-    });
-    await page.route(HISTORY, (route) =>
-      historyRoute(route, finished ? [progress("succeeded")] : []),
-    );
-    await page.route(START, (route) =>
-      route.request().method() === "POST"
-        ? json(route, { batch_id: "batch-e2e", preview: PREVIEW_BODY })
-        : route.fallback(),
-    );
-
-    await page.goto("/imports");
-    // Not `.import-action` — a past batch's own Publish buttons share that class and are
-    // already on the page, grouped under "Past imports" alongside the Import button.
-    await page.getByRole("button", { name: "Import" }).click();
-
-    await expect(page.getByText("Importing…")).toBeVisible();
-    // Arrives on its own — the poll used to die before the first batch existed, leaving this
-    // stuck until somebody reloaded.
-    await expect(page.getByText("Review and publish")).toBeVisible();
   });
 
   test("publishes only the localities that were picked", async ({
