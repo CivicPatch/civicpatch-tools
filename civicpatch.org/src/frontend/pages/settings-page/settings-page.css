@@ -80,6 +80,42 @@
   user-select: all;
 }
 
+.api-keys__command {
+  margin: 0 0 0.75rem;
+  padding: 0.5rem 0.75rem;
+  background: var(--surface);
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  user-select: all;
+}
+
+/* Per-agent setup */
+.api-keys__agent-picker {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 0.5rem 0;
+}
+
+.api-keys__agent-picker select {
+  width: auto;
+  margin: 0;
+}
+
+.api-keys__field-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.api-keys__field-label {
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+}
+
 .api-keys__table {
   font-size: 0.9rem;
   margin: 0 0 1rem;

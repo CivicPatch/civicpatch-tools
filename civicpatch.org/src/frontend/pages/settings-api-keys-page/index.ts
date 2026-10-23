@@ -2,7 +2,7 @@ import { html } from "lit-html";
 import { component } from "haunted";
 import "../settings-page/api-keys.js";
 import { canManageApiKeys } from "../settings-page/api-key-access.js";
-import { SectionNav, overviewSection } from "../../components/section-nav/index.js";
+import { SectionNav, settingsSection } from "../../components/section-nav/index.js";
 import "../../components/panel/panel.css";
 import "../settings-page/settings-page.css";
 
@@ -28,7 +28,7 @@ function SettingsApiKeysPage({ user }: { user: string }) {
       </div>
 
       <div class="sectioned">
-        ${SectionNav("overview", overviewSection(), "/settings/api-keys")}
+        ${SectionNav("settings", settingsSection(userData.permissions ?? {}), "/settings/api-keys")}
         <div class="secbody">${canHoldKeys ? html`<api-keys></api-keys>` : null}</div>
       </div>
     </main>
