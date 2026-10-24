@@ -10,8 +10,9 @@ import pytest
 from fastapi import HTTPException
 from fastapi.routing import APIRoute
 
+from lib.auth import get_optional_user
 from main import app
-from schemas.common import Identity, UserRole
+from schemas.common import ApiKeyScope, Identity, UserRole
 
 pytestmark = pytest.mark.unit
 
@@ -72,7 +73,7 @@ def _gates(dependant) -> list:
     return found
 
 
-async def _passes(route: APIRoute, identity: Identity) -> bool:
+async def _passes(route: APIRoute, identity: Identity | None) -> bool:
     for gate in _gates(route.dependant):
         try:
             await gate(identity=identity)
@@ -103,6 +104,84 @@ async def test_the_service_key_reaches_every_route_it_is_used_for(method, path):
 )
 async def test_the_service_key_is_refused_by_person_routes(method, path):
     assert not await _passes(_route(method, path), SERVICE_KEY)
+
+
+AGENT_KEY = Identity(
+    type="user_key",
+    provider="supabase",
+    provider_user_id="sb-agent",
+    email="agent@example.com",
+    role=UserRole.MAINTAINERS.value,
+    user_id="00000000-0000-4000-8000-0000000000bb",
+    key_scope=ApiKeyScope.AGENT,
+)
+
+# Every route an agent key reaches beyond the public ones: MCP, and the comparisons (CLI agents
+# upload with curl). A route joins by passing `agent_key=AgentKey.ACCEPTED` and being listed here.
+AGENT_KEY_ROUTES = {
+    ("GET", "/mcp"),
+    ("POST", "/mcp"),
+    ("DELETE", "/mcp"),
+    ("POST", "/api/v1/roster-comparisons"),
+    ("GET", "/api/v1/roster-comparisons"),
+    ("POST", "/api/v1/roster-comparisons/drafts"),
+    ("POST", "/api/v1/roster-comparisons/drafts/{draft_id}/rows"),
+    ("POST", "/api/v1/roster-comparisons/drafts/{draft_id}/finish"),
+    ("GET", "/api/v1/roster-comparisons/{run_id}"),
+    ("GET", "/api/v1/roster-comparisons/{run_id}/jurisdictions/{jurisdiction_ocdid:path}"),
+    ("GET", "/api/v1/roster-comparisons/{run_id}/fields/{field}"),
+}
+
+
+@pytest.mark.asyncio
+async def test_an_agent_key_reaches_exactly_its_routes_beyond_the_public_ones():
+    beyond_public = {
+        key
+        for route in app.routes
+        if isinstance(route, APIRoute)
+        and await _passes(route, AGENT_KEY)
+        and not await _passes(route, None)
+        for key in _route_keys(route)
+    }
+    assert beyond_public == AGENT_KEY_ROUTES
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize(
+    "method,path",
+    [
+        ("PATCH", "/api/v1/jurisdictions/{jurisdiction_ocdid:path}"),
+        ("POST", "/api/v1/organizations/{organization_id}/posts"),
+        ("POST", "/api/v1/api_keys"),
+        ("POST", "/api/v1/api_keys/{api_key_id}/revoke"),
+    ],
+)
+async def test_an_agent_key_is_refused_by_writes_its_owner_may_make(method, path):
+    """Its owner is a maintainer: these are what a leaked agent key must not reach."""
+    route = _route(method, path)
+    assert await _passes(route, _person(UserRole.MAINTAINERS))
+    assert not await _passes(route, AGENT_KEY)
+
+
+def _direct_caller_reads(dependant, parent=None) -> list[str]:
+    found = []
+    for dependency in dependant.dependencies:
+        if dependency.call is get_optional_user and parent not in ("require_route_access", "get_optional_person"):
+            found.append(parent or "the route")
+        name = getattr(dependency.call, "__qualname__", "").split(".")[0]
+        found.extend(_direct_caller_reads(dependency, name))
+    return found
+
+
+def test_only_the_gate_and_get_optional_person_read_the_raw_caller():
+    """Anything else would hand an agent key its owner's role outside the routes that opt in."""
+    leaks = [
+        f"{sorted(route.methods)} {route.path} via {where}"
+        for route in app.routes
+        if isinstance(route, APIRoute)
+        for where in _direct_caller_reads(route.dependant)
+    ]
+    assert leaks == []
 
 
 @pytest.mark.asyncio

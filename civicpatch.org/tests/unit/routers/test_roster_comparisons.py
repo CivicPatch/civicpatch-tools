@@ -22,10 +22,12 @@ from schemas.roster_comparisons import (
     RosterComparisonListItem,
     RosterComparisonListPage,
     RosterComparisonRun,
+    RejectedReason,
+    RejectedRow,
     RosterComparisonSummary,
 )
 import services.roster_comparison_drafts as drafts_service
-from services.roster_comparison import RunNotFound
+from services.roster_comparison import RowsOutsideState, RunNotFound
 
 _PREFIX = "/roster-comparisons"
 _RUN_ID = "11111111-1111-1111-1111-111111111111"
@@ -65,7 +67,6 @@ def _run() -> RosterComparisonRun:
         started_at="2026-10-22T14:05:00+00:00",
         source_columns={"name": ["Official"]},
         corrections=[],
-        rejected=[],
         rates=ComparisonRates(outcomes=OutcomeCounts(matched=1)),
         jurisdictions_not_named=0,
     )
@@ -189,7 +190,7 @@ def test_an_unknown_field_level_is_refused():
 # ── batched upload: drafts ────────────────────────────────────────────────────
 
 _DRAFT_ID = "22222222-2222-2222-2222-222222222222"
-_HEADER = {key: value for key, value in _UPLOAD.items() if key != "rows"}
+_HEADER = {key: value for key, value in _UPLOAD.items() if key not in ("rows", "corrections")}
 
 
 def _drafts(name: str, **kwargs):
@@ -241,7 +242,7 @@ def test_a_batch_over_the_batch_size_is_refused():
 )
 def test_draft_errors_reach_the_caller_as_statuses(error, status):
     with _drafts("finish_draft", side_effect=error()):
-        response = _client().post(f"{_PREFIX}/drafts/{_DRAFT_ID}/finish")
+        response = _client().post(f"{_PREFIX}/drafts/{_DRAFT_ID}/finish", json={"corrections": []})
 
     assert response.status_code == status
 
@@ -250,7 +251,7 @@ def test_draft_errors_reach_the_caller_as_statuses(error, status):
 def test_a_finished_draft_returns_the_run_like_an_upload():
     created = RosterComparisonCreated(id=_RUN_ID, page_url=_PAGE, rates=_run().rates)
     with _drafts("finish_draft", return_value=created):
-        response = _client().post(f"{_PREFIX}/drafts/{_DRAFT_ID}/finish")
+        response = _client().post(f"{_PREFIX}/drafts/{_DRAFT_ID}/finish", json={"corrections": []})
 
     assert response.status_code == 200
     assert response.json()["data"]["page_url"] == _PAGE
@@ -261,3 +262,51 @@ def test_a_contributor_may_not_start_a_draft():
     response = _client(_identity(UserRole.CONTRIBUTORS)).post(f"{_PREFIX}/drafts", json=_HEADER)
 
     assert response.status_code == 403
+
+
+def _outside_state(count: int) -> RowsOutsideState:
+    rejected = [
+        RejectedRow(source_row=row, jurisdiction_ocdid=f"{_BARRE}x", reason=RejectedReason.UNKNOWN_JURISDICTION)
+        for row in range(2, 2 + count)
+    ]
+    return RowsOutsideState("vt", rejected)
+
+
+@pytest.mark.unit
+def test_an_upload_with_rows_outside_the_state_is_refused_with_them_listed():
+    with _service("run_roster_comparison", side_effect=_outside_state(2)):
+        response = _client().post(_PREFIX, json=_UPLOAD)
+
+    assert response.status_code == 422
+    detail = response.json()["detail"]
+    assert detail["rejected_count"] == 2
+    assert [row["source_row"] for row in detail["rejected"]] == [2, 3]
+    assert detail["message"].startswith("Not saved")
+
+
+@pytest.mark.unit
+def test_a_batch_with_rows_outside_the_state_is_refused_the_same_way():
+    batch = {"rows": _UPLOAD["rows"]}
+    with _drafts("add_draft_rows", side_effect=_outside_state(1)):
+        response = _client().post(f"{_PREFIX}/drafts/{_DRAFT_ID}/rows", json=batch)
+
+    assert response.status_code == 422
+    assert response.json()["detail"]["rejected_count"] == 1
+
+
+@pytest.mark.unit
+def test_finishing_passes_the_complete_corrections():
+    created = RosterComparisonCreated(id=_RUN_ID, page_url=_PAGE, rates=_run().rates)
+    with _drafts("finish_draft", return_value=created) as finish:
+        _client().post(f"{_PREFIX}/drafts/{_DRAFT_ID}/finish", json={"corrections": ["row 9: Montpellier to Montpelier"]})
+
+    assert finish.await_args.args[2] == ["row 9: Montpellier to Montpelier"]
+
+
+@pytest.mark.unit
+def test_finishing_needs_the_corrections():
+    with _drafts("finish_draft") as finish:
+        response = _client().post(f"{_PREFIX}/drafts/{_DRAFT_ID}/finish")
+
+    assert response.status_code == 422
+    finish.assert_not_awaited()

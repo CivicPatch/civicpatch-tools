@@ -14,7 +14,6 @@ CREATE TABLE IF NOT EXISTS roster_comparison_runs (
     started_at              timestamptz NOT NULL DEFAULT now(),
     source_columns          jsonb NOT NULL,
     corrections             jsonb NOT NULL,
-    rejected                jsonb NOT NULL DEFAULT '[]'::jsonb,
     rates                   jsonb NOT NULL,
     jurisdictions_not_named integer NOT NULL
 );

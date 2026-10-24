@@ -11,6 +11,7 @@ MAX_ROWS_PER_BATCH = 500
 MAX_ROW_NUMBER = 2_147_483_647  # the column is a Postgres integer
 MAX_VALUES_PER_FIELD = 20
 MAX_EXTRA_COLUMNS = 50
+MAX_CORRECTIONS = 1000
 
 
 def _no_nul(value: str) -> str:
@@ -94,25 +95,31 @@ class UploadedRow(BaseModel):
 
 
 class RosterComparisonHeader(BaseModel):
-    """Everything about an upload but its rows: the start of a batched upload."""
+    """What a batched upload starts with; its rows come in batches and its corrections at finish."""
 
     state: str = Field(pattern=r"^[a-z]{2}$", description="Two-letter state code, lowercase.")
     source_columns: dict[ShortText, Values] = Field(
         max_length=MAX_EXTRA_COLUMNS,
         description="Each field above (name, role, emails, …) → the original column(s) it came from.",
     )
-    corrections: list[LongText] = Field(
-        max_length=1000,
+
+
+Corrections = Annotated[
+    list[LongText],
+    Field(
+        max_length=MAX_CORRECTIONS,
         description=(
-            "What the conversion changed in jurisdiction_ocdid or name, and rows it could not "
-            "place, citing row numbers. An empty list says nothing was changed."
+            "Everything the conversion changed, citing row numbers: jurisdictions matched by search, "
+            "names corrected, rows the user agreed to leave out. An empty list says nothing was changed."
         ),
-    )
+    ),
+]
 
 
 class RosterComparisonUpload(RosterComparisonHeader):
     """A state's roster, converted from the user's file by the agent."""
 
+    corrections: Corrections
     rows: list[UploadedRow] = Field(min_length=1, max_length=MAX_ROWS)
 
 
@@ -120,6 +127,10 @@ class DraftRows(BaseModel):
     rows: list[UploadedRow] = Field(
         min_length=1, max_length=MAX_ROWS_PER_BATCH, description=f"Up to {MAX_ROWS_PER_BATCH} rows."
     )
+
+
+class DraftFinish(BaseModel):
+    corrections: Corrections
 
 
 class RosterComparisonDraft(BaseModel):
@@ -204,6 +215,14 @@ class RejectedRow(BaseModel):
     reason: RejectedReason
 
 
+class RowsRefused(BaseModel):
+    """A 422's detail when rows name no jurisdiction of the state: nothing was saved."""
+
+    message: str
+    rejected_count: int
+    rejected: list[RejectedRow] = Field(description="The first of them; rejected_count says how many in all.")
+
+
 class JurisdictionComparison(BaseModel):
     jurisdiction_ocdid: str
     rates: ComparisonRates
@@ -214,7 +233,6 @@ class RunResult(BaseModel):
     state: str
     source_columns: dict[str, list[str]]
     corrections: list[str]
-    rejected: list[RejectedRow]
     rates: ComparisonRates
     jurisdictions_not_named: int
 

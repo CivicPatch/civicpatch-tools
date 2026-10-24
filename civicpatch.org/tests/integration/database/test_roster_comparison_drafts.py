@@ -14,7 +14,7 @@ from database.roster_comparison_drafts import (
 from schemas.roster_comparisons import RosterComparisonHeader, UploadedRow
 
 _USER_EMAIL = "roster-comparison-drafts@civicpatch.test"
-_HEADER = RosterComparisonHeader(state="zz", source_columns={}, corrections=[])
+_HEADER = RosterComparisonHeader(state="zz", source_columns={})
 _ROW = UploadedRow(source_row=2, jurisdiction_ocdid="ocd-jurisdiction/country:us/state:zz/place:x/government", name="Jane Doe")
 
 

@@ -77,12 +77,6 @@ export interface ComparisonRates {
   rows_with_warnings: number;
 }
 
-export interface RejectedRow {
-  source_row: number;
-  jurisdiction_ocdid: string;
-  reason: string;
-}
-
 export interface RosterComparisonRun {
   id: string;
   state: string;
@@ -90,7 +84,6 @@ export interface RosterComparisonRun {
   started_at: string;
   source_columns: Record<string, string[]>;
   corrections: string[];
-  rejected: RejectedRow[];
   rates: ComparisonRates;
   jurisdictions_not_named: number;
 }
