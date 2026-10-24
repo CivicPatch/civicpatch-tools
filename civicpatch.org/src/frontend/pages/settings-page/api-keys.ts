@@ -2,9 +2,12 @@ import { html } from "lit-html";
 import { component, useState, useEffect } from "haunted";
 import { fetchApiKeys, createApiKey, revokeApiKey } from "../../api.js";
 import "../../components/action-btn/action-btn.css";
+import "./connected-apps.js";
 import {
   agentSetups,
+  CHATGPT_STEPS,
   exportLine,
+  mcpUrl,
   type AgentSetup,
   type SetupField,
 } from "./api-key-commands.js";
@@ -122,6 +125,23 @@ function renderAgentSetup(
     </label>
     <p>${setup.where}:</p>
     ${setup.fields.map((field) => renderField(field, copied, onCopy))}
+  `;
+}
+
+function renderChatGpt(
+  origin: string,
+  copied: string | null,
+  onCopy: (field: SetupField) => void,
+) {
+  return html`
+    <section class="api-keys">
+      <h2 class="api-keys__title">ChatGPT</h2>
+      <p class="api-keys__hint">ChatGPT signs in as you, so it needs no key.</p>
+      ${renderField({ label: "Server URL", value: mcpUrl(origin) }, copied, onCopy)}
+      <ol>
+        ${CHATGPT_STEPS.map((step) => html`<li>${step}</li>`)}
+      </ol>
+    </section>
   `;
 }
 
@@ -245,6 +265,8 @@ ${exportLine(created.api_key)}</pre
       )}
     </section>
 
+    <connected-apps></connected-apps>
+    ${renderChatGpt(window.location.origin, copied, handleCopy)}
     ${renderRevokedKeys(revokedKeys)}
   `;
 }

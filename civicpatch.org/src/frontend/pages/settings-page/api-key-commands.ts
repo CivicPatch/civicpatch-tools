@@ -15,12 +15,22 @@ export type AgentSetup = {
 
 export const exportLine = (key: string) => `export ${API_KEY_VARIABLE}=${key}`;
 
+export const mcpUrl = (origin: string) => `${origin}/mcp`;
+
+// ChatGPT accepts only OAuth: it registers itself and sends the user to our consent page, so no key.
+export const CHATGPT_STEPS = [
+  "Open chatgpt.com/plugins, then + and Add custom MCP server",
+  "Give it a name and paste the Server URL above",
+  "Authentication: OAuth, with client id and secret left empty",
+  "Tick the warning, create it, then install it: ChatGPT opens civicpatch to approve it",
+];
+
 const json = (value: object) => JSON.stringify(value, null, 2);
 
 // Every setup names the variable, never the key, except Claude.ai: a browser app has no shell
 // to read one from, so its header holds the key itself, stored by Claude.ai.
 export function agentSetups(origin: string, key: string): AgentSetup[] {
-  const url = `${origin}/mcp`;
+  const url = mcpUrl(origin);
   return [
     {
       agent: "Claude Code",

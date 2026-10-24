@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { agentSetups, exportLine, type AgentSetup } from "../pages/settings-page/api-key-commands.js";
+import { agentSetups, exportLine, mcpUrl, type AgentSetup } from "../pages/settings-page/api-key-commands.js";
 
 const ORIGIN = "https://civicpatch.org";
 const KEY = "cp_abc123";
@@ -44,5 +44,9 @@ describe("api key commands", () => {
       "Request header name": "Authorization",
       "Request header value": `Bearer ${KEY}`,
     });
+  });
+
+  it("gives ChatGPT the same /mcp every agent uses", () => {
+    expect(mcpUrl(ORIGIN)).toBe("https://civicpatch.org/mcp");
   });
 });

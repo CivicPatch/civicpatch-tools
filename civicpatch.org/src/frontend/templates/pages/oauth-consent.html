@@ -1,0 +1,22 @@
+{% extends "layouts/base.html" %}
+{% block title %}Connect an app: civicpatch{% endblock %}
+{% block scripts %}<script type="module" src="{{ vite_asset('assets/login.ts') }}"></script>{% endblock %}
+{% block styles %}{% for href in vite_css('assets/login.ts') %}<link rel="stylesheet" href="{{ href }}">{% endfor %}{% endblock %}
+{% block content %}
+<civ-navbar user='{{ user | tojson }}'></civ-navbar>
+
+<section class="login-page">
+  <h1>Connect an app</h1>
+  {% if client_name %}
+  <p><strong>{{ client_name }}</strong> wants to read civicpatch and run roster comparisons as you.</p>
+  <form method="post" action="{{ consent_path }}">
+    <input type="hidden" name="authorization_id" value="{{ authorization_id }}">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+    <button class="btn" name="action" value="{{ approve }}">Approve</button>
+    <button class="btn secondary" name="action" value="{{ deny }}">Deny</button>
+  </form>
+  {% else %}
+  <p>{{ message }}</p>
+  {% endif %}
+</section>
+{% endblock %}

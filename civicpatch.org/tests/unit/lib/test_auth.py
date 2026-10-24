@@ -12,6 +12,7 @@ import pytest
 from fastapi import HTTPException
 
 from lib.auth import get_optional_person, get_user, get_user_by_cookie, header_token, require_route_access
+from lib.supabase_tokens import TokenRejected
 from schemas.common import AgentKey, ApiKeyScope, Identity, UserRole, RouteCategory, ServiceKey
 
 
@@ -373,3 +374,45 @@ async def test_the_service_key_resolves_bare_or_as_bearer(authorization: str):
     with patch("lib.auth.environment.get_env_vars", return_value={"SERVICE_API_KEY": "service"}):
         identity = await get_user(SimpleNamespace(method="GET"), authorization=authorization, cookie=None)
     assert identity.type == "service_api_key"
+
+
+@pytest.mark.asyncio
+@pytest.mark.unit
+async def test_a_supabase_token_signs_in_as_its_user_scoped_like_an_agent_key():
+    token = "header.claims.signature"
+    with (
+        patch("lib.auth.environment.get_env_vars", return_value={"SERVICE_API_KEY": "service", "SUPABASE_URL": "http://sb"}),
+        patch("lib.auth.verify_supabase_token", new=AsyncMock(return_value={"sub": "sb-1"})) as verify,
+        patch("lib.auth.database.get_user", new=AsyncMock(return_value={"id": "u-1", "role": "maintainers", "email": None})),
+        patch("lib.auth.database.get_user_by_api_key", new=AsyncMock()) as key_lookup,
+    ):
+        identity = await get_user(SimpleNamespace(method="GET"), authorization=f"Bearer {token}", cookie=None)
+
+    verify.assert_awaited_once_with(token, "http://sb")
+    key_lookup.assert_not_awaited()
+    assert (identity.user_id, identity.key_scope) == ("u-1", ApiKeyScope.AGENT)
+
+
+@pytest.mark.asyncio
+@pytest.mark.unit
+async def test_a_valid_token_for_someone_with_no_civicpatch_account_is_a_401():
+    with (
+        patch("lib.auth.environment.get_env_vars", return_value={"SERVICE_API_KEY": "service", "SUPABASE_URL": "http://sb"}),
+        patch("lib.auth.verify_supabase_token", new=AsyncMock(return_value={"sub": "sb-stranger"})),
+        patch("lib.auth.database.get_user", new=AsyncMock(return_value=None)),
+    ):
+        with pytest.raises(HTTPException) as refused:
+            await get_user(SimpleNamespace(method="GET"), authorization="Bearer a.b.c", cookie=None)
+    assert refused.value.status_code == 401
+
+
+@pytest.mark.asyncio
+@pytest.mark.unit
+async def test_a_rejected_supabase_token_is_a_401():
+    with (
+        patch("lib.auth.environment.get_env_vars", return_value={"SERVICE_API_KEY": "service", "SUPABASE_URL": "http://sb"}),
+        patch("lib.auth.verify_supabase_token", new=AsyncMock(side_effect=TokenRejected("expired"))),
+    ):
+        with pytest.raises(HTTPException) as refused:
+            await get_user(SimpleNamespace(method="GET"), authorization="Bearer a.b.c", cookie=None)
+    assert refused.value.status_code == 401

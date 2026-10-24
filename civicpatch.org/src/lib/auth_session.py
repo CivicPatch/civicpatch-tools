@@ -10,6 +10,7 @@ import lib.redis as redis_store
 import environment
 
 SESSION_EXPIRY_DAYS = 7
+CSRF_COOKIE = "csrf_token"
 
 _TOKEN_PREFIX = "session:tok:"
 _USER_PREFIX = "session:usr:"
@@ -112,7 +113,7 @@ async def create_session_cookies(
 
     # JS-readable CSRF nonce for double-submit pattern
     response.set_cookie(
-        key="csrf_token",
+        key=CSRF_COOKIE,
         value=csrf_nonce,
         expires=expiration,
         httponly=False,
@@ -142,7 +143,7 @@ async def clear_session_cookies(
         **cookie_params,
     )
     response.delete_cookie(
-        key="csrf_token",
+        key=CSRF_COOKIE,
         samesite="lax",
         path="/",
         **cookie_params,

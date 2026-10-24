@@ -122,7 +122,7 @@ class Identity(BaseModel):
     role: str | None = None
     user_id: str | None = None
     username: str | None = None
-    # Set only for a user's API key; cookies and the service key have no scope.
+    # Set for a user's API key and an OAuth app's token (always agent); cookies and the service key have none.
     key_scope: ApiKeyScope | None = None
 
 

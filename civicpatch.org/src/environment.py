@@ -99,3 +99,11 @@ def instance_url() -> str:
 def mcp_allowed_hosts() -> list[str]:
     value = get_env_vars()["MCP_ALLOWED_HOSTS"] or ""
     return [host.strip() for host in value.split(",") if host.strip()]
+
+
+def supabase_url() -> str:
+    return get_env_vars()["SUPABASE_URL"]
+
+
+def supabase_url_and_secret_key() -> tuple[str, str]:
+    return supabase_url(), get_env_vars()["SUPABASE_SECRET_KEY"]
