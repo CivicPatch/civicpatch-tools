@@ -10,7 +10,6 @@ CREATE TABLE IF NOT EXISTS roster_comparison_drafts (
     created_at     timestamptz NOT NULL DEFAULT now(),
     state          text NOT NULL,
     source_columns jsonb NOT NULL,
-    corrections    jsonb NOT NULL,
     rows           jsonb NOT NULL DEFAULT '[]'::jsonb,
     row_count      integer NOT NULL DEFAULT 0
 );

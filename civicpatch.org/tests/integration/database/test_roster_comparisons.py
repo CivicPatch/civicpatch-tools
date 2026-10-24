@@ -24,8 +24,6 @@ from schemas.roster_comparisons import (
     OutcomeCounts,
     PersonComparison,
     PersonOutcome,
-    RejectedReason,
-    RejectedRow,
     RosterComparison,
     UploadedRow,
 )
@@ -91,7 +89,6 @@ def _comparison() -> RosterComparison:
         state="zz",
         source_columns={"name": ["Official"]},
         corrections=["212 names reordered"],
-        rejected=[RejectedRow(source_row=77, jurisdiction_ocdid="nowhere", reason=RejectedReason.UNKNOWN_JURISDICTION)],
         rates=barre_rates,
         jurisdictions_not_named=12,
         jurisdictions=[
@@ -110,7 +107,6 @@ async def test_a_run_reads_back_in_its_parts(user_id):
     assert run is not None
     assert (run.state, run.started_by_user_id, run.jurisdictions_not_named) == ("zz", user_id, 12)
     assert run.corrections == ["212 names reordered"]
-    assert [row.source_row for row in run.rejected] == [77]
     assert run.rates.outcomes.matched == 3
 
     jurisdictions = await get_roster_comparison_jurisdictions(run_id)

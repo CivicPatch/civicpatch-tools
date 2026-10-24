@@ -13,6 +13,8 @@ from schemas.roster_comparisons import (
     FieldLevel,
     JurisdictionRates,
     OutcomeCounts,
+    RejectedReason,
+    RejectedRow,
     RosterComparisonRun,
 )
 
@@ -24,7 +26,7 @@ _STOWE = "ocd-jurisdiction/country:us/state:vt/place:stowe/government"
 def _run() -> RosterComparisonRun:
     return RosterComparisonRun(
         id=_RUN_ID, state="vt", started_by_user_id="u", started_at="2026-10-22T00:00:00+00:00",
-        source_columns={}, corrections=[], rejected=[], rates=ComparisonRates(), jurisdictions_not_named=0,
+        source_columns={}, corrections=[], rates=ComparisonRates(), jurisdictions_not_named=0,
     )
 
 
@@ -66,3 +68,29 @@ async def test_reading_an_unknown_run_raises_run_not_found():
     with _database("get_roster_comparison_run", return_value=None):
         with pytest.raises(service.RunNotFound, match="No roster comparison"):
             await service.get_run_people(_RUN_ID, _BARRE)
+
+
+def _refused(count: int) -> service.RowsOutsideState:
+    rejected = [
+        RejectedRow(source_row=row, jurisdiction_ocdid=f"{_BARRE}x", reason=RejectedReason.UNKNOWN_JURISDICTION)
+        for row in range(2, 2 + count)
+    ]
+    return service.RowsOutsideState("vt", rejected)
+
+
+@pytest.mark.unit
+def test_a_refusal_lists_the_first_rows_and_counts_them_all():
+    extra = 30
+    refusal = _refused(service.MAX_REJECTED_LISTED + extra)
+
+    assert len(refusal.listed) == service.MAX_REJECTED_LISTED
+    assert len(refusal.rejected) == service.MAX_REJECTED_LISTED + extra
+    assert f"and {extra} more" in str(refusal)
+
+
+@pytest.mark.unit
+def test_a_short_refusal_lists_every_row():
+    refusal = _refused(2)
+
+    assert [row.source_row for row in refusal.listed] == [2, 3]
+    assert "more" not in str(refusal)

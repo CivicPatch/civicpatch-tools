@@ -8,10 +8,11 @@ from fastapi import APIRouter, Depends, HTTPException, Query
 import services.roster_comparison as service
 import services.roster_comparison_drafts as drafts
 from lib.auth import require_route_access
-from schemas.common import Identity, RouteCategory, UserRole
+from schemas.common import AgentKey, Identity, RouteCategory, UserRole
 from schemas.roster_comparisons import (
     ComparedField,
     CreatedResponse,
+    DraftFinish,
     DraftResponse,
     DraftRows,
     FieldFilter,
@@ -20,6 +21,7 @@ from schemas.roster_comparisons import (
     RosterComparisonHeader,
     RosterComparisonListPage,
     RosterComparisonUpload,
+    RowsRefused,
     SummaryResponse,
 )
 
@@ -29,7 +31,9 @@ UPLOAD_PATH = "/api/v1/roster-comparisons"
 
 
 def _maintainer() -> Identity:
-    return Depends(require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.MAINTAINERS))
+    return Depends(
+        require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.MAINTAINERS, agent_key=AgentKey.ACCEPTED)
+    )
 
 
 def get_router() -> APIRouter:
@@ -41,7 +45,7 @@ def get_router() -> APIRouter:
     ) -> dict:
         """Compare an uploaded roster with civicpatch's and keep the run. Convert the user's file
         to this shape first; send it as the JSON body (`curl --data-binary @file.json`)."""
-        run_id = await service.run_roster_comparison(upload, _owner(user))
+        run_id = await _refused_rows(service.run_roster_comparison(upload, _owner(user)))
         return {"data": await _or_404(service.get_run_created(run_id))}
 
     @router.post("/drafts", response_model=DraftResponse)
@@ -60,9 +64,11 @@ def get_router() -> APIRouter:
         return {"data": await _draft_errors(drafts.add_draft_rows(str(draft_id), batch.rows, _owner(user)))}
 
     @router.post("/drafts/{draft_id}/finish", response_model=CreatedResponse)
-    async def finish_roster_comparison_draft_endpoint(draft_id: uuid.UUID, user: Identity = _maintainer()) -> dict:
+    async def finish_roster_comparison_draft_endpoint(
+        draft_id: uuid.UUID, finish: DraftFinish, user: Identity = _maintainer()
+    ) -> dict:
         """Compare the draft's rows and keep the run, as a one-shot upload would; the draft is gone after."""
-        return {"data": await _draft_errors(drafts.finish_draft(str(draft_id), _owner(user)))}
+        return {"data": await _draft_errors(drafts.finish_draft(str(draft_id), _owner(user), finish.corrections))}
 
     @router.get("", response_model=RosterComparisonListPage)
     async def list_roster_comparisons_endpoint(
@@ -107,9 +113,17 @@ def _owner(user: Identity) -> str:
     return user.user_id
 
 
-async def _draft_errors(call):
+async def _refused_rows(call):
     try:
         return await call
+    except service.RowsOutsideState as error:
+        detail = RowsRefused(message=str(error), rejected_count=len(error.rejected), rejected=error.listed)
+        raise HTTPException(status_code=422, detail=detail.model_dump(mode="json")) from error
+
+
+async def _draft_errors(call):
+    try:
+        return await _refused_rows(call)
     except drafts.DraftNotFound as error:
         raise HTTPException(status_code=404, detail=str(error)) from error
     except drafts.DraftTooLarge as error:

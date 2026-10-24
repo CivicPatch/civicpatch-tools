@@ -15,7 +15,7 @@ from starlette.responses import PlainTextResponse
 from starlette.testclient import TestClient
 
 from routers import mcp as mcp_router
-from schemas.common import Identity, UserRole
+from schemas.common import ApiKeyScope, Identity, UserRole
 from schemas.jurisdictions import JurisdictionSearchResult
 from schemas.roster_comparisons import (
     ComparedField,
@@ -40,7 +40,7 @@ _OCDID = "ocd-jurisdiction/country:us/state:vt/place:barre/government"
 def _run() -> RosterComparisonRun:
     return RosterComparisonRun(
         id=_RUN_ID, state="vt", started_by_user_id="u", started_at="2026-10-22T00:00:00+00:00",
-        source_columns={}, corrections=[], rejected=[], rates=ComparisonRates(), jurisdictions_not_named=0,
+        source_columns={}, corrections=[], rates=ComparisonRates(), jurisdictions_not_named=0,
     )
 
 
@@ -61,9 +61,12 @@ async def test_the_server_lists_its_read_tools_and_names_itself_in_the_instructi
         "start_roster_comparison",
         "add_roster_comparison_rows",
         "finish_roster_comparison",
+        "list_jurisdictions",
     }
     assert f"{_INSTANCE}/api/v1/roster-comparisons" in (instructions or "")
     assert "$CIVICPATCH_API_KEY" in (instructions or "")
+    assert "list_jurisdictions" in (instructions or "")
+    assert f"{_INSTANCE}/api/v1/jurisdictions/search?state=<state>&limit={mcp_router.LIST_PAGE_SIZE}" in (instructions or "")
 
 
 @pytest.mark.asyncio
@@ -131,9 +134,9 @@ async def test_finishing_is_the_routes_finish_for_the_caller():
     caller = _caller()
     created = RosterComparisonCreated(id=_RUN_ID, page_url="p", rates=ComparisonRates())
     with patch.object(mcp_router.drafts, "finish_draft", AsyncMock(return_value=created)) as finish:
-        result = await mcp_router.finish_roster_comparison("d", _ctx(caller))
+        result = await mcp_router.finish_roster_comparison("d", [], _ctx(caller))
 
-    finish.assert_awaited_once_with("d", caller.user_id)
+    finish.assert_awaited_once_with("d", caller.user_id, [])
     assert result["id"] == _RUN_ID
 
 
@@ -256,11 +259,25 @@ async def _echo_caller(scope, receive, send):
 
 
 def _user(role: UserRole) -> dict:
-    return {"provider": "p", "provider_user_id": "u", "email": None, "role": role.value, "id": "u-1"}
+    return {
+        "provider": "p",
+        "provider_user_id": "u",
+        "email": None,
+        "role": role.value,
+        "id": "u-1",
+        "key_scope": ApiKeyScope.FULL.value,
+        "key_id": 1,
+    }
 
 
 def _key_lookup(user: dict | None):
     return patch("lib.auth.database.get_user_by_api_key", AsyncMock(return_value=user))
+
+
+@pytest.fixture(autouse=True)
+def _no_last_used_write():
+    with patch("lib.auth.database.touch_api_key", new_callable=AsyncMock):
+        yield
 
 
 @pytest.mark.unit
@@ -303,3 +320,27 @@ def test_the_gate_leaves_the_checked_caller_on_the_request_for_the_tools():
         response = TestClient(app).post("/mcp", headers={"Authorization": "Bearer k"})
 
     assert (response.status_code, response.text) == (200, "u-1")
+
+
+@pytest.mark.asyncio
+@pytest.mark.unit
+async def test_finishing_passes_the_corrections_made_while_sending():
+    caller = _caller()
+    created = RosterComparisonCreated(id=_RUN_ID, page_url="p", rates=ComparisonRates())
+    with patch.object(mcp_router.drafts, "finish_draft", AsyncMock(return_value=created)) as finish:
+        await mcp_router.finish_roster_comparison("d", ["row 9: Montpellier to Montpelier"], _ctx(caller))
+
+    finish.assert_awaited_once_with("d", caller.user_id, ["row 9: Montpellier to Montpelier"])
+
+
+@pytest.mark.asyncio
+@pytest.mark.unit
+async def test_listing_a_states_jurisdictions_is_the_search_with_no_query_paged():
+    result = JurisdictionSearchResult(jurisdiction_ocdid="ocd-jurisdiction/x", level="local", name="Barre")
+    with patch.object(mcp_router, "search_in_state", AsyncMock(return_value=(291, [result]))) as search:
+        page = await mcp_router.list_jurisdictions("VT", page=2)
+
+    size = mcp_router.LIST_PAGE_SIZE
+    search.assert_awaited_once_with("vt", "", size, size)
+    assert page["total_items"] == 291
+    assert page["data"][0]["name"] == "Barre"

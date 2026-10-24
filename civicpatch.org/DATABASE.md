@@ -199,6 +199,9 @@ erDiagram
         text            api_key_hash        "idx"
         timestamptz_null created_at      "default: now()"
         timestamptz_null revoked_at      "idx"
+        text            scope           "258: check: full|agent, mirrors ApiKeyScope; default: agent (keys before 258 are full)"
+        text_null       label           "258: what the key is for, e.g. Claude Code on laptop"
+        timestamptz_null last_used_at   "258: last successful lookup, written at most once a minute; null = unused since 258"
     }
 
     api_usage_limits {
@@ -369,7 +372,6 @@ erDiagram
         timestamptz     started_at
         jsonb           source_columns      "our field → the original file's column(s), as the agent reported them"
         jsonb           corrections         "what the agent's conversion changed in jurisdiction_ocdid or name; its own account, never checked"
-        jsonb           rejected            "[{source_row, jurisdiction_ocdid, reason}]: rows with an unknown ocdid or one outside state"
         jsonb           rates               "ComparisonRates for the state: counts only, percentages derived where shown"
         int             jurisdictions_not_named "civicpatch jurisdictions in the state the upload never named"
     }
@@ -396,7 +398,6 @@ erDiagram
         timestamptz     created_at          "idx"
         text            state
         jsonb           source_columns
-        jsonb           corrections
         jsonb           rows                "UploadedRow[] appended batch by batch"
         int             row_count           "kept beside rows so the 20,000-row cap is checked without reading them"
     }

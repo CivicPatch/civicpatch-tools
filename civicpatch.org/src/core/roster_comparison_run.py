@@ -1,4 +1,5 @@
-"""A whole upload into one run: rows grouped by jurisdiction, each compared, rejects set aside."""
+"""A whole upload into one run: rows grouped by jurisdiction, each compared; and the rows that name no
+jurisdiction of the state, which refuse an upload before it is compared."""
 
 from shared.schemas import Person
 from shared.utils.taxonomy import Taxonomy
@@ -21,9 +22,9 @@ def build_comparison(
     rosters: dict[str, list[Person]],
     taxonomy: Taxonomy,
 ) -> RosterComparison:
-    """`state_ocdids` is every current jurisdiction in the upload's state; `rosters` holds the
+    """Every row names one of `state_ocdids` (checked before, `rejected_rows`); `rosters` holds the
     people with an open membership in those the upload names."""
-    rows_by_ocdid = _rows_by_ocdid([row for row in upload.rows if row.jurisdiction_ocdid in state_ocdids])
+    rows_by_ocdid = _rows_by_ocdid(upload.rows)
     jurisdictions = [
         _jurisdiction(ocdid, rows, rosters.get(ocdid, []), taxonomy)
         for ocdid, rows in rows_by_ocdid.items()
@@ -32,9 +33,6 @@ def build_comparison(
         state=upload.state,
         source_columns=upload.source_columns,
         corrections=upload.corrections,
-        rejected=[
-            _rejected(row, upload.state) for row in upload.rows if row.jurisdiction_ocdid not in state_ocdids
-        ],
         rates=total([jurisdiction.rates for jurisdiction in jurisdictions]),
         jurisdictions_not_named=len(state_ocdids - rows_by_ocdid.keys()),
         jurisdictions=jurisdictions,
@@ -53,6 +51,10 @@ def _jurisdiction(
 ) -> JurisdictionComparison:
     people = compare_people(rows, roster, taxonomy)
     return JurisdictionComparison(jurisdiction_ocdid=ocdid, rates=rates(people), people=people)
+
+
+def rejected_rows(rows: list[UploadedRow], state_ocdids: set[str], state: str) -> list[RejectedRow]:
+    return [_rejected(row, state) for row in rows if row.jurisdiction_ocdid not in state_ocdids]
 
 
 def _rejected(row: UploadedRow, state: str) -> RejectedRow:

@@ -2,7 +2,7 @@ import pytest
 from shared.schemas import Membership, Person, Role, RoleConfig
 from shared.utils.taxonomy import build_taxonomy
 
-from core.roster_comparison_run import build_comparison
+from core.roster_comparison_run import build_comparison, rejected_rows
 from schemas.roster_comparisons import PersonOutcome, RejectedReason, RosterComparisonUpload
 
 TAXONOMY = build_taxonomy(RoleConfig(roles=[Role(id="member", label="Member")]))
@@ -44,12 +44,11 @@ def test_rows_are_compared_per_jurisdiction_and_the_state_totals_add_up():
 
 @pytest.mark.unit
 def test_rows_outside_the_known_jurisdictions_are_rejected_with_the_reason():
-    upload = _upload([(2, _NOWHERE, "Jane Doe"), (3, _KEENE, "Lee Park")])
+    upload = _upload([(2, _NOWHERE, "Jane Doe"), (3, _KEENE, "Lee Park"), (4, _BARRE, "Pat Lin")])
 
-    run = build_comparison(upload, {_BARRE}, {}, TAXONOMY)
+    rejected = rejected_rows(upload.rows, {_BARRE}, "vt")
 
-    assert run.jurisdictions == []
-    assert [(r.source_row, r.reason) for r in run.rejected] == [
+    assert [(r.source_row, r.reason) for r in rejected] == [
         (2, RejectedReason.UNKNOWN_JURISDICTION),
         (3, RejectedReason.OUTSIDE_STATE),
     ]
@@ -57,9 +56,9 @@ def test_rows_outside_the_known_jurisdictions_are_rejected_with_the_reason():
 
 @pytest.mark.unit
 def test_a_state_level_ocdid_in_the_uploaded_state_is_unknown_not_outside():
-    state_level = "ocd-jurisdiction/country:us/state:vt"
+    state_level = "ocd-jurisdiction/country:us/state:vt/government"
     upload = _upload([(2, state_level, "Phil Scott")])
 
-    run = build_comparison(upload, {_BARRE}, {}, TAXONOMY)
+    rejected = rejected_rows(upload.rows, {_BARRE}, "vt")
 
-    assert [r.reason for r in run.rejected] == [RejectedReason.UNKNOWN_JURISDICTION]
+    assert [r.reason for r in rejected] == [RejectedReason.UNKNOWN_JURISDICTION]

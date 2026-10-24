@@ -23,7 +23,7 @@ _STARTED_AT = """to_char(roster_comparison_runs.started_at AT TIME ZONE 'UTC', '
 _RUN_COLUMNS = f"""
     id::text AS id, state, started_by_user_id::text AS started_by_user_id,
     {_STARTED_AT} AS started_at,
-    source_columns, corrections, rejected, rates, jurisdictions_not_named
+    source_columns, corrections, rates, jurisdictions_not_named
 """
 
 
@@ -42,9 +42,9 @@ async def _insert_run(cur, started_by_user_id: str, comparison: RosterComparison
     await cur.execute(
         """
         INSERT INTO roster_comparison_runs
-            (state, started_by_user_id, source_columns, corrections, rejected, rates,
+            (state, started_by_user_id, source_columns, corrections, rates,
              jurisdictions_not_named)
-        VALUES (%s, %s, %s, %s, %s, %s, %s)
+        VALUES (%s, %s, %s, %s, %s, %s)
         RETURNING id::text
         """,
         (
@@ -52,7 +52,6 @@ async def _insert_run(cur, started_by_user_id: str, comparison: RosterComparison
             started_by_user_id,
             json.dumps(comparison.source_columns),
             json.dumps(comparison.corrections),
-            json.dumps([row.model_dump(mode="json") for row in comparison.rejected]),
             comparison.rates.model_dump_json(),
             comparison.jurisdictions_not_named,
         ),

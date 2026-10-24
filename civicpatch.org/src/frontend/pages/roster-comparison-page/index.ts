@@ -7,7 +7,7 @@ import {
 } from "../../api-roster-comparisons.js";
 import { formatDateTime } from "../../utils/date-utils.js";
 import { fieldList } from "./field-list.js";
-import { jurisdictionsPanel, placeName } from "./jurisdictions.js";
+import { jurisdictionsPanel } from "./jurisdictions.js";
 import { fieldsPanel, peoplePanel, type FieldSelection } from "./summary.js";
 import type { FieldPage, PersonComparison, RosterComparisonRun, RosterComparisonSummary } from "./types.js";
 import "../../components/panel/panel.css";
@@ -88,7 +88,6 @@ function RosterComparisonPage({ run_id: runId }: RosterComparisonPageProps) {
       pageUrl: jurisdictionPageUrl,
       onToggle: handleToggle,
     })}
-    ${rejectedPanel(run)}
     ${correctionsPanel(run)}
   </main>`;
 }
@@ -103,18 +102,6 @@ function metaLine(run: RosterComparisonRun, jurisdictionCount: number): string {
 
 function count(n: number, noun: string): string {
   return `${n} ${noun}${n === 1 ? "" : "s"}`;
-}
-
-function rejectedPanel(run: RosterComparisonRun) {
-  if (!run.rejected.length) return null;
-  return html`<section class="panel">
-    <div class="panel__cap"><b>rows not compared</b><span class="panel__cap-right">${run.rejected.length}</span></div>
-    <ul class="rc-list">
-      ${run.rejected.map(
-        (row) => html`<li>Row ${row.source_row}: ${placeName(row.jurisdiction_ocdid)}. ${row.reason}</li>`,
-      )}
-    </ul>
-  </section>`;
 }
 
 function correctionsPanel(run: RosterComparisonRun) {

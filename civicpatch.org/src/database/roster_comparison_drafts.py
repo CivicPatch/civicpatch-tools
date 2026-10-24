@@ -28,15 +28,14 @@ async def insert_roster_comparison_draft(owner_user_id: str, header: RosterCompa
         )
         await cur.execute(
             f"""
-            INSERT INTO roster_comparison_drafts (owner_user_id, state, source_columns, corrections)
-            VALUES (%(owner)s, %(state)s, %(source_columns)s, %(corrections)s)
+            INSERT INTO roster_comparison_drafts (owner_user_id, state, source_columns)
+            VALUES (%(owner)s, %(state)s, %(source_columns)s)
             RETURNING {_DRAFT_COLUMNS}
             """,
             {
                 "owner": owner_user_id,
                 "state": header.state,
                 "source_columns": json.dumps(header.source_columns),
-                "corrections": json.dumps(header.corrections),
                 "lifetime": DRAFT_LIFETIME,
             },
         )
@@ -83,7 +82,7 @@ async def get_roster_comparison_draft(
     async with pool.connection() as conn, conn.cursor(row_factory=dict_row) as cur:
         await cur.execute(
             """
-            SELECT state, source_columns, corrections, rows, row_count
+            SELECT state, source_columns, rows, row_count
             FROM roster_comparison_drafts
             WHERE id = %s AND owner_user_id = %s AND created_at > now() - %s
             """,
@@ -92,10 +91,23 @@ async def get_roster_comparison_draft(
         row = await cur.fetchone()
     if row is None:
         return None
-    header = RosterComparisonHeader.model_validate(
-        {key: row[key] for key in ("state", "source_columns", "corrections")}
-    )
+    header = RosterComparisonHeader.model_validate({key: row[key] for key in ("state", "source_columns")})
     return header, [UploadedRow.model_validate(uploaded) for uploaded in row["rows"]], row["row_count"]
+
+
+async def get_roster_comparison_draft_state(draft_id: str, owner_user_id: str) -> str | None:
+    """Just the state, without the rows; None when missing, expired or someone else's."""
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            """
+            SELECT state FROM roster_comparison_drafts
+            WHERE id = %s AND owner_user_id = %s AND created_at > now() - %s
+            """,
+            (draft_id, owner_user_id, DRAFT_LIFETIME),
+        )
+        row = await cur.fetchone()
+    return row[0] if row else None
 
 
 async def delete_roster_comparison_draft(draft_id: str) -> None:

@@ -1199,8 +1199,8 @@ const _rosterComparisonPeople = [
 async function seedRosterComparison(client) {
   await client.query(
     `INSERT INTO roster_comparison_runs
-       (id, state, started_by_user_id, source_columns, corrections, rejected, rates, jurisdictions_not_named)
-     SELECT $1, 'nj', id, $2, $3, '[]'::jsonb, $4, 0 FROM users WHERE provider = $5 AND provider_user_id = $6
+       (id, state, started_by_user_id, source_columns, corrections, rates, jurisdictions_not_named)
+     SELECT $1, 'nj', id, $2, $3, $4, 0 FROM users WHERE provider = $5 AND provider_user_id = $6
      ON CONFLICT (id) DO NOTHING`,
     [
       ROSTER_COMPARISON_RUN_ID,
