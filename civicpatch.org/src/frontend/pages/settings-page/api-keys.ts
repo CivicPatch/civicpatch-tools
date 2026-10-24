@@ -1,34 +1,94 @@
 import { html } from "lit-html";
 import { component, useState, useEffect } from "haunted";
-import {
-  fetchApiKeys,
-  createApiKey,
-  revokeApiKey,
-  deleteApiKey,
-} from "../../api.js";
+import { fetchApiKeys, createApiKey, revokeApiKey } from "../../api.js";
 import "../../components/action-btn/action-btn.css";
-import { agentSetups, exportLine, type AgentSetup, type SetupField } from "./api-key-commands.js";
+import {
+  agentSetups,
+  exportLine,
+  type AgentSetup,
+  type SetupField,
+} from "./api-key-commands.js";
+import {
+  AGENT_SCOPE,
+  FULL_SCOPE,
+  renderActiveKeys,
+  renderRevokedKeys,
+  type ApiKey,
+  type ApiKeyScope,
+} from "./api-key-tables.js";
 
-type ApiKey = {
-  id: number;
-  suffix: string;
-  created_at: string | null;
-  revoked_at: string | null;
+const SCOPE_LABELS: Record<ApiKeyScope, string> = {
+  [AGENT_SCOPE]: "Agent: MCP and roster comparisons only",
+  [FULL_SCOPE]: "Full: everything you can do",
 };
 
-function formatDate(value: string | null): string {
-  if (!value) return "—";
-  return new Date(value).toLocaleDateString();
-}
+// Mirrors MAX_LABEL_LENGTH in schemas/api_keys.py.
+const MAX_LABEL_LENGTH = 100;
+
+type CreatedKey = {
+  api_key: string;
+  scope: ApiKeyScope;
+};
 
 const COPIED_FOR_MS = 1500;
 
-function renderField(field: SetupField, copied: string | null, onCopy: (field: SetupField) => void) {
+function renderCreateForm(
+  label: string,
+  scope: ApiKeyScope,
+  creating: boolean,
+  onLabel: (e: Event) => void,
+  onScope: (e: Event) => void,
+  onSubmit: (e: Event) => void,
+) {
+  return html`
+    <form class="api-keys__form" @submit=${onSubmit}>
+      <label class="api-keys__form-field">
+        What is it for?
+        <input
+          type="text"
+          placeholder="Claude Code on laptop"
+          maxlength=${MAX_LABEL_LENGTH}
+          required
+          .value=${label}
+          @input=${onLabel}
+        />
+      </label>
+      <label class="api-keys__form-field">
+        Access
+        <select @change=${onScope}>
+          ${[AGENT_SCOPE, FULL_SCOPE].map(
+            (option) =>
+              html`<option value=${option} .selected=${option === scope}>
+                ${SCOPE_LABELS[option]}
+              </option>`,
+          )}
+        </select>
+      </label>
+      <button
+        type="submit"
+        class="api-keys__create"
+        ?disabled=${creating || !label.trim()}
+      >
+        Create key
+      </button>
+    </form>
+  `;
+}
+
+function renderField(
+  field: SetupField,
+  copied: string | null,
+  onCopy: (field: SetupField) => void,
+) {
   return html`
     <div class="api-keys__field">
       <div class="api-keys__field-head">
         <span class="api-keys__field-label">${field.label}</span>
-        <button type="button" class="btn-ghost btn-sm" @click=${() => onCopy(field)}>
+        <button
+          type="button"
+          class="btn-ghost btn-sm"
+          @click=${() => onCopy(field)}
+        >
           ${copied === field.label ? "Copied" : "Copy"}
         </button>
       </div>
@@ -48,9 +108,15 @@ function renderAgentSetup(
   return html`
     <label class="api-keys__agent-picker">
       Connect your agent
-      <select @change=${(e: Event) => onSelect(Number((e.target as HTMLSelectElement).value))}>
+      <select
+        @change=${(e: Event) =>
+          onSelect(Number((e.target as HTMLSelectElement).value))}
+      >
         ${setups.map(
-          (option, index) => html`<option value=${index} .selected=${index === selected}>${option.agent}</option>`,
+          (option, index) =>
+            html`<option value=${index} .selected=${index === selected}>
+              ${option.agent}
+            </option>`,
         )}
       </select>
     </label>
@@ -61,8 +127,11 @@ function renderAgentSetup(
 
 function ApiKeys() {
   const [keys, setKeys] = useState<ApiKey[]>([]);
-  const [created, setCreated] = useState<string | null>(null);
-  const [busy, setBusy] = useState(false);
+  const [created, setCreated] = useState<CreatedKey | null>(null);
+  const [label, setLabel] = useState("");
+  const [scope, setScope] = useState<ApiKeyScope>(AGENT_SCOPE);
+  const [creating, setCreating] = useState(false);
+  const [revokingId, setRevokingId] = useState<number | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [agentIndex, setAgentIndex] = useState(0);
   const [copied, setCopied] = useState<string | null>(null);
@@ -91,128 +160,92 @@ function ApiKeys() {
     load();
   }, []);
 
-  const handleCreate = async () => {
-    setBusy(true);
+  const handleLabel = (e: Event) =>
+    setLabel((e.target as HTMLInputElement).value);
+  const handleScope = (e: Event) =>
+    setScope((e.target as HTMLSelectElement).value as ApiKeyScope);
+
+  const handleCreate = async (e: Event) => {
+    e.preventDefault();
+    setCreating(true);
     setError(null);
     try {
-      const body = await createApiKey();
+      const body = await createApiKey({ label, scope });
       // Shown once and never again — it is stored hashed, so there is nothing to show later.
-      setCreated(body.api_key);
+      setCreated({ api_key: body.api_key, scope });
+      setLabel("");
       await load();
     } catch (e) {
       setError(String(e));
     } finally {
-      setBusy(false);
+      setCreating(false);
     }
   };
 
   const handleRevoke = async (id: number) => {
-    setBusy(true);
+    setRevokingId(id);
     try {
       await revokeApiKey(id);
       await load();
     } catch (e) {
       setError(String(e));
     } finally {
-      setBusy(false);
+      setRevokingId(null);
     }
   };
 
-  const handleDelete = async (id: number) => {
-    setBusy(true);
-    try {
-      await deleteApiKey(id);
-      await load();
-    } catch (e) {
-      setError(String(e));
-    } finally {
-      setBusy(false);
-    }
-  };
-
-  const keyRow = (key: ApiKey) => html`
-    <tr class=${key.revoked_at ? "api-key--revoked" : ""}>
-      <td class="api-key__suffix">…${key.suffix}</td>
-      <td>${formatDate(key.created_at)}</td>
-      <td>${key.revoked_at ? `revoked ${formatDate(key.revoked_at)}` : "active"}</td>
-      <td class="api-key__actions">
-        ${key.revoked_at
-          ? null
-          : html`<button
-              type="button"
-              class="civ-action-btn"
-              ?disabled=${busy}
-              @click=${() => handleRevoke(key.id)}
-            >
-              Revoke
-            </button>`}
-        <button
-          type="button"
-          class="civ-action-btn civ-action-btn--danger"
-          ?disabled=${busy}
-          @click=${() => handleDelete(key.id)}
-        >
-          Delete
-        </button>
-      </td>
-    </tr>
-  `;
+  const activeKeys = keys.filter((key) => !key.revoked_at);
+  const revokedKeys = keys.filter((key) => key.revoked_at);
 
   return html`
     <section class="api-keys">
       <h2 class="api-keys__title">API keys</h2>
       <p class="api-keys__hint">
-        A key carries your own access. Use one for a script or scheduled job —
-        anything that needs to reach civicpatch without a browser session.
+        Agent key: MCP and roster comparisons<br />
+        Full key: Full permissions inherited from your account permissions
       </p>
 
       ${error ? html`<p class="api-keys__error">${error}</p>` : null}
-
       ${created
         ? html`
             <div class="api-keys__created">
-              <p>Copy this now — it is stored hashed and cannot be shown again.</p>
-              <code class="api-keys__secret">${created}</code>
-              <p>To use it from an agent, put this line in your shell profile, not in a chat:</p>
-              <pre class="api-keys__command">${exportLine(created)}</pre>
-              ${renderAgentSetup(
-                agentSetups(window.location.origin, created),
-                agentIndex,
-                handleSelectAgent,
-                copied,
-                handleCopy,
-              )}
+              <p>
+                Copy this now — it is stored hashed and cannot be shown again.
+              </p>
+              <code class="api-keys__secret">${created.api_key}</code>
+              ${created.scope === AGENT_SCOPE
+                ? html`
+                    <p>
+                      To use it from an agent, put this line in your shell
+                      profile, not in a chat:
+                    </p>
+                    <pre class="api-keys__command">
+${exportLine(created.api_key)}</pre
+                    >
+                    ${renderAgentSetup(
+                      agentSetups(window.location.origin, created.api_key),
+                      agentIndex,
+                      handleSelectAgent,
+                      copied,
+                      handleCopy,
+                    )}
+                  `
+                : null}
             </div>
           `
         : null}
-
-      ${keys.length
-        ? html`
-            <table class="api-keys__table">
-              <thead>
-                <tr>
-                  <th>Key</th>
-                  <th>Created</th>
-                  <th>Status</th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>
-                ${keys.map(keyRow)}
-              </tbody>
-            </table>
-          `
-        : html`<p class="api-keys__hint">No keys yet.</p>`}
-
-      <button
-        type="button"
-        class="api-keys__create"
-        ?disabled=${busy}
-        @click=${handleCreate}
-      >
-        Create key
-      </button>
+      ${renderActiveKeys(activeKeys, revokingId, handleRevoke)}
+      ${renderCreateForm(
+        label,
+        scope,
+        creating,
+        handleLabel,
+        handleScope,
+        handleCreate,
+      )}
     </section>
+
+    ${renderRevokedKeys(revokedKeys)}
   `;
 }
 

@@ -112,10 +112,9 @@ A page the visitor can't view redirects to `/`.
   `POST /api/v1/imports` still accepts it.
 - Compare an uploaded roster with civicpatch's (`/api/v1/roster-comparisons`) and read every
   run, whoever started it, on `/roster-comparisons/{id}`. Read-only towards everything else.
-- Use `/mcp`, the MCP server, with their API key (see "Connect your agent"). Its tools only
-  read. The key itself still reaches every route its owner can: MCP steers an agent, it does
-  not narrow the key.
-- Manage their own API keys.
+- Use `/mcp`, the MCP server, with an agent key (see "Connect your agent"). Its tools only
+  read.
+- Create and revoke their own API keys (see "API keys").
 
 ### Admins
 
@@ -128,6 +127,24 @@ A page the visitor can't view redirects to `/`.
 - Change other users' levels; roll back a user's hand-made edits.
 - Open the debug copies of the pages a scrape read.
 - The admin-bus endpoints (`od_sync`, `sheet_sync` and the rest).
+
+### API keys
+
+A key acts as its owner, at its owner's level, but only as far as its access allows:
+
+- **Agent** (the default): `/mcp`, the roster-comparison routes and public routes. Every other
+  route refuses it, whatever its owner's level. A route takes agent keys only by passing
+  `agent_key=AgentKey.ACCEPTED` to `require_route_access`, and every such route is listed in
+  `AGENT_KEY_ROUTES` (`tests/unit/test_route_gates.py`), which fails if the two disagree.
+  Routes and pages that read the caller themselves (`get_optional_person`: pages, `/api/v1/me`,
+  `/api/permissions`, a jurisdiction's activity) treat an agent key as signed out, so its owner's
+  role reaches nothing outside those routes.
+- **Full**: every route its owner can reach, for a script or scheduled job. Keys made before
+  agent keys existed are full.
+
+A key is revoked, never deleted, so a leaked key stays on record. Settings → API keys shows each
+key's label, access and when it was last used (written at most once a minute). Calling `/logout`
+with a key does not end its owner's browser session.
 
 ### Username
 
@@ -164,8 +181,8 @@ state at a time. Any agent that takes an API key works: Claude Code, Codex CLI, 
 VS Code, and Claude.ai in the browser. ChatGPT and the Gemini app in the browser accept
 only OAuth, which civicpatch does not offer yet.
 
-1. Create a key on Settings → API keys. The page shows the key once, with the setup for each
-   agent.
+1. Create an agent key (the default access) on Settings → API keys. The page shows the key
+   once, with the setup for each agent. A full key works too, but reaches everything you can.
 2. Put `export CIVICPATCH_API_KEY=…` in your shell profile. Never paste the key into a chat.
 3. Add the server with your agent's setup from that page. For Claude Code:
    ```sh

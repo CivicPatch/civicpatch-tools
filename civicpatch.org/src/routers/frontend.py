@@ -13,7 +13,7 @@ from database.users import get_user_by_username
 from shared.utils.id_utils import OCDID_PREFIX, folder_to_jurisdiction_ocdid
 
 from schemas.common import Identity, UserRole, has_at_least
-from lib.auth import get_optional_user
+from lib.auth import get_optional_person
 from lib.blog import get_all_posts, get_post
 
 _is_production = os.getenv("APP_ENVIRONMENT", "").lower() == "production"
@@ -110,7 +110,7 @@ def register_page_redirects(app: FastAPI) -> None:
     app.add_exception_handler(PageRedirect, _page_redirect_handler)
 
 
-async def get_page_user(identity: Optional[Identity] = Depends(get_optional_user)) -> dict:
+async def get_page_user(identity: Optional[Identity] = Depends(get_optional_person)) -> dict:
     user = _build_user_dict(identity)
     if needs_username(user):
         raise PageRedirect("/login/username")
@@ -136,7 +136,7 @@ def get_router(templates: Jinja2Templates) -> APIRouter:
     router = APIRouter()
 
     @router.get("/api/permissions", include_in_schema=False)
-    async def permissions(identity: Optional[Identity] = Depends(get_optional_user)):
+    async def permissions(identity: Optional[Identity] = Depends(get_optional_person)):
         user = _build_user_dict(identity)
         return {
             "authenticated": user["authenticated"],
@@ -159,7 +159,7 @@ def get_router(templates: Jinja2Templates) -> APIRouter:
 
     @router.get("/login/username", response_class=HTMLResponse, include_in_schema=False)
     async def login_username_page(
-        request: Request, identity: Optional[Identity] = Depends(get_optional_user)
+        request: Request, identity: Optional[Identity] = Depends(get_optional_person)
     ):
         user = _build_user_dict(identity)
         if not user["authenticated"]:
@@ -354,7 +354,7 @@ def get_router(templates: Jinja2Templates) -> APIRouter:
     async def jurisdiction_activity_page(
         request: Request,
         path: str,
-        identity: Optional[Identity] = Depends(get_optional_user),
+        identity: Optional[Identity] = Depends(get_optional_person),
     ):
         # Registered ahead of the /{path:path} catch-all, and this one is not optional.
         # `folder_to_jurisdiction_ocdid` only checks `len < 3` — it reads segments 0 and 2 and
@@ -385,7 +385,7 @@ def get_router(templates: Jinja2Templates) -> APIRouter:
     async def jurisdiction_page(
         request: Request,
         path: str,
-        identity: Optional[Identity] = Depends(get_optional_user),
+        identity: Optional[Identity] = Depends(get_optional_person),
     ):
         try:
             jurisdiction_ocdid = _path_to_jurisdiction_ocdid(path)

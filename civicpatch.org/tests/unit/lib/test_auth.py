@@ -11,8 +11,8 @@ from unittest.mock import AsyncMock, patch
 import pytest
 from fastapi import HTTPException
 
-from lib.auth import get_user, get_user_by_cookie, header_token, require_route_access
-from schemas.common import Identity, UserRole, RouteCategory, ServiceKey
+from lib.auth import get_optional_person, get_user, get_user_by_cookie, header_token, require_route_access
+from schemas.common import AgentKey, ApiKeyScope, Identity, UserRole, RouteCategory, ServiceKey
 
 
 def _service_identity() -> Identity:
@@ -144,6 +144,78 @@ async def test_service_key_reads_public_routes():
     assert (await dep(identity=identity)) is identity
 
 
+# ── Agent-scoped user keys ───────────────────────────────────────────────────
+
+def _key_identity(scope: ApiKeyScope) -> Identity:
+    return Identity(
+        type="user_key",
+        provider="supabase",
+        provider_user_id="sb-xyz",
+        email="user@example.com",
+        role=UserRole.MAINTAINERS.value,
+        user_id="aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
+        key_scope=scope,
+    )
+
+
+@pytest.mark.asyncio
+@pytest.mark.unit
+async def test_an_agent_key_is_refused_by_a_route_that_does_not_take_it():
+    """Its owner is a maintainer, so the ladder alone would let it through."""
+    dep = require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.MAINTAINERS)
+    with pytest.raises(HTTPException) as exc:
+        await dep(identity=_key_identity(ApiKeyScope.AGENT))
+    assert exc.value.status_code == 403
+
+
+@pytest.mark.asyncio
+@pytest.mark.unit
+async def test_an_agent_key_reaches_a_route_that_takes_it():
+    dep = require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.MAINTAINERS, agent_key=AgentKey.ACCEPTED)
+    identity = _key_identity(ApiKeyScope.AGENT)
+    assert (await dep(identity=identity)) is identity
+
+
+@pytest.mark.asyncio
+@pytest.mark.unit
+async def test_an_agent_key_still_climbs_the_ladder_where_it_is_taken():
+    dep = require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.ADMINS, agent_key=AgentKey.ACCEPTED)
+    with pytest.raises(HTTPException) as exc:
+        await dep(identity=_key_identity(ApiKeyScope.AGENT))
+    assert exc.value.status_code == 403
+
+
+@pytest.mark.asyncio
+@pytest.mark.unit
+async def test_an_agent_key_reads_public_routes():
+    dep = require_route_access(RouteCategory.PUBLIC)
+    identity = _key_identity(ApiKeyScope.AGENT)
+    assert (await dep(identity=identity)) is identity
+
+
+@pytest.mark.asyncio
+@pytest.mark.unit
+async def test_an_agent_key_is_nobody_to_a_route_reading_the_caller_directly():
+    assert await get_optional_person(caller=_key_identity(ApiKeyScope.AGENT)) is None
+
+
+@pytest.mark.asyncio
+@pytest.mark.unit
+@pytest.mark.parametrize(
+    "caller", [_user_identity(UserRole.ADMINS.value), _key_identity(ApiKeyScope.FULL), None], ids=["cookie", "full key", "nobody"]
+)
+async def test_everyone_else_reaches_a_route_reading_the_caller_directly_as_themselves(caller):
+    assert await get_optional_person(caller=caller) is caller
+
+
+@pytest.mark.asyncio
+@pytest.mark.unit
+async def test_a_full_key_needs_no_opt_in():
+    dep = require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.MAINTAINERS)
+    identity = _key_identity(ApiKeyScope.FULL)
+    assert (await dep(identity=identity)) is identity
+
+
 # ── TEAM_REQUIRED — full ladder matrix ───────────────────────────────────────
 
 LADDER = [UserRole.DEFAULT, UserRole.CONTRIBUTORS, UserRole.MAINTAINERS, UserRole.ADMINS]
@@ -230,19 +302,68 @@ def test_header_token_reads_a_bare_or_bearer_key(authorization: str):
     assert header_token(authorization) == "cp_key"
 
 
+def _key_user(scope: ApiKeyScope) -> dict:
+    """What `database.get_user_by_api_key` returns for a live key."""
+    return {
+        "provider": "supabase",
+        "provider_user_id": "sb-key",
+        "role": "maintainers",
+        "id": "u-1",
+        "key_scope": scope.value,
+        "key_id": 7,
+    }
+
+
 @pytest.mark.asyncio
 @pytest.mark.unit
 @pytest.mark.parametrize("authorization", ["cp_key", "Bearer cp_key"])
 async def test_a_user_key_resolves_bare_or_as_bearer(authorization: str):
-    user = {"provider": "supabase", "provider_user_id": "sb-key", "role": "maintainers", "id": "u-1"}
-    lookup = AsyncMock(return_value=user)
+    lookup = AsyncMock(return_value=_key_user(ApiKeyScope.FULL))
     with (
         patch("lib.auth.environment.get_env_vars", return_value={"SERVICE_API_KEY": "service"}),
         patch("lib.auth.database.get_user_by_api_key", new=lookup),
+        patch("lib.auth.database.touch_api_key", new_callable=AsyncMock),
     ):
         identity = await get_user(SimpleNamespace(method="GET"), authorization=authorization, cookie=None)
     lookup.assert_awaited_once_with("cp_key")
     assert identity.provider_user_id == "sb-key"
+
+
+@pytest.mark.asyncio
+@pytest.mark.unit
+async def test_an_agent_key_carries_its_scope():
+    with (
+        patch("lib.auth.environment.get_env_vars", return_value={"SERVICE_API_KEY": "service"}),
+        patch("lib.auth.database.get_user_by_api_key", new=AsyncMock(return_value=_key_user(ApiKeyScope.AGENT))),
+        patch("lib.auth.database.touch_api_key", new_callable=AsyncMock),
+    ):
+        identity = await get_user(SimpleNamespace(method="GET"), authorization="cp_key", cookie=None)
+    assert identity.key_scope == ApiKeyScope.AGENT
+
+
+@pytest.mark.asyncio
+@pytest.mark.unit
+async def test_a_used_key_is_marked_used():
+    with (
+        patch("lib.auth.environment.get_env_vars", return_value={"SERVICE_API_KEY": "service"}),
+        patch("lib.auth.database.get_user_by_api_key", new=AsyncMock(return_value=_key_user(ApiKeyScope.AGENT))),
+        patch("lib.auth.database.touch_api_key", new_callable=AsyncMock) as touch,
+    ):
+        await get_user(SimpleNamespace(method="GET"), authorization="cp_key", cookie=None)
+    touch.assert_awaited_once_with(7)
+
+
+@pytest.mark.asyncio
+@pytest.mark.unit
+async def test_an_unknown_key_marks_nothing():
+    with (
+        patch("lib.auth.environment.get_env_vars", return_value={"SERVICE_API_KEY": "service"}),
+        patch("lib.auth.database.get_user_by_api_key", new=AsyncMock(return_value=None)),
+        patch("lib.auth.database.touch_api_key", new_callable=AsyncMock) as touch,
+    ):
+        with pytest.raises(HTTPException):
+            await get_user(SimpleNamespace(method="GET"), authorization="cp_key", cookie=None)
+    touch.assert_not_awaited()
 
 
 @pytest.mark.asyncio

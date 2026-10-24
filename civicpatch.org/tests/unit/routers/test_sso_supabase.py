@@ -5,8 +5,10 @@ from fastapi import FastAPI
 from fastapi.testclient import TestClient
 from psycopg.errors import UniqueViolation
 
+from lib.auth import get_optional_user
 from lib.supabase_auth import get_supabase_client
 from routers import sso as sso_router
+from schemas.common import Identity
 
 
 @pytest.fixture
@@ -200,3 +202,32 @@ def test_verify_otp_rejects_missing_fields(client):
     )
     assert r1.status_code == 422
     assert r2.status_code == 422
+
+
+def _logout_client(identity: Identity) -> TestClient:
+    app = FastAPI()
+    app.include_router(sso_router.get_router(is_production=False), prefix="/api/v1/auth")
+    app.dependency_overrides[get_optional_user] = lambda: identity
+    return TestClient(app, follow_redirects=False)
+
+
+def _caller(identity_type: str) -> Identity:
+    return Identity(type=identity_type, provider="supabase", provider_user_id="sb-1", email=None)
+
+
+@pytest.mark.unit
+def test_logout_ends_a_browser_session():
+    with patch("lib.auth_session.invalidate_session", new_callable=AsyncMock) as invalidate:
+        response = _logout_client(_caller("cookie")).get("/api/v1/auth/logout")
+
+    assert response.status_code == 307
+    invalidate.assert_awaited_once_with("supabase", "sb-1")
+
+
+@pytest.mark.unit
+def test_logout_with_an_api_key_does_not_sign_its_owner_out():
+    with patch("lib.auth_session.invalidate_session", new_callable=AsyncMock) as invalidate:
+        response = _logout_client(_caller("user_key")).get("/api/v1/auth/logout")
+
+    assert response.status_code == 307
+    invalidate.assert_not_awaited()

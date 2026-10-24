@@ -7,7 +7,7 @@ from fastapi.security import APIKeyCookie, APIKeyHeader
 
 import database.users as database
 import environment
-from schemas.common import Identity, UserRole, RouteCategory, ServiceKey, has_at_least
+from schemas.common import AgentKey, ApiKeyScope, Identity, UserRole, RouteCategory, ServiceKey, has_at_least
 import lib.auth_session as session_service
 
 logger = logging.getLogger(__name__)
@@ -88,6 +88,7 @@ async def get_user_by_api_key(api_key: str) -> Identity:
     if not user:
         raise HTTPException(status_code=401, detail="No identity found using api key")
 
+    await database.touch_api_key(user["key_id"])
     return Identity(
         type="user_key",
         provider=cast(str, user.get("provider")),
@@ -95,6 +96,7 @@ async def get_user_by_api_key(api_key: str) -> Identity:
         email=user.get("email"),
         role=user.get("role", UserRole.DEFAULT.value),
         user_id=user.get("id"),
+        key_scope=ApiKeyScope(user["key_scope"]),
     )
 
 
@@ -156,10 +158,19 @@ async def get_optional_user(
         return None
 
 
+async def get_optional_person(caller: Optional[Identity] = Depends(get_optional_user)) -> Optional[Identity]:
+    """The caller for a route that reads it outside `require_route_access`: an agent key is nobody here,
+    so its owner's role reaches only routes that opt in through the gate."""
+    if caller and caller.key_scope == ApiKeyScope.AGENT:
+        return None
+    return caller
+
+
 def require_route_access(
     category: RouteCategory,
     required_role: Optional[UserRole] = None,
     service_key: ServiceKey = ServiceKey.REFUSED,
+    agent_key: AgentKey = AgentKey.REFUSED,
 ):
     async def _dependency(
         identity: Optional[Identity] = Depends(get_optional_user),
@@ -186,6 +197,9 @@ def require_route_access(
         # Public
         if category == RouteCategory.PUBLIC:
             return identity
+
+        if identity and identity.key_scope == ApiKeyScope.AGENT and agent_key != AgentKey.ACCEPTED:
+            raise HTTPException(status_code=403, detail="An agent key is not accepted here")
 
         # Authenticated — any signed-in identity.
         if category == RouteCategory.AUTHENTICATED:

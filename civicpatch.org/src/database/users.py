@@ -1,5 +1,6 @@
 import secrets
 import uuid
+from datetime import timedelta
 from typing import cast
 
 from database.database import get_pool
@@ -10,6 +11,10 @@ from database.database import get_pool
 SYSTEM_USER_ID = "00000000-0000-4000-8000-000000000001"
 from environment import get_env_vars
 import lib.hash as hash_utils
+from schemas.common import ApiKeyScope
+
+# `last_used_at` is rewritten at most this often per key, so a busy agent is not a write per request.
+LAST_USED_PRECISION = timedelta(minutes=1)
 
 
 async def create_user(provider, provider_user_id, email) -> str:
@@ -63,7 +68,7 @@ async def set_username(user_id: str, username: str) -> None:
         )
 
 
-async def create_api_key(provider, provider_user_id):
+async def create_api_key(provider, provider_user_id, scope: ApiKeyScope, label: str):
     pool = await get_pool()
     env = get_env_vars()
     api_key = secrets.token_urlsafe(32)
@@ -72,10 +77,10 @@ async def create_api_key(provider, provider_user_id):
     async with pool.connection() as conn:
         await conn.execute(
             """
-            INSERT INTO api_keys (user_id, api_key_hash, api_key_suffix)
-            SELECT id, %s, %s FROM users WHERE provider = %s AND provider_user_id = %s
+            INSERT INTO api_keys (user_id, api_key_hash, api_key_suffix, scope, label)
+            SELECT id, %s, %s, %s, %s FROM users WHERE provider = %s AND provider_user_id = %s
             """,
-            (api_key_hash, api_key_suffix, provider, provider_user_id),
+            (api_key_hash, api_key_suffix, scope.value, label, provider, provider_user_id),
         )
     return api_key
 
@@ -89,21 +94,12 @@ async def revoke_api_key(api_key_id):
         )
 
 
-async def delete_api_key(api_key_id):
-    pool = await get_pool()
-    async with pool.connection() as conn:
-        await conn.execute(
-            "DELETE FROM api_keys WHERE id = %s",
-            (api_key_id,),
-        )
-
-
 async def get_api_keys_for_user(provider, provider_user_id):
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
-            SELECT k.id, k.api_key_suffix, k.created_at, k.revoked_at
+            SELECT k.id, k.api_key_suffix, k.created_at, k.revoked_at, k.scope, k.label, k.last_used_at
             FROM api_keys k
             JOIN users u ON u.id = k.user_id
             WHERE u.provider = %s AND u.provider_user_id = %s
@@ -112,7 +108,15 @@ async def get_api_keys_for_user(provider, provider_user_id):
         )
         rows = await cur.fetchall()
     return [
-        {"id": r[0], "suffix": r[1], "created_at": r[2], "revoked_at": r[3]}
+        {
+            "id": r[0],
+            "suffix": r[1],
+            "created_at": r[2],
+            "revoked_at": r[3],
+            "scope": r[4],
+            "label": r[5],
+            "last_used_at": r[6],
+        }
         for r in rows
     ]
 
@@ -192,7 +196,7 @@ async def get_user_by_api_key(api_key):
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
-            SELECT u.id::text, u.provider, u.provider_user_id, u.email, u.created_at, u.role
+            SELECT u.id::text, u.provider, u.provider_user_id, u.email, u.created_at, u.role, k.scope, k.id
             FROM users u
             JOIN api_keys k ON u.id = k.user_id
             WHERE k.api_key_hash = %s AND k.revoked_at IS NULL
@@ -209,8 +213,21 @@ async def get_user_by_api_key(api_key):
         "email": row[3],
         "created_at": row[4],
         "role": row[5],
+        "key_scope": row[6],
+        "key_id": row[7],
     }
 
+
+async def touch_api_key(api_key_id: int) -> None:
+    pool = await get_pool()
+    async with pool.connection() as conn:
+        await conn.execute(
+            """
+            UPDATE api_keys SET last_used_at = now()
+            WHERE id = %s AND (last_used_at IS NULL OR last_used_at < now() - %s)
+            """,
+            (api_key_id, LAST_USED_PRECISION),
+        )
 
 
 async def get_user_id_by_provider(provider: str, provider_user_id: str) -> str | None:
