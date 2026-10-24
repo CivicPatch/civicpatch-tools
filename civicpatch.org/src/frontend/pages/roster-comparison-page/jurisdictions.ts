@@ -1,7 +1,7 @@
 import { html } from "lit-html";
 import { CANDIDATE_REASON_LABELS, OUTCOME_LABELS } from "./labels.js";
 import { outcomeBar } from "./summary.js";
-import { levelChip, rowRef, warningList } from "./values.js";
+import { fieldValues, rowRef, warningIcon, warningList } from "./values.js";
 import type { JurisdictionRates, PersonComparison } from "./types.js";
 
 export interface JurisdictionsView {
@@ -60,7 +60,7 @@ function jurisdictionRows(jurisdiction: JurisdictionRates, view: JurisdictionsVi
       <td>
         <a href=${view.pageUrl(ocdid)} @click=${(e: Event) => e.stopPropagation()}>${placeName(ocdid)}</a>
         ${jurisdiction.rates.rows_with_warnings
-          ? html`<span class="rc-warning-count">⚠ ${jurisdiction.rates.rows_with_warnings}</span>`
+          ? html`<span class="rc-warning-count">${warningIcon} ${jurisdiction.rates.rows_with_warnings}</span>`
           : null}
       </td>
       <td>${outcomeBar(outcomes, placeName(ocdid), true)}</td>
@@ -86,15 +86,10 @@ function peopleTable(people: PersonComparison[], pageUrl: string) {
       <tbody>
         ${people.map(
           (person) => html`<tr>
-            <td>
-              ${person.uploaded ? html`${person.uploaded.name}${rowRef(person.uploaded)}` : html`<span class="rc-muted">not in uploaded data</span>`}
-              ${warningList(person.warnings)}
-            </td>
+            <td>${uploadedSide(person)}</td>
             <td>${civicpatchSide(person, pageUrl)}</td>
             <td>${OUTCOME_LABELS[person.outcome]}</td>
-            <td>${levelChip(person.fields.role)}</td>
-            <td>${levelChip(person.fields.emails)}</td>
-            <td>${levelChip(person.fields.phones)}</td>
+            ${fieldCells(person)}
           </tr>`,
         )}
       </tbody>
@@ -102,7 +97,20 @@ function peopleTable(people: PersonComparison[], pageUrl: string) {
   </div>`;
 }
 
-function civicpatchSide(person: PersonComparison, pageUrl: string) {
+export function uploadedSide(person: PersonComparison) {
+  return html`${person.uploaded
+      ? html`${person.uploaded.name}${rowRef(person.uploaded)}`
+      : html`<span class="rc-muted">not in uploaded data</span>`}
+    ${warningList(person.warnings)}`;
+}
+
+export function fieldCells(person: PersonComparison) {
+  return html`<td>${fieldValues(person.fields.role, person.post_roles)}</td>
+    <td>${fieldValues(person.fields.emails, [])}</td>
+    <td>${fieldValues(person.fields.phones, [])}</td>`;
+}
+
+export function civicpatchSide(person: PersonComparison, pageUrl: string) {
   if (person.person_name) return html`<a href=${pageUrl}>${person.person_name}</a>`;
   if (!person.candidates.length) return html`<span class="rc-muted">not in civicpatch</span>`;
   return person.candidates.map(

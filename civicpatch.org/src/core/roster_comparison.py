@@ -49,11 +49,20 @@ def compare_people(
     accounted_for = {person_id for comparison in compared for person_id in _person_ids(comparison)}
     return compared + [
         PersonComparison(
-            outcome=PersonOutcome.ONLY_IN_CIVICPATCH, person_id=person.id, person_name=person.name
+            outcome=PersonOutcome.ONLY_IN_CIVICPATCH,
+            person_id=person.id,
+            person_name=person.name,
+            fields=_fields(None, person, taxonomy),
+            post_roles=post_role_names(person, taxonomy),
         )
         for person in roster
         if person.id not in accounted_for
     ]
+
+
+def post_role_names(person: Person, taxonomy: Taxonomy) -> list[str]:
+    labels_by_id = {role_id: label for label, role_id in taxonomy.role_ids.items()}
+    return list(dict.fromkeys(labels_by_id.get(m.role_id, m.role_id) for m in person.memberships))
 
 
 def civicpatch_role_ids(person: Person, taxonomy: Taxonomy) -> list[str]:
@@ -110,16 +119,18 @@ def _matched(row: UploadedRow, person: Person, taxonomy: Taxonomy) -> PersonComp
         person_id=person.id,
         person_name=person.name,
         fields=_fields(row, person, taxonomy),
+        post_roles=post_role_names(person, taxonomy),
     )
 
 
-def _fields(row: UploadedRow, person: Person, taxonomy: Taxonomy) -> dict[ComparedField, FieldComparison]:
+def _fields(row: UploadedRow | None, person: Person, taxonomy: Taxonomy) -> dict[ComparedField, FieldComparison]:
+    """With no row (a person only in civicpatch), civicpatch's values against an empty side."""
     return {
-        ComparedField.ROLE: compare_role(row.role, civicpatch_role_ids(person, taxonomy), taxonomy),
-        ComparedField.EMAILS: compare_emails(row.emails, person.emails),
-        ComparedField.PHONES: compare_phones(row.phones, person.phones),
-        ComparedField.URLS: compare_urls(row.urls, person.urls),
-        ComparedField.START_DATE: compare_start_date(row.start_date, _earliest_start(person)),
+        ComparedField.ROLE: compare_role(row.role if row else None, civicpatch_role_ids(person, taxonomy), taxonomy),
+        ComparedField.EMAILS: compare_emails(row.emails if row else [], person.emails),
+        ComparedField.PHONES: compare_phones(row.phones if row else [], person.phones),
+        ComparedField.URLS: compare_urls(row.urls if row else [], person.urls),
+        ComparedField.START_DATE: compare_start_date(row.start_date if row else None, _earliest_start(person)),
     }
 
 

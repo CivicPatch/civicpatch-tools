@@ -2,18 +2,27 @@ import { html } from "lit-html";
 import { component, useEffect, useState } from "haunted";
 import {
   fetchRosterComparison,
-  fetchRosterComparisonField,
   fetchRosterComparisonJurisdiction,
+  fetchRosterComparisonPeople,
 } from "../../api-roster-comparisons.js";
 import { formatDateTime } from "../../utils/date-utils.js";
 import { fieldList } from "./field-list.js";
 import { jurisdictionsPanel } from "./jurisdictions.js";
-import { fieldsPanel, peoplePanel, type FieldSelection } from "./summary.js";
-import type { FieldPage, PersonComparison, RosterComparisonRun, RosterComparisonSummary } from "./types.js";
+import { outcomeList } from "./outcome-list.js";
+import { fieldsPanel, peoplePanel } from "./summary.js";
+import {
+  isOutcomeSelection,
+  isSameSelection,
+  type PeopleSelection,
+  type PersonComparison,
+  type RosterComparisonRun,
+  type RosterComparisonSummary,
+  type RunPeoplePage,
+} from "./types.js";
 import "../../components/panel/panel.css";
 import "./roster-comparison-page.css";
 
-const FIELD_PAGE_SIZE = 50;
+const PEOPLE_PAGE_SIZE = 50;
 const LOADING = "loading";
 
 const jurisdictionPageUrl = (ocdid: string) => `/${ocdid}`;
@@ -26,26 +35,26 @@ function RosterComparisonPage({ run_id: runId }: RosterComparisonPageProps) {
   const [summary, setSummary] = useState<RosterComparisonSummary | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [open, setOpen] = useState<Record<string, PersonComparison[] | typeof LOADING>>({});
-  const [selection, setSelection] = useState<FieldSelection | null>(null);
-  const [fieldPage, setFieldPage] = useState<FieldPage | null>(null);
+  const [selection, setSelection] = useState<PeopleSelection | null>(null);
+  const [peoplePage, setPeoplePage] = useState<RunPeoplePage | null>(null);
 
   useEffect(() => {
     fetchRosterComparison(runId).then(setSummary, (e) => setError(String(e)));
   }, [runId]);
 
-  const loadFieldPage = async (next: FieldSelection, page: number) => {
-    setFieldPage(null);
+  const loadPeoplePage = async (next: PeopleSelection, page: number) => {
+    setPeoplePage(null);
     try {
-      setFieldPage(await fetchRosterComparisonField(runId, next.field, next.filter, page, FIELD_PAGE_SIZE));
+      setPeoplePage(await fetchRosterComparisonPeople(runId, next, page, PEOPLE_PAGE_SIZE));
     } catch (e) {
       setError(String(e));
     }
   };
 
-  const handleSelect = (next: FieldSelection) => {
-    const same = selection?.field === next.field && selection.filter === next.filter;
+  const handleSelect = (next: PeopleSelection) => {
+    const same = isSameSelection(selection, next);
     setSelection(same ? null : next);
-    if (!same) loadFieldPage(next, 1);
+    if (!same) loadPeoplePage(next, 1);
   };
 
   const handleToggle = async (ocdid: string) => {
@@ -72,14 +81,22 @@ function RosterComparisonPage({ run_id: runId }: RosterComparisonPageProps) {
       <h1 class="page-focal__title">${run.state.toUpperCase()} roster comparison</h1>
     </div>
     <p class="rc-meta">${metaLine(run, summary.jurisdictions.length)}</p>
-    ${peoplePanel(run)}
+    ${peoplePanel(run, selection, handleSelect)}
+    ${selection && isOutcomeSelection(selection)
+      ? outcomeList({
+          selection,
+          page: peoplePage,
+          pageUrl: jurisdictionPageUrl,
+          onPage: (page) => loadPeoplePage(selection, page),
+        })
+      : null}
     ${fieldsPanel(run, selection, handleSelect)}
-    ${selection
+    ${selection && !isOutcomeSelection(selection)
       ? fieldList({
           selection,
-          page: fieldPage,
+          page: peoplePage,
           pageUrl: jurisdictionPageUrl,
-          onPage: (page) => loadFieldPage(selection, page),
+          onPage: (page) => loadPeoplePage(selection, page),
         })
       : null}
     ${jurisdictionsPanel({

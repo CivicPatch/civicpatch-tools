@@ -15,6 +15,7 @@ export type Outcome = (typeof OUTCOMES)[number];
 
 export const COMPARED_FIELDS = ["role", "emails", "phones", "urls", "start_date"] as const;
 export type ComparedField = (typeof COMPARED_FIELDS)[number];
+export const ROLE_FIELD: ComparedField = "role";
 
 export const FIELD_FILTER_CONFLICT = "conflict";
 export const FIELD_FILTER_ONE_SIDE_HAS_MORE = "one_side_has_more";
@@ -58,9 +59,34 @@ export interface PersonComparison {
   candidates: Candidate[];
   fields: Partial<Record<ComparedField, FieldComparison>>;
   warnings: RowWarning[];
+  post_roles: string[];
 }
 
 export type OutcomeCounts = Record<Outcome, number>;
+
+/** A field's conflict or one-side-has-more count, clicked on the page. */
+export interface FieldSelection {
+  field: ComparedField;
+  filter: FieldFilter;
+}
+
+/** One outcome's count in the people bar, clicked on the page. */
+export interface OutcomeSelection {
+  outcome: Outcome;
+}
+
+/** Whichever state-wide list of people is open: one at a time. */
+export type PeopleSelection = FieldSelection | OutcomeSelection;
+
+export function isOutcomeSelection(selection: PeopleSelection): selection is OutcomeSelection {
+  return "outcome" in selection;
+}
+
+export function isSameSelection(a: PeopleSelection | null, b: PeopleSelection): boolean {
+  if (a === null) return false;
+  if (isOutcomeSelection(a)) return isOutcomeSelection(b) && a.outcome === b.outcome;
+  return !isOutcomeSelection(b) && a.field === b.field && a.filter === b.filter;
+}
 
 export interface FieldCounts {
   agreement: number;
@@ -116,14 +142,14 @@ export interface RosterComparisonListPage {
   data: RosterComparisonListItem[];
 }
 
-export interface FieldPerson {
+export interface RunPerson {
   jurisdiction_ocdid: string;
   person: PersonComparison;
 }
 
-export interface FieldPage {
+export interface RunPeoplePage {
   total_items: number;
   page: number;
   total_pages: number;
-  data: FieldPerson[];
+  data: RunPerson[];
 }

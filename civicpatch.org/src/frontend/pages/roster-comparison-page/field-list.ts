@@ -3,12 +3,11 @@ import { Pagination } from "../../components/pagination/index.js";
 import { FIELD_LABELS } from "./labels.js";
 import { placeName } from "./jurisdictions.js";
 import { civicpatchChips, rowRef, uploadedChips, valueLegend } from "./values.js";
-import { FIELD_FILTER_CONFLICT, type FieldPage } from "./types.js";
-import type { FieldSelection } from "./summary.js";
+import { FIELD_FILTER_CONFLICT, ROLE_FIELD, type FieldSelection, type RunPeoplePage } from "./types.js";
 
 export interface FieldListView {
   selection: FieldSelection;
-  page: FieldPage | null;
+  page: RunPeoplePage | null;
   pageUrl: (jurisdictionOcdid: string) => string;
   onPage: (page: number) => void;
 }
@@ -33,17 +32,21 @@ export function fieldList(view: FieldListView) {
               <td>${person.uploaded ? html`${person.uploaded.name}${rowRef(person.uploaded)}` : null}</td>
               <td><a href=${view.pageUrl(jurisdiction_ocdid)}>${person.person_name}</a></td>
               <td>${comparison ? uploadedChips(comparison) : null}</td>
-              <td>${comparison ? civicpatchChips(comparison) : null}</td>
+              <td>${comparison ? civicpatchChips(comparison, selection.field === ROLE_FIELD ? person.post_roles : []) : null}</td>
             </tr>`;
           })}
         </tbody>
       </table>
     </div>
-    ${Pagination({
-      page: page.page,
-      totalPages: page.total_pages,
-      onPrevious: () => view.onPage(page.page - 1),
-      onNext: () => view.onPage(page.page + 1),
-    })}
+    ${peoplePager(page, view.onPage)}
   </div>`;
+}
+
+export function peoplePager(page: RunPeoplePage, onPage: (page: number) => void) {
+  return Pagination({
+    page: page.page,
+    totalPages: page.total_pages,
+    onPrevious: () => onPage(page.page - 1),
+    onNext: () => onPage(page.page + 1),
+  });
 }

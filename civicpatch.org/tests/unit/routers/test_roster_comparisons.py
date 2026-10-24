@@ -14,17 +14,19 @@ from schemas.roster_comparisons import (
     ComparedField,
     ComparisonRates,
     FieldFilter,
-    FieldPeoplePage,
     JurisdictionRates,
     OutcomeCounts,
+    PeopleFilter,
+    PersonOutcome,
+    RejectedReason,
+    RejectedRow,
     RosterComparisonCreated,
     RosterComparisonDraft,
     RosterComparisonListItem,
     RosterComparisonListPage,
     RosterComparisonRun,
-    RejectedReason,
-    RejectedRow,
     RosterComparisonSummary,
+    RunPeoplePage,
 )
 import services.roster_comparison_drafts as drafts_service
 from services.roster_comparison import RowsOutsideState, RunNotFound
@@ -171,20 +173,37 @@ def test_a_run_id_that_is_not_a_uuid_is_refused():
 
 @pytest.mark.unit
 def test_a_fields_people_are_paged_through_the_service():
-    page = FieldPeoplePage(total_items=120, page=2, total_pages=3, data=[])
-    with _service("get_run_field_page", return_value=page) as get_page:
-        response = _client().get(f"{_PREFIX}/{_RUN_ID}/fields/emails?level=conflict&page=2&per_page=50")
+    page = RunPeoplePage(total_items=120, page=2, total_pages=3, data=[])
+    with _service("get_run_people_page", return_value=page) as get_page:
+        response = _client().get(f"{_PREFIX}/{_RUN_ID}/people?field=emails&level=conflict&page=2&per_page=50")
 
     assert response.status_code == 200
     assert (response.json()["total_items"], response.json()["total_pages"]) == (120, 3)
-    get_page.assert_awaited_once_with(_RUN_ID, ComparedField.EMAILS, FieldFilter.CONFLICT, 2, 50)
+    get_page.assert_awaited_once_with(
+        _RUN_ID, PeopleFilter(field=ComparedField.EMAILS, level=FieldFilter.CONFLICT), 2, 50
+    )
 
 
 @pytest.mark.unit
-def test_an_unknown_field_level_is_refused():
-    response = _client().get(f"{_PREFIX}/{_RUN_ID}/fields/emails?level=agreement")
+def test_an_outcomes_people_are_paged_through_the_service():
+    page = RunPeoplePage(total_items=61, page=1, total_pages=2, data=[])
+    with _service("get_run_people_page", return_value=page) as get_page:
+        response = _client().get(f"{_PREFIX}/{_RUN_ID}/people?outcome=only_in_uploaded_data")
+
+    assert response.status_code == 200
+    get_page.assert_awaited_once_with(_RUN_ID, PeopleFilter(outcome=PersonOutcome.ONLY_IN_UPLOADED_DATA), 1, 50)
+
+
+@pytest.mark.unit
+@pytest.mark.parametrize(
+    "query", ["field=emails&level=agreement", "field=emails", "level=conflict", "outcome=everyone"]
+)
+def test_a_bad_people_filter_is_refused(query: str):
+    with _service("get_run_people_page") as get_page:
+        response = _client().get(f"{_PREFIX}/{_RUN_ID}/people?{query}")
 
     assert response.status_code == 422
+    get_page.assert_not_awaited()
 
 
 # ── batched upload: drafts ────────────────────────────────────────────────────

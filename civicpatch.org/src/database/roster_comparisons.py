@@ -8,13 +8,14 @@ from database.database import get_pool
 from schemas.roster_comparisons import (
     ComparedField,
     FieldLevel,
-    FieldPerson,
     JurisdictionComparison,
     JurisdictionRates,
     PersonComparison,
+    PersonOutcome,
     RosterComparison,
     RosterComparisonListRow,
     RosterComparisonRun,
+    RunPerson,
 )
 
 _STARTED_AT = """to_char(roster_comparison_runs.started_at AT TIME ZONE 'UTC', 'YYYY-MM-DD"T"HH24:MI:SS') || '+00:00'"""
@@ -159,26 +160,40 @@ async def get_roster_comparison_people(run_id: str, jurisdiction_ocdid: str) -> 
     return [PersonComparison.model_validate(row[0]) for row in rows]
 
 
-async def get_roster_comparison_field_people(
-    run_id: str, field: ComparedField, levels: list[FieldLevel], limit: int, offset: int
-) -> tuple[int, list[FieldPerson]]:
-    """One page of the matched people whose `field` graded at one of `levels`, and their total."""
-    level_values = [level.value for level in levels]
+async def get_roster_comparison_people_page(
+    run_id: str,
+    outcome: PersonOutcome | None,
+    field: ComparedField | None,
+    levels: list[FieldLevel],
+    limit: int,
+    offset: int,
+) -> tuple[int, list[RunPerson]]:
+    """One page of a run's people across every jurisdiction, and their total. Each filter applies
+    only when given; `levels` are the ones `field` must have graded at."""
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
             SELECT jurisdiction_ocdid, comparison, count(*) OVER ()
             FROM roster_comparison_people
-            WHERE run_id = %s AND comparison -> 'fields' -> %s ->> 'level' = ANY(%s)
+            WHERE run_id = %(run_id)s
+              AND (%(outcome)s::text IS NULL OR outcome = %(outcome)s)
+              AND (%(field)s::text IS NULL OR comparison -> 'fields' -> %(field)s ->> 'level' = ANY(%(levels)s::text[]))
             ORDER BY jurisdiction_ocdid, position
-            LIMIT %s OFFSET %s
+            LIMIT %(limit)s OFFSET %(offset)s
             """,
-            (run_id, field.value, level_values, limit, offset),
+            {
+                "run_id": run_id,
+                "outcome": outcome.value if outcome else None,
+                "field": field.value if field else None,
+                "levels": [level.value for level in levels],
+                "limit": limit,
+                "offset": offset,
+            },
         )
         rows = await cur.fetchall()
     total = rows[0][2] if rows else 0
     return total, [
-        FieldPerson(jurisdiction_ocdid=ocdid, person=PersonComparison.model_validate(comparison))
+        RunPerson(jurisdiction_ocdid=ocdid, person=PersonComparison.model_validate(comparison))
         for ocdid, comparison, _ in rows
     ]

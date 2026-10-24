@@ -201,8 +201,8 @@ only OAuth, which civicpatch does not offer yet.
    connector's key) uploads through the draft tools in batches of 500 rows, which costs it
    tokens. Either way it replies with the run's page, `/roster-comparisons/{id}`.
 
-The tools: `find_jurisdiction`, `get_jurisdiction_people`, `list_roster_comparisons`,
-`get_roster_comparison`, `get_roster_comparison_jurisdiction`, `get_roster_comparison_field`, and
+The tools: `find_jurisdiction`, `list_jurisdictions`, `get_jurisdiction_people`, `list_roster_comparisons`,
+`get_roster_comparison`, `get_roster_comparison_jurisdiction`, `get_roster_comparison_people`, and
 for batched uploads `start_roster_comparison`, `add_roster_comparison_rows`,
 `finish_roster_comparison`. Each mirrors one `/api/v1/` route. A draft belongs to whoever started
 it and expires after a day.

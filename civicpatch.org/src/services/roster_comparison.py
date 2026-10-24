@@ -16,9 +16,7 @@ from core.page_urls import roster_comparison_page_url
 from core.roster_comparison_rates import LEVELS_BY_FILTER, worst_first
 from schemas.pagination import paginated_response, pagination_offset
 from schemas.roster_comparisons import (
-    ComparedField,
-    FieldFilter,
-    FieldPeoplePage,
+    PeopleFilter,
     PersonComparison,
     RejectedRow,
     RosterComparisonCreated,
@@ -27,6 +25,7 @@ from schemas.roster_comparisons import (
     RosterComparisonRun,
     RosterComparisonSummary,
     RosterComparisonUpload,
+    RunPeoplePage,
     UploadedRow,
 )
 
@@ -104,14 +103,13 @@ async def get_run_people(run_id: str, jurisdiction_ocdid: str) -> list[PersonCom
     return await database.get_roster_comparison_people(run_id, jurisdiction_ocdid)
 
 
-async def get_run_field_page(
-    run_id: str, field: ComparedField, level: FieldFilter, page: int, per_page: int
-) -> FieldPeoplePage:
+async def get_run_people_page(run_id: str, people_filter: PeopleFilter, page: int, per_page: int) -> RunPeoplePage:
     await _run(run_id)
-    total, people = await database.get_roster_comparison_field_people(
-        run_id, field, LEVELS_BY_FILTER[level], per_page, pagination_offset(page, per_page)
+    levels = LEVELS_BY_FILTER[people_filter.level] if people_filter.level else []
+    total, people = await database.get_roster_comparison_people_page(
+        run_id, people_filter.outcome, people_filter.field, levels, per_page, pagination_offset(page, per_page)
     )
-    return FieldPeoplePage.model_validate(paginated_response(total, page, per_page, people))
+    return RunPeoplePage.model_validate(paginated_response(total, page, per_page, people))
 
 
 async def _run(run_id: str) -> RosterComparisonRun:

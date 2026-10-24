@@ -1,25 +1,36 @@
 import { html } from "lit-html";
-import { FIELD_LABELS, LEVEL_LABELS } from "./labels.js";
+import { FIELD_LABELS, LEVEL_LABELS, ONE_SIDE_LEVELS } from "./labels.js";
 import type { FieldComparison, RowWarning, UploadedRow } from "./types.js";
+
+export const warningIcon = html`<i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>`;
 
 const SIDE_UPLOADED = "uploaded";
 const SIDE_CIVICPATCH = "civicpatch";
 type Side = typeof SIDE_UPLOADED | typeof SIDE_CIVICPATCH;
 
-/** One side's values, each tinted when the other side does not have it. */
-export function valueChips(comparison: FieldComparison, side: Side) {
+/** One side's values, each tinted when the other side does not have it; `bold` ones in bold. */
+export function valueChips(comparison: FieldComparison, side: Side, bold: string[]) {
   const own = side === SIDE_UPLOADED ? comparison.uploaded : comparison.civicpatch;
   const other = new Set(side === SIDE_UPLOADED ? comparison.civicpatch : comparison.uploaded);
   return own.map(
     (value) =>
       html`<span class="rc-value ${other.has(value) ? "rc-value--shared" : `rc-value--${side}-only`}"
-        >${value}</span
+        >${bold.includes(value) ? html`<b>${value}</b>` : value}</span
       >`,
   );
 }
 
-export const uploadedChips = (comparison: FieldComparison) => valueChips(comparison, SIDE_UPLOADED);
-export const civicpatchChips = (comparison: FieldComparison) => valueChips(comparison, SIDE_CIVICPATCH);
+export const uploadedChips = (comparison: FieldComparison) => valueChips(comparison, SIDE_UPLOADED, []);
+/** `postRoles` (civicpatch's post roles) are bolded; pass [] for any field but role. */
+export const civicpatchChips = (comparison: FieldComparison, postRoles: string[]) =>
+  valueChips(comparison, SIDE_CIVICPATCH, postRoles);
+
+/** A person's field in a table cell: the verdict, then both sides' values. */
+export function fieldValues(comparison: FieldComparison | undefined, postRoles: string[]) {
+  if (!comparison) return null;
+  return html`${levelChip(comparison)}
+    <div class="rc-values">${uploadedChips(comparison)}${civicpatchChips(comparison, postRoles)}</div>`;
+}
 
 export function valueLegend() {
   return html`<p class="rc-value-legend">
@@ -31,7 +42,9 @@ export function valueLegend() {
 
 export function levelChip(comparison: FieldComparison | undefined) {
   if (!comparison) return null;
-  return html`<span class="rc-level rc-level--${comparison.level}">${LEVEL_LABELS[comparison.level] ?? comparison.level}</span>`;
+  return html`<span class="rc-level rc-level--${comparison.level}"
+    >${ONE_SIDE_LEVELS.has(comparison.level) ? warningIcon : null} ${LEVEL_LABELS[comparison.level] ?? comparison.level}</span
+  >`;
 }
 
 /** "row 847", opening the row as it was uploaded on hover and on keyboard focus. */
@@ -52,7 +65,7 @@ export function rowRef(row: UploadedRow) {
 export function warningList(warnings: RowWarning[]) {
   if (!warnings.length) return null;
   return html`<ul class="rc-warnings">
-    ${warnings.map((warning) => html`<li>⚠ ${warning.message}</li>`)}
+    ${warnings.map((warning) => html`<li>${warningIcon} ${warning.message}</li>`)}
   </ul>`;
 }
 
