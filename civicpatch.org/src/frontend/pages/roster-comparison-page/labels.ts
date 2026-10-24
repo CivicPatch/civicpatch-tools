@@ -15,18 +15,20 @@ export const FIELD_LABELS: Record<ComparedField, string> = {
   start_date: "Start date",
 };
 
-// One-side levels keep a ⚠: they agree, but one side knows more.
 export const LEVEL_LABELS: Record<string, string> = {
   both_empty: "neither has it",
   uploaded_data_has_none: "uploaded data has none",
   civicpatch_has_none: "civicpatch has none",
   equal: "equal",
-  civicpatch_has_more: "⚠ civicpatch has more",
-  uploaded_data_has_more: "⚠ uploaded data has more",
-  overlap: "⚠ overlap",
+  civicpatch_has_more: "civicpatch has more",
+  uploaded_data_has_more: "uploaded data has more",
+  overlap: "overlap",
   differs: "differs",
   unknown: "role not recognised",
 };
+
+// They agree, but one side knows more: shown with the warning icon.
+export const ONE_SIDE_LEVELS = new Set(["civicpatch_has_more", "uploaded_data_has_more", "overlap"]);
 
 export const CANDIDATE_REASON_LABELS: Record<string, string> = {
   same_name: "same name",

@@ -178,6 +178,10 @@ class PersonComparison(BaseModel):
     candidates: list[Candidate] = Field(default_factory=list)
     fields: dict[ComparedField, FieldComparison] = Field(default_factory=dict)
     warnings: list[RowWarning] = Field(default_factory=list)
+    post_roles: list[str] = Field(
+        default_factory=list,
+        description="civicpatch's post role of each open membership, by name; the role field's other civicpatch values are member roles.",
+    )
 
 
 class OutcomeCounts(BaseModel):
@@ -290,20 +294,41 @@ class FieldFilter(StrEnum):
     ONE_SIDE_HAS_MORE = "one_side_has_more"
 
 
-class FieldPerson(BaseModel):
-    """One person behind a field's count, with where they were compared."""
+class PeopleFilter(BaseModel):
+    """Which of a run's people to list; with none, every one. `field` and `level` go together."""
+
+    outcome: PersonOutcome | None = None
+    field: ComparedField | None = None
+    level: FieldFilter | None = None
+
+    @model_validator(mode="after")
+    def _field_and_level_together(self) -> "PeopleFilter":
+        if (self.field is None) != (self.level is None):
+            raise ValueError("field and level go together")
+        return self
+
+
+class RunPeopleQuery(PeopleFilter):
+    """The query string of GET /roster-comparisons/{run_id}/people: one model, as FastAPI reads it."""
+
+    page: int = Field(1, ge=1)
+    per_page: int = Field(50, ge=1, le=200)
+
+
+class RunPerson(BaseModel):
+    """One person in a run's state-wide list, with the jurisdiction they were compared in."""
 
     jurisdiction_ocdid: str
     person: PersonComparison
 
 
-class FieldPeoplePage(BaseModel):
+class RunPeoplePage(BaseModel):
     """The house pagination shape (`schemas.pagination.paginated_response`), typed."""
 
     total_items: int
     page: int
     total_pages: int
-    data: list[FieldPerson]
+    data: list[RunPerson]
 
 
 class RosterComparisonListPage(BaseModel):

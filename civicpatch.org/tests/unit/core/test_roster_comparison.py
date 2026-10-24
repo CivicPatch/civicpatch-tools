@@ -145,3 +145,26 @@ def test_the_same_person_listed_twice_is_a_match_then_a_possible_match():
     assert first.outcome is PersonOutcome.MATCHED
     assert second.outcome is PersonOutcome.POSSIBLE_MATCH
     assert [c.person_id for c in second.candidates] == ["jane"]
+
+
+@pytest.mark.unit
+def test_a_matched_person_names_their_post_role_apart_from_member_roles():
+    roster = [_person("jane", "Jane Doe", label="Vice Mayor")]
+
+    [jane] = compare_people([_row("Jane Doe", role="Council Member")], roster, TAXONOMY)
+
+    assert jane.post_roles == ["Member"]
+    assert jane.fields[ComparedField.ROLE].civicpatch == ["Member", "Vice Mayor"]
+
+
+@pytest.mark.unit
+def test_a_person_only_in_civicpatch_shows_civicpatchs_values():
+    roster = [_person("jane", "Jane Doe", emails=["jane@barre.gov"], label="Vice Mayor")]
+
+    [jane] = compare_people([], roster, TAXONOMY)
+
+    assert jane.outcome is PersonOutcome.ONLY_IN_CIVICPATCH
+    assert jane.post_roles == ["Member"]
+    emails = jane.fields[ComparedField.EMAILS]
+    assert (emails.uploaded, emails.civicpatch) == ([], ["jane@barre.gov"])
+    assert emails.level is FieldLevel.UPLOADED_DATA_HAS_NONE

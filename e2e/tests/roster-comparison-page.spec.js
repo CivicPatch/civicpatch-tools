@@ -4,7 +4,8 @@
  * Given a saved run over the test jurisdiction (seeded by fixtures/db.js)
  * Then the page shows the people bar, the field rates and the jurisdictions
  * And a jurisdiction opens into its people, with their warnings
- * And a field's ⚠ count lists the people behind it, values tinted by side
+ * And a field's one-side-has-more count lists the people behind it, values tinted by side
+ * And an outcome's count in the people bar lists those people across the state
  * And a row's uploaded values open on keyboard focus, not only on hover
  *
  * Nothing is stubbed: the seeded run is answered by the real endpoints, so a change to the
@@ -46,6 +47,15 @@ test.describe("Roster comparison page", () => {
     await expect(list).toContainText("Emails: one side has more");
     await expect(list.locator(".rc-table .rc-value--civicpatch-only")).toHaveText("clerk@e2e.gov");
     await expect(list.locator(".rc-table .rc-value--shared").first()).toHaveText("jane@e2e.gov");
+  });
+
+  test("an outcome's count lists those people across the state", async ({ maintainerPage: page }) => {
+    await page.goto(PAGE);
+    await page.locator(".rc-legend li").filter({ hasText: "Only in civicpatch" }).locator(".rc-count").click();
+
+    const list = page.locator(".rc-field-list");
+    await expect(list).toContainText("Only in civicpatch, across the state");
+    await expect(list.getByRole("row").filter({ hasText: "Maria Ortiz" })).toBeVisible();
   });
 
   test("a row's uploaded values open on keyboard focus", async ({ maintainerPage: page }) => {

@@ -211,6 +211,10 @@
     background: var(--error-tint);
 }
 
+.rc-values {
+    margin-top: 0.2rem;
+}
+
 .rc-value {
     display: inline-block;
     margin: 0.1rem 0.25rem 0.1rem 0;

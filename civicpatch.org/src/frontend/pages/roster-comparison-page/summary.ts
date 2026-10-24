@@ -1,21 +1,19 @@
-import { html } from "lit-html";
+import { html, type TemplateResult } from "lit-html";
 import { FIELD_LABELS, OUTCOME_LABELS, percent } from "./labels.js";
-import { columnNote } from "./values.js";
+import { columnNote, warningIcon } from "./values.js";
 import {
   COMPARED_FIELDS,
   FIELD_FILTER_CONFLICT,
   FIELD_FILTER_ONE_SIDE_HAS_MORE,
   OUTCOMES,
+  isSameSelection,
   type ComparedField,
   type FieldFilter,
+  type Outcome,
   type OutcomeCounts,
+  type PeopleSelection,
   type RosterComparisonRun,
 } from "./types.js";
-
-export interface FieldSelection {
-  field: ComparedField;
-  filter: FieldFilter;
-}
 
 /** One stacked bar: matched, possible, only in uploaded data, only in civicpatch. */
 export function outcomeBar(outcomes: OutcomeCounts, label: string, small = false) {
@@ -35,33 +33,47 @@ export function outcomeBar(outcomes: OutcomeCounts, label: string, small = false
   </div>`;
 }
 
-export function peoplePanel(run: RosterComparisonRun) {
+export function peoplePanel(
+  run: RosterComparisonRun,
+  selected: PeopleSelection | null,
+  onSelect: (selection: PeopleSelection) => void,
+) {
   const outcomes = run.rates.outcomes;
   const whole = OUTCOMES.reduce((sum, outcome) => sum + outcomes[outcome], 0);
+  const count = (outcome: Outcome) => {
+    const text = `${outcomes[outcome]} (${percent(outcomes[outcome], whole)})`;
+    if (outcomes[outcome] === 0) return html`<span class="rc-legend__count">${text}</span>`;
+    const pressed = isSameSelection(selected, { outcome });
+    return html`<button
+      type="button"
+      class="rc-count rc-legend__count"
+      aria-pressed=${pressed ? "true" : "false"}
+      @click=${() => onSelect({ outcome })}
+    >${text}</button>`;
+  };
   return html`<section class="panel">
     <div class="panel__cap"><b>people</b><span class="panel__cap-right">${whole}</span></div>
     ${outcomeBar(outcomes, "People")}
     <ul class="rc-legend">
       ${OUTCOMES.map(
         (outcome) => html`<li>
-          <span class="rc-legend__swatch rc-outcome--${outcome}"></span>${OUTCOME_LABELS[outcome]}
-          <span class="rc-legend__count">${outcomes[outcome]} (${percent(outcomes[outcome], whole)})</span>
+          <span class="rc-legend__swatch rc-outcome--${outcome}"></span>${OUTCOME_LABELS[outcome]} ${count(outcome)}
         </li>`,
       )}
     </ul>
-    <p class="rc-note">Possible match: linked only by a nickname, or a name that fits several people. Every candidate is listed under its jurisdiction.</p>
+    <p class="rc-note">Possible match: linked only by a nickname, or a name that fits several people. Click a count to list those people across the state.</p>
   </section>`;
 }
 
 export function fieldsPanel(
   run: RosterComparisonRun,
-  selected: FieldSelection | null,
-  onSelect: (selection: FieldSelection) => void,
+  selected: PeopleSelection | null,
+  onSelect: (selection: PeopleSelection) => void,
 ) {
   const matched = run.rates.outcomes.matched;
-  const count = (field: ComparedField, filter: FieldFilter, value: number, text: string) => {
+  const count = (field: ComparedField, filter: FieldFilter, value: number, text: string | TemplateResult) => {
     if (value === 0) return text;
-    const pressed = selected?.field === field && selected.filter === filter;
+    const pressed = isSameSelection(selected, { field, filter });
     return html`<button
       type="button"
       class="rc-count"
@@ -91,7 +103,7 @@ export function fieldsPanel(
             return html`<tr>
               <td>${FIELD_LABELS[field]}${columnNote(field, run.source_columns)}</td>
               <td class="rc-number">${percent(counts.agreement, matched)}</td>
-              <td class="rc-number">${count(field, FIELD_FILTER_ONE_SIDE_HAS_MORE, counts.one_side_has_more, `⚠ ${percent(counts.one_side_has_more, matched)}`)}</td>
+              <td class="rc-number">${count(field, FIELD_FILTER_ONE_SIDE_HAS_MORE, counts.one_side_has_more, html`${warningIcon} ${percent(counts.one_side_has_more, matched)}`)}</td>
               <td class="rc-number">${count(field, FIELD_FILTER_CONFLICT, counts.conflict, percent(counts.conflict, matched))}</td>
               <td class="rc-number">${percent(counts.uploaded_data_has_it, matched)}</td>
               <td class="rc-number">${percent(counts.civicpatch_has_it, matched)}</td>

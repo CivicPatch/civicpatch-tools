@@ -13,6 +13,8 @@ from schemas.roster_comparisons import (
     FieldLevel,
     JurisdictionRates,
     OutcomeCounts,
+    PeopleFilter,
+    PersonOutcome,
     RejectedReason,
     RejectedRow,
     RosterComparisonRun,
@@ -53,13 +55,26 @@ async def test_a_summary_lists_jurisdictions_most_unmatched_first_with_the_runs_
 @pytest.mark.asyncio
 @pytest.mark.unit
 async def test_a_field_page_queries_the_filters_levels_and_reports_the_house_paging():
+    people_filter = PeopleFilter(field=ComparedField.EMAILS, level=FieldFilter.CONFLICT)
     with _database("get_roster_comparison_run", return_value=_run()), _database(
-        "get_roster_comparison_field_people", return_value=(120, [])
-    ) as field_people:
-        page = await service.get_run_field_page(_RUN_ID, ComparedField.EMAILS, FieldFilter.CONFLICT, 2, 50)
+        "get_roster_comparison_people_page", return_value=(120, [])
+    ) as people:
+        page = await service.get_run_people_page(_RUN_ID, people_filter, 2, 50)
 
     assert (page.total_items, page.page, page.total_pages) == (120, 2, 3)
-    field_people.assert_awaited_once_with(_RUN_ID, ComparedField.EMAILS, [FieldLevel.DIFFERS], 50, 50)
+    people.assert_awaited_once_with(_RUN_ID, None, ComparedField.EMAILS, [FieldLevel.DIFFERS], 50, 50)
+
+
+@pytest.mark.asyncio
+@pytest.mark.unit
+async def test_an_outcome_page_queries_no_field_levels():
+    people_filter = PeopleFilter(outcome=PersonOutcome.ONLY_IN_UPLOADED_DATA)
+    with _database("get_roster_comparison_run", return_value=_run()), _database(
+        "get_roster_comparison_people_page", return_value=(0, [])
+    ) as people:
+        await service.get_run_people_page(_RUN_ID, people_filter, 1, 50)
+
+    people.assert_awaited_once_with(_RUN_ID, PersonOutcome.ONLY_IN_UPLOADED_DATA, None, [], 50, 0)
 
 
 @pytest.mark.asyncio

@@ -2,6 +2,7 @@
 compares them with its own roster and keeps the run. Maintainers and above."""
 
 import uuid
+from typing import Annotated
 
 from fastapi import APIRouter, Depends, HTTPException, Query
 
@@ -10,18 +11,18 @@ import services.roster_comparison_drafts as drafts
 from lib.auth import require_route_access
 from schemas.common import AgentKey, Identity, RouteCategory, UserRole
 from schemas.roster_comparisons import (
-    ComparedField,
     CreatedResponse,
     DraftFinish,
     DraftResponse,
     DraftRows,
-    FieldFilter,
-    FieldPeoplePage,
+    PeopleFilter,
     PeopleResponse,
     RosterComparisonHeader,
     RosterComparisonListPage,
     RosterComparisonUpload,
     RowsRefused,
+    RunPeoplePage,
+    RunPeopleQuery,
     SummaryResponse,
 )
 
@@ -92,17 +93,14 @@ def get_router() -> APIRouter:
         then civicpatch's people no row matched."""
         return {"data": await _or_404(service.get_run_people(str(run_id), jurisdiction_ocdid))}
 
-    @router.get("/{run_id}/fields/{field}", response_model=FieldPeoplePage)
-    async def get_roster_comparison_field_endpoint(
-        run_id: uuid.UUID,
-        field: ComparedField,
-        level: FieldFilter,
-        page: int = Query(1, ge=1),
-        per_page: int = Query(50, ge=1, le=200),
-        _: Identity = _maintainer(),
+    @router.get("/{run_id}/people", response_model=RunPeoplePage)
+    async def get_roster_comparison_people_endpoint(
+        run_id: uuid.UUID, query: Annotated[RunPeopleQuery, Query()], _: Identity = _maintainer()
     ):
-        """The matched people behind one field's conflict or one-side-has-more count, paged."""
-        return await _or_404(service.get_run_field_page(str(run_id), field, level, page, per_page))
+        """A run's people across every jurisdiction, paged: those with one outcome, or the matched
+        people behind a field's conflict or one-side-has-more count."""
+        people_filter = PeopleFilter(outcome=query.outcome, field=query.field, level=query.level)
+        return await _or_404(service.get_run_people_page(str(run_id), people_filter, query.page, query.per_page))
 
     return router
 

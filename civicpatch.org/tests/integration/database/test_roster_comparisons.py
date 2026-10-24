@@ -8,9 +8,9 @@ import pytest_asyncio
 
 from database.database import get_pool
 from database.roster_comparisons import (
-    get_roster_comparison_field_people,
     get_roster_comparison_jurisdictions,
     get_roster_comparison_people,
+    get_roster_comparison_people_page,
     get_roster_comparison_run,
     get_roster_comparison_runs,
     insert_roster_comparison,
@@ -122,12 +122,27 @@ async def test_a_run_reads_back_in_its_parts(user_id):
 async def test_a_fields_people_page_by_level(user_id):
     run_id = await insert_roster_comparison(user_id, _comparison())
 
-    total, page = await get_roster_comparison_field_people(
-        run_id, ComparedField.EMAILS, [FieldLevel.DIFFERS], limit=1, offset=1
+    total, page = await get_roster_comparison_people_page(
+        run_id, None, ComparedField.EMAILS, [FieldLevel.DIFFERS], limit=1, offset=1
     )
 
     assert total == 2
     assert [(p.jurisdiction_ocdid, p.person.uploaded.source_row) for p in page if p.person.uploaded] == [(_BARRE, 4)]
+
+
+@pytest.mark.integration
+@pytest.mark.asyncio
+async def test_an_outcomes_people_across_the_run(user_id):
+    run_id = await insert_roster_comparison(user_id, _comparison())
+
+    total, page = await get_roster_comparison_people_page(
+        run_id, PersonOutcome.ONLY_IN_CIVICPATCH, None, [], limit=50, offset=0
+    )
+    everyone, _ = await get_roster_comparison_people_page(run_id, None, None, [], limit=50, offset=0)
+
+    assert total == 1
+    assert [(p.jurisdiction_ocdid, p.person.person_name) for p in page] == [(_BARRE, "Maria")]
+    assert everyone == 4
 
 
 @pytest.mark.integration

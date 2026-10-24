@@ -21,6 +21,8 @@ from schemas.roster_comparisons import (
     DraftFinish,
     DraftRows,
     FieldFilter,
+    PeopleFilter,
+    PersonOutcome,
     RosterComparisonHeader,
     UploadedRow,
 )
@@ -29,7 +31,7 @@ MCP_PATH = "/mcp"
 CALLER_STATE = "civicpatch_caller"
 SEARCH_LIMIT = 10
 LIST_PAGE_SIZE = MAX_SEARCH_LIMIT
-FIELD_PAGE_LIMIT = 200
+PEOPLE_PAGE_LIMIT = 200
 RUN_PAGE_LIMIT = 100
 
 INSTRUCTIONS = """\
@@ -73,8 +75,9 @@ To compare a user's file (usually one state's officials):
    only that batch (earlier batches stay). Fix those rows as in step 3, tell the user which rows
    failed and what you changed each to, then send again, with those fixes in corrections.
 7. The response gives the run's id, its page_url and its rates. End your reply with the page_url
-   on a line of its own, then read the run with get_roster_comparison, and any jurisdiction the
-   user asks about with get_roster_comparison_jurisdiction.
+   on a line of its own, then read the run with get_roster_comparison, any jurisdiction the user
+   asks about with get_roster_comparison_jurisdiction, and everyone with one outcome across the
+   state (e.g. everyone only in the user's file) with get_roster_comparison_people.
 """
 
 
@@ -96,8 +99,12 @@ def build_server(instance_url: str) -> MCPServer:
     server.add_tool(get_roster_comparison, description="A saved comparison: state rates, then jurisdictions, most unmatched first.")
     server.add_tool(get_roster_comparison_jurisdiction, description="One jurisdiction's people in a saved comparison.")
     server.add_tool(
-        get_roster_comparison_field,
-        description="The matched people behind a field's conflict or one_side_has_more count, paged.",
+        get_roster_comparison_people,
+        description=(
+            "A saved comparison's people across every jurisdiction, paged: those with one outcome "
+            "(e.g. only_in_uploaded_data), or the matched people behind a field's conflict or "
+            "one_side_has_more count (field and level together)."
+        ),
     )
     server.add_tool(
         start_roster_comparison,
@@ -149,11 +156,17 @@ async def get_roster_comparison_jurisdiction(run_id: str, jurisdiction_ocdid: st
     return [person.model_dump(mode="json") for person in people]
 
 
-async def get_roster_comparison_field(
-    run_id: str, field: ComparedField, level: FieldFilter, page: int = 1, per_page: int = 50
+async def get_roster_comparison_people(
+    run_id: str,
+    outcome: PersonOutcome | None = None,
+    field: ComparedField | None = None,
+    level: FieldFilter | None = None,
+    page: int = 1,
+    per_page: int = 50,
 ) -> dict:
-    page_of_people = await roster_comparisons.get_run_field_page(
-        run_id, field, level, max(page, 1), max(1, min(per_page, FIELD_PAGE_LIMIT))
+    people_filter = PeopleFilter(outcome=outcome, field=field, level=level)
+    page_of_people = await roster_comparisons.get_run_people_page(
+        run_id, people_filter, max(page, 1), max(1, min(per_page, PEOPLE_PAGE_LIMIT))
     )
     return page_of_people.model_dump(mode="json")
 

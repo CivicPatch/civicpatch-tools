@@ -1,10 +1,10 @@
-import type {
-  ComparedField,
-  FieldFilter,
-  FieldPage,
-  PersonComparison,
-  RosterComparisonListPage,
-  RosterComparisonSummary,
+import {
+  isOutcomeSelection,
+  type PeopleSelection,
+  type PersonComparison,
+  type RosterComparisonListPage,
+  type RosterComparisonSummary,
+  type RunPeoplePage,
 } from "./pages/roster-comparison-page/types.js";
 
 const ROSTER_COMPARISONS_URL = "/api/v1/roster-comparisons";
@@ -28,13 +28,15 @@ export const fetchRosterComparison = async (runId: string) =>
 export const fetchRosterComparisonJurisdiction = async (runId: string, jurisdictionOcdid: string) =>
   (await getJson<{ data: PersonComparison[] }>(`/${runId}/jurisdictions/${jurisdictionOcdid}`)).data;
 
-export const fetchRosterComparisonField = async (
+export const fetchRosterComparisonPeople = async (
   runId: string,
-  field: ComparedField,
-  level: FieldFilter,
+  selection: PeopleSelection,
   page: number,
   perPage: number,
 ) => {
-  const params = new URLSearchParams({ level, page: String(page), per_page: String(perPage) });
-  return getJson<FieldPage>(`/${runId}/fields/${field}?${params}`);
+  const filter = isOutcomeSelection(selection)
+    ? { outcome: selection.outcome }
+    : { field: selection.field, level: selection.filter };
+  const params = new URLSearchParams({ ...filter, page: String(page), per_page: String(perPage) });
+  return getJson<RunPeoplePage>(`/${runId}/people?${params}`);
 };

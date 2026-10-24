@@ -21,12 +21,14 @@ from schemas.roster_comparisons import (
     ComparedField,
     ComparisonRates,
     FieldFilter,
-    FieldPeoplePage,
+    PeopleFilter,
+    PersonOutcome,
     RosterComparisonCreated,
     RosterComparisonDraft,
     RosterComparisonListPage,
     RosterComparisonRun,
     RosterComparisonSummary,
+    RunPeoplePage,
     UploadedRow,
 )
 from services.roster_comparison import RunNotFound
@@ -57,7 +59,7 @@ async def test_the_server_lists_its_read_tools_and_names_itself_in_the_instructi
         "list_roster_comparisons",
         "get_roster_comparison",
         "get_roster_comparison_jurisdiction",
-        "get_roster_comparison_field",
+        "get_roster_comparison_people",
         "start_roster_comparison",
         "add_roster_comparison_rows",
         "finish_roster_comparison",
@@ -151,12 +153,25 @@ async def test_an_unknown_run_is_an_error_the_agent_can_read():
 
 @pytest.mark.asyncio
 @pytest.mark.unit
-async def test_the_field_tool_keeps_page_and_size_in_range():
-    page = FieldPeoplePage(total_items=0, page=1, total_pages=1, data=[])
-    with patch.object(mcp_router.roster_comparisons, "get_run_field_page", AsyncMock(return_value=page)) as get:
-        await mcp_router.get_roster_comparison_field(_RUN_ID, ComparedField.EMAILS, FieldFilter.CONFLICT, page=0, per_page=5000)
+async def test_the_people_tool_keeps_page_and_size_in_range():
+    page = RunPeoplePage(total_items=0, page=1, total_pages=1, data=[])
+    with patch.object(mcp_router.roster_comparisons, "get_run_people_page", AsyncMock(return_value=page)) as get:
+        await mcp_router.get_roster_comparison_people(
+            _RUN_ID, field=ComparedField.EMAILS, level=FieldFilter.CONFLICT, page=0, per_page=5000
+        )
 
-    get.assert_awaited_once_with(_RUN_ID, ComparedField.EMAILS, FieldFilter.CONFLICT, 1, mcp_router.FIELD_PAGE_LIMIT)
+    people_filter = PeopleFilter(field=ComparedField.EMAILS, level=FieldFilter.CONFLICT)
+    get.assert_awaited_once_with(_RUN_ID, people_filter, 1, mcp_router.PEOPLE_PAGE_LIMIT)
+
+
+@pytest.mark.asyncio
+@pytest.mark.unit
+async def test_the_people_tool_lists_one_outcome():
+    page = RunPeoplePage(total_items=0, page=1, total_pages=1, data=[])
+    with patch.object(mcp_router.roster_comparisons, "get_run_people_page", AsyncMock(return_value=page)) as get:
+        await mcp_router.get_roster_comparison_people(_RUN_ID, outcome=PersonOutcome.ONLY_IN_UPLOADED_DATA)
+
+    get.assert_awaited_once_with(_RUN_ID, PeopleFilter(outcome=PersonOutcome.ONLY_IN_UPLOADED_DATA), 1, 50)
 
 
 @pytest.mark.asyncio
