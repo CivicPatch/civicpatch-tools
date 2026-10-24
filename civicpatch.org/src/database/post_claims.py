@@ -1,4 +1,4 @@
-"""What people claim about a post: its label, headcount and tracked state, and its deletion into
+"""What people claim about a post: its label and headcount, and its deletion into
 another. No column holds these; they are read back from claims."""
 
 from core.membership_label import post_label
@@ -8,7 +8,7 @@ from schemas.claims import DefaultNote, Claim, ClaimKind, EntityType, Source
 
 # The fields a human owns, and what a post reads as until somebody claims otherwise. Claims
 # only: no column holds them, so deleting a post row loses nothing.
-HUMAN_FIELD_DEFAULTS = {"meta_headcount": 1, "meta_is_tracked": True}
+HUMAN_FIELD_DEFAULTS = {"meta_headcount": 1}
 HUMAN_FIELDS = tuple(HUMAN_FIELD_DEFAULTS)
 
 # Not a column — 148 dropped `posts.label` in favor of composing it from role and division on
@@ -115,10 +115,9 @@ async def accept_fields(
     user_id: str,
     changeset_id: str,
 ) -> None:
-    """Accept this post's human fields on somebody's behalf — what makes a hand-made post
-    verified. A no-op edit claims nothing new: `upsert_all` skips a value already the current
-    answer, so re-saving does not insert a row. Only for a person's act: the derivation's path
-    claims nothing, so its posts stay unverified.
+    """Accept this post's human fields on somebody's behalf. A no-op edit claims nothing new:
+    `upsert_all` skips a value already the current answer, so re-saving does not insert a row.
+    Only for a person's act: the derivation's path claims nothing.
     """
     await claims.upsert_all(
         cur,

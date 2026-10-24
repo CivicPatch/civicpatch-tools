@@ -144,9 +144,9 @@ async def test_today_matches_the_default():
 
 @pytest.mark.asyncio
 @pytest.mark.integration
-async def test_before_we_ever_looked_the_seat_is_empty_but_still_there_and_still_vouched_for():
+async def test_before_we_ever_looked_the_seat_is_empty_but_still_there():
     """Transaction time, so a date before our first scrape has no holders — but the post is
-    not a temporal fact and neither is the vouching, and neither may vanish with the clock."""
+    not a temporal fact and may not vanish with the clock."""
     await _seed_succession()
 
     pool = await get_pool()
@@ -155,7 +155,6 @@ async def test_before_we_ever_looked_the_seat_is_empty_but_still_there_and_still
 
     assert len(rows) == 1
     assert await _holders(date(2026, 1, 1)) == 0
-    assert rows[0]["meta_is_verified"] is True
 
 
 @pytest.mark.asyncio

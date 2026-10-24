@@ -53,32 +53,6 @@ async def get(cur, post_id: str) -> Post | None:
     return (await get_many(cur, [post_id])).get(post_id)
 
 
-# Nobody holds a post here yet, so every one of them is new: a reporting rule, not a fact about
-# a post. Unaliased `posts`, spliced into several queries, per CLAUDE.md.
-JURISDICTIONS_FIRST_SCRAPE = """NOT EXISTS (
-    SELECT 1 FROM memberships
-    JOIN posts held ON held.id = memberships.post_id
-    WHERE held.jurisdiction_ocdid = posts.jurisdiction_ocdid
-)"""
-
-
-# Members mean a publish accepted this post; a claim on `HUMAN_FIELDS` means a human did, which
-# reaches posts no publish can — a vacant post is real, and a superseded request can never be
-# published. Naming a post is not vouching for it, so a `label` claim does not count.
-#
-# Not as-of filtered: winding the clock back does not un-vouch a post. The field list is
-# `HUMAN_FIELDS`, spelled out because a LiteralString cannot be joined, and pinned to it by
-# `test_the_verified_arm_names_the_human_fields`.
-POST_IS_VERIFIED = """(
-    EXISTS (SELECT 1 FROM memberships WHERE memberships.post_id = posts.id)
-    OR EXISTS (
-        SELECT 1 FROM claims
-        WHERE claims.entity_type = 'post' AND claims.entity_id = posts.id
-          AND claims.field_path IN ('meta_headcount', 'meta_is_tracked')
-    )
-)"""
-
-
 async def identities_by_id(cur, post_ids: list[str]) -> dict[str, dict]:
     """The `(organization_id, role_id, division_ocdid)` of each named post — its identity, and
     all the derivation needs from a post a human picked.
@@ -114,11 +88,8 @@ async def list_for_jurisdictions(cur, jurisdiction_ocdids: list[str]) -> dict[st
     """
     await cur.execute(
         f"""
-        -- `meta_is_verified` is one of the fields no civic standard defines; the other two,
-        -- `meta_headcount` and `meta_is_tracked`, come from claims after this read.
         SELECT posts.id::text, posts.jurisdiction_ocdid, posts.organization_id::text,
                posts.role_id, posts.division_ocdid,
-               {POST_IS_VERIFIED} AS meta_is_verified,
                post_role_label(posts.organization_id, posts.role_id) AS role_label
         FROM posts
         WHERE posts.jurisdiction_ocdid = ANY(%(jurisdiction_ocdids)s)
@@ -153,7 +124,6 @@ async def list_page_for_state(
                    posts.jurisdiction_ocdid,
                    posts.id::text, posts.organization_id::text, posts.role_id,
                    posts.division_ocdid,
-                   {POST_IS_VERIFIED} AS meta_is_verified,
                    post_role_label(posts.organization_id, posts.role_id) AS role_label
             FROM posts
             WHERE posts.jurisdiction_ocdid LIKE %(prefix)s
@@ -199,41 +169,6 @@ async def ids_by_identity(
         (organization_ids,),
     )
     return {(row[0], row[1], row[2]): row[3] for row in await cur.fetchall()}
-
-
-async def unverified_by_jurisdiction(
-    cur, jurisdiction_ocdids: list[str]
-) -> dict[str, list[dict]]:
-    """Posts nobody has vouched for, grouped by jurisdiction.
-
-    A scrape mints a post at ingest; a membership only lands at publish. So an unverified post
-    is an office some scrape claimed exists and no human has answered for — and it stays that
-    way after the scrape that minted it is superseded, which is why it hangs off the
-    jurisdiction rather than off a request. (Keying it on "created by *this* request" would
-    lose exactly that: a seat minted by a superseded scrape would go unmentioned forever.)
-
-    Nothing is returned for a jurisdiction that has never been published — see the query.
-    """
-    if not jurisdiction_ocdids:
-        return {}
-    await cur.execute(
-        f"""
-        SELECT posts.jurisdiction_ocdid, posts.id::text, posts.role_id,
-               posts.division_ocdid, post_role_label(posts.organization_id, posts.role_id) AS role_label
-        FROM posts
-        WHERE posts.jurisdiction_ocdid = ANY(%s) AND NOT {POST_IS_VERIFIED}
-          -- Silent on the jurisdiction's first scrape — see the constant.
-          AND NOT {JURISDICTIONS_FIRST_SCRAPE}
-        ORDER BY posts.role_id, posts.division_ocdid
-        """,
-        (jurisdiction_ocdids,),
-    )
-    columns = [column.name for column in cur.description or []]
-    grouped: dict[str, list[dict]] = {ocdid: [] for ocdid in jurisdiction_ocdids}
-    for row in await cur.fetchall():
-        post = dict(zip(columns, row))
-        grouped[post.pop("jurisdiction_ocdid")].append(post)
-    return grouped
 
 
 async def list_by_organization(jurisdiction_ocdid: str) -> list[dict]:

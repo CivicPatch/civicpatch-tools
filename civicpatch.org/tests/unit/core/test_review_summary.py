@@ -14,7 +14,6 @@ from datetime import datetime, timezone
 
 import pytest
 
-from core.post_issues import unverified_post_issues
 from core.projection.diff import roster_diff
 from core.projection.facts import PostKey
 from core.projection.people import Membership, Person
@@ -181,12 +180,6 @@ def test_roster_checks_come_first_and_post_checks_after():
     now reads `fold_card_summary`, which takes the two rosters the fold derives, because the
     proposal layer is gone — the claim about ordering is unchanged.
     """
-    post = {
-        "id": "post-1",
-        "role_id": "council_member",
-        "role_label": "Council Member",
-        "division_ocdid": f"{_BASE}/council_district:3",
-    }
     published = Roster()
     proposed = Roster(people=(_fold_person("a", "Ann Lee"),))
 
@@ -198,12 +191,8 @@ def test_roster_checks_come_first_and_post_checks_after():
         read_organization_ids=set(),
         role_labels={},
         unique_role_ids=set(),
-        unverified_posts=unverified_post_issues([post]),
         organization_names={},
     )
 
     assert all(isinstance(issue, Issue) for issue in summary.issues)
-    assert [issue.code for issue in summary.issues] == [
-        IssueCode.TOO_FEW_PEOPLE,
-        IssueCode.UNVERIFIED_POST,
-    ]
+    assert [issue.code for issue in summary.issues] == [IssueCode.TOO_FEW_PEOPLE]

@@ -20,8 +20,6 @@ const post = (overrides: Partial<Post> & { id: string; role_id: string }): Post 
   division_ocdid: "ocd-division/country:us/state:wa/place:x",
   label: null,
   meta_headcount: 1,
-  meta_is_verified: false,
-  meta_is_tracked: true,
   ...overrides,
 });
 

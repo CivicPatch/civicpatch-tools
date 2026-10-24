@@ -23,7 +23,7 @@ def get_router() -> APIRouter:
     ):
         assert user.user_id is not None
         jurisdiction_ocdid = await posts.update(
-            post_id, body.meta_headcount, body.meta_is_tracked, user.user_id
+            post_id, body.meta_headcount, user.user_id
         )
         if jurisdiction_ocdid is None:
             return JSONResponse({"error": "No such post."}, status_code=404)

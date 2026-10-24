@@ -45,9 +45,6 @@ def roster_from_rows(
 
     Everyone the scrape saw is in it.
 
-    Whether a post is one we diff against is the post's `meta_is_tracked` claim — not decided
-    here, and not by dropping the person.
-
     Dicts rather than a model, because the roster carries fields no model declares —
     `order_person_fields` places them, and validating on the way through would drop them.
     """

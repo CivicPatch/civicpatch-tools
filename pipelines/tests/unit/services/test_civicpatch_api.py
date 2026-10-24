@@ -39,8 +39,6 @@ def _post(post_id: str, organization_id: str) -> dict:
         "label": "Mayor",
         "role_label": "Mayor",
         "meta_headcount": 1,
-        "meta_is_tracked": True,
-        "meta_is_verified": False,
     }
 
 

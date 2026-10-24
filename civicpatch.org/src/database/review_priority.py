@@ -2,75 +2,57 @@
 
 The other half of `review_pool`: that one decides membership, this one decides order.
 
-⚠️ **Only the post issues reach the ordering today.** The five roster checks are computed at
-read from the published and proposed rosters — neither of which SQL can derive — so they show
-on the card but cannot sort the pool. `.scratch/2026-08-25-retire-review-json.md` phase 2 puts
-them in `roster_issues` and restores the full score; until then the queue orders on unverified
-posts, then recency.
+⚠️ **Only the run's stored issues reach the ordering today** (`pipeline_run_issues`, through
+`pipeline_runs.changeset_id`). A pending user report takes a card out of the pool (`UNDECIDED`),
+so `changeset_issues` has nothing to add. The roster checks are computed at read from the
+published and proposed rosters, which SQL cannot derive, so they show on the card but cannot
+sort the pool until they are stored.
 
-Not in `changesets.py`: the score reads `posts` too, and importing posts there closes a cycle
-(`changesets` → `posts` → `activity` → `changesets`).
+Not in `changesets.py`: importing it there closes a cycle (`changesets` → `posts` → `activity` →
+`changesets`).
 """
 
 from typing import LiteralString, cast
 
-from database.post_listings import JURISDICTIONS_FIRST_SCRAPE, POST_IS_VERIFIED
-from shared.schemas import IssueCode
+from shared.utils.statuses import PipelineIssueStatus, PipelineIssueType
 
-# How much a reviewer should care, per issue. Ordering on `jsonb_array_length` weighted every
-# issue the same, so a ward-numbering gap outranked nothing and a new type was an
-# unprioritisable +1.
+# How much a reviewer should care, per stored issue type.
 _ISSUE_WEIGHT = {
-    IssueCode.NOBODY_FOUND_IN_ORGANIZATION: 10,  # a whole body missing reads like a failed scrape
-    IssueCode.TOO_FEW_PEOPLE: 10,        # the roster is incomplete; publishing retires people
-    IssueCode.DUPLICATE_UNIQUE_ROLE: 8,  # two mayors is a contradiction, not a judgement call
-    IssueCode.ABSENT_PERSON: 5,          # someone we hold is gone
-    IssueCode.MOVED_PERSON: 4,           # someone we hold is in a different seat
-    IssueCode.NEW_PERSON: 3,             # someone arrived
-    # Below NEW_PERSON: a person found in a post we have never seen raises both, which is one
-    # event seen twice. Counted from `posts`, never stored, so its CASE arm never matches — the
-    # entry is here so one table holds every weight.
-    IssueCode.UNVERIFIED_POST: 2,
-    # Above the numbering gap, below anyone arriving or leaving: a moved value is worth a
-    # look but it is the commonest issue there is, so it must not outrank a lost person.
-    IssueCode.CHANGED_FIELD: 2,
-    IssueCode.DIVISION_NUMBERING_GAP: 1,
+    PipelineIssueType.FEWER_THAN_EXPECTED: 10,  # the roster is short; publishing retires people
+    PipelineIssueType.COST_CAP_REACHED: 10,     # the run stopped before it had the roster
+    PipelineIssueType.USER_REPORTED: 8,         # a person flagged it
+    PipelineIssueType.PIPELINE_ERROR: 5,
 }
-# A stored summary can still name a code since renamed out of the enum.
+# A stored issue can still name a type since renamed out of the enum.
 _UNKNOWN_ISSUE = 1
 
 
-def _unverified_posts(jurisdiction_ocdid: str) -> str:
-    """SQL counting posts nobody has vouched for.
-
-    Same two predicates as `unverified_by_jurisdiction`, shared rather than restated: a queue
-    scoring cards on issues the card does not show is worse than not scoring them at all.
-    """
+def _pending_issues(changeset_id: str, value: str) -> str:
+    """SQL summing `value` over the pending issues of the run behind a changeset."""
+    pending = PipelineIssueStatus.PENDING.value
     return (
-        f"(SELECT count(*) FROM posts "
-        f"WHERE posts.jurisdiction_ocdid = {jurisdiction_ocdid} "
-        f"AND NOT {POST_IS_VERIFIED} AND NOT {JURISDICTIONS_FIRST_SCRAPE})"
+        f"(SELECT coalesce(sum({value}), 0) FROM pipeline_run_issues issue "
+        f"JOIN pipeline_runs run ON run.id = issue.pipeline_run_id "
+        f"WHERE run.changeset_id = {changeset_id} AND issue.status = '{pending}')"
     )
 
 
-def issue_count(jurisdiction_ocdid: str) -> LiteralString:
-    """SQL for how many issues the queue can see from here.
-
-    Undercounts the card, which also shows the five roster checks — see the module note.
-    """
-    return cast(LiteralString, _unverified_posts(jurisdiction_ocdid))
+def _weight() -> str:
+    arms = " ".join(f"WHEN '{issue_type.value}' THEN {weight}" for issue_type, weight in _ISSUE_WEIGHT.items())
+    return f"CASE issue.issue_type {arms} ELSE {_UNKNOWN_ISSUE} END"
 
 
-def issue_priority(jurisdiction_ocdid: str) -> LiteralString:
+def issue_count(changeset_id: str) -> LiteralString:
+    """SQL for how many pending run issues a card has. Undercounts the card, which also shows
+    the roster checks; see the module note."""
+    return cast(LiteralString, _pending_issues(changeset_id, "1"))
+
+
+def issue_priority(changeset_id: str) -> LiteralString:
     """SQL scoring what a card costs a reviewer, to sort a queue on.
 
-    Takes a column expression rather than assuming a table alias, so a caller that writes
-    `FROM changesets` and one that does not can both use it. Composed from ints and that
-    expression — no user input reaches it, which is what `sql.SQL`'s LiteralString guard
+    Takes a column expression rather than assuming a table alias. Composed from enum values, ints
+    and that expression; no user input reaches it, which is what `sql.SQL`'s LiteralString guard
     cannot see for itself.
     """
-    posts_weight = _ISSUE_WEIGHT[IssueCode.UNVERIFIED_POST]
-    return cast(
-        LiteralString,
-        f"({_unverified_posts(jurisdiction_ocdid)} * {posts_weight})",
-    )
+    return cast(LiteralString, _pending_issues(changeset_id, _weight()))

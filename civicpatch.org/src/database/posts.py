@@ -150,7 +150,6 @@ async def create(
 async def update(
     post_id: str,
     headcount: int,
-    is_tracked: bool,
     user_id: str,
 ) -> str | None:
     """Set the human-owned fields, logging what actually moved. Returns the jurisdiction, or
@@ -174,7 +173,7 @@ async def update(
         await accept_fields(
             cur,
             post_id,
-            {"meta_headcount": headcount, "meta_is_tracked": is_tracked},
+            {"meta_headcount": headcount},
             user_id,
             changeset_id,
         )
@@ -192,7 +191,6 @@ async def update(
                     FieldChange(field=field, before=was, after=now)
                     for field, was, now in (
                         ("meta_headcount", before.meta_headcount, headcount),
-                        ("meta_is_tracked", before.meta_is_tracked, is_tracked),
                     )
                     if was != now
                 ],

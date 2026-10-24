@@ -24,7 +24,6 @@ from database import changesets as changesets_db
 from database.users import SYSTEM_USER_ID
 from database.database import get_pool
 from database.publications import SupersededRoster, publish_changeset
-from database.review_priority import issue_count, issue_priority
 from core.source_pages import SourcePageRow
 from database.source_pages import insert_source_pages
 from database.source_records import insert_source_records
@@ -162,30 +161,13 @@ async def test_a_match_never_overwrites_a_human_edit():
         post_id = await factories.seed_post(cur, _OCDID, org, "council-member", _BASE)
         await conn.commit()
 
-    await posts.update(post_id, 9, False, SYSTEM_USER_ID)
+    await posts.update(post_id, 9, SYSTEM_USER_ID)
 
     async with pool.connection() as conn, conn.cursor() as cur:
         await factories.seed_post(cur, _OCDID, org, "council-member", _BASE)
         post = await post_listings.get(cur, post_id)
         assert post is not None
-        assert (post.meta_headcount, post.meta_is_tracked) == (9, False)
-
-
-async def _already_published() -> None:
-    """Put the jurisdiction past its first publish, by holding a seat that is not under test.
-
-    A membership only exists at publish, so one is the proof — which is why the predicate reads
-    memberships rather than `requests.published_at`. A *different* post on purpose: the tests
-    below assert that the post they created is still unverified.
-    """
-    person_id = await _seed_person()
-    pool = await get_pool()
-    async with pool.connection() as conn, conn.cursor() as cur:
-        org = await organizations.find_or_create(cur, _OCDID)
-        await divisions.find_or_create(cur, _BASE, _OCDID)
-        other = await factories.seed_post(cur, _OCDID, org, "clerk", _BASE)
-        await factories.bind_membership(cur, SeededMembership(person_id=person_id), other, org, _T0)
-        await conn.commit()
+        assert post.meta_headcount == 9
 
 
 async def _seed_request() -> str:
@@ -216,75 +198,6 @@ async def _seed_request() -> str:
         )
         await conn.commit()
     return changeset_id
-
-
-@pytest.mark.asyncio
-@pytest.mark.integration
-async def test_a_post_is_unverified_until_a_publish_puts_somebody_in_it():
-    """Ingest mints the post; only publish writes the membership. The gap between them is
-    exactly the window in which nobody has answered for the office a scrape invented.
-
-    Now needs `_already_published`: the same claim held before, but it is only *reported* once
-    the jurisdiction has been published at least once — see the suppression test below."""
-    person_id = await _seed_person()
-    await _already_published()
-    pool = await get_pool()
-    async with pool.connection() as conn, conn.cursor() as cur:
-        org = await organizations.find_or_create(cur, _OCDID)
-        await divisions.find_or_create(cur, _BASE, _OCDID)
-        post_id = await factories.seed_post(cur, _OCDID, org, "mayor", _BASE)
-
-        unverified = await post_listings.unverified_by_jurisdiction(cur, [_OCDID])
-        assert [post["id"] for post in unverified[_OCDID]] == [post_id]
-
-        await factories.bind_membership(cur, SeededMembership(person_id=person_id), post_id, org, _T0)
-        assert await post_listings.unverified_by_jurisdiction(cur, [_OCDID]) == {_OCDID: []}
-        await conn.rollback()
-
-
-@pytest.mark.asyncio
-@pytest.mark.integration
-async def test_an_unverified_post_raises_the_queue_score_and_the_badge():
-    """A post nobody has vouched for is the one issue the queue can see for itself — the five
-    roster checks are computed at read from two rosters SQL cannot derive. Without this the
-    badge reads `0 issues` over a card that opens with one.
-
-    Evaluated against a literal jurisdiction rather than an inserted request: the review pool
-    is shared, and a spare request for this jurisdiction would reach unrelated tests.
-
-    Needs `_already_published` for the same reason the card-side test does — the queue counts
-    on the same two predicates, deliberately, so a card and its badge cannot disagree about
-    whether there is anything to look at.
-    """
-    await _seed_person()  # for the jurisdiction row the organization FK needs
-    await _already_published()
-    pool = await get_pool()
-    async with pool.connection() as conn, conn.cursor() as cur:
-        org = await organizations.find_or_create(cur, _OCDID)
-        await divisions.find_or_create(cur, _BASE, _OCDID)
-        await factories.seed_post(cur, _OCDID, org, "mayor", _BASE)
-
-        await cur.execute(
-            f"SELECT {issue_count('t.ocdid')}, {issue_priority('t.ocdid')} "
-            "FROM (VALUES (%s)) t(ocdid)",
-            (_OCDID,),
-        )
-        count, priority = await cur.fetchone()
-        assert count == 1, "an unanswered post is an issue even with nothing else wrong"
-        assert priority > 0, "and it must not sort as though it had nothing to review"
-        await conn.rollback()
-
-
-@pytest.mark.asyncio
-@pytest.mark.integration
-async def test_a_jurisdiction_with_no_unverified_posts_still_gets_a_key():
-    """The review queue indexes the result by ocdid. A missing key would be a KeyError on the
-    jurisdictions that are fine, which is most of them."""
-    pool = await get_pool()
-    async with pool.connection() as conn, conn.cursor() as cur:
-        assert await post_listings.unverified_by_jurisdiction(cur, [_OCDID]) == {_OCDID: []}
-        assert await post_listings.unverified_by_jurisdiction(cur, []) == {}
-        await conn.rollback()
 
 
 @pytest.mark.asyncio
@@ -470,13 +383,13 @@ async def test_update_reaches_the_two_human_fields_and_reports_a_miss():
         post_id = await factories.seed_post(cur, _OCDID, org, "trustee", _BASE)
         await conn.commit()
 
-    assert await posts.update(post_id, 5, False, SYSTEM_USER_ID) == _OCDID
+    assert await posts.update(post_id, 5, SYSTEM_USER_ID) == _OCDID
     async with pool.connection() as conn, conn.cursor() as cur:
         post = await post_listings.get(cur, post_id)
     assert post is not None
-    assert (post.meta_headcount, post.meta_is_tracked) == (5, False)
+    assert post.meta_headcount == 5
 
-    assert await posts.update("00000000-0000-0000-0000-000000000000", 1, True, SYSTEM_USER_ID) is None
+    assert await posts.update("00000000-0000-0000-0000-000000000000", 1, SYSTEM_USER_ID) is None
 
 
 async def _human_sets_label(cur, membership_id: str, label: str) -> None:
@@ -619,46 +532,6 @@ async def test_only_the_new_seat_is_logged_when_a_scrape_mixes_both():
 
     logs = await _add_post_logs(later)
     assert [log["changes"]["subject"] for log in logs] == ["council-member"]
-
-
-@pytest.mark.asyncio
-@pytest.mark.integration
-async def test_a_jurisdictions_first_scrape_raises_no_post_issues():
-    """Every seat is new on a first scrape, so one issue per seat says nothing a reviewer
-    cannot see by reading the roster in front of them — it only buries the checks that do
-    carry information. Onboarding a state (#2424, #2462) is entirely first scrapes.
-    """
-    await _seed_person()
-    pool = await get_pool()
-    async with pool.connection() as conn, conn.cursor() as cur:
-        org = await organizations.find_or_create(cur, _OCDID)
-        await divisions.find_or_create(cur, _BASE, _OCDID)
-        await factories.seed_post(cur, _OCDID, org, "mayor", _BASE)
-        await conn.commit()
-
-    async with pool.connection() as conn, conn.cursor() as cur:
-        assert await post_listings.unverified_by_jurisdiction(cur, [_OCDID]) == {_OCDID: []}
-
-
-@pytest.mark.asyncio
-@pytest.mark.integration
-async def test_the_same_post_raises_once_the_jurisdiction_has_been_published():
-    """The suppression is about the jurisdiction's first scrape, not about the post. Once
-    anything here has been published, a seat nobody has vouched for is a real signal again —
-    and this is the pair that proves the first test is not passing for some other reason."""
-    await _seed_person()
-    pool = await get_pool()
-    async with pool.connection() as conn, conn.cursor() as cur:
-        org = await organizations.find_or_create(cur, _OCDID)
-        await divisions.find_or_create(cur, _BASE, _OCDID)
-        post_id = await factories.seed_post(cur, _OCDID, org, "mayor", _BASE)
-        await conn.commit()
-
-    await _already_published()
-
-    async with pool.connection() as conn, conn.cursor() as cur:
-        unverified = await post_listings.unverified_by_jurisdiction(cur, [_OCDID])
-        assert [post["id"] for post in unverified[_OCDID]] == [post_id]
 
 
 @pytest.mark.asyncio

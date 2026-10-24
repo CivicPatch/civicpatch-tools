@@ -96,12 +96,12 @@ def test_get_pull_request_review_returns_the_summary(client):
     with patch(
         "routers.api.review_cards.review_summary_for_changeset",
         new_callable=AsyncMock,
-        return_value={"issues": [{"code": "unverified_post"}]},
+        return_value={"issues": [{"code": "too_few_people"}]},
     ):
         response = client.get(f"/pull_requests/{TEST_CHANGESET_ID}/review")
 
     assert response.status_code == 200
-    assert response.json()["data"]["issues"] == [{"code": "unverified_post"}]
+    assert response.json()["data"]["issues"] == [{"code": "too_few_people"}]
 
 
 @pytest.mark.unit

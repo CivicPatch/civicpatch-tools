@@ -156,7 +156,6 @@ def fold_card_summary(
     read_organization_ids: set[str],
     role_labels: dict[str, str],
     unique_role_ids: set[str],
-    unverified_posts: list[Issue],
     organization_names: dict[str, str],
 ) -> ReviewSummary:
     """`roster_summary` plus the post checks, all over the fold. The proposal layer is not read:
@@ -165,7 +164,6 @@ def fold_card_summary(
     return ReviewSummary(
         issues=[
             *roster.issues,
-            *unverified_posts,
             *moved_person_issues_from_roster(published, proposed, diff, role_labels),
             *organizations_nobody_was_found_in_from_roster(
                 published, proposed, read_organization_ids, organization_names

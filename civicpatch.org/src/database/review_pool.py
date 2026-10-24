@@ -50,7 +50,7 @@ async def list_open_changesets(
             {}
             """).format(
                 where,
-                count=sql.SQL(issue_count("changesets.jurisdiction_ocdid")),
+                count=sql.SQL(issue_count("changesets.id")),
             ),
             params,
         )
@@ -73,8 +73,8 @@ async def list_open_changesets(
             ORDER BY {priority} DESC, changesets.created_at DESC, changesets.id
             LIMIT %s OFFSET %s
             """).format(where, status=sql.SQL('changesets.changeset_state'),
-                        count=sql.SQL(issue_count("changesets.jurisdiction_ocdid")),
-                        priority=sql.SQL(issue_priority("changesets.jurisdiction_ocdid"))),
+                        count=sql.SQL(issue_count("changesets.id")),
+                        priority=sql.SQL(issue_priority("changesets.id"))),
             params + [per_page, offset],
         )
         rows = await cur.fetchall()

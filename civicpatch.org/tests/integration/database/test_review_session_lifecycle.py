@@ -642,3 +642,39 @@ async def test_a_dismissal_loses_the_race_to_a_reviewer_publishing():
         )
         assert await cur.fetchone() == (None, None)
         await conn.rollback()
+
+
+# ── ordering the pool by stored issues ────────────────────────────────────────
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_a_card_with_pending_issues_sorts_first_and_counts_them():
+    """The run's pending `fewer_than_expected` counts; a resolved one does not."""
+    plain, plain_ocdid = await _seed_open_pr("issues_none")
+    flagged, flagged_ocdid = await _seed_open_pr("issues_one")
+    run_id = await factories.start_run(flagged_ocdid)
+    pool = await get_pool()
+    try:
+        async with pool.connection() as conn, conn.cursor() as cur:
+            await cur.execute(
+                "UPDATE pipeline_runs SET changeset_id = %s, finished_at = now() WHERE id = %s", (flagged, run_id)
+            )
+            await cur.execute(
+                "INSERT INTO pipeline_run_issues (pipeline_run_id, issue_type, status) "
+                "VALUES (%s, 'fewer_than_expected', 'pending'), (%s, 'cost_cap_reached', 'resolved')",
+                (run_id, run_id),
+            )
+
+        rows, _, with_issues = await list_open_changesets(state_code=_STATE_CODE)
+        order = [row["changeset_id"] for row in rows if row["changeset_id"] in (plain, flagged)]
+        counts = {row["changeset_id"]: row["issue_count"] for row in rows}
+
+        assert order == [flagged, plain]
+        assert counts[flagged] == 1
+        assert counts[plain] == 0
+        assert with_issues >= 1
+    finally:
+        async with pool.connection() as conn:
+            await conn.execute("DELETE FROM pipeline_runs WHERE id = %s", (run_id,))
+        await _cleanup_open_pr(plain, plain_ocdid)
+        await _cleanup_open_pr(flagged, flagged_ocdid)

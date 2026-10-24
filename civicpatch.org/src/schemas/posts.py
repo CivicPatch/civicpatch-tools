@@ -31,7 +31,5 @@ class UpdatePostRequest(BaseModel):
     there is nothing here to set.
     """
 
-    # Required, like the identity fields on create: this route replaces what it is given, and
-    # a default would let an omission silently re-track a post somebody turned off.
+    # Required, like the identity fields on create: this route replaces what it is given.
     meta_headcount: int = Field(gt=0)
-    meta_is_tracked: bool

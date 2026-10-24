@@ -162,8 +162,6 @@ function OfficePicker(host: OfficePickerHost) {
         division_ocdid: division,
         label: roles.find((r) => r.id === role)?.label ?? role,
         meta_headcount: 1,
-        meta_is_tracked: true,
-        meta_is_verified: true,
       });
       notifyPicked(post_id);
       hostDispatch(host, POST_CREATED_EVENT);
@@ -210,8 +208,6 @@ function OfficePicker(host: OfficePickerHost) {
       label:
         label ?? roles.find((role) => role.id === role_id)?.label ?? role_id,
       meta_headcount: 1,
-      meta_is_tracked: true,
-      meta_is_verified: true,
     });
     setRoleId(role_id);
     setDivisionOcdid(division_ocdid);

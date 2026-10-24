@@ -6,7 +6,6 @@ import pytest
 from core.post_issues import (
     moved_person_issues_from_roster,
     organizations_nobody_was_found_in_from_roster,
-    unverified_post_issues,
 )
 from core.projection.diff import roster_diff
 from core.projection.facts import PostKey
@@ -16,36 +15,6 @@ from shared.schemas import POST_FIELD, IssueCode
 
 _BASE = "ocd-division/country:us/state:wa/place:buckley"
 _T = datetime(2026, 1, 1, tzinfo=timezone.utc)
-
-
-def _post(**overrides) -> dict:
-    return {
-        "id": "post-1",
-        "role_id": "council_member",
-        "role_label": "Council Member",
-        "division_ocdid": f"{_BASE}/council_district:3",
-        **overrides,
-    }
-
-
-@pytest.mark.unit
-def test_the_post_is_named_by_role_and_division():
-    issues = unverified_post_issues([_post()])
-    assert [issue.code for issue in issues] == [IssueCode.UNVERIFIED_POST]
-    assert issues[0].message == "Unverified post: Council Member, District 3"
-
-
-@pytest.mark.unit
-def test_a_post_covering_the_whole_jurisdiction_names_no_division():
-    """At-large is the jurisdiction's own division. Appending it would read as a place, not as
-    the absence of one."""
-    issues = unverified_post_issues([_post(role_label="Mayor", division_ocdid=_BASE)])
-    assert issues[0].message == "Unverified post: Mayor"
-
-
-@pytest.mark.unit
-def test_nothing_unverified_asks_nothing():
-    assert unverified_post_issues([]) == []
 
 
 _ROLE_LABELS = {"council-member": "Council Member", "mayor": "Mayor"}

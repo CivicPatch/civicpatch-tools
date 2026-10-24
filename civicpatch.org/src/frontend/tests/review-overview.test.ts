@@ -100,8 +100,8 @@ describe("attentionOf — the second axis", () => {
 describe("issueTypesOf — what an issue is, in short", () => {
   it("humanizes the issue code for display", () => {
     expect(
-      issueTypesOf(card({ issues: [{ code: "unverified_post", message: "" }] })),
-    ).toEqual(["unverified post"]);
+      issueTypesOf(card({ issues: [{ code: "too_few_people", message: "" }] })),
+    ).toEqual(["too few people"]);
   });
   it("drops a code the status badge already says, so it isn't shown twice", () => {
     expect(
