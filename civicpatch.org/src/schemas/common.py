@@ -43,6 +43,20 @@ class ServiceKey(str, Enum):
     REFUSED = "refused"
 
 
+class AgentKey(str, Enum):
+    """Whether a non-public route also takes an `agent`-scoped key. Refused unless it says ACCEPTED."""
+
+    ACCEPTED = "accepted"
+    REFUSED = "refused"
+
+
+class ApiKeyScope(str, Enum):
+    """What a user's API key may reach, mirrored by `api_keys.scope`'s CHECK."""
+
+    FULL = "full"
+    AGENT = "agent"
+
+
 class ReviewMode(str, Enum):
     BASELINE = "baseline"      # first capture for a jurisdiction; nothing to diff against
     RECONCILE = "reconcile"    # subsequent scrape; old<->new pairing is meaningful
@@ -108,6 +122,8 @@ class Identity(BaseModel):
     role: str | None = None
     user_id: str | None = None
     username: str | None = None
+    # Set only for a user's API key; cookies and the service key have no scope.
+    key_scope: ApiKeyScope | None = None
 
 
 class UserWithRole(BaseModel):

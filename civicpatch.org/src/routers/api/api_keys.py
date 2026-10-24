@@ -1,7 +1,8 @@
-"""A user's own API keys: list, mint, revoke, delete.
+"""A user's own API keys: list, mint, revoke.
 
-Maintainers and above. A key inherits its owner's access, so minting one is handing out that
-access in a form that travels — a scraper, a scheduled job, an Apps Script pushing rows.
+Maintainers and above. A `full` key carries its owner's access, so minting one is handing out
+that access in a form that travels: a scraper, a scheduled job, an Apps Script pushing rows. An
+`agent` key, the default, reaches only MCP and the roster comparisons (`AgentKey` in schemas.common).
 
 Every route is scoped to the caller's own keys. Ownership is checked against the key's user, not
 just the role, so one maintainer cannot revoke another's.
@@ -11,6 +12,7 @@ from fastapi import APIRouter, Depends, HTTPException
 
 import database.users as database
 from lib.auth import require_route_access
+from schemas.api_keys import CreateApiKeyRequest
 from schemas.common import Identity, RouteCategory, UserRole
 
 
@@ -33,10 +35,12 @@ def get_router():
         return {"data": keys}
 
     @router.post("", include_in_schema=False)
-    async def create_api_key_endpoint(user: Identity = _maintainer()):
+    async def create_api_key_endpoint(body: CreateApiKeyRequest, user: Identity = _maintainer()):
         """Returns the key once. It is stored hashed, so this response is the only chance to
         copy it."""
-        api_key = await database.create_api_key(user.provider, user.provider_user_id)
+        api_key = await database.create_api_key(
+            user.provider, user.provider_user_id, body.scope, body.label
+        )
         return {
             "status": "success",
             "message": "API key created successfully.",
@@ -52,14 +56,6 @@ def get_router():
         await _refuse_unless_owned(api_key_id, user)
         await database.revoke_api_key(api_key_id)
         return {"data": {"revoked": True}}
-
-    @router.delete("/{api_key_id}", include_in_schema=False)
-    async def delete_api_key_endpoint(
-        api_key_id: str, user: Identity = _maintainer()
-    ):
-        await _refuse_unless_owned(api_key_id, user)
-        await database.delete_api_key(api_key_id)
-        return {"data": {"deleted": True}}
 
     return router
 

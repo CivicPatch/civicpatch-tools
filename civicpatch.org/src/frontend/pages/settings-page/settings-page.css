@@ -125,8 +125,8 @@
   font-family: var(--font-mono);
 }
 
-.api-key--revoked {
-  opacity: 0.55;
+.api-keys + .api-keys {
+  margin-top: 1.4rem;
 }
 
 .api-key__actions {
@@ -138,5 +138,29 @@
 .api-keys__create {
   margin: 0;
   width: auto;
+}
+
+/* Create form */
+
+.api-keys__form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.api-keys__form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  font-size: 0.9rem;
+}
+
+.api-keys__form-field input,
+.api-keys__form-field select {
+  margin: 0;
+}
+
+.api-keys__form .api-keys__create {
+  align-self: flex-start;
 }
 }

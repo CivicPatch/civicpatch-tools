@@ -8,11 +8,13 @@ from unittest.mock import AsyncMock, patch
 
 import pytest
 from fastapi import FastAPI
+from fastapi.routing import APIRoute
 from fastapi.testclient import TestClient
 
 from lib.auth import get_optional_user
 from routers.api import api_keys as api_keys_router
-from schemas.common import Identity, UserRole
+from schemas.api_keys import MAX_LABEL_LENGTH
+from schemas.common import ApiKeyScope, Identity, UserRole
 
 _PREFIX = "/api_keys"
 
@@ -58,16 +60,49 @@ def test_creating_returns_the_key_once():
         new_callable=AsyncMock,
         return_value="cp_secret_ab12",
     ):
-        response = _client().post(_PREFIX)
+        response = _client().post(_PREFIX, json={"label": "Claude Code on laptop"})
 
     assert response.status_code == 200
     assert response.json()["api_key"] == "cp_secret_ab12"
 
 
 @pytest.mark.unit
+def test_a_new_key_is_an_agent_key_unless_asked():
+    with patch(
+        "routers.api.api_keys.database.create_api_key", new_callable=AsyncMock, return_value="cp_secret"
+    ) as create:
+        _client().post(_PREFIX, json={"label": "  Claude Code on laptop  "})
+
+    create.assert_awaited_once_with("supabase", "user-1", ApiKeyScope.AGENT, "Claude Code on laptop")
+
+
+@pytest.mark.unit
+def test_a_full_key_is_an_explicit_choice():
+    with patch(
+        "routers.api.api_keys.database.create_api_key", new_callable=AsyncMock, return_value="cp_secret"
+    ) as create:
+        _client().post(_PREFIX, json={"label": "sheet push", "scope": "full"})
+
+    create.assert_awaited_once_with("supabase", "user-1", ApiKeyScope.FULL, "sheet push")
+
+
+@pytest.mark.unit
+@pytest.mark.parametrize(
+    "body",
+    [{}, {"label": "   "}, {"label": "x" * (MAX_LABEL_LENGTH + 1)}, {"label": "ok", "scope": "admin"}],
+)
+def test_a_key_needs_a_label_and_a_known_scope(body: dict):
+    with patch("routers.api.api_keys.database.create_api_key", new_callable=AsyncMock) as create:
+        response = _client().post(_PREFIX, json=body)
+
+    assert response.status_code == 422
+    create.assert_not_awaited()
+
+
+@pytest.mark.unit
 def test_contributors_cannot_mint_a_key():
     """A key carries its owner's access, so minting one is a maintainer action."""
-    response = _client(_identity(UserRole.CONTRIBUTORS)).post(_PREFIX)
+    response = _client(_identity(UserRole.CONTRIBUTORS)).post(_PREFIX, json={"label": "x"})
     assert response.status_code in (401, 403)
 
 
@@ -91,6 +126,18 @@ def test_revoking_a_key_that_does_not_exist_is_a_404():
         new_callable=AsyncMock,
         return_value=None,
     ):
-        response = _client().delete(f"{_PREFIX}/7")
+        response = _client().post(f"{_PREFIX}/7/revoke")
 
     assert response.status_code == 404
+
+
+@pytest.mark.unit
+def test_a_key_cannot_be_deleted():
+    """Revoked, never deleted: the row is the record that a leaked key existed."""
+    methods = {
+        method
+        for route in api_keys_router.get_router().routes
+        if isinstance(route, APIRoute)
+        for method in route.methods
+    }
+    assert "DELETE" not in methods

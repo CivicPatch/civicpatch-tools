@@ -5,7 +5,7 @@ import lib.auth_session as session_service
 import lib.supabase_auth as supabase_auth_service
 from fastapi import APIRouter, Depends, HTTPException
 from fastapi.responses import JSONResponse, RedirectResponse
-from lib.auth import get_optional_user
+from lib.auth import get_optional_person
 from psycopg.errors import UniqueViolation
 from schemas.common import (
     Identity,
@@ -60,14 +60,16 @@ def get_router(is_production: bool) -> APIRouter:
     @router.get("/logout", include_in_schema=False)
     async def logout(
         redirect: str = "/",
-        user: Identity | None = Depends(get_optional_user),
+        user: Identity | None = Depends(get_optional_person),
     ):
         redirect_url = redirect if is_safe_redirect(redirect, allowed_hosts) else "/"
         response = RedirectResponse(url=redirect_url)
+        # Only a browser has a session to end: an API key calling this must not sign its owner out.
+        session_user = user if user and user.type == "cookie" else None
         await session_service.clear_session_cookies(
             response,
-            provider=user.provider if user else None,
-            provider_user_id=user.provider_user_id if user else None,
+            provider=session_user.provider if session_user else None,
+            provider_user_id=session_user.provider_user_id if session_user else None,
         )
         return response
 

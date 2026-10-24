@@ -20,7 +20,7 @@ from database.changeset_batches import BatchKind, BatchStatus
 from database.database import get_pool
 from database.review_sessions import ReviewSessionEntryStatus
 from schemas.claims import ClaimKind, EntityType
-from schemas.common import UserRole
+from schemas.common import ApiKeyScope, UserRole
 from schemas.roster_comparisons import PersonOutcome
 from shared.schemas import GovernmentForm, RoleAliasStatus, RoleStatus, SelectionMethod
 from shared.utils.statuses import COLLECTOR_RUN_KINDS, ChangesetKind, DismissalReason, PipelineIssueStatus, PipelineRunKind
@@ -46,6 +46,7 @@ EXACT = {
     # A subset, not a whole enum: every kind but the scrape.
     "collector_settings_kind_check": COLLECTOR_RUN_KINDS,
     "roster_comparison_people_outcome_check": PersonOutcome,
+    "api_keys_scope_check": ApiKeyScope,
 }
 
 # No enum behind it: `active`/`inactive` exists only here and in the SQL that reads it.

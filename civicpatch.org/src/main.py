@@ -54,7 +54,7 @@ from fastapi.security import APIKeyHeader
 from fastapi.templating import Jinja2Templates
 from frontend.static import HashedAssetStaticFiles
 from frontend.vite import vite_asset, vite_css
-from lib.auth import get_optional_user, get_ws_user, require_route_access
+from lib.auth import get_optional_person, get_ws_user, require_route_access
 from lib.supabase_auth import create_supabase_admin_client, create_supabase_client
 from routers.frontend import get_router as frontend_router, register_page_redirects
 from routers.sso import get_router as auth_router
@@ -400,7 +400,7 @@ app.include_router(
 
 
 @app.get("/api/v1/me", tags=["auth"], include_in_schema=False)
-async def get_me(user: Identity = Depends(get_optional_user)):
+async def get_me(user: Identity = Depends(get_optional_person)):
     """
     Returns the authenticated user's identity info.
     """

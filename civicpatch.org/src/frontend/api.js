@@ -992,11 +992,12 @@ export const dismissBatch = async (batchId, changesetIds) => {
 
 const API_KEYS_URL = `/api/v1/api_keys`;
 
-async function apiKeysRequest(path, method) {
+async function apiKeysRequest(path, method, payload) {
   const res = await fetch(`${API_KEYS_URL}${path}`, {
     credentials: "include",
     method,
-    headers: { "X-CSRF-Token": getCsrfCookie() },
+    headers: { "X-CSRF-Token": getCsrfCookie(), "Content-Type": "application/json" },
+    body: payload === undefined ? undefined : JSON.stringify(payload),
   });
   const body = await res.json().catch(() => ({}));
   if (!res.ok) throw new Error(parseSaveError(body, res.status));
@@ -1005,13 +1006,11 @@ async function apiKeysRequest(path, method) {
 
 export const fetchApiKeys = async () => apiKeysRequest("", "GET");
 
-export const createApiKey = async () => apiKeysRequest("", "POST");
+export const createApiKey = async ({ label, scope }) =>
+  apiKeysRequest("", "POST", { label, scope });
 
 export const revokeApiKey = async (apiKeyId) =>
   apiKeysRequest(`/${apiKeyId}/revoke`, "POST");
-
-export const deleteApiKey = async (apiKeyId) =>
-  apiKeysRequest(`/${apiKeyId}`, "DELETE");
 
 const SUMMARIES_URL = `/api/v1/changeset_summaries`;
 
