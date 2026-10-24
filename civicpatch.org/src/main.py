@@ -9,6 +9,7 @@ import environment
 import lib.pubsub as pubsub_service
 import routers.api.admin as api_admin_router
 import routers.api.api_keys as api_keys_router
+import routers.api.connected_apps as connected_apps_router
 import routers.api.blog as api_blog_router
 import routers.api.activity as api_activity_router
 import routers.api.coverage as api_coverage_router
@@ -37,6 +38,7 @@ import routers.api.user as api_user_router
 import routers.webhooks.blog_sync as blog_sync_webhook_router
 import routers.webhooks.github as github_webhook_router
 import routers.mcp as mcp_router
+import routers.oauth_consent as oauth_consent_router
 import services.collector_runs as collector_runs_service
 from database.database import (
     close_pool,
@@ -297,6 +299,12 @@ app.include_router(
 )
 
 app.include_router(
+    connected_apps_router.get_router(),
+    prefix="/api/v1/connected-apps",
+    tags=["connected-apps"],
+)
+
+app.include_router(
     api_data_router.get_router(),
     prefix="/api/v1/data",
     tags=["data"],
@@ -456,6 +464,8 @@ async def websocket_endpoint(websocket: WebSocket):
 # The MCP server: a gated route that hands the request to the SDK's app. Not a mount: a mount at
 # /mcp would not match /mcp itself, and the catch-all below would answer with a jurisdiction 404.
 app.include_router(mcp_router.get_router(mcp_app))
+# Where Supabase's OAuth server sends an MCP client's user to approve it.
+app.include_router(oauth_consent_router.get_router(templates))
 
 # Must be last: contains a /{path:path} catch-all for jurisdiction pages
 app.include_router(frontend_router(templates))

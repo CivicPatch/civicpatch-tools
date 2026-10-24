@@ -10,10 +10,12 @@ from unittest.mock import AsyncMock, patch
 import mcp
 import pytest
 from fastapi import FastAPI
+from mcp.server.mcpserver.exceptions import ToolError
 from starlette.requests import Request
 from starlette.responses import PlainTextResponse
 from starlette.testclient import TestClient
 
+from lib.supabase_tokens import TokenRejected
 from routers import mcp as mcp_router
 from schemas.common import ApiKeyScope, Identity, UserRole
 from schemas.jurisdictions import JurisdictionSearchResult
@@ -23,6 +25,8 @@ from schemas.roster_comparisons import (
     FieldFilter,
     PeopleFilter,
     PersonOutcome,
+    RejectedReason,
+    RejectedRow,
     RosterComparisonCreated,
     RosterComparisonDraft,
     RosterComparisonListPage,
@@ -31,7 +35,7 @@ from schemas.roster_comparisons import (
     RunPeoplePage,
     UploadedRow,
 )
-from services.roster_comparison import RunNotFound
+from services.roster_comparison import RowsOutsideState, RunNotFound
 from shared.schemas import Person
 
 _INSTANCE = "https://civicpatch.test"
@@ -144,11 +148,35 @@ async def test_finishing_is_the_routes_finish_for_the_caller():
 
 @pytest.mark.asyncio
 @pytest.mark.unit
+async def test_a_refused_batch_reaches_the_agent_with_its_reasons():
+    row = UploadedRow.model_validate({"source_row": 560, "jurisdiction_ocdid": "ocd-jurisdiction/x", "name": "Jane Doe"})
+    rejected = RejectedRow(source_row=560, jurisdiction_ocdid="ocd-jurisdiction/x", reason=RejectedReason.UNKNOWN_JURISDICTION)
+    with patch.object(mcp_router.drafts, "add_draft_rows", AsyncMock(side_effect=RowsOutsideState("vt", [rejected]))):
+        with pytest.raises(ToolError, match="row 560: ocd-jurisdiction/x"):
+            await mcp_router.add_roster_comparison_rows("d", [row], _ctx(_caller()))
+
+
+@pytest.mark.asyncio
+@pytest.mark.unit
+async def test_a_bad_header_is_an_error_the_agent_can_read():
+    with pytest.raises(ToolError, match="state"):
+        await mcp_router.start_roster_comparison("Vermont", {}, _ctx(_caller()))
+
+
+@pytest.mark.asyncio
+@pytest.mark.unit
 async def test_an_unknown_run_is_an_error_the_agent_can_read():
     missing = AsyncMock(side_effect=RunNotFound(_RUN_ID))
     with patch.object(mcp_router.roster_comparisons, "get_run_people", missing):
-        with pytest.raises(RunNotFound, match="No roster comparison"):
+        with pytest.raises(ToolError, match="No roster comparison"):
             await mcp_router.get_roster_comparison_jurisdiction(_RUN_ID, "ocd-jurisdiction/x")
+
+
+@pytest.mark.asyncio
+@pytest.mark.unit
+async def test_a_field_without_a_level_is_an_error_the_agent_can_read():
+    with pytest.raises(ToolError, match="field and level go together"):
+        await mcp_router.get_roster_comparison_people(_RUN_ID, field=ComparedField.EMAILS)
 
 
 @pytest.mark.asyncio
@@ -296,17 +324,54 @@ def _no_last_used_write():
 
 
 @pytest.mark.unit
-def test_no_key_is_refused_as_every_gated_route_refuses():
-    # 403, the shared gate's answer; a 401 would also send MCP clients looking for OAuth.
-    assert _client().post("/mcp").status_code == 403
+def test_a_client_sending_nothing_is_told_where_to_sign_in():
+    response = _client().post("/mcp", headers={"Host": "devbox.test:8443", "X-Forwarded-Proto": "https"})
+
+    assert response.status_code == 401
+    assert response.headers["WWW-Authenticate"] == (
+        'Bearer resource_metadata="https://devbox.test:8443/.well-known/oauth-protected-resource"'
+    )
 
 
 @pytest.mark.unit
-def test_an_unknown_or_revoked_key_is_refused():
-    with _key_lookup(None):
-        response = _client().post("/mcp", headers={"Authorization": "Bearer cp_nope"})
+@pytest.mark.parametrize("path", ["/.well-known/oauth-protected-resource", "/.well-known/oauth-protected-resource/mcp"])
+def test_the_protected_resource_names_supabase_as_where_to_sign_in(path: str):
+    with (
+        patch.object(mcp_router.environment, "get_env_vars", return_value={"SUPABASE_URL": "http://sb"}),
+        patch.object(mcp_router, "fetch_issuer", AsyncMock(return_value="https://devbox.test:8443/auth/v1")) as issuer,
+    ):
+        response = _client().get(path, headers={"Host": "devbox.test:8443", "X-Forwarded-Proto": "https"})
 
-    assert response.status_code == 403
+    assert response.json() == {
+        "resource": "https://devbox.test:8443/mcp",
+        "authorization_servers": ["https://devbox.test:8443/auth/v1"],
+        "bearer_methods_supported": ["header"],
+    }
+    issuer.assert_awaited_once_with("http://sb")
+
+
+@pytest.mark.unit
+def test_an_unknown_or_revoked_key_is_told_it_is_invalid():
+    with _key_lookup(None):
+        response = _client().post("/mcp", headers={"Authorization": "Bearer cp_nope", "Host": "devbox.test"})
+
+    assert response.status_code == 401
+    assert response.headers["WWW-Authenticate"] == (
+        'Bearer error="invalid_token", resource_metadata="http://devbox.test/.well-known/oauth-protected-resource"'
+    )
+
+
+@pytest.mark.unit
+def test_an_expired_token_is_told_it_is_invalid_so_the_client_refreshes():
+    with (
+        patch("lib.auth.environment.get_env_vars", return_value={"SUPABASE_URL": "http://sb"}),
+        patch("lib.auth.verify_supabase_token", new=AsyncMock(side_effect=TokenRejected("Signature has expired"))) as verify,
+    ):
+        response = _client().post("/mcp", headers={"Authorization": "Bearer a.b.c"})
+
+    verify.assert_awaited_once()
+    assert response.status_code == 401
+    assert response.headers["WWW-Authenticate"].startswith('Bearer error="invalid_token"')
 
 
 @pytest.mark.unit
@@ -359,3 +424,16 @@ async def test_listing_a_states_jurisdictions_is_the_search_with_no_query_paged(
     search.assert_awaited_once_with("vt", "", size, size)
     assert page["total_items"] == 291
     assert page["data"][0]["name"] == "Barre"
+
+
+@pytest.mark.unit
+@pytest.mark.parametrize("path", mcp_router.AUTHORIZATION_SERVER_PATHS)
+def test_supabases_discovery_document_is_served_where_chatgpt_looks(path: str):
+    document = {"issuer": "https://devbox.test/auth/v1", "registration_endpoint": "https://devbox.test/auth/v1/oauth/clients/register"}
+    with (
+        patch.object(mcp_router.environment, "get_env_vars", return_value={"SUPABASE_URL": "http://sb"}),
+        patch.object(mcp_router, "fetch_authorization_server_metadata", AsyncMock(return_value=document)),
+    ):
+        response = _client().get(path)
+
+    assert (response.status_code, response.json()) == (200, document)

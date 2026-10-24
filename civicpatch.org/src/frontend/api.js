@@ -1012,6 +1012,24 @@ export const createApiKey = async ({ label, scope }) =>
 export const revokeApiKey = async (apiKeyId) =>
   apiKeysRequest(`/${apiKeyId}/revoke`, "POST");
 
+const CONNECTED_APPS_URL = `/api/v1/connected-apps`;
+
+async function connectedAppsRequest(path, method) {
+  const res = await fetch(`${CONNECTED_APPS_URL}${path}`, {
+    credentials: "include",
+    method,
+    headers: { "X-CSRF-Token": getCsrfCookie() },
+  });
+  const body = await res.json().catch(() => ({}));
+  if (!res.ok) throw new Error(parseSaveError(body, res.status));
+  return body;
+}
+
+export const fetchConnectedApps = async () => connectedAppsRequest("", "GET");
+
+export const disconnectApp = async (clientId) =>
+  connectedAppsRequest(`/${clientId}`, "DELETE");
+
 const SUMMARIES_URL = `/api/v1/changeset_summaries`;
 
 const summariesRequest = async (path) => {

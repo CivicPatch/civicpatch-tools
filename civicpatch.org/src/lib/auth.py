@@ -9,6 +9,7 @@ import database.users as database
 import environment
 from schemas.common import AgentKey, ApiKeyScope, Identity, UserRole, RouteCategory, ServiceKey, has_at_least
 import lib.auth_session as session_service
+from lib.supabase_tokens import TokenRejected, looks_like_jwt, verify_supabase_token
 
 logger = logging.getLogger(__name__)
 
@@ -17,6 +18,7 @@ API_HEADER = APIKeyHeader(name="Authorization", auto_error=False)
 
 UNSAFE_METHODS = {"POST", "PUT", "PATCH", "DELETE"}
 BEARER_PREFIX = "bearer "
+SUPABASE_PROVIDER = "supabase"
 
 
 def header_token(authorization: str) -> str:
@@ -67,6 +69,8 @@ async def get_user(
     try:
         if token_source == "cookie":
             identity = await get_user_by_cookie(request, token)
+        elif token_source == "header" and looks_like_jwt(token):
+            identity = await get_user_by_supabase_token(token, environment.supabase_url())
         elif token_source == "header":
             identity = await get_user_by_api_key(token)
         else:
@@ -100,6 +104,26 @@ async def get_user_by_api_key(api_key: str) -> Identity:
     )
 
 
+async def get_user_by_supabase_token(token: str, supabase_url: str) -> Identity:
+    """An MCP client signed in through Supabase's OAuth server: scoped like an agent key."""
+    try:
+        claims = await verify_supabase_token(token, supabase_url)
+    except TokenRejected as error:
+        raise HTTPException(status_code=401, detail=f"Token rejected: {error}") from error
+    user = await database.get_user(SUPABASE_PROVIDER, claims["sub"])
+    if not user:
+        raise HTTPException(status_code=401, detail="No civicpatch user for this token")
+    return Identity(
+        type="oauth_token",
+        provider=SUPABASE_PROVIDER,
+        provider_user_id=claims["sub"],
+        email=user.get("email"),
+        role=user.get("role", UserRole.DEFAULT.value),
+        user_id=user.get("id"),
+        key_scope=ApiKeyScope.AGENT,
+    )
+
+
 async def get_user_by_cookie(request, token: str) -> Identity:
     session = await session_service.get_session(token)
     if not session:
@@ -111,7 +135,7 @@ async def get_user_by_cookie(request, token: str) -> Identity:
             form = await request.form()
             csrf_header = form.get("csrf_token")
 
-        csrf_cookie = request.cookies.get("csrf_token")
+        csrf_cookie = request.cookies.get(session_service.CSRF_COOKIE)
         if not csrf_header or not csrf_cookie or csrf_header != csrf_cookie:
             logger.debug(
                 f"CSRF double-submit failed: has_header={bool(csrf_header)}, has_cookie={bool(csrf_cookie)}"

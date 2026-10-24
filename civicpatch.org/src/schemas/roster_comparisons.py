@@ -4,7 +4,7 @@ an agent reads, in OpenAPI."""
 from enum import StrEnum
 from typing import Annotated, Any
 
-from pydantic import AfterValidator, BaseModel, Field, StringConstraints, model_validator
+from pydantic import AfterValidator, BaseModel, BeforeValidator, Field, StringConstraints, model_validator
 
 MAX_ROWS = 20_000
 MAX_ROWS_PER_BATCH = 500
@@ -19,6 +19,10 @@ def _no_nul(value: str) -> str:
     if "\x00" in value:
         raise ValueError("contains a NUL character")
     return value
+
+
+def _lowercase(value: Any) -> Any:
+    return value.lower() if isinstance(value, str) else value
 
 
 ShortText = Annotated[str, StringConstraints(max_length=300), AfterValidator(_no_nul)]
@@ -97,7 +101,9 @@ class UploadedRow(BaseModel):
 class RosterComparisonHeader(BaseModel):
     """What a batched upload starts with; its rows come in batches and its corrections at finish."""
 
-    state: str = Field(pattern=r"^[a-z]{2}$", description="Two-letter state code, lowercase.")
+    state: Annotated[str, BeforeValidator(_lowercase)] = Field(
+        pattern=r"^[a-z]{2}$", description="Two-letter state code (lowercased)."
+    )
     source_columns: dict[ShortText, Values] = Field(
         max_length=MAX_EXTRA_COLUMNS,
         description="Each field above (name, role, emails, …) → the original column(s) it came from.",

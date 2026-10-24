@@ -2,6 +2,7 @@ import { component, useState } from "haunted";
 import { html } from "lit-html";
 import type { TemplateResult } from "lit-html";
 import "./email-login.css";
+import { afterLoginPath } from "./after-login-path.js";
 
 type Step = "enter-email" | "enter-code";
 
@@ -66,7 +67,7 @@ function EmailLogin(): TemplateResult {
         );
         return;
       }
-      window.location.href = "/";
+      window.location.href = afterLoginPath(window.location.search, window.location.origin);
     } finally {
       setBusy(false);
     }

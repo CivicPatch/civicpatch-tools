@@ -75,6 +75,8 @@ A page the visitor can't view redirects to `/`.
 
 - View a jurisdiction page and all its data: people, history, roles, posts, organizations and
   memberships.
+- Read the OAuth discovery documents MCP clients start from: `/.well-known/oauth-protected-resource`
+  and Supabase's authorization-server document, served on our origin.
 
 ### Default (signed in)
 
@@ -112,9 +114,11 @@ A page the visitor can't view redirects to `/`.
   `POST /api/v1/imports` still accepts it.
 - Compare an uploaded roster with civicpatch's (`/api/v1/roster-comparisons`) and read every
   run, whoever started it, on `/roster-comparisons/{id}`. Read-only towards everything else.
-- Use `/mcp`, the MCP server, with an agent key (see "Connect your agent"). Its tools only
-  read.
+- Use `/mcp`, the MCP server, with an agent key (see "Connect your agent") or from an app they
+  connected (see "Connected apps").
 - Create and revoke their own API keys (see "API keys").
+- Approve an app that signs in by OAuth (ChatGPT) on `/oauth/consent`, and list or disconnect
+  their own connected apps (see "Connected apps").
 
 ### Admins
 
@@ -145,6 +149,14 @@ A key acts as its owner, at its owner's level, but only as far as its access all
 A key is revoked, never deleted, so a leaked key stays on record. Settings → API keys shows each
 key's label, access and when it was last used (written at most once a minute). Calling `/logout`
 with a key does not end its owner's browser session.
+
+### Connected apps
+
+An app that takes no API key (ChatGPT) signs in through Supabase's OAuth server and our consent
+page, which only a maintainer can approve. Its token is limited exactly like an agent key, by the
+same checks; `test_route_gates.py` runs the agent sweep for both. Settings → API keys lists the
+apps a maintainer approved (`/api/v1/connected-apps`). Disconnecting one ends its sessions and
+refresh tokens; a token it already holds works until it expires, within the hour.
 
 ### Username
 
@@ -178,8 +190,9 @@ The session picks up the new role on the next request — no logout required.
 
 Maintainers can let their own agent compare a list of officials with civicpatch's, a whole
 state at a time. Any agent that takes an API key works: Claude Code, Codex CLI, Gemini CLI,
-VS Code, and Claude.ai in the browser. ChatGPT and the Gemini app in the browser accept
-only OAuth, which civicpatch does not offer yet.
+VS Code, and Claude.ai in the browser. ChatGPT accepts only OAuth: it signs in instead of
+taking a key (Settings → API keys shows its steps; see "Connected apps"). The Gemini app in the
+browser accepts only OAuth too, and has not been tried.
 
 1. Create an agent key (the default access) on Settings → API keys. The page shows the key
    once, with the setup for each agent. A full key works too, but reaches everything you can.

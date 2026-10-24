@@ -115,6 +115,9 @@ AGENT_KEY = Identity(
     user_id="00000000-0000-4000-8000-0000000000bb",
     key_scope=ApiKeyScope.AGENT,
 )
+OAUTH_TOKEN = AGENT_KEY.model_copy(update={"type": "oauth_token"})
+# An MCP client signed in through Supabase's OAuth server must reach exactly what an agent key does.
+AGENT_CALLERS = pytest.mark.parametrize("caller", [AGENT_KEY, OAUTH_TOKEN], ids=["agent_key", "oauth_token"])
 
 # Every route an agent key reaches beyond the public ones: MCP, and the comparisons (CLI agents
 # upload with curl). A route joins by passing `agent_key=AgentKey.ACCEPTED` and being listed here.
@@ -134,12 +137,13 @@ AGENT_KEY_ROUTES = {
 
 
 @pytest.mark.asyncio
-async def test_an_agent_key_reaches_exactly_its_routes_beyond_the_public_ones():
+@AGENT_CALLERS
+async def test_an_agent_caller_reaches_exactly_its_routes_beyond_the_public_ones(caller):
     beyond_public = {
         key
         for route in app.routes
         if isinstance(route, APIRoute)
-        and await _passes(route, AGENT_KEY)
+        and await _passes(route, caller)
         and not await _passes(route, None)
         for key in _route_keys(route)
     }
@@ -156,24 +160,29 @@ async def test_an_agent_key_reaches_exactly_its_routes_beyond_the_public_ones():
         ("POST", "/api/v1/api_keys/{api_key_id}/revoke"),
     ],
 )
-async def test_an_agent_key_is_refused_by_writes_its_owner_may_make(method, path):
-    """Its owner is a maintainer: these are what a leaked agent key must not reach."""
+@AGENT_CALLERS
+async def test_an_agent_caller_is_refused_by_writes_its_owner_may_make(method, path, caller):
+    """Its owner is a maintainer: these are what a leaked agent key or token must not reach."""
     route = _route(method, path)
     assert await _passes(route, _person(UserRole.MAINTAINERS))
-    assert not await _passes(route, AGENT_KEY)
+    assert not await _passes(route, caller)
+
+
+# challenge_unidentified (/mcp) reads only whether there is a caller, never its role.
+RAW_CALLER_READERS = ("require_route_access", "get_optional_person", "challenge_unidentified")
 
 
 def _direct_caller_reads(dependant, parent=None) -> list[str]:
     found = []
     for dependency in dependant.dependencies:
-        if dependency.call is get_optional_user and parent not in ("require_route_access", "get_optional_person"):
+        if dependency.call is get_optional_user and parent not in RAW_CALLER_READERS:
             found.append(parent or "the route")
         name = getattr(dependency.call, "__qualname__", "").split(".")[0]
         found.extend(_direct_caller_reads(dependency, name))
     return found
 
 
-def test_only_the_gate_and_get_optional_person_read_the_raw_caller():
+def test_only_the_gate_and_its_named_readers_read_the_raw_caller():
     """Anything else would hand an agent key its owner's role outside the routes that opt in."""
     leaks = [
         f"{sorted(route.methods)} {route.path} via {where}"

@@ -58,9 +58,14 @@ def test_a_column_we_do_not_model_lands_in_not_compared():
 
 
 @pytest.mark.unit
-def test_a_state_must_be_a_lowercase_code():
+def test_a_state_must_be_a_two_letter_code():
     with pytest.raises(ValidationError):
         RosterComparisonUpload.model_validate(_upload(state="Vermont"))
+
+
+@pytest.mark.unit
+def test_an_uppercase_state_is_lowercased():
+    assert RosterComparisonUpload.model_validate(_upload(state="VT")).state == "vt"
 
 
 @pytest.mark.unit

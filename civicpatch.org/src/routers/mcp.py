@@ -3,14 +3,18 @@ as its `/api/v1/` route. Uploading is `curl`, not a tool, so the rows never pass
 
 from urllib.parse import urlparse
 
-from fastapi import APIRouter, Depends, Request, Response
+from fastapi import APIRouter, Depends, HTTPException, Request, Response, Security
 from mcp.server.mcpserver import Context, MCPServer
+from mcp.server.mcpserver.exceptions import ToolError
 from mcp.server.transport_security import TransportSecuritySettings
+from pydantic import ValidationError
 from starlette.types import ASGIApp, Receive, Scope, Send
 
 import services.roster_comparison as roster_comparisons
 import services.roster_comparison_drafts as drafts
-from lib.auth import require_route_access
+import environment
+from lib.auth import API_COOKIE, API_HEADER, get_optional_user, require_route_access
+from lib.supabase_tokens import fetch_authorization_server_metadata, fetch_issuer
 from routers.api.jurisdictions import MAX_SEARCH_LIMIT, search_in_state
 from routers.api.people import current_roster
 from schemas.common import AgentKey, Identity, RouteCategory, UserRole
@@ -28,11 +32,31 @@ from schemas.roster_comparisons import (
 )
 
 MCP_PATH = "/mcp"
+PROTECTED_RESOURCE_PATH = "/.well-known/oauth-protected-resource"
+# ChatGPT looks for the authorization server's document on the MCP server's own origin, whatever the
+# protected resource names; each path serves Supabase's, unchanged.
+AUTHORIZATION_SERVER_PATHS = [
+    "/.well-known/oauth-authorization-server",
+    f"/.well-known/oauth-authorization-server{MCP_PATH}",
+    f"{MCP_PATH}/.well-known/oauth-authorization-server",
+    "/.well-known/openid-configuration",
+    f"/.well-known/openid-configuration{MCP_PATH}",
+    f"{MCP_PATH}/.well-known/openid-configuration",
+]
 CALLER_STATE = "civicpatch_caller"
 SEARCH_LIMIT = 10
 LIST_PAGE_SIZE = MAX_SEARCH_LIMIT
 PEOPLE_PAGE_LIMIT = 200
 RUN_PAGE_LIMIT = 100
+# Raised as a ToolError so the agent reads why; the SDK hides any other exception's message.
+AGENT_REFUSALS = (
+    ValidationError,
+    roster_comparisons.RunNotFound,
+    roster_comparisons.RowsOutsideState,
+    drafts.DraftNotFound,
+    drafts.DraftTooLarge,
+    drafts.DraftIsEmpty,
+)
 
 INSTRUCTIONS = """\
 civicpatch keeps rosters of local elected officials. These tools read them, and run and read
@@ -148,11 +172,17 @@ async def list_roster_comparisons(page: int = 1, per_page: int = 20) -> dict:
 
 
 async def get_roster_comparison(run_id: str) -> dict:
-    return (await roster_comparisons.get_run_summary(run_id)).model_dump(mode="json")
+    try:
+        return (await roster_comparisons.get_run_summary(run_id)).model_dump(mode="json")
+    except AGENT_REFUSALS as error:
+        raise ToolError(str(error)) from error
 
 
 async def get_roster_comparison_jurisdiction(run_id: str, jurisdiction_ocdid: str) -> list[dict]:
-    people = await roster_comparisons.get_run_people(run_id, jurisdiction_ocdid)
+    try:
+        people = await roster_comparisons.get_run_people(run_id, jurisdiction_ocdid)
+    except AGENT_REFUSALS as error:
+        raise ToolError(str(error)) from error
     return [person.model_dump(mode="json") for person in people]
 
 
@@ -164,10 +194,13 @@ async def get_roster_comparison_people(
     page: int = 1,
     per_page: int = 50,
 ) -> dict:
-    people_filter = PeopleFilter(outcome=outcome, field=field, level=level)
-    page_of_people = await roster_comparisons.get_run_people_page(
-        run_id, people_filter, max(page, 1), max(1, min(per_page, PEOPLE_PAGE_LIMIT))
-    )
+    try:
+        people_filter = PeopleFilter(outcome=outcome, field=field, level=level)
+        page_of_people = await roster_comparisons.get_run_people_page(
+            run_id, people_filter, max(page, 1), max(1, min(per_page, PEOPLE_PAGE_LIMIT))
+        )
+    except AGENT_REFUSALS as error:
+        raise ToolError(str(error)) from error
     return page_of_people.model_dump(mode="json")
 
 
@@ -181,18 +214,27 @@ def caller_id(ctx: Context) -> str:
 
 
 async def start_roster_comparison(state: str, source_columns: dict[str, list[str]], ctx: Context) -> dict:
-    header = RosterComparisonHeader(state=state, source_columns=source_columns)
-    return (await drafts.start_draft(header, caller_id(ctx))).model_dump(mode="json")
+    try:
+        header = RosterComparisonHeader(state=state, source_columns=source_columns)
+        return (await drafts.start_draft(header, caller_id(ctx))).model_dump(mode="json")
+    except AGENT_REFUSALS as error:
+        raise ToolError(str(error)) from error
 
 
 async def add_roster_comparison_rows(draft_id: str, rows: list[UploadedRow], ctx: Context) -> dict:
-    batch = DraftRows(rows=rows)
-    return (await drafts.add_draft_rows(draft_id, batch.rows, caller_id(ctx))).model_dump(mode="json")
+    try:
+        batch = DraftRows(rows=rows)
+        return (await drafts.add_draft_rows(draft_id, batch.rows, caller_id(ctx))).model_dump(mode="json")
+    except AGENT_REFUSALS as error:
+        raise ToolError(str(error)) from error
 
 
 async def finish_roster_comparison(draft_id: str, corrections: list[str], ctx: Context) -> dict:
-    finish = DraftFinish(corrections=corrections)
-    return (await drafts.finish_draft(draft_id, caller_id(ctx), finish.corrections)).model_dump(mode="json")
+    try:
+        finish = DraftFinish(corrections=corrections)
+        return (await drafts.finish_draft(draft_id, caller_id(ctx), finish.corrections)).model_dump(mode="json")
+    except AGENT_REFUSALS as error:
+        raise ToolError(str(error)) from error
 
 
 def allowed_hosts(instance_url: str, extra_hosts: list[str]) -> list[str]:
@@ -223,13 +265,62 @@ class ForwardToMcp(Response):
         await self.mcp_app(scope, receive, send)
 
 
+def public_origin(request: Request) -> str:
+    """The address the client used; behind a tunnel or proxy, from its forwarded headers."""
+    scheme = request.headers.get("x-forwarded-proto", request.url.scheme)
+    host = request.headers.get("x-forwarded-host", request.headers.get("host", request.url.netloc))
+    return f"{scheme}://{host}"
+
+
+async def challenge_unidentified(
+    request: Request,
+    identity: Identity | None = Depends(get_optional_user),
+    authorization: str | None = Security(API_HEADER),
+    cookie: str | None = Security(API_COOKIE),
+) -> None:
+    """A request with no caller is told where to sign in (RFC 9728); a refused credential is also told it
+    is invalid (RFC 6750), which makes an OAuth client refresh an expired token."""
+    if identity is not None:
+        return
+    metadata = f'resource_metadata="{public_origin(request)}{PROTECTED_RESOURCE_PATH}"'
+    challenge = f'Bearer error="invalid_token", {metadata}' if authorization or cookie else f"Bearer {metadata}"
+    raise HTTPException(
+        status_code=401,
+        detail="Sign in, or send an API key",
+        headers={"WWW-Authenticate": challenge},
+    )
+
+
 def get_router(mcp_app: ASGIApp) -> APIRouter:
     """A FastAPI route, so `/mcp` is gated by `require_route_access` like every other route."""
     router = APIRouter()
 
+    @router.get(PROTECTED_RESOURCE_PATH, include_in_schema=False)
+    @router.get(f"{PROTECTED_RESOURCE_PATH}{MCP_PATH}", include_in_schema=False)
+    async def protected_resource_endpoint(
+        request: Request, _: Identity | None = Depends(require_route_access(RouteCategory.PUBLIC))
+    ) -> dict:
+        """Where an MCP client signs in: Supabase's OAuth server, whose tokens /mcp accepts."""
+        supabase_url = environment.supabase_url()
+        return {
+            "resource": f"{public_origin(request)}{MCP_PATH}",
+            "authorization_servers": [await fetch_issuer(supabase_url)],
+            "bearer_methods_supported": ["header"],
+        }
+
+    async def authorization_server_endpoint(
+        _: Identity | None = Depends(require_route_access(RouteCategory.PUBLIC)),
+    ) -> dict:
+        """Supabase's OAuth discovery document, for clients that look for it here."""
+        return await fetch_authorization_server_metadata(environment.supabase_url())
+
+    for path in AUTHORIZATION_SERVER_PATHS:
+        router.add_api_route(path, authorization_server_endpoint, methods=["GET"], include_in_schema=False)
+
     @router.api_route(MCP_PATH, methods=["GET", "POST", "DELETE"], include_in_schema=False)
     async def mcp_endpoint(
         request: Request,
+        _: None = Depends(challenge_unidentified),
         identity: Identity = Depends(
             require_route_access(RouteCategory.TEAM_REQUIRED, UserRole.MAINTAINERS, agent_key=AgentKey.ACCEPTED)
         ),
