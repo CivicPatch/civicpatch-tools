@@ -17,8 +17,6 @@ HEADERS = [
     "post_headcount",
 ]
 
-# `meta_is_verified` and `meta_is_tracked` are absent: review-queue state, not facts about the seat.
-
 
 def _text(value) -> str:
     return "" if value is None else str(value)

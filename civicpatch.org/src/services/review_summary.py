@@ -5,17 +5,15 @@ that follow from the posts it fills. Filed apart from the proposal layer it grew
 summary is read off the fold, and outlives that layer's deletion.
 """
 
-from core.post_issues import unverified_post_issues
 from core.projection.diff import roster_diff
 from core.review_summary import ReviewSummary, fold_card_summary
 from database import source_pages
 from database import changesets as changesets_db
 from database import organizations as organizations_db
-from database import post_listings as post_listings_db
 from database.database import get_pool
 from database.roles import get_roles
 from services.roster import CardFold, card_fold
-from shared.schemas import Issue, RoleConfig
+from shared.schemas import RoleConfig
 from shared.utils.config_utils import get_unique_roles
 
 
@@ -58,7 +56,6 @@ async def summary_of(
             for person in proposed.people
             for membership in person.memberships
         }
-    unverified = await _unverified_post_issues([jurisdiction_ocdid])
     names = await _organization_names_for(read_organization_ids)
     return fold_card_summary(
         published,
@@ -68,7 +65,6 @@ async def summary_of(
         read_organization_ids,
         role_labels,
         unique_role_ids,
-        unverified.get(jurisdiction_ocdid, []),
         names,
     )
 
@@ -80,11 +76,3 @@ async def _organization_names_for(organization_ids: set[str]) -> dict[str, str]:
     async with pool.connection() as conn, conn.cursor() as cur:
         return await organizations_db.names(cur, sorted(organization_ids))
 
-
-async def _unverified_post_issues(
-    jurisdiction_ocdids: list[str],
-) -> dict[str, list[Issue]]:
-    pool = await get_pool()
-    async with pool.connection() as conn, conn.cursor() as cur:
-        unverified = await post_listings_db.unverified_by_jurisdiction(cur, jurisdiction_ocdids)
-    return {ocdid: unverified_post_issues(posts) for ocdid, posts in unverified.items()}

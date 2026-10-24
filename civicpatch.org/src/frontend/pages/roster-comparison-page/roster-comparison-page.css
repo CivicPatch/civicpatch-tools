@@ -126,6 +126,17 @@
     min-width: 40rem;
 }
 
+.rc-table--runs {
+    table-layout: auto;
+    width: max-content;
+    min-width: 100%;
+}
+
+.rc-table--runs th,
+.rc-table--runs td {
+    white-space: nowrap;
+}
+
 .rc-number {
     text-align: right;
     font-family: var(--font-mono);

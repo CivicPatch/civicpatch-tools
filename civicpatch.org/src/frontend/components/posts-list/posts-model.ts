@@ -13,8 +13,6 @@ export interface Post {
 
   // `meta_`-marked: no civic standard defines these.
   meta_headcount: number;
-  meta_is_tracked: boolean;
-  meta_is_verified: boolean;
 }
 
 export interface RoleOption {

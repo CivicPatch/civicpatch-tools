@@ -19,21 +19,6 @@ from core.projection.facts import PostKey
 from core.projection.roster import Roster
 
 
-def _post_name(post: dict) -> str:
-    return derive_post_label(post["role_label"], post["division_ocdid"])
-
-
-def unverified_post_issues(posts: list[dict]) -> list[Issue]:
-    return [
-        Issue(
-            code=IssueCode.UNVERIFIED_POST,
-            message=f"Unverified post: {_post_name(post)}",
-            person_ids=[],
-        )
-        for post in posts
-    ]
-
-
 def _post_index(*rosters: Roster) -> dict[str, PostKey]:
     """Every post either roster names, by id, so a diff's post ids can be read back to a key."""
     return {

@@ -229,8 +229,7 @@ def derived_people(
 ) -> List[Tuple[DerivedPerson, List[PersonSourceRecord]]]:
     """Group a scrape's source records into people, each with the records behind it.
 
-    Everyone seen comes back: scope lives on the post, as its `meta_is_tracked` claim, not on whether
-    a label resolved.
+    Everyone seen comes back, whether or not a label resolved.
     """
     canonical_map = name_utils.build_canonical_map(
         [{"name": r.name} for r in records], identities

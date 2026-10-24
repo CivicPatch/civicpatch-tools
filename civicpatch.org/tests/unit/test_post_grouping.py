@@ -22,7 +22,6 @@ def _post(organization_id: str, role_id: str, division: str = "…/place:zz") ->
         "division_ocdid": division,
         "label": None,
         "meta_headcount": 1,
-        "meta_is_verified": True,
         "holders": 1,
     }
 

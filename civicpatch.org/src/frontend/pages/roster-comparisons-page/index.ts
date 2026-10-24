@@ -32,20 +32,22 @@ function runsTable(page: RosterComparisonListPage, onPage: (page: number) => voi
   if (!page.data.length) {
     return html`<p class="rc-note">No comparisons yet. An agent starts one by uploading a roster; see "Connect your agent" on Settings → API keys.</p>`;
   }
-  return html`<table>
-      <thead>
-        <tr>
-          <th>State</th>
-          <th>Run</th>
-          <th>By</th>
-          <th class="rc-number">Jurisdictions</th>
-          <th>People</th>
-          <th class="rc-number">Matched</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>${page.data.map(runRow)}</tbody>
-    </table>
+  return html`<div class="rc-scroll">
+      <table class="rc-table rc-table--runs">
+        <thead>
+          <tr>
+            <th>State</th>
+            <th>Run</th>
+            <th>By</th>
+            <th class="rc-number">Jurisdictions</th>
+            <th>People</th>
+            <th class="rc-number">Matched</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>${page.data.map(runRow)}</tbody>
+      </table>
+    </div>
     ${Pagination({
       page: page.page,
       totalPages: page.total_pages,

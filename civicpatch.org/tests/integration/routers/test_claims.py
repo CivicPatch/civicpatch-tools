@@ -110,13 +110,9 @@ async def _seed() -> str:
 
 @pytest.mark.asyncio
 @pytest.mark.integration
-async def test_vouching_for_a_post_makes_it_read_verified(client):
-    """The whole point of the endpoint: a curator vouches for an office nobody has published,
-    and the roster says so. Previously only a publish could make this true.
-
-    An ordinary field assertion since 137 — "there really are five trustees" is a claim about
-    `meta_headcount`. Vouching has no shape of its own, which is how it outlived `confirm`.
-    """
+async def test_a_headcount_claim_reads_back_on_the_post(client):
+    """An ordinary field assertion since 137 — "there really are five trustees" is a claim
+    about `meta_headcount`, and the post listing reads it back."""
     post_id = await _seed()
 
     response = client.post(
@@ -135,7 +131,7 @@ async def test_vouching_for_a_post_makes_it_read_verified(client):
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         rows = await post_listings.list_for_jurisdiction(cur, _OCDID)
-    assert rows[0]["meta_is_verified"] is True
+    assert rows[0]["meta_headcount"] == 5
 
 
 @pytest.mark.asyncio

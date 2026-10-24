@@ -183,7 +183,7 @@ class PublishedSourcePage(BaseModel):
 
 
 class Post(BaseModel):
-    """The `posts` row, plus the label composed on read. No `meta_is_verified` — that is per-query."""
+    """The `posts` row, plus the label composed on read."""
 
     id: str
     jurisdiction_ocdid: str
@@ -194,7 +194,6 @@ class Post(BaseModel):
     # What this organization calls the role: `post_role_label` in the database, the one resolver.
     role_label: str
     meta_headcount: int = 1
-    meta_is_tracked: bool = True
 
 
 # The body cp.org creates before a government form names the real ones.
@@ -447,7 +446,6 @@ class IssueCode(str, Enum):
     TOO_FEW_PEOPLE = "too_few_people"
     DUPLICATE_UNIQUE_ROLE = "duplicate_unique_role"
     DIVISION_NUMBERING_GAP = "division_numbering_gap"
-    UNVERIFIED_POST = "unverified_post"
     # A scrape that found nobody in one of the jurisdiction's organizations.
     NOBODY_FOUND_IN_ORGANIZATION = "nobody_found_in_organization"
     # A field moved on someone who is in both rosters.

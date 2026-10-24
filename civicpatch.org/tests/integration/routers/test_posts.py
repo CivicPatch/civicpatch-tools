@@ -267,7 +267,7 @@ async def test_patch_reaches_a_post_not_the_jurisdiction_route(client):
     collision is gone; this now just locks down the patch-then-read round trip."""
     post_id = (await _create(client)).json()["data"]["id"]
 
-    patched = client.patch(f"{_PREFIX}/{post_id}", json={"meta_headcount": 2, "meta_is_tracked": True})
+    patched = client.patch(f"{_PREFIX}/{post_id}", json={"meta_headcount": 2})
     assert patched.status_code == 200, patched.text
 
     listed = client.get(f"{_ORG_PREFIX}/{_OCDID}").json()["data"]["organizations"][0]["posts"][0]
@@ -279,31 +279,9 @@ async def test_patch_reaches_a_post_not_the_jurisdiction_route(client):
 @pytest.mark.asyncio
 @pytest.mark.integration
 async def test_patching_a_post_that_is_not_there_is_404(client):
-    missing = client.patch(f"{_PREFIX}/{uuid.uuid4()}", json={"meta_headcount": 1, "meta_is_tracked": True})
+    missing = client.patch(f"{_PREFIX}/{uuid.uuid4()}", json={"meta_headcount": 1})
 
     assert missing.status_code == 404, missing.text
-
-
-@pytest.mark.asyncio
-@pytest.mark.integration
-async def test_verified_is_on_the_wire_both_ways(client):
-    """The flag is only useful if it survives serialisation, and absence must never be how a
-    consumer infers it. The unverified one is a scrape's mint: a person's create is a vouch."""
-    pool = await get_pool()
-    async with pool.connection() as conn, conn.cursor() as cur:
-        await divisions.find_or_create(cur, _BASE, _OCDID)
-        unheld = await factories.seed_post(cur, _OCDID, await _default_org_id(), "mayor", _BASE)
-        await conn.commit()
-    held = (await _create(client, role_id="clerk")).json()["data"]["id"]
-    await _seat_someone(held)
-
-    posts_out = client.get(f"{_ORG_PREFIX}/{_OCDID}").json()["data"]["organizations"][0]["posts"]
-
-    by_id = {p["id"]: p for p in posts_out}
-    assert by_id[held]["meta_is_verified"] is True
-    assert by_id[unheld]["meta_is_verified"] is False
-    assert "verified" not in by_id[held]
-
 
 
 @pytest.mark.asyncio
@@ -341,7 +319,7 @@ async def test_the_identity_triple_is_not_patchable(client):
     fork the post — the next scrape would mint a second rather than match this one."""
     post_id = (await _create(client)).json()["data"]["id"]
 
-    client.patch(f"{_PREFIX}/{post_id}", json={"label": "x", "meta_headcount": 1, "meta_is_tracked": True, "role_id": "clerk"})
+    client.patch(f"{_PREFIX}/{post_id}", json={"label": "x", "meta_headcount": 1, "role_id": "clerk"})
 
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
@@ -354,7 +332,7 @@ async def test_every_write_leaves_a_trace(client):
     """Who created a seat and who edited it. `roles.py`, `people.py` and `pull_requests.py`
     all log; posts did not, so a curator's edits were unattributable."""
     post_id = (await _create(client)).json()["data"]["id"]
-    client.patch(f"{_PREFIX}/{post_id}", json={"meta_headcount": 2, "meta_is_tracked": True})
+    client.patch(f"{_PREFIX}/{post_id}", json={"meta_headcount": 2})
 
     logs = await _activity_rows()
 
@@ -376,36 +354,13 @@ async def test_a_rejected_create_leaves_no_trace(client):
     assert [log["type"] for log in await _activity_rows()] == ["add_post"]
 
 
-async def _is_tracked(post_id: str) -> bool:
-    pool = await get_pool()
-    async with pool.connection() as conn, conn.cursor() as cur:
-        post = await post_listings.get(cur, post_id)
-    assert post is not None
-    return post.meta_is_tracked
-
-
 @pytest.mark.asyncio
 @pytest.mark.integration
-async def test_a_post_can_be_untracked_and_tracked_again(client):
-    """Mint seeds tracking from whether the role was recognised, which is a guess. This is
-    where somebody corrects it."""
-    post_id = (await _create(client)).json()["data"]["id"]
-    assert await _is_tracked(post_id) is True
-
-    client.patch(f"{_PREFIX}/{post_id}", json={"meta_headcount": 1, "meta_is_tracked": False})
-    assert await _is_tracked(post_id) is False
-
-    client.patch(f"{_PREFIX}/{post_id}", json={"meta_headcount": 1, "meta_is_tracked": True})
-    assert await _is_tracked(post_id) is True
-
-
-@pytest.mark.asyncio
-@pytest.mark.integration
-async def test_a_patch_must_state_whether_the_post_is_tracked(client):
+async def test_a_patch_must_state_the_headcount(client):
     """No default. This route replaces what it is given, so an omission would silently
-    re-track a post somebody turned off."""
+    reset a headcount somebody set."""
     post_id = (await _create(client)).json()["data"]["id"]
-    response = client.patch(f"{_PREFIX}/{post_id}", json={"meta_headcount": 2})
+    response = client.patch(f"{_PREFIX}/{post_id}", json={})
     assert response.status_code == 422
 
 

@@ -85,30 +85,19 @@ async def _seed() -> tuple[str, str]:
         organization_id = await organizations.find_or_create(cur, _OCDID)
         await divisions.find_or_create(cur, _BASE, _OCDID)
         post_id = await factories.seed_post(cur, _OCDID, organization_id, "mayor", _BASE)
-        # A held seat somewhere else in the jurisdiction, so this is not its first scrape:
-        # `unverified_by_jurisdiction` says nothing where nobody holds anything, and without
-        # this the vouching test below would pass for the wrong reason.
+        # A held seat somewhere else in the jurisdiction, so this is not its first scrape.
         await cur.execute(
             "INSERT INTO people (id, jurisdiction_ocdid, name) "
             "VALUES (gen_random_uuid(), %s, 'Seated Elsewhere') RETURNING id::text",
             (_OCDID,),
         )
         seated = (await cur.fetchone())[0]
-        # `assessor` because the tests below mint `clerk` and `treasurer` themselves and
-        # expect those unverified — a collision here hands them back this held one.
         other = await factories.seed_post(
             cur, _OCDID, organization_id, "assessor", _BASE
         )
         await factories.bind_membership(cur, SeededMembership(person_id=seated), other, organization_id, _SEEN_AT)
         await conn.commit()
     return user_id, post_id
-
-
-def _verified(rows: list[dict], post_id: str) -> bool:
-    """By id, not by position. `_seed` now holds a second seat so the jurisdiction is past its
-    first scrape, and `list_for_jurisdiction` orders by role — so `rows[0]` silently became a
-    different post than the one under test."""
-    return next(row for row in rows if row["id"] == post_id)["meta_is_verified"]
 
 
 def _vouch(post_id: str, changeset_id: str, **overrides) -> Claim:
@@ -131,92 +120,9 @@ def _vouch(post_id: str, changeset_id: str, **overrides) -> Claim:
 
 @pytest.mark.asyncio
 @pytest.mark.integration
-async def test_vouching_for_a_post_verifies_it_without_a_publish():
-    """The case that could not be done any other way. A transient's request was superseded, so
-    publishing it is refused by the guard — the rows most needing human judgement were
-    permanently locked out of receiving it."""
-    user_id, post_id = await _seed()
-
-    pool = await get_pool()
-    async with pool.connection() as conn, conn.cursor() as cur:
-        rows = await post_listings.list_for_jurisdiction(cur, _OCDID)
-        assert _verified(rows, post_id) is False
-        # The review queue reads the same fact through a different query. Asserted together
-        # because the screen saying "unverified" while the queue stops asking is the failure
-        # neither test catches alone.
-        unverified = await post_listings.unverified_by_jurisdiction(cur, [_OCDID])
-        assert [post["id"] for post in unverified[_OCDID]] == [post_id]
-
-    await claims.create(_vouch(post_id, await factories.hand_edit(_OCDID, user_id)), user_id)
-
-    async with pool.connection() as conn, conn.cursor() as cur:
-        rows = await post_listings.list_for_jurisdiction(cur, _OCDID)
-        assert await post_listings.unverified_by_jurisdiction(cur, [_OCDID]) == {_OCDID: []}
-    assert _verified(rows, post_id) is True
-
-
-@pytest.mark.asyncio
-@pytest.mark.integration
-async def test_naming_a_post_does_not_verify_it():
-    """Renaming is not vouching, so the queue keeps asking about this post.
-
-    It did verify it until 2026-09-24: `POST_IS_VERIFIED` counted any post claim, written when a
-    post claim meant a human vouched -- a reading retired 2026-09-18. `set_post_label` writes an
-    ordinary `label` accept, so calling a post "Position 8" silently took it out of the review
-    queue while the screen still called it unverified.
-    """
-    user_id, post_id = await _seed()
-
-    pool = await get_pool()
-    async with pool.connection() as conn, conn.cursor() as cur:
-        edit = str(uuid.uuid4())
-        await changesets_db.create_roster_edit_changeset(cur, edit, _OCDID, user_id)
-        await post_claims.set_post_label(cur, post_id, "Position 8", user_id, edit)
-        await conn.commit()
-
-    async with pool.connection() as conn, conn.cursor() as cur:
-        rows = await post_listings.list_for_jurisdiction(cur, _OCDID)
-        unverified = await post_listings.unverified_by_jurisdiction(cur, [_OCDID])
-    assert _verified(rows, post_id) is False
-    assert [post["id"] for post in unverified[_OCDID]] == [post_id]
-
-
-@pytest.mark.asyncio
-@pytest.mark.integration
-async def test_a_hand_made_post_is_verified_by_having_been_made():
-    """Nobody has to vouch separately. Creating a post is somebody saying it exists, so it reads
-    verified without a publish and without a second action — which is what `created_by` was
-    briefly a column for, before `activity` turned out to already record it.
-
-    The derivation's path leaves one unverified, because nothing there is claiming anything.
-    """
-    user_id, _ = await _seed()
-
-    pool = await get_pool()
-    async with pool.connection() as conn, conn.cursor() as cur:
-        organization_id = await organizations.find_or_create(cur, _OCDID)
-        derived = await factories.seed_post(
-            cur, _OCDID, organization_id, "clerk", _BASE
-        )
-        await conn.commit()
-
-    by_hand = await posts.create(organization_id, "treasurer", _BASE, 1, user_id)
-
-    async with pool.connection() as conn, conn.cursor() as cur:
-        verified = {
-            row["id"]: row["meta_is_verified"]
-            for row in await post_listings.list_for_jurisdiction(cur, _OCDID)
-        }
-    assert verified[by_hand] is True
-    assert verified[derived] is False
-
-
-@pytest.mark.asyncio
-@pytest.mark.integration
 async def test_a_hand_made_post_can_override_its_own_derived_label():
     """148 dropped `posts.label` as a column — a person can still name a post something other
-    than the bare role, the same way `meta_headcount`/`meta_is_tracked` are claimed rather
-    than stored."""
+    than the bare role, the same way `meta_headcount` is claimed rather than stored."""
     user_id, _ = await _seed()
 
     pool = await get_pool()
@@ -269,13 +175,13 @@ async def test_looking_again_refreshes_rather_than_accumulating():
 
     for _ in range(3):
         # `update` returns the jurisdiction its caller mirrors, so success is "not None".
-        assert await posts.update(post_id, 1, True, user_id) is not None
+        assert await posts.update(post_id, 1, user_id) is not None
 
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         rows = (await claims.list_for_entities(cur, EntityType.POST, [post_id])).get(post_id, [])
 
-    assert sorted(row["field_path"] for row in rows) == ["meta_headcount", "meta_is_tracked"]
+    assert [row["field_path"] for row in rows] == ["meta_headcount"]
 
 
 @pytest.mark.asyncio
