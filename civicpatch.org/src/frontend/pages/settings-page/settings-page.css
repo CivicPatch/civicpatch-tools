@@ -116,9 +116,22 @@
   color: var(--text-secondary);
 }
 
+.api-keys__scroll {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
 .api-keys__table {
   font-size: 0.9rem;
   margin: 0 0 1rem;
+  table-layout: auto;
+  width: max-content;
+  min-width: 100%;
+}
+
+.api-keys__table th,
+.api-keys__table td {
+  white-space: nowrap;
 }
 
 .api-key__suffix {
