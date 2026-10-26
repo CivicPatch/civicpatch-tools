@@ -82,25 +82,27 @@ def _changed_field_issues(proposed: Roster, diff: RosterDiff) -> list[Issue]:
     ]
 
 
-def _roles_held(person: FoldPerson) -> set[str]:
+def _roles_held(person: FoldPerson) -> set[tuple[str, str]]:
+    """(organization id, role id): a unique role is unique within its organization."""
     roles = set()
     for membership in person.memberships:
-        roles.add(membership.post.role_id)
-        roles.update(membership.extra_roles)
+        organization_id = membership.post.organization_id
+        roles.add((organization_id, membership.post.role_id))
+        roles.update((organization_id, role_id) for role_id in membership.extra_roles)
     return roles
 
 
 def _duplicate_unique_role_issues(
     proposed: Roster, unique_role_ids: set[str]
 ) -> list[Issue]:
-    holders: dict[str, list[tuple[str, str]]] = defaultdict(list)
+    holders: dict[tuple[str, str], list[tuple[str, str]]] = defaultdict(list)
     for person in proposed.people:
-        for role_id in _roles_held(person):
+        for organization_id, role_id in _roles_held(person):
             if role_id in unique_role_ids:
-                holders[role_id].append((person.id, person.name or ""))
+                holders[(organization_id, role_id)].append((person.id, person.name or ""))
     return [
         duplicate_unique_role_issue(role_id, people)
-        for role_id, people in holders.items()
+        for (_, role_id), people in holders.items()
         if len(people) > 1
     ]
 
