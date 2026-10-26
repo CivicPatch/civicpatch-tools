@@ -30,9 +30,11 @@ _T = datetime(2026, 1, 1, tzinfo=timezone.utc)
 _BASE = "ocd-division/country:us/state:tx/place:alpha"
 
 
-def _membership(role_id="mayor", division=f"{_BASE}/council_district:1", extra_roles=()):
+def _membership(
+    role_id="mayor", division=f"{_BASE}/council_district:1", extra_roles=(), organization_id="org-1"
+):
     return Membership(
-        post=PostKey(organization_id="org-1", role_id=role_id, division_ocdid=division),
+        post=PostKey(organization_id=organization_id, role_id=role_id, division_ocdid=division),
         opened_at=_T,
         extra_roles=extra_roles,
     )
@@ -137,6 +139,21 @@ def test_fold_summary_flags_a_unique_member_role_held_twice():
 
     assert len(dupes) == 1
     assert set(dupes[0].person_ids) == {"a", "b"}
+
+
+@pytest.mark.unit
+def test_fold_summary_a_unique_role_in_two_organizations_is_no_duplicate():
+    """Brattleboro: the Selectboard's clerk and the Town Clerk."""
+    selectboard_clerk = Person(
+        id="a", name="Nell Mayo", memberships=(_membership("clerk", organization_id="selectboard"),)
+    )
+    town_clerk = Person(
+        id="b", name="Hilary Francis", memberships=(_membership("clerk", organization_id="town-officers"),)
+    )
+
+    summary = _fold_summary([], [selectboard_clerk, town_clerk], unique_role_ids=frozenset({"clerk"}))
+
+    assert IssueCode.DUPLICATE_UNIQUE_ROLE not in {issue.code for issue in summary.issues}
 
 
 @pytest.mark.unit
