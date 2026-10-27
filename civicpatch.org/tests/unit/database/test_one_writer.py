@@ -34,8 +34,10 @@ ALLOWED: dict[tuple[str, str], int] = {
     # A post's organization and existence become claims at step 11.
     ("database/posts.py", "DELETE FROM posts"): 1,
     # Organizations become claims at step 11.
-    ("database/organizations.py", "INSERT INTO organizations"): 3,
+    ("database/organizations.py", "INSERT INTO organizations"): 4,
     ("database/organizations.py", "UPDATE organizations SET name"): 1,
+    # A merged config's labels on organizations that have none (ensure_form_organizations).
+    ("database/organizations.py", "UPDATE organizations SET extras_role_labels"): 1,
     ("database/organizations.py", "UPDATE organizations SET meta_is_default"): 2,
     ("database/organizations.py", "DELETE FROM organizations"): 1,
     # Dev-only seed that truncates and reloads an export, then backfills the facts behind it

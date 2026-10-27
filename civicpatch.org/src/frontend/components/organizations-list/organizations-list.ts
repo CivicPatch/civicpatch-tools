@@ -146,21 +146,22 @@ const renderPosts = (
   </div>
 `;
 
+// Edit and Remove are off while organizations come only from the config sync (the routes are too).
 const renderActions = (organization: Organization, isDefault: boolean, actions: RowActions) => html`
   <span class="organizations-list__actions">
-    <button class="civ-action-btn" @click=${() => actions.onEdit(organization.id)}>Edit</button>
     ${isDefault
       ? ""
       : html`<button class="civ-action-btn" @click=${() => actions.onMakeDefault(organization.id)}>
           Make default
         </button>`}
-    ${!isDefault && organization.posts.length === 0
-      ? html`<button class="civ-action-btn" @click=${() => actions.onRemove(organization.id)}>
-          Remove
-        </button>`
-      : ""}
   </span>
 `;
+// <button class="civ-action-btn" @click=${() => actions.onEdit(organization.id)}>Edit</button>
+// ${!isDefault && organization.posts.length === 0
+//   ? html`<button class="civ-action-btn" @click=${() => actions.onRemove(organization.id)}>
+//       Remove
+//     </button>`
+//   : ""}
 
 const renderOrganization = (
   organization: Organization,
@@ -205,7 +206,7 @@ function OrganizationsList(host: OrganizationsListHost) {
   };
   const close = () => setEditing(null);
 
-  const handleAdd = () => setEditing({ entity: "organization", id: null });
+  // const handleAdd = () => setEditing({ entity: "organization", id: null });
   const runAndReload = async (request: () => Promise<unknown>) => {
     setError(null);
     try {
@@ -246,11 +247,13 @@ function OrganizationsList(host: OrganizationsListHost) {
           Add post
         </button>`;
 
-  const controls = canManage
-    ? html`<div class="organizations-list__controls">
-        <button class="civ-action-btn" @click=${handleAdd}>Add organization</button>
-      </div>`
-    : "";
+  // Add organization is off while organizations come only from the config sync.
+  // const controls = canManage
+  //   ? html`<div class="organizations-list__controls">
+  //       <button class="civ-action-btn" @click=${handleAdd}>Add organization</button>
+  //     </div>`
+  //   : "";
+  const controls = "";
 
   if (loadError) {
     return html`<p class="posts-list__error">Could not load organizations: ${loadError}</p>`;

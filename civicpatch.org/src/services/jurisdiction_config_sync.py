@@ -1,8 +1,13 @@
+import logging
+
 import database.jurisdiction_configs as jurisdiction_configs_db
 import lib.github.api as github_service
+import services.government_form as government_form_service
 import yaml
 from schemas.jurisdiction_configs import JurisdictionConfigSyncRequest, JurisdictionConfigVersion
 from shared.utils.layered_config import ConfigFile
+
+logger = logging.getLogger(__name__)
 
 
 def parse_jurisdiction_config(raw: str) -> ConfigFile:
@@ -10,7 +15,8 @@ def parse_jurisdiction_config(raw: str) -> ConfigFile:
 
 
 async def sync_jurisdiction_configs(request: JurisdictionConfigSyncRequest) -> None:
-    """Read each merged config file at its commit and apply it."""
+    """Read each merged config file at its commit, apply its roles, then give the jurisdictions it
+    governs the organizations its forms list."""
     for path in request.paths:
         raw = await github_service.get_github_file_contents(path, ref=request.commit_sha)
         if raw is None:
@@ -20,3 +26,5 @@ async def sync_jurisdiction_configs(request: JurisdictionConfigSyncRequest) -> N
             path=path, commit_sha=request.commit_sha, pull_request_number=request.pull_request_number
         )
         await jurisdiction_configs_db.sync_jurisdiction_config(version, config)
+        created = await government_form_service.apply_config_organizations(path)
+        logger.info(f"sync_jurisdiction_configs: {path}: {created} organizations created")

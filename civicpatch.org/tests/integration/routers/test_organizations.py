@@ -137,6 +137,20 @@ def _create(client, name: str = "School Board", **body):
     return client.post(f"{_PREFIX}/{_OCDID}", json={"name": name, **body})
 
 
+async def _seed_organization(name: str = "School Board") -> str:
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "INSERT INTO organizations (jurisdiction_ocdid, name) VALUES (%s, %s) RETURNING id::text",
+            (_OCDID, name),
+        )
+        row = await cur.fetchone()
+        await conn.commit()
+    assert row is not None
+    return row[0]
+
+
+@pytest.mark.skip(reason="organization create, rename and delete are off while organizations come only from the config sync")
 @pytest.mark.asyncio
 @pytest.mark.integration
 async def test_an_ocdid_survives_the_round_trip(client):
@@ -149,6 +163,7 @@ async def test_an_ocdid_survives_the_round_trip(client):
     assert names == [_DEFAULT_ORG_NAME, "School Board"]
 
 
+@pytest.mark.skip(reason="organization create, rename and delete are off while organizations come only from the config sync")
 @pytest.mark.asyncio
 @pytest.mark.integration
 async def test_creating_the_same_name_twice_is_a_conflict(client):
@@ -160,12 +175,14 @@ async def test_creating_the_same_name_twice_is_a_conflict(client):
     assert duplicate.status_code == 409, duplicate.text
 
 
+@pytest.mark.skip(reason="organization create, rename and delete are off while organizations come only from the config sync")
 @pytest.mark.asyncio
 @pytest.mark.integration
 async def test_creating_without_signing_in_is_refused(anonymous_client):
     assert _create(anonymous_client).status_code == 403
 
 
+@pytest.mark.skip(reason="organization create, rename and delete are off while organizations come only from the config sync")
 @pytest.mark.asyncio
 @pytest.mark.integration
 async def test_creating_an_organization_requires_maintainer_or_above(default_role_client):
@@ -174,6 +191,7 @@ async def test_creating_an_organization_requires_maintainer_or_above(default_rol
     assert _create(default_role_client).status_code == 403
 
 
+@pytest.mark.skip(reason="organization create, rename and delete are off while organizations come only from the config sync")
 @pytest.mark.asyncio
 @pytest.mark.integration
 async def test_updating_requires_maintainer(client, default_role_client):
@@ -185,6 +203,7 @@ async def test_updating_requires_maintainer(client, default_role_client):
     assert response.status_code == 403
 
 
+@pytest.mark.skip(reason="organization create, rename and delete are off while organizations come only from the config sync")
 @pytest.mark.asyncio
 @pytest.mark.integration
 async def test_updating_changes_name_and_url(client):
@@ -199,6 +218,7 @@ async def test_updating_changes_name_and_url(client):
     assert renamed[1:] == ("Renamed", "https://example.com")
 
 
+@pytest.mark.skip(reason="organization create, rename and delete are off while organizations come only from the config sync")
 @pytest.mark.asyncio
 @pytest.mark.integration
 async def test_updating_a_missing_organization_is_404(client):
@@ -212,7 +232,7 @@ async def test_updating_a_missing_organization_is_404(client):
 @pytest.mark.asyncio
 @pytest.mark.integration
 async def test_setting_the_default_requires_maintainer(client, default_role_client):
-    org_id = _create(client).json()["data"]["id"]
+    org_id = await _seed_organization()
 
     response = default_role_client.post(f"{_PREFIX}/{org_id}/default")
     assert response.status_code == 403
@@ -223,7 +243,7 @@ async def test_setting_the_default_requires_maintainer(client, default_role_clie
 async def test_setting_the_default_is_not_mistaken_for_creating_an_organization(client):
     """The create route takes a greedy `:path`; registered first, it would read this as a new
     body for the jurisdiction `{id}/default`."""
-    org_id = _create(client).json()["data"]["id"]
+    org_id = await _seed_organization()
 
     response = client.post(f"{_PREFIX}/{org_id}/default")
     assert response.status_code == 200, response.text
@@ -239,6 +259,7 @@ async def test_setting_a_missing_organization_as_default_is_404(client):
     assert response.status_code == 404
 
 
+@pytest.mark.skip(reason="organization create, rename and delete are off while organizations come only from the config sync")
 @pytest.mark.asyncio
 @pytest.mark.integration
 async def test_deleting_requires_maintainer(client, default_role_client):
@@ -248,6 +269,7 @@ async def test_deleting_requires_maintainer(client, default_role_client):
     assert response.status_code == 403
 
 
+@pytest.mark.skip(reason="organization create, rename and delete are off while organizations come only from the config sync")
 @pytest.mark.asyncio
 @pytest.mark.integration
 async def test_deleting_an_empty_non_default_organization_succeeds(client):
@@ -259,6 +281,7 @@ async def test_deleting_an_empty_non_default_organization_succeeds(client):
     assert org_id not in {row[0] for row in await _rows()}
 
 
+@pytest.mark.skip(reason="organization create, rename and delete are off while organizations come only from the config sync")
 @pytest.mark.asyncio
 @pytest.mark.integration
 async def test_deleting_the_default_organization_is_refused(client):
@@ -268,6 +291,7 @@ async def test_deleting_the_default_organization_is_refused(client):
     assert response.status_code == 404
 
 
+@pytest.mark.skip(reason="organization create, rename and delete are off while organizations come only from the config sync")
 @pytest.mark.asyncio
 @pytest.mark.integration
 async def test_deleting_an_organization_with_posts_is_refused(client):
@@ -293,8 +317,20 @@ async def test_deleting_an_organization_with_posts_is_refused(client):
     assert response.status_code == 404
 
 
+@pytest.mark.skip(reason="organization create, rename and delete are off while organizations come only from the config sync")
 @pytest.mark.asyncio
 @pytest.mark.integration
 async def test_deleting_a_missing_organization_is_404(client):
     response = client.delete(f"{_PREFIX}/00000000-0000-0000-0000-000000000000")
     assert response.status_code == 404
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_create_rename_and_delete_are_off(client):
+    org_id = await _seed_organization()
+
+    assert _create(client).status_code == 405
+    assert client.patch(f"{_PREFIX}/{org_id}", json={"name": "Renamed", "url": None}).status_code == 405
+    assert client.delete(f"{_PREFIX}/{org_id}").status_code == 405
+    assert [name for _, name, _ in await _rows()] == [_DEFAULT_ORG_NAME, "School Board"]
