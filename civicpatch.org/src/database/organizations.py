@@ -1,4 +1,5 @@
 import json
+from core.organization_build import FormOrganizationRow
 from core.organization_derivation import default_organization_name
 from database.database import get_pool
 
@@ -38,6 +39,31 @@ async def ensure_defaults_exist(jurisdiction_ocdids: list[str]) -> None:
             """,
             [(ocdid, default_organization_name(name)) for ocdid, name in unbuilt],
         )
+
+
+async def ensure_form_organizations(cur, rows: list[FormOrganizationRow]) -> int:
+    """Create each organization its jurisdiction lacks and label any that has no labels yet, the
+    born default included. Never renames, relabels or deletes, so a person's own stays. Returns
+    how many were created."""
+    created = 0
+    for row in rows:
+        await cur.execute(
+            """
+            INSERT INTO organizations (jurisdiction_ocdid, name, extras_role_labels)
+            VALUES (%s, %s, %s::jsonb)
+            ON CONFLICT (jurisdiction_ocdid, name) DO NOTHING
+            """,
+            (row.jurisdiction_ocdid, row.name, json.dumps(row.role_labels)),
+        )
+        created += cur.rowcount
+        await cur.execute(
+            """
+            UPDATE organizations SET extras_role_labels = %s::jsonb
+            WHERE jurisdiction_ocdid = %s AND name = %s AND extras_role_labels = '{}'::jsonb
+            """,
+            (json.dumps(row.role_labels), row.jurisdiction_ocdid, row.name),
+        )
+    return created
 
 
 async def get_default(cur, jurisdiction_ocdid: str) -> str:

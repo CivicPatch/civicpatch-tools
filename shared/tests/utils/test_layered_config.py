@@ -13,6 +13,7 @@ from shared.utils.layered_config import (
     allowed_classifications,
     allowed_government_forms,
     check_roles_distinct_across,
+    config_path_layer,
     derived_organizations,
     government_form_organizations,
     jurisdiction_config,
@@ -420,3 +421,17 @@ def test_a_forms_role_label_may_be_an_alias_of_a_role():
     )
 
     assert merged_config(roles, forms, None).country_government_forms[GovernmentForm.OPEN_TOWN_MEETING].organizations[0].role_labels == ["Select Board Member"]
+
+
+@pytest.mark.parametrize(
+    ("path", "layer"),
+    [
+        ("data_source/vt/local/config.yml", ("vt", JurisdictionLevel.LOCAL)),
+        ("data_source/local/config.yml", (None, JurisdictionLevel.LOCAL)),
+        ("data_source/wa/counties/config.yml", ("wa", JurisdictionLevel.COUNTIES)),
+        ("data_source/config.yml", None),
+        ("data_source/vt/local/place_essex.yml", None),
+    ],
+)
+def test_a_config_path_names_the_state_and_level_it_governs(path, layer):
+    assert config_path_layer(path) == layer

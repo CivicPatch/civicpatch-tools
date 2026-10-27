@@ -11,6 +11,7 @@ import asyncio
 import sys
 
 import database.jurisdiction_configs as jurisdiction_configs_db
+import services.government_form as government_form_service
 from database.database import close_pool
 from schemas.jurisdiction_configs import JurisdictionConfigVersion
 from services.jurisdiction_config_sync import parse_jurisdiction_config
@@ -23,7 +24,8 @@ async def main(path: str, raw: str) -> None:
     version = JurisdictionConfigVersion(path=path, commit_sha=LOCAL_COMMIT_SHA, pull_request_number=None)
     try:
         await jurisdiction_configs_db.sync_jurisdiction_config(version, config)
-        print(f"{path}: {len(config.roles)} roles, {len(config.government_forms)} forms", flush=True)
+        created = await government_form_service.apply_config_organizations(path)
+        print(f"{path}: {len(config.roles)} roles, {len(config.government_forms)} forms, {created} organizations created", flush=True)
     finally:
         await close_pool()
 

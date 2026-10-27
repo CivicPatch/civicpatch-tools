@@ -19,6 +19,16 @@ def state_config_path(state: str, level: JurisdictionLevel) -> str:
     return f"data_source/{state}/{level}/config.yml"
 
 
+def config_path_layer(path: str) -> tuple[str | None, JurisdictionLevel] | None:
+    """(state, level) for a state's file, (None, level) for a country level's file, None for the
+    country roles file, which governs no level's organizations."""
+    match = CONFIG_PATH.match(path)
+    if match is None or match.group(3) is None:
+        return None
+    state = match.group(2).rstrip("/") if match.group(2) else None
+    return state, JurisdictionLevel(match.group(3))
+
+
 class ConfigRole(BaseModel):
     id: str
     label: str

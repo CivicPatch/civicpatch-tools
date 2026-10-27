@@ -4,6 +4,9 @@ import database.government_forms as government_forms_db
 import services.extras_organizations as extras_organizations_service
 import services.governing_law as governing_law_service
 import database.jurisdiction_configs as jurisdiction_configs_db
+import database.jurisdictions as jurisdictions_db
+import database.organizations as organizations_db
+from core.organization_build import GovernmentFormInputs, form_organization_rows
 from core.organization_derivation import (
     NOTHING_RESOLVED,
     ResolvedGovernment,
@@ -14,7 +17,6 @@ from core.post_deletion import with_holder_names
 from database import post_listings as post_listings_db
 from database.activity import record_change
 from database.database import get_pool
-from database.government_forms import GovernmentFormInputs
 from schemas.activity import Change, FieldChange
 from schemas.claims import EntityType
 from schemas.jurisdictions import GovernmentFormSummary, JurisdictionDetailsFields
@@ -24,6 +26,7 @@ from shared.utils.government_forms import (
     government_form_name,
 )
 from shared.utils.layered_config import (
+    config_path_layer,
     level_government_forms,
     jurisdiction_config,
 )
@@ -40,6 +43,34 @@ async def resolved_government(jurisdiction_ocdid: str) -> ResolvedGovernment:
         return NOTHING_RESOLVED
     config = jurisdiction_config(await jurisdiction_configs_db.get_jurisdiction_configs(), *layer)
     return resolve_government(config, jurisdiction.name, jurisdiction.government_form)
+
+
+async def apply_config_organizations(path: str) -> int:
+    """After a config file merges: every jurisdiction it governs gets the organizations its form
+    lists, created where missing and labelled where unlabelled. Nothing a person made is renamed
+    or removed, so a deleted organization comes back only at that state's next config merge.
+    Returns how many organizations were created."""
+    layer = config_path_layer(path)
+    if layer is None:
+        return 0
+    state, level = layer
+    configs = await jurisdiction_configs_db.get_jurisdiction_configs()
+    states = [state] if state else await jurisdictions_db.get_states()
+    created = 0
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        for one_state in states:
+            jurisdictions = await government_forms_db.list_government_form_inputs(cur, one_state, level)
+            created += await _ensure_organizations(cur, configs, one_state, level, jurisdictions)
+        await conn.commit()
+    return created
+
+
+async def _ensure_organizations(
+    cur, configs, state: str, level: JurisdictionLevel, jurisdictions: list[GovernmentFormInputs]
+) -> int:
+    rows = form_organization_rows(jurisdiction_config(configs, state, level), jurisdictions)
+    return await organizations_db.ensure_form_organizations(cur, rows)
 
 
 async def government_form_summary(jurisdiction_ocdid: str) -> GovernmentFormSummary | None:
@@ -104,13 +135,18 @@ class GovernmentFormNotAtLevel(Exception):
 
 
 async def set_government_form(jurisdiction_ocdid: str, government_form: GovernmentForm, user_id: str | None) -> None:
-    """Saved over whatever was there; organizations come from a state's migration, not from here.
-    `user_id` is None for the service key."""
+    """Saved over whatever was there, then the form's organizations built as a config merge builds
+    them: created where missing, never renamed or removed. `user_id` is None for the service key."""
     jurisdiction = await _checked(jurisdiction_ocdid, government_form)
+    layer = _layer(jurisdiction)
+    assert layer is not None, "_checked refuses a state, which has no government form"
+    configs = await jurisdiction_configs_db.get_jurisdiction_configs()
+    saved = jurisdiction.model_copy(update={"government_form": government_form})
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await government_forms_db.save_government_form(cur, jurisdiction_ocdid, government_form)
         await _record_government_form(cur, jurisdiction, government_form, user_id)
+        await _ensure_organizations(cur, configs, *layer, [saved])
 
 
 async def _checked(jurisdiction_ocdid: str, government_form: GovernmentForm) -> GovernmentFormInputs:

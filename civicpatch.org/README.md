@@ -106,7 +106,8 @@ A page the visitor can't view redirects to `/`.
   organizations its law sets up. One rule for every one of them: maintainers and the service
   key, nobody else.
 - Edit a post's headcount and tracked state; delete a post, or fold it into another.
-- Create, edit and delete organizations; choose a jurisdiction's default organization.
+- Choose a jurisdiction's default organization. (Creating, editing and deleting organizations is
+  off while they come only from the config sync.)
 - Store a collected governing-law source page; the service key may too.
 - Add, edit and remove roles (each opens a PR on open-data's `data_source/config.yml`).
 - Scrape a single jurisdiction; read pipeline run details; resume a paused run.
