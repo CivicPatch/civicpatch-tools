@@ -21,7 +21,7 @@ import shared.utils.id_utils
 from database.database import get_pool
 from database.pipeline_runs import register_run
 from database.review_pool import has_open_review
-from routers.api.pipeline_runs import _DISPATCH_MODE_LOCAL, DISPATCH_MODE
+from routers.api.pipeline_runs import _DISPATCH_MODE_LOCAL, DISPATCH_MODE, USE_CACHE_ARGUMENT
 from shared.utils.statuses import PipelineRunKind, PipelineRunStatus
 
 MEMINFO_PATH = "/proc/meminfo"
@@ -87,12 +87,14 @@ async def name_and_url(ocdid: str) -> tuple[str | None, str | None]:
         return (row[0], row[1]) if row else (None, None)
 
 
-async def start_run(ocdid: str, name: str | None, url: str) -> Run:
+async def start_run(ocdid: str, name: str | None, url: str, use_cache: bool) -> Run:
     run_id = shared.utils.id_utils.make_id()
     await register_run(
         run_id=run_id,
         kind=PipelineRunKind.PEOPLE_COLLECTOR,
-        arguments_json={"jurisdiction_ocdid": ocdid, "name": name, "url": url, "source_urls": None},
+        arguments_json={
+            "jurisdiction_ocdid": ocdid, "name": name, "url": url, "source_urls": None, USE_CACHE_ARGUMENT: use_cache,
+        },
         jurisdiction_ocdid=ocdid,
     )
     await temporal_service.start_people_collector_workflow(
@@ -101,7 +103,7 @@ async def start_run(ocdid: str, name: str | None, url: str) -> Run:
     return Run(run_id=run_id, jurisdiction_ocdid=ocdid)
 
 
-async def start_next(ocdid: str, supersede: bool) -> Run | None:
+async def start_next(ocdid: str, supersede: bool, use_cache: bool) -> Run | None:
     """Start one jurisdiction, or say why not. None means skipped."""
     if not supersede and await has_open_review(ocdid):
         emit("SKIPPED", "open review (pass --supersede to start anyway)", ocdid)
@@ -110,7 +112,7 @@ async def start_next(ocdid: str, supersede: bool) -> Run | None:
     if not url:
         emit("SKIPPED", "no url", ocdid)
         return None
-    run = await start_run(ocdid, name, url)
+    run = await start_run(ocdid, name, url, use_cache)
     emit("STARTED", ocdid)
     return run
 
@@ -128,7 +130,7 @@ def progress_line(in_flight: list[Run], states: dict[str, RunState]) -> str:
     ) or "none"
 
 
-async def scrape(queue: list[str], max_in_flight: int, supersede: bool) -> None:
+async def scrape(queue: list[str], max_in_flight: int, supersede: bool, use_cache: bool) -> None:
     in_flight = await in_flight_runs()
     consecutive_errors = 0
     last_progress = time.monotonic()
@@ -144,7 +146,7 @@ async def scrape(queue: list[str], max_in_flight: int, supersede: bool) -> None:
             if read_available_gib() < MIN_AVAILABLE_GIB:
                 emit("WAITING_MEMORY", f"{read_available_gib():.1f}GiB available")
             else:
-                started = await start_next(queue.pop(0), supersede)
+                started = await start_next(queue.pop(0), supersede, use_cache)
                 in_flight += [started] if started else []
                 continue
         if in_flight and time.monotonic() - last_progress >= PROGRESS_SECONDS:
@@ -159,10 +161,11 @@ def main() -> None:
     parser.add_argument("jurisdictions", nargs="+", help="jurisdiction ocdids")
     parser.add_argument("--max-in-flight", type=int, default=DEFAULT_MAX_IN_FLIGHT)
     parser.add_argument("--supersede", action="store_true", help="start even where a scrape awaits review")
+    parser.add_argument("--no-cache", action="store_true", help="read every page fresh, ignoring published readings")
     args = parser.parse_args()
     if DISPATCH_MODE != _DISPATCH_MODE_LOCAL:
         sys.exit(f"Dev only: dispatch mode is {DISPATCH_MODE!r}, which would start real remote runs.")
-    asyncio.run(scrape(list(args.jurisdictions), args.max_in_flight, args.supersede))
+    asyncio.run(scrape(list(args.jurisdictions), args.max_in_flight, args.supersede, not args.no_cache))
 
 
 if __name__ == "__main__":

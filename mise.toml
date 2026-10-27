@@ -90,7 +90,7 @@ run = """
 """
 
 [tasks.scrape-local]
-description = "Scrape jurisdictions on the local pipelines server, 2 at a time (dev only). Usage: mise run scrape-local -- <jurisdiction ocdid>... [--supersede] [--max-in-flight N]"
+description = "Scrape jurisdictions on the local pipelines server, 2 at a time (dev only). Usage: mise run scrape-local -- <jurisdiction ocdid>... [--supersede] [--no-cache] [--max-in-flight N]"
 run = """
     docker exec -w /app civicpatch-org python src/scripts/scrape_local.py "$@"
 """
@@ -151,12 +151,6 @@ dir = "pipelines"
 # Offline: scores an ordering on the pages that actually produced records in the saved runs.
 # `FRONTIER_KEYS=shipped,organization_first` to compare a subset.
 run = "uv run python -m tests.unit.runners.frontier_outcomes"
-dir = "pipelines"
-
-[tasks.evalsc]
-# Which bodies a page carries people for — one call per (page, body), so a 5-case dataset over
-# two bodies is 10 calls per provider. -s: see the note on evalsm.
-run = "uv run pytest -s tests/prompts/tests/evals/test_local_page_covers_eval.py"
 dir = "pipelines"
 
 [tasks.evals]
