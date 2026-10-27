@@ -14,10 +14,11 @@ import logging
 
 import services.government_form as government_form_service
 from core.display_rows import display_rows
-from core.organization_placement import PlaceableOrganization, placed_rows, role_ids_of
+from core.organization_placement import PlaceableOrganization, placed_records, role_ids_of
 from core.people_roster import (
     identified,
     in_known_organizations,
+    raise_on_unknown_organization,
     records_by_person,
     roster_from_rows,
 )
@@ -58,30 +59,38 @@ async def _with_organizations(jurisdiction_ocdid: str, rows: list[dict]) -> list
     )
 
 
-async def placed_by_role(jurisdiction_ocdid: str, rows: list[dict], taxonomy: Taxonomy) -> list[dict]:
-    """Each pipeline row in the organization its post role belongs to, else the one it was stamped
-    with, else the default. Not for sheet rows, which keep going to the default."""
-    pool = await get_pool()
-    async with pool.connection() as conn, conn.cursor() as cur:
-        current = await organizations.list_for_jurisdiction(cur, jurisdiction_ocdid)
-        default_organization_id = await organizations.get_default(cur, jurisdiction_ocdid)
+async def _placeable_organizations(
+    jurisdiction_ocdid: str, current: list[dict], taxonomy: Taxonomy
+) -> list[PlaceableOrganization]:
+    """Each current organization with the roles the resolved form lists under its name."""
     government = await government_form_service.resolved_government(jurisdiction_ocdid)
     labels_by_name = {organization.name: organization.role_labels for organization in government.candidate_organizations}
-    placeable = [
+    return [
         PlaceableOrganization(id=row["id"], role_ids=role_ids_of(labels_by_name.get(row["name"], []), taxonomy))
         for row in current
     ]
-    return placed_rows(rows, placeable, default_organization_id, jurisdiction_ocdid, taxonomy)
+
+
+def _held_organizations(everyone: list[Person]) -> dict[str, set[str]]:
+    """Where each known person already holds a post."""
+    return {
+        person.id: {membership.organization_id for membership in person.memberships if membership.organization_id}
+        for person in everyone
+        if person.id
+    }
 
 
 async def assign_ids(jurisdiction_ocdid: str, roster: list[dict]) -> list[dict]:
+    return identified_against(roster, await matcher_pool(jurisdiction_ocdid))
+
+
+def identified_against(roster: list[dict], everyone: list[Person]) -> list[dict]:
     """Give every person the id we already know them by, or a fresh one.
 
     Everyone, not only the entries arriving without one: `resolve_people_ids` guards against
     two entries claiming one person, and only sees the collision if it sees both. Matched
     against inactive people too, so someone returning after a term away keeps their id.
     """
-    everyone = await matcher_pool(jurisdiction_ocdid)
     resolutions = resolve_people_ids(
         roster, everyone, person_list_to_identities(everyone)
     )
@@ -109,3 +118,31 @@ async def reconcile_roster(
     )
     identified_roster = await assign_ids(jurisdiction_ocdid, roster)
     return identified_roster, records_by_person(identified_roster, records_by_name)
+
+
+async def reconcile_scrape(
+    jurisdiction_ocdid: str,
+    rows: list[dict],
+    identities: dict,
+    taxonomy: Taxonomy,
+) -> tuple[list[dict], dict[str, list[dict]]]:
+    """`reconcile_roster` for the pipeline's rows, each record placed once its person is known: the
+    model's pick, else the organization whose form lists the post role, else the one of those the
+    person already sits in, else the default. Sheet rows take `reconcile_roster`."""
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        current = await organizations.list_for_jurisdiction(cur, jurisdiction_ocdid)
+        default_organization_id = await organizations.get_default(cur, jurisdiction_ocdid)
+    raise_on_unknown_organization(rows, {row["id"] for row in current})
+    roster, records_by_name = roster_from_rows(rows, identities, taxonomy, jurisdiction_ocdid, logger)
+    everyone = await matcher_pool(jurisdiction_ocdid)
+    identified_roster = identified_against(roster, everyone)
+    placed = placed_records(
+        records_by_person(identified_roster, records_by_name),
+        await _placeable_organizations(jurisdiction_ocdid, current, taxonomy),
+        default_organization_id,
+        _held_organizations(everyone),
+        jurisdiction_ocdid,
+        taxonomy,
+    )
+    return identified_roster, placed

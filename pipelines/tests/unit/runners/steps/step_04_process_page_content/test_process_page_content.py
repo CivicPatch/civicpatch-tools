@@ -1043,6 +1043,7 @@ async def test_process_with_llm_reorders_inverted_names():
             "ocd-jurisdiction/country:us/state:tx/place:port_isabel/government",
             "page content",
             "prompt",
+            [],
         )
 
     assert [r.name for r in records] == ["Laurie Kincannon", "Rory Burke"]
@@ -1067,6 +1068,7 @@ async def test_process_with_llm_resolves_a_shortened_url_against_its_page():
             "ocd-jurisdiction/country:us/state:wa/county:king/government",
             "page content",
             "prompt",
+            [],
         )
 
     assert [r.url for r in records] == [
@@ -1101,6 +1103,7 @@ async def test_process_with_llm_keeps_only_downloaded_images():
             "ocd-jurisdiction/country:us/state:wa/place:seattle/government",
             "page content",
             "prompt",
+            [],
         )
 
     assert [r.image for r in records] == ["local://8ac384d14474.png", None, None]

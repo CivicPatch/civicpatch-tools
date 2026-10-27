@@ -11,7 +11,6 @@ from runners.pipeline03_people_collector.schemas import (
     Link,
     LinkFrontier,
     LinkStatus,
-    OrganizationCoverageResponseSchema,
     PeopleArrayLLMResponseSchema,
     PeopleByName,
     PeopleCollectorContext,
@@ -26,10 +25,6 @@ from runners.pipeline03_people_collector.steps.step_04_process_page_content.orga
     organization_needs,
     organizations_progress,
 )
-from runners.pipeline03_people_collector.steps.step_04_process_page_content.extraction_by_organization import (
-    ExtractionScope,
-    extraction_scopes,
-)
 from runners.pipeline03_people_collector.steps.step_04_process_page_content.heuristics import (
     check_page_heuristics,
     without_unnormalizable_phones,
@@ -38,7 +33,7 @@ from runners.pipeline03_people_collector.steps.step_04_process_page_content.heur
 from runners.pipeline03_people_collector.steps.step_04_process_page_content.heuristics_failure import (
     HeuristicsFailure,
 )
-from shared.schemas import LOCAL_IMAGE_PREFIX, KnownOrganization
+from shared.schemas import LOCAL_IMAGE_PREFIX, ExtractedPersonRecord, KnownOrganization
 from runners.pipeline03_people_collector.utils.organization_terms import (
     as_tokens,
     expected_roles,
@@ -64,10 +59,16 @@ from shared.utils import (
 from shared.utils import merge_utils
 from utils import log_utils
 from runners.pipeline03_people_collector.steps.step_04_process_page_content.page_prompts import (
-    coverage_prompt,
-    extraction_prompt,
+    page_extraction_prompt,
     prompt_hash,
     relevance_prompt,
+)
+from runners.pipeline03_people_collector.steps.step_04_process_page_content.organization_pick import (
+    pick_choices,
+    pick_response_schema,
+    picked_name,
+    picked_organization_id,
+    picked_organization_ids,
 )
 from runners.pipeline03_people_collector.steps.step_04_process_page_content.unchanged_pages import (
     is_unchanged,
@@ -103,6 +104,7 @@ async def _process_with_llm_in_chunks(
     jurisdiction_ocdid: str,
     content: str,
     prompt: str,
+    organizations: List[KnownOrganization],
     seed: Optional[int],
     logger,
 ) -> List[PersonSourceRecord]:
@@ -120,6 +122,7 @@ async def _process_with_llm_in_chunks(
             jurisdiction_ocdid,
             chunk,
             prompt,
+            organizations,
             seed=seed,
             chunk_index=index,
             chunk_count=len(chunks),
@@ -430,52 +433,6 @@ def apply_relevance(
     return frontier, response.is_relevant
 
 
-async def organizations_covered(
-    context: PeopleCollectorContext,
-    page_to_process: Link,
-    content: str,
-    organizations: List[KnownOrganization],
-    memberships: List[ExpectedMembership],
-) -> List[str]:
-    """Which organizations this page carries people for, one narrow question each.
-
-    Only worth asking where there are organizations to tell apart, and only on a page already judged
-    relevant, so the calls land on the minority of pages that are worth extracting from at all.
-    """
-    if len(organizations) < 2:
-        return []
-    answers = await asyncio.gather(
-        *(
-            open_router_llm.run_prompt(
-                context.pipeline_run_id,
-                context.data.jurisdiction_ocdid,
-                coverage_prompt(organization, memberships, context.data.config),
-                prompt_name="page_covers_organization",
-                response_schema=OrganizationCoverageResponseSchema,
-                content=content,
-                source_url=page_to_process.url,
-            )
-            for organization in organizations
-        )
-    )
-    return [
-        organization.name
-        for organization, answer in zip(organizations, answers)
-        if OrganizationCoverageResponseSchema.model_validate(answer).covers
-    ]
-
-
-def covered_organization_ids(
-    organizations: List[KnownOrganization], covers: List[str]
-) -> List[str]:
-    """The page's own answer, for a page already judged relevant. A single organization is never
-    asked, so relevant means it; an empty answer stays empty even though extraction then runs
-    for every organization."""
-    if len(organizations) == 1:
-        return [organizations[0].id]
-    return [organization.id for organization in organizations if organization.name in covers]
-
-
 class PageExtraction(BaseModel):
     records: PeopleByName
     # True if any organization's extraction passed.
@@ -509,23 +466,12 @@ async def collect_page_records(
     identities: Dict,
     logger,
 ) -> PageExtraction:
-    """One extraction per organization the page covers. An organization whose results fail the
-    heuristics twice adds nothing from this page; the others' still count."""
-    found: List[PersonSourceRecord] = []
-    failures: List[HeuristicsFailure] = []
-    any_passed = False
-    covers = await organizations_covered(context, page_to_process, content, organizations, memberships)
-    organization_ids = covered_organization_ids(organizations, covers)
-    for scope in extraction_scopes(organizations, memberships, covers):
-        scoped, scope_failures = await _extract_for_scope(
-            context, page_to_process, content, organizations, memberships, scope, logger
-        )
-        failures.extend(scope_failures)
-        if scoped is not None:
-            found.extend(scoped)
-            any_passed = True
-
-    if not any_passed:
+    """One extraction for the page, each person carrying the organization the model picked.
+    Results that fail the heuristics twice add nothing from this page."""
+    found, failures = await _extract_page(
+        context, page_to_process, content, organizations, memberships, logger
+    )
+    if found is None:
         logger.warning(
             f"Failed heuristics for page after all attempts, skipping page: {page_to_process.url}"
         )
@@ -533,40 +479,39 @@ async def collect_page_records(
             records=current_step.records,
             heuristics_passed=False,
             heuristics_failures=failures,
-            organization_ids=organization_ids,
+            organization_ids=[],
         )
     return PageExtraction(
         records=merge_utils.group_people_by_name(identities, current_step.records, found),
         heuristics_passed=True,
         heuristics_failures=failures,
-        organization_ids=organization_ids,
+        organization_ids=picked_organization_ids(found),
     )
 
 
-async def _extract_for_scope(
+async def _extract_page(
     context: PeopleCollectorContext,
     page_to_process: Link,
     content: str,
     organizations: List[KnownOrganization],
     memberships: List[ExpectedMembership],
-    scope: ExtractionScope,
     logger,
 ) -> Tuple[Optional[List[PersonSourceRecord]], List[HeuristicsFailure]]:
-    """This organization's records, stamped with its id — or None if they failed the heuristics
-    twice — and the reason each failed attempt gave."""
-    prompt = extraction_prompt(organizations, memberships, context.data.jurisdiction_ocdid, scope)
-    organization = scope.prompt_organization.name if scope.prompt_organization else "unscoped"
+    """The page's records, each stamped with its picked organization, or None if they failed the
+    heuristics twice; and the reason each failed attempt gave."""
+    prompt = page_extraction_prompt(organizations, memberships, context.data.jurisdiction_ocdid)
     failures: List[HeuristicsFailure] = []
 
     for attempt in range(2):
         seed = attempt or None
-        logger.info(f"Running LLM: openrouter_seed seed={seed} organization={organization}")
+        logger.info(f"Running LLM: openrouter_seed seed={seed}")
         people_found_in_page = await _process_with_llm_in_chunks(
             page_to_process.url,
             context.pipeline_run_id,
             context.data.jurisdiction_ocdid,
             content,
             prompt,
+            organizations,
             seed,
             logger,
         )
@@ -582,16 +527,11 @@ async def _extract_for_scope(
             logger, page_to_process.url, content, people_found_in_page
         )
         if failure is None:
-            logger.info(f"Heuristics passed for LLM: {page_to_process.url} organization={organization}")
-            return [
-                record.model_copy(update={"organization_id": scope.organization_id})
-                for record in people_found_in_page
-            ], failures
+            logger.info(f"Heuristics passed for LLM: {page_to_process.url}")
+            return people_found_in_page, failures
         failures.append(failure)
         if attempt == 0:
-            logger.info(
-                f"Heuristics failed for LLM: open_router, retrying: {page_to_process.url} organization={organization}"
-            )
+            logger.info(f"Heuristics failed for LLM: open_router, retrying: {page_to_process.url}")
     return None, failures
 
 
@@ -601,6 +541,7 @@ async def process_with_llm(
     jurisdiction_ocdid: str,
     content: str,
     prompt: str,
+    organizations: List[KnownOrganization],
     seed: Optional[int] = None,
     chunk_index: Optional[int] = None,
     chunk_count: Optional[int] = None,
@@ -610,7 +551,7 @@ async def process_with_llm(
         jurisdiction_ocdid,
         prompt,
         prompt_name="elected_officials",
-        response_schema=PeopleArrayLLMResponseSchema,
+        response_schema=pick_response_schema(pick_choices(organizations)),
         content=content,
         seed=seed,
         source_url=source_url,
@@ -618,20 +559,33 @@ async def process_with_llm(
         chunk_count=chunk_count,
     )
 
-    processed_people = []
-    for p in cast(PeopleArrayLLMResponseSchema, response).people:
-        p = p.model_dump()
-        p["name"] = name_utils.reorder_name_if_inverted(p["name"])
-        if not p.get("name") or not p["name"].strip():
-            continue
-        p["source_url"] = source_url
-        if p["url"]:
-            # A model sometimes shortens a link it was given in full to its path.
-            p["url"] = url_utils.format_url(urljoin(source_url, p["url"]))
-        p["image"] = _downloaded_image(p.get("image"))
-        processed_people.append(PersonSourceRecord.model_validate(p))
+    records = [
+        _source_record(person, source_url, organizations)
+        for person in cast(PeopleArrayLLMResponseSchema, response).people
+    ]
+    return [record for record in records if record is not None]
 
-    return processed_people
+
+def _source_record(
+    person: ExtractedPersonRecord, source_url: str, organizations: List[KnownOrganization]
+) -> PersonSourceRecord | None:
+    """One extracted person as the record cp.org receives; None for a nameless one."""
+    name = name_utils.reorder_name_if_inverted(person.name)
+    if not name.strip():
+        return None
+    return PersonSourceRecord(
+        name=name,
+        label=person.label,
+        phone=person.phone,
+        email=person.email,
+        # A model sometimes shortens a link it was given in full to its path.
+        url=url_utils.format_url(urljoin(source_url, person.url)) if person.url else None,
+        start_date=person.start_date,
+        end_date=person.end_date,
+        image=_downloaded_image(person.image),
+        source_url=source_url,
+        organization_id=picked_organization_id(picked_name(person), organizations),
+    )
 
 
 def _downloaded_image(image: Optional[str]) -> Optional[str]:

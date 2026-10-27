@@ -21,6 +21,8 @@ from accuracy import (
 )
 from aggregation import mean_by_key
 from runners.pipeline03_people_collector.schemas import ExtractedPersonRecord
+from services.open_router.prompts import NO_ORGANIZATION
+from shared.utils import name_utils
 from shared.utils.label_parser import ParsedLabel, parse_label
 
 EVAL_TAXONOMY = build_eval_taxonomy()
@@ -198,6 +200,35 @@ def score_case(
         "expected": expected_vals,
         "person_name": expected.name,
     }
+
+
+ORGANIZATION_OUTCOMES = ("right", "wrong", "none", "missing")
+
+
+def organization_counts(actual, expected_people: list[dict]) -> dict[str, int]:
+    """Report-only (plan P5): for each expected person with an organization, whether the model's
+    pick is one the gold accepts. "none" is a person returned unplaced; "missing" one not returned."""
+    counts = dict.fromkeys(ORGANIZATION_OUTCOMES, 0)
+    picked = {key: getattr(records[0], "organization", None) for key, records in group_by_name(actual).items()}
+    for person in expected_people:
+        accepted = person.get("organization")
+        if accepted is None:
+            continue
+        accepted = accepted if isinstance(accepted, list) else [accepted]
+        key = name_utils.name_grouping_key(person["name"])
+        if key not in picked:
+            counts["missing"] += 1
+        elif picked[key] in accepted:
+            counts["right"] += 1
+        elif picked[key] in (None, NO_ORGANIZATION):
+            counts["none"] += 1
+        else:
+            counts["wrong"] += 1
+    return counts
+
+
+def summed_counts(per_case: list[dict[str, int]]) -> dict[str, int]:
+    return {outcome: sum(counts[outcome] for counts in per_case) for outcome in ORGANIZATION_OUTCOMES}
 
 
 def aggregate_case(case_scores) -> dict[str, float]:

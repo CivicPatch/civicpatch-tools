@@ -8,6 +8,8 @@ drift the same way.
 """
 
 
+from types import SimpleNamespace
+
 import pytest
 from accuracy import case_dispositions, normalize_field
 from scoring import (
@@ -15,6 +17,7 @@ from scoring import (
     aggregate_case,
     case_score,
     failing_people,
+    organization_counts,
     person_precision,
     score_cases,
 )
@@ -234,3 +237,29 @@ def test_invented_people_scale_the_case_score_down():
 def test_person_precision_counts_a_two_office_person_once():
     records = [extracted_person_factory("Sharlene T. Hetzel", "Mayor Pro-Tem"), extracted_person_factory("Sharlene T. Hetzel", "Council Member Place 2")]
     assert person_precision(records, records[:1]) == 1.0
+
+
+def test_a_pick_is_right_wrong_none_or_missing_against_the_gold():
+
+    actual = [
+        SimpleNamespace(name="Ann Lee", organization="Council"),
+        SimpleNamespace(name="Bo Ray", organization="Office of the Mayor"),
+        SimpleNamespace(name="Cy Fox", organization="none"),
+    ]
+    expected = [
+        {"name": "Ann Lee", "organization": "Council"},
+        {"name": "Bo Ray", "organization": "Council"},
+        {"name": "Cy Fox", "organization": "Council"},
+        {"name": "Di Moss", "organization": "Council"},
+        {"name": "Ed Park"},
+    ]
+
+    assert organization_counts(actual, expected) == {"right": 1, "wrong": 1, "none": 1, "missing": 1}
+
+
+def test_a_gold_listing_two_organizations_accepts_either():
+
+    actual = [SimpleNamespace(name="Sandra Staples", organization="Office of the Mayor")]
+    expected = [{"name": "Sandra Staples", "organization": ["Council", "Office of the Mayor"]}]
+
+    assert organization_counts(actual, expected)["right"] == 1

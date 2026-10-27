@@ -1,0 +1,63 @@
+generated: true
+jurisdiction_ocdid: ocd-jurisdiction/country:us/state:ma/place:acton/government
+current_date: '2026-10-16'
+organization_choices:
+- Select Board
+- Town Meeting
+known_roles:
+- Chair
+- Vice Chair
+- Select Board Member
+- Clerk
+people:
+- name: Alissa Nicol
+  label: Chair
+  phone: (978) 929-6611
+  email: alissanicol@acton-ma.gov
+  url: https://www.actonma.gov/87/Board-of-Selectmen
+  start_date: null
+  end_date: null
+  image: null
+  organization: Select Board
+- name: David D. Martin
+  label: Vice Chair
+  phone: (978) 929-6611
+  email: davidmartin@acton-ma.gov
+  url: https://www.actonma.gov/87/Board-of-Selectmen
+  start_date: null
+  end_date: null
+  image: null
+  organization: Select Board
+- name: Dean A. Charter
+  label: Select Board Member
+  phone: (978) 929-6611
+  email: deancharter@acton-ma.gov
+  url: https://www.actonma.gov/87/Board-of-Selectmen
+  start_date: null
+  end_date: null
+  image: null
+  organization: Select Board
+- name: Pam Nourse
+  label: Select Board Member
+  phone: (978) 929-6611
+  email: pamnourse@acton-ma.gov
+  url: https://www.actonma.gov/87/Board-of-Selectmen
+  start_date: null
+  end_date: null
+  image: null
+  organization: Select Board
+- name: Francesca Arsenault
+  label: Clerk
+  phone: (978) 929-6611
+  email: franarsenault@acton-ma.gov
+  url: https://www.actonma.gov/87/Board-of-Selectmen
+  start_date: null
+  end_date: null
+  image: null
+  organization: Select Board
+thought: 'Merged by plan P5 from place_acton__open_town_meeting__select_board__known_titles,
+  place_acton__open_town_meeting__town_meeting__known_titles. GENERATED, review before
+  moving into the dataset. Form open_town_meeting (one of several allowed, so assumed);
+  known_titles, scoped to Select Board. People are the published roster''s, filed
+  by role (a role no organization lists goes to the main board): check titles, dates
+  and anyone the page lists that the roster lacks.'

@@ -1,0 +1,74 @@
+mismatches:
+  burlington_city_council__pick:
+  - actual: "\u2014"
+    actual_label: Council Member East
+    expected: https://burlingtonvt.gov/413/city-council
+    expected_label: Council Member East
+    field: url
+    person: Allie Schachter
+  - actual: "\u2014"
+    actual_label: Council Member Ward 6
+    expected: https://burlingtonvt.gov/413/city-council
+    expected_label: Council Member Ward 6
+    field: url
+    person: Becca Brown McKnight
+  - actual: "\u2014"
+    actual_label: Council Member Ward 5 and City Council President
+    expected: https://burlingtonvt.gov/413/city-council
+    expected_label: Council Member Ward 5 and City Council President
+    field: url
+    person: Ben Traverse
+  - actual: "\u2014"
+    actual_label: Council Member Ward 1
+    expected: https://burlingtonvt.gov/413/city-council
+    expected_label: Council Member Ward 1
+    field: url
+    person: Carter Neubieser
+  - actual: "\u2014"
+    actual_label: Council Member Ward 2
+    expected: https://burlingtonvt.gov/413/city-council
+    expected_label: Council Member Ward 2
+    field: url
+    person: Eugene Bergman
+  - actual: "\u2014"
+    actual_label: Council Member Ward 7
+    expected: https://burlingtonvt.gov/413/city-council
+    expected_label: Council Member Ward 7
+    field: url
+    person: Evan Litwin
+  - actual: "\u2014"
+    actual_label: Council Member Ward 3
+    expected: https://burlingtonvt.gov/413/city-council
+    expected_label: Council Member Ward 3
+    field: url
+    person: Laura Sanchez-Parkinson
+  - actual: "\u2014"
+    actual_label: Council Member Ward 8
+    expected: https://burlingtonvt.gov/413/city-council
+    expected_label: Council Member Ward 8
+    field: url
+    person: Marek Broderick
+  - actual: "\u2014"
+    actual_label: Council Member North
+    expected: https://burlingtonvt.gov/413/city-council
+    expected_label: Council Member North
+    field: url
+    person: Mark Barlow
+  - actual: "\u2014"
+    actual_label: Council Member Central
+    expected: https://burlingtonvt.gov/413/city-council
+    expected_label: Council Member Central
+    field: url
+    person: Melo Grant
+  - actual: "\u2014"
+    actual_label: Council Member South
+    expected: https://burlingtonvt.gov/413/city-council
+    expected_label: Council Member South
+    field: url
+    person: Ranjit "Buddy" Singh
+  - actual: "\u2014"
+    actual_label: Council Member Ward 4
+    expected: https://burlingtonvt.gov/413/city-council
+    expected_label: Council Member Ward 4
+    field: url
+    person: Sarah E Carpenter

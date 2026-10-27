@@ -19,8 +19,11 @@ from runners.pipeline03_people_collector.schemas import (
     PeopleArrayLLMResponseSchema,
     ExtractedPersonRecord,
 )
+from runners.pipeline03_people_collector.steps.step_04_process_page_content.organization_pick import (
+    pick_response_schema,
+)
 from services.open_router.llm import run_prompt as run_together_prompt
-from services.open_router.prompts import PromptOrganization, elected_officials_prompt
+from services.open_router.prompts import elected_officials_prompt
 from shared.schemas import JurisdictionLevel
 from shared.utils.id_utils import parse_jurisdiction_ocdid
 from utils import cost_utils
@@ -30,8 +33,10 @@ from scoring import (
     aggregate_case,
     case_score,
     failing_people,
+    organization_counts,
     person_precision,
     score_cases,
+    summed_counts,
 )
 from accuracy import (
     GATE_THRESHOLDS as ACCURACY_THRESHOLDS,
@@ -69,15 +74,14 @@ def _jurisdiction_inputs(expected: dict) -> dict:
 
 
 def make_together_prompt(expected: dict):
-    organization = expected.get("organization")
     return elected_officials_prompt(
         expected.get("known_roles", []),
         **_jurisdiction_inputs(expected),
         # The day the page was read, where the case records it: terms are judged as of then.
         current_date=expected.get("current_date", EVAL_CURRENT_DATE),
-        organization=PromptOrganization(**organization) if organization else None,
         divisions=expected.get("divisions", []),
         government_form_role_labels=expected.get("government_form_role_labels", []),
+        organization_choices=expected.get("organization_choices", []),
     )
 
 
@@ -117,7 +121,7 @@ async def _run_single_case(model_client, case, ocdid):
             ocdid,
             prompt,
             prompt_name="elected_officials",
-            response_schema=PeopleArrayLLMResponseSchema,
+            response_schema=pick_response_schema(case["expected"].get("organization_choices", [])),
             content=case["input"],
             **extra_kwargs,
         )
@@ -137,7 +141,7 @@ async def _run_single_case(model_client, case, ocdid):
         f"{case_path}/{model_client['name']}-actual.yml", "w", encoding="utf-8"
     ) as f:
         yaml_output = yaml.safe_dump(
-            PeopleArrayLLMResponseSchema.model_dump(actual), sort_keys=False
+            actual.model_dump(), sort_keys=False
         )
         f.write(yaml_output)
 
@@ -148,6 +152,7 @@ async def _run_single_case(model_client, case, ocdid):
         "score": case_score(case_aggregate, precision),
         "person_precision": precision,
         "scores": case_aggregate,
+        "organization": organization_counts(actual.people, case["expected"]["people"]),
     }
 
     dispositions = case_dispositions(actual.people, expected, EVAL_TAXONOMY)
@@ -183,7 +188,8 @@ async def run_eval(
     # Per-person expected/actual, so the dashboard can show *what* differed rather than only
     # that something did. Keyed by case; empty entries dropped to keep the report readable.
     mismatches = {case_id: rows for case_id, _, _, _, rows in results if rows}
-    return aggregate(scores), per_case_scores, accuracy, case_scores_by_id, mismatches
+    organization = summed_counts([case_result["organization"] for _, case_result in per_case_scores])
+    return aggregate(scores), per_case_scores, accuracy, case_scores_by_id, mismatches, organization
 
 
 @pytest_asyncio.fixture
@@ -258,7 +264,7 @@ async def _run_provider(client, cases):
     # county parsing, and has raised on the first case of every provider ever since.
     ocdid = f"ocd-jurisdiction/country:us/state:tx/place:example_{client['name']}/government"
     start_time = time.time()
-    report, per_case_scores, accuracy, case_scores_by_id, mismatches = await run_eval(
+    report, per_case_scores, accuracy, case_scores_by_id, mismatches, organization = await run_eval(
         client, cases, ocdid
     )
     elapsed_seconds = round(time.time() - start_time, 2)
@@ -270,6 +276,7 @@ async def _run_provider(client, cases):
         "per_case_scores": per_case_scores,
         "case_scores_by_id": case_scores_by_id,
         "mismatches": mismatches,
+        "organization": organization,
         "elapsed_seconds": elapsed_seconds,
         "llm_costs": llm_costs,
     }
@@ -317,7 +324,7 @@ async def test_provider_comparison(load_eval_cases):
             "total_cost_usd": float(cost_utils.sum_cost(llm_costs)),
         }
         accuracy_report = as_report(result["accuracy"])
-        # Placeholders, not empty values: `known_roles` and the organization block are injected
+        # Placeholders, not empty values: `known_roles` and the organization choices are injected
         # per case, and passing nothing omits those blocks entirely — so the archived text would
         # miss structure real cases send. Archive the template as structured, marking what varies.
         run = record_run(
@@ -325,7 +332,7 @@ async def test_provider_comparison(load_eval_cases):
             make_together_prompt(
                 {
                     "known_roles": ["<injected per case>"],
-                    "organization": {"name": "<body, per case>", "posts": ["<posts, per case>"]},
+                    "organization_choices": ["<organizations, per case>"],
                 }
             ),
         )
@@ -347,6 +354,8 @@ async def test_provider_comparison(load_eval_cases):
                     "run": run,
                     "cost_summary": cost_summary,
                     "accuracy": accuracy_report,
+                    # Report-only (plan P5): picked organization per expected person.
+                    "organization": result["organization"],
                     "aggregated_report": result["report"],
                     "per_case_scores": [
                         {"case_id": case_id, **case_result}
@@ -359,6 +368,7 @@ async def test_provider_comparison(load_eval_cases):
                 sort_keys=False,
             )
         print(f"Saved provider comparison report to {report_path}")
+        print(f"[{client['name']}] organization picks: {result['organization']}", flush=True)
         below = [
             f"{client['name']} {field}: F1={result['accuracy'][field].f1:.3f} < {floor:.2f}"
             for field, floor in ACCURACY_THRESHOLDS.items()

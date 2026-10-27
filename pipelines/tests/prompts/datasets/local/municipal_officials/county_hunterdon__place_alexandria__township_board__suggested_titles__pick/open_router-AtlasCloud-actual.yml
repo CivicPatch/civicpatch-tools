@@ -1,0 +1,37 @@
+people:
+- name: Jim Kiernan
+  label: Mayor
+  phone: 908-996-7071
+  email: jkiernan@alexandrianj.gov
+  url: https://www.alexandrianj.gov/government/mayor
+  start_date: null
+  end_date: null
+  image: null
+  organization: Board
+- name: Tom Hudanish
+  label: Deputy Mayor
+  phone: 908-996-7071
+  email: thudanish@alexandrianj.gov
+  url: https://www.alexandrianj.gov/government/mayor
+  start_date: null
+  end_date: null
+  image: null
+  organization: Board
+- name: Brad Patkochis
+  label: Committee Member
+  phone: 908-996-7071
+  email: bpatkochis@alexandrianj.gov
+  url: https://www.alexandrianj.gov/government/mayor
+  start_date: null
+  end_date: null
+  image: null
+  organization: Board
+- name: Robert Mortara
+  label: Committee Member
+  phone: 908-996-7071
+  email: rmortara@alexandrianj.gov
+  url: https://www.alexandrianj.gov/government/mayor
+  start_date: null
+  end_date: null
+  image: null
+  organization: Board

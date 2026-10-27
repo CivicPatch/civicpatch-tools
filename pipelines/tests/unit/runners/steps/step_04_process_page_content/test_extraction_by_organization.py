@@ -1,28 +1,25 @@
-"""One extraction per organization, stamped with its id; unscoped only with no organizations or the lone placeholder."""
+"""One extraction per page, each person stamped with the organization the model picked."""
 
 from unittest.mock import AsyncMock, MagicMock, patch
 
 import pytest
 from runners.pipeline03_people_collector.schemas import (
-    ExpectedMembership,
     ExtractedPersonRecord,
     Link,
     LinkStatus,
-    OrganizationCoverageResponseSchema,
     PeopleArrayLLMResponseSchema,
     ProcessPageContentStep,
-)
-from runners.pipeline03_people_collector.steps.step_04_process_page_content.extraction_by_organization import (
-    extraction_scopes,
 )
 from runners.pipeline03_people_collector.steps.step_04_process_page_content.heuristics_failure import (
     HeuristicsFailure,
 )
+from runners.pipeline03_people_collector.steps.step_04_process_page_content.organization_pick import (
+    pick_response_schema,
+)
 from runners.pipeline03_people_collector.steps.step_04_process_page_content.process_page_content import (
     collect_page_records,
-    covered_organization_ids,
 )
-from shared.schemas import PLACEHOLDER_ORGANIZATION_NAME, KnownOrganization, Post
+from shared.schemas import KnownOrganization, Post
 from tests.factories.pipeline_run_context import pipeline_run_context_factory
 
 pytestmark = pytest.mark.unit
@@ -62,34 +59,6 @@ def _answer(*people: tuple[str, str]) -> PeopleArrayLLMResponseSchema:
     )
 
 
-# The first line of `page_covers_organization_prompt`, which is asked once per body before any
-# extraction runs.
-_COVERAGE_PROMPT = "Decide whether the provided page content carries people"
-
-
-def _by_organization(
-    council: PeopleArrayLLMResponseSchema,
-    mayor: PeopleArrayLLMResponseSchema,
-    covers: tuple[bool, bool] = (True, True),
-):
-    """A fake LLM that answers according to which organization the prompt names.
-
-    Coverage is asked first, one call per body; these tests are about what happens after, so it
-    answers yes for both unless a test says otherwise.
-    """
-    covers_council, covers_mayor = covers
-
-    async def run_prompt(_run_id, _ocdid, prompt, **_kwargs):
-        if _COVERAGE_PROMPT in prompt:
-            is_council = "Body: City Council" in prompt
-            return OrganizationCoverageResponseSchema(
-                covers=covers_council if is_council else covers_mayor
-            )
-        return council if "hold a post in City Council" in prompt else mayor
-
-    return run_prompt
-
-
 async def _collect(organizations: list[KnownOrganization]):
     return await collect_page_records(
         pipeline_run_context_factory(steps={}),
@@ -103,76 +72,27 @@ async def _collect(organizations: list[KnownOrganization]):
     )
 
 
+def _picked(*people: tuple[str, str, str]):
+    """An answer whose people each carry the organization the model picked."""
+    schema = pick_response_schema(["City Council", "Office of the Mayor"])
+    return schema.model_validate(
+        {"people": [{"name": name, "label": label, "organization": organization} for name, label, organization in people]}
+    )
+
+
 def _stamps(records) -> dict[str, str | None]:
     return {name: group[0].organization_id for name, group in records.items()}
 
 
-def test_no_organizations_is_one_unscoped_run():
-    [scope] = extraction_scopes([], [])
-
-    assert scope.organization_id is None
-    assert scope.prompt_organization is None
-
-
-def test_one_organization_runs_scoped_to_it():
-    [scope] = extraction_scopes([_COUNCIL], [])
-
-    assert scope.organization_id == "council"
-    assert scope.prompt_organization is not None
-    assert scope.prompt_organization.name == "City Council"
-
-
-def test_a_lone_placeholder_organization_runs_unscoped_but_is_stamped_with_its_id():
-    placeholder = KnownOrganization(id="placeholder", name=PLACEHOLDER_ORGANIZATION_NAME)
-
-    [scope] = extraction_scopes([placeholder], [])
-
-    assert scope.organization_id == "placeholder"
-    assert scope.prompt_organization is None
-
-
-def test_several_organizations_each_get_a_scoped_run_with_their_roles_and_divisions():
-    memberships = [
-        ExpectedMembership(organization_id="council", role_id="council-member", role_label="Council Member", division="district 1"),
-        ExpectedMembership(organization_id="council", role_id="council-member", role_label="Council Member", division="district 2"),
-        ExpectedMembership(organization_id="mayor", role_id="mayor", role_label="Mayor"),
-    ]
-
-    scopes = extraction_scopes([_COUNCIL, _MAYOR], memberships)
-
-    assert [
-        (s.organization_id, s.prompt_organization.name, s.prompt_organization.role_labels, s.prompt_organization.divisions)
-        for s in scopes
-        if s.prompt_organization
-    ] == [
-        ("council", "City Council", ["Council Member"], ["district 1", "district 2"]),
-        ("mayor", "Office of the Mayor", ["Mayor"], []),
-    ]
-
-
-def test_organizations_nobody_is_expected_in_carry_their_forms_role_labels_as_a_guess():
-    select_board = KnownOrganization(
-        id="select",
-        name="Select Board",
-        role_labels=["Select Board Chair", "Select Board Vice Chair", "Select Board Member"],
-    )
-    town_meeting = KnownOrganization(id="meeting", name="Town Meeting", role_labels=["Moderator"])
-
-    scopes = extraction_scopes([select_board, town_meeting], [])
-
-    scoped = [s.prompt_organization for s in scopes if s.prompt_organization]
-    assert [o.role_labels for o in scoped] == [[], []]
-    assert [o.government_form_role_labels for o in scoped] == [
-        ["Select Board Chair", "Select Board Vice Chair", "Select Board Member"],
-        ["Moderator"],
-    ]
-
-
 @pytest.mark.asyncio
-async def test_each_organizations_records_are_stamped_with_that_organization():
-    fake = _by_organization(_answer(("Rob Saka", "Council Member District 1")), _answer(("Katie Wilson", "Mayor")))
+async def test_each_person_is_stamped_with_the_organization_picked_for_them():
+    run_prompt = AsyncMock(
+        return_value=_picked(
+            ("Rob Saka", "Council Member District 1", "City Council"), ("Katie Wilson", "Mayor", "Office of the Mayor")
+        )
+    )
 
-    with patch(_RUN_PROMPT, new=AsyncMock(side_effect=fake)):
+    with patch(_RUN_PROMPT, new=run_prompt):
         extraction = await _collect([_COUNCIL, _MAYOR])
 
     assert extraction.heuristics_passed is True
@@ -180,35 +100,21 @@ async def test_each_organizations_records_are_stamped_with_that_organization():
 
 
 @pytest.mark.asyncio
-async def test_an_organization_failing_the_heuristics_twice_does_not_discard_the_others():
-    """A name that is not on the page fails the heuristics; that organization's retry fails too."""
-    fake = _by_organization(_answer(("Rob Saka", "Council Member District 1")), _answer(("Not On Page", "Mayor")))
-
-    with patch(_RUN_PROMPT, new=AsyncMock(side_effect=fake)) as run_prompt:
-        extraction = await _collect([_COUNCIL, _MAYOR])
-
-    assert extraction.heuristics_passed is True
-    assert _stamps(extraction.records) == {"Rob Saka": "council"}
-    # Two coverage questions, then council once and mayor twice.
-    assert run_prompt.await_count == 5
-
-
-@pytest.mark.asyncio
-async def test_a_single_organization_sends_a_prompt_scoped_to_it():
+async def test_the_prompt_offers_every_organization_but_the_default():
+    default = KnownOrganization(id="officers", name="City Officers", meta_is_default=True)
     run_prompt = AsyncMock(return_value=_answer(("Rob Saka", "Council Member District 1")))
 
     with patch(_RUN_PROMPT, new=run_prompt):
-        extraction = await _collect([_COUNCIL])
+        await _collect([_COUNCIL, _MAYOR, default])
 
-    assert "hold a post in City Council" in run_prompt.await_args.args[2]
-    assert _stamps(extraction.records) == {"Rob Saka": "council"}
+    prompt = run_prompt.await_args.args[2]
+    assert '- "City Council"' in prompt and '- "Office of the Mayor"' in prompt
+    assert "City Officers" not in prompt
 
 
 @pytest.mark.asyncio
-async def test_when_every_organization_fails_the_page_is_skipped():
-    fake = _by_organization(_answer(("Not On Page", "Mayor")), _answer(("Not On Page", "Mayor")))
-
-    with patch(_RUN_PROMPT, new=AsyncMock(side_effect=fake)):
+async def test_when_both_attempts_fail_the_page_is_skipped():
+    with patch(_RUN_PROMPT, new=AsyncMock(return_value=_answer(("Not On Page", "Mayor")))):
         extraction = await _collect([_COUNCIL, _MAYOR])
 
     assert extraction.heuristics_passed is False
@@ -217,15 +123,17 @@ async def test_when_every_organization_fails_the_page_is_skipped():
 
 @pytest.mark.asyncio
 async def test_every_failed_attempt_leaves_its_reason_even_when_the_page_passes():
-    """The council passes first time; the mayor invents someone twice. A name miss on any
-    attempt is what marks the model as having made a person up."""
-    fake = _by_organization(_answer(("Rob Saka", "Council Member District 1")), _answer(("Not On Page", "Mayor")))
+    """The first attempt invents someone, the retry does not. A name miss on any attempt is what
+    marks the model as having made a person up."""
+    run_prompt = AsyncMock(
+        side_effect=[_answer(("Not On Page", "Mayor")), _answer(("Rob Saka", "Council Member District 1"))]
+    )
 
-    with patch(_RUN_PROMPT, new=AsyncMock(side_effect=fake)):
+    with patch(_RUN_PROMPT, new=run_prompt):
         extraction = await _collect([_COUNCIL, _MAYOR])
 
     assert extraction.heuristics_passed is True
-    assert extraction.heuristics_failures == [HeuristicsFailure.NAME_NOT_IN_TEXT, HeuristicsFailure.NAME_NOT_IN_TEXT]
+    assert extraction.heuristics_failures == [HeuristicsFailure.NAME_NOT_IN_TEXT]
 
 
 @pytest.mark.asyncio
@@ -239,71 +147,49 @@ async def test_a_page_that_passes_first_time_leaves_no_reasons():
 
 
 @pytest.mark.asyncio
-async def test_a_body_the_page_does_not_cover_is_not_extracted_for():
-    """The saving: a council roster gets one extraction, not one per body in the jurisdiction."""
-    fake = _by_organization(
-        _answer(("Rob Saka", "Council Member District 1")),
-        _answer(("Katie Wilson", "Mayor")),
-        covers=(True, False),
-    )
+async def test_a_page_is_read_once_whatever_its_organizations():
+    """The saving over one coverage question and one extraction per organization."""
+    run_prompt = AsyncMock(return_value=_answer(("Rob Saka", "Council Member District 1")))
 
-    with patch(_RUN_PROMPT, new=AsyncMock(side_effect=fake)) as run_prompt:
-        extraction = await _collect([_COUNCIL, _MAYOR])
+    with patch(_RUN_PROMPT, new=run_prompt):
+        await _collect([_COUNCIL, _MAYOR])
 
-    assert extraction.heuristics_passed is True
-    assert _stamps(extraction.records) == {"Rob Saka": "council"}
-    # Two coverage questions, then only the council's extraction.
-    assert run_prompt.await_count == 3
+    assert run_prompt.await_count == 1
 
 
 @pytest.mark.asyncio
-async def test_a_page_covering_no_known_body_still_runs_them_all():
-    """An empty answer is not evidence the page is empty — it may carry a body nobody holds yet,
-    and withholding every extraction would drop those people on the floor."""
-    fake = _by_organization(
-        _answer(("Rob Saka", "Council Member District 1")),
-        _answer(("Katie Wilson", "Mayor")),
-        covers=(False, False),
-    )
+async def test_a_person_picked_into_no_organization_is_left_for_ingest_to_place():
+    run_prompt = AsyncMock(return_value=_picked(("Rob Saka", "Council Member District 1", "none")))
 
-    with patch(_RUN_PROMPT, new=AsyncMock(side_effect=fake)):
+    with patch(_RUN_PROMPT, new=run_prompt):
         extraction = await _collect([_COUNCIL, _MAYOR])
 
-    assert extraction.heuristics_passed is True
-    assert _stamps(extraction.records) == {"Rob Saka": "council", "Katie Wilson": "mayor"}
-
-
-def test_a_single_organization_is_the_page_s_answer_without_being_asked():
-    assert covered_organization_ids([_COUNCIL], []) == ["council"]
-
-
-def test_several_organizations_answer_with_the_ids_of_those_the_page_covers():
-    assert covered_organization_ids([_COUNCIL, _MAYOR], ["Office of the Mayor"]) == ["mayor"]
-
-
-def test_an_answer_naming_no_organization_stays_empty():
-    """Extraction still runs for every organization, but the page vouched for none of them."""
-    assert covered_organization_ids([_COUNCIL, _MAYOR], []) == []
-
-
-def test_no_organizations_is_no_answer():
-    assert covered_organization_ids([], []) == []
+    assert _stamps(extraction.records) == {"Rob Saka": None}
 
 
 @pytest.mark.asyncio
-async def test_the_coverage_answer_is_kept_even_when_that_organization_s_extraction_fails():
-    """A fact about the page, not proof of a read: the writer must not count a failed page."""
-    fake = _by_organization(
-        _answer(("Rob Saka", "Council Member District 1")),
-        _answer(("Not On Page", "Mayor")),
-        covers=(False, True),
+async def test_the_page_s_organizations_are_those_its_people_were_picked_into():
+    run_prompt = AsyncMock(
+        return_value=_picked(
+            ("Rob Saka", "Council Member District 1", "City Council"), ("Katie Wilson", "Mayor", "none")
+        )
     )
 
-    with patch(_RUN_PROMPT, new=AsyncMock(side_effect=fake)):
+    with patch(_RUN_PROMPT, new=run_prompt):
+        extraction = await _collect([_COUNCIL, _MAYOR])
+
+    assert extraction.organization_ids == ["council"]
+
+
+@pytest.mark.asyncio
+async def test_a_failed_page_vouches_for_no_organization():
+    run_prompt = AsyncMock(return_value=_picked(("Not On Page", "Mayor", "Office of the Mayor")))
+
+    with patch(_RUN_PROMPT, new=run_prompt):
         extraction = await _collect([_COUNCIL, _MAYOR])
 
     assert extraction.heuristics_passed is False
-    assert extraction.organization_ids == ["mayor"]
+    assert extraction.organization_ids == []
 
 
 @pytest.mark.asyncio

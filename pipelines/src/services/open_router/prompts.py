@@ -1,7 +1,6 @@
 from datetime import datetime
 from typing import List
 
-from pydantic import BaseModel
 from shared.schemas import GovernmentForm, JurisdictionLevel
 from shared.utils.government_forms import describe_government_form
 
@@ -149,17 +148,6 @@ def relevant_page_prompt(
     return prompt
 
 
-class PromptOrganization(BaseModel):
-    """A body as the officials prompt names it: its name, the roles and divisions our posts (or
-    research) say it has, and on a cold start the roles its form of government usually has. Roles
-    and divisions stay apart: the model writes one label and `parse_label` splits it again."""
-
-    name: str
-    role_labels: List[str] = []
-    divisions: List[str] = []
-    government_form_role_labels: List[str] = []
-
-
 _PAGE_LABEL_RULES = """    - Everything the page uses to identify which office this person holds, written as one
       label. Collect both parts:
         * the title — what the office is called: "Mayor", "Council Member", "Alderman",
@@ -188,38 +176,25 @@ _PAGE_LABEL_RULES = """    - Everything the page uses to identify which office t
             -> "Council Member Seat 4 and Vice Mayor\""""
 
 
-def _bullets(items: List[str], indent: str) -> str:
-    return "\n".join(f"{indent}- {item}" for item in items)
+NO_ORGANIZATION = "none"
 
 
-def _organization_scope(organization: PromptOrganization) -> str:
-    """Naming the target body is the whole scope. Listing other bodies was tried (stage 5a) and
-    added nothing on pages where each body has its own roster."""
-    return f"""
-    TARGET BODY
-    Only extract people who hold a post in {organization.name}.
+def _organization_field(choices: List[str]) -> str:
+    """The body each person is in, picked from ours; empty when there is nothing to pick between."""
+    if not choices:
+        return ""
+    listed = "\n".join(f'        - "{choice}"' for choice in choices)
+    return f"""    organization:
+    - The body this person holds a post in, chosen from this list only:
+{listed}
+    - "{NO_ORGANIZATION}" when the person holds no post in any body on the list.
+
 """
-
-
-def _listed(heading: str, items: List[str]) -> str:
-    return f"    - {heading}:\n{_bullets(items, '        ')}\n" if items else ""
-
-
-def _label_rules(organization: PromptOrganization | None) -> str:
-    if organization is None:
-        return _PAGE_LABEL_RULES
-    return (
-        _listed(f"Roles in {organization.name}", organization.role_labels)
-        + _listed(f"Roles a {organization.name} usually has", [] if organization.role_labels else organization.government_form_role_labels)
-        + _listed(f"Divisions in {organization.name}", organization.divisions)
-        + _PAGE_LABEL_RULES
-    )
 
 
 def _roles_hint(
     known_roles: List[str], divisions: List[str], government_form_role_labels: List[str]
 ) -> str:
-    """Unscoped only: a scoped run's label rules already name its body's roles and divisions."""
     lines = []
     if known_roles:
         lines.append("- Roles in this municipality: " + ", ".join(known_roles) + ".")
@@ -258,9 +233,10 @@ def elected_officials_prompt(
     state: str = "",
     county: str | None = None,
     current_date: str | None = None,
-    organization: PromptOrganization | None = None,
     divisions: List[str] = [],
     government_form_role_labels: List[str] = [],
+    # The jurisdiction's organizations a person may be put in, the default left out.
+    organization_choices: List[str] = [],
 ):
     """
     Generate a prompt for extracting a jurisdiction's elected officials (Llama-optimized).
@@ -272,21 +248,16 @@ def elected_officials_prompt(
     """
     current_date = current_date or datetime.now().strftime("%Y-%m-%d")
 
-    roles_hint_str = (
-        "" if organization else _roles_hint(known_roles, divisions, government_form_role_labels)
-    )
+    roles_hint_str = _roles_hint(known_roles, divisions, government_form_role_labels)
 
     jurisdiction_line = _jurisdiction_line(level, state, county)
-
-    scope = _organization_scope(organization) if organization else ""
-    label_rules = _label_rules(organization)
 
     return f"""
     You are a data extraction assistant. Extract information about the currently
     serving elected officials of the target {_TARGET_NOUN[level]} from the provided content.
 
     Current Date: {current_date}{jurisdiction_line}
-{scope}
+
     STEP 1 - FIND OFFICIALS
     Only extract officials from:
     - A structured table, list, or directory of officials
@@ -323,10 +294,10 @@ def elected_officials_prompt(
     - The image src of a profile photo, exactly as it appears in the content.
 
     label:
-{label_rules}
+{_PAGE_LABEL_RULES}
     {roles_hint_str}
 
-    phone, email:
+{_organization_field(organization_choices)}    phone, email:
     - Use in this order: the person's own, then their office's, then any general
       {_TARGET_ADJECTIVE[level]} contact found anywhere in the content.
     - An email must be a valid address (email@domain.tld). A contact form URL
@@ -364,78 +335,6 @@ def is_official_jurisdiction_url_prompt() -> str:
     a GoDaddy or registrar placeholder, spam, advertisements, or otherwise has no substantive government content.
 
     IMPORTANT: Return only valid JSON. Do not include any other text.
-    """
-
-
-def page_covers_organization_prompt(
-    organization_name: str,
-    # That body's roles and divisions, to say what holding office in it looks like. A person is
-    # the evidence a page covers a body, so the offices are the thing to recognise.
-    role_labels: List[str],
-    jurisdiction_name: str = "",
-    divisions: List[str] = [],
-    # On a cold start, what its form of government says it usually has: a guess, said as one.
-    government_form_role_labels: List[str] = [],
-) -> str:
-    """Whether one page carries people of one body.
-
-    Asked once per body, after `relevant_page_prompt` has already said the page is worth reading
-    and which links to follow. Deliberately not a list to choose from: picking one body out of
-    several is the forced-match failure the officials prompt guards against, and it is invisible
-    when it goes wrong, where a wrong yes/no about one body is one extraction run too many or too
-    few.
-    """
-    jurisdiction_line = (
-        f"    Municipality: {jurisdiction_name}\n" if jurisdiction_name else ""
-    )
-    if role_labels:
-        roles_line = f"    Roles in it:\n{_bullets(role_labels, '      ')}\n"
-    elif government_form_role_labels:
-        roles_line = f"    Roles it usually has:\n{_bullets(government_form_role_labels, '      ')}\n"
-    else:
-        roles_line = ""
-    divisions_line = f"    Its divisions:\n{_bullets(divisions, '      ')}\n" if divisions else ""
-    listed_note = (
-        """
-    Only people who hold office in that body count. Once the page shows they are in it, their
-    title may be one not listed above; the list says what holding office in this body looks like,
-    not every title it has.
-"""
-        if roles_line
-        else """
-    Only people who hold office in that body count, whatever the page calls their office.
-"""
-    )
-    return f"""
-    Decide whether the provided page content carries people who currently hold office in one
-    specific governing body.
-
-    Body: {organization_name}
-{jurisdiction_line}{roles_line}{divisions_line}
-    Answer true only if this page presents a person holding office in that body as one of its
-    officials — a roster entry, a directory row, a profile, or a contact block naming them.
-
-    The test: would this page tell a reader who currently holds the office, if they had never
-    heard of the person? A listing, a profile or a contact block answers that. A sentence about
-    something that happened assumes you already know, and names the person in passing.
-
-    All of these are false, however prominently the body or its people appear, and however many
-    times a name is repeated:
-    - a link to the body, or its name in the site navigation, including a heading such as
-      "Connect with Elected Officials" that links elsewhere
-    - a mention of the body in prose, or a meeting agenda or minutes naming it
-    - news stories, press releases and announcements. "Mayor Wilson Signs Junk Fee Legislation
-      into Law" names the mayor and their office and is still a report of an event: the page
-      exists to say what happened, not who holds the office. A homepage carrying six such
-      headlines is a newsfeed, not a roster.
-
-    Judge the page's own content. A block that would be identical on every page of the site —
-    a menu, a footer, a sidebar list of members repeated across a section — is furniture, and
-    counting it would make every page of a site cover every body, which is no answer at all. The
-    same list in the body of a page, as what that page exists to present, does count.
-
-{listed_note}
-    IMPORTANT: Return only valid JSON, {{"covers": true}} or {{"covers": false}}.
     """
 
 

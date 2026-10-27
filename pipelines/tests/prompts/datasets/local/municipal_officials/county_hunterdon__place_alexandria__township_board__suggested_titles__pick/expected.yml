@@ -1,0 +1,52 @@
+generated: true
+jurisdiction_ocdid: ocd-jurisdiction/country:us/state:nj/county:hunterdon/place:alexandria/government
+current_date: '2026-10-02'
+organization_choices:
+- Board
+government_form_role_labels:
+- Supervisor
+- Clerk
+- Treasurer
+- Trustee
+people:
+- name: Jim Kiernan
+  label: Mayor
+  phone: (908) 996-7071
+  email: jkiernan@alexandrianj.gov
+  url: https://www.alexandrianj.gov/government/mayor
+  start_date: null
+  end_date: null
+  image: null
+  organization: Board
+- name: Tom Hudanish
+  label: Deputy Mayor
+  phone: (908) 996-7071
+  email: thudanish@alexandrianj.gov
+  url: https://www.alexandrianj.gov/government/mayor
+  start_date: null
+  end_date: null
+  image: null
+  organization: Board
+- name: Brad Patkochis
+  label: Committee Member
+  phone: (908) 996-7071
+  email: bpatkochis@alexandrianj.gov
+  url: https://www.alexandrianj.gov/government/mayor
+  start_date: null
+  end_date: null
+  image: null
+  organization: Board
+- name: Robert Mortara
+  label: Committee Member
+  phone: (908) 996-7071
+  email: rmortara@alexandrianj.gov
+  url: https://www.alexandrianj.gov/government/mayor
+  start_date: null
+  end_date: null
+  image: null
+  organization: Board
+thought: 'Merged by plan P5 from county_hunterdon__place_alexandria__township_board__board__suggested_titles.
+  GENERATED, review before moving into the dataset. Form township_board (one of several
+  allowed, so assumed); suggested_titles, scoped to Board. People are the published
+  roster''s, filed by role (a role no organization lists goes to the main board):
+  check titles, dates and anyone the page lists that the roster lacks.'

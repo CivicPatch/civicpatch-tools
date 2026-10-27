@@ -1,0 +1,83 @@
+generated: true
+current_date: '2026-10-02'
+organization_choices:
+- Council
+- Office of the Mayor
+government_form_role_labels:
+- Council Member
+people:
+- name: Edward G. Campbell III
+  label: Mayor
+  phone: 856-783-6655
+  email: mayor@gibbsborotownhall.com
+  url: https://gibbsborotownhall.com/borough-council/
+  start_date: null
+  end_date: null
+  image: null
+  organization:
+  - Council
+  - Office of the Mayor
+- name: Brandon Boots
+  label: Councilman
+  phone: null
+  email: boots@gibbsborotownhall.com
+  url: https://gibbsborotownhall.com/borough-council/
+  start_date: null
+  end_date: null
+  image: null
+  organization: Council
+- name: Mitch Brown
+  label: Councilman
+  phone: null
+  email: brown@gibbsborotownhall.com
+  url: https://gibbsborotownhall.com/borough-council/
+  start_date: null
+  end_date: null
+  image: null
+  organization: Council
+- name: Marianne Colavita
+  label: Councilman
+  phone: null
+  email: colavita@gibbsborotownhall.com
+  url: https://gibbsborotownhall.com/borough-council/
+  start_date: null
+  end_date: null
+  image: null
+  organization: Council
+- name: Beth Schmidt
+  label: Councilwoman
+  phone: null
+  email: schmidt@gibbsborotownhall.com
+  url: https://gibbsborotownhall.com/borough-council/
+  start_date: null
+  end_date: null
+  image: null
+  organization: Council
+- name: Glenn Werner
+  label: Councilman
+  phone: null
+  email: werner@gibbsborotownhall.com
+  url: https://gibbsborotownhall.com/borough-council/
+  start_date: null
+  end_date: null
+  image: null
+  organization: Council
+- name: John Ritz
+  label: Councilman
+  phone: null
+  email: ritz@gibbsborotownhall.com
+  url: https://gibbsborotownhall.com/borough-council/
+  start_date: null
+  end_date: null
+  image: null
+  organization: Council
+- name: Andrew Parsinitz
+  label: Councilman
+  phone: null
+  email: parsinitz@gibbsborotownhall.com
+  url: https://gibbsborotownhall.com/borough-council/
+  start_date: null
+  end_date: null
+  image: null
+  organization: Council
+thought: 'Merged by plan P5 from place_gibbsboro__mayor_council__council__suggested_titles. '

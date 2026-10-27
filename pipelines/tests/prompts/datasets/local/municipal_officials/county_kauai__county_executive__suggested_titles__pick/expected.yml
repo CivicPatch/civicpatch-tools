@@ -1,0 +1,81 @@
+generated: true
+jurisdiction_ocdid: ocd-jurisdiction/country:us/state:hi/county:kauai/government
+current_date: '2026-10-16'
+organization_choices:
+- County Council
+- Office of the Mayor
+government_form_role_labels:
+- Council Member
+- Chair
+- Vice Chair
+- Mayor
+people:
+- name: Mel Rapozo
+  label: Chair
+  phone: null
+  email: mrapozo@kauai.gov
+  url: https://www.kauai.gov/Government/Council
+  start_date: null
+  end_date: null
+  image: null
+  organization: County Council
+- name: KipuKai Kuali'i
+  label: Vice Chair
+  phone: null
+  email: kkualii@kauai.gov
+  url: https://www.kauai.gov/Government/Council
+  start_date: null
+  end_date: null
+  image: null
+  organization: County Council
+- name: Addison Bulosan
+  label: Council Member
+  phone: null
+  email: abulosan@kauai.gov
+  url: https://www.kauai.gov/Government/Council
+  start_date: null
+  end_date: null
+  image: null
+  organization: County Council
+- name: Arryl Kaneshiro
+  label: Council Member
+  phone: null
+  email: akaneshiro@kauai.gov
+  url: https://www.kauai.gov/Government/Council
+  start_date: null
+  end_date: null
+  image: null
+  organization: County Council
+- name: Bernard P. Carvalho Jr.
+  label: Council Member
+  phone: null
+  email: bcarvalho@kauai.gov
+  url: https://www.kauai.gov/Government/Council
+  start_date: null
+  end_date: null
+  image: null
+  organization: County Council
+- name: Felicia Cowden
+  label: Council Member
+  phone: null
+  email: fcowden@kauai.gov
+  url: https://www.kauai.gov/Government/Council
+  start_date: null
+  end_date: null
+  image: null
+  organization: County Council
+- name: Fern Holland
+  label: Council Member
+  phone: null
+  email: fholland@kauai.gov
+  url: https://www.kauai.gov/Government/Council
+  start_date: null
+  end_date: null
+  image: null
+  organization: County Council
+thought: 'Merged by plan P5 from county_kauai__county_executive__county_council__suggested_titles,
+  county_kauai__county_executive__office_of_the_mayor__suggested_titles. GENERATED,
+  review before moving into the dataset. Form county_executive (decided by the config);
+  suggested_titles, scoped to County Council. People are the published roster''s,
+  filed by role (a role no organization lists goes to the main board): check titles,
+  dates and anyone the page lists that the roster lacks.'

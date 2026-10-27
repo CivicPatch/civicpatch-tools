@@ -2,12 +2,8 @@ from typing import List
 
 import services.open_router.prompts as open_router_prompt
 from runners.pipeline03_people_collector.schemas import ExpectedMembership
-from runners.pipeline03_people_collector.steps.step_04_process_page_content.extraction_by_organization import (
-    ExtractionScope,
-    extraction_scopes,
-    prompt_organization,
-)
 from shared.schemas import KnownOrganization, PipelineRunConfig
+from runners.pipeline03_people_collector.steps.step_04_process_page_content.organization_pick import pick_choices
 from shared.utils import id_utils
 from shared.utils.content_hash import hash_texts
 from runners.pipeline03_people_collector.utils.organization_terms import (
@@ -28,13 +24,12 @@ def prompt_hash(
     """Everything the LLM sees about this page besides its text: every prompt it could be sent,
     rendered by the same builders the calls use, so any input or wording change moves it.
     Hashing a prompt a run never sends is harmless: it can only force a re-read."""
-    prompts = [relevance_prompt(page_url, config, known_roles, organizations)]
-    prompts += [coverage_prompt(organization, memberships, config) for organization in organizations]
-    prompts += [
-        extraction_prompt(organizations, memberships, jurisdiction_ocdid, scope)
-        for scope in extraction_scopes(organizations, memberships)
-    ]
-    return hash_texts(prompts)
+    return hash_texts(
+        [
+            relevance_prompt(page_url, config, known_roles, organizations),
+            page_extraction_prompt(organizations, memberships, jurisdiction_ocdid),
+        ]
+    )
 
 
 def relevance_prompt(
@@ -52,34 +47,19 @@ def relevance_prompt(
     )
 
 
-def coverage_prompt(
-    organization: KnownOrganization, memberships: List[ExpectedMembership], config: PipelineRunConfig
-) -> str:
-    asked = prompt_organization(organization, memberships)
-    return open_router_prompt.page_covers_organization_prompt(
-        organization.name,
-        asked.role_labels,
-        config.name or "",
-        divisions=asked.divisions,
-        government_form_role_labels=asked.government_form_role_labels,
-    )
-
-
-def extraction_prompt(
+def page_extraction_prompt(
     organizations: List[KnownOrganization],
     memberships: List[ExpectedMembership],
     jurisdiction_ocdid: str,
-    scope: ExtractionScope,
 ) -> str:
-    """An unscoped run is told the whole jurisdiction's roles and divisions; a scoped one reads
-    its organization's from `scope`."""
+    """One unscoped read of the page; each person's organization is picked from ours."""
     ocdid_parts = id_utils.parse_jurisdiction_ocdid(jurisdiction_ocdid)
     return open_router_prompt.elected_officials_prompt(
         expected_roles(memberships),
         level=ocdid_parts.level,
         state=ocdid_parts.state,
         county=ocdid_parts.county,
-        organization=scope.prompt_organization,
         divisions=expected_divisions(memberships),
         government_form_role_labels=government_form_role_labels(organizations, memberships),
+        organization_choices=pick_choices(organizations),
     )

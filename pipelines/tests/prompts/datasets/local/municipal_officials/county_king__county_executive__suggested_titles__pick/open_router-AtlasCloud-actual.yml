@@ -1,0 +1,91 @@
+people:
+- name: Girmay Zahilay
+  label: King County Executive
+  phone: null
+  email: null
+  url: https://kingcounty.gov/en/dept/executive
+  start_date: null
+  end_date: null
+  image: local://456fd6692c50.png
+  organization: County Executive
+- name: Rod Dembowski
+  label: King County Councilmember District 1
+  phone: null
+  email: null
+  url: https://kingcounty.gov/en/dept/council/governance-leadership/county-council/councilmembers-districts/rod-dembowski
+  start_date: null
+  end_date: null
+  image: local://1017c456c9ca.png
+  organization: County Council
+- name: Rhonda Lewis
+  label: King County Councilmember District 2
+  phone: null
+  email: null
+  url: https://kingcounty.gov/en/dept/council/governance-leadership/county-council/councilmembers-districts/rhonda-lewis
+  start_date: null
+  end_date: null
+  image: local://2400d22da048.png
+  organization: County Council
+- name: Sarah Perry
+  label: King County Councilmember District 3
+  phone: null
+  email: null
+  url: https://kingcounty.gov/en/dept/council/governance-leadership/county-council/councilmembers-districts/sarah-perry
+  start_date: null
+  end_date: null
+  image: local://260753e33326.png
+  organization: County Council
+- name: "Jorge L. Bar\xF3n"
+  label: King County Councilmember District 4
+  phone: null
+  email: null
+  url: https://kingcounty.gov/en/dept/council/governance-leadership/county-council/councilmembers-districts/jorge-l-baron
+  start_date: null
+  end_date: null
+  image: local://b7781f80cfaa.png
+  organization: County Council
+- name: Steffanie Fain
+  label: King County Councilmember District 5
+  phone: null
+  email: null
+  url: https://kingcounty.gov/en/dept/council/governance-leadership/county-council/councilmembers-districts/steffanie-fain
+  start_date: null
+  end_date: null
+  image: local://0b42e9ac8027.png
+  organization: County Council
+- name: Claudia Balducci
+  label: King County Councilmember District 6
+  phone: null
+  email: null
+  url: https://kingcounty.gov/en/dept/council/governance-leadership/county-council/councilmembers-districts/claudia-balducci
+  start_date: null
+  end_date: null
+  image: local://4e25e6caf6e2.png
+  organization: County Council
+- name: Pete von Reichbauer
+  label: King County Councilmember District 7
+  phone: null
+  email: null
+  url: https://kingcounty.gov/en/dept/council/governance-leadership/county-council/councilmembers-districts/pete-von-reichbauer
+  start_date: null
+  end_date: null
+  image: local://a4a58cdeecca.png
+  organization: County Council
+- name: Teresa Mosqueda
+  label: King County Councilmember District 8
+  phone: null
+  email: null
+  url: https://kingcounty.gov/en/dept/council/governance-leadership/county-council/councilmembers-districts/teresa-mosqueda
+  start_date: null
+  end_date: null
+  image: local://eb3637466d89.png
+  organization: County Council
+- name: Reagan Dunn
+  label: King County Councilmember District 9
+  phone: null
+  email: null
+  url: https://kingcounty.gov/en/dept/council/governance-leadership/county-council/councilmembers-districts/reagan-dunn
+  start_date: null
+  end_date: null
+  image: local://78bd4203babd.png
+  organization: County Council
