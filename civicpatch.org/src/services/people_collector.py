@@ -5,6 +5,7 @@ import lib.buckets as buckets
 import lib.pipeline_artifacts as artifacts
 import lib.storage as storage_service
 from core.images import cdn_urls, records_with_images, resolve_images
+from core.pipeline_run_summary import pipeline_run_summary, summary_log_line
 from core.source_pages import frontier_links, source_page_rows
 from database.changesets import register_scrape_changeset
 from database.issues import has_pending_issues, upsert_issue
@@ -27,6 +28,7 @@ from shared.utils.statuses import (
     PipelineIssueType,
     PipelineRunStatus,
 )
+from shared.utils.id_utils import parse_jurisdiction_ocdid
 from shared.utils.taxonomy import Taxonomy, build_taxonomy
 from shared.utils.yaml_utils import yaml_dump, yaml_load
 
@@ -272,6 +274,26 @@ async def _record_pipeline_error(pipeline_run_id: str, workflow_context: dict) -
     )
 
 
+async def _log_run_summary(
+    request: HandleSubmitPipelineRunArtifactsRequest, llm_costs: list[dict], workflow_context: dict
+) -> None:
+    """Best-effort, like recording the calls: a summary that cannot be built must not fail a submit."""
+    try:
+        run = await get_pipeline_run(request.pipeline_run_id)
+        logger.info(
+            summary_log_line(
+                request.pipeline_run_id,
+                request.jurisdiction_ocdid,
+                parse_jurisdiction_ocdid(request.jurisdiction_ocdid).state,
+                request.pipeline_run_status or "unknown",
+                run.get("pipeline_run_cap_usd") if run else None,
+                pipeline_run_summary(llm_costs, workflow_context),
+            )
+        )
+    except Exception as e:
+        logger.error(f"[{request.pipeline_run_id}] Failed to log the run summary: {e}", exc_info=True)
+
+
 async def _handle_submit_pipeline_run_artifacts(
     request: HandleSubmitPipelineRunArtifactsRequest,
 ) -> SubmitPipelineRunArtifactsResponse:
@@ -286,10 +308,10 @@ async def _handle_submit_pipeline_run_artifacts(
 
     # Best-effort, like the Sheets push it replaces: an unrecorded cost must not fail a submit
     # whose people are already stored.
+    llm_costs: list[dict] = []
     try:
-        recorded = await record_calls(
-            request.pipeline_run_id, artifacts.read_costs(dirs.debug)["llm_costs"]
-        )
+        llm_costs = artifacts.read_costs(dirs.debug)["llm_costs"]
+        recorded = await record_calls(request.pipeline_run_id, llm_costs)
         logger.info(f"[{request.pipeline_run_id}] Recorded {recorded} LLM call(s)")
     except Exception as e:
         logger.error(
@@ -297,6 +319,7 @@ async def _handle_submit_pipeline_run_artifacts(
         )
 
     workflow_context = artifacts.read_workflow_context(dirs.debug)
+    await _log_run_summary(request, llm_costs, workflow_context)
 
     if request.pipeline_run_status == PipelineRunStatus.SUCCESS:
         await _ingest_roster(request, dirs, filenames_to_urls, workflow_context)

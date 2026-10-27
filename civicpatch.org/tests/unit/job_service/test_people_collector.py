@@ -1,9 +1,13 @@
+import logging
+from decimal import Decimal
+
 import pytest
 from unittest.mock import AsyncMock, patch, MagicMock
 
 
 from services.people_collector import (
     _identities,
+    _log_run_summary,
     handle_submit_pipeline_run_artifacts,
 )
 from schemas.pipeline_runs import HandleSubmitPipelineRunArtifactsRequest, ServerDetail
@@ -186,3 +190,43 @@ def _official(name: str, person_id: str = "") -> dict:
         "source_urls": [],
         "updated_at": "2026-01-01T00:00:00+00:00",
     }
+
+
+# --- the run summary Grafana reads ---
+
+
+@pytest.mark.unit
+@pytest.mark.asyncio
+async def test_a_submitted_run_logs_its_summary_with_its_cap(caplog):
+    request = make_request(
+        jurisdiction_ocdid="ocd-jurisdiction/country:us/state:vt/place:essex/government",
+        pipeline_run_status=PipelineRunStatus.SUCCESS,
+    )
+    costs = [{"cost_usd": 0.02, "finish_reason": "length"}]
+    context = {"data": {"frontier": {"links": {}}, "stop_reason": "cost_cap_reached"}}
+    with (
+        patch(
+            "services.people_collector.get_pipeline_run",
+            new_callable=AsyncMock,
+            return_value={"pipeline_run_cap_usd": Decimal("0.19")},
+        ),
+        caplog.at_level(logging.INFO, logger="services.people_collector"),
+    ):
+        await _log_run_summary(request, costs, context)
+
+    lines = [record.getMessage() for record in caplog.records if record.getMessage().startswith("pipeline_run_finished")]
+    assert len(lines) == 1
+    assert " state=vt status=SUCCESS cost_usd=0.02 cap_usd=0.19 calls=1 calls_cut_at_the_output_cap=1" in lines[0]
+    assert lines[0].endswith(" stop_reason=cost_cap_reached")
+
+
+@pytest.mark.unit
+@pytest.mark.asyncio
+async def test_a_summary_that_cannot_be_built_is_logged_and_does_not_raise(caplog):
+    with (
+        patch("services.people_collector.get_pipeline_run", new_callable=AsyncMock, side_effect=RuntimeError("db down")),
+        caplog.at_level(logging.ERROR, logger="services.people_collector"),
+    ):
+        await _log_run_summary(make_request(), [], {})
+
+    assert any("Failed to log the run summary" in record.getMessage() for record in caplog.records)
