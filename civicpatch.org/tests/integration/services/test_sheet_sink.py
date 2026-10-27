@@ -194,7 +194,7 @@ async def _seed(count: int):
             "VALUES (%s, 'zz', 'local')",
             (_ZZ,),
         )
-        organization_id = await organizations.find_or_create(cur, _ZZ)
+        organization_id = await organizations.find_or_create(cur, _ZZ, "Officers")
         await divisions.find_or_create(cur, _ZZ_DIVISION, _ZZ)
         post_id = await factories.seed_post(
             cur, _ZZ, organization_id, "mayor", _ZZ_DIVISION
@@ -438,7 +438,7 @@ async def _seed_two_stints() -> None:
             "VALUES (%s, 'zz', 'local')",
             (_ZZ,),
         )
-        organization_id = await organizations.find_or_create(cur, _ZZ)
+        organization_id = await organizations.find_or_create(cur, _ZZ, "Officers")
         await divisions.find_or_create(cur, _ZZ_DIVISION, _ZZ)
         post_id = await factories.seed_post(
             cur, _ZZ, organization_id, "mayor", _ZZ_DIVISION

@@ -13,7 +13,6 @@ import pytest_asyncio
 from database.database import get_pool
 from database.organizations import ensure_defaults_exist
 from services.government_form import (
-    ensure_government_form_organizations,
     government_form_summary,
     organizations_with_role_labels,
     resolved_government,
@@ -64,12 +63,15 @@ def _forms(**organizations_by_form: list[DerivedOrganization]) -> ConfigFile:
 
 
 _ROLE_LABELS = [
-    "Mayor", "Council Member", "Commissioner", "Supervisor", "Clerk", "Treasurer", "Trustee",
+    "Mayor", "Council Member", "Commissioner", "Supervisor", "Treasurer", "Trustee",
     "Select Board Member", "Chair", "Vice Chair", "Moderator", "County Executive",
 ]
 _CONFIGS = {
     COUNTRY_ROLES_PATH: ConfigFile(
-        roles=[ConfigRole(id=label.lower().replace(" ", "-"), label=label) for label in _ROLE_LABELS]
+        roles=[
+            *[ConfigRole(id=label.lower().replace(" ", "-"), label=label) for label in _ROLE_LABELS],
+            ConfigRole(id="clerk", label="Clerk", aliases=["Town Clerk"]),
+        ]
     ),
     "data_source/local/config.yml": _forms(
         mayor_council=[_organization("Council", "Council Member"), _organization("Office of the Mayor", "Mayor")],
@@ -78,6 +80,7 @@ _CONFIGS = {
         open_town_meeting=[
             _organization("Select Board", "Select Board Member", "Chair", "Vice Chair"),
             _organization("Town Meeting", "Moderator"),
+            _organization("Town Officers", "Town Clerk", "Treasurer"),
         ],
     ),
     "data_source/counties/config.yml": _forms(
@@ -186,91 +189,19 @@ async def test_a_tennessee_county_resolves_to_its_board_and_mayors_office():
     ]
 
 
-async def _organizations(jurisdiction_ocdid: str) -> list[tuple[str, str, bool]]:
-    pool = await get_pool()
-    async with pool.connection() as conn, conn.cursor() as cur:
-        await cur.execute(
-            """
-            SELECT id::text, name, meta_is_default FROM organizations
-            WHERE jurisdiction_ocdid = %s ORDER BY meta_is_default DESC, name
-            """,
-            (jurisdiction_ocdid,),
-        )
-        return list(await cur.fetchall())
-
-
 async def _resolved_form(jurisdiction_ocdid: str) -> str | None:
     form = (await resolved_government(jurisdiction_ocdid)).government_form
     return form.value if form is not None else None
 
 
-@pytest.mark.integration
-@pytest.mark.asyncio
-async def test_a_rule_decided_form_renames_the_default():
-    await _seed(_MI_TOWNSHIP, "mi", {"name": "Zyform township"})
-    await ensure_defaults_exist([_MI_TOWNSHIP])
-    [(default_id, _, _)] = await _organizations(_MI_TOWNSHIP)
-
-    await ensure_government_form_organizations()
-
-    assert await _organizations(_MI_TOWNSHIP) == [(default_id, "Board", True)]
-    assert await _resolved_form(_MI_TOWNSHIP) == "township_board"
-
-
-@pytest.mark.integration
-@pytest.mark.asyncio
-async def test_an_open_data_form_creates_the_second_organization_beside_the_renamed_default():
-    await _seed(_MA_TOWN, "ma", {"name": "Zyform town"}, government_form="open_town_meeting")
-    await ensure_defaults_exist([_MA_TOWN])
-    [(default_id, _, _)] = await _organizations(_MA_TOWN)
-
-    await ensure_government_form_organizations()
-
-    organizations = await _organizations(_MA_TOWN)
-    assert organizations[0] == (default_id, "Select Board", True)
-    assert [(name, is_default) for _, name, is_default in organizations[1:]] == [
-        ("Town Meeting", False)
-    ]
-
-
-@pytest.mark.integration
-@pytest.mark.asyncio
-async def test_applying_a_form_twice_changes_nothing_the_second_time():
-    await _seed(_MI_TOWNSHIP, "mi", {"name": "Zyform township"})
-    await ensure_defaults_exist([_MI_TOWNSHIP])
-    await ensure_government_form_organizations()
-    before = await _organizations(_MI_TOWNSHIP)
-
-    await ensure_government_form_organizations()
-
-    assert await _organizations(_MI_TOWNSHIP) == before
-
-
-@pytest.mark.integration
-@pytest.mark.asyncio
-async def test_a_jurisdiction_the_config_leaves_open_is_not_touched():
-    await _seed(_WA_CITY, "wa", {"name": "Zyform city"})
-    await ensure_defaults_exist([_WA_CITY])
-
-    await ensure_government_form_organizations()
-
-    assert [name for _, name, _ in await _organizations(_WA_CITY)] == ["Government"]
-    assert await _resolved_form(_WA_CITY) is None
-
-
-@pytest.mark.integration
-@pytest.mark.asyncio
-async def test_the_sync_pass_applies_forms_not_yet_applied_and_leaves_open_ones_alone():
-    await _seed(_MI_TOWNSHIP, "mi", {"name": "Zyform township"})
-    await _seed(_WA_CITY, "wa", {"name": "Zyform city"})
-    await ensure_defaults_exist([_MI_TOWNSHIP, _WA_CITY])
-
-    await ensure_government_form_organizations()
-
-    assert [name for _, name, _ in await _organizations(_MI_TOWNSHIP)] == ["Board"]
-    assert await _resolved_form(_MI_TOWNSHIP) == "township_board"
-    assert [name for _, name, _ in await _organizations(_WA_CITY)] == ["Government"]
-    assert await _resolved_form(_WA_CITY) is None
+async def _insert_organizations(jurisdiction_ocdid: str, names: list[str]) -> None:
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        for name in names:
+            await cur.execute(
+                "INSERT INTO organizations (jurisdiction_ocdid, name) VALUES (%s, %s)", (jurisdiction_ocdid, name)
+            )
+        await conn.commit()
 
 
 async def _rename_default(jurisdiction_ocdid: str, name: str) -> None:
@@ -285,66 +216,16 @@ async def _rename_default(jurisdiction_ocdid: str, name: str) -> None:
 
 @pytest.mark.integration
 @pytest.mark.asyncio
-async def test_a_default_renamed_by_hand_is_not_renamed_back():
-    await _seed(_MI_TOWNSHIP, "mi", {"name": "Zyform township"})
-    await ensure_defaults_exist([_MI_TOWNSHIP])
-    await _rename_default(_MI_TOWNSHIP, "Township Board of Trustees")
-
-    await ensure_government_form_organizations()
-
-    assert [name for _, name, _ in await _organizations(_MI_TOWNSHIP)] == ["Township Board of Trustees"]
-    assert await _resolved_form(_MI_TOWNSHIP) == "township_board"
-
-
-@pytest.mark.integration
-@pytest.mark.asyncio
-async def test_a_texas_county_gets_its_commissioners_court():
-    await _seed(_TX_COUNTY, "tx", {"name": "Zyform County"})
-    await ensure_defaults_exist([_TX_COUNTY])
-
-    await ensure_government_form_organizations()
-
-    assert [name for _, name, _ in await _organizations(_TX_COUNTY)] == ["Commissioners Court"]
-    assert await _resolved_form(_TX_COUNTY) == "commission"
-
-
-@pytest.mark.integration
-@pytest.mark.asyncio
-async def test_a_tennessee_county_also_gets_its_mayors_office():
-    await _seed(_TN_COUNTY, "tn", {"name": "Zyform County"})
-    await ensure_defaults_exist([_TN_COUNTY])
-
-    await ensure_government_form_organizations()
-
-    assert [name for _, name, _ in await _organizations(_TN_COUNTY)] == [
-        "County Commission",
-        "Office of the County Mayor",
-    ]
-    assert await _resolved_form(_TN_COUNTY) == "county_executive"
-
-
-@pytest.mark.integration
-@pytest.mark.asyncio
-async def test_a_county_gets_its_states_one_form_and_board():
-    await _seed(_WA_COUNTY, "wa", {"name": "Zyform County"})
-    await ensure_defaults_exist([_WA_COUNTY])
-
-    await ensure_government_form_organizations()
-
-    assert [name for _, name, _ in await _organizations(_WA_COUNTY)] == ["Board of County Commissioners"]
-    assert await _resolved_form(_WA_COUNTY) == "commission"
-
-
-@pytest.mark.integration
-@pytest.mark.asyncio
 async def test_the_organizations_carry_their_derived_role_labels():
+    """The organizations a state's migration creates, beside the born default."""
     await _seed(_TN_COUNTY, "tn", {"name": "Zyform County"})
     await ensure_defaults_exist([_TN_COUNTY])
-    await ensure_government_form_organizations()
+    await _insert_organizations(_TN_COUNTY, ["County Commission", "Office of the County Mayor"])
 
     organizations = await organizations_with_role_labels(_TN_COUNTY)
 
     assert {o["name"]: o["role_labels"] for o in organizations} == {
+        "County Officers": [],
         "County Commission": ["Commissioner", "Chair"],
         "Office of the County Mayor": ["Mayor"],
     }

@@ -72,3 +72,42 @@ def test_the_question_names_every_way_the_law_may_write_the_role():
     member = role_asks(CONFIG, "Stowe town", GovernmentForm.OPEN_TOWN_MEETING)[0]
 
     assert member.names == ["Select Board Member", "Member", "Council Member", "selectboard member"]
+
+
+# Vermont's town forms list the § 2646 officers after the Selectboard and Town Meeting, so the
+# presiding candidates still hang on the Selectboard while the clerk is asked under Town Officers.
+_VT_ROLES = ConfigFile(
+    roles=[
+        ConfigRole(id="member", label="Member", aliases=["Select Board Member"]),
+        ConfigRole(id="chair", label="Chair", is_unique=True, selection_method=SelectionMethod.ELECTED_BY_MEMBERS),
+        ConfigRole(id="moderator", label="Moderator", is_unique=True),
+        ConfigRole(id="clerk", label="Clerk", is_unique=True, aliases=["Town Clerk"]),
+        ConfigRole(id="treasurer", label="Treasurer", is_unique=True, aliases=["Town Treasurer"]),
+        ConfigRole(id="lister", label="Lister"),
+    ]
+)
+_VT_FORMS = ConfigFile(
+    government_forms={
+        GovernmentForm.OPEN_TOWN_MEETING: GovernmentFormConfig(
+            suffixes=["town"],
+            organizations=[
+                DerivedOrganization(name="Selectboard", role_labels=["Select Board Member"]),
+                DerivedOrganization(name="Town Meeting", role_labels=["Moderator"]),
+                DerivedOrganization(name="Town Officers", role_labels=["Town Clerk", "Town Treasurer"]),
+                DerivedOrganization(name="Board of Listers", role_labels=["Lister"]),
+            ],
+        ),
+    }
+)
+_VT_CONFIG = merged_config(_VT_ROLES, _VT_FORMS, None)
+
+
+def test_town_officers_are_asked_under_their_own_organization_after_the_boards():
+    assert _asked(role_asks(_VT_CONFIG, "Johnson town", GovernmentForm.OPEN_TOWN_MEETING)) == [
+        ("Selectboard", "member", "Select Board Member"),
+        ("Town Meeting", "moderator", "Moderator"),
+        ("Town Officers", "clerk", "Town Clerk"),
+        ("Town Officers", "treasurer", "Town Treasurer"),
+        ("Board of Listers", "lister", "Lister"),
+    ]
+    assert _asked(presiding_asks(_VT_CONFIG, "Johnson town", GovernmentForm.OPEN_TOWN_MEETING)) == [("Selectboard", "chair", "Chair")]

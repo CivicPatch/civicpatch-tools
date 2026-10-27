@@ -3,17 +3,14 @@ and the role labels each serves with.
 
 Pure: the derived organizations and the jurisdiction's organizations in.
 
-The default organization is renamed to the first derived organization rather than replaced, so its
-id, and with it every post id, membership id and human claim keyed to them, survives. No source
-record moves. Whoever the form puts elsewhere (a Mayor under mayor_council) stays in the renamed
-organization until the next reviewed scrape files them into their own and closes the old
-membership.
+The default organization, `{lsad} Officers`, is born with the jurisdiction (`ensure_defaults_exist`).
+The form's other organizations come from a state's data migration, never from code.
 """
 
 from pydantic import BaseModel
 
 from shared.schemas import GovernmentForm
-from shared.utils.government_forms import DerivedOrganization
+from shared.utils.government_forms import DerivedOrganization, name_suffix
 from shared.utils.layered_config import (
     MergedConfig,
     allowed_government_forms,
@@ -22,38 +19,16 @@ from shared.utils.layered_config import (
 )
 
 
-class ExistingOrganization(BaseModel):
-    id: str
-    name: str
-    meta_is_default: bool
+LEGAL_STATUS_WORDS = ("city", "town", "township", "county", "village", "borough", "plantation")
+DEFAULT_ORGANIZATION_SUFFIX = "Officers"
 
 
-class OrganizationChanges(BaseModel):
-    # None when the default was renamed by hand, or the name is already taken.
-    rename_default_to: str | None
-    organizations_to_create: list[DerivedOrganization]
-
-    @property
-    def has_no_changes(self) -> bool:
-        return self.rename_default_to is None and not self.organizations_to_create
-
-
-def organization_changes(
-    derived: list[DerivedOrganization],
-    organizations: list[ExistingOrganization],
-    original_default_name: str,
-) -> OrganizationChanges:
-    if not derived:
-        return OrganizationChanges(rename_default_to=None, organizations_to_create=[])
-    first, *others = derived
-    existing_names = [organization.name for organization in organizations]
-    defaults = [organization for organization in organizations if organization.meta_is_default]
-    default_keeps_its_original_name = bool(defaults) and defaults[0].name == original_default_name
-    rename = default_keeps_its_original_name and first.name not in existing_names
-    return OrganizationChanges(
-        rename_default_to=first.name if rename else None,
-        organizations_to_create=[o for o in others if o.name not in existing_names],
-    )
+def default_organization_name(jurisdiction_name: str) -> str:
+    """"Essex town" -> "Town Officers"; names that end in no legal status word -> "Officers"."""
+    suffix = name_suffix(jurisdiction_name)
+    if suffix not in LEGAL_STATUS_WORDS:
+        return DEFAULT_ORGANIZATION_SUFFIX
+    return f"{suffix.capitalize()} {DEFAULT_ORGANIZATION_SUFFIX}"
 
 
 class ResolvedGovernment(BaseModel):

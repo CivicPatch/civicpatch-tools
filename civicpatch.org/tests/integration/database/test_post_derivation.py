@@ -131,7 +131,7 @@ async def test_record_mints_once_then_matches():
     await _seed_person()
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        org = await organizations.find_or_create(cur, _OCDID)
+        org = await organizations.find_or_create(cur, _OCDID, "Officers")
         await divisions.find_or_create(cur, _BASE, _OCDID)
 
         first = await factories.seed_post(cur, _OCDID, org, "mayor", _BASE)
@@ -156,7 +156,7 @@ async def test_a_match_never_overwrites_a_human_edit():
     await _seed_person()
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        org = await organizations.find_or_create(cur, _OCDID)
+        org = await organizations.find_or_create(cur, _OCDID, "Officers")
         await divisions.find_or_create(cur, _BASE, _OCDID)
         post_id = await factories.seed_post(cur, _OCDID, org, "council-member", _BASE)
         await conn.commit()
@@ -213,7 +213,7 @@ async def test_unmatched_people_share_one_post_per_division():
             "VALUES (%s, %s, %s)",
             (second := str(uuid.uuid4()), _OCDID, "Other"),
         )
-        org = await organizations.find_or_create(cur, _OCDID)
+        org = await organizations.find_or_create(cur, _OCDID, "Officers")
         await divisions.find_or_create(cur, _BASE, _OCDID)
 
         bucket = await factories.seed_post(cur, _OCDID, org, "unmatched", _BASE)
@@ -324,7 +324,7 @@ async def test_create_returns_none_when_the_identity_is_taken():
     await _seed_person()
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        org = await organizations.find_or_create(cur, _OCDID)
+        org = await organizations.find_or_create(cur, _OCDID, "Officers")
         await divisions.find_or_create(cur, _BASE, _OCDID)
 
         first = await posts.create_if_absent(cur, _OCDID, org, "mayor", _BASE)
@@ -340,7 +340,7 @@ async def test_a_human_created_post_is_matched_by_a_later_scrape():
     await _seed_person()
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        org = await organizations.find_or_create(cur, _OCDID)
+        org = await organizations.find_or_create(cur, _OCDID, "Officers")
         await conn.commit()
 
     created = await posts.create(org, "mayor", _BASE, 3, SYSTEM_USER_ID)
@@ -361,7 +361,7 @@ async def test_delete_refuses_a_post_that_has_ever_been_held():
     person_id = await _seed_person()
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        org = await organizations.find_or_create(cur, _OCDID)
+        org = await organizations.find_or_create(cur, _OCDID, "Officers")
         await divisions.find_or_create(cur, _BASE, _OCDID)
         held = await factories.seed_post(cur, _OCDID, org, "mayor", _BASE)
         unheld = await factories.seed_post(cur, _OCDID, org, "clerk", _BASE)
@@ -378,7 +378,7 @@ async def test_update_reaches_the_two_human_fields_and_reports_a_miss():
     await _seed_person()
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        org = await organizations.find_or_create(cur, _OCDID)
+        org = await organizations.find_or_create(cur, _OCDID, "Officers")
         await divisions.find_or_create(cur, _BASE, _OCDID)
         post_id = await factories.seed_post(cur, _OCDID, org, "trustee", _BASE)
         await conn.commit()
@@ -414,7 +414,7 @@ async def test_the_membership_read_still_selects_every_column_it_names():
     person_id = await _seed_person()
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        org = await organizations.find_or_create(cur, _OCDID)
+        org = await organizations.find_or_create(cur, _OCDID, "Officers")
         await divisions.find_or_create(cur, _BASE, _OCDID)
         post_id = await factories.seed_post(cur, _OCDID, org, "mayor", _BASE)
         await factories.bind_membership(cur, SeededMembership(person_id=person_id), post_id, org, _T0)
@@ -440,7 +440,7 @@ async def test_a_label_naming_two_offices_keeps_the_loser_on_the_membership():
     person_id = await _seed_person()
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        org = await organizations.find_or_create(cur, _OCDID)
+        org = await organizations.find_or_create(cur, _OCDID, "Officers")
 
     await _publish((org, person_id, "Clerk and Treasurer"))
     assert await _extra_roles(person_id) == ["treasurer"]
@@ -552,7 +552,7 @@ async def test_an_unreviewed_scrape_leaves_published_memberships_alone():
     person_id = await _seed_person()
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        org = await organizations.find_or_create(cur, _OCDID)
+        org = await organizations.find_or_create(cur, _OCDID, "Officers")
         await divisions.find_or_create(cur, _BASE, _OCDID)
         post_id = await factories.seed_post(cur, _OCDID, org, "mayor", _BASE)
         await factories.bind_membership(cur, SeededMembership(person_id=person_id), post_id, org, _T0)
@@ -624,7 +624,7 @@ async def test_a_scrape_that_re_confirms_the_roster_publishes():
     people = [await _seed_person(f"Seed {label}") for _, label in seats]
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        org = await organizations.find_or_create(cur, _OCDID)
+        org = await organizations.find_or_create(cur, _OCDID, "Officers")
         await divisions.find_or_create(cur, _BASE, _OCDID)
         await cur.execute(
             "INSERT INTO changesets (id, jurisdiction_ocdid, kind, "
@@ -686,7 +686,7 @@ async def test_a_scrape_the_pipeline_reported_an_issue_on_does_not_publish():
     people = [await _seed_person(f"Seed {label}") for _, label in seats]
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        org = await organizations.find_or_create(cur, _OCDID)
+        org = await organizations.find_or_create(cur, _OCDID, "Officers")
         await divisions.find_or_create(cur, _BASE, _OCDID)
         await cur.execute(
             "INSERT INTO changesets (id, jurisdiction_ocdid, kind, "
@@ -748,7 +748,7 @@ async def test_a_partial_term_date_is_stored_as_the_source_gave_it():
     person_id = await _seed_person()
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        org = await organizations.find_or_create(cur, _OCDID)
+        org = await organizations.find_or_create(cur, _OCDID, "Officers")
         await divisions.find_or_create(cur, _BASE, _OCDID)
         post_id = await factories.seed_post(cur, _OCDID, org, "mayor", _BASE)
 
@@ -778,7 +778,7 @@ async def test_a_persons_term_is_read_off_the_seat_they_hold():
     person_id = await _seed_person()
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        org = await organizations.find_or_create(cur, _OCDID)
+        org = await organizations.find_or_create(cur, _OCDID, "Officers")
         await divisions.find_or_create(cur, _BASE, _OCDID)
         post_id = await factories.seed_post(cur, _OCDID, org, "mayor", _BASE)
         await factories.bind_membership(
@@ -830,7 +830,7 @@ async def _open_memberships(person_id: str) -> list[tuple[str, str, str]]:
 async def _two_bodies() -> tuple[str, str]:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        council = await organizations.find_or_create(cur, _OCDID)
+        council = await organizations.find_or_create(cur, _OCDID, "Officers")
         mayors_office = await organizations.find_or_create(cur, _OCDID, "Office of the Mayor")
         await conn.commit()
     return council, mayors_office
@@ -940,7 +940,7 @@ async def test_a_proposal_names_a_post_by_the_name_a_human_gave_it():
     leaving = await _seed_person("Bo Chen")
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        council = await organizations.find_or_create(cur, _OCDID)
+        council = await organizations.find_or_create(cur, _OCDID, "Officers")
         await divisions.find_or_create(cur, _BASE, _OCDID)
         post_id = await factories.seed_post(cur, _OCDID, council, "council-member", _BASE)
         await cur.execute(
@@ -1005,7 +1005,7 @@ async def test_a_newer_scrape_published_meanwhile_supersedes_a_pending_one():
 async def _organization() -> str:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        return await organizations.find_or_create(cur, _OCDID)
+        return await organizations.find_or_create(cur, _OCDID, "Officers")
 
 async def _restating(*source_records: tuple[str, str, str]) -> str:
     """An unpublished scrape that read these `(organization, person, label)` source records — what a

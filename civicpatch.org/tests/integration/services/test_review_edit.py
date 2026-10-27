@@ -58,7 +58,7 @@ async def _seed() -> tuple[str, str]:
     await factories.seed_jurisdiction(_OCDID, "zz", name="Review Edit Ville")
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        organization_id = await organizations.find_or_create(cur, _OCDID)
+        organization_id = await organizations.find_or_create(cur, _OCDID, "Officers")
         await conn.commit()
     person_id = str(uuid.uuid4())
     record = {"name": "Ada", "label": "Mayor", "source_url": _PAGE, "organization_id": organization_id}
@@ -246,7 +246,7 @@ async def test_a_merge_in_review_publishes_as_one_person_and_rolls_back_as_two()
 async def _organization_id() -> str:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        return await organizations.find_or_create(cur, _OCDID)
+        return await organizations.find_or_create(cur, _OCDID, "Officers")
 
 
 async def _seed_duplicate(scrape_id: str) -> str:

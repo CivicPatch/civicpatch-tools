@@ -7,7 +7,6 @@ import database.organizations as organizations_db
 import database.synced_files as synced_files_db
 import environment
 import lib.github.api as github_service
-import services.government_form as government_form_service
 import services.jurisdiction_pull_request as jurisdiction_pr_service
 import yaml
 from core.sources.open_data.paths import (
@@ -121,9 +120,6 @@ async def read_all():
     # drop cursors for files that left the tree
     for path in jurisdiction_diffs.deleted:
         await synced_files_db.delete_synced_files(paths=[path])
-    # Every run, not only for files that changed: a config edit changes no registry file. Cheap
-    # when there is nothing to do, which is nearly every run.
-    await government_form_service.ensure_government_form_organizations()
     # After the files are read: a PR merged by now has just been synced in.
     await jurisdiction_pr_service.fetch_pull_request_outcomes()
 

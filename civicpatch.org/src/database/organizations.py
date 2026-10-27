@@ -1,19 +1,15 @@
 import json
+from core.organization_derivation import default_organization_name
 from database.database import get_pool
-from shared.schemas import PLACEHOLDER_ORGANIZATION_NAME
-
-# The name a jurisdiction's first body is created with. Generic because the ocdid is:
-# `…/place:berlin/government` says nothing about city vs township. Only a starting name —
-# which body is the default is `meta_is_default`, so this one can be renamed.
-DEFAULT_ORGANIZATION_NAME = PLACEHOLDER_ORGANIZATION_NAME
 
 
 async def ensure_defaults_exist(jurisdiction_ocdids: list[str]) -> None:
-    """Give each jurisdiction with no organizations at all its first, default one.
+    """Give each jurisdiction with no organizations at all its first, default one, named
+    `{lsad} Officers` from the jurisdiction's name.
 
     Called from the open-data sync as jurisdictions are upserted, so `get_default` never has to
     create one lazily afterward. Keyed on "has any organization", not on the name, so renaming
-    the default does not bring a second 'Government' back on the next sync.
+    the default does not bring a second one back on the next sync.
     """
     if not jurisdiction_ocdids:
         return
@@ -21,15 +17,26 @@ async def ensure_defaults_exist(jurisdiction_ocdids: list[str]) -> None:
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
+            SELECT jurisdiction_ocdid, coalesce(data->>'name', '')
+            FROM jurisdictions
+            WHERE jurisdiction_ocdid = ANY(%s::text[])
+              AND NOT EXISTS (
+                SELECT 1 FROM organizations
+                WHERE organizations.jurisdiction_ocdid = jurisdictions.jurisdiction_ocdid
+              )
+            """,
+            (jurisdiction_ocdids,),
+        )
+        unbuilt = await cur.fetchall()
+        if not unbuilt:
+            return
+        await cur.executemany(
+            """
             INSERT INTO organizations (jurisdiction_ocdid, name, meta_is_default)
-            SELECT ocdid, %s, true
-            FROM unnest(%s::text[]) AS ocdid
-            WHERE NOT EXISTS (
-                SELECT 1 FROM organizations WHERE organizations.jurisdiction_ocdid = ocdid
-            )
+            VALUES (%s, %s, true)
             ON CONFLICT DO NOTHING
             """,
-            (DEFAULT_ORGANIZATION_NAME, jurisdiction_ocdids),
+            [(ocdid, default_organization_name(name)) for ocdid, name in unbuilt],
         )
 
 
@@ -52,9 +59,7 @@ async def get_default(cur, jurisdiction_ocdid: str) -> str:
     return row[0]
 
 
-async def find_or_create(
-    cur, jurisdiction_ocdid: str, name: str = DEFAULT_ORGANIZATION_NAME
-) -> str:
+async def find_or_create(cur, jurisdiction_ocdid: str, name: str) -> str:
     await cur.execute(
         """
         INSERT INTO organizations (jurisdiction_ocdid, name)
@@ -149,23 +154,6 @@ async def update(organization_id: str, name: str, url: str | None, extras_role_l
             (name, url, json.dumps(extras_role_labels) if extras_role_labels is not None else None, organization_id),
         )
         return cur.rowcount > 0
-
-
-async def set_extras_role_labels(cur, organization_id: str, role_labels: dict[str, str]) -> None:
-    """What the organization calls its roles, laid over what it had: a form's or the charter's answer."""
-    if not role_labels:
-        return
-    await cur.execute(
-        "UPDATE organizations SET extras_role_labels = extras_role_labels || %s::jsonb WHERE id = %s",
-        (json.dumps(role_labels), organization_id),
-    )
-
-
-async def rename(cur, organization_id: str, name: str) -> None:
-    """On the caller's transaction, unlike `update`, which opens its own."""
-    await cur.execute(
-        "UPDATE organizations SET name = %s WHERE id = %s", (name, organization_id)
-    )
 
 
 async def set_default(organization_id: str) -> bool:

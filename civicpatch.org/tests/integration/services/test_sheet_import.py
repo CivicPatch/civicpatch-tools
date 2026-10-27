@@ -115,7 +115,7 @@ async def user_id():
         # raw insert bypasses that, so it has to do the pairing itself.
         await cur.execute(
             "INSERT INTO organizations (jurisdiction_ocdid, name) "
-            "SELECT unnest(%s::text[]), 'Government'",
+            "SELECT unnest(%s::text[]), 'Officers'",
             (_OCDIDS,),
         )
         await cur.execute(
@@ -171,7 +171,7 @@ async def _seed_open_membership(name: str, source_labels: list[str]) -> None:
             "INSERT INTO people (id, jurisdiction_ocdid, name) VALUES (%s, %s, %s)",
             (person_id, _OCDID, name),
         )
-        org = await organizations.find_or_create(cur, _OCDID)
+        org = await organizations.find_or_create(cur, _OCDID, "Officers")
         division = "ocd-division/country:us/state:zz/place:zz_sheet_test"
         await divisions.find_or_create(cur, division, _OCDID)
         post_id = await factories.seed_post(cur, _OCDID, org, "select-board-chair", division)

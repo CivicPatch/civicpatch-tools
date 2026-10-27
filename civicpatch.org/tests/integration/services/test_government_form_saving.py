@@ -94,11 +94,12 @@ async def _saved_form() -> GovernmentForm | None:
 
 @pytest.mark.integration
 @pytest.mark.asyncio
-async def test_setting_the_form_saves_it_logs_it_and_builds_its_organizations():
+async def test_setting_the_form_saves_it_and_logs_it_and_builds_nothing():
+    """Organizations come from a state's migration; the born default is all a form change leaves."""
     await set_government_form(_CITY, GovernmentForm.MAYOR_COUNCIL, SYSTEM_USER_ID)
 
     assert await _saved_form() == GovernmentForm.MAYOR_COUNCIL
-    assert await _organization_names() == ["Council", "Office of the Mayor"]
+    assert await _organization_names() == ["City Officers"]
     assert [{"field": "government_form", "before": None, "after": "mayor_council", "sources": []}] in (
         await _logged_fields()
     )

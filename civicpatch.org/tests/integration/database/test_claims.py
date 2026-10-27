@@ -82,7 +82,7 @@ async def _seed() -> tuple[str, str]:
             "VALUES (%s, 'zz', 'local')",
             (_OCDID,),
         )
-        organization_id = await organizations.find_or_create(cur, _OCDID)
+        organization_id = await organizations.find_or_create(cur, _OCDID, "Officers")
         await divisions.find_or_create(cur, _BASE, _OCDID)
         post_id = await factories.seed_post(cur, _OCDID, organization_id, "mayor", _BASE)
         # A held seat somewhere else in the jurisdiction, so this is not its first scrape.
@@ -127,7 +127,7 @@ async def test_a_hand_made_post_can_override_its_own_derived_label():
 
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        organization_id = await organizations.find_or_create(cur, _OCDID)
+        organization_id = await organizations.find_or_create(cur, _OCDID, "Officers")
         await conn.commit()
 
     post_id = await posts.create(
@@ -148,7 +148,7 @@ async def test_a_hand_made_post_without_a_label_override_keeps_the_derived_one()
 
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        organization_id = await organizations.find_or_create(cur, _OCDID)
+        organization_id = await organizations.find_or_create(cur, _OCDID, "Officers")
         await conn.commit()
 
     post_id = await posts.create(organization_id, "council-member", _BASE, 1, user_id)
@@ -169,7 +169,7 @@ async def test_looking_again_refreshes_rather_than_accumulating():
     user_id, _ = await _seed()
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        organization_id = await organizations.find_or_create(cur, _OCDID)
+        organization_id = await organizations.find_or_create(cur, _OCDID, "Officers")
         await conn.commit()
     post_id = await posts.create(organization_id, "treasurer", _BASE, 1, user_id)
 
@@ -557,7 +557,7 @@ async def test_a_post_someone_holds_cannot_be_deleted():
 
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        organization_id = await organizations.find_or_create(cur, _OCDID)
+        organization_id = await organizations.find_or_create(cur, _OCDID, "Officers")
         await cur.execute(
             "INSERT INTO people (id, jurisdiction_ocdid, name) VALUES (%s, %s, %s)",
             (person_id := str(uuid.uuid4()), _OCDID, "Holder"),
@@ -579,7 +579,7 @@ async def _person_with_a_record(name: str) -> str:
             "INSERT INTO people (id, jurisdiction_ocdid, name) VALUES (%s, %s, %s)",
             (person_id, _OCDID, name),
         )
-        organization_id = await organizations.find_or_create(cur, _OCDID)
+        organization_id = await organizations.find_or_create(cur, _OCDID, "Officers")
         await conn.commit()
     await factories.published_scrape(
         _OCDID,

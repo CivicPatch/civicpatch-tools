@@ -113,7 +113,7 @@ async def _seed() -> tuple[str, Identity]:
         )
         # A seat, and an open membership in it: `get_roster` is "has an open membership", so
         # a person without one is not on the roster and the edit would read as an addition.
-        org = await organizations.find_or_create(cur, _OCDID)
+        org = await organizations.find_or_create(cur, _OCDID, "Officers")
         await divisions.find_or_create(cur, _BASE, _OCDID)
         post_id = await factories.seed_post(cur, _OCDID, org, "mayor", _BASE)
         await factories.bind_membership(
@@ -320,7 +320,7 @@ async def test_leaving_somebody_out_retires_them():
             "        ARRAY[]::text[], ARRAY[]::text[], ARRAY[]::text[], ARRAY[]::text[])",
             (other_id, _OCDID),
         )
-        org = await organizations.find_or_create(cur, _OCDID)
+        org = await organizations.find_or_create(cur, _OCDID, "Officers")
         seat = await factories.seed_post(cur, _OCDID, org, "clerk", _BASE)
         await factories.bind_membership(
             cur,
@@ -399,7 +399,7 @@ async def _seed_second_person() -> str:
             "        ARRAY[]::text[], ARRAY[]::text[], ARRAY[]::text[])",
             (person_id, _OCDID),
         )
-        org = await organizations.find_or_create(cur, _OCDID)
+        org = await organizations.find_or_create(cur, _OCDID, "Officers")
         post_id = await factories.seed_post(cur, _OCDID, org, "clerk", _BASE)
         await factories.bind_membership(
             cur,
@@ -613,7 +613,7 @@ async def _seat(person_id: str, post_id: str, label: str | None, user_id: str) -
 async def _clerk_post() -> str:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        org = await organizations.find_or_create(cur, _OCDID)
+        org = await organizations.find_or_create(cur, _OCDID, "Officers")
         post_id = await factories.seed_post(cur, _OCDID, org, "clerk", _BASE)
         await conn.commit()
     return post_id

@@ -123,7 +123,7 @@ async def test_ensure_defaults_exist_creates_a_flagged_first_organization():
         await cur.execute(
             "SELECT name, meta_is_default FROM organizations WHERE id = %s", (created,)
         )
-        assert await cur.fetchone() == (organizations.DEFAULT_ORGANIZATION_NAME, True)
+        assert await cur.fetchone() == ("Officers", True)
 
 
 @pytest.mark.asyncio

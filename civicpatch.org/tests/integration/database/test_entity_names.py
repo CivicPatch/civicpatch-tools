@@ -99,7 +99,7 @@ async def test_a_membership_is_named_by_who_holds_it():
     person_id = await _person("Ada Lovelace")
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        org = await organizations.find_or_create(cur, _OCDID)
+        org = await organizations.find_or_create(cur, _OCDID, "Officers")
         base = "ocd-division/country:us/state:zz/place:zz_names"
         await divisions.find_or_create(cur, base, _OCDID)
         post_id = await factories.seed_post(cur, _OCDID, org, "mayor", base)
