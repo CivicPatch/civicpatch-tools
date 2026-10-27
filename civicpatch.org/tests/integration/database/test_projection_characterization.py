@@ -457,9 +457,9 @@ async def test_a_body_read_without_someone_drops_them_there():
 @pytest.mark.asyncio
 @pytest.mark.integration
 async def test_a_rescrape_that_changes_the_pages_details():
-    """Ana's phone and the spelling in her page's aside both change between scrapes. Publish
-    overwrites the list columns with what the newest page says; the fold reads her newest
-    listing. Ben, whose page was not read again, keeps his."""
+    """Ana's phone and the spelling in her page's aside both change between scrapes. The fold
+    reads her newest listing for the phone, but keeps every spelling any record used as an
+    other name. Ben, whose page was not read again, keeps his."""
     ids = await _seed()
     first = await _changeset(_T0)
     await _record_evidence(
@@ -480,7 +480,7 @@ async def test_a_rescrape_that_changes_the_pages_details():
 
     people = {row["person"]: row for row in (await _projection(ids))["people"]}
     assert people["ana"]["phones"] == ["(206) 555-0002"]
-    assert people["ana"]["other_names"] == ["Ana M. Reyes"]
+    assert people["ana"]["other_names"] == ["A. Reyes", "Ana M. Reyes"]
     assert people["ben"]["phones"] == ["(206) 555-0009"]
 
     diff = await _projection_diff()

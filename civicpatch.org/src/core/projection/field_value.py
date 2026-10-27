@@ -1,15 +1,19 @@
 """What one field of one person says.
 
-Two policies, one per kind of field, and the table below is the only place that knowledge
-lives:
+Three policies, one per kind of field, and the tables below are the only place that
+knowledge lives:
 
     scalar    the newest claimed value, else the newest a current record carries; None if
               neither
 
+    name      the newest claimed value, else the name most records ever read carry, as ingest
+              picks it (`most_common_name`); None if neither
+
     list      every value a current record carries, plus accepted values; `()` if neither
 
 "Current" is the same rule for both: the newest read of each organization. A value the page
-has stopped printing goes, whether it is a phone or a photograph.
+has stopped printing goes, whether it is a phone or a photograph. Other names are every
+spelling any record used, so a page's new spelling joins them instead of renaming the person.
 """
 
 from collections.abc import Callable, Iterable
@@ -18,13 +22,13 @@ from shared.utils.email_utils import is_valid_email, normalize_email
 from shared.utils.name_utils import same_name
 from shared.utils.phone_utils import normalize_phone_number
 
+from core.people_derivation import most_common_name
 from core.projection.facts import Claim, ClaimKind, Facts, SourceRecord, latest_first
 
 NAME = "name"
 OTHER_NAMES = "other_names"
 
 SCALAR_FIELDS: dict[str, str] = {
-    "name": "name",
     "image": "image",
     "cdn_image": "cdn_image",
 }
@@ -95,19 +99,36 @@ def stands(value, accepts: list[Claim], rejects: list[Claim]) -> bool:
     return not claims or claims[-1].kind != ClaimKind.REJECT
 
 
-def scalar_value(members: Iterable[str], field: str, facts: Facts) -> str | None:
-    accepts = claims_for(members, field, ClaimKind.ACCEPT, facts)
-    rejects = claims_for(members, field, ClaimKind.REJECT, facts)
-    attribute = SCALAR_FIELDS[field]
-
+def _claimed(accepts: list[Claim], rejects: list[Claim]) -> str | None:
+    """The newest accepted value nobody has rejected since."""
     for claim in reversed(accepts):
         if stands(claim.value, accepts, rejects):
             return claim.value
+    return None
+
+
+def scalar_value(members: Iterable[str], field: str, facts: Facts) -> str | None:
+    accepts = claims_for(members, field, ClaimKind.ACCEPT, facts)
+    rejects = claims_for(members, field, ClaimKind.REJECT, facts)
+    claimed = _claimed(accepts, rejects)
+    if claimed is not None:
+        return claimed
+    attribute = SCALAR_FIELDS[field]
     for record in reversed(current_records(members, facts)):
         value = getattr(record, attribute)
         if value is not None and stands(value, accepts, rejects):
             return value
     return None
+
+
+def name_value(members: Iterable[str], facts: Facts) -> str | None:
+    accepts = claims_for(members, NAME, ClaimKind.ACCEPT, facts)
+    rejects = claims_for(members, NAME, ClaimKind.REJECT, facts)
+    claimed = _claimed(accepts, rejects)
+    if claimed is not None:
+        return claimed
+    names = [record.name for record in records_for(members, facts) if stands(record.name, accepts, rejects)]
+    return most_common_name(names) or None
 
 
 def list_value(members: Iterable[str], field: str, facts: Facts) -> tuple[str, ...]:
@@ -144,6 +165,9 @@ def without_claims(facts: Facts) -> Facts:
 def overridden_source_values(members: Iterable[str], facts: Facts) -> dict[str, object]:
     page = without_claims(facts)
     overridden: dict[str, object] = {}
+    evidence_name = name_value(members, page)
+    if evidence_name != name_value(members, facts):
+        overridden[NAME] = evidence_name
     for field in SCALAR_FIELDS:
         evidence = scalar_value(members, field, page)
         if evidence != scalar_value(members, field, facts):
@@ -164,10 +188,10 @@ def source_urls(members: Iterable[str], facts: Facts) -> tuple[str, ...]:
 def other_names(members: Iterable[str], facts: Facts) -> tuple[str, ...]:
     accepts = claims_for(members, OTHER_NAMES, ClaimKind.ACCEPT, facts)
     rejects = claims_for(members, OTHER_NAMES, ClaimKind.REJECT, facts)
-    published = scalar_value(members, NAME, facts)
+    published = name_value(members, facts)
 
     seen = []
-    for record in current_records(members, facts):
+    for record in records_for(members, facts):
         seen.extend([record.name] + list(record.other_names))
 
     for claim in accepts:

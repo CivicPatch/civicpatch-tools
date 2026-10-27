@@ -168,9 +168,15 @@ def canonical_name(published_name: str, records: List[PersonSourceRecord]) -> st
     """
     if published_name:
         return published_name
-    return merge_field(
-        [name_utils.strip_titles_and_credentials(record.name) for record in records]
-    )
+    return most_common_name([record.name for record in records])
+
+
+def most_common_name(names: List[str]) -> str:
+    """The name most records carry, compared as `same_name` does, shown as its most frequent
+    spelling with titles stripped (nameparser cannot tell "Dr." from "Chair"). Ties alphabetical."""
+    winner = merge_field([name_utils.name_comparison_key(name) for name in names])
+    spellings = [name for name in names if name_utils.name_comparison_key(name) == winner]
+    return merge_field([name_utils.strip_titles_and_credentials(name) for name in spellings])
 
 
 def merge_records_to_person(

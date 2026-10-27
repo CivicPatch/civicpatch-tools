@@ -13,6 +13,7 @@ import pytest
 from core.projection.facts import Claim, ClaimKind, EntityType, Facts, SourceRecord
 from core.projection.field_value import (
     list_value,
+    name_value,
     overridden_source_values,
     scalar_value,
     without_claims,
@@ -72,12 +73,53 @@ def test_a_list_with_nothing_to_say_is_empty_not_none():
 def test_a_scalar_takes_the_latest_record():
     facts = Facts(
         records=(
-            record("r1", minutes=1, name="A. Ng"),
-            record("r2", minutes=2, name="Alice Ng"),
+            record("r1", minutes=1, image="old.jpg"),
+            record("r2", minutes=2, image="new.jpg"),
         )
     )
 
-    assert scalar_value(ALICE, "name", facts) == "Alice Ng"
+    assert scalar_value(ALICE, "image", facts) == "new.jpg"
+
+
+@pytest.mark.unit
+def test_the_name_is_the_spelling_most_records_carry():
+    """One later page's spelling does not rename the person; it becomes an other name."""
+    facts = Facts(
+        records=(
+            record("r1", changeset_id="c1", minutes=1, name="Sue Trainor"),
+            record("r2", changeset_id="c2", minutes=2, name="Sue Trainor"),
+            record("r3", changeset_id="c2", minutes=2, name="Susan Trainor"),
+        )
+    )
+
+    assert name_value(ALICE, facts) == "Sue Trainor"
+
+
+@pytest.mark.unit
+def test_spellings_of_one_name_vote_together_and_the_name_loses_its_title():
+    facts = Facts(
+        records=(
+            record("r1", changeset_id="c1", minutes=1, name="Dr. José Ruiz, PhD"),
+            record("r2", changeset_id="c1", minutes=1, name="Dr. José Ruiz, PhD"),
+            record("r3", changeset_id="c2", minutes=2, name="Jose Ruiz"),
+            record("r4", changeset_id="c2", minutes=2, name="J. Ruiz"),
+            record("r5", changeset_id="c2", minutes=2, name="J. Ruiz"),
+        )
+    )
+
+    assert name_value(ALICE, facts) == "José Ruiz"
+
+
+@pytest.mark.unit
+def test_two_spellings_read_as_often_tie_alphabetically_as_at_ingest():
+    facts = Facts(
+        records=(
+            record("r1", changeset_id="c1", minutes=1, name="Susan Trainor"),
+            record("r2", changeset_id="c2", minutes=2, name="Sue Trainor"),
+        )
+    )
+
+    assert name_value(ALICE, facts) == "Sue Trainor"
 
 
 @pytest.mark.unit
@@ -129,7 +171,7 @@ def test_a_claim_beats_every_record_however_new():
         claims=(claim("k1", "name", "Alice Ng", minutes=1),),
     )
 
-    assert scalar_value(ALICE, "name", facts) == "Alice Ng"
+    assert name_value(ALICE, facts) == "Alice Ng"
 
 
 @pytest.mark.unit
@@ -142,7 +184,7 @@ def test_the_newest_claim_wins():
         )
     )
 
-    assert scalar_value(ALICE, "name", facts) == "Dave's answer"
+    assert name_value(ALICE, facts) == "Dave's answer"
 
 
 @pytest.mark.unit
@@ -150,7 +192,7 @@ def test_a_claim_on_either_half_of_a_merge_counts():
     """`members` is the whole cluster, so where the claim was filed does not matter."""
     facts = Facts(claims=(claim("k1", "name", "Alice Ng", person="alice2"),))
 
-    assert scalar_value({"alice", "alice2"}, "name", facts) == "Alice Ng"
+    assert name_value({"alice", "alice2"}, facts) == "Alice Ng"
 
 
 @pytest.mark.unit
@@ -160,7 +202,7 @@ def test_a_claim_about_another_person_is_ignored():
         claims=(claim("k1", "name", "Bob's name", person="bob"),),
     )
 
-    assert scalar_value(ALICE, "name", facts) == "Alice Ng"
+    assert name_value(ALICE, facts) == "Alice Ng"
 
 
 @pytest.mark.unit
@@ -250,7 +292,7 @@ def test_rejecting_a_typed_scalar_falls_back_to_the_records():
         ),
     )
 
-    assert scalar_value(ALICE, "name", facts) == "Jones"
+    assert name_value(ALICE, facts) == "Jones"
 
 
 @pytest.mark.unit
@@ -343,7 +385,7 @@ def test_the_answer_does_not_depend_on_the_order_the_facts_arrive():
     backwards = Facts(records=tuple(reversed(records)), claims=tuple(reversed(claims)))
 
     assert list_value(ALICE, "phones", forwards) == list_value(ALICE, "phones", backwards)
-    assert scalar_value(ALICE, "name", forwards) == scalar_value(ALICE, "name", backwards)
+    assert name_value(ALICE, forwards) == name_value(ALICE, backwards)
 
 
 # What the records alone say — the same resolvers asked with the claims taken away, which is
@@ -357,8 +399,8 @@ def test_evidence_is_what_the_page_says_with_the_claims_taken_away():
         claims=(claim("k1", "name", "Alice Nguyen"),),
     )
 
-    assert scalar_value(ALICE, "name", facts) == "Alice Nguyen"
-    assert scalar_value(ALICE, "name", without_claims(facts)) == "Alice Ng"
+    assert name_value(ALICE, facts) == "Alice Nguyen"
+    assert name_value(ALICE, without_claims(facts)) == "Alice Ng"
 
 
 @pytest.mark.unit
@@ -370,17 +412,17 @@ def test_evidence_ignores_a_reject_too():
         claims=(claim("k1", "name", "Alice Ng", kind=ClaimKind.REJECT),),
     )
 
-    assert scalar_value(ALICE, "name", facts) is None
-    assert scalar_value(ALICE, "name", without_claims(facts)) == "Alice Ng"
+    assert name_value(ALICE, facts) is None
+    assert name_value(ALICE, without_claims(facts)) == "Alice Ng"
 
 
 @pytest.mark.unit
 def test_evidence_is_the_newest_read_like_every_other_scalar():
     facts = Facts(
-        records=(record("r1", name="Alice Ng"), record("r2", minutes=10, name="A. Ng")),
+        records=(record("r1", image="old.jpg"), record("r2", minutes=10, image="new.jpg")),
     )
 
-    assert scalar_value(ALICE, "name", without_claims(facts)) == "A. Ng"
+    assert scalar_value(ALICE, "image", without_claims(facts)) == "new.jpg"
 
 
 # The card's lock disclosure: "the page says X, a human said Y". The page as it reads *now* —
@@ -410,13 +452,13 @@ def test_the_disclosure_follows_the_page_rather_than_the_moment_the_claim_was_fi
     what the reviewer would be seeing if nobody had intervened."""
     facts = Facts(
         records=(
-            record("r1", name="Alice Ng"),
-            record("r2", minutes=10, name="A. Ng"),
+            record("r1", image="old.jpg"),
+            record("r2", minutes=10, image="new.jpg"),
         ),
-        claims=(claim("k1", "name", "Alice Nguyen"),),
+        claims=(claim("k1", "image", "typed.jpg"),),
     )
 
-    assert overridden_source_values(ALICE, facts) == {"name": "A. Ng"}
+    assert overridden_source_values(ALICE, facts) == {"image": "new.jpg"}
 
 
 @pytest.mark.unit

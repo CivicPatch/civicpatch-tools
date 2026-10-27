@@ -1,7 +1,6 @@
 """What `other_names` and `source_urls` must answer.
 
-Both are today's `people_derivation` rules moved onto current records: `source_urls` from
-`get_source_urls`, `other_names` from the loop that collects every spelling a record used and
+`source_urls` reads current records; `other_names` collects every spelling any record used and
 drops the published one.
 """
 
@@ -10,7 +9,7 @@ from datetime import datetime, timedelta, timezone
 import pytest
 
 from core.projection.facts import Claim, ClaimKind, EntityType, Facts, SourceRecord
-from core.projection.field_value import other_names, source_urls
+from core.projection.field_value import name_value, other_names, source_urls
 
 _T = datetime(2026, 1, 1, tzinfo=timezone.utc)
 ALICE = {"alice"}
@@ -124,7 +123,8 @@ def test_the_published_name_is_not_an_other_name():
 
 @pytest.mark.unit
 def test_a_second_spelling_is_an_other_name():
-    """Two pages, two spellings. The newest is the name; the other is kept as a spelling."""
+    """Two pages, two spellings, one each: the tie goes alphabetically, as at ingest, so "A. Ng"
+    is the name and "Alice Ng" is kept as a spelling."""
     facts = Facts(
         records=(
             record("r1", name="A. Ng", minutes=1),
@@ -132,7 +132,7 @@ def test_a_second_spelling_is_an_other_name():
         )
     )
 
-    assert other_names(ALICE, facts) == ("A. Ng",)
+    assert other_names(ALICE, facts) == ("Alice Ng",)
 
 
 @pytest.mark.unit
@@ -148,13 +148,14 @@ def test_spellings_that_are_the_same_name_count_once():
     neither is "Alice Ng" spelled differently."""
     facts = Facts(
         records=(
-            record("r1", name="A. Ng", minutes=1),
-            record("r2", name="a ng", minutes=2),
-            record("r3", name="ALICE NG", minutes=3),
+            record("r1", name="ALICE NG", minutes=1),
+            record("r2", name="A. Ng", minutes=2),
+            record("r3", name="a ng", minutes=3),
         )
     )
 
-    assert other_names(ALICE, facts) == ("A. Ng",)
+    assert name_value(ALICE, facts) == "A. Ng"
+    assert other_names(ALICE, facts) == ("ALICE NG",)
 
 
 @pytest.mark.unit
@@ -187,16 +188,17 @@ def test_a_rejected_other_name_is_dropped():
 
 
 @pytest.mark.unit
-def test_a_spelling_from_a_page_that_stopped_listing_them_is_gone():
-    """Current records only, like every other list."""
+def test_a_newer_reads_spelling_is_an_other_name():
+    """Every record, not only the current read: Hyde Park printed "Sue Trainor", then
+    "Susan Trainor"; she stays Sue and keeps Susan."""
     facts = Facts(
         records=(
-            record("r1", name="A. Ng", changeset="c1", minutes=1),
-            record("r2", name="Alice Ng", changeset="c2", minutes=2),
+            record("r1", name="Sue Trainor", changeset="c1", minutes=1),
+            record("r2", name="Susan Trainor", changeset="c2", minutes=2),
         )
     )
 
-    assert other_names(ALICE, facts) == ()
+    assert other_names(ALICE, facts) == ("Susan Trainor",)
 
 
 @pytest.mark.unit
