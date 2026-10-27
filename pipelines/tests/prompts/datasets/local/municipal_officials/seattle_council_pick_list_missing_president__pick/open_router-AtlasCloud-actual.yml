@@ -6,7 +6,7 @@ people:
   url: https://seattle.gov/council/members/rob-saka
   start_date: null
   end_date: null
-  image: null
+  image: local://8ac384d14474.png
   organization: City Council
 - name: Eddie Lin
   label: Councilmember District 2
@@ -15,16 +15,16 @@ people:
   url: https://seattle.gov/council/members/eddie-lin
   start_date: null
   end_date: null
-  image: null
+  image: local://8518b717839c.png
   organization: City Council
 - name: Joy Hollingsworth
-  label: Council President District 3
+  label: Council President and Councilmember District 3
   phone: (206) 684-8888
   email: council@seattle.gov
   url: https://seattle.gov/council/members/joy-hollingsworth
   start_date: null
   end_date: null
-  image: null
+  image: local://ef06d9a9e07d.png
   organization: City Council
 - name: Maritza Rivera
   label: Councilmember District 4
@@ -33,7 +33,7 @@ people:
   url: https://seattle.gov/council/members/maritza-rivera
   start_date: null
   end_date: null
-  image: null
+  image: local://ed071cb84224.png
   organization: City Council
 - name: Debora Juarez
   label: Councilmember District 5
@@ -42,7 +42,7 @@ people:
   url: https://seattle.gov/council/members/debora-juarez
   start_date: null
   end_date: null
-  image: null
+  image: local://183bf92d4c48.png
   organization: City Council
 - name: Dan Strauss
   label: Councilmember District 6
@@ -51,7 +51,7 @@ people:
   url: https://seattle.gov/council/members/dan-strauss
   start_date: null
   end_date: null
-  image: null
+  image: local://ada6b13ec0d1.png
   organization: City Council
 - name: Bob Kettle
   label: Councilmember District 7
@@ -60,7 +60,7 @@ people:
   url: https://seattle.gov/council/members/bob-kettle
   start_date: null
   end_date: null
-  image: null
+  image: local://f490e8055573.png
   organization: City Council
 - name: Alexis Mercedes Rinck
   label: Councilmember Position 8
@@ -69,7 +69,7 @@ people:
   url: https://seattle.gov/council/members/alexis-mercedes-rinck
   start_date: null
   end_date: null
-  image: null
+  image: local://ce027a08f3f1.png
   organization: City Council
 - name: Dionne Foster
   label: Councilmember Position 9
@@ -78,5 +78,5 @@ people:
   url: https://seattle.gov/council/members/dionne-foster
   start_date: null
   end_date: null
-  image: null
+  image: local://f207a4a7733a.png
   organization: City Council

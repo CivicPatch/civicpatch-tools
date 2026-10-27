@@ -1,13 +1,16 @@
 run:
-  timestamp: '2026-10-16T17:07:21+00:00'
-  prompt_sha256: 77e3eb2c9e3e
-  prompt_file: _prompts/77e3eb2c9e3e.txt
+  timestamp: '2026-10-27T17:07:45+00:00'
+  prompt_sha256: e4aeea87f2a7
+  prompt_file: _prompts/e4aeea87f2a7.txt
 cost_summary:
   model: deepseek/deepseek-v4-flash
-  elapsed_seconds: 472.13
-  total_input_tokens: 297846
-  total_output_tokens: 81300
-  total_cost_usd: 0.063430248
+  elapsed_seconds: 1325.06
+  total_input_tokens: 395811
+  total_output_tokens: 385046
+  total_cost_usd: 0.151671604
+total_cases: 57
+passed_cases: 57
+failed_cases: []
 accuracy:
   relevant_urls:
     correct: 26
@@ -25,64 +28,63 @@ accuracy:
     precision: 1.0
     recall: 1.0
     f1: 1.0
-failed_cases: []
 mismatches: {}
 case_prompts:
-  austin_city_manager_irrelevant: 7632fce1d717
-  beeville_water_supply_district_irrelevant: 2aedaa10e4d7
-  castroville_airport_board_irrelevant: a580fa98d4dd
-  dish_irrelevant: 19c0257a0221
-  eastpointe_home: cac83c7b7155
-  ellago_mayor_history_irrelevant: 197d279abc41
-  gatesville_ordinance_vote_records: fd080303ac47
-  mcgregor_city_announcement_irrelevant: 3a06cee013c9
-  mikado_township_home: c4a986b16030
-  millbury_board_of_selectmen: 08d403eeadef
-  millbury_school_committee_irrelevant: 981a0c77954c
-  olton_newslist_irrelevant: 0e3d76d6d649
-  place_abernathy__cityofabernathy_org_directory_: a17ab3799ced
-  place_abilene__abilenetx_gov_526_city-council: 1856e31a83e6
-  place_adamsville__www_cityofadamsville_com_boards_commissions_city_commission_index_html: 587168b905ca
-  place_airway_heights__cawh_org_city-manager_: a5f10287e63b
-  place_algona__algonawa_gov_: 9e69b8426f68
-  place_ames__www_cityofamestexas_com_171_mayor-council: c1a7905e11f0
-  place_amherst__www_cityofamherst_com_city_government_mayor___city_council_php: 0f26848c817d
-  place_amherst__www_cityofamherst_com_contact_us_index_php: 9912a3d7ce9d
-  place_anacortes__www_anacorteswa_gov_756_mayor: 09ea4c28eb1c
-  place_anahuac__anahuac_us_government_city-council: 0beb1043708d
-  place_anahuac__anahuac_us_government_greetings-from-the-mayor_: 36f41d2a9c5b
-  place_anahuac__www_anahuac_us: 5df83a8eae49
-  place_apple_valley__applevalley_org_council-member-info_larry-cusack_: 6abac302b8e6
-  place_bainbridge_island__bainbridgewa_gov_directory_aspx_did_14: 3af56c65fdbc
-  place_bellevue__bellevuewa_gov_: 4ad24c185e6f
-  place_bellevue__bellevuewa_gov_city-government_city-council_councilmembers: 19c642620691
-  place_bridgeport__bridgeportwashington_net_city-council_: 7b56a2e82add
-  place_bridgeport__bridgeportwashington_net_ova_dep_mayors-office: 71290b7e68d1
-  place_cathlamet__www_townofcathlamet_com_about-us: 2cc615d8625a
-  place_cathlamet__www_townofcathlamet_com_elected-officials-1: 43d32b9c1479
-  place_colville__www_colville_wa_us_: 5f39018ba5c9
-  place_colville__www_colville_wa_us_pview_aspx_id_35815_catid_462: afe81eca3623
-  place_colville__www_colville_wa_us_pview_aspx_id_35906_catid_601: 2c3e81f5bd8e
-  place_crescent_city__www_crescentcity_org_directory_citycouncil: 5dae8a45ff1d
+  austin_city_manager_irrelevant: 2e6fbbf52ba2
+  beeville_water_supply_district_irrelevant: bfac50ec986a
+  castroville_airport_board_irrelevant: 5dde003d6794
+  dish_irrelevant: bd2b2e0009c1
+  eastpointe_home: 18ce9374ed14
+  ellago_mayor_history_irrelevant: 610509744d44
+  gatesville_ordinance_vote_records: bc8082adca77
+  mcgregor_city_announcement_irrelevant: abf54d2e6777
+  mikado_township_home: 62785df0afb6
+  millbury_board_of_selectmen: 3407fe756cb2
+  millbury_school_committee_irrelevant: efcfa701e56e
+  olton_newslist_irrelevant: ff76d9bbbe77
+  place_abernathy__cityofabernathy_org_directory_: 73f999a1faf5
+  place_abilene__abilenetx_gov_526_city-council: 760d6ba382c8
+  place_adamsville__www_cityofadamsville_com_boards_commissions_city_commission_index_html: 82183ca6997c
+  place_airway_heights__cawh_org_city-manager_: 10bd9480dfea
+  place_algona__algonawa_gov_: 4e481d5fe6e7
+  place_ames__www_cityofamestexas_com_171_mayor-council: 99fc7be6b30c
+  place_amherst__www_cityofamherst_com_city_government_mayor___city_council_php: 23a5fa6d0d8e
+  place_amherst__www_cityofamherst_com_contact_us_index_php: 742452f6e7a1
+  place_anacortes__www_anacorteswa_gov_756_mayor: d6979d15536a
+  place_anahuac__anahuac_us_government_city-council: f6d98501ea1f
+  place_anahuac__anahuac_us_government_greetings-from-the-mayor_: 7ef2eade8469
+  place_anahuac__www_anahuac_us: d24c164d5fae
+  place_apple_valley__applevalley_org_council-member-info_larry-cusack_: 5ad9b2529925
+  place_bainbridge_island__bainbridgewa_gov_directory_aspx_did_14: 8fb306b04a3d
+  place_bellevue__bellevuewa_gov_: 3b64e079c1a4
+  place_bellevue__bellevuewa_gov_city-government_city-council_councilmembers: efac9dbba643
+  place_bridgeport__bridgeportwashington_net_city-council_: 5998e27127bc
+  place_bridgeport__bridgeportwashington_net_ova_dep_mayors-office: 8b1b4bf9761b
+  place_cathlamet__www_townofcathlamet_com_about-us: eef31e0d1f46
+  place_cathlamet__www_townofcathlamet_com_elected-officials-1: de620807ffa2
+  place_colville__www_colville_wa_us_: d16c745d6318
+  place_colville__www_colville_wa_us_pview_aspx_id_35815_catid_462: c341bd273363
+  place_colville__www_colville_wa_us_pview_aspx_id_35906_catid_601: a89bc1b49469
+  place_crescent_city__www_crescentcity_org_directory_citycouncil: 44207148504d
   ? place_davenport__www_davenportwa_us_index_asp_sec_a2951c48-519e-4aac-a2c8-4e8e24c4010c_de_4af1b45b-81cb-4eee-8dc7-3c6bdb98eaad_type_b_dir
-  : 3167ebf309ef
-  place_ellensburg__ci_ellensburg_wa_us_975_meet-your-city-council: 44f6cca7ea20
-  place_ephrata__www_ephrata_org_27_government: 343acd9543b3
-  place_goldthwaite__www_visitgoldthwaite_com_: ef9c9d66a132
-  place_goldthwaite__www_visitgoldthwaite_com_city-hall: cbbc96cf6cf3
-  place_lookout_mountain__www_lookoutmtn_us_directory_index_php: b0f0ce5d7220
-  place_manchester__www_cityofmanchestertn_com: 5c05ee9a3be3
-  place_omak__www_omakcity_com: bd3d1b7ef56f
-  place_omak__www_omakcity_com_1382_departments: 771dd5a8cf8f
-  place_omak__www_omakcity_com_directory_aspx_did_19: 21b6382983f3
-  place_republic__www_republicwa_org_: f3214a6890d5
-  place_sedro-woolley__www_sedro-woolley_gov_governing_bodies_city_council_index_php: 05604857b39d
-  place_shelton__sheltonwa_gov_government_city_council_city_council_members_councilmember_eric_onisko_php: b1c45f6650f3
-  place_walla_walla__www_wallawallawa_gov_government_city-directory: bf5d9354751b
-  place_wilbur__www_wilburwa_gov_: 1a34343a8071
-  place_wilbur__www_wilburwa_gov_27_government: 5e5ab501d41e
-  quitaque_council: 4facc3995111
-  raisin_township_clerk: f396d2365584
-  raisin_township_supervisor: 31434d4aa0a0
-  san_antonio: 8b61d9831767
-  san_saba_airport_advisory_irrelevant: 1bfecfe136f1
+  : 5b96e540ff11
+  place_ellensburg__ci_ellensburg_wa_us_975_meet-your-city-council: d25722083cb3
+  place_ephrata__www_ephrata_org_27_government: d97b1fbe4784
+  place_goldthwaite__www_visitgoldthwaite_com_: cbf28c730b9a
+  place_goldthwaite__www_visitgoldthwaite_com_city-hall: 6e185b2b213b
+  place_lookout_mountain__www_lookoutmtn_us_directory_index_php: adc442d1423a
+  place_manchester__www_cityofmanchestertn_com: fc32e99ca120
+  place_omak__www_omakcity_com: 4d23b14d4f00
+  place_omak__www_omakcity_com_1382_departments: 5188380176f5
+  place_omak__www_omakcity_com_directory_aspx_did_19: dabed71d7d36
+  place_republic__www_republicwa_org_: a86896e322e9
+  place_sedro-woolley__www_sedro-woolley_gov_governing_bodies_city_council_index_php: 906d218fcf93
+  place_shelton__sheltonwa_gov_government_city_council_city_council_members_councilmember_eric_onisko_php: 2cb177e24a5a
+  place_walla_walla__www_wallawallawa_gov_government_city-directory: 42e20fbf59c9
+  place_wilbur__www_wilburwa_gov_: 65cb0b9e804b
+  place_wilbur__www_wilburwa_gov_27_government: 4f8de61f6cbf
+  quitaque_council: ba111182b27a
+  raisin_township_clerk: cab5c5088adf
+  raisin_township_supervisor: 865c1a6cba8f
+  san_antonio: 60cff6023a39
+  san_saba_airport_advisory_irrelevant: e052f893ebd2

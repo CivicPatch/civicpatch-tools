@@ -9,6 +9,10 @@ known_roles:
 - Supervisor
 - Treasurer
 - Assessor
+- District Attorney
+- Sheriff
+- Auditor
+- Superintendent of Schools
 divisions:
 - district 1
 - district 3
@@ -61,9 +65,65 @@ people:
   end_date: null
   image: null
   organization: Board of Supervisors
+- name: Phong La
+  label: Assessor
+  phone: null
+  email: null
+  url: https://www.acassessor.org/
+  start_date: '2023'
+  end_date: '2028'
+  image: null
+  organization: none
+- name: Henry C. Levy
+  label: Treasurer/Tax Collector
+  phone: null
+  email: null
+  url: https://treasurer.acgov.org/
+  start_date: '2023'
+  end_date: '2028'
+  image: null
+  organization: none
+- name: Melissa Wilk
+  label: Auditor/Controller
+  phone: null
+  email: null
+  url: https://auditor.alamedacountyca.gov/
+  start_date: '2023'
+  end_date: '2028'
+  image: null
+  organization: none
+- name: Ursula Jones Dickson
+  label: District Attorney
+  phone: null
+  email: null
+  url: https://da.alamedacountyca.gov/
+  start_date: '2025'
+  end_date: '2028'
+  image: null
+  organization: none
+- name: Yesenia Sanchez
+  label: Sheriff/Coroner
+  phone: null
+  email: null
+  url: https://www.alamedasheriff.gov/
+  start_date: '2023'
+  end_date: '2028'
+  image: null
+  organization: none
+- name: Alysse Castro
+  label: Superintendent of Schools
+  phone: null
+  email: null
+  url: https://www.acoe.org/superintendent
+  start_date: '2023'
+  end_date: '2026'
+  image: null
+  organization: none
 thought: 'Merged by plan P5 from county_alameda__commission__board_of_supervisors__known_titles.
   GENERATED, review before moving into the dataset. Form commission (decided by the
   config); known_titles, scoped to Board of Supervisors. People are the published
   roster''s, filed by role (a role no organization lists goes to the main board):
   check titles, dates and anyone the page lists that the roster lacks. Hand-corrected
-  against the page: the published roster was out of date.'
+  against the page: the published roster was out of date. Plan D4 (2026-10-27): known_roles
+  carries the county''s offices as a county config would (Gov. Code § 24000 names
+  the county''s officers), so its officers are in, in no listed organization.'

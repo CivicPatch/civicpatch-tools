@@ -30,11 +30,13 @@ def relevant_page_prompt(
     # Otherwise the roles cp.org holds or research named, so a School Committee chair is not read
     # as a main official just because "chair" sounds like one.
     main_officials = (
-        f"""Main officials hold this municipality's known elected roles, which make up its
-    **primary governing body**: {", ".join(known_roles)}."""
+        f"""Main officials hold one of this municipality's listed offices, elected or appointed:
+    {", ".join(known_roles)}. An office the page shows is elected counts too; appointed or hired
+    staff on no list do not."""
         if known_roles
         else """Main officials are the Mayor, City Council Members, Aldermen, Select Board Members,
-    Commissioners and others who make up the municipality's **primary governing body**."""
+    Commissioners and others who make up the municipality's **primary governing body**, and any
+    other office the page shows is elected. Appointed or hired staff are not main officials."""
     )
     known_organizations_line = (
         f"    Governing bodies of this municipality: {', '.join(known_organizations)}\n"
@@ -73,20 +75,20 @@ def relevant_page_prompt(
 
     ## is_relevant
 
-    True when the page exists to show who currently holds a primary governing role: a roster, a
+    True when the page exists to show who currently holds one of these offices: a roster, a
     directory, or one official's own page. Ask "does this page exist to show who holds office
     right now?" and answer on the page's own heading and body.
 
     Also true, and these are the ones most often got wrong:
-    - The heading names a known elected role and the page gives a person's name for it. A
+    - The heading names one of these offices and the page gives a person's name for it. A
       site-wide navigation menu is not the page's purpose however much of the content it fills,
       and a non-voting deputy appearing alongside does not change the answer.
     - The page lists the municipality's own officials and also lists appointed staff. A small
       town's "City Officials" page naming the Mayor and council members alongside the City
       Manager, Water Supervisor and Fire Chief is the roster. Judge it by whether the governing
       body's members are presented as such, not by who else shares the page.
-    - A staff or contact directory that gives a row to a current holder of a primary role, such
-      as the Mayor with a phone number and email. That row is a directory entry for the official,
+    - A staff or contact directory that gives a row to a current holder of one of these offices,
+      such as the Mayor or Town Clerk with a phone number and email. That row is a directory entry for the official,
       even when every other row is staff.{known_organizations_rule}
 
     When a page names a person who holds one of the roles above and you cannot tell whether it is
@@ -95,12 +97,13 @@ def relevant_page_prompt(
     called irrelevant is never read again and its officials are never found.
 
     False for these, whoever is named in them:
-    - Auxiliary committees, boards and commissions (Planning and Zoning, Parks and Recreation,
-      Airport Advisory), and pages about department heads or other non-elected staff. A Mayor or
-      Alderman sitting on such a body does not make its page relevant.
+    - Committees, boards and commissions that are not among this municipality's bodies (Planning
+      and Zoning, Parks and Recreation, Airport Advisory, unless listed above), and pages about
+      department heads or other staff who hold none of these offices. A Mayor or Alderman sitting
+      on such a body does not make its page relevant.
     - Special districts, utility boards and other sub-municipal entities (Water Supply District,
-      Fire District, Library Board), which are separate legal entities. A structured roster of
-      their board members is still not this municipality's governing body.
+      Fire District), which are separate legal entities. A structured roster of their board
+      members is still not this municipality's.
     - News, announcements and press releases, even a post naming newly elected members by ward.
     - Meeting minutes, vote records, ordinances and legislative archives, even titled "City
       Council" or living at a city council URL. Read the body, not the title.
@@ -117,8 +120,8 @@ def relevant_page_prompt(
     numeric paths (e.g. /179/Township-Board) where the slug is the only signal.
 
     Include every link whose anchor text or context refers to:
-    - a governing body or elected role ("Township Board", "City Council", "Mayor", "City
-      Officials", "Board of Trustees", "Aldermen", "Commissioners", "Select Board")
+    - a governing body or office ("Township Board", "City Council", "Mayor", "City Officials",
+      "Board of Trustees", "Aldermen", "Commissioners", "Select Board", "Town Clerk")
     - a government directory or index page likely to link onward to governance pages
       ("Government", "City Hall", "Our Government", "Administration")
     - a staff or personnel directory that may list elected officials ("Staff Directory",
@@ -198,11 +201,39 @@ def _roles_hint(
     lines = []
     if known_roles:
         lines.append("- Roles in this municipality: " + ", ".join(known_roles) + ".")
-    elif government_form_role_labels:
-        lines.append("- Roles this municipality usually has: " + ", ".join(government_form_role_labels) + ".")
+    if government_form_role_labels:
+        lines.append(
+            "- Roles the law provides for (this municipality may fill fewer): "
+            + ", ".join(government_form_role_labels)
+            + "."
+        )
     if divisions:
         lines.append("- Divisions in this municipality: " + ", ".join(divisions) + ".")
     return "\n    ".join(lines)
+
+
+_GOVERNING_BODY = """they are a member of the governing body (e.g. Mayor, City Council, Board of Aldermen,
+      Board of Commissioners)"""
+_LEFT_OUT = """officials of
+    other governments (another city or county, the state, a precinct or special district), even
+    when listed on the same page."""
+
+
+def _who_to_extract(roles_listed: bool, organizations_listed: bool) -> str:
+    """Only what we told the model or the page states outright: the governing body and the listed
+    offices. Its own judgement of an unlisted title (elected or staff?) flips read to read, so an
+    unlisted office waits for its state's config to list it."""
+    ways = [
+        _GOVERNING_BODY,
+        'their title is one of the roles listed under label below (a longer form of one counts:\n'
+        '      "Treasurer/Tax Collector" is the Treasurer)' if roles_listed else "",
+        "they hold a seat on one of the bodies listed under organization" if organizations_listed else "",
+    ]
+    listed = ";\n    - ".join(way for way in ways if way)
+    return f"""Extract a person only if:
+    - {listed}.
+    Anyone else stays out, elected or not: a title on no list (deputies, assistants, directors,
+    chiefs, coordinators, department staff, a clerk or manager not listed), and {_LEFT_OUT}"""
 
 
 # Note: Claude Sonnet 4.6 Generated prompt
@@ -254,7 +285,7 @@ def elected_officials_prompt(
 
     return f"""
     You are a data extraction assistant. Extract information about the currently
-    serving elected officials of the target {_TARGET_NOUN[level]} from the provided content.
+    serving officials of the target {_TARGET_NOUN[level]} from the provided content.
 
     Current Date: {current_date}{jurisdiction_line}
 
@@ -262,8 +293,8 @@ def elected_officials_prompt(
     Only extract officials from:
     - A structured table, list, or directory of officials
     - A dedicated biography, about, or contact section for an official
-    - A contact or position page for a single elected official, where the page or section
-      heading names an elected role and the content includes the person's name and contact
+    - A contact or position page for a single official, where the page or section
+      heading names an office and the content includes the person's name and contact
       information, even if the body mostly describes the role's duties
     - A section labeled with a governing body name (e.g. "City Council Members", "Board of
       Aldermen") that lists names as headings or line items, even with no other details;
@@ -273,10 +304,7 @@ def elected_officials_prompt(
     A list of links whose text is only a role or position label (e.g. "Mayor",
     "Councilmember, Place 1", "Alderman") is navigation, not a roster, and those labels are
     not person names.
-    Only extract elected members of the governing body (e.g. Mayor, City Council, Board of
-    Aldermen, Board of Commissioners). Exclude appointed staff and officials of other
-    governments (another city or county, the state, a precinct or special district), even when
-    listed on the same page.
+    {_who_to_extract(bool(known_roles or government_form_role_labels), bool(organization_choices))}
     Treat officials as currently serving unless the content says the roster is historical, or
     gives a term that ended before the current date: leave those people out.
     If there are no valid sources, return an empty "people" array.

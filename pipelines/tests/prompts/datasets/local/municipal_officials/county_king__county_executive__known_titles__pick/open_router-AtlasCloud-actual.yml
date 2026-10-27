@@ -89,3 +89,30 @@ people:
   end_date: null
   image: local://78bd4203babd.png
   organization: County Council
+- name: John Wilson
+  label: King County Assessor
+  phone: null
+  email: null
+  url: https://kingcounty.gov/en/dept/assessor/about-king-county/about-king-county-assessor/leadership-team
+  start_date: null
+  end_date: null
+  image: local://ba832bf0b55b.png
+  organization: none
+- name: Julie Wise
+  label: Elections director
+  phone: null
+  email: null
+  url: https://kingcounty.gov/en/dept/elections/about-us/meet-the-director
+  start_date: null
+  end_date: null
+  image: local://e9e46caa4375.png
+  organization: none
+- name: Leesa Manion
+  label: Prosecutor
+  phone: null
+  email: null
+  url: https://kingcounty.gov/en/dept/pao
+  start_date: null
+  end_date: null
+  image: local://05f1994cde89.png
+  organization: none
