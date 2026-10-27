@@ -1,18 +1,18 @@
 run:
-  timestamp: '2026-10-26T19:19:12+00:00'
-  prompt_sha256: 766d04d7f1f4
-  prompt_file: _prompts/766d04d7f1f4.txt
+  timestamp: '2026-10-27T18:48:56+00:00'
+  prompt_sha256: 373bb1ceadce
+  prompt_file: _prompts/373bb1ceadce.txt
 cost_summary:
   model: deepseek/deepseek-v4-flash
   providers:
   - AtlasCloud
-  elapsed_seconds: 21.29
-  total_input_tokens: 3154
-  total_output_tokens: 1914
-  total_cost_usd: 0.000633416
+  elapsed_seconds: 22.52
+  total_input_tokens: 3016
+  total_output_tokens: 1197
+  total_cost_usd: 0.0007574
 accuracy:
   person:
-    correct: 12
+    correct: 1
     missing: 0
     spurious: 0
     wrong: 0
@@ -20,7 +20,7 @@ accuracy:
     recall: 1.0
     f1: 1.0
   primary_role:
-    correct: 12
+    correct: 1
     missing: 0
     spurious: 0
     wrong: 0
@@ -28,7 +28,7 @@ accuracy:
     recall: 1.0
     f1: 1.0
   roles:
-    correct: 13
+    correct: 2
     missing: 0
     spurious: 0
     wrong: 0
@@ -36,13 +36,13 @@ accuracy:
     recall: 1.0
     f1: 1.0
   district:
-    correct: 8
+    correct: 0
     missing: 0
     spurious: 0
     wrong: 0
-    precision: 1.0
-    recall: 1.0
-    f1: 1.0
+    precision: null
+    recall: null
+    f1: null
   designations_other:
     correct: 0
     missing: 0
@@ -52,7 +52,7 @@ accuracy:
     recall: null
     f1: null
   email:
-    correct: 12
+    correct: 1
     missing: 0
     spurious: 0
     wrong: 0
@@ -60,7 +60,7 @@ accuracy:
     recall: 1.0
     f1: 1.0
   phone:
-    correct: 10
+    correct: 1
     missing: 0
     spurious: 0
     wrong: 0
@@ -68,13 +68,13 @@ accuracy:
     recall: 1.0
     f1: 1.0
   url:
-    correct: 0
+    correct: 1
     missing: 0
     spurious: 0
     wrong: 0
-    precision: null
-    recall: null
-    f1: null
+    precision: 1.0
+    recall: 1.0
+    f1: 1.0
   start_date:
     correct: 0
     missing: 0
@@ -84,13 +84,13 @@ accuracy:
     recall: null
     f1: null
   end_date:
-    correct: 12
+    correct: 0
     missing: 0
     spurious: 0
     wrong: 0
-    precision: 1.0
-    recall: 1.0
-    f1: 1.0
+    precision: null
+    recall: null
+    f1: null
   image:
     correct: 0
     missing: 0
@@ -100,39 +100,35 @@ accuracy:
     recall: null
     f1: null
 organization:
-  right: 12
+  right: 1
   wrong: 0
   none: 0
   missing: 0
 aggregated_report:
-  email: 1.0
-  designations_precision: 1.0
-  designations: 1.0
-  url: 1.0
+  roles: 1.0
   roles_precision: 1.0
   name: 1.0
+  url: 1.0
+  designations: 1.0
+  email: 1.0
   phone: 1.0
-  end_date: 1.0
-  roles: 1.0
 per_case_scores:
-- case_id: burlington_city_council__pick
+- case_id: place_essex__open_town_meeting__known_titles__pick
   score: 1.0
   person_precision: 1.0
   scores:
-    email: 1.0
-    designations_precision: 1.0
-    designations: 1.0
-    url: 1.0
+    roles: 1.0
     roles_precision: 1.0
     name: 1.0
+    url: 1.0
+    designations: 1.0
+    email: 1.0
     phone: 1.0
-    end_date: 1.0
-    roles: 1.0
   organization:
-    right: 12
+    right: 1
     wrong: 0
     none: 0
     missing: 0
 mismatches: {}
 case_prompts:
-  burlington_city_council__pick: d90b50d29f08
+  place_essex__open_town_meeting__known_titles__pick: 8f477ccd4b5d

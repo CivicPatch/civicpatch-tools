@@ -7,7 +7,7 @@ people:
   start_date: null
   end_date: null
   image: null
-  organization: Office of the Mayor
+  organization: Council
 - name: Brandon Boots
   label: Councilman
   phone: null
@@ -17,10 +17,19 @@ people:
   end_date: null
   image: null
   organization: Council
-- name: Mitch Brown
+- name: Marianne Colavita
   label: Councilman
   phone: null
   email: brown@gibbsborotownhall.com
+  url: https://gibbsborotownhall.com/borough-council/
+  start_date: null
+  end_date: null
+  image: null
+  organization: Council
+- name: Mitch Brown
+  label: Councilman
+  phone: null
+  email: colavita@gibbsborotownhall.com
   url: https://gibbsborotownhall.com/borough-council/
   start_date: null
   end_date: null

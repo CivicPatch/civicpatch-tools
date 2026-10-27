@@ -1,6 +1,6 @@
 people:
 - name: Brian Whitlock
-  label: City Council Member, District 1
+  label: City Council Member District 1
   phone: null
   email: bwhitlock@meridiancity.org
   url: https://meridiancity.org/city-council/seat-1/
@@ -9,7 +9,7 @@ people:
   image: local://77962d1b6d9f.png
   organization: Council
 - name: Liz Strader
-  label: City Council Member, District 2
+  label: City Council Member District 2
   phone: null
   email: lstrader@meridiancity.org
   url: https://meridiancity.org/city-council/seat-2/
@@ -18,7 +18,7 @@ people:
   image: local://b92363fb9ed9.png
   organization: Council
 - name: Doug Taylor
-  label: City Council Member, District 3
+  label: City Council Member District 3
   phone: null
   email: dtaylor@meridiancity.org
   url: https://meridiancity.org/city-council/seat-3/
@@ -27,7 +27,7 @@ people:
   image: local://54cf92715421.png
   organization: Council
 - name: John Overton
-  label: City Council President, District 4
+  label: City Council President District 4
   phone: null
   email: joverton@meridiancity.org
   url: https://meridiancity.org/city-council/seat-4/
@@ -36,7 +36,7 @@ people:
   image: local://0f8201674819.png
   organization: Council
 - name: Anne Little Roberts
-  label: City Council Vice President, District 5
+  label: City Council Vice President District 5
   phone: null
   email: alittleroberts@meridiancity.org
   url: https://meridiancity.org/city-council/seat-5/
@@ -45,7 +45,7 @@ people:
   image: local://fb51fe6e6cc4.png
   organization: Council
 - name: Luke Cavener
-  label: City Council Member, District 6
+  label: City Council Member District 6
   phone: null
   email: lcavener@meridiancity.org
   url: https://meridiancity.org/city-council/seat-6/

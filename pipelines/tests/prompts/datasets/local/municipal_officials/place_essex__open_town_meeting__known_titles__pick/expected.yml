@@ -1,0 +1,42 @@
+jurisdiction_ocdid: ocd-jurisdiction/country:us/state:vt/place:essex/government
+current_date: '2026-10-27'
+organization_choices:
+- Advisory Budget Committee
+- Board of Cemetery Commissioners
+- Board of Library Trustees
+- Board of Listers
+- Selectboard
+- Town Auditors
+- Town Meeting
+- Trustees of Public Funds
+- Water Commissioners
+known_roles:
+- Cemetery Commissioner
+- Library Trustee
+- Select Board Member
+- Town Clerk
+- Member
+government_form_role_labels:
+- Advisory Budget Committee Member
+- Lister
+- Auditor
+- Moderator
+- Trustee of Public Funds
+- Water Commissioner
+people:
+- name: Tatsiana Bussiere
+  label: Town Clerk / Treasurer
+  phone: 802-879-0413
+  email: tbussiere@essex.org
+  url: https://www.essexvt.gov/m/directory/employee?eid=289
+  start_date: null
+  end_date: null
+  image: null
+  organization: none
+thought: 'Plan D4 (2026-10-27): Essex''s clerk is named only in the staff directory of the
+  Clerk''s Office, as "Town Clerk / Treasurer" beside a Deputy Clerk and an Assistant Clerk.
+  Town Clerk is a listed role (Vermont''s config), so she is in, in no listed organization
+  (Town Officers is the default and is never offered); the deputy and assistant are staff
+  and out. The lists are the ones the 2026-10-27 Essex run (`0714621e`) sent. The page was
+  fetched 2026-10-27 and preprocessed as step 3 does (clean_html, filter_content, markdownify),
+  its links made absolute as the scraper stores them.'

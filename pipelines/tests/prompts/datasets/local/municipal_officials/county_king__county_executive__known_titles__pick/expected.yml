@@ -7,6 +7,9 @@ organization_choices:
 known_roles:
 - Chair
 - Council Member
+- Assessor
+- Prosecuting Attorney
+- Director of Elections
 divisions:
 - district 3
 - district 1
@@ -108,5 +111,35 @@ people:
   end_date: null
   image: null
   organization: County Executive
+- name: John Wilson
+  label: Assessor
+  phone: null
+  email: null
+  url: https://kingcounty.gov/en/dept/assessor/about-king-county/about-king-county-assessor/leadership-team
+  start_date: null
+  end_date: null
+  image: null
+  organization: none
+- name: Julie Wise
+  label: Elections director
+  phone: null
+  email: null
+  url: https://kingcounty.gov/en/dept/elections/about-us/meet-the-director
+  start_date: null
+  end_date: null
+  image: null
+  organization: none
+- name: Leesa Manion
+  label: Prosecutor
+  phone: null
+  email: null
+  url: https://kingcounty.gov/en/dept/pao
+  start_date: null
+  end_date: null
+  image: null
+  organization: none
 thought: 'Merged by plan P5 from county_king__county_executive__county_council__known_titles,
-  county_king__county_executive__county_executive__known_titles. '
+  county_king__county_executive__county_executive__known_titles.  Plan D4 (2026-10-27):
+  known_roles carries the county''s offices as a county config would (RCW 36.16.030
+  and charter § 350.20.50 name the county''s elective offices), so its officers are
+  in, in no listed organization.'

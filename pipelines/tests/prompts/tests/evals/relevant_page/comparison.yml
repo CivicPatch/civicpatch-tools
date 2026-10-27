@@ -1,7 +1,7 @@
 providers:
   open_router-AtlasCloud:
-    elapsed_seconds: 472.13
-    cost_usd: 0.063430248
+    elapsed_seconds: 1325.06
+    cost_usd: 0.151671604
     failed_cases: 0
     passed_cases: 57
 failures: {}

@@ -3,7 +3,7 @@ people:
   label: Council Member
   phone: null
   email: lsteiniker@cityofpayette.com
-  url: //cityofpayette.com/index.asp?SEC=3E868623-D11C-4F30-A389-C51A121FB9A7&Type=B_BASIC
+  url: https://cityofpayette.com/index.asp?SEC=3E868623-D11C-4F30-A389-C51A121FB9A7&Type=B_BASIC
   start_date: null
   end_date: '2027'
   image: null
@@ -11,7 +11,7 @@ people:
   label: Council Member
   phone: null
   email: mkee@cityofpayette.com
-  url: //cityofpayette.com/index.asp?SEC=3E868623-D11C-4F30-A389-C51A121FB9A7&Type=B_BASIC
+  url: https://cityofpayette.com/index.asp?SEC=3E868623-D11C-4F30-A389-C51A121FB9A7&Type=B_BASIC
   start_date: null
   end_date: '2027'
   image: null
@@ -19,7 +19,7 @@ people:
   label: Council Member
   phone: null
   email: dmcgill@cityofpayette.com
-  url: //cityofpayette.com/index.asp?SEC=3E868623-D11C-4F30-A389-C51A121FB9A7&Type=B_BASIC
+  url: https://cityofpayette.com/index.asp?SEC=3E868623-D11C-4F30-A389-C51A121FB9A7&Type=B_BASIC
   start_date: null
   end_date: '2029'
   image: null
@@ -27,7 +27,7 @@ people:
   label: Council Member
   phone: null
   email: jhenderson@cityofpayette.com
-  url: //cityofpayette.com/index.asp?SEC=3E868623-D11C-4F30-A389-C51A121FB9A7&Type=B_BASIC
+  url: https://cityofpayette.com/index.asp?SEC=3E868623-D11C-4F30-A389-C51A121FB9A7&Type=B_BASIC
   start_date: null
   end_date: '2027'
   image: null
@@ -35,7 +35,7 @@ people:
   label: Council Member
   phone: null
   email: kpatrick@cityofpayette.com
-  url: //cityofpayette.com/index.asp?SEC=3E868623-D11C-4F30-A389-C51A121FB9A7&Type=B_BASIC
+  url: https://cityofpayette.com/index.asp?SEC=3E868623-D11C-4F30-A389-C51A121FB9A7&Type=B_BASIC
   start_date: null
   end_date: '2029'
   image: null
@@ -43,15 +43,15 @@ people:
   label: Council Member
   phone: null
   email: jfranklin@cityofpayette.com
-  url: //cityofpayette.com/index.asp?SEC=3E868623-D11C-4F30-A389-C51A121FB9A7&Type=B_BASIC
+  url: https://cityofpayette.com/index.asp?SEC=3E868623-D11C-4F30-A389-C51A121FB9A7&Type=B_BASIC
   start_date: null
   end_date: '2029'
   image: null
 - name: Ray Wickersham
-  label: Mayor
+  label: Council Member and Mayor
   phone: null
   email: ray@wickersham.us
-  url: //cityofpayette.com/index.asp?SEC=3E868623-D11C-4F30-A389-C51A121FB9A7&Type=B_BASIC
+  url: https://cityofpayette.com/index.asp?SEC=3E868623-D11C-4F30-A389-C51A121FB9A7&Type=B_BASIC
   start_date: null
   end_date: '2029'
   image: null

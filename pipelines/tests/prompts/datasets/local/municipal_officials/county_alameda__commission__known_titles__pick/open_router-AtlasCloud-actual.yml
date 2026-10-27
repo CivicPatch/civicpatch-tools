@@ -1,6 +1,6 @@
 people:
 - name: David Haubert
-  label: Supervisor 1st District
+  label: Board of Supervisors, 1st District
   phone: null
   email: null
   url: https://district1.acgov.org/
@@ -9,7 +9,7 @@ people:
   image: null
   organization: Board of Supervisors
 - name: "Elisa M\xE1rquez"
-  label: Supervisor 2nd District
+  label: Board of Supervisors, 2nd District
   phone: null
   email: null
   url: https://district2.acgov.org/
@@ -18,7 +18,7 @@ people:
   image: null
   organization: Board of Supervisors
 - name: Lena Tam
-  label: Supervisor 3rd District
+  label: Board of Supervisors, 3rd District
   phone: null
   email: null
   url: https://district3.acgov.org/
@@ -27,7 +27,7 @@ people:
   image: null
   organization: Board of Supervisors
 - name: Nate Miley
-  label: Supervisor 4th District
+  label: Board of Supervisors, 4th District
   phone: null
   email: null
   url: https://district4.acgov.org/
@@ -36,7 +36,7 @@ people:
   image: null
   organization: Board of Supervisors
 - name: Nikki Fortunato Bas
-  label: Supervisor 5th District
+  label: Board of Supervisors, 5th District
   phone: null
   email: null
   url: https://district5.acgov.org/

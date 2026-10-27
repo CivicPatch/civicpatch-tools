@@ -1,64 +1,64 @@
 people:
 - name: Mel Rapozo
   label: Council Chair
-  phone: null
+  phone: (808) 241-4188
   email: mrapozo@kauai.gov
   url: https://www.kauai.gov/Government/Council
-  start_date: '2024'
-  end_date: '2026'
+  start_date: null
+  end_date: null
   image: null
   organization: County Council
 - name: KipuKai Kuali'i
   label: Council Vice Chair
-  phone: null
+  phone: (808) 241-4188
   email: kkualii@kauai.gov
   url: https://www.kauai.gov/Government/Council
-  start_date: '2024'
-  end_date: '2026'
+  start_date: null
+  end_date: null
   image: null
   organization: County Council
 - name: Addison Bulosan
-  label: Council Member
-  phone: null
+  label: Councilmember
+  phone: (808) 241-4188
   email: abulosan@kauai.gov
   url: https://www.kauai.gov/Government/Council
-  start_date: '2024'
-  end_date: '2026'
+  start_date: null
+  end_date: null
   image: null
   organization: County Council
 - name: Bernard P. Carvalho, Jr.
-  label: Council Member
-  phone: null
+  label: Councilmember
+  phone: (808) 241-4188
   email: bcarvalho@kauai.gov
   url: https://www.kauai.gov/Government/Council
-  start_date: '2024'
-  end_date: '2026'
+  start_date: null
+  end_date: null
   image: null
   organization: County Council
 - name: Felicia Cowden
-  label: Council Member
-  phone: null
+  label: Councilmember
+  phone: (808) 241-4188
   email: fcowden@kauai.gov
   url: https://www.kauai.gov/Government/Council
-  start_date: '2024'
-  end_date: '2026'
+  start_date: null
+  end_date: null
   image: null
   organization: County Council
 - name: Fern Holland
-  label: Council Member
-  phone: null
+  label: Councilmember
+  phone: (808) 241-4188
   email: fholland@kauai.gov
   url: https://www.kauai.gov/Government/Council
-  start_date: '2024'
-  end_date: '2026'
+  start_date: null
+  end_date: null
   image: null
   organization: County Council
 - name: Arryl Kaneshiro
-  label: Council Member
-  phone: null
+  label: Councilmember
+  phone: (808) 241-4188
   email: akaneshiro@kauai.gov
   url: https://www.kauai.gov/Government/Council
-  start_date: '2024'
-  end_date: '2026'
+  start_date: null
+  end_date: null
   image: null
   organization: County Council
