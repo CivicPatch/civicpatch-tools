@@ -6,6 +6,7 @@ from shared.schemas import (
     GoverningLawOrganizations,
     GoverningLawOrganizationsExtras,
     GoverningLawPost,
+    PublishedSourcePage,
     QuoteScope,
     Source,
     SourceExtras,
@@ -19,6 +20,7 @@ from core.spend_limits import Cap
 from schemas.common import Identity, UserRole
 from lib.auth import get_optional_user
 from routers.api import pipeline_runs as pipeline_runs_router
+from routers.api.pipeline_runs import USE_CACHE_ARGUMENT
 import services.extras_organizations as extras_organizations_service
 import services.governing_law as governing_law_service
 from services.governing_law import CollectorConfig
@@ -482,6 +484,29 @@ def test_a_people_run_is_told_the_posts_its_governing_law_establishes(service_cl
 
     assert response.status_code == 200, response.text
     assert response.json()["governing_law_posts"] == ([member.model_dump(mode="json")] if collected else [])
+
+
+@pytest.mark.unit
+@pytest.mark.parametrize("arguments, reused", [({}, True), ({USE_CACHE_ARGUMENT: True}, True), ({USE_CACHE_ARGUMENT: False}, False)])
+def test_a_people_run_started_without_the_cache_is_given_no_published_pages(service_client, arguments, reused):
+    page = PublishedSourcePage(
+        read_source_page_id="read-1", source_url="https://example.gov/selectboard", page_hash="p", prompt_hash="q",
+    )
+    with patch("routers.api.pipeline_runs.get_pipeline_run", new_callable=AsyncMock, return_value={
+        "jurisdiction_ocdid": TEST_OCDID, "arguments_json": arguments, "pipeline_run_cap_usd": None,
+    }), patch(
+        "routers.api.pipeline_runs.government_form_service.resolved_government", new_callable=AsyncMock, return_value=NOTHING_RESOLVED
+    ), patch(
+        "routers.api.pipeline_runs.government_form_service.government_form_choices", new_callable=AsyncMock, return_value=[]
+    ), patch(
+        "routers.api.pipeline_runs.published_source_pages", new_callable=AsyncMock, return_value=[page]
+    ), patch(
+        "routers.api.pipeline_runs.extras_organizations_service.get_extras_organizations", new_callable=AsyncMock, return_value=None,
+    ):
+        response = service_client.get(f"/pipeline_runs/{TEST_CHANGESET_ID}/config")
+
+    assert response.status_code == 200, response.text
+    assert response.json()["published_source_pages"] == ([page.model_dump()] if reused else [])
 
 
 @pytest.mark.unit

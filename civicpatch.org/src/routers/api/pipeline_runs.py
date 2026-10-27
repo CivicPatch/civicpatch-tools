@@ -87,6 +87,9 @@ _is_production = os.getenv("APP_ENVIRONMENT", "").lower() == "production"
 _DISPATCH_MODE_LOCAL = "local"
 DISPATCH_MODE = "remote" if _is_production else _DISPATCH_MODE_LOCAL
 
+# A run's arguments_json key; false reads every page fresh (dev measurements, `scrape-local --no-cache`).
+USE_CACHE_ARGUMENT = "use_cache"
+
 # What each collector run is told when it starts, by its kind.
 COLLECTOR_CONFIGS = {
     PipelineRunKind.GOVERNING_LAW_COLLECTOR: governing_law_service.collector_config,
@@ -299,7 +302,7 @@ def get_router(api_key_header):
             "published_source_pages": [
                 page.model_dump()
                 for page in await published_source_pages(pipeline_run["jurisdiction_ocdid"])
-            ],
+            ] if args.get(USE_CACHE_ARGUMENT, True) else [],
             # The posts its governing law establishes (the organizations collector's); empty
             # until that has run.
             "governing_law_posts": [
