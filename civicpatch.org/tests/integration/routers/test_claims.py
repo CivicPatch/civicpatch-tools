@@ -101,7 +101,7 @@ async def _seed() -> str:
             "VALUES (%s, 'zz', 'local')",
             (_OCDID,),
         )
-        organization_id = await organizations.find_or_create(cur, _OCDID)
+        organization_id = await organizations.find_or_create(cur, _OCDID, "Officers")
         await divisions.find_or_create(cur, _BASE, _OCDID)
         post_id = await factories.seed_post(cur, _OCDID, organization_id, "mayor", _BASE)
         await conn.commit()

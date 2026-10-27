@@ -196,7 +196,16 @@ async def default_organization(cur, jurisdiction_ocdid: str) -> str:
     row = await cur.fetchone()
     if row:
         return row[0]
-    return await organizations.find_or_create(cur, jurisdiction_ocdid)
+    await cur.execute(
+        """
+        INSERT INTO organizations (jurisdiction_ocdid, name, meta_is_default)
+        VALUES (%s, 'Officers', true) RETURNING id::text
+        """,
+        (jurisdiction_ocdid,),
+    )
+    created = await cur.fetchone()
+    assert created is not None
+    return created[0]
 
 
 async def hand_edit(jurisdiction_ocdid: str, user_id: str) -> str:

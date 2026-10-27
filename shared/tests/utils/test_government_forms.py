@@ -11,3 +11,8 @@ def test_every_form_has_a_description(form):
 def test_the_suffix_is_the_last_word_of_the_name():
     assert name_suffix("Millbury town") == "town"
     assert name_suffix("") == ""
+
+
+def test_a_parenthetical_is_not_the_suffix():
+    assert name_suffix("Reno city (Lamar County)") == "city"
+    assert name_suffix("San Buenaventura (Ventura) city") == "city"

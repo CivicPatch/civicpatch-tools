@@ -1,6 +1,5 @@
 from pydantic import BaseModel
 
-from core.organization_derivation import ExistingOrganization
 from database.database import get_pool
 from shared.schemas import GovernmentForm
 
@@ -37,35 +36,3 @@ async def save_government_form(cur, jurisdiction_ocdid: str, government_form: Go
         "UPDATE jurisdictions SET extras_government_form = %s WHERE jurisdiction_ocdid = %s",
         (government_form, jurisdiction_ocdid),
     )
-
-
-async def government_form_inputs_below_state() -> list[GovernmentFormInputs]:
-    pool = await get_pool()
-    async with pool.connection() as conn, conn.cursor() as cur:
-        await cur.execute(_INPUTS_SELECT + " WHERE status = 'active' AND level <> 'state'")
-        return [_inputs(row) for row in await cur.fetchall()]
-
-
-async def list_organizations(
-    jurisdiction_ocdids: list[str],
-) -> dict[str, list[ExistingOrganization]]:
-    """Each jurisdiction's organizations, the default first."""
-    pool = await get_pool()
-    async with pool.connection() as conn, conn.cursor() as cur:
-        await cur.execute(
-            """
-            SELECT jurisdiction_ocdid, id::text, name, meta_is_default
-            FROM organizations
-            WHERE jurisdiction_ocdid = ANY(%s)
-            ORDER BY meta_is_default DESC, sort_order, name
-            """,
-            (jurisdiction_ocdids,),
-        )
-        rows = await cur.fetchall()
-    by_jurisdiction: dict[str, list[ExistingOrganization]] = {}
-    for row in rows:
-        by_jurisdiction.setdefault(row[0], []).append(
-            ExistingOrganization(id=row[1], name=row[2], meta_is_default=row[3])
-        )
-    return by_jurisdiction
-

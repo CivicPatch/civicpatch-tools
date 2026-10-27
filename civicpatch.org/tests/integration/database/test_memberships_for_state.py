@@ -73,7 +73,7 @@ async def _add_membership(cur, ocdid, division, state, name, stints) -> str:
         "VALUES (%s, %s, 'local') ON CONFLICT DO NOTHING",
         (ocdid, state),
     )
-    organization_id = await organizations.find_or_create(cur, ocdid)
+    organization_id = await organizations.find_or_create(cur, ocdid, "Officers")
     await divisions.find_or_create(cur, division, ocdid)
     post_id = await factories.seed_post(cur, ocdid, organization_id, _ROLE, division)
 

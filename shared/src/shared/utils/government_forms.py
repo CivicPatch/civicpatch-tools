@@ -1,3 +1,5 @@
+import re
+
 from pydantic import BaseModel
 from shared.schemas import GovernmentForm
 
@@ -31,7 +33,11 @@ def describe_government_form(form: GovernmentForm) -> str:
     return f"{government_form_name(form)} ({GOVERNMENT_FORM_DESCRIPTIONS[form]})"
 
 
+PARENTHETICAL = re.compile(r"\s*\([^)]*\)")
+
+
 def name_suffix(name: str) -> str:
-    """Millbury town -> town: the statutory type most registry names end with."""
-    words = name.split()
+    """Millbury town -> town: the statutory type most registry names end with. A parenthetical
+    is not part of it: "Reno city (Lamar County)" and "San Buenaventura (Ventura) city" -> city."""
+    words = PARENTHETICAL.sub("", name).split()
     return words[-1].lower() if words else ""

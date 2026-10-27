@@ -162,7 +162,7 @@ async def _seed() -> tuple[str, str, str]:
             "INSERT INTO people (id, jurisdiction_ocdid, name) VALUES (%s, %s, %s)",
             (person_id, _OCDID, "Route Test"),
         )
-        organization_id = await organizations.find_or_create(cur, _OCDID)
+        organization_id = await organizations.find_or_create(cur, _OCDID, "Officers")
         await divisions.find_or_create(cur, _BASE, _OCDID)
         await divisions.find_or_create(cur, _WARD_3, _OCDID)
         mayor = await factories.seed_post(cur, _OCDID, organization_id, "mayor", _BASE)
@@ -204,7 +204,7 @@ async def test_unmatched_text_reaches_the_wire_with_its_counts(client):
     person_id, mayor, _ = await _seed()
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        organization_id = await organizations.find_or_create(cur, _OCDID)
+        organization_id = await organizations.find_or_create(cur, _OCDID, "Officers")
         await factories.bind_membership(
             cur,
             SeededMembership(
@@ -311,7 +311,7 @@ async def test_the_person_axis_read_carries_the_whole_parse(client):
     person_id, mayor, _ = await _seed()
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        organization_id = await organizations.find_or_create(cur, _OCDID)
+        organization_id = await organizations.find_or_create(cur, _OCDID, "Officers")
         await factories.bind_membership(
             cur,
             SeededMembership(

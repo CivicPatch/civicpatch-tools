@@ -5,18 +5,13 @@ import services.extras_organizations as extras_organizations_service
 import services.governing_law as governing_law_service
 import database.jurisdiction_configs as jurisdiction_configs_db
 from core.organization_derivation import (
-    ExistingOrganization,
     NOTHING_RESOLVED,
-    OrganizationChanges,
     ResolvedGovernment,
-    organization_changes,
     resolve_government,
     with_role_labels,
 )
 from core.post_deletion import with_holder_names
-from database import organizations as organizations_db
 from database import post_listings as post_listings_db
-from database.organizations import DEFAULT_ORGANIZATION_NAME
 from database.activity import record_change
 from database.database import get_pool
 from database.government_forms import GovernmentFormInputs
@@ -29,15 +24,11 @@ from shared.utils.government_forms import (
     government_form_name,
 )
 from shared.utils.layered_config import (
-    MergedConfig,
     level_government_forms,
-    derived_organizations,
     jurisdiction_config,
-    resolve_government_form,
 )
 from shared.utils.id_utils import parse_jurisdiction_ocdid
 from shared.utils.statuses import ActivityType
-from shared.utils.taxonomy import build_taxonomy, role_labels_by_role_id
 
 
 async def resolved_government(jurisdiction_ocdid: str) -> ResolvedGovernment:
@@ -87,110 +78,12 @@ async def organizations_with_role_labels(jurisdiction_ocdid: str) -> list[dict]:
     return with_role_labels(with_holder_names(organizations, holder_names), government.candidate_organizations)
 
 
-async def ensure_government_form_organizations() -> int:
-    """Build every active jurisdiction's derived organizations not built yet. Returns how many
-    changed. The saved government form, else the config files, decides which.
-
-    Run on every open-data sync, like `ensure_defaults_exist`. Two reads decide everything in
-    memory; only a jurisdiction with something to change gets a write, so a run with nothing to
-    do (nearly every run) writes nothing.
-    """
-    configs = await jurisdiction_configs_db.get_jurisdiction_configs()
-    jurisdictions = await government_forms_db.government_form_inputs_below_state()
-    layers = {layer for layer in map(_layer, jurisdictions) if layer is not None}
-    config_by_layer = {layer: jurisdiction_config(configs, *layer) for layer in layers}
-    organizations = await government_forms_db.list_organizations(
-        [jurisdiction.jurisdiction_ocdid for jurisdiction in jurisdictions]
-    )
-    changed = 0
-    for jurisdiction in jurisdictions:
-        layer = _layer(jurisdiction)
-        if layer is None:
-            continue
-        existing = organizations.get(jurisdiction.jurisdiction_ocdid, [])
-        if await _build_organizations(jurisdiction, config_by_layer[layer], existing):
-            changed += 1
-    return changed
-
-
-async def build_government_form_organizations(jurisdiction_ocdid: str) -> None:
-    """`ensure_government_form_organizations` for one jurisdiction, right after its form changes."""
-    jurisdiction = await government_forms_db.get_government_form_inputs(jurisdiction_ocdid)
-    layer = _layer(jurisdiction) if jurisdiction else None
-    if jurisdiction is None or layer is None:
-        return
-    config = jurisdiction_config(await jurisdiction_configs_db.get_jurisdiction_configs(), *layer)
-    existing = (await government_forms_db.list_organizations([jurisdiction_ocdid])).get(jurisdiction_ocdid, [])
-    await _build_organizations(jurisdiction, config, existing)
-
-
-async def _build_organizations(
-    jurisdiction: GovernmentFormInputs, config: MergedConfig, existing: list[ExistingOrganization]
-) -> bool:
-    """Returns whether anything changed."""
-    if not existing:
-        return False
-    government_form = resolve_government_form(config, jurisdiction.name, jurisdiction.government_form)
-    derived = derived_organizations(config, government_form)
-    changes = organization_changes(derived, existing, DEFAULT_ORGANIZATION_NAME)
-    if changes.has_no_changes:
-        return False
-    taxonomy = build_taxonomy(config.roles)
-    role_labels = {organization.name: role_labels_by_role_id(organization.role_labels, taxonomy) for organization in derived}
-    await _apply(jurisdiction, existing[0], changes, role_labels)
-    return True
-
-
 def _layer(jurisdiction: GovernmentFormInputs) -> tuple[str, JurisdictionLevel] | None:
     """The (state, level) whose config files apply; None for a state, which has no government form."""
     parsed = parse_jurisdiction_ocdid(jurisdiction.jurisdiction_ocdid)
     if parsed.level == JurisdictionLevel.STATE:
         return None
     return parsed.state, parsed.level
-
-
-async def _apply(
-    jurisdiction: GovernmentFormInputs,
-    default: ExistingOrganization,
-    changes: OrganizationChanges,
-    role_labels: dict[str, dict[str, str]],
-) -> None:
-    """Rename the default, create the rest, give each what the form calls its roles, and log
-    it: one transaction. `role_labels` is per organization name."""
-    pool = await get_pool()
-    async with pool.connection() as conn, conn.cursor() as cur:
-        if changes.rename_default_to is not None:
-            await organizations_db.rename(cur, default.id, changes.rename_default_to)
-            await organizations_db.set_extras_role_labels(cur, default.id, role_labels[changes.rename_default_to])
-        for organization in changes.organizations_to_create:
-            organization_id = await organizations_db.find_or_create(
-                cur, jurisdiction.jurisdiction_ocdid, organization.name
-            )
-            await organizations_db.set_extras_role_labels(cur, organization_id, role_labels[organization.name])
-        fields = _organization_fields(default.name, changes)
-        await record_change(
-            cur,
-            ActivityType.EDIT_JURISDICTION,
-            None,
-            jurisdiction.jurisdiction_ocdid,
-            Change(
-                entity_type=EntityType.JURISDICTION,
-                entity_id=jurisdiction.jurisdiction_ocdid,
-                subject=jurisdiction.name,
-                fields=fields,
-            ),
-        )
-
-
-def _organization_fields(default_name: str, changes: OrganizationChanges) -> list[FieldChange]:
-    fields = []
-    if changes.rename_default_to is not None:
-        fields.append(
-            FieldChange(field="organization_name", before=default_name, after=changes.rename_default_to)
-        )
-    for organization in changes.organizations_to_create:
-        fields.append(FieldChange(field="organization_created", after=organization.name))
-    return fields
 
 
 async def government_form_choices(jurisdiction_ocdid: str) -> list[GovernmentForm]:
@@ -211,13 +104,13 @@ class GovernmentFormNotAtLevel(Exception):
 
 
 async def set_government_form(jurisdiction_ocdid: str, government_form: GovernmentForm, user_id: str | None) -> None:
-    """Saved over whatever was there. `user_id` is None for the service key."""
+    """Saved over whatever was there; organizations come from a state's migration, not from here.
+    `user_id` is None for the service key."""
     jurisdiction = await _checked(jurisdiction_ocdid, government_form)
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await government_forms_db.save_government_form(cur, jurisdiction_ocdid, government_form)
         await _record_government_form(cur, jurisdiction, government_form, user_id)
-    await build_government_form_organizations(jurisdiction_ocdid)
 
 
 async def _checked(jurisdiction_ocdid: str, government_form: GovernmentForm) -> GovernmentFormInputs:

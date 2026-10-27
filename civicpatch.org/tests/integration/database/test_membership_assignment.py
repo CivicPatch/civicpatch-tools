@@ -83,7 +83,7 @@ async def _seed(label: str = "Mayor", read_in: str | None = None) -> tuple[str, 
             "VALUES (%s, %s, %s)",
             (person_id, _OCDID, "Assign Test"),
         )
-        org = await organizations.find_or_create(cur, _OCDID)
+        org = await organizations.find_or_create(cur, _OCDID, "Officers")
         await divisions.find_or_create(cur, _BASE, _OCDID)
         await divisions.find_or_create(cur, _WARD_3, _OCDID)
         first = await factories.seed_post(cur, _OCDID, org, "mayor", _BASE)

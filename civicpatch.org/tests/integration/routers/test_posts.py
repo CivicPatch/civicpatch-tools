@@ -155,7 +155,7 @@ async def clean_sentinels():
         # Real jurisdictions get their default organization at sync time (open_data.py); this
         # raw insert bypasses that, so it has to do the pairing itself.
         await cur.execute(
-            "INSERT INTO organizations (jurisdiction_ocdid, name) VALUES (%s, 'Government')",
+            "INSERT INTO organizations (jurisdiction_ocdid, name) VALUES (%s, 'Officers')",
             (_OCDID,),
         )
         await conn.commit()
@@ -200,7 +200,7 @@ async def _seat_someone(post_id: str) -> None:
             "INSERT INTO people (id, jurisdiction_ocdid, name) VALUES (%s, %s, %s)",
             (person_id, _OCDID, "Post Test"),
         )
-        organization_id = await organizations.find_or_create(cur, _OCDID)
+        organization_id = await organizations.find_or_create(cur, _OCDID, "Officers")
         await factories.bind_membership(
             cur, SeededMembership(person_id=person_id), post_id, organization_id, "2026-06-15T00:00:00Z"
         )

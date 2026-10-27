@@ -66,7 +66,7 @@ async def _seed_member(
             "VALUES (%s, %s, %s)",
         (person_id, ocdid, "Triage Test"),
     )
-    organization_id = await organizations.find_or_create(cur, ocdid)
+    organization_id = await organizations.find_or_create(cur, ocdid, "Officers")
     await divisions.find_or_create(cur, division, ocdid)
     post_id = await factories.seed_post(
         cur, ocdid, organization_id, "council-member", division

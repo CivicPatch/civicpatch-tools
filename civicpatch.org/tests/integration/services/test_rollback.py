@@ -127,7 +127,7 @@ async def _seed_person(
             "        ARRAY[]::text[], ARRAY[]::text[], ARRAY[]::text[])",
             (person_id, jurisdiction_ocdid, name, source_url),
         )
-        org = await organizations.find_or_create(cur, jurisdiction_ocdid)
+        org = await organizations.find_or_create(cur, jurisdiction_ocdid, "Officers")
         await divisions.find_or_create(cur, base, jurisdiction_ocdid)
         post_id = await factories.seed_post(cur, jurisdiction_ocdid, org, post_slug, base)
         await factories.bind_membership(

@@ -309,9 +309,9 @@ async def jurisdiction_ocdids_in_states(conn: AsyncConnection, states: list[str]
 
 
 async def remove_synced_defaults(conn: AsyncConnection, jurisdiction_ocdids: set[str]) -> None:
-    """The sync gave every jurisdiction an empty 'Government'. Where the export has the real
-    bodies, that placeholder would take the name first and leave the exported one skipped by its
-    conflict clause — and every exported post pointing at that id failing its foreign key."""
+    """The sync gave every jurisdiction an empty default organization. Where the export has the
+    real ones, that default would take the name first and leave the exported one skipped by its
+    conflict clause, and every exported post pointing at that id failing its foreign key."""
     async with conn.cursor() as cur:
         await cur.execute(
             "DELETE FROM organizations WHERE jurisdiction_ocdid = ANY(%s)",

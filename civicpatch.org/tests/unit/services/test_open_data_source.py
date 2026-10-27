@@ -189,11 +189,6 @@ def _patch_sync_all(stack, tree, stored, contents):
     _patch(stack, "organizations_db.ensure_defaults_exist", new_callable=AsyncMock)
     _patch(
         stack,
-        "government_form_service.ensure_government_form_organizations",
-        new_callable=AsyncMock,
-    )
-    _patch(
-        stack,
         "jurisdiction_pr_service.fetch_pull_request_outcomes",
         new_callable=AsyncMock,
     )
