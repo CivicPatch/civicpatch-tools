@@ -92,8 +92,9 @@ async def _reconcile_roster(
     Fatal on failure, unlike the writes below: everything downstream consumes it.
     """
     identities = await _identities(jurisdiction_ocdid, workflow_context)
+    placed = await roster_ingest.placed_by_role(jurisdiction_ocdid, rows, taxonomy)
     return await roster_ingest.reconcile_roster(
-        jurisdiction_ocdid, rows, identities, taxonomy
+        jurisdiction_ocdid, placed, identities, taxonomy
     )
 
 

@@ -12,7 +12,9 @@ sheet has no analogue.
 
 import logging
 
+import services.government_form as government_form_service
 from core.display_rows import display_rows
+from core.organization_placement import PlaceableOrganization, placed_rows, role_ids_of
 from core.people_roster import (
     identified,
     in_known_organizations,
@@ -54,6 +56,22 @@ async def _with_organizations(jurisdiction_ocdid: str, rows: list[dict]) -> list
     return in_known_organizations(
         rows, {row["id"] for row in current}, default_organization_id
     )
+
+
+async def placed_by_role(jurisdiction_ocdid: str, rows: list[dict], taxonomy: Taxonomy) -> list[dict]:
+    """Each pipeline row in the organization its post role belongs to, else the one it was stamped
+    with, else the default. Not for sheet rows, which keep going to the default."""
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        current = await organizations.list_for_jurisdiction(cur, jurisdiction_ocdid)
+        default_organization_id = await organizations.get_default(cur, jurisdiction_ocdid)
+    government = await government_form_service.resolved_government(jurisdiction_ocdid)
+    labels_by_name = {organization.name: organization.role_labels for organization in government.candidate_organizations}
+    placeable = [
+        PlaceableOrganization(id=row["id"], role_ids=role_ids_of(labels_by_name.get(row["name"], []), taxonomy))
+        for row in current
+    ]
+    return placed_rows(rows, placeable, default_organization_id, jurisdiction_ocdid, taxonomy)
 
 
 async def assign_ids(jurisdiction_ocdid: str, roster: list[dict]) -> list[dict]:
