@@ -170,7 +170,8 @@ def normalize_text_for_search(text: str) -> str:
     return _NOT_WORD_OR_SPACE.sub("", _strip_accents(text)).lower()
 
 
-def _comparison_key(name: str) -> str:
+def name_comparison_key(name: str) -> str:
+    """The name with case, accents, punctuation, titles and credentials set aside: what `same_name` compares."""
     parsed = parse_name(name)
     parts = [parsed.first, parsed.middle, parsed.last, parsed.suffix, parsed.nickname]
     unpunctuated = _NAME_PUNCTUATION.sub("", _casefold(" ".join(parts)))
@@ -179,7 +180,7 @@ def _comparison_key(name: str) -> str:
 
 def same_name(name1: str, name2: str) -> bool:
     """Same parsed name, setting aside case, accents, punctuation, titles and credentials."""
-    return _comparison_key(name1) == _comparison_key(name2)
+    return name_comparison_key(name1) == name_comparison_key(name2)
 
 
 def _within_one_edit(a: str, b: str) -> bool:

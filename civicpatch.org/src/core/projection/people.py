@@ -8,6 +8,7 @@ from core.projection.facts import Claim, Facts, PostKey, SourceRecord, latest_fi
 from core.projection.field_value import (
     list_value,
     other_names,
+    name_value,
     scalar_value,
     source_urls,
 )
@@ -153,7 +154,7 @@ def derive_person(
     held = collapse_per_organization(members, active, by_post, facts)
     return Person(
         id=person_id,
-        name=scalar_value(members, "name", facts),
+        name=name_value(members, facts),
         image=scalar_value(members, "image", facts),
         cdn_image=scalar_value(members, "cdn_image", facts),
         phones=list_value(members, "phones", facts),
