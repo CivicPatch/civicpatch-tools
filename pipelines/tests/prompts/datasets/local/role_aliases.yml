@@ -78,6 +78,8 @@ roles:
     - Councilman
     - Councilwoman
     - Councilperson
+    # Burlington's own word ("To reach Councilors"); open-data's member role lists it too.
+    - Councilor
     # Bare "Council" appears as a role in golinda_mixed_city_county and
     # vacant_positions_council. It is not a title, but it is what the fixture says, and
     # dropping it would score those people 0 for a naming defect in the golden data.

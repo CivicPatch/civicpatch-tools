@@ -3,7 +3,7 @@ people:
   label: Mayor
   phone: 908-996-7071
   email: jkiernan@alexandrianj.gov
-  url: https://www.alexandrianj.gov/government/mayor
+  url: null
   start_date: null
   end_date: null
   image: null
@@ -11,7 +11,7 @@ people:
   label: Deputy Mayor
   phone: 908-996-7071
   email: thudanish@alexandrianj.gov
-  url: https://www.alexandrianj.gov/government/mayor
+  url: null
   start_date: null
   end_date: null
   image: null
@@ -19,7 +19,7 @@ people:
   label: Committee Member
   phone: 908-996-7071
   email: bpatkochis@alexandrianj.gov
-  url: https://www.alexandrianj.gov/government/mayor
+  url: null
   start_date: null
   end_date: null
   image: null
@@ -27,7 +27,7 @@ people:
   label: Committee Member
   phone: 908-996-7071
   email: rmortara@alexandrianj.gov
-  url: https://www.alexandrianj.gov/government/mayor
+  url: null
   start_date: null
   end_date: null
   image: null

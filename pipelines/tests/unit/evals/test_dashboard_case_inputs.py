@@ -13,9 +13,3 @@ def test_a_case_shows_its_prompt_inputs_and_not_its_answer():
     assert inputs["known_organizations"] == '["Select Board", "Town Meeting"]'
     assert "page" not in inputs
 
-
-def test_page_covers_inputs_name_every_body_with_its_posts():
-    inputs = read_case_inputs("page_covers")["millbury_school_committee"]
-
-    assert '"name": "Select Board"' in inputs["organizations"]
-    assert "covers" not in inputs

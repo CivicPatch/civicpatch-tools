@@ -1,9 +1,11 @@
-"""`placed_by_role` against real organization rows and config: a pipeline row goes to the
-organization whose form lists its post role, else to the one it was stamped with, else the default.
+"""`reconcile_scrape` against real organization rows and config: a pipeline row goes to the
+organization the model picked, else the one whose form lists its post role, else the one of
+those the person already sits in, else the default.
 
 Isolation: place `zyplace_town` in ma and the two config paths below, cleaned after.
 """
 
+import datetime
 import json
 
 import pytest
@@ -11,8 +13,9 @@ import pytest_asyncio
 
 from database.database import get_pool
 from database.organizations import ensure_defaults_exist
-from services.roster_ingest import placed_by_role
-from shared.schemas import GovernmentForm, Role, RoleConfig
+from services.roster_ingest import reconcile_scrape
+from tests.integration import factories
+from shared.schemas import GovernmentForm, Role, RoleConfig, SelectionMethod
 from shared.utils.government_forms import DerivedOrganization
 from shared.utils.layered_config import COUNTRY_ROLES_PATH, ConfigFile, ConfigRole, GovernmentFormConfig
 from shared.utils.taxonomy import build_taxonomy
@@ -20,6 +23,7 @@ from shared.utils.taxonomy import build_taxonomy
 _TOWN = "ocd-jurisdiction/country:us/state:ma/place:zyplace_town/government"
 _ROLES = [
     ConfigRole(id="member", label="Member", aliases=["Select Board Member"]),
+    ConfigRole(id="chair", label="Chair", is_unique=True, selection_method=SelectionMethod.ELECTED_BY_MEMBERS),
     ConfigRole(id="clerk", label="Clerk", is_unique=True, aliases=["Town Clerk"]),
     ConfigRole(id="moderator", label="Moderator", is_unique=True),
 ]
@@ -29,7 +33,7 @@ _CONFIGS = {
         government_forms={
             GovernmentForm.OPEN_TOWN_MEETING: GovernmentFormConfig(
                 organizations=[
-                    DerivedOrganization(name="Select Board", role_labels=["Select Board Member"]),
+                    DerivedOrganization(name="Select Board", role_labels=["Select Board Member", "Chair"]),
                     DerivedOrganization(name="Town Meeting", role_labels=["Moderator"]),
                     DerivedOrganization(name="Town Officers", role_labels=["Town Clerk"]),
                 ]
@@ -68,6 +72,8 @@ async def _seeded():
     yield
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute("DELETE FROM activity WHERE jurisdiction_ocdid = %s", (_TOWN,))
+        await cur.execute("DELETE FROM source_records WHERE jurisdiction_ocdid = %s", (_TOWN,))
+        await cur.execute("DELETE FROM changesets WHERE jurisdiction_ocdid = %s", (_TOWN,))
         await cur.execute("DELETE FROM organizations WHERE jurisdiction_ocdid = %s", (_TOWN,))
         await cur.execute("DELETE FROM jurisdictions WHERE jurisdiction_ocdid = %s", (_TOWN,))
         await cur.execute("DELETE FROM jurisdiction_configs WHERE path = ANY(%s)", (list(_CONFIGS),))
@@ -87,18 +93,25 @@ def _row(name: str, label: str, organization_id: str | None) -> dict:
 
 @pytest.mark.integration
 @pytest.mark.asyncio
-async def test_each_row_goes_to_its_role_then_its_stamp_then_the_default():
+async def test_each_row_goes_to_its_pick_then_its_role_then_where_it_sits_then_the_default():
     ids = await _ids_by_name()
+    await factories.published_source_record(
+        _TOWN, ids["Select Board"], "11111111-1111-4111-8111-111111111111", "Dee Moss", "Select Board Member",
+        "https://zyplace.gov/select-board", datetime.datetime(2026, 1, 1, tzinfo=datetime.timezone.utc),
+    )
     rows = [
-        _row("Ann", "Town Clerk", ids["Town Meeting"]),
-        _row("Bo", "Select Board Member", ids["Select Board"]),
-        _row("Cy", "Select Board Member", None),
+        _row("Ann Lee", "Town Clerk", ids["Town Meeting"]),
+        _row("Bo Ray", "Town Clerk", None),
+        _row("Cy Fox", "Select Board Member", None),
+        _row("Dee Moss", "Chair", None),
     ]
 
-    placed = await placed_by_role(_TOWN, rows, TAXONOMY)
+    roster, records_by_person = await reconcile_scrape(_TOWN, rows, {}, TAXONOMY)
 
-    assert {row["name"]: row["organization_id"] for row in placed} == {
-        "Ann": ids["Town Officers"],
-        "Bo": ids["Select Board"],
-        "Cy": ids["Town Officers"],
+    placed = {person["name"]: records_by_person[person["id"]][0]["organization_id"] for person in roster}
+    assert placed == {
+        "Ann Lee": ids["Town Meeting"],
+        "Bo Ray": ids["Town Officers"],
+        "Cy Fox": ids["Town Officers"],
+        "Dee Moss": ids["Select Board"],
     }

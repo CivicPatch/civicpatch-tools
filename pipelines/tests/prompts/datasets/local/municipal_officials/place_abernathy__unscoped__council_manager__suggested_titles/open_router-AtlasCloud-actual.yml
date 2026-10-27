@@ -1,7 +1,7 @@
 people:
 - name: Harold Bufe
   label: Mayor
-  phone: (806) 298-2546
+  phone: null
   email: null
   url: https://cityofabernathy.org/your-government/city-council/
   start_date: 2025-06

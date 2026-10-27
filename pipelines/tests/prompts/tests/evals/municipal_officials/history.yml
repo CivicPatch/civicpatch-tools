@@ -3141,221 +3141,6 @@ runs:
     seattle_council_separate_mayor: d25d5f556b92
     vacant_positions_council: eaacf4a1c6f7
   mismatches_file: _runs/20261004T045116Z-open_router-Alibaba.yml
-- timestamp: '2026-09-16T23:59:20+00:00'
-  provider: open_router-AtlasCloud
-  model: deepseek/deepseek-v4-flash
-  prompt_sha256: 8cdc56e997db
-  cost_usd: 0.001290156
-  elapsed_seconds: 10.87
-  scores:
-    district: 1.0
-    person: 1.0
-    phone: 1.0
-    primary_role: 1.0
-    roles: 1.0
-    url: 1.0
-  cases:
-    austin_council_shared_roster_scoped_to_council: 1.0
-  dispositions:
-    designations_other:
-      correct: 0
-      missing: 0
-      spurious: 0
-      wrong: 0
-    district:
-      correct: 10
-      missing: 0
-      spurious: 0
-      wrong: 0
-    email:
-      correct: 0
-      missing: 0
-      spurious: 0
-      wrong: 0
-    end_date:
-      correct: 0
-      missing: 0
-      spurious: 0
-      wrong: 0
-    image:
-      correct: 0
-      missing: 0
-      spurious: 0
-      wrong: 0
-    person:
-      correct: 10
-      missing: 0
-      spurious: 0
-      wrong: 0
-    phone:
-      correct: 10
-      missing: 0
-      spurious: 0
-      wrong: 0
-    primary_role:
-      correct: 10
-      missing: 0
-      spurious: 0
-      wrong: 0
-    roles:
-      correct: 10
-      missing: 0
-      spurious: 0
-      wrong: 0
-    start_date:
-      correct: 0
-      missing: 0
-      spurious: 0
-      wrong: 0
-    url:
-      correct: 10
-      missing: 0
-      spurious: 0
-      wrong: 0
-  mismatches_file: _runs/20260916T235920Z-open_router-AtlasCloud.yml
-- timestamp: '2026-09-16T23:59:38+00:00'
-  provider: open_router-AtlasCloud
-  model: deepseek/deepseek-v4-flash
-  prompt_sha256: 8cdc56e997db
-  cost_usd: 0.0011109
-  elapsed_seconds: 11.73
-  scores:
-    person: 1.0
-    phone: 1.0
-    primary_role: 1.0
-    roles: 1.0
-    url: 1.0
-  cases:
-    austin_council_shared_roster_scoped_to_mayor: 1.0
-  dispositions:
-    designations_other:
-      correct: 0
-      missing: 0
-      spurious: 0
-      wrong: 0
-    district:
-      correct: 0
-      missing: 0
-      spurious: 0
-      wrong: 0
-    email:
-      correct: 0
-      missing: 0
-      spurious: 0
-      wrong: 0
-    end_date:
-      correct: 0
-      missing: 0
-      spurious: 0
-      wrong: 0
-    image:
-      correct: 0
-      missing: 0
-      spurious: 0
-      wrong: 0
-    person:
-      correct: 1
-      missing: 0
-      spurious: 0
-      wrong: 0
-    phone:
-      correct: 1
-      missing: 0
-      spurious: 0
-      wrong: 0
-    primary_role:
-      correct: 1
-      missing: 0
-      spurious: 0
-      wrong: 0
-    roles:
-      correct: 1
-      missing: 0
-      spurious: 0
-      wrong: 0
-    start_date:
-      correct: 0
-      missing: 0
-      spurious: 0
-      wrong: 0
-    url:
-      correct: 1
-      missing: 0
-      spurious: 0
-      wrong: 0
-  mismatches_file: _runs/20260916T235938Z-open_router-AtlasCloud.yml
-- timestamp: '2026-09-17T00:00:41+00:00'
-  provider: open_router-AtlasCloud
-  model: deepseek/deepseek-v4-flash
-  prompt_sha256: aeb59ab46565
-  cost_usd: 0.001315356
-  elapsed_seconds: 14.66
-  scores:
-    district: 1.0
-    person: 1.0
-    phone: 1.0
-    primary_role: 1.0
-    roles: 1.0
-    url: 1.0
-  cases:
-    austin_council_shared_roster_scoped_to_council: 1.0
-  dispositions:
-    designations_other:
-      correct: 0
-      missing: 0
-      spurious: 0
-      wrong: 0
-    district:
-      correct: 10
-      missing: 0
-      spurious: 0
-      wrong: 0
-    email:
-      correct: 0
-      missing: 0
-      spurious: 0
-      wrong: 0
-    end_date:
-      correct: 0
-      missing: 0
-      spurious: 0
-      wrong: 0
-    image:
-      correct: 0
-      missing: 0
-      spurious: 0
-      wrong: 0
-    person:
-      correct: 10
-      missing: 0
-      spurious: 0
-      wrong: 0
-    phone:
-      correct: 10
-      missing: 0
-      spurious: 0
-      wrong: 0
-    primary_role:
-      correct: 10
-      missing: 0
-      spurious: 0
-      wrong: 0
-    roles:
-      correct: 10
-      missing: 0
-      spurious: 0
-      wrong: 0
-    start_date:
-      correct: 0
-      missing: 0
-      spurious: 0
-      wrong: 0
-    url:
-      correct: 10
-      missing: 0
-      spurious: 0
-      wrong: 0
-  mismatches_file: _runs/20260917T000041Z-open_router-AtlasCloud.yml
 - timestamp: '2026-09-17T00:00:54+00:00'
   provider: open_router-AtlasCloud
   model: deepseek/deepseek-v4-flash
@@ -7220,6 +7005,392 @@ runs:
     seattle_council_separate_mayor: 783730a99b71
     vacant_positions_council: 692551de0881
   mismatches_file: _runs/20261017T013407Z-open_router-AtlasCloud.yml
+- timestamp: '2026-10-26T18:58:48+00:00'
+  provider: open_router-AtlasCloud
+  model: deepseek/deepseek-v4-flash
+  prompt_sha256: 766d04d7f1f4
+  cost_usd: 0.103481784
+  elapsed_seconds: 185.62
+  scores:
+    designations_other: 1.0
+    district: 1.0
+    email: 0.9840348330914369
+    end_date: 0.6453900709219859
+    image: 0.27586206896551724
+    person: 0.9897377423033067
+    phone: 0.9013657056145675
+    primary_role: 0.9776207302709069
+    roles: 0.9457700650759219
+    start_date: 0.2727272727272727
+    url: 0.9166666666666666
+  cases:
+    austin_city_manager_staff: 1.0
+    austin_council: 1.0
+    austin_district7_council_member: 1.0
+    board_of_aldermen: 1.0
+    burlington_city_council__pick: 0.7552083333333334
+    coleman_council: 1.0
+    county_alameda__commission__known_titles__pick: 0.3896103896103896
+    county_alameda__commission__no_titles__pick: 0.8571428571428571
+    county_alameda__commission__suggested_titles__pick: 0.8571428571428571
+    county_allegan__place_leighton__township_board__known_titles__pick: 1.0
+    county_allegan__place_leighton__township_board__no_titles__pick: 1.0
+    county_allegan__place_leighton__township_board__suggested_titles__pick: 1.0
+    county_allegan__place_leighton__unscoped__known_titles: 1.0
+    county_allegan__place_leighton__unscoped__no_titles: 1.0
+    county_allegan__place_leighton__unscoped__township_board__suggested_titles: 1.0
+    county_hunterdon__place_alexandria__township_board__known_titles__pick: 1.0
+    county_hunterdon__place_alexandria__township_board__no_titles__pick: 1.0
+    county_hunterdon__place_alexandria__township_board__suggested_titles__pick: 1.0
+    county_hunterdon__place_alexandria__unscoped__known_titles: 0.8333333333333334
+    county_hunterdon__place_alexandria__unscoped__no_titles: 1.0
+    county_hunterdon__place_alexandria__unscoped__township_board__suggested_titles: 1.0
+    county_kauai__county_executive__known_titles__pick: 1.0
+    county_kauai__county_executive__no_titles__pick: 0.8333333333333334
+    county_kauai__county_executive__suggested_titles__pick: 0.8333333333333334
+    county_king__county_executive__known_titles__pick: 1.0
+    county_king__county_executive__no_titles__pick: 1.0
+    county_king__county_executive__suggested_titles__pick: 1.0
+    golinda_mixed_city_county: 1.0
+    inverted_name_format: 1.0
+    jackson_mayors_office__pick: 0.8571428571428571
+    la_porte_council: 1.0
+    mixed_current_past: 0.6666666666666666
+    nav_links_no_names: 0.0
+    place_abernathy__unscoped__council_manager__suggested_titles: 0.875
+    place_abernathy__unscoped__known_titles: 0.875
+    place_abernathy__unscoped__no_titles: 1.0
+    place_acton__open_town_meeting__known_titles__pick: 0.8333333333333334
+    place_acton__open_town_meeting__no_titles__pick: 0.6666666666666666
+    place_acton__open_town_meeting__suggested_titles__pick: 0.8333333333333334
+    place_amador_city__council_manager__known_titles__pick: 1.0
+    place_amador_city__council_manager__no_titles__pick: 1.0
+    place_amador_city__council_manager__suggested_titles__pick: 1.0
+    place_amador_city__mayor_council__known_titles__pick: 0.5
+    place_amador_city__mayor_council__no_titles__pick: 1.0
+    place_amador_city__mayor_council__suggested_titles__pick: 1.0
+    place_amador_city__unscoped__commission__suggested_titles: 1.0
+    place_amador_city__unscoped__council_manager__suggested_titles: 1.0
+    place_amador_city__unscoped__known_titles: 1.0
+    place_amador_city__unscoped__no_titles: 1.0
+    place_armada__unscoped__no_titles: 1.0
+    place_armada__unscoped__township_board__suggested_titles: 1.0
+    place_belle_meade__unscoped__commission__suggested_titles: 0.9666666666666667
+    place_belle_meade__unscoped__council_manager__suggested_titles: 0.9666666666666667
+    place_belle_meade__unscoped__known_titles: 0.9666666666666667
+    place_belle_meade__unscoped__no_titles: 0.9666666666666667
+    place_gibbsboro__mayor_council__no_titles__pick: 1.0
+    place_gibbsboro__mayor_council__suggested_titles__pick: 1.0
+    place_greenwood_village__mayor_council__known_titles__pick: 1.0
+    place_greenwood_village__mayor_council__no_titles__pick: 1.0
+    place_greenwood_village__mayor_council__suggested_titles__pick: 1.0
+    place_greenwood_village__unscoped__known_titles: 0.8042328042328042
+    place_greenwood_village__unscoped__no_titles: 1.0
+    place_meridian__mayor_council__known_titles__pick: 0.8571428571428571
+    place_meridian__mayor_council__no_titles__pick: 0.8571428571428571
+    place_meridian__mayor_council__suggested_titles__pick: 0.8571428571428571
+    place_millbury__open_town_meeting__known_titles__pick: 0.9428571428571428
+    place_millbury__open_town_meeting__no_titles__pick: 1.0
+    place_millbury__open_town_meeting__suggested_titles__pick: 0.7999999999999999
+    place_millbury__representative_town_meeting__known_titles__pick: 0.9428571428571428
+    place_millbury__representative_town_meeting__no_titles__pick: 0.7999999999999999
+    place_millbury__representative_town_meeting__suggested_titles__pick: 0.8571428571428571
+    place_payette__unscoped__no_titles: 1.0
+    placeholder_name_council: 1.0
+    raisin_township_clerk: 1.0
+    raisin_township_supervisor: 1.0
+    redundant_place_role: 1.0
+    seattle_council_pick_list_missing_president__pick: 0.875
+    seattle_council_separate_mayor__pick: 1.0
+    vacant_positions_council: 1.0
+  dispositions:
+    designations_other:
+      correct: 21
+      missing: 0
+      spurious: 0
+      wrong: 0
+    district:
+      correct: 143
+      missing: 0
+      spurious: 0
+      wrong: 0
+    email:
+      correct: 339
+      missing: 11
+      spurious: 0
+      wrong: 0
+    end_date:
+      correct: 91
+      missing: 0
+      spurious: 100
+      wrong: 0
+    image:
+      correct: 24
+      missing: 9
+      spurious: 117
+      wrong: 0
+    person:
+      correct: 434
+      missing: 1
+      spurious: 8
+      wrong: 0
+    phone:
+      correct: 297
+      missing: 51
+      spurious: 14
+      wrong: 0
+    primary_role:
+      correct: 415
+      missing: 19
+      spurious: 0
+      wrong: 0
+    roles:
+      correct: 436
+      missing: 28
+      spurious: 22
+      wrong: 0
+    start_date:
+      correct: 15
+      missing: 0
+      spurious: 80
+      wrong: 0
+    url:
+      correct: 374
+      missing: 36
+      spurious: 0
+      wrong: 16
+  case_prompts:
+    austin_city_manager_staff: 692551de0881
+    austin_council: 692551de0881
+    austin_district7_council_member: 692551de0881
+    board_of_aldermen: 692551de0881
+    burlington_city_council__pick: d90b50d29f08
+    coleman_council: 692551de0881
+    county_alameda__commission__known_titles__pick: 252018bc9398
+    county_alameda__commission__no_titles__pick: 2469ad6cecc2
+    county_alameda__commission__suggested_titles__pick: f12cade4c80a
+    county_allegan__place_leighton__township_board__known_titles__pick: 3bea4fc05627
+    county_allegan__place_leighton__township_board__no_titles__pick: 5c68d4faa2a3
+    county_allegan__place_leighton__township_board__suggested_titles__pick: 11798976b8d7
+    county_allegan__place_leighton__unscoped__known_titles: 56560bcdf763
+    county_allegan__place_leighton__unscoped__no_titles: 7a25695d8676
+    county_allegan__place_leighton__unscoped__township_board__suggested_titles: aad37c48b16a
+    county_hunterdon__place_alexandria__township_board__known_titles__pick: b5c279924d1a
+    county_hunterdon__place_alexandria__township_board__no_titles__pick: 8c0183622704
+    county_hunterdon__place_alexandria__township_board__suggested_titles__pick: 6019972cda4a
+    county_hunterdon__place_alexandria__unscoped__known_titles: c08279d86886
+    county_hunterdon__place_alexandria__unscoped__no_titles: 7a25695d8676
+    county_hunterdon__place_alexandria__unscoped__township_board__suggested_titles: aad37c48b16a
+    county_kauai__county_executive__known_titles__pick: 9a4baa6e1a3a
+    county_kauai__county_executive__no_titles__pick: 444c9169bc9b
+    county_kauai__county_executive__suggested_titles__pick: d6ea51a7013b
+    county_king__county_executive__known_titles__pick: c23085953f59
+    county_king__county_executive__no_titles__pick: fe75151b793b
+    county_king__county_executive__suggested_titles__pick: 371d4945d90b
+    golinda_mixed_city_county: 692551de0881
+    inverted_name_format: 692551de0881
+    jackson_mayors_office__pick: fd548ab17a43
+    la_porte_council: 692551de0881
+    mixed_current_past: 692551de0881
+    nav_links_no_names: 692551de0881
+    place_abernathy__unscoped__council_manager__suggested_titles: 38f051a890f5
+    place_abernathy__unscoped__known_titles: 0c14f8557c6c
+    place_abernathy__unscoped__no_titles: 03e713ef0d5b
+    place_acton__open_town_meeting__known_titles__pick: 6a8d70af6cba
+    place_acton__open_town_meeting__no_titles__pick: cff115ba9913
+    place_acton__open_town_meeting__suggested_titles__pick: cb47b5d1990c
+    place_amador_city__council_manager__known_titles__pick: f7b2a8ffa7cc
+    place_amador_city__council_manager__no_titles__pick: abb25bf18115
+    place_amador_city__council_manager__suggested_titles__pick: 4922d3a86d3a
+    place_amador_city__mayor_council__known_titles__pick: 6a374d34e364
+    place_amador_city__mayor_council__no_titles__pick: fdba66e6933e
+    place_amador_city__mayor_council__suggested_titles__pick: 70297dcca755
+    place_amador_city__unscoped__commission__suggested_titles: 58f4c5abd02e
+    place_amador_city__unscoped__council_manager__suggested_titles: 09fea736d90b
+    place_amador_city__unscoped__known_titles: 4fa055e1d873
+    place_amador_city__unscoped__no_titles: 3e3de8a86e87
+    place_armada__unscoped__no_titles: 7a25695d8676
+    place_armada__unscoped__township_board__suggested_titles: aad37c48b16a
+    place_belle_meade__unscoped__commission__suggested_titles: 5c029baa66ef
+    place_belle_meade__unscoped__council_manager__suggested_titles: c8e5cfc8fd7a
+    place_belle_meade__unscoped__known_titles: d3cc14b26bec
+    place_belle_meade__unscoped__no_titles: f12dfeb0219a
+    place_gibbsboro__mayor_council__no_titles__pick: f1202c9d64c0
+    place_gibbsboro__mayor_council__suggested_titles__pick: d6856e2483d3
+    place_greenwood_village__mayor_council__known_titles__pick: d97aa3f68807
+    place_greenwood_village__mayor_council__no_titles__pick: 82731f323d96
+    place_greenwood_village__mayor_council__suggested_titles__pick: 9c39315ef80c
+    place_greenwood_village__unscoped__known_titles: 7c15d8afdbf7
+    place_greenwood_village__unscoped__no_titles: 7a25695d8676
+    place_meridian__mayor_council__known_titles__pick: ebd3bdaa33fd
+    place_meridian__mayor_council__no_titles__pick: f6953d578635
+    place_meridian__mayor_council__suggested_titles__pick: ec8581a1ead5
+    place_millbury__open_town_meeting__known_titles__pick: 9faec12bed30
+    place_millbury__open_town_meeting__no_titles__pick: 35fa2f98ca49
+    place_millbury__open_town_meeting__suggested_titles__pick: a4c12a85ccc5
+    place_millbury__representative_town_meeting__known_titles__pick: 9faec12bed30
+    place_millbury__representative_town_meeting__no_titles__pick: 35fa2f98ca49
+    place_millbury__representative_town_meeting__suggested_titles__pick: f2e1751fd06f
+    place_payette__unscoped__no_titles: 7a25695d8676
+    placeholder_name_council: 692551de0881
+    raisin_township_clerk: 79b1e459fd62
+    raisin_township_supervisor: 79b1e459fd62
+    redundant_place_role: 692551de0881
+    seattle_council_pick_list_missing_president__pick: a34bc875aa51
+    seattle_council_separate_mayor__pick: b5592f8e25fd
+    vacant_positions_council: 692551de0881
+  mismatches_file: _runs/20261026T185848Z-open_router-AtlasCloud.yml
+- timestamp: '2026-10-26T19:15:09+00:00'
+  provider: open_router-AtlasCloud
+  model: deepseek/deepseek-v4-flash
+  prompt_sha256: 766d04d7f1f4
+  cost_usd: 0.00094836
+  elapsed_seconds: 19.29
+  scores:
+    district: 1.0
+    email: 1.0
+    end_date: 1.0
+    person: 1.0
+    phone: 1.0
+    primary_role: 1.0
+    roles: 1.0
+    url: 0.0
+  cases:
+    burlington_city_council__pick: 0.875
+  dispositions:
+    designations_other:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    district:
+      correct: 8
+      missing: 0
+      spurious: 0
+      wrong: 0
+    email:
+      correct: 12
+      missing: 0
+      spurious: 0
+      wrong: 0
+    end_date:
+      correct: 12
+      missing: 0
+      spurious: 0
+      wrong: 0
+    image:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    person:
+      correct: 12
+      missing: 0
+      spurious: 0
+      wrong: 0
+    phone:
+      correct: 10
+      missing: 0
+      spurious: 0
+      wrong: 0
+    primary_role:
+      correct: 12
+      missing: 0
+      spurious: 0
+      wrong: 0
+    roles:
+      correct: 13
+      missing: 0
+      spurious: 0
+      wrong: 0
+    start_date:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    url:
+      correct: 0
+      missing: 12
+      spurious: 0
+      wrong: 0
+  case_prompts:
+    burlington_city_council__pick: d90b50d29f08
+  mismatches_file: _runs/20261026T191509Z-open_router-AtlasCloud.yml
+- timestamp: '2026-10-26T19:19:12+00:00'
+  provider: open_router-AtlasCloud
+  model: deepseek/deepseek-v4-flash
+  prompt_sha256: 766d04d7f1f4
+  cost_usd: 0.000633416
+  elapsed_seconds: 21.29
+  scores:
+    district: 1.0
+    email: 1.0
+    end_date: 1.0
+    person: 1.0
+    phone: 1.0
+    primary_role: 1.0
+    roles: 1.0
+  cases:
+    burlington_city_council__pick: 1.0
+  dispositions:
+    designations_other:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    district:
+      correct: 8
+      missing: 0
+      spurious: 0
+      wrong: 0
+    email:
+      correct: 12
+      missing: 0
+      spurious: 0
+      wrong: 0
+    end_date:
+      correct: 12
+      missing: 0
+      spurious: 0
+      wrong: 0
+    image:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    person:
+      correct: 12
+      missing: 0
+      spurious: 0
+      wrong: 0
+    phone:
+      correct: 10
+      missing: 0
+      spurious: 0
+      wrong: 0
+    primary_role:
+      correct: 12
+      missing: 0
+      spurious: 0
+      wrong: 0
+    roles:
+      correct: 13
+      missing: 0
+      spurious: 0
+      wrong: 0
+    start_date:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+    url:
+      correct: 0
+      missing: 0
+      spurious: 0
+      wrong: 0
+  case_prompts:
+    burlington_city_council__pick: d90b50d29f08
+  mismatches_file: _runs/20261026T191912Z-open_router-AtlasCloud.yml
 - timestamp: '2026-08-16T00:15:30+00:00'
   provider: open_router-DeepInfra
   model: deepseek/deepseek-v4-flash

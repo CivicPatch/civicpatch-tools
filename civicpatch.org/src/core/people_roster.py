@@ -265,12 +265,17 @@ def in_known_organizations(
 ) -> list[dict]:
     """Every row in a current organization; unstamped ones in the default. Raises on any other id."""
     stamped = [_with_organization(row, default_organization_id) for row in rows]
-    unknown = [row for row in stamped if row["organization_id"] not in organization_ids]
+    raise_on_unknown_organization(stamped, organization_ids)
+    return stamped
+
+
+def raise_on_unknown_organization(rows: list[dict], organization_ids: set[str]) -> None:
+    """A row naming an organization that is not a current one: a scrape run against a deleted one."""
+    unknown = [row for row in rows if row.get("organization_id") and row["organization_id"] not in organization_ids]
     if unknown:
         raise UnknownOrganization(
             f"{unknown[0].get('name')!r} names organization {unknown[0]['organization_id']!r}, not a current body"
         )
-    return stamped
 
 
 # A partial source (`changeset_lifecycle.PARTIAL_KINDS`) states only the cells it fills in, so a

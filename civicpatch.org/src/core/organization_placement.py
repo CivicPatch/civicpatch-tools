@@ -1,5 +1,5 @@
-"""Which organization a scraped record belongs in: the one whose form lists its post role, else
-the one the model picked, else the default."""
+"""Which organization a scraped record belongs in: the model's pick, else the organization whose
+form lists its post role, else the one of those the person already sits in, else the default."""
 
 from pydantic import BaseModel
 
@@ -23,12 +23,23 @@ def role_ids_of(role_labels: list[str], taxonomy: Taxonomy) -> list[str]:
     return ids
 
 
-def post_role_id(label: str, jurisdiction_ocdid: str, taxonomy: Taxonomy) -> str | None:
-    """The fold's answer for one label: `member` when a member holds it ("Chair")."""
+class LabelRoles(BaseModel):
+    # The fold's post role: `member` when a member holds it ("Chair"); None for no role at all.
+    post_role_id: str | None
+    # Every role the label names ("Cemetery Commissioner, Chair": both).
+    named_role_ids: list[str]
+
+
+def label_roles(label: str, jurisdiction_ocdid: str, taxonomy: Taxonomy) -> LabelRoles:
     derived = derive_roles([label], jurisdiction_ocdid, taxonomy)
     if holds_a_member_post(derived, taxonomy):
-        return MEMBER_ROLE_ID
-    return taxonomy.role_ids.get(derived.role) if derived.role else None
+        post_role_id = MEMBER_ROLE_ID
+    else:
+        post_role_id = taxonomy.role_ids.get(derived.role) if derived.role else None
+    return LabelRoles(
+        post_role_id=post_role_id,
+        named_role_ids=[taxonomy.role_ids[role] for role in derived.roles if role in taxonomy.role_ids],
+    )
 
 
 def placed_organization_id(
@@ -36,35 +47,54 @@ def placed_organization_id(
     picked_organization_id: str | None,
     organizations: list[PlaceableOrganization],
     default_organization_id: str,
+    held_organization_ids: set[str],
     jurisdiction_ocdid: str,
     taxonomy: Taxonomy,
 ) -> str:
-    role_id = post_role_id(label, jurisdiction_ocdid, taxonomy)
-    if role_id is not None and role_id != MEMBER_ROLE_ID:
-        listing = [organization.id for organization in organizations if role_id in organization.role_ids]
-        if len(listing) == 1:
-            return listing[0]
-    return picked_organization_id or default_organization_id
+    """`held_organization_ids`: where the person already holds a post. A member post never goes by
+    the form alone: every board lists members, and "none" from the model means no listed board."""
+    if picked_organization_id:
+        return picked_organization_id
+    roles = label_roles(label, jurisdiction_ocdid, taxonomy)
+    if roles.post_role_id is None:
+        return default_organization_id
+    listing = [organization.id for organization in organizations if roles.post_role_id in organization.role_ids]
+    if len(listing) == 1 and roles.post_role_id != MEMBER_ROLE_ID:
+        return listing[0]
+    named = [
+        organization.id
+        for organization in organizations
+        if any(role_id in organization.role_ids for role_id in roles.named_role_ids)
+    ]
+    held = [organization_id for organization_id in named if organization_id in held_organization_ids]
+    if len(held) == 1:
+        return held[0]
+    return default_organization_id
 
 
-def placed_rows(
-    rows: list[dict],
+def placed_records(
+    records_by_person: dict[str, list[dict]],
     organizations: list[PlaceableOrganization],
     default_organization_id: str,
+    held_by_person: dict[str, set[str]],
     jurisdiction_ocdid: str,
     taxonomy: Taxonomy,
-) -> list[dict]:
-    return [
-        {
-            **row,
-            "organization_id": placed_organization_id(
-                row["label"],
-                row.get("organization_id"),
-                organizations,
-                default_organization_id,
-                jurisdiction_ocdid,
-                taxonomy,
-            ),
-        }
-        for row in rows
-    ]
+) -> dict[str, list[dict]]:
+    return {
+        person_id: [
+            {
+                **record,
+                "organization_id": placed_organization_id(
+                    record["label"],
+                    record.get("organization_id"),
+                    organizations,
+                    default_organization_id,
+                    held_by_person.get(person_id, set()),
+                    jurisdiction_ocdid,
+                    taxonomy,
+                ),
+            }
+            for record in records
+        ]
+        for person_id, records in records_by_person.items()
+    }

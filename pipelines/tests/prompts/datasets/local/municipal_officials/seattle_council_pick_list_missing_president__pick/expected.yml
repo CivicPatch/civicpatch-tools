@@ -1,0 +1,104 @@
+organization_choices:
+- City Council
+- Office of the Mayor
+known_roles:
+- Council Member
+- Mayor
+divisions:
+- district 1
+- district 2
+- district 3
+- district 4
+- district 5
+- district 6
+- district 7
+people:
+- name: Rob Saka
+  label: Councilmember District 1
+  phone: (206) 684-8888
+  email: council@seattle.gov
+  url: https://seattle.gov/council/members/rob-saka
+  start_date: null
+  end_date: null
+  image: local://8ac384d14474.png
+  organization: City Council
+- name: Eddie Lin
+  label: Councilmember District 2
+  phone: (206) 684-8888
+  email: council@seattle.gov
+  url: https://seattle.gov/council/members/eddie-lin
+  start_date: null
+  end_date: null
+  image: local://8518b717839c.png
+  organization: City Council
+- name: Joy Hollingsworth
+  label: Council President District 3
+  phone: (206) 684-8888
+  email: council@seattle.gov
+  url: https://seattle.gov/council/members/joy-hollingsworth
+  start_date: null
+  end_date: null
+  image: local://ef06d9a9e07d.png
+  organization: City Council
+- name: Maritza Rivera
+  label: Councilmember District 4
+  phone: (206) 684-8888
+  email: council@seattle.gov
+  url: https://seattle.gov/council/members/maritza-rivera
+  start_date: null
+  end_date: null
+  image: local://ed071cb84224.png
+  organization: City Council
+- name: Debora Juarez
+  label: Councilmember District 5
+  phone: (206) 684-8888
+  email: council@seattle.gov
+  url: https://seattle.gov/council/members/debora-juarez
+  start_date: null
+  end_date: null
+  image: local://183bf92d4c48.png
+  organization: City Council
+- name: Dan Strauss
+  label: Councilmember District 6
+  phone: (206) 684-8888
+  email: council@seattle.gov
+  url: https://seattle.gov/council/members/dan-strauss
+  start_date: null
+  end_date: null
+  image: local://ada6b13ec0d1.png
+  organization: City Council
+- name: Bob Kettle
+  label: Councilmember District 7
+  phone: (206) 684-8888
+  email: council@seattle.gov
+  url: https://seattle.gov/council/members/bob-kettle
+  start_date: null
+  end_date: null
+  image: local://f490e8055573.png
+  organization: City Council
+- name: Alexis Mercedes Rinck
+  label: Councilmember Position 8
+  phone: (206) 684-8888
+  email: council@seattle.gov
+  url: https://seattle.gov/council/members/alexis-mercedes-rinck
+  start_date: null
+  end_date: null
+  image: local://ce027a08f3f1.png
+  organization: City Council
+- name: Dionne Foster
+  label: Councilmember Position 9
+  phone: (206) 684-8888
+  email: council@seattle.gov
+  url: https://seattle.gov/council/members/dionne-foster
+  start_date: null
+  end_date: null
+  image: local://f207a4a7733a.png
+  organization: City Council
+thought: 'Merged by plan P5 from seattle_council_pick_list_missing_president, seattle_council_scoped_to_mayor.
+  The same Seattle City Council page and the same nine people as seattle_council_separate_mayor,
+  but the pick list deliberately omits Council President. Joy Hollingsworth holds
+  the listed Council Member District 3 seat and the unlisted presiding title, so her
+  label must carry both: the seat picked from the list, Council President written
+  from the page. Dropping the title for the listed seat alone reads as a confident,
+  correct answer, which is why this case exists: it is the only one that can tell
+  the escape hatch apart from a shove.'

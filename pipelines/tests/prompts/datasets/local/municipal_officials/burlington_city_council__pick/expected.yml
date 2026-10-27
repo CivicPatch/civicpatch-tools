@@ -1,0 +1,121 @@
+jurisdiction_ocdid: ocd-jurisdiction/country:us/state:vt/place:burlington/government
+current_date: '2026-10-25'
+organization_choices:
+- Council
+- Office of the Mayor
+people:
+- name: Carter Neubieser
+  phone: null
+  email: cneubieser@burlingtonvt.gov
+  url: null
+  start_date: null
+  end_date: '2028'
+  label: Council Member Ward 1
+  image: null
+  organization: Council
+- name: Eugene Bergman
+  phone: (802) 598-3602
+  email: gbergman@burlingtonvt.gov
+  url: null
+  start_date: null
+  end_date: '2028'
+  label: Council Member Ward 2
+  image: null
+  organization: Council
+- name: Laura Sanchez-Parkinson
+  phone: null
+  email: lsanchezparkinson@burlingtonvt.gov
+  url: null
+  start_date: null
+  end_date: '2028'
+  label: Council Member Ward 3
+  image: null
+  organization: Council
+- name: Sarah E Carpenter
+  phone: (802) 658-0474
+  email: scarpenter@burlingtonvt.gov
+  url: null
+  start_date: null
+  end_date: '2028'
+  label: Council Member Ward 4
+  image: null
+  organization: Council
+- name: Ben Traverse
+  phone: (802) 357-2055
+  email: btraverse@burlingtonvt.gov
+  url: null
+  start_date: null
+  end_date: '2028'
+  label: Council Member Ward 5 and City Council President
+  image: null
+  organization: Council
+- name: Becca Brown McKnight
+  phone: 802-489-6439
+  email: bbrownmcknight@burlingtonvt.gov
+  url: null
+  start_date: null
+  end_date: '2028'
+  label: Council Member Ward 6
+  image: null
+  organization: Council
+- name: Evan Litwin
+  phone: (802) 448-0802
+  email: elitwin@burlingtonvt.gov
+  url: null
+  start_date: null
+  end_date: '2028'
+  label: Council Member Ward 7
+  image: null
+  organization: Council
+- name: Marek Broderick
+  phone: (802) 488-5134
+  email: mbroderick@burlingtonvt.gov
+  url: null
+  start_date: null
+  end_date: '2028'
+  label: Council Member Ward 8
+  image: null
+  organization: Council
+- name: Melo Grant
+  phone: (802) 310-0962
+  email: megrant@burlingtonvt.gov
+  url: null
+  start_date: null
+  end_date: '2027'
+  label: Council Member Central
+  image: null
+  organization: Council
+- name: Allie Schachter
+  phone: (802) 448-4227
+  email: aschachter@burlingtonvt.gov
+  url: null
+  start_date: null
+  end_date: '2027'
+  label: Council Member East
+  image: null
+  organization: Council
+- name: Mark Barlow
+  phone: (802) 549-4433
+  email: mbarlow@burlingtonvt.gov
+  url: null
+  start_date: null
+  end_date: '2027'
+  label: Council Member North
+  image: null
+  organization: Council
+- name: Ranjit "Buddy" Singh
+  phone: (802) 238-5131
+  email: bsingh@burlingtonvt.gov
+  url: null
+  start_date: null
+  end_date: '2027'
+  label: Council Member South
+  image: null
+  organization: Council
+thought: Burlington's City Council page (burlingtonvt.gov/413), twelve councilors
+  by ward and district, each with an email, a party and a term year. Every one belongs
+  to the Council; nobody on the page holds the mayor's office. Placement hand-checked
+  in plan P4c stage 2 (.scratch/2026-10-25-p4c-stage2-truth.tsv); fields checked against
+  the page 2026-10-26; url null, since the page links no councilor to a page of their
+  own. Replaces millbury_school_committee_scoped_to_select_board,
+  parked until Massachusetts is researched.

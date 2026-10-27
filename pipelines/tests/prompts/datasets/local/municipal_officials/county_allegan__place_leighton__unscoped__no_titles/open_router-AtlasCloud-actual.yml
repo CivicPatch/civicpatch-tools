@@ -2,7 +2,7 @@ people:
 - name: Steve Wolbrink
   label: Township Supervisor
   phone: (616) 891-8238 ext 111
-  email: Supervisor@leightontownship.org
+  email: supervisor@leightontownship.org
   url: https://leightontownship.org/officials/
   start_date: null
   end_date: null
@@ -10,7 +10,7 @@ people:
 - name: Rachel Fennema
   label: Township Clerk
   phone: (616) 891-8238 ext 114
-  email: Clerk@leightontownship.org
+  email: clerk@leightontownship.org
   url: https://leightontownship.org/officials/
   start_date: null
   end_date: null
@@ -18,7 +18,7 @@ people:
 - name: Jacquelynn Bultsma
   label: Township Treasurer
   phone: (616) 891-8238 ext 113
-  email: Treasurer@leightontownship.org
+  email: treasurer@leightontownship.org
   url: https://leightontownship.org/officials/
   start_date: null
   end_date: null

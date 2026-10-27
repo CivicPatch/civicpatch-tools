@@ -1,0 +1,46 @@
+people:
+- name: Sandra Staples
+  label: Mayor and Council Member
+  phone: null
+  email: null
+  url: null
+  start_date: null
+  end_date: null
+  image: null
+  organization: Council
+- name: Nikko Ambroselli
+  label: Council Member
+  phone: null
+  email: null
+  url: null
+  start_date: null
+  end_date: null
+  image: null
+  organization: Council
+- name: Susan Bragstad
+  label: Council Member
+  phone: null
+  email: null
+  url: null
+  start_date: null
+  end_date: null
+  image: null
+  organization: Council
+- name: Bruce Sherrill
+  label: Council Member
+  phone: null
+  email: null
+  url: null
+  start_date: null
+  end_date: null
+  image: null
+  organization: Council
+- name: Stephen Testa
+  label: Council Member
+  phone: null
+  email: null
+  url: null
+  start_date: null
+  end_date: null
+  image: null
+  organization: Council

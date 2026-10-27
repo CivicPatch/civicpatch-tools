@@ -1,18 +1,16 @@
 providers:
   open_router-AtlasCloud:
-    elapsed_seconds: 292.63
-    cost_usd: 0.124165524
-    f1_primary_role: 0.9881235154394299
+    elapsed_seconds: 21.29
+    cost_usd: 0.000633416
+    f1_primary_role: 1.0
     f1_district: 1.0
-    phone: 0.8688630490956072
-    end_date: 1.0
+    email: 1.0
     designations_precision: 1.0
-    url: 0.9272794389073459
-    roles: 0.9661498708010335
-    image: 1.0
-    start_date: 1.0
-    roles_precision: 0.9821613141380583
-    email: 0.9857881136950905
-    name: 0.9987080103359173
-    designations: 0.9987080103359173
+    designations: 1.0
+    url: 1.0
+    roles_precision: 1.0
+    name: 1.0
+    phone: 1.0
+    end_date: 1.0
+    roles: 1.0
 failures: {}
