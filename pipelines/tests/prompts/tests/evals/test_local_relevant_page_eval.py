@@ -5,6 +5,9 @@ import pytest
 from services.open_router.llm import run_prompt as run_together_prompt
 from services.open_router.prompts import relevant_page_prompt as make_together_prompt
 from runners.pipeline03_people_collector.schemas import RelevantPageResponseSchema
+from runners.pipeline03_people_collector.steps.step_04_process_page_content.process_page_content import (
+    RELEVANCE_MAX_OUTPUT_TOKENS,
+)
 from utils import cost_utils
 from typing import cast
 import pathlib
@@ -114,6 +117,7 @@ async def run_eval(model_client, case, ocdid="ocd-jurisdiction/country:us/state:
         prompt_name="relevant_page",
         response_schema=RelevantPageResponseSchema,
         content=case_input,
+        max_output_tokens=RELEVANCE_MAX_OUTPUT_TOKENS,
         **extra_kwargs,
     )
     actual = cast(RelevantPageResponseSchema, response)

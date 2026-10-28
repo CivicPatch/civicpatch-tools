@@ -102,6 +102,7 @@ async def run_prompt(
     source_url: str | None = None,
     chunk_index: int | None = None,
     chunk_count: int | None = None,
+    max_output_tokens: int = _MAX_OUTPUT_TOKENS,
 ):
     logger = get_pipeline_run_logger(jurisdiction_ocdid)
     logger.info("Running OpenRouter prompt")
@@ -159,7 +160,7 @@ async def run_prompt(
                     "messages": messages,
                     "temperature": temperature,
                     "top_p": 1.0,
-                    "max_tokens": _MAX_OUTPUT_TOKENS,
+                    "max_tokens": max_output_tokens,
                     "response_format": response_format,
                     **({"seed": seed} if seed is not None else {}),
                     # Ask for the billed cost. Deriving it from a price table in the repo

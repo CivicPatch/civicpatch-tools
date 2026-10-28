@@ -90,6 +90,8 @@ class ProcessingSetup:
 
 MINIMUM_NUM_PEOPLE = 5
 _CHUNK_OVERLAP_CHARS = 500
+# Above the longest finished relevance call seen (6,970); a runaway reasoning loop fails at half the time.
+RELEVANCE_MAX_OUTPUT_TOKENS = 8_192
 
 
 def _split_content_into_chunks(content: str, max_chars: int) -> list[str]:
@@ -364,6 +366,7 @@ async def check_page_relevance(
         response_schema=RelevantPageResponseSchema,
         content=content,
         source_url=page_to_process.url,
+        max_output_tokens=RELEVANCE_MAX_OUTPUT_TOKENS,
     )
     response = RelevantPageResponseSchema.model_validate(raw_response)
     return apply_relevance(

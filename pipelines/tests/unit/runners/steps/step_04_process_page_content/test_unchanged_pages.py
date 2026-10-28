@@ -10,6 +10,7 @@ from runners.pipeline03_people_collector.steps.step_04_process_page_content.unch
     published_source_page,
 )
 from runners.pipeline03_people_collector.steps.step_04_process_page_content.process_page_content import (
+    RELEVANCE_MAX_OUTPUT_TOKENS,
     process_page_content,
 )
 from shared.schemas import PublishedSourcePage, PersonSourceRecord
@@ -172,3 +173,14 @@ async def test_a_page_that_changed_since_is_read_again(tmp_path):
 
     assert llm.await_count == 1
     assert link.unchanged_since_source_page_id is None
+
+
+@pytest.mark.asyncio
+async def test_a_fresh_relevance_read_has_its_own_lower_output_cap(tmp_path):
+    """At the shared 16k cap a runaway reasoning loop held one page about nine minutes."""
+    llm = _irrelevant_llm()
+
+    await _step_4(tmp_path, [], llm)
+
+    assert llm.await_args.kwargs["prompt_name"] == "relevant_page"
+    assert llm.await_args.kwargs["max_output_tokens"] == RELEVANCE_MAX_OUTPUT_TOKENS < 16_384
