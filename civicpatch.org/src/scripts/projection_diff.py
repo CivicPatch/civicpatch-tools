@@ -113,6 +113,7 @@ async def diff_all() -> list[Comparison]:
                 derive_roster(facts, jurisdiction_ocdid, taxonomy),
                 buckets.ARTIFACTS,
                 friendly_host,
+                frozenset(),
             )
             stored = await stored_roster(cur, jurisdiction_ocdid)
             results.append(

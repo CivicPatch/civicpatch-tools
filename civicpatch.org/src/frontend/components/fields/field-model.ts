@@ -11,12 +11,12 @@ import {
   POST_FIELD,
   diffValue,
   isContextField,
+  isImage,
   isMulti,
   normalizeMultiValue,
   normalizeScalar,
   type DiffRecord,
   type FieldSpec,
-  type FieldType,
 } from "./field-schema.js";
 import { fieldError } from "./field-validation.js";
 
@@ -27,23 +27,19 @@ export * from "./field-validation.js";
 
 export type ScalarDiffState = "same" | "changed" | "added" | "cleared";
 
-export function fieldDiffState(
-  oldValue: unknown,
-  newValue: unknown,
-  type: FieldType,
-): ScalarDiffState {
+export function fieldDiffState(oldValue: unknown, newValue: unknown): ScalarDiffState {
   const oldStr = normalizeScalar(oldValue);
   const newStr = normalizeScalar(newValue);
-  // Presence only: old is a CDN copy and new a raw scrape, so the URLs differ
-  // even when the photo has not.
-  if (type === "image") {
-    if (!!oldStr === !!newStr) return "same";
-    return newStr ? "added" : "cleared";
-  }
   if (oldStr === newStr) return "same";
   if (!oldStr) return "added";
   if (!newStr) return "cleared";
   return "changed";
+}
+
+// A downloaded photo is named by its bytes' hash, so a rehost keeps the name. A raw
+// jurisdiction url is never compared: no downloaded copy reads as no photo.
+export function photoHash(person: DiffRecord): string {
+  return person?.cdn_image?.split("/").pop() ?? "";
 }
 
 // ── Multi-value field diff (emails / phones / urls / other_names) ────────────
@@ -106,6 +102,9 @@ export function fieldState(
 ): ScalarDiffState {
   if (field.diff === false) return "same";
   if (field.key === POST_FIELD && holdsPickedPost(oldRecord, newRecord)) return "same";
+  if (isImage(field)) {
+    return fieldDiffState(photoHash(oldRecord), photoHash(newRecord));
+  }
   const oldValue = diffValue(oldRecord, field);
   const newValue = diffValue(newRecord, field);
   if (isMulti(field)) {
@@ -114,7 +113,7 @@ export function fieldState(
       (newValue as string[]) ?? [],
     );
   }
-  return fieldDiffState(oldValue, newValue, field.type);
+  return fieldDiffState(oldValue, newValue);
 }
 
 // A published record holds its post in `memberships`, never as `post_id`, so a new side

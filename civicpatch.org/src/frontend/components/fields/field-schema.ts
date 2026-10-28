@@ -50,10 +50,8 @@ export const LABEL_FIELD = "label";
 // so it is not a per-row field.
 export const FIELD_SCHEMA: FieldSpec[] = [
   // Order follows the mockup: photo, identity, post, term, contacts, sources.
-  // Not compared (`diff: false`): a photo moving — a new crop, a CDN rehost, the same
-  // face from a different url — is not something a reviewer needs to decide about, and
-  // making it one opened a card for every person whose image url merely changed.
-  { key: "image", label: "Photo", type: "image", diff: false },
+  // Compared by `photoHash`, the file's name, so the same bytes rehosted are no change.
+  { key: "image", label: "Photo", type: "image" },
   { key: "name", label: "Name", type: "text", required: true },
   { key: "other_names", label: "Other names", type: "multi" },
   // Not `required: true` — the pipeline never sets `post_id`; `fieldError` asks only when

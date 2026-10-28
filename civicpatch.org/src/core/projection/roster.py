@@ -31,7 +31,9 @@ def derive_roster(facts: Facts, jurisdiction_ocdid: str, taxonomy: Taxonomy) -> 
     """
 
     live = with_post_merges(
-        with_inherited_blanks(with_person_ids(live_facts(facts))), jurisdiction_ocdid, taxonomy
+        with_inherited_blanks(with_person_ids(live_facts(facts))),
+        jurisdiction_ocdid,
+        taxonomy,
     )
     clusters = person_clusters(live)
     people = [
@@ -78,18 +80,47 @@ def overridden_page_values(facts: Facts) -> dict[str, dict[str, object]]:
     return {person_id: values for person_id, values in overridden.items() if values}
 
 
+def _served_image(
+    cdn_image: str | None,
+    unpublished: frozenset[str],
+    artifacts_bucket: str,
+    friendly_storage_host: str,
+) -> str | None:
+    if cdn_image in unpublished:
+        return cdn_image
+    return published_image_url(cdn_image, artifacts_bucket, friendly_storage_host)
+
+
 def with_published_images(
-    roster: Roster, artifacts_bucket: str, friendly_storage_host: str
+    roster: Roster,
+    artifacts_bucket: str,
+    friendly_storage_host: str,
+    unpublished: frozenset[str],
 ) -> Roster:
     return Roster(
         people=tuple(
             person.model_copy(
                 update={
-                    "cdn_image": published_image_url(
-                        person.cdn_image, artifacts_bucket, friendly_storage_host
+                    "cdn_image": _served_image(
+                        person.cdn_image,
+                        unpublished,
+                        artifacts_bucket,
+                        friendly_storage_host,
                     )
                 }
             )
             for person in roster.people
         )
+    )
+
+
+def unpublished_images(
+    facts: Facts, including_changeset_id: str | None
+) -> frozenset[str]:
+    return frozenset(
+        [
+            r.cdn_image
+            for r in facts.records
+            if r.changeset_id == including_changeset_id and r.cdn_image
+        ]
     )
