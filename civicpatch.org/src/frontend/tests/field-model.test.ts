@@ -74,37 +74,58 @@ describe("diffValue", () => {
 
 describe("fieldDiffState (text)", () => {
   it("is same for equal values (whitespace-insensitive)", () => {
-    expect(fieldDiffState("Mayor", " Mayor ", "text")).toBe("same");
+    expect(fieldDiffState("Mayor", " Mayor ")).toBe("same");
   });
 
   it("is added when old is empty", () => {
-    expect(fieldDiffState("", "Mayor", "text")).toBe("added");
+    expect(fieldDiffState("", "Mayor")).toBe("added");
   });
 
   it("is cleared when new is empty", () => {
-    expect(fieldDiffState("Mayor", "", "text")).toBe("cleared");
+    expect(fieldDiffState("Mayor", "")).toBe("cleared");
   });
 
   it("is changed when both present and differ", () => {
-    expect(fieldDiffState("Mayor", "Council", "text")).toBe("changed");
+    expect(fieldDiffState("Mayor", "Council")).toBe("changed");
   });
 
   it("treats a date precision change as changed (no 'refined' state)", () => {
-    expect(fieldDiffState("2021", "2021-01-04", "date")).toBe("changed");
+    expect(fieldDiffState("2021", "2021-01-04")).toBe("changed");
   });
 });
 
-describe("fieldDiffState (image, presence-only)", () => {
-  it("is same when both sides have a photo, even if the URLs differ", () => {
-    expect(fieldDiffState("cdn.jpg", "raw.jpg", "image")).toBe("same");
+const PUBLISHED_PHOTO =
+  "https://cdn.civicpatch.org/open-data/vt/local/place_johnson_village/images/41a59e57dae5.png";
+const SAME_PHOTO_UNDER_REVIEW =
+  "https://civicpatch-artifacts.civicpatch.org/7a1bd87c/data_source/vt/local/place_johnson_village/images/41a59e57dae5.png";
+const NEW_PHOTO_UNDER_REVIEW =
+  "https://civicpatch-artifacts.civicpatch.org/9c01aa20/data_source/vt/local/place_johnson_village/images/d73d6d6994f5.png";
+const RAW_PHOTO = "https://villageofjohnson.com/wp-content/uploads/2025/03/IMG_9468.jpeg";
+
+describe("fieldState (image, by hash)", () => {
+  const photoState = (oldRecord: object, newRecord: object) =>
+    fieldState(IMAGE_FIELD, { id: "1", ...oldRecord }, { id: "1", ...newRecord });
+
+  it("is same when the same file is rehosted", () => {
+    expect(
+      photoState({ cdn_image: PUBLISHED_PHOTO }, { cdn_image: SAME_PHOTO_UNDER_REVIEW }),
+    ).toBe("same");
   });
 
-  it("is added when only the new side has a photo", () => {
-    expect(fieldDiffState("", "raw.jpg", "image")).toBe("added");
+  it("is changed when the file differs", () => {
+    expect(
+      photoState({ cdn_image: PUBLISHED_PHOTO }, { cdn_image: NEW_PHOTO_UNDER_REVIEW }),
+    ).toBe("changed");
   });
 
-  it("is cleared when only the old side had a photo", () => {
-    expect(fieldDiffState("cdn.jpg", "", "image")).toBe("cleared");
+  it("is added when only the new side has a downloaded photo", () => {
+    expect(photoState({}, { cdn_image: NEW_PHOTO_UNDER_REVIEW })).toBe("added");
+  });
+
+  it("reads a raw url with no downloaded copy as no photo", () => {
+    expect(
+      photoState({ cdn_image: PUBLISHED_PHOTO }, { image: RAW_PHOTO }),
+    ).toBe("cleared");
   });
 });
 
@@ -177,13 +198,22 @@ describe("recordsDiffer", () => {
     ).toBe(true);
   });
 
-  it("ignores photo URL differences (presence-only)", () => {
+  it("ignores a rehost of the same photo", () => {
     expect(
       recordsDiffer(
-        { ...base, cdn_image: "cdn.jpg" },
-        { ...base, image: "raw.jpg" },
+        { ...base, cdn_image: PUBLISHED_PHOTO },
+        { ...base, cdn_image: SAME_PHOTO_UNDER_REVIEW },
       ),
     ).toBe(false);
+  });
+
+  it("is true when the photo's file differs", () => {
+    expect(
+      recordsDiffer(
+        { ...base, cdn_image: PUBLISHED_PHOTO },
+        { ...base, cdn_image: NEW_PHOTO_UNDER_REVIEW },
+      ),
+    ).toBe(true);
   });
 
   it("ignores source_urls (documentation, not diffed)", () => {
@@ -276,16 +306,6 @@ describe("fieldState", () => {
     expect(fieldState(nameField, { id: "1", name: "Maria" }, null)).toBe(
       "cleared",
     );
-  });
-
-  it("compares photos on presence only", () => {
-    expect(
-      fieldState(
-        IMAGE_FIELD,
-        { id: "1", cdn_image: "cdn.jpg" },
-        { id: "1", image: "raw.jpg" },
-      ),
-    ).toBe("same");
   });
 });
 

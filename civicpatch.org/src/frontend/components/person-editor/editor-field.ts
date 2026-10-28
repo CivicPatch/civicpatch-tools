@@ -232,6 +232,16 @@ function renderWas(props: EditorFieldProps) {
   const { field, oldRecord, newRecord, state, save, isReadOnly } = props;
   if (state === "same" || CARRIES_OWN_PROVENANCE.has(field.key)) return nothing;
   if (isMulti(field)) return nothing;
+  if (isImage(field)) {
+    return oldRecord?.cdn_image
+      ? html`<div class="person-editor__was">
+          <span class="person-editor__was-value"
+            >was
+            <person-image .person=${oldRecord} .size=${"2.75rem"}></person-image
+          ></span>
+        </div>`
+      : nothing;
+  }
   const oldValue = diffValue(oldRecord, field);
   const oldText = !oldRecord
     ? ""

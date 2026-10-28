@@ -97,6 +97,25 @@
     color: var(--tile-added);
     text-decoration: none;
   }
+
+  /* Photo row */
+  .review-overview .pv-photo {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.15em;
+    margin-right: 0.5em;
+    vertical-align: top;
+  }
+  .review-overview del.pv-photo person-image,
+  .review-overview ins.pv-photo person-image {
+    padding: 2px;
+    border: 2px solid currentColor;
+    border-radius: var(--radius);
+  }
+  .review-overview .pv-photo__caption {
+    font-size: 0.75em;
+  }
   .review-row__field-lock {
     margin-right: 0.2em;
     font-size: 0.85em;

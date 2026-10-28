@@ -17,26 +17,29 @@ from datetime import datetime, timezone
 
 import environment
 import lib.buckets as buckets
-
-from shared.utils.membership_ids import membership_id
-from shared.utils.statuses import ActivityType
-
 from core.projection.as_of import facts_as_of, snapshot_times
 from core.projection.canonical_ids import with_merges, without_merges
-from core.projection.membership_history import MembershipRow, membership_history
-from core.projection.membership_details import MembershipSource
-from core.projection.people import Membership, Person
 from core.projection.facts import Facts, PostKey
-from core.projection.roster import Roster, derive_roster, with_published_images
+from core.projection.membership_details import MembershipSource
+from core.projection.membership_history import MembershipRow, membership_history
+from core.projection.people import Membership, Person
+from core.projection.roster import (
+    Roster,
+    derive_roster,
+    unpublished_images,
+    with_published_images,
+)
 from database import divisions, posts
 from database.activity import record_change
-from database.facts import load_facts
 from database.extras_organizations import get_extras_organizations
+from database.facts import load_facts
 from database.roles import get_roles
-from shared.schemas import RoleConfig
-from shared.utils.taxonomy import Taxonomy, build_taxonomy, with_selection_methods
 from schemas.activity import Change
 from schemas.claims import EntityType
+from shared.schemas import RoleConfig
+from shared.utils.membership_ids import membership_id
+from shared.utils.statuses import ActivityType
+from shared.utils.taxonomy import Taxonomy, build_taxonomy, with_selection_methods
 
 logger = logging.getLogger(__name__)
 
@@ -147,7 +150,11 @@ async def _ensure_posts(
     for key in keys:
         await divisions.find_or_create(cur, key.division_ocdid, jurisdiction_ocdid)
         minted = await posts.create_if_absent(
-            cur, jurisdiction_ocdid, key.organization_id, key.role_id, key.division_ocdid
+            cur,
+            jurisdiction_ocdid,
+            key.organization_id,
+            key.role_id,
+            key.division_ocdid,
         )
         if minted:
             await record_change(
@@ -155,7 +162,9 @@ async def _ensure_posts(
                 ActivityType.ADD_POST,
                 None,
                 jurisdiction_ocdid,
-                Change(entity_type=EntityType.POST, entity_id=minted, subject=key.role_id),
+                Change(
+                    entity_type=EntityType.POST, entity_id=minted, subject=key.role_id
+                ),
                 changeset_id=changeset_id,
             )
 
@@ -166,18 +175,30 @@ async def _taxonomy(taxonomy: Taxonomy | None) -> Taxonomy:
     return build_taxonomy(RoleConfig(roles=await get_roles()))
 
 
-async def _jurisdiction_taxonomy(cur, jurisdiction_ocdid: str, taxonomy: Taxonomy | None) -> Taxonomy:
+async def _jurisdiction_taxonomy(
+    cur, jurisdiction_ocdid: str, taxonomy: Taxonomy | None
+) -> Taxonomy:
     """The config's taxonomy with this jurisdiction's own selection methods, from its law."""
     base = await _taxonomy(taxonomy)
     organizations = await get_extras_organizations(cur, jurisdiction_ocdid)
-    return with_selection_methods(base, organizations.selection_methods()) if organizations else base
+    return (
+        with_selection_methods(base, organizations.selection_methods())
+        if organizations
+        else base
+    )
 
 
-def _fold(facts: Facts, jurisdiction_ocdid: str, taxonomy: Taxonomy) -> Roster:
+def _fold(
+    facts: Facts,
+    jurisdiction_ocdid: str,
+    taxonomy: Taxonomy,
+    including_changeset_id: str | None,
+) -> Roster:
     return with_published_images(
         derive_roster(facts, jurisdiction_ocdid, taxonomy),
         buckets.ARTIFACTS,
         environment.get_env_vars()["FRIENDLY_STORAGE_HOST"],
+        unpublished_images(facts, including_changeset_id),
     )
 
 
@@ -228,13 +249,18 @@ async def derived_roster_and_facts(
     facts = await load_facts(cur, jurisdiction_ocdid, cutoff, including)
     if merged_into:
         facts = with_merges(facts, merged_into, cutoff)
-    return _fold(facts, jurisdiction_ocdid, await _jurisdiction_taxonomy(cur, jurisdiction_ocdid, taxonomy)), facts
+    return _fold(
+        facts,
+        jurisdiction_ocdid,
+        await _jurisdiction_taxonomy(cur, jurisdiction_ocdid, taxonomy),
+        including,
+    ), facts
 
 
 async def base_identities(cur, jurisdiction_ocdid: str, taxonomy: Taxonomy) -> Roster:
     """Everyone the facts name, merges left apart, on or off the roster. The matcher's pool."""
     facts = await load_facts(cur, jurisdiction_ocdid, datetime.now(timezone.utc))
-    return _fold(without_merges(facts), jurisdiction_ocdid, taxonomy)
+    return _fold(without_merges(facts), jurisdiction_ocdid, taxonomy, None)
 
 
 async def rebuild_from_facts(
@@ -247,7 +273,7 @@ async def rebuild_from_facts(
     """
     taxonomy = await _jurisdiction_taxonomy(cur, jurisdiction_ocdid, None)
     facts = await load_facts(cur, jurisdiction_ocdid, datetime.now(timezone.utc))
-    roster = _fold(facts, jurisdiction_ocdid, taxonomy)
+    roster = _fold(facts, jurisdiction_ocdid, taxonomy, None)
     history = await _history(cur, facts, jurisdiction_ocdid, taxonomy)
     # From the fold's memberships, not the raw records: a split moves a record to a person whose
     # labels then parse alone, into a post the records as stored never name.
@@ -263,7 +289,11 @@ async def _history(
     in Python, so it costs folds, not queries."""
     changeset_ids = sorted(
         {record.changeset_id for record in facts.records}
-        | {claim.changeset_id for claim in (*facts.claims, *facts.withdraws) if claim.changeset_id}
+        | {
+            claim.changeset_id
+            for claim in (*facts.claims, *facts.withdraws)
+            if claim.changeset_id
+        }
     )
     await cur.execute(_PUBLISHED_AT, (changeset_ids,))
     published_at = {row[0]: row[1] for row in await cur.fetchall()}
@@ -272,7 +302,12 @@ async def _history(
         return []
     started = time.perf_counter()
     snapshots = [
-        (stamp, derive_roster(facts_as_of(facts, published_at, cut), jurisdiction_ocdid, taxonomy))
+        (
+            stamp,
+            derive_roster(
+                facts_as_of(facts, published_at, cut), jurisdiction_ocdid, taxonomy
+            ),
+        )
         for cut, stamp in times
     ]
     history = membership_history(snapshots)
@@ -319,7 +354,9 @@ def membership_rows(history: Iterable[MembershipRow]) -> list[dict]:
             "end_date": row.membership.end_date,
             "opened_at": row.opened_at,
             "closed_at": row.closed_at,
-            "sources": json.dumps([source.model_dump() for source in row.membership.sources]),
+            "sources": json.dumps(
+                [source.model_dump() for source in row.membership.sources]
+            ),
         }
         for row in history
     ]
