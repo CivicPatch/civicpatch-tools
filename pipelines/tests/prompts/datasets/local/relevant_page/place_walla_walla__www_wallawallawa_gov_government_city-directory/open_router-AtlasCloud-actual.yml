@@ -1,7 +1,12 @@
 is_relevant: true
 relevant_urls:
-- https://www.wallawallawa.gov/government
 - https://www.wallawallawa.gov/government/city-council
-- https://www.wallawallawa.gov/government/city-manager
-- https://www.wallawallawa.gov/government/support-services/city-clerk
 - https://www.wallawallawa.gov/government/boards-commissions-committees
+- https://www.wallawallawa.gov/government/support-services/city-clerk
+- https://www.wallawallawa.gov/government
+- https://www.wallawallawa.gov/government/lodging-tax-advisory-committee
+- https://www.wallawallawa.gov/government/boards-commissions-committees/historic-preservation-commission
+- https://www.wallawallawa.gov/government/boards-commissions-committees/planning-commission
+- https://www.wallawallawa.gov/government/boards-commissions-committees/solid-waste-advisory-committee
+- https://www.wallawallawa.gov/government/boards-commissions-committees/salary-commission
+- https://www.wallawallawa.gov/government/boards-commissions-committees/deaccessioning-public-art
