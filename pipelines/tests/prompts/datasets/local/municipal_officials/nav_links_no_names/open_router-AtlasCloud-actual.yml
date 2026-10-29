@@ -1,6 +1,7 @@
 people:
 - name: Edward Zapalac
   label: Councilmember, Place 5
+  organization_label: null
   phone: null
   email: null
   url: https://www.anytown.gov/government/city_council/councilmember_place_5.php

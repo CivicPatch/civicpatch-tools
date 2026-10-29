@@ -1,118 +1,118 @@
 people:
 - name: Girmay Zahilay
   label: King County Executive
+  organization_label: Executive
   phone: null
   email: null
   url: https://kingcounty.gov/en/dept/executive
   start_date: null
   end_date: null
   image: local://456fd6692c50.png
-  organization: County Executive
 - name: Rod Dembowski
-  label: King County Councilmember District 1
+  label: Councilmember District 1
+  organization_label: King County Council
   phone: null
   email: null
   url: https://kingcounty.gov/en/dept/council/governance-leadership/county-council/councilmembers-districts/rod-dembowski
   start_date: null
   end_date: null
   image: local://1017c456c9ca.png
-  organization: County Council
 - name: Rhonda Lewis
-  label: King County Councilmember District 2
+  label: Councilmember District 2
+  organization_label: King County Council
   phone: null
   email: null
   url: https://kingcounty.gov/en/dept/council/governance-leadership/county-council/councilmembers-districts/rhonda-lewis
   start_date: null
   end_date: null
   image: local://2400d22da048.png
-  organization: County Council
 - name: Sarah Perry
-  label: King County Councilmember District 3
+  label: Councilmember District 3
+  organization_label: King County Council
   phone: null
   email: null
   url: https://kingcounty.gov/en/dept/council/governance-leadership/county-council/councilmembers-districts/sarah-perry
   start_date: null
   end_date: null
   image: local://260753e33326.png
-  organization: County Council
 - name: "Jorge L. Bar\xF3n"
-  label: King County Councilmember District 4
+  label: Councilmember District 4
+  organization_label: King County Council
   phone: null
   email: null
   url: https://kingcounty.gov/en/dept/council/governance-leadership/county-council/councilmembers-districts/jorge-l-baron
   start_date: null
   end_date: null
   image: local://b7781f80cfaa.png
-  organization: County Council
 - name: Steffanie Fain
-  label: King County Councilmember District 5
+  label: Councilmember District 5
+  organization_label: King County Council
   phone: null
   email: null
   url: https://kingcounty.gov/en/dept/council/governance-leadership/county-council/councilmembers-districts/steffanie-fain
   start_date: null
   end_date: null
   image: local://0b42e9ac8027.png
-  organization: County Council
 - name: Claudia Balducci
-  label: King County Councilmember District 6
+  label: Councilmember District 6
+  organization_label: King County Council
   phone: null
   email: null
   url: https://kingcounty.gov/en/dept/council/governance-leadership/county-council/councilmembers-districts/claudia-balducci
   start_date: null
   end_date: null
   image: local://4e25e6caf6e2.png
-  organization: County Council
 - name: Pete von Reichbauer
-  label: King County Councilmember District 7
+  label: Councilmember District 7
+  organization_label: King County Council
   phone: null
   email: null
   url: https://kingcounty.gov/en/dept/council/governance-leadership/county-council/councilmembers-districts/pete-von-reichbauer
   start_date: null
   end_date: null
   image: local://a4a58cdeecca.png
-  organization: County Council
 - name: Teresa Mosqueda
-  label: King County Councilmember District 8
+  label: Councilmember District 8
+  organization_label: King County Council
   phone: null
   email: null
   url: https://kingcounty.gov/en/dept/council/governance-leadership/county-council/councilmembers-districts/teresa-mosqueda
   start_date: null
   end_date: null
   image: local://eb3637466d89.png
-  organization: County Council
 - name: Reagan Dunn
-  label: King County Councilmember District 9
+  label: Councilmember District 9
+  organization_label: King County Council
   phone: null
   email: null
   url: https://kingcounty.gov/en/dept/council/governance-leadership/county-council/councilmembers-districts/reagan-dunn
   start_date: null
   end_date: null
   image: local://78bd4203babd.png
-  organization: County Council
 - name: John Wilson
-  label: King County Assessor
+  label: Assessor
+  organization_label: King County Assessor
   phone: null
   email: null
   url: https://kingcounty.gov/en/dept/assessor/about-king-county/about-king-county-assessor/leadership-team
   start_date: null
   end_date: null
   image: local://ba832bf0b55b.png
-  organization: none
 - name: Julie Wise
-  label: Elections director
+  label: Elections Director
+  organization_label: Elections director
   phone: null
   email: null
   url: https://kingcounty.gov/en/dept/elections/about-us/meet-the-director
   start_date: null
   end_date: null
   image: local://e9e46caa4375.png
-  organization: none
 - name: Leesa Manion
-  label: Prosecutor
+  label: Prosecuting Attorney
+  organization_label: Prosecutor
   phone: null
   email: null
   url: https://kingcounty.gov/en/dept/pao
   start_date: null
   end_date: null
   image: local://05f1994cde89.png
-  organization: none

@@ -1,6 +1,7 @@
 people:
 - name: David Coenen
   label: Village President
+  organization_label: null
   phone: 586-784-9151
   email: president@villageofarmada.org
   url: https://www.villageofarmada.org/departments/village_council/members.php
@@ -9,6 +10,7 @@ people:
   image: null
 - name: Michelle Poulos
   label: Clerk
+  organization_label: null
   phone: 586-784-9151
   email: clerk@villageofarmada.org
   url: https://www.villageofarmada.org/departments/village_council/members.php
@@ -17,6 +19,7 @@ people:
   image: null
 - name: Anne Porter
   label: Treasurer
+  organization_label: null
   phone: 586-784-9151
   email: null
   url: https://www.villageofarmada.org/departments/village_council/members.php
@@ -25,6 +28,7 @@ people:
   image: null
 - name: Michael Stirrett
   label: Trustee and Sewer Commissioner
+  organization_label: null
   phone: 586-784-9151
   email: null
   url: https://www.villageofarmada.org/departments/village_council/members.php
@@ -33,6 +37,7 @@ people:
   image: null
 - name: Ross Boelke
   label: Trustee and Water Commissioner
+  organization_label: null
   phone: 586-784-9151
   email: watercommissioner@villageofarmada.org
   url: https://www.villageofarmada.org/departments/village_council/members.php
@@ -41,6 +46,7 @@ people:
   image: null
 - name: Stephen Clark
   label: Trustee and President Pro Tem
+  organization_label: null
   phone: 586-784-9151
   email: sewercommissioner@villageofarmada.org
   url: https://www.villageofarmada.org/departments/village_council/members.php
@@ -49,6 +55,7 @@ people:
   image: null
 - name: Jo Adair
   label: Trustee and Police Commissioner
+  organization_label: null
   phone: 586-784-9151
   email: streetadministrator@villageofarmada.org
   url: https://www.villageofarmada.org/departments/village_council/members.php
@@ -57,6 +64,7 @@ people:
   image: null
 - name: Amy Barzyk
   label: Trustee and Street Administrator
+  organization_label: null
   phone: 586-784-9151
   email: null
   url: https://www.villageofarmada.org/departments/village_council/members.php
@@ -65,6 +73,7 @@ people:
   image: null
 - name: Michael Shall
   label: Trustee and Park Commissioner
+  organization_label: null
   phone: 586-784-9151
   email: parkcommissioner@villageofarmada.org
   url: https://www.villageofarmada.org/departments/village_council/members.php

@@ -1,6 +1,7 @@
 people:
 - name: George Lantz
   label: Mayor
+  organization_label: null
   phone: 303-486-5745
   email: glantz@greenwoodvillage.com
   url: https://greenwoodvillage.com/2707/Contact-Your-Elected-Officials
@@ -9,6 +10,7 @@ people:
   image: local://05074859a7df.png
 - name: Ann Nelson
   label: Council Member District 1
+  organization_label: null
   phone: 303-804-4137
   email: anelson@greenwoodvillage.com
   url: https://greenwoodvillage.com/2707/Contact-Your-Elected-Officials
@@ -17,6 +19,7 @@ people:
   image: local://c175baeebdd2.png
 - name: Paul Wiesner
   label: Council Member District 1
+  organization_label: null
   phone: 303-804-4138
   email: pwiesner@greenwoodvillage.com
   url: https://greenwoodvillage.com/2707/Contact-Your-Elected-Officials
@@ -25,6 +28,7 @@ people:
   image: local://d15ec3fc330d.png
 - name: Jay Schneiderman
   label: Council Member District 2
+  organization_label: null
   phone: 303-804-4136
   email: jschneiderman@greenwoodvillage.com
   url: https://greenwoodvillage.com/2707/Contact-Your-Elected-Officials
@@ -33,6 +37,7 @@ people:
   image: local://7ea160bab3ca.png
 - name: Bob Doyle
   label: Council Member District 2
+  organization_label: null
   phone: 303-804-4135
   email: bdoyle@greenwoodvillage.com
   url: https://greenwoodvillage.com/2707/Contact-Your-Elected-Officials
@@ -41,6 +46,7 @@ people:
   image: local://92195470815f.png
 - name: Libby Hilton Barnacle
   label: Council Member District 3 and Mayor Pro Tem
+  organization_label: null
   phone: 303-804-4129
   email: ebarnacle@greenwoodvillage.com
   url: https://greenwoodvillage.com/2707/Contact-Your-Elected-Officials
@@ -49,6 +55,7 @@ people:
   image: local://513a106f2b44.png
 - name: Donna Johnston
   label: Council Member District 3
+  organization_label: null
   phone: 303-804-4128
   email: djohnston@greenwoodvillage.com
   url: https://greenwoodvillage.com/2707/Contact-Your-Elected-Officials
@@ -57,6 +64,7 @@ people:
   image: local://2716200a4d65.png
 - name: Tom Stahl
   label: Council Member District 4
+  organization_label: null
   phone: 303-804-4132
   email: tstahl@greenwoodvillage.com
   url: https://greenwoodvillage.com/2707/Contact-Your-Elected-Officials
@@ -65,6 +73,7 @@ people:
   image: local://ae9612794888.png
 - name: Katrin Mezger
   label: Council Member District 4
+  organization_label: null
   phone: 303-804-4131
   email: kmezger@greenwoodvillage.com
   url: https://greenwoodvillage.com/2707/Contact-Your-Elected-Officials

@@ -1,6 +1,7 @@
 people:
 - name: Alysa Jarvis
   label: Council
+  organization_label: null
   phone: 713-703-8662
   email: null
   url: https://www.seadrifttx.org/city-council/directory-listing/alysa-jarvis
@@ -9,6 +10,7 @@ people:
   image: null
 - name: Tracey Johnson
   label: Council
+  organization_label: null
   phone: 361-746-8488
   email: null
   url: https://www.seadrifttx.org/city-council/directory-listing/tracey-johnson
@@ -17,6 +19,7 @@ people:
   image: null
 - name: Kenneth Reese
   label: Council
+  organization_label: null
   phone: null
   email: null
   url: https://www.seadrifttx.org/city-council/directory-listing/kenneth-reese

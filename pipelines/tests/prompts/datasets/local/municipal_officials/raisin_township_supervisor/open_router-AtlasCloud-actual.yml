@@ -1,6 +1,7 @@
 people:
 - name: Deb Brousseau
   label: Supervisor
+  organization_label: null
   phone: 517-662-5213
   email: supervisor@raisintownship.com
   url: https://raisinchartertownship.com/supervisor

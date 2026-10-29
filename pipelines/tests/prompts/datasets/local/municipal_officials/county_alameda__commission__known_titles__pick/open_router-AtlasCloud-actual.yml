@@ -1,100 +1,100 @@
 people:
 - name: David Haubert
-  label: Board of Supervisors, 1st District
+  label: Supervisor 1st District
+  organization_label: County Offices
   phone: null
   email: null
   url: https://district1.acgov.org/
   start_date: '2024'
   end_date: '2028'
   image: null
-  organization: Board of Supervisors
 - name: "Elisa M\xE1rquez"
-  label: Board of Supervisors, 2nd District
+  label: Supervisor 2nd District
+  organization_label: County Offices
   phone: null
   email: null
   url: https://district2.acgov.org/
   start_date: '2024'
   end_date: '2026'
   image: null
-  organization: Board of Supervisors
 - name: Lena Tam
-  label: Board of Supervisors, 3rd District
+  label: Supervisor 3rd District
+  organization_label: County Offices
   phone: null
   email: null
   url: https://district3.acgov.org/
   start_date: '2023'
   end_date: '2026'
   image: null
-  organization: Board of Supervisors
 - name: Nate Miley
-  label: Board of Supervisors, 4th District
+  label: Supervisor 4th District
+  organization_label: County Offices
   phone: null
   email: null
   url: https://district4.acgov.org/
   start_date: '2024'
   end_date: '2028'
   image: null
-  organization: Board of Supervisors
 - name: Nikki Fortunato Bas
-  label: Board of Supervisors, 5th District
+  label: Supervisor 5th District
+  organization_label: County Offices
   phone: null
   email: null
   url: https://district5.acgov.org/
   start_date: '2024'
   end_date: '2028'
   image: null
-  organization: Board of Supervisors
 - name: Phong La
   label: Assessor
+  organization_label: County Offices
   phone: null
   email: null
   url: https://www.acassessor.org/
   start_date: '2023'
   end_date: '2028'
   image: null
-  organization: none
 - name: Melissa Wilk
   label: Auditor/Controller
+  organization_label: County Offices
   phone: null
   email: null
   url: https://auditor.alamedacountyca.gov/
   start_date: '2023'
   end_date: '2028'
   image: null
-  organization: none
 - name: Ursula Jones Dickson
   label: District Attorney
+  organization_label: County Offices
   phone: null
   email: null
   url: https://da.alamedacountyca.gov/
   start_date: '2025'
   end_date: '2028'
   image: null
-  organization: none
 - name: Yesenia Sanchez
   label: Sheriff/Coroner
+  organization_label: County Offices
   phone: null
   email: null
   url: https://www.alamedasheriff.gov/
   start_date: '2023'
   end_date: '2028'
   image: null
-  organization: none
 - name: Henry C. Levy
   label: Treasurer/Tax Collector
+  organization_label: County Offices
   phone: null
   email: null
   url: https://treasurer.acgov.org/
   start_date: '2023'
   end_date: '2028'
   image: null
-  organization: none
 - name: Alysse Castro
   label: Superintendent of Schools
+  organization_label: County Offices
   phone: null
   email: null
   url: https://www.acoe.org/superintendent
   start_date: '2023'
   end_date: '2026'
   image: null
-  organization: none

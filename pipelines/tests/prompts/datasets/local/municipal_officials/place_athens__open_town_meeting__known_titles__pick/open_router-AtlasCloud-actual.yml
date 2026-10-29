@@ -1,7 +1,7 @@
 people:
 - name: David Bemis
-  label: Selectboard, Moderator, Cemetery Commission
-  organization_label: Selectboard, Moderator, Cemetery Commission
+  label: Selectboard Member, Moderator, and Cemetery Commissioner
+  organization_label: Selectboard
   phone: 869-3268
   email: null
   url: https://www.athensvt.com/officials.html
@@ -9,7 +9,7 @@ people:
   end_date: null
   image: null
 - name: Denise Randall
-  label: Selectboard
+  label: Selectboard Member
   organization_label: Selectboard
   phone: null
   email: null
@@ -18,8 +18,8 @@ people:
   end_date: null
   image: null
 - name: Janet Perry
-  label: Selectboard, Budget Committee
-  organization_label: Selectboard, Budget Committee
+  label: Selectboard Member and Budget Committee Member
+  organization_label: Selectboard
   phone: null
   email: null
   url: https://www.athensvt.com/officials.html
@@ -27,7 +27,7 @@ people:
   end_date: null
   image: null
 - name: Krista Gay
-  label: Selectboard
+  label: Selectboard Member
   organization_label: Selectboard
   phone: null
   email: null
@@ -36,7 +36,7 @@ people:
   end_date: null
   image: null
 - name: Danny Taylor
-  label: Selectboard
+  label: Selectboard Member
   organization_label: Selectboard
   phone: null
   email: null
@@ -45,8 +45,8 @@ people:
   end_date: null
   image: null
 - name: Amber Stevens
-  label: Town Clerk & Treasurer, Listers, Budget Committee
-  organization_label: Town Clerk & Treasurer, Listers, Budget Committee
+  label: Town Clerk & Treasurer, Lister, and Budget Committee Member
+  organization_label: null
   phone: (802) 869-3370
   email: listers@athensvt.gov
   url: https://www.athensvt.com/officials.html
@@ -55,7 +55,7 @@ people:
   image: null
 - name: Hannah Regier
   label: Delinquent Tax Collector
-  organization_label: Delinquent Tax Collector
+  organization_label: null
   phone: null
   email: null
   url: https://www.athensvt.com/officials.html
@@ -63,8 +63,8 @@ people:
   end_date: null
   image: null
 - name: Carol Bingham
-  label: Listers, Budget Committee
-  organization_label: Listers, Budget Committee
+  label: Lister and Budget Committee Member
+  organization_label: Listers
   phone: null
   email: null
   url: https://www.athensvt.com/officials.html
@@ -72,8 +72,8 @@ people:
   end_date: null
   image: null
 - name: Mike Bates
-  label: Auditors, Budget Committee
-  organization_label: Auditors, Budget Committee
+  label: Auditor and Budget Committee Member
+  organization_label: Auditors
   phone: null
   email: null
   url: https://www.athensvt.com/officials.html
@@ -81,7 +81,7 @@ people:
   end_date: null
   image: null
 - name: Jimmy Trimble
-  label: Auditors
+  label: Auditor
   organization_label: Auditors
   phone: null
   email: null
@@ -90,7 +90,7 @@ people:
   end_date: null
   image: null
 - name: Amanda Alsvig
-  label: Auditors
+  label: Auditor
   organization_label: Auditors
   phone: null
   email: null
@@ -99,7 +99,7 @@ people:
   end_date: null
   image: null
 - name: Harold Noyes
-  label: Cemetery Commission
+  label: Cemetery Commissioner
   organization_label: Cemetery Commission
   phone: null
   email: null
@@ -108,7 +108,7 @@ people:
   end_date: null
   image: null
 - name: Steve Oakes
-  label: Cemetery Commission
+  label: Cemetery Commissioner
   organization_label: Cemetery Commission
   phone: null
   email: null
@@ -117,7 +117,7 @@ people:
   end_date: null
   image: null
 - name: Don Capponcelli
-  label: Cemetery Commission
+  label: Cemetery Commissioner
   organization_label: Cemetery Commission
   phone: null
   email: null
@@ -126,7 +126,7 @@ people:
   end_date: null
   image: null
 - name: James Neathawk
-  label: Cemetery Commission
+  label: Cemetery Commissioner
   organization_label: Cemetery Commission
   phone: null
   email: null
