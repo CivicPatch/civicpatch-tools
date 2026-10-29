@@ -38,7 +38,8 @@ _PUBLISHED_RECORDS = f"""
            source_records.name, source_records.label, source_records.phone,
            source_records.email, source_records.url, source_records.start_date,
            source_records.end_date, source_records.image, source_records.cdn_image,
-           source_records.other_names, source_records.organization_id::text
+           source_records.other_names, source_records.organization_id::text,
+           source_records.organization_label
     FROM source_records
     WHERE source_records.changeset_id::text = ANY(%(changeset_ids)s)
       AND {_NOT_WITHDRAWN.format(table="source_records")}
@@ -166,6 +167,7 @@ def _published_record(row: tuple) -> PersonSourceRecord:
         cdn_image=row[10],
         other_names=row[11] or [],
         organization_id=row[12],
+        organization_label=row[13],
     )
 
 

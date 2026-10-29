@@ -72,33 +72,23 @@ def merge_field_to_list(values: List[str]) -> List[str]:
 
 
 def normalize_record(log: Log, record: PersonSourceRecord) -> PersonSourceRecord:
+    """Contacts normalized; every other field, the label included, passes through verbatim
+    (cp.org parses labels). A copy, so a field added later is never dropped here."""
     normalized_phone = (
         phone_utils.normalize_phone_number(record.phone) if record.phone else None
     )
     if record.phone and normalized_phone is None:
         log.warning(f"Failed to parse phone number: {record.phone}")
 
+    url = record.url
     normalized_email = email_utils.normalize_email(record.email)
     if normalized_email and not email_utils.is_valid_email(normalized_email):
         log.warning(f"Invalid email address found: {record.email}")
-        if not record.url and url_utils.is_valid_url(normalized_email):
-            record.url = url_utils.format_url(normalized_email)
+        if not url and url_utils.is_valid_url(normalized_email):
+            url = url_utils.format_url(normalized_email)
         normalized_email = None
 
-    return PersonSourceRecord(
-        name=record.name,
-        other_names=record.other_names,
-        # Verbatim: normalizing here is what 2.2 removed — cp.org parses.
-        label=record.label,
-        phone=normalized_phone,
-        email=normalized_email,
-        url=record.url,
-        start_date=record.start_date,
-        end_date=record.end_date,
-        image=record.image,
-        source_url=record.source_url,
-        organization_id=record.organization_id,
-    )
+    return record.model_copy(update={"phone": normalized_phone, "email": normalized_email, "url": url})
 
 
 def merge_weak_tie_groups(

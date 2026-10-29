@@ -135,6 +135,9 @@ class ExtractedPersonRecord(BaseModel):
 
     name: str
     label: str
+    # The organization as the page writes it over the person, as `label` is the office;
+    # `organization_id` is matched from it, so a wrong match can be repaired from the record.
+    organization_label: Optional[str] = None
 
     phone: Optional[str] = None
     email: Optional[str] = None
