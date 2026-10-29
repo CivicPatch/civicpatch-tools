@@ -1,19 +1,21 @@
 """The hash gate: an unchanged page reuses its published verdict and records, with no LLM call."""
 
+from runners.pipeline03_people_collector.constants import RELEVANCE_MAX_OUTPUT_TOKENS
 from unittest.mock import AsyncMock, patch
 
 import pytest
-from runners.pipeline03_people_collector.schemas import Link, LinkFrontier, LinkStatus, RelevantPageResponseSchema
+from runners.pipeline03_people_collector.schemas import Link, LinkFrontier, LinkStatus, ProcessPageContentStep, RelevantPageResponseSchema
 from runners.pipeline03_people_collector.steps.step_04_process_page_content.unchanged_pages import (
     is_unchanged,
     page_content_hash,
     published_source_page,
 )
 from runners.pipeline03_people_collector.steps.step_04_process_page_content.process_page_content import (
-    RELEVANCE_MAX_OUTPUT_TOKENS,
     process_page_content,
+    rematched_records,
+    source_page_extraction,
 )
-from shared.schemas import PublishedSourcePage, PersonSourceRecord
+from shared.schemas import KnownOrganization, PublishedSourcePage, PersonSourceRecord
 from shared.utils.url_utils import canonical_url
 from tests.factories.pipeline_run_context import pipeline_run_context_factory
 
@@ -184,3 +186,45 @@ async def test_a_fresh_relevance_read_has_its_own_lower_output_cap(tmp_path):
 
     assert llm.await_args.kwargs["prompt_name"] == "relevant_page"
     assert llm.await_args.kwargs["max_output_tokens"] == RELEVANCE_MAX_OUTPUT_TOKENS < 16_384
+
+
+# --- a replay is re-matched ----------------------------------------------------------------
+
+_LISTERS = KnownOrganization(id="listers", name="Board of Listers", role_labels=["Lister"])
+_SELECTBOARD = KnownOrganization(id="selectboard", name="Selectboard", role_labels=["Select Board Member"])
+
+
+def _record(name: str, organization_id: str, organization_label: str | None) -> PersonSourceRecord:
+    return PersonSourceRecord(
+        name=name, label="Lister", source_url=_URL, organization_id=organization_id, organization_label=organization_label
+    )
+
+
+@pytest.mark.asyncio
+async def test_a_replayed_record_is_placed_again_from_the_label_it_kept():
+    """Placed on the Selectboard by an older matcher; today's words say Listers, with no LLM call."""
+    context = pipeline_run_context_factory(steps={})
+
+    records = await rematched_records([_record("Carol Bingham", "selectboard", "Listers")], context, [_LISTERS, _SELECTBOARD])
+
+    assert [record.organization_id for record in records] == ["listers"]
+
+
+@pytest.mark.asyncio
+async def test_a_record_stored_before_labels_were_kept_stays_where_it_was_placed():
+    context = pipeline_run_context_factory(steps={})
+
+    records = await rematched_records([_record("Carol Bingham", "selectboard", None)], context, [_LISTERS, _SELECTBOARD])
+
+    assert [record.organization_id for record in records] == ["selectboard"]
+
+
+def test_the_page_reads_the_bodies_its_re_matched_records_name():
+    extraction = source_page_extraction(
+        _known(organization_ids=["selectboard"]),
+        [_record("Carol Bingham", "listers", "Listers")],
+        ProcessPageContentStep(records={}),
+        {},
+    )
+
+    assert extraction.organization_ids == ["listers"]

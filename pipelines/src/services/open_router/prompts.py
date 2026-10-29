@@ -183,14 +183,17 @@ NO_ORGANIZATION = "none"
 
 
 def _organization_field(choices: List[str]) -> str:
-    """The body each person is in, picked from ours; empty when there is nothing to pick between."""
+    """The body each person is listed under, as the page writes it; code matches it to ours.
+    Empty when the run knows no bodies to match against."""
     if not choices:
         return ""
     listed = "\n".join(f'        - "{choice}"' for choice in choices)
-    return f"""    organization:
-    - The body this person holds a post in, chosen from this list only:
+    return f"""    organization_label:
+    - The heading, label or page title this person is listed under, copied exactly as the
+      page writes it (e.g. "Lister Board", "Mayor and Township Committee"); null when there
+      is none.
+    - For reference, the bodies the law provides for (this government may have fewer):
 {listed}
-    - "{NO_ORGANIZATION}" when the person holds no post in any body on the list.
 
 """
 
@@ -446,4 +449,43 @@ def governing_presiding_question(organization_name: str, candidates: List[tuple[
     empty list when it establishes none. role_id is the id listed above; label is the office's
     name as the law writes it; maximum_memberships the number of people who hold it when the law
     states one, else null. Each quote is its own office's clause.
+    """
+
+
+# Measured 2026-10-28 on 85 organization labels: without this rule the model places a fund's or a
+# neighbouring village's trustees on the lookalike board; with it, no wrong placement.
+_ORGANIZATION_MATCH_RULE = """A heading names a body only if it is that body under another
+    wording. It is "{none}" when it is a fund, a library, a building, a programme, a
+    department, an office held by one person, a committee or commission not on the list, or
+    a body of another town, village, city or county, even one that shares the website."""
+_ORGANIZATION_MATCH_EXAMPLES = """Examples: "Assessor Board" with [Board of Assessors, Board of
+    Health] is "Board of Assessors". "Smith Memorial Fund Trustees" with [Trustees of Trust
+    Funds, Select Board] is "{none}": a fund's own trustees. "North Village Commissioners" for
+    the village of South with [Board of Commissioners] is "{none}": another village."""
+
+
+def organization_match_prompt() -> str:
+    """The system prompt for `organization_match_question`; a system message alone gets an
+    empty answer from the model, so the question goes as content."""
+    return f"""
+    You match the heading a local government's web page lists people under to one of that
+    government's own bodies, or to none.
+
+    {_ORGANIZATION_MATCH_RULE.format(none=NO_ORGANIZATION)}
+    {_ORGANIZATION_MATCH_EXAMPLES.format(none=NO_ORGANIZATION)}
+
+    IMPORTANT: Return only valid JSON. Do not include any other text.
+    """
+
+
+def organization_match_question(place_name: str, organization_label: str, choices: List[str]) -> str:
+    """Asked once per organization label the words could not settle. The default is never
+    offered; a label naming none leaves the title to decide."""
+    listed = "\n".join(f'    - "{choice}"' for choice in choices)
+    return f"""
+    A page of {place_name} lists people under the heading "{organization_label}". Which of these
+    bodies of {place_name} is that, if any?
+{listed}
+
+    Return {{"organization": ...}}: exactly one name from the list, or "{NO_ORGANIZATION}".
     """

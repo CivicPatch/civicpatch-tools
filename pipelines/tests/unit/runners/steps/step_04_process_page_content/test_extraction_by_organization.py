@@ -1,4 +1,4 @@
-"""One extraction per page, each person stamped with the organization the model picked."""
+"""One extraction per page, each person stamped with the organization their organization label names."""
 
 from unittest.mock import AsyncMock, MagicMock, patch
 
@@ -12,9 +12,6 @@ from runners.pipeline03_people_collector.schemas import (
 )
 from runners.pipeline03_people_collector.steps.step_04_process_page_content.heuristics_failure import (
     HeuristicsFailure,
-)
-from runners.pipeline03_people_collector.steps.step_04_process_page_content.organization_pick import (
-    pick_response_schema,
 )
 from runners.pipeline03_people_collector.steps.step_04_process_page_content.process_page_content import (
     collect_page_records,
@@ -73,10 +70,9 @@ async def _collect(organizations: list[KnownOrganization]):
 
 
 def _picked(*people: tuple[str, str, str]):
-    """An answer whose people each carry the organization the model picked."""
-    schema = pick_response_schema(["City Council", "Office of the Mayor"])
-    return schema.model_validate(
-        {"people": [{"name": name, "label": label, "organization": organization} for name, label, organization in people]}
+    """An answer whose people each carry the organization the page listed them under, as written."""
+    return PeopleArrayLLMResponseSchema.model_validate(
+        {"people": [{"name": name, "label": label, "organization_label": organization} for name, label, organization in people]}
     )
 
 
@@ -85,7 +81,7 @@ def _stamps(records) -> dict[str, str | None]:
 
 
 @pytest.mark.asyncio
-async def test_each_person_is_stamped_with_the_organization_picked_for_them():
+async def test_each_person_is_stamped_with_the_organization_their_organization_label_names():
     run_prompt = AsyncMock(
         return_value=_picked(
             ("Rob Saka", "Council Member District 1", "City Council"), ("Katie Wilson", "Mayor", "Office of the Mayor")

@@ -1,8 +1,8 @@
 jurisdiction_ocdid: ocd-jurisdiction/country:us/state:vt/place:burlington/government
 current_date: '2026-10-25'
-organization_choices:
-- Council
-- Office of the Mayor
+organizations:
+- {name: Council, role_labels: [Council Member]}
+- {name: Office of the Mayor, role_labels: [Mayor]}
 people:
 - name: Carter Neubieser
   phone: null

@@ -14,13 +14,13 @@ from scoring import (
     EVAL_TAXONOMY,
     aggregate_case,
     case_score,
+    expected_records,
     person_precision,
     score_cases,
 )
 from test_local_municipal_officials_eval import make_together_prompt
 from test_local_relevant_page_eval import page_dispositions, score_page
 
-from runners.pipeline03_people_collector.schemas import ExtractedPersonRecord
 from shared.utils.label_parser import parse_label
 from tests.factories.extracted_person import extracted_person_factory
 
@@ -63,7 +63,7 @@ PHONE_PATTERN = re.compile(r"\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}")
 
 
 def _expected_people(case_dir):
-    return [ExtractedPersonRecord(**person) for person in _expected(case_dir)["people"]]
+    return expected_records(_expected(case_dir)["people"])
 
 
 def _summary(actual, expected):

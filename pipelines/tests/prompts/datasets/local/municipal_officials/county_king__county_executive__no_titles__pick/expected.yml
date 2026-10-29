@@ -1,9 +1,9 @@
 generated: true
 jurisdiction_ocdid: ocd-jurisdiction/country:us/state:wa/county:king/government
 current_date: '2026-09-29'
-organization_choices:
-- County Council
-- County Executive
+organizations:
+- {name: County Council, role_labels: [Council Member, Chair, Vice Chair]}
+- {name: County Executive, role_labels: [County Executive]}
 people:
 - name: Rod Dembowski
   label: King County Councilmember District 1

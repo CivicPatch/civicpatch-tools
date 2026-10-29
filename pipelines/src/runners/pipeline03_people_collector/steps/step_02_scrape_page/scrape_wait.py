@@ -1,5 +1,5 @@
 from runners.pipeline03_people_collector.steps.step_02_scrape_page.scrape.wix import wait_for_wix_content
-from runners.pipeline03_people_collector.steps.step_02_scrape_page.scrape_constants import (
+from runners.pipeline03_people_collector.constants import (
     DOM_READY_TIMEOUT_MS,
     LAZY_RENDER_SETTLE_MS,
     POST_LAZY_NETWORKIDLE_TIMEOUT_MS,

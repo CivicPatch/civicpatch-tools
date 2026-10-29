@@ -1,9 +1,9 @@
 generated: true
 jurisdiction_ocdid: ocd-jurisdiction/country:us/state:ma/place:acton/government
 current_date: '2026-10-16'
-organization_choices:
-- Select Board
-- Town Meeting
+organizations:
+- {name: Select Board, role_labels: [Select Board Member, Chair, Vice Chair]}
+- {name: Town Meeting, role_labels: [Moderator, Town Meeting Member]}
 known_roles:
 - Chair
 - Vice Chair

@@ -1,6 +1,6 @@
-organization_choices:
-- City Council
-- Office of the Mayor
+organizations:
+- {name: City Council, role_labels: [Council Member]}
+- {name: Office of the Mayor, role_labels: [Mayor]}
 known_roles:
 - Council Member
 - Council President

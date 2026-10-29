@@ -5,12 +5,12 @@ So the issue fires only past the tolerance the crawler itself allows, or a run t
 because it had enough would file an issue saying it did not.
 """
 
+from runners.pipeline03_people_collector.constants import DATA_REQUIREMENT_TOLERANCE
 import pytest
 
 from runners.pipeline03_people_collector.schemas import ProgressState
 from runners.pipeline03_people_collector.transitions.main import _collect_pipeline_heuristics
 from runners.pipeline03_people_collector.transitions.process_page_content_transition import (
-    DATA_REQUIREMENT_TOLERANCE,
     STOP_COST_CAP,
 )
 from shared.utils.statuses import PipelineIssueType

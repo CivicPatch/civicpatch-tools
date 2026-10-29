@@ -3,7 +3,7 @@ from contextlib import asynccontextmanager
 from typing import Literal, TypedDict
 
 from patchright.async_api import async_playwright
-from runners.pipeline03_people_collector.steps.step_02_scrape_page.scrape_constants import (
+from runners.pipeline03_people_collector.constants import (
     PAGE_DEFAULT_TIMEOUT_MS,
     PAGE_NAVIGATION_TIMEOUT_MS,
 )

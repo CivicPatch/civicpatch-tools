@@ -1,0 +1,69 @@
+jurisdiction_ocdid: ocd-jurisdiction/country:us/state:vt/place:bellows_falls/government
+current_date: '2026-10-28'
+organizations:
+- {name: Board of Trustees, role_labels: [Trustee, Village President]}
+known_roles:
+- Trustee
+- Village President
+- Member
+government_form_role_labels:
+- Village Clerk
+- Village Treasurer
+- Collector of Taxes
+people:
+- name: Wendy M. Levy
+  label: Village President
+  phone: (802) 246-7286
+  email: wendylevy@rockbf.org
+  url: null
+  start_date: null
+  end_date: null
+  image: null
+  organization: Board of Trustees
+- name: Wade Masure
+  label: Trustee
+  phone: (802) 376-4702
+  email: wmasure@rockbf.org
+  url: null
+  start_date: null
+  end_date: null
+  image: null
+  organization: Board of Trustees
+- name: Taylor Pichette
+  label: Trustee
+  phone: null
+  email: tpichette@rockbf.org
+  url: null
+  start_date: null
+  end_date: null
+  image: null
+  organization: Board of Trustees
+- name: Samantha Snow
+  label: Trustee
+  phone: (802) 579-2599
+  email: ssnow@rockbf.org
+  url: null
+  start_date: null
+  end_date: null
+  image: null
+  organization: Board of Trustees
+- name: Jeff Dunbar
+  label: Trustee
+  phone: null
+  email: jeffdunbar@rockbf.org
+  url: null
+  start_date: null
+  end_date: null
+  image: null
+  organization: Board of Trustees
+thought: 'Plan D4b (2026-10-28): the Town of Rockingham''s staff directory serves the town and
+  both its villages, Bellows Falls and Saxtons River, and nearly every entry carries "Town of
+  Rockingham/ Bellows Falls Village Corporation" whichever body it belongs to; only the section
+  heading says. The prod run for Bellows Falls (changeset a9b41349) put four of Saxtons River''s
+  trustees (Ellen Clark-Lawrence, Laura Wolfe, Kristen Swartwout, Andrew Dunbar, under "Saxtons
+  River Village Trustees") on Bellows Falls'' Board of Trustees. The gold is the five under
+  "Bellow Falls Village Trustees" (the site''s own spelling) and nobody else: Saxtons River''s
+  trustees and officers and the Town of Rockingham Selectboard are other governments; the Town
+  Clerk, Listers'' Office, Municipal Manager and departments are the town''s; committees and
+  commissions are unlisted. The page is the run''s own preprocessed.md from the debug bucket;
+  the lists approximate the run''s.'

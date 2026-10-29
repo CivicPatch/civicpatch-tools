@@ -1,3 +1,4 @@
+from runners.pipeline03_people_collector.constants import RELEVANCE_MAX_OUTPUT_TOKENS
 import asyncio
 from functools import partial
 import time
@@ -5,9 +6,6 @@ import pytest
 from services.open_router.llm import run_prompt as run_together_prompt
 from services.open_router.prompts import relevant_page_prompt as make_together_prompt
 from runners.pipeline03_people_collector.schemas import RelevantPageResponseSchema
-from runners.pipeline03_people_collector.steps.step_04_process_page_content.process_page_content import (
-    RELEVANCE_MAX_OUTPUT_TOKENS,
-)
 from utils import cost_utils
 from typing import cast
 import pathlib

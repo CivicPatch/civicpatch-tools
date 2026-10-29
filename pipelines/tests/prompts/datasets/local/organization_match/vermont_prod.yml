@@ -1,0 +1,1575 @@
+# A sample of the organization labels Vermont's prod pages listed people under, cut from each
+# page's stored markdown on 2026-10-28: every distinct label naming a body, every judgment call (with
+# its reason), every none that mentions a body word, and 30 plain-noise nones. Role labels are the
+# forms' own, written once per organization set that places share. Read by tests/unit/evals/test_organization_match_vermont.py.
+organization_sets:
+  town:
+  - name: Advisory Budget Committee
+    role_labels:
+    - Advisory Budget Committee Member
+  - name: Board of Cemetery Commissioners
+    role_labels:
+    - Cemetery Commissioner
+  - name: Board of Library Trustees
+    role_labels:
+    - Library Trustee
+  - name: Board of Listers
+    role_labels:
+    - Lister
+  - name: Selectboard
+    role_labels:
+    - Select Board Member
+    - Chair
+    - Vice Chair
+  - name: Town Auditors
+    role_labels:
+    - Auditor
+  - name: Town Meeting
+    role_labels:
+    - Moderator
+  - meta_is_default: true
+    name: Town Officers
+    role_labels:
+    - Town Clerk
+    - Town Treasurer
+    - First Constable
+    - Second Constable
+    - Collector of Delinquent Taxes
+    - Trustee of Public Money
+    - Road Commissioner
+    - Patrol Officer
+    - Town Manager
+  - name: Trustees of Public Funds
+    role_labels:
+    - Trustee of Public Funds
+  - name: Water Commissioners
+    role_labels:
+    - Water Commissioner
+  village:
+  - name: Board of Trustees
+    role_labels:
+    - Trustee
+    - Village President
+  - meta_is_default: true
+    name: Village Officers
+    role_labels:
+    - Village Clerk
+    - Village Treasurer
+    - Collector of Taxes
+  city:
+  - meta_is_default: true
+    name: City Officers
+    role_labels: []
+  - name: Council
+    role_labels:
+    - Council Member
+  - name: Office of the Mayor
+    role_labels:
+    - Mayor
+  city_3:
+  - meta_is_default: true
+    name: City Officers
+    role_labels: []
+  - name: Council
+    role_labels:
+    - Council Member
+places:
+  addison:
+    name: addison
+    organizations: town
+  alburgh_town:
+    name: alburgh town
+    organizations: town
+  alburgh_village:
+    name: alburgh village
+    organizations: village
+  arlington:
+    name: arlington
+    organizations: town
+  athens:
+    name: athens
+    organizations: town
+  bakersfield:
+    name: bakersfield
+    organizations: town
+  barnard:
+    name: barnard
+    organizations: town
+  barton_town:
+    name: barton town
+    organizations: town
+  barton_village:
+    name: barton village
+    organizations: village
+  bellows_falls:
+    name: bellows falls
+    organizations: village
+  belvidere:
+    name: belvidere
+    organizations: town
+  bennington:
+    name: bennington
+    organizations: town
+  berkshire:
+    name: berkshire
+    organizations: town
+  bolton:
+    name: bolton
+    organizations: town
+  bradford:
+    name: bradford
+    organizations: town
+  brandon:
+    name: brandon
+    organizations: town
+  brighton:
+    name: brighton
+    organizations: town
+  burke:
+    name: burke
+    organizations: town
+  burlington:
+    name: burlington
+    organizations: city
+  cabot:
+    name: cabot
+    organizations: town
+  calais:
+    name: calais
+    organizations: town
+  cambridge_town:
+    name: cambridge town
+    organizations: town
+  charleston:
+    name: charleston
+    organizations: town
+  charlotte:
+    name: charlotte
+    organizations: town
+  chelsea:
+    name: chelsea
+    organizations: town
+  chester:
+    name: chester
+    organizations: town
+  chittenden:
+    name: chittenden
+    organizations: town
+  concord:
+    name: concord
+    organizations: town
+  corinth:
+    name: corinth
+    organizations: town
+  coventry:
+    name: coventry
+    organizations: town
+  derby:
+    name: derby
+    organizations: town
+  dorset:
+    name: dorset
+    organizations: town
+  dover:
+    name: dover
+    organizations: town
+  dummerston:
+    name: dummerston
+    organizations: town
+  duxbury:
+    name: duxbury
+    organizations: town
+  east_montpelier:
+    name: east montpelier
+    organizations: town
+  eden:
+    name: eden
+    organizations: town
+  elmore:
+    name: elmore
+    organizations: town
+  enosburg_falls:
+    name: enosburg falls
+    organizations: village
+  essex_junction:
+    name: essex junction
+    organizations: city_3
+  glover:
+    name: glover
+    organizations: town
+  goshen:
+    name: goshen
+    organizations: town
+  grafton:
+    name: grafton
+    organizations: town
+  granby:
+    name: granby
+    organizations: town
+  grand_isle:
+    name: grand isle
+    organizations: town
+  granville:
+    name: granville
+    organizations: town
+  groton:
+    name: groton
+    organizations: town
+  guilford:
+    name: guilford
+    organizations: town
+  hyde_park_town:
+    name: hyde park town
+    organizations: town
+  jay:
+    name: jay
+    organizations: town
+  killington:
+    name: killington
+    organizations: town
+  leicester:
+    name: leicester
+    organizations: town
+  ludlow_village:
+    name: ludlow village
+    organizations: village
+  lunenburg:
+    name: lunenburg
+    organizations: town
+  lyndon:
+    name: lyndon
+    organizations: town
+  maidstone:
+    name: maidstone
+    organizations: town
+  manchester_village:
+    name: manchester village
+    organizations: village
+  marshfield_town:
+    name: marshfield town
+    organizations: town
+  middlesex:
+    name: middlesex
+    organizations: town
+  middletown_springs:
+    name: middletown springs
+    organizations: town
+  milton:
+    name: milton
+    organizations: town
+  montpelier:
+    name: montpelier
+    organizations: city_3
+  morgan:
+    name: morgan
+    organizations: town
+  mount_holly:
+    name: mount holly
+    organizations: town
+  newbury_town:
+    name: newbury town
+    organizations: town
+  newport_city:
+    name: newport city
+    organizations: city_3
+  north_bennington:
+    name: north bennington
+    organizations: village
+  north_troy:
+    name: north troy
+    organizations: village
+  old_bennington:
+    name: old bennington
+    organizations: village
+  orange:
+    name: orange
+    organizations: town
+  orwell:
+    name: orwell
+    organizations: town
+  panton:
+    name: panton
+    organizations: town
+  pawlet:
+    name: pawlet
+    organizations: town
+  peacham:
+    name: peacham
+    organizations: town
+  peru:
+    name: peru
+    organizations: town
+  poultney_town:
+    name: poultney town
+    organizations: town
+  pownal:
+    name: pownal
+    organizations: town
+  proctor:
+    name: proctor
+    organizations: town
+  randolph:
+    name: randolph
+    organizations: town
+  reading:
+    name: reading
+    organizations: town
+  richmond:
+    name: richmond
+    organizations: town
+  rockingham:
+    name: rockingham
+    organizations: town
+  saxtons_river:
+    name: saxtons river
+    organizations: village
+  sheldon:
+    name: sheldon
+    organizations: town
+  st_johnsbury:
+    name: st johnsbury
+    organizations: town
+  stamford:
+    name: stamford
+    organizations: town
+  stratton:
+    name: stratton
+    organizations: town
+  sutton:
+    name: sutton
+    organizations: town
+  swanton_village:
+    name: swanton village
+    organizations: village
+  thetford:
+    name: thetford
+    organizations: town
+  tinmouth:
+    name: tinmouth
+    organizations: town
+  townshend:
+    name: townshend
+    organizations: town
+  tunbridge:
+    name: tunbridge
+    organizations: town
+  vernon:
+    name: vernon
+    organizations: town
+  vershire:
+    name: vershire
+    organizations: town
+  waitsfield:
+    name: waitsfield
+    organizations: town
+  waltham:
+    name: waltham
+    organizations: town
+  warren:
+    name: warren
+    organizations: town
+  washington:
+    name: washington
+    organizations: town
+  waterford:
+    name: waterford
+    organizations: town
+  wells_river:
+    name: wells river
+    organizations: village
+  west_windsor:
+    name: west windsor
+    organizations: town
+  westmore:
+    name: westmore
+    organizations: town
+  weston:
+    name: weston
+    organizations: town
+  wheelock:
+    name: wheelock
+    organizations: town
+  whitingham:
+    name: whitingham
+    organizations: town
+  williamstown:
+    name: williamstown
+    organizations: town
+  wilmington:
+    name: wilmington
+    organizations: town
+  windham:
+    name: windham
+    organizations: town
+  woodford:
+    name: woodford
+    organizations: town
+  woodstock_town:
+    name: woodstock town
+    organizations: town
+cases:
+- place: addison
+  organization_label: Auditors
+  expected: Town Auditors
+  source: rule
+  reason: names the Town Auditors
+- place: addison
+  organization_label: Town Water Commissioners
+  expected: Water Commissioners
+  source: rule
+  reason: names the Water Commissioners
+- place: addison
+  organization_label: Listers
+  expected: Board of Listers
+  source: rule
+  reason: names the Board of Listers
+- place: addison
+  organization_label: Selectboard
+  expected: Selectboard
+  source: rule
+  reason: names the Selectboard
+- place: alburgh_town
+  organization_label: SELECTBOARD MEMBERS
+  expected: Selectboard
+  source: rule
+  reason: names the Selectboard
+- place: alburgh_village
+  organization_label: Village Trustees
+  expected: Board of Trustees
+  source: rule
+  reason: names the Board of Trustees
+- place: arlington
+  organization_label: BOARD OF SELECTMEN (ELECTED)
+  expected: Selectboard
+  source: rule
+  reason: names the Selectboard
+- place: arlington
+  organization_label: BOARD OF LISTERS (ELECTED)
+  expected: Board of Listers
+  source: rule
+  reason: names the Board of Listers
+- place: arlington
+  organization_label: CEMETERY COMMISSIONERS (ELECTED)
+  expected: Board of Cemetery Commissioners
+  source: rule
+  reason: names the Board of Cemetery Commissioners
+- place: arlington
+  organization_label: TRUSTEES OF PUBLIC FUNDS
+  expected: Trustees of Public Funds
+  source: rule
+  reason: names the Trustees of Public Funds
+- place: athens
+  organization_label: Moderator
+  expected: Town Meeting
+  source: rule
+  reason: names the Town Meeting
+- place: athens
+  organization_label: Cemetery Commission
+  expected: Board of Cemetery Commissioners
+  source: rule
+  reason: names the Board of Cemetery Commissioners
+- place: athens
+  organization_label: Budget Committee
+  expected: Advisory Budget Committee
+  source: rule
+  reason: names the Advisory Budget Committee
+- place: bakersfield
+  organization_label: Lister Information
+  expected: Board of Listers
+  source: rule
+  reason: names the Board of Listers
+- place: barnard
+  organization_label: TRUSTEES
+  expected: Board of Library Trustees
+  source: judgment
+  reason: town has no village board; the labels under it are Library Trustee
+- place: barton_town
+  organization_label: Town of Barton Selectboard
+  expected: Selectboard
+  source: rule
+  reason: names the Selectboard
+- place: barton_village
+  organization_label: Board of Trustees
+  expected: Board of Trustees
+  source: rule
+  reason: names the Board of Trustees
+- place: bellows_falls
+  organization_label: Bellow Falls Village Trustees
+  expected: Board of Trustees
+  source: rule
+  reason: names the Board of Trustees
+- place: belvidere
+  organization_label: Belvidere Select Board
+  expected: Selectboard
+  source: rule
+  reason: names the Selectboard
+- place: bennington
+  organization_label: Select Board
+  expected: Selectboard
+  source: rule
+  reason: names the Selectboard
+- place: bennington
+  organization_label: SELECT BOARD MEMBERS
+  expected: Selectboard
+  source: rule
+  reason: names the Selectboard
+- place: bradford
+  organization_label: Selectboard Information
+  expected: Selectboard
+  source: rule
+  reason: names the Selectboard
+- place: brandon
+  organization_label: FY 28 Budget Advisory Committee Members
+  expected: Advisory Budget Committee
+  source: rule
+  reason: names the Advisory Budget Committee
+- place: brighton
+  organization_label: Current Selectboard members are
+  expected: Selectboard
+  source: rule
+  reason: names the Selectboard
+- place: brighton
+  organization_label: Board of Listers
+  expected: Board of Listers
+  source: rule
+  reason: names the Board of Listers
+- place: brighton
+  organization_label: Water Commissioners
+  expected: Water Commissioners
+  source: rule
+  reason: names the Water Commissioners
+- place: brighton
+  organization_label: Cemetery Commissioners
+  expected: Board of Cemetery Commissioners
+  source: rule
+  reason: names the Board of Cemetery Commissioners
+- place: burke
+  organization_label: Town Moderator
+  expected: Town Meeting
+  source: rule
+  reason: names the Town Meeting
+- place: burlington
+  organization_label: Ward 1
+  expected: Council
+  source: rule
+  reason: names the Council
+- place: burlington
+  organization_label: Central
+  expected: Council
+  source: rule
+  reason: names the Council
+- place: burlington
+  organization_label: East
+  expected: Council
+  source: rule
+  reason: names the Council
+- place: burlington
+  organization_label: North
+  expected: Council
+  source: rule
+  reason: names the Council
+- place: burlington
+  organization_label: South
+  expected: Council
+  source: rule
+  reason: names the Council
+- place: burlington
+  organization_label: City Council
+  expected: Council
+  source: rule
+  reason: names the Council
+- place: burlington
+  organization_label: Mayor's Office
+  expected: Office of the Mayor
+  source: rule
+  reason: names the Office of the Mayor
+- place: cabot
+  organization_label: Selectpersons
+  expected: Selectboard
+  source: rule
+  reason: names the Selectboard
+- place: calais
+  organization_label: Calais Listers
+  expected: Board of Listers
+  source: rule
+  reason: names the Board of Listers
+- place: calais
+  organization_label: Calais Trustees
+  expected: none
+  source: judgment
+  reason: a town; which trustees is not said and the labels are only Trustee
+- place: cambridge_town
+  organization_label: Selectboard Chair
+  expected: Selectboard
+  source: rule
+  reason: names the Selectboard
+- place: cambridge_town
+  organization_label: Selectboard Vice Chair
+  expected: Selectboard
+  source: rule
+  reason: names the Selectboard
+- place: cambridge_town
+  organization_label: Library Trustees
+  expected: Board of Library Trustees
+  source: rule
+  reason: names the Board of Library Trustees
+- place: charleston
+  organization_label: Charleston Town Listers
+  expected: Board of Listers
+  source: rule
+  reason: names the Board of Listers
+- place: charleston
+  organization_label: Charleston Selectboard
+  expected: Selectboard
+  source: rule
+  reason: names the Selectboard
+- place: charlotte
+  organization_label: Elected Town Auditors
+  expected: Town Auditors
+  source: rule
+  reason: names the Town Auditors
+- place: chelsea
+  organization_label: Lister
+  expected: Board of Listers
+  source: rule
+  reason: names the Board of Listers
+- place: chelsea
+  organization_label: Trustee of the Public Library
+  expected: Board of Library Trustees
+  source: rule
+  reason: names the Board of Library Trustees
+- place: chelsea
+  organization_label: Trustee of Public Funds
+  expected: Trustees of Public Funds
+  source: rule
+  reason: names the Trustees of Public Funds
+- place: chelsea
+  organization_label: Cemetery Commissioner
+  expected: Board of Cemetery Commissioners
+  source: rule
+  reason: names the Board of Cemetery Commissioners
+- place: chester
+  organization_label: Assessors
+  expected: none
+  source: judgment
+  reason: an assessor is hired staff once a town votes listers out (17 V.S.A. § 2651c), not the Board of Listers
+- place: chittenden
+  organization_label: Town Assessor
+  expected: none
+  source: judgment
+  reason: an assessor is hired staff once a town votes listers out (17 V.S.A. § 2651c), not the Board of Listers
+- place: concord
+  organization_label: Town Auditors
+  expected: Town Auditors
+  source: rule
+  reason: names the Town Auditors
+- place: corinth
+  organization_label: CORINTH LISTERS
+  expected: Board of Listers
+  source: rule
+  reason: names the Board of Listers
+- place: corinth
+  organization_label: TOWN LISTERS
+  expected: Board of Listers
+  source: rule
+  reason: names the Board of Listers
+- place: corinth
+  organization_label: SELECTBOARD – 3 Years
+  expected: Selectboard
+  source: rule
+  reason: names the Selectboard
+- place: corinth
+  organization_label: MODERATOR – 1 Year
+  expected: Town Meeting
+  source: rule
+  reason: names the Town Meeting
+- place: corinth
+  organization_label: CEMETERY COMMISSIONERS – 3 Years
+  expected: Board of Cemetery Commissioners
+  source: rule
+  reason: names the Board of Cemetery Commissioners
+- place: corinth
+  organization_label: LISTERS – 3 Years
+  expected: Board of Listers
+  source: rule
+  reason: names the Board of Listers
+- place: corinth
+  organization_label: BUDGET COMMITTEE (At Large) – 1 Year; terms expire 2027
+  expected: Advisory Budget Committee
+  source: rule
+  reason: names the Advisory Budget Committee
+- place: derby
+  organization_label: MODERATOR, TOWN & SCHOOL
+  expected: Town Meeting
+  source: rule
+  reason: names the Town Meeting
+- place: derby
+  organization_label: WATER/SEWER COMMITTEE
+  expected: none
+  source: judgment
+  reason: a committee the selectboard runs, labels are Selectboard
+- place: dorset
+  organization_label: Dorset Select Board Members
+  expected: Selectboard
+  source: rule
+  reason: names the Selectboard
+- place: dover
+  organization_label: Trustees
+  expected: Board of Library Trustees
+  source: judgment
+  reason: a town; the labels under it are Library Trustee
+- place: dummerston
+  organization_label: Board of Trustees
+  expected: Board of Library Trustees
+  source: judgment
+  reason: a town; the labels under it are Library Trustee
+- place: eden
+  organization_label: Contact the Cemetery Commissioners
+  expected: Board of Cemetery Commissioners
+  source: rule
+  reason: names the Board of Cemetery Commissioners
+- place: eden
+  organization_label: Assessors Office
+  expected: none
+  source: judgment
+  reason: an assessor is hired staff once a town votes listers out (17 V.S.A. § 2651c), not the Board of Listers
+- place: elmore
+  organization_label: Cemetery Commission Members
+  expected: Board of Cemetery Commissioners
+  source: rule
+  reason: names the Board of Cemetery Commissioners
+- place: enosburg_falls
+  organization_label: Village Trustees (elected)
+  expected: Board of Trustees
+  source: rule
+  reason: names the Board of Trustees
+- place: essex_junction
+  organization_label: Council Members & Contact Information
+  expected: Council
+  source: rule
+  reason: names the Council
+- place: glover
+  organization_label: Library Trustees/Librarian
+  expected: Board of Library Trustees
+  source: rule
+  reason: names the Board of Library Trustees
+- place: goshen
+  organization_label: Moderator - Town Meeting
+  expected: Town Meeting
+  source: rule
+  reason: names the Town Meeting
+- place: grand_isle
+  organization_label: Town Of Grand Isle Listers
+  expected: Board of Listers
+  source: rule
+  reason: names the Board of Listers
+- place: granville
+  organization_label: TOWN ASSESSOR
+  expected: none
+  source: judgment
+  reason: an assessor is hired staff once a town votes listers out (17 V.S.A. § 2651c), not the Board of Listers
+- place: groton
+  organization_label: Groton Moderator
+  expected: Town Meeting
+  source: rule
+  reason: names the Town Meeting
+- place: guilford
+  organization_label: Cemetery Commission Minutes 07.16.26
+  expected: Board of Cemetery Commissioners
+  source: rule
+  reason: names the Board of Cemetery Commissioners
+- place: guilford
+  organization_label: Auditors Meeting Minutes 08.12.26
+  expected: Town Auditors
+  source: rule
+  reason: names the Town Auditors
+- place: hyde_park_town
+  organization_label: 'Cemetery Commissioners: Please note that the Cemetery Commissioners work full time jobs outside of this volunteer position
+    and may not be available for an immediate response.'
+  expected: Board of Cemetery Commissioners
+  source: rule
+  reason: names the Board of Cemetery Commissioners
+- place: jay
+  organization_label: Jay Select Board Members
+  expected: Selectboard
+  source: rule
+  reason: names the Selectboard
+- place: ludlow_village
+  organization_label: VILLAGE BOARD OF TRUSTEES
+  expected: Board of Trustees
+  source: rule
+  reason: names the Board of Trustees
+- place: lunenburg
+  organization_label: Current Select Board
+  expected: Selectboard
+  source: rule
+  reason: names the Selectboard
+- place: lyndon
+  organization_label: Town of Lyndon Selectboard
+  expected: Selectboard
+  source: rule
+  reason: names the Selectboard
+- place: maidstone
+  organization_label: Selectboard Officials and Staff
+  expected: Selectboard
+  source: judgment
+  reason: the board with its staff; the board is the body
+- place: marshfield_town
+  organization_label: Members of the Selectboard are
+  expected: Selectboard
+  source: rule
+  reason: names the Selectboard
+- place: middlesex
+  organization_label: Middlesex Select Board
+  expected: Selectboard
+  source: rule
+  reason: names the Selectboard
+- place: montpelier
+  organization_label: Council Members
+  expected: Council
+  source: rule
+  reason: names the Council
+- place: morgan
+  organization_label: Selectboard Meetings start at 5:00 PM the 2nd and 4th Monday of each month.
+  expected: Selectboard
+  source: rule
+  reason: names the Selectboard
+- place: morgan
+  organization_label: Town School Moderator
+  expected: Town Meeting
+  source: rule
+  reason: names the Town Meeting
+- place: morgan
+  organization_label: Selectmen
+  expected: Selectboard
+  source: rule
+  reason: names the Selectboard
+- place: mount_holly
+  organization_label: Mount Holly Select Board
+  expected: Selectboard
+  source: rule
+  reason: names the Selectboard
+- place: north_bennington
+  organization_label: Meet the Board of Trustees
+  expected: Board of Trustees
+  source: rule
+  reason: names the Board of Trustees
+- place: north_troy
+  organization_label: Trustee Chair
+  expected: Board of Trustees
+  source: rule
+  reason: names the Board of Trustees
+- place: north_troy
+  organization_label: Trustees
+  expected: Board of Trustees
+  source: rule
+  reason: names the Board of Trustees
+- place: old_bennington
+  organization_label: Trustees and Officers
+  expected: Board of Trustees
+  source: rule
+  reason: names the Board of Trustees
+- place: orange
+  organization_label: Selectboard officers
+  expected: Selectboard
+  source: rule
+  reason: names the Selectboard
+- place: orwell
+  organization_label: The current members of the Orwell Select Board are
+  expected: Selectboard
+  source: rule
+  reason: names the Selectboard
+- place: panton
+  organization_label: Moderator (1-year term)
+  expected: Town Meeting
+  source: rule
+  reason: names the Town Meeting
+- place: panton
+  organization_label: Selectboard Member
+  expected: Selectboard
+  source: rule
+  reason: names the Selectboard
+- place: panton
+  organization_label: Selectboard Member-Chairperson
+  expected: Selectboard
+  source: rule
+  reason: names the Selectboard
+- place: pawlet
+  organization_label: Pawlet Board
+  expected: Selectboard
+  source: judgment
+  reason: the town's only board is the Selectboard; labels are Select Board
+- place: peacham
+  organization_label: Peacham Selectboard Members
+  expected: Selectboard
+  source: rule
+  reason: names the Selectboard
+- place: peru
+  organization_label: 'Select Board: 3-year term'
+  expected: Selectboard
+  source: rule
+  reason: names the Selectboard
+- place: poultney_town
+  organization_label: Chair of Selectboard
+  expected: Selectboard
+  source: rule
+  reason: names the Selectboard
+- place: poultney_town
+  organization_label: Selectboard Member, Vice Chair
+  expected: Selectboard
+  source: rule
+  reason: names the Selectboard
+- place: pownal
+  organization_label: Pownal Selectboard Members
+  expected: Selectboard
+  source: rule
+  reason: names the Selectboard
+- place: proctor
+  organization_label: Selectboard & Town Manager
+  expected: Selectboard
+  source: judgment
+  reason: names the board and a staff office; the board is the body
+- place: randolph
+  organization_label: Current Selectboard Members
+  expected: Selectboard
+  source: rule
+  reason: names the Selectboard
+- place: reading
+  organization_label: 'Selectboard               email: selectboard@readingvt.net'
+  expected: Selectboard
+  source: judgment
+  reason: names the Selectboard, then its email
+- place: richmond
+  organization_label: Water/Sewer Commission Members
+  expected: Water Commissioners
+  source: judgment
+  reason: Richmond's water and sewer commission is its water commissioners
+- place: rockingham
+  organization_label: Town of Rockingham Selectboard
+  expected: Selectboard
+  source: rule
+  reason: names the Selectboard
+- place: stamford
+  organization_label: The current Select Board members serving are
+  expected: Selectboard
+  source: rule
+  reason: names the Selectboard
+- place: stratton
+  organization_label: Selectboard — Town of Stratton, Vermont
+  expected: Selectboard
+  source: rule
+  reason: names the Selectboard
+- place: sutton
+  organization_label: Sutton Selectboard
+  expected: Selectboard
+  source: rule
+  reason: names the Selectboard
+- place: swanton_village
+  organization_label: Trustees Contact Info
+  expected: Board of Trustees
+  source: rule
+  reason: names the Board of Trustees
+- place: thetford
+  organization_label: The Selectboard is the town’s central governing body, charged with supervising municipal operations, managing infrastructure,
+    adopting local policies, overseeing finances, and appointing key officials, all within the authority granted by Vermont statutes.
+  expected: Selectboard
+  source: rule
+  reason: names the Selectboard
+- place: townshend
+  organization_label: Chair of Select Board
+  expected: Selectboard
+  source: rule
+  reason: names the Selectboard
+- place: townshend
+  organization_label: Vice Chair of Select Board
+  expected: Selectboard
+  source: rule
+  reason: names the Selectboard
+- place: townshend
+  organization_label: Select Board Clerk
+  expected: Selectboard
+  source: rule
+  reason: names the Selectboard
+- place: townshend
+  organization_label: Select Board Member
+  expected: Selectboard
+  source: rule
+  reason: names the Selectboard
+- place: vershire
+  organization_label: Vershire Selectboard
+  expected: Selectboard
+  source: rule
+  reason: names the Selectboard
+- place: waitsfield
+  organization_label: Waitsfield Selectboard
+  expected: Selectboard
+  source: rule
+  reason: names the Selectboard
+- place: waltham
+  organization_label: Effective May 2026, the Select Board meets the second Monday of each month at 6:00 pm at the Town Offices. Agendas are posted
+    on the website prior to the meeting and on the message board outside the town offices. Meetings are open to the public. However, for the months
+    of November and December 2026 as well as January 2027the meetings will be on the first Monday of the month- Monday, November 2, Monday, December
+    7, 2026 and Monday, January 7,2027.
+  expected: Selectboard
+  source: rule
+  reason: names the Selectboard
+- place: washington
+  organization_label: 'Selectboard: 2 and 3-year terms'
+  expected: Selectboard
+  source: rule
+  reason: names the Selectboard
+- place: wells_river
+  organization_label: Mary Schilke - Village Clerk, Treasurer and Tax Collector
+  expected: none
+  source: judgment
+  reason: a person and her offices
+- place: wells_river
+  organization_label: Trustees meet the 1st & 3rd Thursday at 4pm
+  expected: Board of Trustees
+  source: rule
+  reason: names the Board of Trustees
+- place: westmore
+  organization_label: WESTMORE SELECTBOARD
+  expected: Selectboard
+  source: rule
+  reason: names the Selectboard
+- place: weston
+  organization_label: Weston Town Moderator
+  expected: Town Meeting
+  source: rule
+  reason: names the Town Meeting
+- place: williamstown
+  organization_label: Town and School Meeting
+  expected: none
+  source: judgment
+  reason: names Town Meeting but lists the selectmen; a section heading, not their body
+- place: wilmington
+  organization_label: 2026 Wilmington Selectboard
+  expected: Selectboard
+  source: rule
+  reason: names the Selectboard
+- place: windham
+  organization_label: West Windham Cemetery Commission
+  expected: Board of Cemetery Commissioners
+  source: judgment
+  reason: a part of the town's own cemetery commission
+- place: woodford
+  organization_label: Assessor
+  expected: none
+  source: judgment
+  reason: an assessor is hired staff once a town votes listers out (17 V.S.A. § 2651c), not the Board of Listers
+- place: woodstock_town
+  organization_label: Town Selectboard & Village Trustees Members & Terms
+  expected: Selectboard
+  source: judgment
+  reason: names two governments; the town's body is the Selectboard
+- place: alburgh_town
+  organization_label: Alburgh Board of Civil Authority
+  expected: none
+  source: none
+  reason: not a body of the place
+- place: alburgh_town
+  organization_label: Alburgh Board of Abatement
+  expected: none
+  source: none
+  reason: not a body of the place
+- place: alburgh_town
+  organization_label: Road Commissioner
+  expected: none
+  source: none
+  reason: names no body of the place
+- place: arlington
+  organization_label: PLANNING COMMISSION (APPOINTED)
+  expected: none
+  source: none
+  reason: not a body of the place
+- place: athens
+  organization_label: Weather Emergency Committee
+  expected: none
+  source: none
+  reason: names no body of the place
+- place: athens
+  organization_label: Meetinghouse Committee
+  expected: none
+  source: none
+  reason: names no body of the place
+- place: athens
+  organization_label: Housing Rehabilitation Grant Committee
+  expected: none
+  source: none
+  reason: names no body of the place
+- place: athens
+  organization_label: Campbell Fund Trustees
+  expected: none
+  source: none
+  reason: not a body of the place
+- place: athens
+  organization_label: Community Center Advisory Committee
+  expected: none
+  source: none
+  reason: names no body of the place
+- place: athens
+  organization_label: Planning Commission
+  expected: none
+  source: none
+  reason: not a body of the place
+- place: bakersfield
+  organization_label: Town Officials & Commissions
+  expected: none
+  source: none
+  reason: names no body of the place
+- place: bellows_falls
+  organization_label: Saxtons River Village Trustees
+  expected: none
+  source: rule
+  reason: names another place
+- place: belvidere
+  organization_label: LNMUUSD Board Member,
+  expected: none
+  source: none
+  reason: names no body of the place
+- place: bolton
+  organization_label: Board Members
+  expected: none
+  source: none
+  reason: names no body of the place
+- place: burke
+  organization_label: Development Review Board
+  expected: none
+  source: none
+  reason: not a body of the place
+- place: burlington
+  organization_label: Subscribe to email updates from Mayor Emma Mulvaney-Stanak
+  expected: none
+  source: none
+  reason: names no body of the place
+- place: burlington
+  organization_label: Housing Board of Review
+  expected: none
+  source: none
+  reason: names no body of the place
+- place: cabot
+  organization_label: Willey Building Committee
+  expected: none
+  source: none
+  reason: names no body of the place
+- place: cabot
+  organization_label: Appointed by Selectboard
+  expected: none
+  source: none
+  reason: not a body of the place
+- place: calais
+  organization_label: Town Administrator, Treasurer, Road Commissioner
+  expected: none
+  source: none
+  reason: names no body of the place
+- place: cambridge_town
+  organization_label: Trustee of Public Money
+  expected: none
+  source: none
+  reason: names no body of the place
+- place: cambridge_town
+  organization_label: Finance Committee
+  expected: none
+  source: none
+  reason: names no body of the place
+- place: cambridge_town
+  organization_label: Community Equity Committee
+  expected: none
+  source: none
+  reason: names no body of the place
+- place: cambridge_town
+  organization_label: LVRT Regional Committee
+  expected: none
+  source: none
+  reason: not a body of the place
+- place: charleston
+  organization_label: Commissioners
+  expected: none
+  source: none
+  reason: names no body of the place
+- place: charlotte
+  organization_label: cemeterycommission@townofcharlotte.com
+  expected: none
+  source: none
+  reason: not a body of the place
+- place: charlotte
+  organization_label: Town & CVFRS Budgets
+  expected: none
+  source: none
+  reason: not a body of the place
+- place: chelsea
+  organization_label: Board/Committee Contact
+  expected: none
+  source: none
+  reason: names no body of the place
+- place: concord
+  organization_label: Committee Members
+  expected: none
+  source: none
+  reason: names no body of the place
+- place: corinth
+  organization_label: BOARD OF CIVIL AUTHORITY
+  expected: none
+  source: none
+  reason: not a body of the place
+- place: corinth
+  organization_label: CONSERVATION COMMISSION – 4 Years
+  expected: none
+  source: none
+  reason: not a body of the place
+- place: corinth
+  organization_label: EMERGENCY MANAGEMENT COMMITTEE – 1 Year; terms expire 2026
+  expected: none
+  source: none
+  reason: names no body of the place
+- place: corinth
+  organization_label: REVOLVING LOAN FUND COMMITTEE – 3 Years
+  expected: none
+  source: none
+  reason: names no body of the place
+- place: corinth
+  organization_label: ROAD COMMISSIONER – 3 Years
+  expected: none
+  source: none
+  reason: names no body of the place
+- place: corinth
+  organization_label: TRORC COMMISSIONER – 1 Year
+  expected: none
+  source: none
+  reason: names no body of the place
+- place: coventry
+  organization_label: Commission Members
+  expected: none
+  source: none
+  reason: names no body of the place
+- place: derby
+  organization_label: ELEMENTARY SCHOOL BOARD
+  expected: none
+  source: none
+  reason: not a body of the place
+- place: derby
+  organization_label: PARKS & RECREATION COMMITTEE
+  expected: none
+  source: none
+  reason: names no body of the place
+- place: duxbury
+  organization_label: Central Vermont Regional Planning Commission Representative
+  expected: none
+  source: none
+  reason: not a body of the place
+- place: granby
+  organization_label: Town Committees, Boards, and Elected Officials
+  expected: none
+  source: none
+  reason: names no body of the place
+- place: granville
+  organization_label: CLERK TO THE SELECTBOARD
+  expected: none
+  source: none
+  reason: not a body of the place
+- place: granville
+  organization_label: FLOOD PLAIN BOARD OF ADJUSTMENT
+  expected: none
+  source: none
+  reason: names no body of the place
+- place: jay
+  organization_label: Appointed & Elected Town Officials/ Boards/Committees
+  expected: none
+  source: none
+  reason: names no body of the place
+- place: lyndon
+  organization_label: Electric Commission Members
+  expected: none
+  source: none
+  reason: names no body of the place
+- place: manchester_village
+  organization_label: Design Advisory Committee (DAC)
+  expected: none
+  source: none
+  reason: names no body of the place
+- place: manchester_village
+  organization_label: Investment Committee (IC)
+  expected: none
+  source: none
+  reason: names no body of the place
+- place: manchester_village
+  organization_label: Tree Warden/Road Commissioner
+  expected: none
+  source: none
+  reason: names no body of the place
+- place: middlesex
+  organization_label: Town Meeting Solutions Committee
+  expected: none
+  source: none
+  reason: not a body of the place
+- place: middletown_springs
+  organization_label: Trustees Copeland Milk Fund
+  expected: none
+  source: none
+  reason: not a body of the place
+- place: morgan
+  organization_label: Community House Committee
+  expected: none
+  source: none
+  reason: names no body of the place
+- place: morgan
+  organization_label: Board of Adjustment
+  expected: none
+  source: none
+  reason: names no body of the place
+- place: newport_city
+  organization_label: 2026 Regular City Council Meeting Schedule
+  expected: none
+  source: none
+  reason: not a body of the place
+- place: orange
+  organization_label: APPOINTED BY THE SELECTBOARD
+  expected: none
+  source: none
+  reason: not a body of the place
+- place: orwell
+  organization_label: selectboard@townoforwellvt.org
+  expected: none
+  source: none
+  reason: not a body of the place
+- place: panton
+  organization_label: Addison Northwest School District Board Representative (3-year term)
+  expected: none
+  source: rule
+  reason: names another place
+- place: peru
+  organization_label: Planning Commission Members
+  expected: none
+  source: none
+  reason: not a body of the place
+- place: peru
+  organization_label: 'Road Commissioner: 1 year term'
+  expected: none
+  source: none
+  reason: names no body of the place
+- place: richmond
+  organization_label: Chittenden County Regional Planning Commission Board of Directors
+  expected: none
+  source: rule
+  reason: names another place
+- place: st_johnsbury
+  organization_label: Tax Stabilization/TIF Committee
+  expected: none
+  source: none
+  reason: names no body of the place
+- place: tunbridge
+  organization_label: Heating Fuel Assistance Committee
+  expected: none
+  source: none
+  reason: names no body of the place
+- place: tunbridge
+  organization_label: Town Forest Committee
+  expected: none
+  source: none
+  reason: names no body of the place
+- place: vernon
+  organization_label: APPOINTMENTS BY THE SELECTBOARD
+  expected: none
+  source: none
+  reason: not a body of the place
+- place: warren
+  organization_label: Staff & Board
+  expected: none
+  source: none
+  reason: names no body of the place
+- place: west_windsor
+  organization_label: lister@westwindsorvt.org
+  expected: none
+  source: none
+  reason: not a body of the place
+- place: wheelock
+  organization_label: MERP Committee
+  expected: none
+  source: none
+  reason: names no body of the place
+- place: whitingham
+  organization_label: Memorial Day Committee
+  expected: none
+  source: none
+  reason: names no body of the place
+- place: whitingham
+  organization_label: Parks Committee
+  expected: none
+  source: none
+  reason: names no body of the place
+- place: whitingham
+  organization_label: Zoning Board of Adjustment
+  expected: none
+  source: none
+  reason: not a body of the place
+- place: wilmington
+  organization_label: Ex-officio of Beautification Committee
+  expected: none
+  source: none
+  reason: names no body of the place
+- place: wilmington
+  organization_label: Representative to Trail Committee
+  expected: none
+  source: none
+  reason: not a body of the place
+- place: wilmington
+  organization_label: Representative to Bi-Town Economic Development Committee
+  expected: none
+  source: none
+  reason: not a body of the place
+- place: woodford
+  organization_label: MAUHS School Board Rep
+  expected: none
+  source: none
+  reason: not a body of the place
+- place: tunbridge
+  organization_label: Justices of the Peace
+  expected: none
+  source: none
+  reason: not a body of the place
+- place: chittenden
+  organization_label: Town Office
+  expected: none
+  source: none
+  reason: names no body of the place
+- place: washington
+  organization_label: voted from the floor at town meeting
+  expected: none
+  source: none
+  reason: names no body of the place
+- place: bellows_falls
+  organization_label: Jarrod James
+  expected: none
+  source: none
+  reason: names no body of the place
+- place: saxtons_river
+  organization_label: Contact Us
+  expected: none
+  source: none
+  reason: names no body of the place
+- place: barnard
+  organization_label: MEMBERSHIP
+  expected: none
+  source: none
+  reason: names no body of the place
+- place: dover
+  organization_label: Appointed Town Officers
+  expected: none
+  source: none
+  reason: names no body of the place
+- place: thetford
+  organization_label: 'Meeting ID: 883 5439 1166'
+  expected: none
+  source: none
+  reason: names no body of the place
+- place: east_montpelier
+  organization_label: 2014 Grand List
+  expected: none
+  source: none
+  reason: names no body of the place
+- place: williamstown
+  organization_label: Justice of the Peace (Term expires 1/31/27)
+  expected: none
+  source: none
+  reason: not a body of the place
+- place: newbury_town
+  organization_label: Staff Directory
+  expected: none
+  source: none
+  reason: names no body of the place
+- place: berkshire
+  organization_label: Fire Warden
+  expected: none
+  source: none
+  reason: names no body of the place
+- place: calais
+  organization_label: Delinquent Tax Collector
+  expected: none
+  source: none
+  reason: names no body of the place
+- place: tinmouth
+  organization_label: Martha Stanley
+  expected: none
+  source: none
+  reason: names no body of the place
+- place: grafton
+  organization_label: TRAVIS MANN
+  expected: none
+  source: none
+  reason: names no body of the place
+- place: goshen
+  organization_label: Treasurer
+  expected: none
+  source: none
+  reason: names no body of the place
+- place: leicester
+  organization_label: 17 V.S.A. § 2646(1)
+  expected: none
+  source: none
+  reason: names no body of the place
+- place: belvidere
+  organization_label: Town Clerk & Treasurer
+  expected: none
+  source: none
+  reason: names no body of the place
+- place: killington
+  organization_label: TOWN CLERK
+  expected: none
+  source: none
+  reason: names no body of the place
+- place: dover
+  organization_label: Town Offices
+  expected: none
+  source: none
+  reason: names no body of the place
+- place: belvidere
+  organization_label: Assistant Town Clerk & Treasure,
+  expected: none
+  source: none
+  reason: names no body of the place
+- place: burke
+  organization_label: Independent elected at General Election
+  expected: none
+  source: none
+  reason: names no body of the place
+- place: milton
+  organization_label: Contact Us
+  expected: none
+  source: none
+  reason: names no body of the place
+- place: sheldon
+  organization_label: Town Health Officer
+  expected: none
+  source: none
+  reason: names no body of the place
+- place: corinth
+  organization_label: TOWN TREASURER
+  expected: none
+  source: none
+  reason: names no body of the place
+- place: dover
+  organization_label: Position
+  expected: none
+  source: none
+  reason: names no body of the place
+- place: tinmouth
+  organization_label: Nelson Jaquay
+  expected: none
+  source: none
+  reason: names no body of the place
+- place: granby
+  organization_label: Chairman
+  expected: none
+  source: none
+  reason: names no body of the place
+- place: duxbury
+  organization_label: Mari Pratt, Vice Chair
+  expected: none
+  source: none
+  reason: names no body of the place
+- place: waterford
+  organization_label: Town Personnel
+  expected: none
+  source: none
+  reason: names no body of the place

@@ -9,6 +9,7 @@ from ..schemas import (
   PeopleCollectorStep,
 )
 from ..steps.step_04_process_page_content.organization_progress import is_done
+from runners.pipeline03_people_collector.constants import DATA_REQUIREMENT_TOLERANCE
 from shared.schemas import PipelineRunLimits
 from shared.utils import url_utils
 from shared.utils.statuses import PipelineIssueType
@@ -49,11 +50,6 @@ def next_process_content_state(
 def should_stop_for_cap(current_cost: Decimal, limits: PipelineRunLimits) -> bool:
     return current_cost >= limits.pipeline_run_cap_usd
 
-# `required_data` is the size of the roster we already hold, so it is an expectation, not a
-# fact — a council that lost a member leaves it permanently unreachable. Seattle, 2026-08-17:
-# 10 found against 11 expected, both target flags satisfied, and the run crawled to its page
-# cap for the missing one. Treated as a target to get close to rather than a wall.
-DATA_REQUIREMENT_TOLERANCE = 2
 
 
 def should_stop_for_data_requirement(progress: ProgressState) -> bool:

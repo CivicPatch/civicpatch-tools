@@ -1,0 +1,88 @@
+# The matcher's cases: the organization as a page writes it over the people it lists, and which
+# of the place's organizations it names, read by `test_organization_match.py`. `expected: none`
+# where the text is an office the default holds, a body the config does not list, or another
+# government's body. The default organization ("Town Officers", "Village Officers") is never a
+# candidate: a person under no matched text falls to the law's role, then the default. Texts
+# are written as the pages write them, misspellings included. Organizations carry their role
+# labels from open-data's Vermont forms, the vocabulary the match reads.
+places:
+  athens:
+    name: Athens town
+    organizations: &town_organizations
+      - {name: Selectboard, role_labels: [Select Board Member, Chair, Vice Chair]}
+      - {name: Town Meeting, role_labels: [Moderator]}
+      - {name: Board of Listers, role_labels: [Lister]}
+      - {name: Town Auditors, role_labels: [Auditor]}
+      - {name: Trustees of Public Funds, role_labels: [Trustee of Public Funds]}
+      - {name: Board of Cemetery Commissioners, role_labels: [Cemetery Commissioner]}
+      - {name: Water Commissioners, role_labels: [Water Commissioner]}
+      - {name: Advisory Budget Committee, role_labels: [Advisory Budget Committee Member]}
+      - {name: Board of Library Trustees, role_labels: [Library Trustee]}
+  sutton:
+    name: Sutton town
+    organizations: *town_organizations
+  whiting:
+    name: Whiting town
+    organizations: *town_organizations
+  bellows_falls:
+    name: Bellows Falls village
+    organizations:
+      - {name: Board of Trustees, role_labels: [Trustee, Village President]}
+  chester:
+    name: Chester town
+    organizations: *town_organizations
+cases:
+# Athens, officials page (bold labels in a table cell)
+- {place: athens, organization_label: "Selectboard", expected: Selectboard}
+- {place: athens, organization_label: "Listers", expected: Board of Listers}
+- {place: athens, organization_label: "Auditors", expected: Town Auditors}
+- {place: athens, organization_label: "Cemetery Commission", expected: Board of Cemetery Commissioners}
+- {place: athens, organization_label: "Budget Committee", expected: Advisory Budget Committee}
+- {place: athens, organization_label: "Campbell Fund Trustees", expected: none}
+- {place: athens, organization_label: "Justices of the Peace", expected: none}
+- {place: athens, organization_label: "Planning Commission", expected: none}
+- {place: athens, organization_label: "Housing Rehabilitation Grant Committee", expected: none}
+- {place: athens, organization_label: "Meetinghouse Committee", expected: none}
+- {place: athens, organization_label: "Weather Emergency Committee", expected: none}
+- {place: athens, organization_label: "Community Center Advisory Committee", expected: none}
+- {place: athens, organization_label: "Town Clerk & Treasurer", expected: none}
+- {place: athens, organization_label: "Moderator", expected: Town Meeting}
+# Sutton, government page
+- {place: sutton, organization_label: "Sutton Selectboard", expected: Selectboard}
+- {place: sutton, organization_label: "Other Elected Officials", expected: none}
+- {place: sutton, organization_label: "Water Commissioner", expected: Water Commissioners}
+- {place: sutton, organization_label: "Town Grand Juror", expected: none}
+- {place: sutton, organization_label: "Listers", expected: Board of Listers}
+- {place: sutton, organization_label: "Auditors", expected: Town Auditors}
+- {place: sutton, organization_label: "Collector of Delinquent Taxes", expected: none}
+- {place: sutton, organization_label: "First Constable", expected: none}
+# Whiting, one page per board (the page title is the heading)
+- {place: whiting, organization_label: "Select Board", expected: Selectboard}
+- {place: whiting, organization_label: "Lister Board", expected: Board of Listers}
+- {place: whiting, organization_label: "Auditors", expected: Town Auditors}
+- {place: whiting, organization_label: "Town Clerk & Treasurer", expected: none}
+- {place: whiting, organization_label: "Planning Commission", expected: none}
+- {place: whiting, organization_label: "Animal Control Officer", expected: none}
+- {place: whiting, organization_label: "Whiting Free Library", expected: Board of Library Trustees}  # "An elected board of trustees operates the Whiting Free Library"
+# Bellows Falls, the shared Rockingham site: the other village's and the town's bodies are none
+- {place: bellows_falls, organization_label: "Bellow Falls Village Trustees", expected: Board of Trustees}
+- {place: bellows_falls, organization_label: "Saxtons River Village Trustees", expected: none}
+- {place: bellows_falls, organization_label: "Saxtons River Village Officers", expected: none}
+- {place: bellows_falls, organization_label: "Town of Rockingham Selectboard", expected: none}
+- {place: bellows_falls, organization_label: "Planning Commission", expected: none}
+- {place: bellows_falls, organization_label: "Cemetery Committee", expected: none}
+- {place: bellows_falls, organization_label: "Lister's Office", expected: none}
+- {place: bellows_falls, organization_label: "Town Clerk", expected: none}
+- {place: bellows_falls, organization_label: "Tree Committee", expected: none}
+- {place: bellows_falls, organization_label: "Recreation Committee", expected: none}
+- {place: bellows_falls, organization_label: "Rockingham Energy Committee", expected: none}
+- {place: bellows_falls, organization_label: "Walk Bike Committee", expected: none}
+- {place: bellows_falls, organization_label: "Bellows Falls Opera House", expected: none}
+- {place: bellows_falls, organization_label: "Conservation Commission", expected: none}
+- {place: bellows_falls, organization_label: "Historic Preservation", expected: none}
+- {place: bellows_falls, organization_label: "Revolving Loan Fund", expected: none}
+# Chester: a library board written as the page does, and a staff office
+- {place: chester, organization_label: "Whiting Library", expected: Board of Library Trustees}  # heading "Whiting Library", then "Trustees:"; elected by Chester voters
+- {place: chester, organization_label: "Trustees of Public Funds", expected: Trustees of Public Funds}
+- {place: chester, organization_label: "Town Manager", expected: none}
+- {place: chester, organization_label: "Development Review Board", expected: none}

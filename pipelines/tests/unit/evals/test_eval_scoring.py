@@ -22,7 +22,12 @@ from scoring import (
     score_cases,
 )
 
+from shared.utils import name_utils
 from tests.factories.extracted_person import extracted_person_factory
+
+
+def _placed(people: list[tuple[str, str | None]]) -> dict[str, str | None]:
+    return {name_utils.name_grouping_key(name): organization for name, organization in people}
 
 pytestmark = pytest.mark.unit
 
@@ -242,9 +247,9 @@ def test_person_precision_counts_a_two_office_person_once():
 def test_a_pick_is_right_wrong_none_or_missing_against_the_gold():
 
     actual = [
-        SimpleNamespace(name="Ann Lee", organization="Council"),
-        SimpleNamespace(name="Bo Ray", organization="Office of the Mayor"),
-        SimpleNamespace(name="Cy Fox", organization="none"),
+        ("Ann Lee", "Council"),
+        ("Bo Ray", "Office of the Mayor"),
+        ("Cy Fox", None),
     ]
     expected = [
         {"name": "Ann Lee", "organization": "Council"},
@@ -254,12 +259,12 @@ def test_a_pick_is_right_wrong_none_or_missing_against_the_gold():
         {"name": "Ed Park"},
     ]
 
-    assert organization_counts(actual, expected) == {"right": 1, "wrong": 1, "none": 1, "missing": 1}
+    assert organization_counts(_placed(actual), expected) == {"right": 1, "wrong": 1, "none": 1, "missing": 1}
 
 
 def test_a_gold_listing_two_organizations_accepts_either():
 
-    actual = [SimpleNamespace(name="Sandra Staples", organization="Office of the Mayor")]
+    actual = [("Sandra Staples", "Office of the Mayor")]
     expected = [{"name": "Sandra Staples", "organization": ["Council", "Office of the Mayor"]}]
 
-    assert organization_counts(actual, expected)["right"] == 1
+    assert organization_counts(_placed(actual), expected)["right"] == 1

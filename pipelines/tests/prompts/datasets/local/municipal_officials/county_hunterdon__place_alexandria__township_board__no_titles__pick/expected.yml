@@ -1,8 +1,8 @@
 generated: true
 jurisdiction_ocdid: ocd-jurisdiction/country:us/state:nj/county:hunterdon/place:alexandria/government
 current_date: '2026-10-02'
-organization_choices:
-- Board
+organizations:
+- {name: Board, role_labels: [Supervisor, Clerk, Treasurer, Trustee]}
 people:
 - name: Jim Kiernan
   label: Mayor

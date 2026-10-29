@@ -6,6 +6,7 @@ from urllib.parse import urljoin
 
 import services.open_router.llm as open_router_llm
 import shared.utils.name_utils as name_utils
+from runners.pipeline03_people_collector.constants import CHUNK_OVERLAP_CHARS, DIVISION_REQUIREMENT_TOLERANCE, MINIMUM_NUM_PEOPLE, RELEVANCE_MAX_OUTPUT_TOKENS
 from runners.pipeline03_people_collector.schemas import (
     ExpectedMembership,
     Link,
@@ -63,12 +64,10 @@ from runners.pipeline03_people_collector.steps.step_04_process_page_content.page
     prompt_hash,
     relevance_prompt,
 )
-from runners.pipeline03_people_collector.steps.step_04_process_page_content.organization_pick import (
-    pick_choices,
-    pick_response_schema,
-    picked_name,
-    picked_organization_id,
-    picked_organization_ids,
+from runners.pipeline03_people_collector.steps.step_04_process_page_content.organization_match import (
+    matched_organization_ids,
+    organization_id_by_name,
+    placed_names,
 )
 from runners.pipeline03_people_collector.steps.step_04_process_page_content.unchanged_pages import (
     is_unchanged,
@@ -88,16 +87,12 @@ class ProcessingSetup:
     expected_memberships: List[ExpectedMembership]
 
 
-MINIMUM_NUM_PEOPLE = 5
-_CHUNK_OVERLAP_CHARS = 500
-# Above the longest finished relevance call seen (6,970); a runaway reasoning loop fails at half the time.
-RELEVANCE_MAX_OUTPUT_TOKENS = 8_192
 
 
 def _split_content_into_chunks(content: str, max_chars: int) -> list[str]:
     if len(content) <= max_chars:
         return [content]
-    return MarkdownSplitter(max_chars, overlap=_CHUNK_OVERLAP_CHARS).chunks(content)
+    return MarkdownSplitter(max_chars, overlap=CHUNK_OVERLAP_CHARS).chunks(content)
 
 
 async def _process_with_llm_in_chunks(
@@ -107,6 +102,8 @@ async def _process_with_llm_in_chunks(
     content: str,
     prompt: str,
     organizations: List[KnownOrganization],
+    place_name: str,
+    taxonomy: Taxonomy,
     seed: Optional[int],
     logger,
 ) -> List[PersonSourceRecord]:
@@ -125,6 +122,8 @@ async def _process_with_llm_in_chunks(
             chunk,
             prompt,
             organizations,
+            place_name,
+            taxonomy,
             seed=seed,
             chunk_index=index,
             chunk_count=len(chunks),
@@ -133,11 +132,6 @@ async def _process_with_llm_in_chunks(
     return all_found
 
 
-# Expected divisions come from the division_ocdids on the roster we already hold, so they have
-# the same staleness as required_data: a ward that was renamed, merged or dropped leaves a
-# target no scrape can reach. Floored at one so it stays a real signal — a jurisdiction with
-# divisions must still place somebody in one, it just need not place everybody.
-DIVISION_REQUIREMENT_TOLERANCE = 2
 
 
 def required_division_count(num_target_divisions: int) -> int:
@@ -250,7 +244,8 @@ async def process_page_content(
         return frontier, current_step
 
     if published:
-        extraction = source_page_extraction(published, current_step, identities)
+        known = await rematched_records(published.known_records, context, research.known_organizations)
+        extraction = source_page_extraction(published, known, current_step, identities)
     else:
         extraction = await collect_page_records(
             context,
@@ -444,18 +439,47 @@ class PageExtraction(BaseModel):
     organization_ids: List[str]
 
 
+async def rematched_records(
+    records: List[PersonSourceRecord], context: PeopleCollectorContext, organizations: List[KnownOrganization]
+) -> List[PersonSourceRecord]:
+    """A replayed page's records placed again by today's matcher, from the organization label each
+    kept; a record stored before labels were kept stays where it was placed."""
+    labelled = [record for record in records if record.organization_label]
+    if not labelled:
+        return list(records)
+    names = iter(
+        await placed_names(
+            [(record.organization_label, record.label) for record in labelled],
+            organizations,
+            build_taxonomy(context.data.role_config),
+            context.pipeline_run_id,
+            context.data.jurisdiction_ocdid,
+            context.data.config.name or "",
+        )
+    )
+    return [
+        record.model_copy(update={"organization_id": organization_id_by_name(next(names), organizations)})
+        if record.organization_label
+        else record
+        for record in records
+    ]
+
+
 def source_page_extraction(
-    source_page: PublishedSourcePage, current_step: ProcessPageContentStep, identities: Dict
+    source_page: PublishedSourcePage,
+    records: List[PersonSourceRecord],
+    current_step: ProcessPageContentStep,
+    identities: Dict,
 ) -> PageExtraction:
     """The records the page gave last time, merged exactly as fresh ones would be. A replay is
-    a full reading: without it the page's people would look absent and retire."""
+    a full reading: without it the page's people would look absent and retire. Re-matched records
+    say which bodies the page read, as a fresh read's do; unlabelled ones leave the stored list."""
+    rematched = any(record.organization_label for record in records)
     return PageExtraction(
-        records=merge_utils.group_people_by_name(
-            identities, current_step.records, list(source_page.known_records)
-        ),
+        records=merge_utils.group_people_by_name(identities, current_step.records, list(records)),
         heuristics_passed=True,
         heuristics_failures=[],
-        organization_ids=source_page.organization_ids,
+        organization_ids=matched_organization_ids(records) if rematched else source_page.organization_ids,
     )
 
 
@@ -488,7 +512,7 @@ async def collect_page_records(
         records=merge_utils.group_people_by_name(identities, current_step.records, found),
         heuristics_passed=True,
         heuristics_failures=failures,
-        organization_ids=picked_organization_ids(found),
+        organization_ids=matched_organization_ids(found),
     )
 
 
@@ -500,9 +524,10 @@ async def _extract_page(
     memberships: List[ExpectedMembership],
     logger,
 ) -> Tuple[Optional[List[PersonSourceRecord]], List[HeuristicsFailure]]:
-    """The page's records, each stamped with its picked organization, or None if they failed the
+    """The page's records, each stamped with its matched organization, or None if they failed the
     heuristics twice; and the reason each failed attempt gave."""
     prompt = page_extraction_prompt(organizations, memberships, context.data.jurisdiction_ocdid)
+    taxonomy = build_taxonomy(context.data.role_config)
     failures: List[HeuristicsFailure] = []
 
     for attempt in range(2):
@@ -515,6 +540,8 @@ async def _extract_page(
             content,
             prompt,
             organizations,
+            context.data.config.name or "",
+            taxonomy,
             seed,
             logger,
         )
@@ -545,6 +572,8 @@ async def process_with_llm(
     content: str,
     prompt: str,
     organizations: List[KnownOrganization],
+    place_name: str,
+    taxonomy: Taxonomy,
     seed: Optional[int] = None,
     chunk_index: Optional[int] = None,
     chunk_count: Optional[int] = None,
@@ -554,40 +583,45 @@ async def process_with_llm(
         jurisdiction_ocdid,
         prompt,
         prompt_name="elected_officials",
-        response_schema=pick_response_schema(pick_choices(organizations)),
+        response_schema=PeopleArrayLLMResponseSchema,
         content=content,
         seed=seed,
         source_url=source_url,
         chunk_index=chunk_index,
         chunk_count=chunk_count,
     )
-
+    people = cast(PeopleArrayLLMResponseSchema, response).people
+    names = await placed_names(
+        [(person.organization_label, person.label) for person in people],
+        organizations,
+        taxonomy,
+        pipeline_run_id,
+        jurisdiction_ocdid,
+        place_name,
+    )
     records = [
-        _source_record(person, source_url, organizations)
-        for person in cast(PeopleArrayLLMResponseSchema, response).people
+        _source_record(person, source_url, organization_id_by_name(name, organizations))
+        for person, name in zip(people, names)
     ]
     return [record for record in records if record is not None]
 
 
-def _source_record(
-    person: ExtractedPersonRecord, source_url: str, organizations: List[KnownOrganization]
-) -> PersonSourceRecord | None:
-    """One extracted person as the record cp.org receives; None for a nameless one."""
+def _source_record(person: ExtractedPersonRecord, source_url: str, organization_id: str | None) -> PersonSourceRecord | None:
+    """One extracted person as the record cp.org receives; None for a nameless one. Every field
+    the model gave passes through, so a field added later reaches cp.org without a line here."""
     name = name_utils.reorder_name_if_inverted(person.name)
     if not name.strip():
         return None
-    return PersonSourceRecord(
-        name=name,
-        label=person.label,
-        phone=person.phone,
-        email=person.email,
-        # A model sometimes shortens a link it was given in full to its path.
-        url=url_utils.format_url(urljoin(source_url, person.url)) if person.url else None,
-        start_date=person.start_date,
-        end_date=person.end_date,
-        image=_downloaded_image(person.image),
-        source_url=source_url,
-        organization_id=picked_organization_id(picked_name(person), organizations),
+    return PersonSourceRecord.model_validate(
+        {
+            **person.model_dump(),
+            "name": name,
+            # A model sometimes shortens a link it was given in full to its path.
+            "url": url_utils.format_url(urljoin(source_url, person.url)) if person.url else None,
+            "image": _downloaded_image(person.image),
+            "source_url": source_url,
+            "organization_id": organization_id,
+        }
     )
 
 

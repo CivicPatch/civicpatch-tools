@@ -81,12 +81,12 @@ def test_the_prompt_lists_known_roles_and_divisions_and_the_forms_usual_roles():
     assert "Roles" not in neither
 
 
-def test_the_organizations_to_pick_from_are_listed_with_none():
+def test_the_organization_is_copied_as_written_with_ours_listed_for_reference():
     prompt = _prompt(organization_choices=["Selectboard", "Board of Listers"])
 
-    assert "chosen from this list only" in prompt
+    assert "copied exactly as the\n      page writes it" in prompt
     assert '- "Selectboard"' in prompt and '- "Board of Listers"' in prompt
-    assert '"none" when the person holds no post in any body on the list' in prompt
+    assert "chosen from this list only" not in prompt
 
 
 def test_with_nothing_to_pick_from_the_prompt_asks_for_no_organization():

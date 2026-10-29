@@ -1,0 +1,185 @@
+jurisdiction_ocdid: ocd-jurisdiction/country:us/state:vt/place:athens/government
+current_date: '2026-10-28'
+organizations:
+- {name: Advisory Budget Committee, role_labels: [Advisory Budget Committee Member]}
+- {name: Board of Cemetery Commissioners, role_labels: [Cemetery Commissioner]}
+- {name: Board of Library Trustees, role_labels: [Library Trustee]}
+- {name: Board of Listers, role_labels: [Lister]}
+- {name: Selectboard, role_labels: [Select Board Member, Chair, Vice Chair]}
+- {name: Town Auditors, role_labels: [Auditor]}
+- {name: Town Meeting, role_labels: [Moderator, Town Meeting Member]}
+- {name: Trustees of Public Funds, role_labels: [Trustee of Public Funds]}
+- {name: Water Commissioners, role_labels: [Water Commissioner]}
+known_roles:
+- Select Board Member
+- Town Clerk
+- Member
+government_form_role_labels:
+- Chair
+- Vice Chair
+- Moderator
+- Town Treasurer
+- First Constable
+- Second Constable
+- Collector of Delinquent Taxes
+- Trustee of Public Money
+- Road Commissioner
+- Patrol Officer
+- Town Manager
+- Lister
+- Auditor
+- Trustee of Public Funds
+- Cemetery Commissioner
+- Water Commissioner
+- Advisory Budget Committee Member
+- Library Trustee
+people:
+- name: David Bemis
+  label: Selectboard
+  phone: 869-3268
+  email: null
+  url: null
+  start_date: null
+  end_date: null
+  image: null
+  organization: Selectboard
+- name: Denise Randall
+  label: Selectboard
+  phone: null
+  email: null
+  url: null
+  start_date: null
+  end_date: null
+  image: null
+  organization: Selectboard
+- name: Janet Perry
+  label: Selectboard
+  phone: null
+  email: null
+  url: null
+  start_date: null
+  end_date: null
+  image: null
+  organization: Selectboard
+- name: Krista Gay
+  label: Selectboard
+  phone: null
+  email: null
+  url: null
+  start_date: null
+  end_date: null
+  image: null
+  organization: Selectboard
+- name: Danny Taylor
+  label: Selectboard
+  phone: null
+  email: null
+  url: null
+  start_date: null
+  end_date: null
+  image: null
+  organization: Selectboard
+- name: Amber Stevens
+  label: Town Clerk & Treasurer
+  phone: (802) 869-3370
+  email: listers@athensvt.gov
+  url: null
+  start_date: null
+  end_date: null
+  image: null
+  organization: none
+- name: Hannah Regier
+  label: Delinquent Tax Collector
+  phone: null
+  email: null
+  url: null
+  start_date: null
+  end_date: null
+  image: null
+  organization: none
+- name: Carol Bingham
+  label: Lister
+  phone: null
+  email: null
+  url: null
+  start_date: null
+  end_date: null
+  image: null
+  organization: Board of Listers
+- name: Mike Bates
+  label: Auditor
+  phone: null
+  email: null
+  url: null
+  start_date: null
+  end_date: null
+  image: null
+  organization: Town Auditors
+- name: Jimmy Trimble
+  label: Auditor
+  phone: null
+  email: null
+  url: null
+  start_date: null
+  end_date: null
+  image: null
+  organization: Town Auditors
+- name: Amanda Alsvig
+  label: Auditor
+  phone: null
+  email: null
+  url: null
+  start_date: null
+  end_date: null
+  image: null
+  organization: Town Auditors
+- name: Harold Noyes
+  label: Cemetery Commissioner
+  phone: null
+  email: null
+  url: null
+  start_date: null
+  end_date: null
+  image: null
+  organization: Board of Cemetery Commissioners
+- name: Steve Oakes
+  label: Cemetery Commissioner
+  phone: null
+  email: null
+  url: null
+  start_date: null
+  end_date: null
+  image: null
+  organization: Board of Cemetery Commissioners
+- name: Don Capponcelli
+  label: Cemetery Commissioner
+  phone: null
+  email: null
+  url: null
+  start_date: null
+  end_date: null
+  image: null
+  organization: Board of Cemetery Commissioners
+- name: James Neathawk
+  label: Cemetery Commissioner
+  phone: null
+  email: null
+  url: null
+  start_date: null
+  end_date: null
+  image: null
+  organization: Board of Cemetery Commissioners
+thought: 'Plan D4b (2026-10-28): Athens lists every board on one page as a bold label followed by
+  names. The case the prod run (changeset 10151361) got wrong: "Campbell Fund Trustees: Carol
+  Bingham, Morgan Wilbur, Krista Gay" is a fund''s own trustees, not one of Athens''s
+  organizations, and Morgan Wilbur was placed in Trustees of Public Funds. Morgan Wilbur is
+  not in this gold: no listed title, no listed organization. Carol Bingham and Krista Gay are
+  in through their listed posts only. "Budget Committee" (appointed, four names, all already
+  in) is Athens''s Advisory Budget Committee; no separate record arises because the gold holds
+  one entry per person, as the pick schema returns one organization per person per page:
+  David Bemis is also Moderator, Cemetery Commissioner and a Justice of the Peace, and keeps
+  his Selectboard record. Out as unlisted: Justices of the Peace, Town Grand Juror, Housing
+  Rehabilitation Grant Committee, Weather Emergency and Meetinghouse Committees, Planning
+  Commission, Tree Warden, Fence Viewers, Health Officer; the Assistant Town Clerk is staff.
+  The lists approximate the run''s (known_roles from the October posts); the page is the
+  run''s own preprocessed.md from the debug bucket, 2026-10-28.'
