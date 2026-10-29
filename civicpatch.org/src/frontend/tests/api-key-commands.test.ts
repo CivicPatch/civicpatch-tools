@@ -23,10 +23,26 @@ describe("api key commands", () => {
     }
   });
 
-  it("names the variable, not the key, for every agent that has a shell or editor", () => {
-    for (const setup of agentSetups(ORIGIN, KEY).filter((candidate) => candidate.agent !== "Claude.ai")) {
-      expect(textOf(setup)).not.toContain(KEY);
+  it("puts the key only in the shell profile line and Claude.ai's header box", () => {
+    const keyHolders = new Set(["Shell profile", "Request header value"]);
+    for (const setup of agentSetups(ORIGIN, KEY)) {
+      for (const field of setup.fields.filter((candidate) => !keyHolders.has(candidate.label))) {
+        expect(field.value).not.toContain(KEY);
+      }
     }
+    expect(setupFor("Claude Code").fields[0]).toEqual({ label: "Shell profile", value: exportLine(KEY) });
+  });
+
+  it("without a key, shows where one goes instead of filling it in", () => {
+    const setups = agentSetups(ORIGIN, null);
+
+    expect(setups.flatMap((setup) => setup.fields.map((field) => field.label))).not.toContain("Shell profile");
+    expect(setups.find((setup) => setup.agent === "Claude Code")?.where).toContain("create one above");
+    expect(setups.find((setup) => setup.agent === "Claude.ai")?.fields.map((field) => field.label)).toEqual([
+      "Name",
+      "URL",
+      "Request header name",
+    ]);
   });
 
   it("uses each agent's own syntax for the key", () => {
@@ -46,7 +62,12 @@ describe("api key commands", () => {
     });
   });
 
-  it("gives ChatGPT the same /mcp every agent uses", () => {
+  it("lists ChatGPT first, with the same /mcp, its steps and no key", () => {
+    const [first] = agentSetups(ORIGIN, KEY);
+
     expect(mcpUrl(ORIGIN)).toBe("https://civicpatch.org/mcp");
+    expect(first.agent).toBe("ChatGPT");
+    expect(first.fields).toEqual([{ label: "Server URL", value: "https://civicpatch.org/mcp" }]);
+    expect(first.steps.length).toBeGreaterThan(0);
   });
 });

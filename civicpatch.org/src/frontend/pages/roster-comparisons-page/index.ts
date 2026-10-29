@@ -30,7 +30,7 @@ function runRow(run: RosterComparisonListItem) {
 
 function runsTable(page: RosterComparisonListPage, onPage: (page: number) => void) {
   if (!page.data.length) {
-    return html`<p class="rc-note">No comparisons yet. An agent starts one by uploading a roster; see "Connect your agent" on Settings → API keys.</p>`;
+    return html`<p class="rc-note">No comparisons yet. An agent starts one by uploading a roster; see "Connect an app" on Settings → API keys.</p>`;
   }
   return html`<div class="rc-scroll">
       <table class="rc-table rc-table--runs">

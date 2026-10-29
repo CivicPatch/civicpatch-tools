@@ -17,6 +17,23 @@ _DRAFT_COLUMNS = """
     id::text AS id, row_count AS rows,
     to_char((created_at + %(lifetime)s) AT TIME ZONE 'UTC', 'YYYY-MM-DD"T"HH24:MI:SS') || '+00:00' AS expires_at
 """
+# The draft's rows minus exact copies of the batch's, so a retried batch replaces itself; one file
+# row split into two people shares a source_row, so matching on source_row alone would drop one.
+_EXISTING_ROWS_NOT_IN_BATCH = """
+    (
+        SELECT coalesce(
+            jsonb_agg(existing.value ORDER BY existing.position),
+            '[]'::jsonb
+        )
+        FROM jsonb_array_elements(roster_comparison_drafts.rows)
+            WITH ORDINALITY AS existing(value, position)
+        WHERE NOT EXISTS (
+            SELECT 1
+            FROM jsonb_array_elements(%(rows)s::jsonb) AS incoming(value)
+            WHERE incoming.value = existing.value
+        )
+    )
+"""
 
 
 async def insert_roster_comparison_draft(owner_user_id: str, header: RosterComparisonHeader) -> RosterComparisonDraft:
@@ -48,16 +65,22 @@ async def insert_roster_comparison_draft(owner_user_id: str, header: RosterCompa
 async def append_roster_comparison_draft_rows(
     draft_id: str, owner_user_id: str, rows: list[UploadedRow], max_rows: int
 ) -> RosterComparisonDraft | None:
-    """None when the draft is missing, expired, someone else's, or the rows would pass `max_rows`."""
+    """A row identical to one the draft already has replaces it. None when the draft is missing,
+    expired, someone else's, or the rows would pass `max_rows`."""
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor(row_factory=dict_row) as cur:
         await cur.execute(
             f"""
             UPDATE roster_comparison_drafts
-            SET rows = rows || %(rows)s::jsonb, row_count = row_count + %(added)s
-            WHERE id = %(id)s AND owner_user_id = %(owner)s
+
+            SET rows = {_EXISTING_ROWS_NOT_IN_BATCH} || %(rows)s::jsonb,
+                row_count = jsonb_array_length({_EXISTING_ROWS_NOT_IN_BATCH}) + %(added)s
+
+            WHERE id = %(id)s
+              AND owner_user_id = %(owner)s
               AND created_at > now() - %(lifetime)s
-              AND row_count + %(added)s <= %(max_rows)s
+              AND jsonb_array_length({_EXISTING_ROWS_NOT_IN_BATCH}) + %(added)s <= %(max_rows)s
+
             RETURNING {_DRAFT_COLUMNS}
             """,
             {

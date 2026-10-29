@@ -6,6 +6,8 @@
  * And a jurisdiction opens into its people, with their warnings
  * And a field's one-side-has-more count lists the people behind it, values tinted by side
  * And an outcome's count in the people bar lists those people across the state
+ * And unticking an organization moves its civicpatch-only people out of the counts
+ * And the state's jurisdictions not in the uploaded data open into a list
  * And a row's uploaded values open on keyboard focus, not only on hover
  *
  * Nothing is stubbed: the seeded run is answered by the real endpoints, so a change to the
@@ -56,6 +58,46 @@ test.describe("Roster comparison page", () => {
     const list = page.locator(".rc-field-list");
     await expect(list).toContainText("Only in civicpatch, across the state");
     await expect(list.getByRole("row").filter({ hasText: "Maria Ortiz" })).toBeVisible();
+  });
+
+  test("unticking an organization counts its civicpatch-only people apart", async ({ maintainerPage: page }) => {
+    await page.goto(PAGE);
+    const council = page.getByRole("checkbox", { name: /Town Council/ });
+    const library = page.getByRole("checkbox", { name: /Library Board/ });
+    await expect(council).toBeChecked();
+    await expect(library).toBeChecked();
+    await expect(page.locator(".rc-organization").filter({ hasText: "Town Council" })).toContainText(
+      "1 matched of 2, in 1 jurisdiction",
+    );
+
+    await council.uncheck();
+
+    await expect(page.locator(".rc-legend")).toContainText("Only in civicpatch 0");
+    await expect(page.getByText("Not counted: 1 more of civicpatch's people")).toBeVisible();
+    await expect(page.locator(".rc-legend")).toContainText("Matched 1");
+  });
+
+  test("with every organization deselected, only the list is left", async ({ maintainerPage: page }) => {
+    await page.goto(PAGE);
+
+    await page.getByRole("button", { name: "Deselect all", exact: true }).click();
+
+    await expect(page.getByRole("checkbox", { name: /Town Council/ })).not.toBeChecked();
+    await expect(page.locator(".rc-legend")).toHaveCount(0);
+    await expect(page.locator(".rc-jurisdiction")).toHaveCount(0);
+
+    await page.getByRole("button", { name: "Select all", exact: true }).click();
+
+    await expect(page.locator(".rc-legend")).toContainText("Only in civicpatch 1");
+  });
+
+  test("the state's jurisdictions not in the uploaded data open into a list", async ({ maintainerPage: page }) => {
+    await page.goto(PAGE);
+    const notCompared = page.locator(".rc-not-compared");
+
+    await notCompared.locator("summary").click();
+
+    await expect(notCompared.locator(".rc-not-compared__list li").first()).toBeVisible();
   });
 
   test("a row's uploaded values open on keyboard focus", async ({ maintainerPage: page }) => {

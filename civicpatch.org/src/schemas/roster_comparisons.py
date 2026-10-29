@@ -188,6 +188,10 @@ class PersonComparison(BaseModel):
         default_factory=list,
         description="civicpatch's post role of each open membership, by name; the role field's other civicpatch values are member roles.",
     )
+    organizations: list[str] = Field(
+        default_factory=list,
+        description="The organizations of civicpatch's person (each open membership's), by name.",
+    )
 
 
 class OutcomeCounts(BaseModel):
@@ -195,6 +199,10 @@ class OutcomeCounts(BaseModel):
     possible_match: int = 0
     only_in_uploaded_data: int = 0
     only_in_civicpatch: int = 0
+    only_in_civicpatch_not_compared: int = Field(
+        default=0,
+        description="Only in civicpatch, in none of the compared organizations: left out of only_in_civicpatch.",
+    )
 
 
 class FieldCounts(BaseModel):
@@ -211,6 +219,10 @@ class FieldCounts(BaseModel):
 class ComparisonRates(BaseModel):
     outcomes: OutcomeCounts = Field(default_factory=OutcomeCounts)
     fields: dict[ComparedField, FieldCounts] = Field(default_factory=dict)
+    people_with_conflicts: int = Field(
+        default=0,
+        description="Matched people with a conflict in at least one field, each counted once; the fields' conflict counts overlap.",
+    )
     rows_with_warnings: int = 0
 
 
@@ -287,10 +299,33 @@ class RosterComparisonCreated(BaseModel):
     rates: ComparisonRates
 
 
+class RunOrganization(BaseModel):
+    """One organization of civicpatch's people in a run, by name across its jurisdictions."""
+
+    name: str
+    jurisdictions: int
+    matched: int = Field(description="Matched people with a membership in it.")
+    civicpatch_people: int = Field(description="civicpatch's people in it: matched and only in civicpatch.")
+
+
+class RunJurisdiction(BaseModel):
+    """A jurisdiction of the run's state, by name; its counts are in the run's summary."""
+
+    jurisdiction_ocdid: str
+    name: str
+    compared: bool = Field(description="Whether the uploaded data has rows for it; without any, it is not compared.")
+
+
 class RosterComparisonSummary(BaseModel):
     run: RosterComparisonRun
     page_url: str
     jurisdictions: list[JurisdictionRates] = Field(description="Most unmatched first.")
+    organizations: list[RunOrganization] = Field(
+        description="Most matched first. Empty for a run saved before organizations were kept."
+    )
+    compared_organizations: list[str] = Field(
+        description="The organizations these counts compare: the ones asked for, else every one with a match."
+    )
 
 
 class FieldFilter(StrEnum):
@@ -319,6 +354,9 @@ class RunPeopleQuery(PeopleFilter):
 
     page: int = Field(1, ge=1)
     per_page: int = Field(50, ge=1, le=200)
+    organizations: list[str] | None = Field(
+        None, description="The organizations to compare; left out, every one with a match."
+    )
 
 
 class RunPerson(BaseModel):
@@ -360,3 +398,7 @@ class SummaryResponse(BaseModel):
 
 class PeopleResponse(BaseModel):
     data: list[PersonComparison]
+
+
+class RunJurisdictionsResponse(BaseModel):
+    data: list[RunJurisdiction]

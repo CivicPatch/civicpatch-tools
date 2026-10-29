@@ -145,15 +145,17 @@ def test_a_run_comes_back_with_its_page_and_jurisdictions():
         run=_run(),
         page_url=_PAGE,
         jurisdictions=[JurisdictionRates(jurisdiction_ocdid=_BARRE, rates=ComparisonRates())],
+        organizations=[],
+        compared_organizations=[],
     )
     with _service("get_run_summary", return_value=summary) as get_summary:
-        response = _client().get(f"{_PREFIX}/{_RUN_ID}")
+        response = _client().get(f"{_PREFIX}/{_RUN_ID}?organizations=Selectboard&organizations=Board+of+Listers")
 
     assert response.status_code == 200
     data = response.json()["data"]
     assert (data["run"]["id"], data["page_url"]) == (_RUN_ID, _PAGE)
     assert [j["jurisdiction_ocdid"] for j in data["jurisdictions"]] == [_BARRE]
-    get_summary.assert_awaited_once_with(_RUN_ID)
+    get_summary.assert_awaited_once_with(_RUN_ID, ["Selectboard", "Board of Listers"])
 
 
 @pytest.mark.unit
@@ -180,7 +182,7 @@ def test_a_fields_people_are_paged_through_the_service():
     assert response.status_code == 200
     assert (response.json()["total_items"], response.json()["total_pages"]) == (120, 3)
     get_page.assert_awaited_once_with(
-        _RUN_ID, PeopleFilter(field=ComparedField.EMAILS, level=FieldFilter.CONFLICT), 2, 50
+        _RUN_ID, PeopleFilter(field=ComparedField.EMAILS, level=FieldFilter.CONFLICT), None, 2, 50
     )
 
 
@@ -188,10 +190,12 @@ def test_a_fields_people_are_paged_through_the_service():
 def test_an_outcomes_people_are_paged_through_the_service():
     page = RunPeoplePage(total_items=61, page=1, total_pages=2, data=[])
     with _service("get_run_people_page", return_value=page) as get_page:
-        response = _client().get(f"{_PREFIX}/{_RUN_ID}/people?outcome=only_in_uploaded_data")
+        response = _client().get(f"{_PREFIX}/{_RUN_ID}/people?outcome=only_in_uploaded_data&organizations=Selectboard")
 
     assert response.status_code == 200
-    get_page.assert_awaited_once_with(_RUN_ID, PeopleFilter(outcome=PersonOutcome.ONLY_IN_UPLOADED_DATA), 1, 50)
+    get_page.assert_awaited_once_with(
+        _RUN_ID, PeopleFilter(outcome=PersonOutcome.ONLY_IN_UPLOADED_DATA), ["Selectboard"], 1, 50
+    )
 
 
 @pytest.mark.unit

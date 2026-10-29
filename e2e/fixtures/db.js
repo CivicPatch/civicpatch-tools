@@ -1180,6 +1180,7 @@ const _rosterComparisonPeople = [
     outcome: "matched", uploaded: _uploadedRow(2, "Jane Doe", { emails: ["jane@e2e.gov"] }),
     person_id: JANE_PERSON_ID, person_name: "Jane Doe", candidates: [], warnings: [],
     fields: { emails: { level: "civicpatch_has_more", uploaded: ["jane@e2e.gov"], civicpatch: ["jane@e2e.gov", "clerk@e2e.gov"] } },
+    organizations: ["Town Council", "Library Board"],
   },
   {
     outcome: "possible_match", uploaded: _uploadedRow(3, "Bob Smith"), person_id: null, person_name: null,
@@ -1192,7 +1193,7 @@ const _rosterComparisonPeople = [
   },
   {
     outcome: "only_in_civicpatch", uploaded: null, person_id: null, person_name: "Maria Ortiz",
-    candidates: [], fields: {}, warnings: [],
+    candidates: [], fields: {}, warnings: [], organizations: ["Town Council"],
   },
 ];
 
@@ -1200,7 +1201,7 @@ async function seedRosterComparison(client) {
   await client.query(
     `INSERT INTO roster_comparison_runs
        (id, state, started_by_user_id, source_columns, corrections, rates, jurisdictions_not_named)
-     SELECT $1, 'nj', id, $2, $3, $4, 0 FROM users WHERE provider = $5 AND provider_user_id = $6
+     SELECT $1, 'nj', id, $2, $3, $4, 1 FROM users WHERE provider = $5 AND provider_user_id = $6
      ON CONFLICT (id) DO NOTHING`,
     [
       ROSTER_COMPARISON_RUN_ID,

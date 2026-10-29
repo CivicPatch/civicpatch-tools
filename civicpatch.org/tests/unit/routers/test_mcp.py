@@ -63,6 +63,7 @@ async def test_the_server_lists_its_read_tools_and_names_itself_in_the_instructi
         "list_roster_comparisons",
         "get_roster_comparison",
         "get_roster_comparison_jurisdiction",
+        "list_roster_comparison_jurisdictions",
         "get_roster_comparison_people",
         "start_roster_comparison",
         "add_roster_comparison_rows",
@@ -78,11 +79,17 @@ async def test_the_server_lists_its_read_tools_and_names_itself_in_the_instructi
 @pytest.mark.asyncio
 @pytest.mark.unit
 async def test_a_runs_summary_is_the_routes_summary():
-    summary = RosterComparisonSummary(run=_run(), page_url=f"{_INSTANCE}/roster-comparisons/{_RUN_ID}", jurisdictions=[])
+    summary = RosterComparisonSummary(
+        run=_run(),
+        page_url=f"{_INSTANCE}/roster-comparisons/{_RUN_ID}",
+        jurisdictions=[],
+        organizations=[],
+        compared_organizations=[],
+    )
     with patch.object(mcp_router.roster_comparisons, "get_run_summary", AsyncMock(return_value=summary)) as get:
-        result = await mcp_router.get_roster_comparison(_RUN_ID)
+        result = await mcp_router.get_roster_comparison(_RUN_ID, ["Selectboard"])
 
-    get.assert_awaited_once_with(_RUN_ID)
+    get.assert_awaited_once_with(_RUN_ID, ["Selectboard"])
     assert result == summary.model_dump(mode="json")
 
 
@@ -189,7 +196,7 @@ async def test_the_people_tool_keeps_page_and_size_in_range():
         )
 
     people_filter = PeopleFilter(field=ComparedField.EMAILS, level=FieldFilter.CONFLICT)
-    get.assert_awaited_once_with(_RUN_ID, people_filter, 1, mcp_router.PEOPLE_PAGE_LIMIT)
+    get.assert_awaited_once_with(_RUN_ID, people_filter, None, 1, mcp_router.PEOPLE_PAGE_LIMIT)
 
 
 @pytest.mark.asyncio
@@ -199,7 +206,7 @@ async def test_the_people_tool_lists_one_outcome():
     with patch.object(mcp_router.roster_comparisons, "get_run_people_page", AsyncMock(return_value=page)) as get:
         await mcp_router.get_roster_comparison_people(_RUN_ID, outcome=PersonOutcome.ONLY_IN_UPLOADED_DATA)
 
-    get.assert_awaited_once_with(_RUN_ID, PeopleFilter(outcome=PersonOutcome.ONLY_IN_UPLOADED_DATA), 1, 50)
+    get.assert_awaited_once_with(_RUN_ID, PeopleFilter(outcome=PersonOutcome.ONLY_IN_UPLOADED_DATA), None, 1, 50)
 
 
 @pytest.mark.asyncio

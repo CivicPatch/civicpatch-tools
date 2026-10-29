@@ -35,6 +35,13 @@
 
 /* API keys */
 
+/* One gap between its sections, whether a section or <connected-apps> wrapping one */
+api-keys {
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+}
+
 .api-keys {
   border: 1px solid var(--border);
   margin: 0;
@@ -136,10 +143,6 @@
 
 .api-key__suffix {
   font-family: var(--font-mono);
-}
-
-.api-keys + .api-keys {
-  margin-top: 1.4rem;
 }
 
 .api-key__actions {

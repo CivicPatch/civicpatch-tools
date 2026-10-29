@@ -111,6 +111,45 @@
     color: var(--text-secondary);
 }
 
+/* Jurisdictions not compared */
+.rc-not-compared summary {
+    cursor: pointer;
+}
+
+.rc-not-compared__list {
+    columns: 12rem;
+    margin: 0.5rem 0 0;
+    padding: 0;
+    list-style: none;
+}
+
+.rc-not-compared__list li {
+    list-style: none;
+}
+
+/* Organizations */
+.rc-organizations__actions {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+}
+
+.rc-organizations {
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+    margin: 0;
+    padding: 0;
+    border: none;
+}
+
+.rc-organization {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.5rem;
+}
+
 /* Tables */
 .rc-scroll {
     max-width: 100%;

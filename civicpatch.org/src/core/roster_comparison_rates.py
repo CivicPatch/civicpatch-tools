@@ -14,6 +14,7 @@ from schemas.roster_comparisons import (
     OutcomeCounts,
     PersonComparison,
     PersonOutcome,
+    RunOrganization,
 )
 
 ONE_SIDE_HAS_MORE = frozenset(
@@ -35,6 +36,7 @@ def rates(people: list[PersonComparison]) -> ComparisonRates:
             field: _field_counts([person.fields[field] for person in matched if field in person.fields])
             for field in ComparedField
         },
+        people_with_conflicts=sum(1 for person in matched if _has_conflict(person)),
         rows_with_warnings=sum(1 for person in people if person.warnings),
     )
 
@@ -49,8 +51,27 @@ def total(parts: list[ComparisonRates]) -> ComparisonRates:
             )
             for field in ComparedField
         },
+        people_with_conflicts=sum(part.people_with_conflicts for part in parts),
         rows_with_warnings=sum(part.rows_with_warnings for part in parts),
     )
+
+
+def compared_organizations(asked: list[str] | None, organizations: list[RunOrganization]) -> list[str]:
+    """The ones asked for, else every organization the uploaded data matched someone in: one it covers."""
+    if asked is not None:
+        return asked
+    return [organization.name for organization in organizations if organization.matched]
+
+
+def with_not_compared(counts: ComparisonRates, not_compared: int) -> ComparisonRates:
+    """Moves `not_compared` of the civicpatch-only people out of the score; no other count changes."""
+    outcomes = counts.outcomes.model_copy(
+        update={
+            "only_in_civicpatch": counts.outcomes.only_in_civicpatch - not_compared,
+            "only_in_civicpatch_not_compared": not_compared,
+        }
+    )
+    return counts.model_copy(update={"outcomes": outcomes})
 
 
 def worst_first(jurisdictions: list[JurisdictionRates]) -> list[JurisdictionRates]:
@@ -63,6 +84,10 @@ def worst_first(jurisdictions: list[JurisdictionRates]) -> list[JurisdictionRate
 
 def _unmatched(outcomes: OutcomeCounts) -> int:
     return outcomes.possible_match + outcomes.only_in_uploaded_data + outcomes.only_in_civicpatch
+
+
+def _has_conflict(person: PersonComparison) -> bool:
+    return any(field.level is FieldLevel.DIFFERS for field in person.fields.values())
 
 
 def _field_counts(comparisons: list[FieldComparison]) -> FieldCounts:

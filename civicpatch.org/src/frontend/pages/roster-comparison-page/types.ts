@@ -60,9 +60,10 @@ export interface PersonComparison {
   fields: Partial<Record<ComparedField, FieldComparison>>;
   warnings: RowWarning[];
   post_roles: string[];
+  organizations: string[];
 }
 
-export type OutcomeCounts = Record<Outcome, number>;
+export type OutcomeCounts = Record<Outcome, number> & { only_in_civicpatch_not_compared: number };
 
 /** A field's conflict or one-side-has-more count, clicked on the page. */
 export interface FieldSelection {
@@ -100,6 +101,7 @@ export interface FieldCounts {
 export interface ComparisonRates {
   outcomes: OutcomeCounts;
   fields: Partial<Record<ComparedField, FieldCounts>>;
+  people_with_conflicts: number;
   rows_with_warnings: number;
 }
 
@@ -119,10 +121,25 @@ export interface JurisdictionRates {
   rates: ComparisonRates;
 }
 
+export interface RunJurisdiction {
+  jurisdiction_ocdid: string;
+  name: string;
+  compared: boolean;
+}
+
+export interface RunOrganization {
+  name: string;
+  jurisdictions: number;
+  matched: number;
+  civicpatch_people: number;
+}
+
 export interface RosterComparisonSummary {
   run: RosterComparisonRun;
   page_url: string;
   jurisdictions: JurisdictionRates[];
+  organizations: RunOrganization[];
+  compared_organizations: string[];
 }
 
 export interface RosterComparisonListItem {

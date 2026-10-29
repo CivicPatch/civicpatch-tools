@@ -1,7 +1,8 @@
 import pytest
 
-from core.roster_comparison_rates import rates, total
+from core.roster_comparison_rates import compared_organizations, rates, total
 from schemas.roster_comparisons import (
+    RunOrganization,
     ComparedField,
     FieldComparison,
     FieldLevel,
@@ -41,6 +42,7 @@ def test_rates_count_outcomes_and_grade_fields_over_matched_people():
 
     assert barre.outcomes.model_dump() == {
         "matched": 3, "possible_match": 0, "only_in_uploaded_data": 0, "only_in_civicpatch": 1,
+        "only_in_civicpatch_not_compared": 0,
     }
     emails = barre.fields[ComparedField.EMAILS]
     assert (emails.agreement, emails.one_side_has_more, emails.conflict) == (2, 1, 1)
@@ -57,6 +59,33 @@ def test_a_state_total_adds_its_jurisdictions():
     emails = state.fields[ComparedField.EMAILS]
     assert (emails.agreement, emails.conflict) == (2, 1)
     assert (emails.uploaded_data_has_it, emails.civicpatch_has_it) == (4, 3)
+
+
+@pytest.mark.unit
+def test_a_person_conflicting_in_two_fields_is_one_person_with_conflicts():
+    differs = FieldComparison(level=FieldLevel.DIFFERS, uploaded=["x"], civicpatch=["y"])
+    both = PersonComparison(
+        outcome=PersonOutcome.MATCHED, fields={ComparedField.EMAILS: differs, ComparedField.PHONES: differs}
+    )
+
+    counted = total([rates([both]), rates(BARRE)])
+
+    assert counted.fields[ComparedField.EMAILS].conflict + counted.fields[ComparedField.PHONES].conflict == 3
+    assert counted.people_with_conflicts == 2
+
+
+@pytest.mark.unit
+@pytest.mark.parametrize(
+    ("asked", "compared"),
+    [(None, ["Selectboard"]), (["Board of Listers"], ["Board of Listers"])],
+)
+def test_the_compared_organizations_are_the_asked_else_the_matched(asked, compared):
+    organizations = [
+        RunOrganization(name="Selectboard", jurisdictions=2, matched=5, civicpatch_people=9),
+        RunOrganization(name="Board of Listers", jurisdictions=2, matched=0, civicpatch_people=6),
+    ]
+
+    assert compared_organizations(asked, organizations) == compared
 
 
 @pytest.mark.unit

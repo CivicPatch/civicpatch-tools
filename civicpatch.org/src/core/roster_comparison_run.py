@@ -8,6 +8,7 @@ from core.roster_comparison import compare_people
 from core.roster_comparison_rates import rates, total
 from schemas.roster_comparisons import (
     JurisdictionComparison,
+    PersonComparison,
     RejectedReason,
     RejectedRow,
     RosterComparison,
@@ -21,12 +22,13 @@ def build_comparison(
     state_ocdids: set[str],
     rosters: dict[str, list[Person]],
     taxonomy: Taxonomy,
+    organization_names: dict[str, str],
 ) -> RosterComparison:
     """Every row names one of `state_ocdids` (checked before, `rejected_rows`); `rosters` holds the
     people with an open membership in those the upload names."""
     rows_by_ocdid = _rows_by_ocdid(upload.rows)
     jurisdictions = [
-        _jurisdiction(ocdid, rows, rosters.get(ocdid, []), taxonomy)
+        _jurisdiction(ocdid, rows, rosters.get(ocdid, []), taxonomy, organization_names)
         for ocdid, rows in rows_by_ocdid.items()
     ]
     return RosterComparison(
@@ -47,10 +49,34 @@ def _rows_by_ocdid(rows: list[UploadedRow]) -> dict[str, list[UploadedRow]]:
 
 
 def _jurisdiction(
-    ocdid: str, rows: list[UploadedRow], roster: list[Person], taxonomy: Taxonomy
+    ocdid: str,
+    rows: list[UploadedRow],
+    roster: list[Person],
+    taxonomy: Taxonomy,
+    organization_names: dict[str, str],
 ) -> JurisdictionComparison:
-    people = compare_people(rows, roster, taxonomy)
+    people = _with_organizations(compare_people(rows, roster, taxonomy), roster, organization_names)
     return JurisdictionComparison(jurisdiction_ocdid=ocdid, rates=rates(people), people=people)
+
+
+def _with_organizations(
+    people: list[PersonComparison], roster: list[Person], organization_names: dict[str, str]
+) -> list[PersonComparison]:
+    """Each compared civicpatch person's organizations, by name."""
+    roster_by_id = {person.id: person for person in roster}
+    return [
+        comparison.model_copy(
+            update={"organizations": _organizations(roster_by_id[comparison.person_id], organization_names)}
+        )
+        if comparison.person_id in roster_by_id
+        else comparison
+        for comparison in people
+    ]
+
+
+def _organizations(person: Person, organization_names: dict[str, str]) -> list[str]:
+    ids = [membership.organization_id for membership in person.memberships]
+    return list(dict.fromkeys(organization_names[id_] for id_ in ids if id_ in organization_names))
 
 
 def rejected_rows(rows: list[UploadedRow], state_ocdids: set[str], state: str) -> list[RejectedRow]:

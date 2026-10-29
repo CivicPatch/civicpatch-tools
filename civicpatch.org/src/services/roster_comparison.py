@@ -7,13 +7,15 @@ from shared.schemas import Person, RoleConfig
 from shared.utils.taxonomy import build_taxonomy
 
 from core.roster_comparison_run import build_comparison, rejected_rows
+import database.organizations as organizations_db
+from database.database import get_pool
 from database.jurisdictions import get_state_jurisdiction_sets
 from database.people import get_rosters_by_jurisdiction
 from database.roles import get_roles
 import database.roster_comparisons as database
 import environment
 from core.page_urls import roster_comparison_page_url
-from core.roster_comparison_rates import LEVELS_BY_FILTER, worst_first
+from core.roster_comparison_rates import LEVELS_BY_FILTER, compared_organizations, with_not_compared, worst_first
 from schemas.pagination import paginated_response, pagination_offset
 from schemas.roster_comparisons import (
     PeopleFilter,
@@ -25,6 +27,7 @@ from schemas.roster_comparisons import (
     RosterComparisonRun,
     RosterComparisonSummary,
     RosterComparisonUpload,
+    RunJurisdiction,
     RunPeoplePage,
     UploadedRow,
 )
@@ -71,9 +74,27 @@ async def run_roster_comparison(upload: RosterComparisonUpload, started_by_user_
         for ocdid, people in (await get_rosters_by_jurisdiction(named)).items()
     }
     taxonomy = build_taxonomy(RoleConfig(roles=await get_roles()))
+    organization_names = await _organization_names(rosters)
     # Name matching is CPU work: off the event loop, so other requests keep moving.
-    comparison = await asyncio.to_thread(build_comparison, upload, state_ocdids, rosters, taxonomy)
+    comparison = await asyncio.to_thread(
+        build_comparison, upload, state_ocdids, rosters, taxonomy, organization_names
+    )
     return await database.insert_roster_comparison(started_by_user_id, comparison)
+
+
+async def _organization_names(rosters: dict[str, list[Person]]) -> dict[str, str]:
+    ids = sorted(
+        {
+            membership.organization_id
+            for people in rosters.values()
+            for person in people
+            for membership in person.memberships
+            if membership.organization_id
+        }
+    )
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        return await organizations_db.names(cur, ids)
 
 
 class RunNotFound(LookupError):
@@ -82,8 +103,9 @@ class RunNotFound(LookupError):
 
 
 async def get_run_created(run_id: str) -> RosterComparisonCreated:
-    run = await _run(run_id)
-    return RosterComparisonCreated(id=run_id, page_url=_page_url(run_id), rates=run.rates)
+    """The rates as the summary counts them by default, so the agent's first report matches the page."""
+    summary = await get_run_summary(run_id, None)
+    return RosterComparisonCreated(id=run_id, page_url=summary.page_url, rates=summary.run.rates)
 
 
 async def list_runs(page: int, per_page: int) -> RosterComparisonListPage:
@@ -92,24 +114,58 @@ async def list_runs(page: int, per_page: int) -> RosterComparisonListPage:
     return RosterComparisonListPage.model_validate(paginated_response(total, page, per_page, items))
 
 
-async def get_run_summary(run_id: str) -> RosterComparisonSummary:
+async def get_run_summary(run_id: str, organizations: list[str] | None) -> RosterComparisonSummary:
     run = await _run(run_id)
-    jurisdictions = await database.get_roster_comparison_jurisdictions(run_id)
-    return RosterComparisonSummary(run=run, page_url=_page_url(run_id), jurisdictions=worst_first(jurisdictions))
+    run_organizations = await database.get_roster_comparison_organizations(run_id)
+    compared = compared_organizations(organizations, run_organizations)
+    not_compared = await database.count_roster_comparison_not_compared(run_id, compared)
+    jurisdictions = [
+        jurisdiction.model_copy(
+            update={"rates": with_not_compared(jurisdiction.rates, not_compared.get(jurisdiction.jurisdiction_ocdid, 0))}
+        )
+        for jurisdiction in await database.get_roster_comparison_jurisdictions(run_id)
+    ]
+    return RosterComparisonSummary(
+        run=run.model_copy(update={"rates": with_not_compared(run.rates, sum(not_compared.values()))}),
+        page_url=_page_url(run_id),
+        jurisdictions=worst_first(jurisdictions),
+        organizations=run_organizations,
+        compared_organizations=compared,
+    )
 
 
-async def get_run_people(run_id: str, jurisdiction_ocdid: str) -> list[PersonComparison]:
+async def get_run_jurisdictions(run_id: str, compared: bool | None) -> list[RunJurisdiction]:
+    run = await _run(run_id)
+    return await database.get_roster_comparison_run_jurisdictions(run_id, run.state, compared)
+
+
+async def get_run_people(
+    run_id: str, jurisdiction_ocdid: str, organizations: list[str] | None
+) -> list[PersonComparison]:
     await _run(run_id)
-    return await database.get_roster_comparison_people(run_id, jurisdiction_ocdid)
+    compared = await _compared(run_id, organizations)
+    return await database.get_roster_comparison_people(run_id, jurisdiction_ocdid, compared)
 
 
-async def get_run_people_page(run_id: str, people_filter: PeopleFilter, page: int, per_page: int) -> RunPeoplePage:
+async def get_run_people_page(
+    run_id: str, people_filter: PeopleFilter, organizations: list[str] | None, page: int, per_page: int
+) -> RunPeoplePage:
     await _run(run_id)
     levels = LEVELS_BY_FILTER[people_filter.level] if people_filter.level else []
     total, people = await database.get_roster_comparison_people_page(
-        run_id, people_filter.outcome, people_filter.field, levels, per_page, pagination_offset(page, per_page)
+        run_id,
+        people_filter.outcome,
+        people_filter.field,
+        levels,
+        await _compared(run_id, organizations),
+        per_page,
+        pagination_offset(page, per_page),
     )
     return RunPeoplePage.model_validate(paginated_response(total, page, per_page, people))
+
+
+async def _compared(run_id: str, organizations: list[str] | None) -> list[str]:
+    return compared_organizations(organizations, await database.get_roster_comparison_organizations(run_id))
 
 
 async def _run(run_id: str) -> RosterComparisonRun:
