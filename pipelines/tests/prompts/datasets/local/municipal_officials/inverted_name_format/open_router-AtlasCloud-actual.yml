@@ -1,6 +1,7 @@
 people:
 - name: Kincannon, Laurie
   label: Mayor
+  organization_label: null
   phone: (979) 235-9434
   email: mayor@westcolumbiatx.org
   url: null
@@ -9,6 +10,7 @@ people:
   image: null
 - name: Burke, Rory
   label: Councilman Pos. 4
+  organization_label: null
   phone: (979) 344-0262
   email: councilpos4@westcolumbiatx.org
   url: null
@@ -17,6 +19,7 @@ people:
   image: null
 - name: Thomas, Robert
   label: Councilman Pos. 1
+  organization_label: null
   phone: (832) 573-2611
   email: rlt2644@yahoo.com
   url: null
@@ -25,6 +28,7 @@ people:
   image: null
 - name: Carreon, Daniel
   label: Council Position 2
+  organization_label: null
   phone: null
   email: councilpos2@westcolumbiatx.org
   url: null
@@ -33,6 +37,7 @@ people:
   image: null
 - name: Gilbert, Chris
   label: Councilman Pos. 3
+  organization_label: null
   phone: null
   email: councilpos3@westcolumbiatx.org
   url: null
@@ -41,6 +46,7 @@ people:
   image: null
 - name: Buchanan, Lauren
   label: Council Pos. 5
+  organization_label: null
   phone: (979) 635-1658
   email: councilpos5@westcolumbiatx.org
   url: null

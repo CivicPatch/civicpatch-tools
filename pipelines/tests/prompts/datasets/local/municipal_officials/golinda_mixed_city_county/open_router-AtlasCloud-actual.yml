@@ -1,6 +1,7 @@
 people:
 - name: Joyce Farar
   label: Mayor
+  organization_label: null
   phone: (254) 881-7333
   email: cityofgolinda@gmail.com
   url: https://www.cityofgolinda.com/city-county-officials
@@ -9,6 +10,7 @@ people:
   image: null
 - name: Bobby Farney
   label: Mayor Pro Tem
+  organization_label: null
   phone: (254) 881-7333
   email: cityofgolinda@gmail.com
   url: https://www.cityofgolinda.com/city-county-officials
@@ -17,6 +19,7 @@ people:
   image: null
 - name: Wanda Ray
   label: Council
+  organization_label: null
   phone: (254) 881-7333
   email: cityofgolinda@gmail.com
   url: https://www.cityofgolinda.com/city-county-officials
@@ -25,6 +28,7 @@ people:
   image: null
 - name: Michael Reed
   label: Council
+  organization_label: null
   phone: (254) 881-7333
   email: cityofgolinda@gmail.com
   url: https://www.cityofgolinda.com/city-county-officials
@@ -33,6 +37,7 @@ people:
   image: null
 - name: Joe M Farney
   label: Council
+  organization_label: null
   phone: (254) 881-7333
   email: cityofgolinda@gmail.com
   url: https://www.cityofgolinda.com/city-county-officials
@@ -41,6 +46,7 @@ people:
   image: null
 - name: Billy Elkins
   label: Council
+  organization_label: null
   phone: (254) 881-7333
   email: cityofgolinda@gmail.com
   url: https://www.cityofgolinda.com/city-county-officials

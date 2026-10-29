@@ -4,7 +4,7 @@ people:
   organization_label: Bellow Falls Village Trustees
   phone: (802) 246-7286
   email: wendylevy@rockbf.org
-  url: null
+  url: https://www.rockinghamvt.org/staff
   start_date: null
   end_date: 2027-05
   image: null
@@ -13,7 +13,7 @@ people:
   organization_label: Bellow Falls Village Trustees
   phone: (802) 376-4702
   email: wmasure@rockbf.org
-  url: null
+  url: https://www.rockinghamvt.org/staff
   start_date: null
   end_date: 2028-05
   image: null
@@ -22,7 +22,7 @@ people:
   organization_label: Bellow Falls Village Trustees
   phone: null
   email: tpichette@rockbf.org
-  url: null
+  url: https://www.rockinghamvt.org/staff
   start_date: null
   end_date: 2028-05
   image: null
@@ -31,7 +31,7 @@ people:
   organization_label: Bellow Falls Village Trustees
   phone: (802) 579-2599
   email: ssnow@rockbf.org
-  url: null
+  url: https://www.rockinghamvt.org/staff
   start_date: null
   end_date: 2027-05
   image: null
@@ -40,25 +40,25 @@ people:
   organization_label: Bellow Falls Village Trustees
   phone: null
   email: jeffdunbar@rockbf.org
-  url: null
+  url: https://www.rockinghamvt.org/staff
   start_date: null
   end_date: 2027-05
   image: null
 - name: Ellen Clark-Lawrence
-  label: Trustee Chair
+  label: Chair
   organization_label: Saxtons River Village Trustees
   phone: null
   email: chairsrvillage@gmail.com
-  url: null
+  url: https://www.rockinghamvt.org/staff
   start_date: null
   end_date: '2028'
   image: null
 - name: Laura Wolfe
-  label: Trustee Vice Chair
+  label: Vice Chair
   organization_label: Saxtons River Village Trustees
   phone: null
   email: LauraSRV@vermontel.net
-  url: null
+  url: https://www.rockinghamvt.org/staff
   start_date: null
   end_date: '2027'
   image: null
@@ -67,7 +67,7 @@ people:
   organization_label: Saxtons River Village Trustees
   phone: null
   email: kristensrv@vermontel.net
-  url: null
+  url: https://www.rockinghamvt.org/staff
   start_date: null
   end_date: '2028'
   image: null
@@ -76,16 +76,16 @@ people:
   organization_label: Saxtons River Village Trustees
   phone: null
   email: AndrewSRV@vermontel.net
-  url: null
+  url: https://www.rockinghamvt.org/staff
   start_date: null
   end_date: '2027'
   image: null
 - name: Dave Moore
-  label: Collector of Taxes
+  label: Collector of Delinquent Taxes
   organization_label: Saxtons River Village Officers
   phone: null
   email: null
-  url: null
+  url: https://www.rockinghamvt.org/staff
   start_date: null
   end_date: '2027'
   image: null
@@ -94,61 +94,52 @@ people:
   organization_label: Saxtons River Village Officers
   phone: null
   email: clerksrv@vermontel.net
-  url: null
+  url: https://www.rockinghamvt.org/staff
   start_date: null
   end_date: null
   image: null
 - name: Rick Cowan
-  label: Selectboard Chair Cambridgeport
+  label: Chair
   organization_label: Town of Rockingham Selectboard
   phone: (802) 376-6218
   email: rickcowan@rockbf.org
-  url: null
+  url: https://www.rockinghamvt.org/staff
   start_date: null
   end_date: 2027-03
   image: null
 - name: Amy Howlett
-  label: Selectboard Vice Chair Saxtons River
+  label: Vice Chair
   organization_label: Town of Rockingham Selectboard
   phone: null
   email: amyhowlett@rockbf.org
-  url: null
+  url: https://www.rockinghamvt.org/staff
   start_date: null
   end_date: 2029-03
   image: null
 - name: John Dunbar
-  label: Selectboard Saxtons River
+  label: Selectboard Member
   organization_label: Town of Rockingham Selectboard
   phone: null
   email: johndunbar@rockbf.org
-  url: null
+  url: https://www.rockinghamvt.org/staff
   start_date: null
   end_date: 2028-03
   image: null
 - name: Bonnie North
-  label: Selectboard Bellows Falls
+  label: Selectboard Member
   organization_label: Town of Rockingham Selectboard
   phone: null
   email: bonnienorth@rockbf.org
-  url: null
+  url: https://www.rockinghamvt.org/staff
   start_date: null
   end_date: 2027-03
   image: null
 - name: Dalila Hall
-  label: Selectboard Bellows Falls
+  label: Selectboard Member
   organization_label: Town of Rockingham Selectboard
   phone: null
   email: DalilaHall@rockbf.org
-  url: null
+  url: https://www.rockinghamvt.org/staff
   start_date: null
   end_date: 2027-03
-  image: null
-- name: Kathleen Kelly
-  label: Town Clerk
-  organization_label: Town Clerk
-  phone: (802) 463-4336 x1102
-  email: clerk@rockbf.org
-  url: null
-  start_date: null
-  end_date: null
   image: null

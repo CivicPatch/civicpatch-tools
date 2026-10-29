@@ -1,82 +1,73 @@
 people:
 - name: Edward G. Campbell, III
   label: Mayor
+  organization_label: Borough Council
   phone: 856-783-6655
   email: mayor@gibbsborotownhall.com
   url: https://gibbsborotownhall.com/borough-council/
   start_date: null
   end_date: null
   image: null
-  organization: Council
 - name: Brandon Boots
   label: Councilman
+  organization_label: Borough Council
   phone: null
   email: boots@gibbsborotownhall.com
   url: https://gibbsborotownhall.com/borough-council/
   start_date: null
   end_date: null
   image: null
-  organization: Council
-- name: Marianne Colavita
+- name: Mitch Brown
   label: Councilman
+  organization_label: Borough Council
   phone: null
   email: brown@gibbsborotownhall.com
   url: https://gibbsborotownhall.com/borough-council/
   start_date: null
   end_date: null
   image: null
-  organization: Council
-- name: Mitch Brown
-  label: Councilman
-  phone: null
-  email: colavita@gibbsborotownhall.com
-  url: https://gibbsborotownhall.com/borough-council/
-  start_date: null
-  end_date: null
-  image: null
-  organization: Council
 - name: Marianne Colavita
   label: Councilman
+  organization_label: Borough Council
   phone: null
   email: colavita@gibbsborotownhall.com
   url: https://gibbsborotownhall.com/borough-council/
   start_date: null
   end_date: null
   image: null
-  organization: Council
 - name: Beth Schmidt
   label: Councilwoman
+  organization_label: Borough Council
   phone: null
   email: schmidt@gibbsborotownhall.com
   url: https://gibbsborotownhall.com/borough-council/
   start_date: null
   end_date: null
   image: null
-  organization: Council
 - name: Glenn Werner
   label: Councilman
+  organization_label: Borough Council
   phone: null
   email: werner@gibbsborotownhall.com
   url: https://gibbsborotownhall.com/borough-council/
   start_date: null
   end_date: null
   image: null
-  organization: Council
 - name: John Ritz
   label: Councilman
+  organization_label: Borough Council
   phone: null
   email: ritz@gibbsborotownhall.com
   url: https://gibbsborotownhall.com/borough-council/
   start_date: null
   end_date: null
   image: null
-  organization: Council
 - name: Andrew Parsinitz
   label: Councilman
+  organization_label: Borough Council
   phone: null
   email: parsinitz@gibbsborotownhall.com
   url: https://gibbsborotownhall.com/borough-council/
   start_date: null
   end_date: null
   image: null
-  organization: Council

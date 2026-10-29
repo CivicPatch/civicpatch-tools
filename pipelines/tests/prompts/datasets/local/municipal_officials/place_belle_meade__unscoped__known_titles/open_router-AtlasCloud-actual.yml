@@ -1,6 +1,7 @@
 people:
 - name: Rusty Moore
   label: Mayor
+  organization_label: null
   phone: 615-297-6041
   email: rmoore@citybellemeade.org
   url: https://citybellemeade.org/person/rusty-moore/
@@ -9,6 +10,7 @@ people:
   image: local://5750533ab677.png
 - name: Haley Dale
   label: Vice-Mayor
+  organization_label: null
   phone: 615-297-6041
   email: hdale@citybellemeade.org
   url: https://citybellemeade.org/person/commissioner-2/
@@ -17,6 +19,7 @@ people:
   image: local://641567e24b2f.png
 - name: Louise Bryan
   label: Commissioner
+  organization_label: null
   phone: 615-297-6041
   email: lbryan@citybellemeade.org
   url: https://citybellemeade.org/person/louise-bryan/
@@ -25,6 +28,7 @@ people:
   image: local://9f01ba26a40c.png
 - name: Tom Starkey
   label: Commissioner
+  organization_label: null
   phone: 615-297-6041
   email: tstarkey@citybellemeade.org
   url: https://citybellemeade.org/person/tom-starkey/
@@ -33,6 +37,7 @@ people:
   image: local://35c620d76e35.png
 - name: Neal Clayton
   label: Commissioner
+  organization_label: null
   phone: 615-297-6041
   email: nclayton@citybellemeade.org
   url: https://citybellemeade.org/person/commissioner/

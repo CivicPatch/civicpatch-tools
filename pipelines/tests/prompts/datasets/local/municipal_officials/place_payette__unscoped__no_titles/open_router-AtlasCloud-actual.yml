@@ -1,57 +1,64 @@
 people:
 - name: Lori Steiniker
   label: Council Member
+  organization_label: null
   phone: null
   email: lsteiniker@cityofpayette.com
-  url: https://cityofpayette.com/index.asp?SEC=3E868623-D11C-4F30-A389-C51A121FB9A7&Type=B_BASIC
+  url: //cityofpayette.com/index.asp?SEC=3E868623-D11C-4F30-A389-C51A121FB9A7&Type=B_BASIC
   start_date: null
   end_date: '2027'
   image: null
 - name: Mike Kee
   label: Council Member
+  organization_label: null
   phone: null
   email: mkee@cityofpayette.com
-  url: https://cityofpayette.com/index.asp?SEC=3E868623-D11C-4F30-A389-C51A121FB9A7&Type=B_BASIC
+  url: //cityofpayette.com/index.asp?SEC=3E868623-D11C-4F30-A389-C51A121FB9A7&Type=B_BASIC
   start_date: null
   end_date: '2027'
   image: null
 - name: Denise McGill
   label: Council Member
+  organization_label: null
   phone: null
   email: dmcgill@cityofpayette.com
-  url: https://cityofpayette.com/index.asp?SEC=3E868623-D11C-4F30-A389-C51A121FB9A7&Type=B_BASIC
+  url: //cityofpayette.com/index.asp?SEC=3E868623-D11C-4F30-A389-C51A121FB9A7&Type=B_BASIC
   start_date: null
   end_date: '2029'
   image: null
 - name: Jody Henderson
   label: Council Member
+  organization_label: null
   phone: null
   email: jhenderson@cityofpayette.com
-  url: https://cityofpayette.com/index.asp?SEC=3E868623-D11C-4F30-A389-C51A121FB9A7&Type=B_BASIC
+  url: //cityofpayette.com/index.asp?SEC=3E868623-D11C-4F30-A389-C51A121FB9A7&Type=B_BASIC
   start_date: null
   end_date: '2027'
   image: null
 - name: Kathy Patrick
   label: Council Member
+  organization_label: null
   phone: null
   email: kpatrick@cityofpayette.com
-  url: https://cityofpayette.com/index.asp?SEC=3E868623-D11C-4F30-A389-C51A121FB9A7&Type=B_BASIC
+  url: //cityofpayette.com/index.asp?SEC=3E868623-D11C-4F30-A389-C51A121FB9A7&Type=B_BASIC
   start_date: null
   end_date: '2029'
   image: null
 - name: Jim Franklin
   label: Council Member
+  organization_label: null
   phone: null
   email: jfranklin@cityofpayette.com
-  url: https://cityofpayette.com/index.asp?SEC=3E868623-D11C-4F30-A389-C51A121FB9A7&Type=B_BASIC
+  url: //cityofpayette.com/index.asp?SEC=3E868623-D11C-4F30-A389-C51A121FB9A7&Type=B_BASIC
   start_date: null
   end_date: '2029'
   image: null
 - name: Ray Wickersham
-  label: Council Member and Mayor
+  label: Mayor
+  organization_label: null
   phone: null
   email: ray@wickersham.us
-  url: https://cityofpayette.com/index.asp?SEC=3E868623-D11C-4F30-A389-C51A121FB9A7&Type=B_BASIC
+  url: //cityofpayette.com/index.asp?SEC=3E868623-D11C-4F30-A389-C51A121FB9A7&Type=B_BASIC
   start_date: null
   end_date: '2029'
   image: null
