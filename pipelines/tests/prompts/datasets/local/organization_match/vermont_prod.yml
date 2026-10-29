@@ -1265,9 +1265,9 @@ cases:
   reason: names no body of the place
 - place: granville
   organization_label: CLERK TO THE SELECTBOARD
-  expected: none
-  source: none
-  reason: not a body of the place
+  expected: Selectboard
+  source: judgment
+  reason: a clerk post on the Selectboard, as Mango-chan decided for board clerks (2026-10-28)
 - place: granville
   organization_label: FLOOD PLAIN BOARD OF ADJUSTMENT
   expected: none

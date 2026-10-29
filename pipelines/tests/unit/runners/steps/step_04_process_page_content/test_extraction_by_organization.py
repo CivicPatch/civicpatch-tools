@@ -164,7 +164,8 @@ async def test_a_person_picked_into_no_organization_is_left_for_ingest_to_place(
 
 
 @pytest.mark.asyncio
-async def test_the_page_s_organizations_are_those_its_people_were_picked_into():
+async def test_the_page_s_organizations_are_those_its_people_were_placed_into():
+    """By the label they were listed under, else by their own label."""
     run_prompt = AsyncMock(
         return_value=_picked(
             ("Rob Saka", "Council Member District 1", "City Council"), ("Katie Wilson", "Mayor", "none")
@@ -174,7 +175,7 @@ async def test_the_page_s_organizations_are_those_its_people_were_picked_into():
     with patch(_RUN_PROMPT, new=run_prompt):
         extraction = await _collect([_COUNCIL, _MAYOR])
 
-    assert extraction.organization_ids == ["council"]
+    assert extraction.organization_ids == ["council", "mayor"]
 
 
 @pytest.mark.asyncio

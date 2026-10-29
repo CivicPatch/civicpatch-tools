@@ -16,17 +16,15 @@ import services.open_router.llm as open_router_llm
 import services.open_router.prompts as open_router_prompts
 from runners.pipeline03_people_collector.constants import MATCH_MAX_OUTPUT_TOKENS
 from services.open_router.prompts import NO_ORGANIZATION
-from shared.schemas import KnownOrganization, PersonSourceRecord
-from shared.utils.taxonomy import Taxonomy, lookup_key
+from shared.schemas import KnownOrganization, PersonSourceRecord, SelectionMethod
+from shared.utils.taxonomy import MEMBER_ROLE_ID, Taxonomy, lookup_key
 
 # Grammar, which names no body anywhere. Words that do, but that several of a place's organizations
 # share ("board", "town", "trustee"), are found from the place's own organizations instead.
 _GRAMMAR_WORDS = {"of", "the", "and", "a", "an", "for", "to", "in", "on", "at", "by"}
 # Words for a kind of body, never a particular one: "Committee Members" names none.
 _BODY_KIND_WORDS = {"board", "committee", "commission", "office"}
-_WORD = re.compile(r"[a-z]+")
-# Words that name a position on any body, not the body: a label made only of them names none.
-_POSITION_WORDS = {"chair", "chairman", "chairperson", "chairwoman", "vice", "member", "clerk", "secretary", "president", "co"}
+_WORD = re.compile(r"[a-z0-9]+")
 # Words beside an office's name that say nothing about which body: a term, an election, contact.
 _INCIDENTAL_WORDS = {"year", "term", "elected", "school", "information", "info", "contact", "current", "expire", "expires"}
 # A page lists one person under several organizations; the model joins them with commas.
@@ -46,7 +44,8 @@ def _singular(word: str) -> str:
 
 
 def _tokens(text: str) -> List[str]:
-    return [_singular(word) for word in _WORD.findall(text.lower()) if len(word) > 1]
+    """Words, singular; a number or ordinal ("3", "1st") is a seat's, never a body's."""
+    return [_singular(word) for word in _WORD.findall(text.lower()) if len(word) > 1 and not any(c.isdigit() for c in word)]
 
 
 def _terms(text: str) -> set[str]:
@@ -69,6 +68,38 @@ def words(text: str, shared: set[str]) -> set[str]:
 
 def vocabulary(organization: KnownOrganization, shared: set[str]) -> set[str]:
     return _own_terms(organization) - shared - _BODY_KIND_WORDS
+
+
+def _role_terms(taxonomy: Taxonomy, canonicals: set[str]) -> set[str]:
+    return set().union(*[_terms(alias) for alias, canonical in taxonomy.role_aliases.items() if canonical in canonicals])
+
+
+def position_words(taxonomy: Taxonomy, organizations: List[KnownOrganization]) -> set[str]:
+    """Words for a position any body can hold: the roles its members fill (Chair, Vice President,
+    Mayor Pro Tempore) and Member, minus any word another role's own label uses ("mayor") or one of
+    the place's organizations is named by ("council")."""
+    by_members = {role for role, method in taxonomy.selection_methods.items() if method == SelectionMethod.ELECTED_BY_MEMBERS}
+    member = {role for role, role_id in taxonomy.role_ids.items() if role_id == MEMBER_ROLE_ID}
+    others = set(taxonomy.selection_methods) - by_members - member
+    blocked = set().union(*[_terms(role) for role in others], *[_terms(known.name) for known in organizations])
+    return (_role_terms(taxonomy, by_members) | set().union(*[_terms(role) for role in member])) - blocked
+
+
+def role_words(taxonomy: Taxonomy, organizations: List[KnownOrganization], shared: set[str]) -> set[str]:
+    """Words naming any role in the taxonomy that are none of the candidates' own: they may stand
+    beside a body's name ("Select Board Clerk") without changing which body it is."""
+    every_role = set(taxonomy.role_aliases.values())
+    own = set().union(*[vocabulary(known, shared) for known in without_default(organizations)])
+    return (_role_terms(taxonomy, every_role) | set().union(*[_terms(role) for role in every_role])) - own
+
+
+def designation_words(taxonomy: Taxonomy, organizations: List[KnownOrganization]) -> set[str]:
+    """Words that say which seat, not which body ("District", "Ward", "At Large"): the taxonomy's
+    designations and their one-word aliases, minus any word the place's organizations use."""
+    canonical = set(taxonomy.designation_aliases.values())
+    one_word = {alias for alias in taxonomy.designation_aliases if " " not in alias.strip()}
+    found = set().union(*[_terms(term.replace("-", " ")) for term in canonical | one_word])
+    return found - set().union(*[_own_terms(known) for known in organizations])
 
 
 def _covered(written: set[str], known: set[str]) -> set[str]:
@@ -110,66 +141,170 @@ def _contains(tokens: List[str], phrase: List[str]) -> bool:
     return bool(phrase) and any(tokens[i:i + len(phrase)] == phrase for i in range(len(tokens) - len(phrase) + 1))
 
 
-def _named_by_role_label(text: str, candidates: List[KnownOrganization], shared: set[str]) -> List[str]:
+class PlaceWords(BaseModel):
+    """What a place's organizations and the taxonomy say about words, worked out once per place."""
+
+    candidates: List[KnownOrganization]
+    defaults: List[KnownOrganization]
+    # Each candidate's own words, those several organizations share removed.
+    vocabularies: Dict[str, set[str]]
+    shared: set[str]
+    # The place's own name and the kind of place its default names ("City Officers").
+    place: set[str]
+    # Words for a position any body can hold ("chair", "vice", "member").
+    positions: set[str]
+    # Words of a role none of the candidates owns, which may stand beside a body's name ("clerk").
+    roles_beside: set[str]
+    # Words that say which seat, not which body ("district", "ward").
+    seats: set[str]
+
+
+def place_words(organizations: List[KnownOrganization], taxonomy: Taxonomy, place_name: str) -> PlaceWords:
+    shared = shared_terms(organizations)
+    candidates = without_default(organizations)
+    defaults = [known for known in organizations if known.meta_is_default]
+    return PlaceWords(
+        candidates=candidates,
+        defaults=defaults,
+        vocabularies={known.name: vocabulary(known, shared) for known in candidates},
+        shared=shared,
+        place=set(_tokens(place_name)).union(*[set(_tokens(known.name)) for known in defaults]),
+        positions=position_words(taxonomy, organizations),
+        roles_beside=role_words(taxonomy, organizations, shared),
+        seats=designation_words(taxonomy, organizations),
+    )
+
+
+class LabelWords(BaseModel):
+    """One organization label read against a place."""
+
+    raw: str
+    # The label's words in order, the place's own name dropped ("Sutton Selectboard" -> "selectboard").
+    text: str
+    # Its words that can say which body: shared, grammar, body-kind and seat words removed.
+    written: set[str]
+    # Those words without roles none of the candidates owns ("Select Board Clerk" -> {"select"}).
+    body: set[str]
+
+
+def label_words(organization_label: str, place: PlaceWords) -> LabelWords:
+    text = " ".join(token for token in _tokens(organization_label) if token not in place.place)
+    written = words(text, place.shared) - place.seats
+    return LabelWords(raw=organization_label, text=text, written=written, body=written - place.roles_beside)
+
+
+def _named_by_role_label(text: str, organizations: List[KnownOrganization], place: PlaceWords) -> List[str]:
     """The organizations one of whose own role labels the text contains whole, with nothing else
-    but incidental words ("Moderator (Town & School)", "Board of Listers (Elected)"). A place or a
-    second body among the rest ("Saxtons River Village Trustees") blocks it; so does a label of
-    position words only ("Chair")."""
+    but incidental words or roles beside it ("Moderator (Town & School)", "Board of Listers
+    (Elected)"). A place or a second body among the rest ("Saxtons River Village Trustees") blocks
+    it; so does a label of position words only ("Chair")."""
     tokens = text.split()
-    written = words(text, shared)
+    written = words(text, place.shared)
     named = []
-    for known in candidates:
-        for label in known.role_labels:
-            phrase = _tokens(label)
-            if set(phrase) <= _POSITION_WORDS | _GRAMMAR_WORDS | shared or not _contains(tokens, phrase):
+    for known in organizations:
+        for role_label in known.role_labels:
+            phrase = _tokens(role_label)
+            if set(phrase) <= place.positions | _GRAMMAR_WORDS | place.shared or not _contains(tokens, phrase):
                 continue
-            if written - words(label, shared) <= _INCIDENTAL_WORDS:
+            if written - words(role_label, place.shared) <= _INCIDENTAL_WORDS | place.roles_beside:
                 named.append(known.name)
                 break
     return named
 
 
-def _without_place(organization: str, place_name: str, organizations: List[KnownOrganization]) -> str:
-    """The label without the place's own name, nor the kind of place its default names ("City Officers")."""
-    defaults = [known.name for known in organizations if known.meta_is_default]
-    place = set(_tokens(place_name)).union(*[set(_tokens(name)) for name in defaults])
-    return " ".join(token for token in _tokens(organization) if token not in place)
+def _covering(label: LabelWords, place: PlaceWords) -> List[str]:
+    return [name for name, known in place.vocabularies.items() if _covered(label.body, known) == label.body]
 
 
-def match_by_words(organization_label: str, place_name: str, organizations: List[KnownOrganization]) -> OrganizationLabelMatch:
-    """The place's own name is dropped from the label ("Sutton Selectboard"); the default
-    is never a candidate."""
-    if "@" in organization_label:
-        return OrganizationLabelMatch()
-    candidates = without_default(organizations)
-    shared = shared_terms(organizations)
-    text = _without_place(organization_label, place_name, organizations)
-    whole = [known.name for known in candidates if text == " ".join(_tokens(known.name))]
-    if len(whole) == 1:
-        return OrganizationLabelMatch(names=whole)
-    written = words(text, shared)
-    if not written or written <= _POSITION_WORDS:
-        return OrganizationLabelMatch()
-    by_role_label = _named_by_role_label(text, candidates, shared)
-    if len(by_role_label) == 1:
-        return OrganizationLabelMatch(names=by_role_label)
-    if _named_by_role_label(text, [known for known in organizations if known.meta_is_default], shared):
-        # An office of the default ("Trustee of Public Money"): no board, the person's own label places them.
-        return OrganizationLabelMatch()
-    covering = [known.name for known in candidates if _covered(written, vocabulary(known, shared)) == written]
-    if len(covering) == 1:
-        return OrganizationLabelMatch(names=covering)
-    if covering:
-        # It fits several of the law's organizations equally ("Trustees" in a town): the page does
-        # not say which, so none, and the person's own label decides.
-        return OrganizationLabelMatch()
-    sharing = [known for known in candidates if _covered(written, vocabulary(known, shared))]
-    if sharing and set().union(*[_covered(written, vocabulary(known, shared)) for known in sharing]) <= _POSITION_WORDS:
-        # Only a position in common ("Paul Warden, Chair"): every board has one, so none.
-        return OrganizationLabelMatch()
-    if not covering and len(sharing) > 1 and _covered(written, set().union(*[vocabulary(known, shared) for known in sharing])) == written:
-        return OrganizationLabelMatch(names=[known.name for known in sharing])
-    return OrganizationLabelMatch(uncertain=bool(covering or sharing))
+def _sharing(label: LabelWords, place: PlaceWords) -> List[str]:
+    return [name for name, known in place.vocabularies.items() if _covered(label.body, known)]
+
+
+_NONE = OrganizationLabelMatch()
+
+
+def _an_email_names_none(label: LabelWords, place: PlaceWords) -> OrganizationLabelMatch | None:
+    """"selectboard@townoforwellvt.org" is a link, not a heading."""
+    return _NONE if "@" in label.raw else None
+
+
+def _a_whole_name_names_it(label: LabelWords, place: PlaceWords) -> OrganizationLabelMatch | None:
+    """"Township Board" is the Board, though "board" alone says nothing."""
+    whole = [known.name for known in place.candidates if label.text == " ".join(_tokens(known.name))]
+    return OrganizationLabelMatch(names=whole) if len(whole) == 1 else None
+
+
+def _positions_alone_name_none(label: LabelWords, place: PlaceWords) -> OrganizationLabelMatch | None:
+    """"Vice Chair": every board has one."""
+    return _NONE if not label.written or label.written <= place.positions else None
+
+
+def _one_role_label_names_it(label: LabelWords, place: PlaceWords) -> OrganizationLabelMatch | None:
+    """"Moderator (Town & School)" names the one organization with a Moderator."""
+    named = _named_by_role_label(label.text, place.candidates, place)
+    return OrganizationLabelMatch(names=named) if len(named) == 1 else None
+
+
+def _a_default_office_names_none(label: LabelWords, place: PlaceWords) -> OrganizationLabelMatch | None:
+    """"Trustee of Public Money" is an office of the default, not a board: the person's own label places them."""
+    return _NONE if _named_by_role_label(label.text, place.defaults, place) else None
+
+
+def _roles_alone_name_none(label: LabelWords, place: PlaceWords) -> OrganizationLabelMatch | None:
+    """"Town Clerk": a role, and nothing that names a body."""
+    return _NONE if not label.body else None
+
+
+def _one_vocabulary_names_it(label: LabelWords, place: PlaceWords) -> OrganizationLabelMatch | None:
+    """"Lister Board" is inside the Board of Listers' words alone."""
+    covering = _covering(label, place)
+    return OrganizationLabelMatch(names=covering) if len(covering) == 1 else None
+
+
+def _several_vocabularies_name_none(label: LabelWords, place: PlaceWords) -> OrganizationLabelMatch | None:
+    """"Trustees" in a town fits two of the law's organizations: the page does not say which."""
+    return _NONE if len(_covering(label, place)) > 1 else None
+
+
+def _a_shared_position_names_none(label: LabelWords, place: PlaceWords) -> OrganizationLabelMatch | None:
+    """"Paul Warden, Chair": the only word in common is a position every board has."""
+    sharing = _sharing(label, place)
+    covered = set().union(*[_covered(label.body, place.vocabularies[name]) for name in sharing])
+    return _NONE if sharing and covered <= place.positions else None
+
+
+def _several_bodies_together(label: LabelWords, place: PlaceWords) -> OrganizationLabelMatch | None:
+    """"Mayor & City Council" names both; the person's own label picks between them."""
+    sharing = _sharing(label, place)
+    together = set().union(*[place.vocabularies[name] for name in sharing])
+    if len(sharing) > 1 and _covered(label.body, together) == label.body:
+        return OrganizationLabelMatch(names=sharing)
+    return None
+
+
+# In order: the first that decides wins.
+_RULES = [
+    _an_email_names_none,
+    _a_whole_name_names_it,
+    _positions_alone_name_none,
+    _one_role_label_names_it,
+    _a_default_office_names_none,
+    _roles_alone_name_none,
+    _one_vocabulary_names_it,
+    _several_vocabularies_name_none,
+    _a_shared_position_names_none,
+    _several_bodies_together,
+]
+
+
+def match_by_words(organization_label: str, place: PlaceWords) -> OrganizationLabelMatch:
+    """The first rule that decides; when none does, uncertain if any organization shares a word."""
+    label = label_words(organization_label, place)
+    for rule in _RULES:
+        match = rule(label, place)
+        if match is not None:
+            return match
+    return OrganizationLabelMatch(uncertain=bool(_sharing(label, place)))
 
 
 def match_response_schema(choices: List[str]) -> type[BaseModel]:
@@ -200,16 +335,20 @@ def label_parts(organization_label: str) -> List[str]:
 
 
 async def resolve_organizations(
-    organization_labels: Iterable[str | None], pipeline_run_id, jurisdiction_ocdid: str, place_name: str, organizations: List[KnownOrganization]
+    organization_labels: Iterable[str | None],
+    pipeline_run_id,
+    jurisdiction_ocdid: str,
+    place_name: str,
+    place: PlaceWords,
 ) -> Dict[str, List[str]]:
     """Each distinct organization label to the organization names it means, empty for none; a
     comma-joined label means the first of its parts that names any. The model is asked only
     for the parts the words leave uncertain, once each."""
     parts = {part for label in organization_labels if label for part in label_parts(label)}
-    by_words = {part: match_by_words(part, place_name, organizations) for part in parts}
+    by_words = {part: match_by_words(part, place) for part in parts}
     uncertain = [part for part, match in by_words.items() if match.uncertain]
     asked = await asyncio.gather(
-        *[ask_organization(pipeline_run_id, jurisdiction_ocdid, place_name, part, organizations) for part in uncertain]
+        *[ask_organization(pipeline_run_id, jurisdiction_ocdid, place_name, part, place.candidates) for part in uncertain]
     )
     per_part = {part: match.names for part, match in by_words.items()}
     per_part.update(zip(uncertain, asked))
@@ -231,33 +370,41 @@ async def placed_names(
     """Each person's organization by the (organization label, label) they were listed under:
     today's taxonomy aliases widen the vocabulary, the words decide, the model is asked once per
     distinct label they leave open, and the person's own label picks among several bodies."""
-    matching = with_role_aliases(organizations, taxonomy)
+    place = place_words(with_role_aliases(organizations, taxonomy), taxonomy, place_name)
     resolved = await resolve_organizations(
-        [organization_label for organization_label, _ in people], pipeline_run_id, jurisdiction_ocdid, place_name, matching
+        [organization_label for organization_label, _ in people], pipeline_run_id, jurisdiction_ocdid, place_name, place
     )
-    return [placed_name(organization_label, label, resolved, matching) for organization_label, label in people]
+    return [placed_name(organization_label, label, resolved, place, taxonomy) for organization_label, label in people]
 
 
-def organization_by_label(label: str | None, organizations: List[KnownOrganization]) -> str | None:
+def organization_by_label(label: str | None, organizations: List[KnownOrganization], taxonomy: Taxonomy) -> str | None:
     """The one organization whose vocabulary shares the most of the label's words ("Council
     Member District 1" shares "council"), else None."""
     common = shared_terms(organizations)
-    written = words(label or "", common) - _POSITION_WORDS
+    written = words(label or "", common) - position_words(taxonomy, organizations)
     overlap = {known.name: len(written & vocabulary(known, common)) for known in without_default(organizations)}
     best = max(overlap.values(), default=0)
     winners = [name for name, count in overlap.items() if count == best]
     return winners[0] if best and len(winners) == 1 else None
 
 
-def placed_name(organization_label: str | None, label: str | None, resolved: Dict[str, List[str]], organizations: List[KnownOrganization]) -> str | None:
-    """Where a record goes by its organization label; among several bodies it names, by its own label."""
+def placed_name(
+    organization_label: str | None,
+    label: str | None,
+    resolved: Dict[str, List[str]],
+    place: PlaceWords,
+    taxonomy: Taxonomy,
+) -> str | None:
+    """Where a record goes by its organization label; among several bodies it names, by its own
+    label; and when it names none, by its own label read the same way ("Library Trustee")."""
     names = resolved.get(organization_label or "", [])
     if len(names) == 1:
         return names[0]
     if len(names) > 1:
-        named = [known for known in organizations if known.name in names]
-        return organization_by_label(label, named)
-    return None
+        named = [known for known in place.candidates if known.name in names]
+        return organization_by_label(label, named, taxonomy)
+    by_own_label = match_by_words(label or "", place)
+    return by_own_label.names[0] if len(by_own_label.names) == 1 else None
 
 
 def organization_id_by_name(name: str | None, organizations: List[KnownOrganization]) -> str | None:
