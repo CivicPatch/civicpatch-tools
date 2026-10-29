@@ -16,6 +16,7 @@ import database.roster_comparisons as database
 import environment
 from core.page_urls import roster_comparison_page_url
 from core.roster_comparison_rates import LEVELS_BY_FILTER, compared_organizations, with_not_compared, worst_first
+from core.roster_comparison_report import report_markdown
 from schemas.pagination import paginated_response, pagination_offset
 from schemas.roster_comparisons import (
     PeopleFilter,
@@ -24,6 +25,7 @@ from schemas.roster_comparisons import (
     RosterComparisonCreated,
     RosterComparisonListItem,
     RosterComparisonListPage,
+    RosterComparisonReport,
     RosterComparisonRun,
     RosterComparisonSummary,
     RosterComparisonUpload,
@@ -132,6 +134,13 @@ async def get_run_summary(run_id: str, organizations: list[str] | None) -> Roste
         organizations=run_organizations,
         compared_organizations=compared,
     )
+
+
+async def get_run_report(run_id: str, organizations: list[str] | None) -> RosterComparisonReport:
+    summary = await get_run_summary(run_id, organizations)
+    jurisdictions = await get_run_jurisdictions(run_id, True)
+    names = {jurisdiction.jurisdiction_ocdid: jurisdiction.name for jurisdiction in jurisdictions}
+    return RosterComparisonReport(markdown=report_markdown(summary, names))
 
 
 async def get_run_jurisdictions(run_id: str, compared: bool | None) -> list[RunJurisdiction]:

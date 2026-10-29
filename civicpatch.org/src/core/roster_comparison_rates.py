@@ -74,6 +74,16 @@ def with_not_compared(counts: ComparisonRates, not_compared: int) -> ComparisonR
     return counts.model_copy(update={"outcomes": outcomes})
 
 
+def civicpatch_has_no_one(outcomes: OutcomeCounts) -> bool:
+    """No one of civicpatch's there, compared or not: every row is only in the uploaded data."""
+    return not (
+        outcomes.matched
+        or outcomes.possible_match
+        or outcomes.only_in_civicpatch
+        or outcomes.only_in_civicpatch_not_compared
+    )
+
+
 def worst_first(jurisdictions: list[JurisdictionRates]) -> list[JurisdictionRates]:
     """Most people not plainly matched first, then most warnings; ties by ocdid."""
     return sorted(

@@ -402,3 +402,11 @@ class PeopleResponse(BaseModel):
 
 class RunJurisdictionsResponse(BaseModel):
     data: list[RunJurisdiction]
+
+
+class RosterComparisonReport(BaseModel):
+    markdown: str = Field(description="The run as Markdown, from its saved counts: give it to the user as it is.")
+
+
+class ReportResponse(BaseModel):
+    data: RosterComparisonReport

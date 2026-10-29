@@ -17,6 +17,7 @@ from schemas.roster_comparisons import (
     DraftRows,
     PeopleFilter,
     PeopleResponse,
+    ReportResponse,
     RosterComparisonHeader,
     RosterComparisonListPage,
     RosterComparisonUpload,
@@ -93,6 +94,13 @@ def get_router() -> APIRouter:
         """A run's rates for the state and each jurisdiction, most unmatched first, and the
         organizations of civicpatch's people in it."""
         return {"data": await _or_404(service.get_run_summary(str(run_id), organizations))}
+
+    @router.get("/{run_id}/report", response_model=ReportResponse)
+    async def get_roster_comparison_report_endpoint(
+        run_id: uuid.UUID, organizations: _Organizations = None, _: Identity = _maintainer()
+    ) -> dict:
+        """The run as Markdown, from its saved counts, for an agent to give the user as it is."""
+        return {"data": await _or_404(service.get_run_report(str(run_id), organizations))}
 
     @router.get("/{run_id}/jurisdictions", response_model=RunJurisdictionsResponse)
     async def list_roster_comparison_jurisdictions_endpoint(

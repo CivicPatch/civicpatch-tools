@@ -122,7 +122,7 @@ export function civicpatchSide(person: PersonComparison, pageUrl: string) {
   );
 }
 
-/** No one of civicpatch's in the jurisdiction, compared or not: every row is only in the uploaded data. */
+/** Mirrors `civicpatch_has_no_one` in core/roster_comparison_rates.py, which the report uses. */
 export function civicpatchHasNoOne(outcomes: OutcomeCounts): boolean {
   return !(
     outcomes.matched ||
