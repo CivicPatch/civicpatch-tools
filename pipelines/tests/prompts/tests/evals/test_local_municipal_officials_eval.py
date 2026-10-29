@@ -18,7 +18,6 @@ from eval_utils import (
 )
 from runners.pipeline03_people_collector.schemas import PeopleArrayLLMResponseSchema
 from runners.pipeline03_people_collector.steps.step_04_process_page_content.organization_match import (
-    organization_by_label,
     placed_names,
 )
 from services.open_router.llm import run_prompt as run_together_prompt
@@ -159,8 +158,7 @@ async def _run_single_case(model_client, case, ocdid):
         )
         f.write(yaml_output)
 
-    # Placement as in production: the organization label through the matcher, else the label's role
-    # (ingest's fallback, approximated by the organizations' role labels).
+    # Placement as in production: the organization label through the matcher, else the person's own label.
     organizations = _organizations(case["expected"])
     by_organization_label = await placed_names(
         [(person.organization_label, person.label) for person in actual.people],
@@ -171,7 +169,7 @@ async def _run_single_case(model_client, case, ocdid):
         _place_name(case["expected"]),
     )
     placed = {
-        name_utils.name_grouping_key(person.name): name or organization_by_label(person.label, organizations)
+        name_utils.name_grouping_key(person.name): name
         for person, name in zip(actual.people, by_organization_label)
     }
     case_scores = score_cases(actual.people, expected)
@@ -183,7 +181,6 @@ async def _run_single_case(model_client, case, ocdid):
         "scores": case_aggregate,
         "organization": {
             **organization_counts(placed, case["expected"]["people"]),
-            "by_label": sum(name is None and organization_by_label(person.label, organizations) is not None for person, name in zip(actual.people, by_organization_label)),
         },
     }
 
