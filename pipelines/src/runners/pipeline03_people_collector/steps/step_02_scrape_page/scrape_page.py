@@ -9,7 +9,7 @@ from runners.pipeline03_people_collector.schemas import (
     PeopleCollectorState,
     PeopleCollectorStep,
 )
-from runners.pipeline03_people_collector.steps.step_02_scrape_page.scrape_constants import (
+from runners.pipeline03_people_collector.constants import (
     MAX_SCRAPE_ATTEMPTS,
 )
 from runners.pipeline03_people_collector.steps.step_02_scrape_page.scrape_exceptions import (

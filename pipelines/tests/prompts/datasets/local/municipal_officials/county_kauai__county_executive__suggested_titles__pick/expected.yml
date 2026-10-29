@@ -1,9 +1,9 @@
 generated: true
 jurisdiction_ocdid: ocd-jurisdiction/country:us/state:hi/county:kauai/government
 current_date: '2026-10-16'
-organization_choices:
-- County Council
-- Office of the Mayor
+organizations:
+- {name: County Council, role_labels: [Council Member, Chair, Vice Chair]}
+- {name: Office of the Mayor, role_labels: [Mayor]}
 government_form_role_labels:
 - Council Member
 - Chair

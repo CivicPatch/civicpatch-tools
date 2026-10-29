@@ -3,7 +3,7 @@ from typing import List
 import services.open_router.prompts as open_router_prompt
 from runners.pipeline03_people_collector.schemas import ExpectedMembership
 from shared.schemas import KnownOrganization, PipelineRunConfig
-from runners.pipeline03_people_collector.steps.step_04_process_page_content.organization_pick import pick_choices
+from runners.pipeline03_people_collector.steps.step_04_process_page_content.organization_match import without_default
 from shared.utils import id_utils
 from shared.utils.content_hash import hash_texts
 from runners.pipeline03_people_collector.utils.organization_terms import (
@@ -61,5 +61,5 @@ def page_extraction_prompt(
         county=ocdid_parts.county,
         divisions=expected_divisions(memberships),
         government_form_role_labels=government_form_role_labels(organizations, memberships),
-        organization_choices=pick_choices(organizations),
+        organization_choices=[organization.name for organization in without_default(organizations)],
     )

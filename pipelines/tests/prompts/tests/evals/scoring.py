@@ -28,6 +28,12 @@ from shared.utils.label_parser import ParsedLabel, parse_label
 EVAL_TAXONOMY = build_eval_taxonomy()
 
 
+def expected_records(people: list[dict]) -> List[ExtractedPersonRecord]:
+    """The gold's people as records. Its `organization` is the accepted placement (a name, a
+    list of names, or none), read by `organization_counts`, not an organization label."""
+    return [ExtractedPersonRecord(**{key: value for key, value in person.items() if key != "organization"}) for person in people]
+
+
 def _parse(records: List[ExtractedPersonRecord]) -> List[ParsedLabel]:
     return [parse_label(record.label or "", EVAL_TAXONOMY) for record in records]
 
@@ -205,22 +211,21 @@ def score_case(
 ORGANIZATION_OUTCOMES = ("right", "wrong", "none", "missing")
 
 
-def organization_counts(actual, expected_people: list[dict]) -> dict[str, int]:
+def organization_counts(placed: dict[str, str | None], expected_people: list[dict]) -> dict[str, int]:
     """Report-only (plan P5): for each expected person with an organization, whether the model's
     pick is one the gold accepts. "none" is a person returned unplaced; "missing" one not returned."""
     counts = dict.fromkeys(ORGANIZATION_OUTCOMES, 0)
-    picked = {key: getattr(records[0], "organization", None) for key, records in group_by_name(actual).items()}
     for person in expected_people:
         accepted = person.get("organization")
         if accepted is None:
             continue
         accepted = accepted if isinstance(accepted, list) else [accepted]
         key = name_utils.name_grouping_key(person["name"])
-        if key not in picked:
+        if key not in placed:
             counts["missing"] += 1
-        elif picked[key] in accepted:
+        elif placed[key] in accepted:
             counts["right"] += 1
-        elif picked[key] in (None, NO_ORGANIZATION):
+        elif placed[key] in (None, NO_ORGANIZATION):
             counts["none"] += 1
         else:
             counts["wrong"] += 1

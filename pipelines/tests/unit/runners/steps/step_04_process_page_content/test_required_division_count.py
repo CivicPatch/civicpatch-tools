@@ -10,10 +10,10 @@ check vacuous exactly where it matters most, since a jurisdiction with two wards
 nobody to be placed in either.
 """
 
+from runners.pipeline03_people_collector.constants import DIVISION_REQUIREMENT_TOLERANCE
 import pytest
 
 from runners.pipeline03_people_collector.steps.step_04_process_page_content.process_page_content import (
-    DIVISION_REQUIREMENT_TOLERANCE,
     required_division_count,
 )
 

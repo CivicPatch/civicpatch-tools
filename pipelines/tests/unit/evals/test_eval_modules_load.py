@@ -77,15 +77,14 @@ def test_officials_eval_role_aliases_fixture_validates():
 
 
 def test_officials_eval_fixtures_validate():
-    """The eval loads these with `ExtractedPersonRecord(**person)`, so a fixture carrying the
-    old `roles:`/`designations:` pair fails there and nowhere else — under an API key and a
-    bill. The record shape has already changed once."""
-    from runners.pipeline03_people_collector.schemas import ExtractedPersonRecord
+    """The eval loads these with `expected_records`, so a fixture carrying the old
+    `roles:`/`designations:` pair fails there and nowhere else — under an API key and a
+    bill. The record shape has already changed twice."""
+    from scoring import expected_records
 
     cases = sorted(pathlib.Path("tests/prompts/datasets/local/municipal_officials").iterdir())
     fixtures = [case / "expected.yml" for case in cases if (case / "expected.yml").exists()]
     assert fixtures, "no officials fixtures found — the dataset path moved"
     for fixture in fixtures:
         content = yaml.safe_load(fixture.read_text(encoding="utf-8")) or {}
-        for person in content.get("people") or []:
-            ExtractedPersonRecord(**person)
+        expected_records(content.get("people") or [])

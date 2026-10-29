@@ -36,7 +36,7 @@ from runners.pipeline03_people_collector.utils.link_discovery import (
 from runners.pipeline03_people_collector.utils.organization_terms import as_tokens, search_phrases
 from shared.schemas import KnownOrganization, Post, RoleConfig, Role
 from tests.factories.pipeline_run_context import pipeline_run_context_factory
-from shared.utils.taxonomy import build_taxonomy
+from shared.utils.taxonomy import Taxonomy, build_taxonomy
 from shared.utils.url_utils import canonical_url
 
 _ROLE_TAXONOMY = build_taxonomy(
@@ -67,6 +67,8 @@ def pending_in_queue_order(frontier: LinkFrontier) -> list[Link]:
 make_links = make_frontier
 
 pytestmark = pytest.mark.unit
+
+_NO_TAXONOMY = Taxonomy({}, {}, {}, {})
 
 
 def dummy_logger():
@@ -1044,6 +1046,8 @@ async def test_process_with_llm_reorders_inverted_names():
             "page content",
             "prompt",
             [],
+            "",
+            _NO_TAXONOMY,
         )
 
     assert [r.name for r in records] == ["Laurie Kincannon", "Rory Burke"]
@@ -1069,6 +1073,8 @@ async def test_process_with_llm_resolves_a_shortened_url_against_its_page():
             "page content",
             "prompt",
             [],
+            "",
+            _NO_TAXONOMY,
         )
 
     assert [r.url for r in records] == [
@@ -1104,6 +1110,8 @@ async def test_process_with_llm_keeps_only_downloaded_images():
             "page content",
             "prompt",
             [],
+            "",
+            _NO_TAXONOMY,
         )
 
     assert [r.image for r in records] == ["local://8ac384d14474.png", None, None]

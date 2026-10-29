@@ -1,6 +1,7 @@
 import asyncio
 import os
 import pathlib
+import re
 import time
 from typing import cast
 
@@ -15,16 +16,15 @@ from eval_utils import (
     record_run,
     write_comparison_report,
 )
-from runners.pipeline03_people_collector.schemas import (
-    PeopleArrayLLMResponseSchema,
-    ExtractedPersonRecord,
-)
-from runners.pipeline03_people_collector.steps.step_04_process_page_content.organization_pick import (
-    pick_response_schema,
+from runners.pipeline03_people_collector.schemas import PeopleArrayLLMResponseSchema
+from runners.pipeline03_people_collector.steps.step_04_process_page_content.organization_match import (
+    organization_by_label,
+    placed_names,
 )
 from services.open_router.llm import run_prompt as run_together_prompt
 from services.open_router.prompts import elected_officials_prompt
-from shared.schemas import JurisdictionLevel
+from shared.schemas import JurisdictionLevel, KnownOrganization
+from shared.utils import name_utils
 from shared.utils.id_utils import parse_jurisdiction_ocdid
 from utils import cost_utils
 from scoring import (
@@ -32,6 +32,7 @@ from scoring import (
     aggregate,
     aggregate_case,
     case_score,
+    expected_records,
     failing_people,
     organization_counts,
     person_precision,
@@ -73,6 +74,19 @@ def _jurisdiction_inputs(expected: dict) -> dict:
     return {"level": parts.level, "state": parts.state, "county": parts.county}
 
 
+def _place_name(expected: dict) -> str:
+    """What the run's config.name gives the matcher, so a page's own place words drop out;
+    older cases carry no ocdid and give it nothing."""
+    found = re.search(r"(?:place|county):([a-z_]+)", expected.get("jurisdiction_ocdid") or "")
+    return expected.get("place_name") or (found.group(1).replace("_", " ").title() if found else "")
+
+
+def _organizations(expected: dict) -> list[KnownOrganization]:
+    """With their role labels, as cp.org builds them from the forms."""
+    entries = expected.get("organizations") or []
+    return [KnownOrganization(id=entry["name"], **entry) for entry in entries]
+
+
 def make_together_prompt(expected: dict):
     return elected_officials_prompt(
         expected.get("known_roles", []),
@@ -81,7 +95,7 @@ def make_together_prompt(expected: dict):
         current_date=expected.get("current_date", EVAL_CURRENT_DATE),
         divisions=expected.get("divisions", []),
         government_form_role_labels=expected.get("government_form_role_labels", []),
-        organization_choices=expected.get("organization_choices", []),
+        organization_choices=[organization["name"] for organization in expected.get("organizations") or []],
     )
 
 
@@ -121,7 +135,7 @@ async def _run_single_case(model_client, case, ocdid):
             ocdid,
             prompt,
             prompt_name="elected_officials",
-            response_schema=pick_response_schema(case["expected"].get("organization_choices", [])),
+            response_schema=PeopleArrayLLMResponseSchema,
             content=case["input"],
             **extra_kwargs,
         )
@@ -134,7 +148,7 @@ async def _run_single_case(model_client, case, ocdid):
 
     _PROGRESS[name][0] += 1
     _progress(name, f"done   {case['id']} in {time.time() - started:.1f}s")
-    expected = [ExtractedPersonRecord(**person) for person in case["expected"]["people"]]
+    expected = expected_records(case["expected"]["people"])
     actual = cast(PeopleArrayLLMResponseSchema, response)
     case_path = case.get("case_path", "unknown_case")
     with open(
@@ -145,6 +159,21 @@ async def _run_single_case(model_client, case, ocdid):
         )
         f.write(yaml_output)
 
+    # Placement as in production: the organization label through the matcher, else the label's role
+    # (ingest's fallback, approximated by the organizations' role labels).
+    organizations = _organizations(case["expected"])
+    by_organization_label = await placed_names(
+        [(person.organization_label, person.label) for person in actual.people],
+        organizations,
+        EVAL_TAXONOMY,
+        _eval_run_id(name),
+        ocdid,
+        _place_name(case["expected"]),
+    )
+    placed = {
+        name_utils.name_grouping_key(person.name): name or organization_by_label(person.label, organizations)
+        for person, name in zip(actual.people, by_organization_label)
+    }
     case_scores = score_cases(actual.people, expected)
     case_aggregate = aggregate_case(case_scores)
     precision = person_precision(actual.people, expected)
@@ -152,7 +181,10 @@ async def _run_single_case(model_client, case, ocdid):
         "score": case_score(case_aggregate, precision),
         "person_precision": precision,
         "scores": case_aggregate,
-        "organization": organization_counts(actual.people, case["expected"]["people"]),
+        "organization": {
+            **organization_counts(placed, case["expected"]["people"]),
+            "by_label": sum(name is None and organization_by_label(person.label, organizations) is not None for person, name in zip(actual.people, by_organization_label)),
+        },
     }
 
     dispositions = case_dispositions(actual.people, expected, EVAL_TAXONOMY)

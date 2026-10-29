@@ -9,7 +9,7 @@ import aiofiles
 import httpx
 from patchright.async_api import Page
 
-from runners.pipeline03_people_collector.steps.step_02_scrape_page.scrape_constants import IMAGE_DOWNLOAD_TIMEOUT_S
+from runners.pipeline03_people_collector.constants import IMAGE_DOWNLOAD_TIMEOUT_S
 
 
 IMAGE_URL_BLACKLIST = ["https://google.com"]

@@ -1,15 +1,15 @@
 jurisdiction_ocdid: ocd-jurisdiction/country:us/state:vt/place:essex/government
 current_date: '2026-10-27'
-organization_choices:
-- Advisory Budget Committee
-- Board of Cemetery Commissioners
-- Board of Library Trustees
-- Board of Listers
-- Selectboard
-- Town Auditors
-- Town Meeting
-- Trustees of Public Funds
-- Water Commissioners
+organizations:
+- {name: Advisory Budget Committee, role_labels: [Advisory Budget Committee Member]}
+- {name: Board of Cemetery Commissioners, role_labels: [Cemetery Commissioner]}
+- {name: Board of Library Trustees, role_labels: [Library Trustee]}
+- {name: Board of Listers, role_labels: [Lister]}
+- {name: Selectboard, role_labels: [Select Board Member, Chair, Vice Chair]}
+- {name: Town Auditors, role_labels: [Auditor]}
+- {name: Town Meeting, role_labels: [Moderator, Town Meeting Member]}
+- {name: Trustees of Public Funds, role_labels: [Trustee of Public Funds]}
+- {name: Water Commissioners, role_labels: [Water Commissioner]}
 known_roles:
 - Cemetery Commissioner
 - Library Trustee
