@@ -61,6 +61,12 @@ export function peoplePanel(
         </li>`,
       )}
     </ul>
+    ${outcomes.only_in_civicpatch_not_compared
+      ? html`<p class="rc-note">
+          Not counted: ${outcomes.only_in_civicpatch_not_compared} more of civicpatch's people, only in organizations
+          not compared.
+        </p>`
+      : null}
     <p class="rc-note">Possible match: linked only by a nickname, or a name that fits several people. Click a count to list those people across the state.</p>
   </section>`;
 }
@@ -112,6 +118,10 @@ export function fieldsPanel(
         </tbody>
       </table>
     </div>
+    <p class="rc-note">
+      ${run.rates.people_with_conflicts} of ${matched} matched people (${percent(run.rates.people_with_conflicts, matched)})
+      conflict in at least one field.
+    </p>
     <p class="rc-note">Agree includes one side having more. "Has it" counts people with any value. Click a count to list those people.</p>
   </section>`;
 }

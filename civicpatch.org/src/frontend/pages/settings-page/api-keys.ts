@@ -3,14 +3,7 @@ import { component, useState, useEffect } from "haunted";
 import { fetchApiKeys, createApiKey, revokeApiKey } from "../../api.js";
 import "../../components/action-btn/action-btn.css";
 import "./connected-apps.js";
-import {
-  agentSetups,
-  CHATGPT_STEPS,
-  exportLine,
-  mcpUrl,
-  type AgentSetup,
-  type SetupField,
-} from "./api-key-commands.js";
+import { agentSetups, type AgentSetup, type SetupField } from "./api-key-commands.js";
 import {
   AGENT_SCOPE,
   FULL_SCOPE,
@@ -100,7 +93,7 @@ function renderField(
   `;
 }
 
-function renderAgentSetup(
+function renderConnectApp(
   setups: AgentSetup[],
   selected: number,
   onSelect: (index: number) => void,
@@ -109,38 +102,27 @@ function renderAgentSetup(
 ) {
   const setup = setups[selected];
   return html`
-    <label class="api-keys__agent-picker">
-      Connect your agent
-      <select
-        @change=${(e: Event) =>
-          onSelect(Number((e.target as HTMLSelectElement).value))}
-      >
-        ${setups.map(
-          (option, index) =>
-            html`<option value=${index} .selected=${index === selected}>
-              ${option.agent}
-            </option>`,
-        )}
-      </select>
-    </label>
-    <p>${setup.where}:</p>
-    ${setup.fields.map((field) => renderField(field, copied, onCopy))}
-  `;
-}
-
-function renderChatGpt(
-  origin: string,
-  copied: string | null,
-  onCopy: (field: SetupField) => void,
-) {
-  return html`
     <section class="api-keys">
-      <h2 class="api-keys__title">ChatGPT</h2>
-      <p class="api-keys__hint">ChatGPT signs in as you, so it needs no key.</p>
-      ${renderField({ label: "Server URL", value: mcpUrl(origin) }, copied, onCopy)}
-      <ol>
-        ${CHATGPT_STEPS.map((step) => html`<li>${step}</li>`)}
-      </ol>
+      <h2 class="api-keys__title">Connect an app</h2>
+      <label class="api-keys__agent-picker">
+        App
+        <select
+          @change=${(e: Event) =>
+            onSelect(Number((e.target as HTMLSelectElement).value))}
+        >
+          ${setups.map(
+            (option, index) =>
+              html`<option value=${index} .selected=${index === selected}>
+                ${option.agent}
+              </option>`,
+          )}
+        </select>
+      </label>
+      <p>${setup.where}:</p>
+      ${setup.fields.map((field) => renderField(field, copied, onCopy))}
+      ${setup.steps.length
+        ? html`<ol>${setup.steps.map((step) => html`<li>${step}</li>`)}</ol>`
+        : null}
     </section>
   `;
 }
@@ -214,6 +196,8 @@ function ApiKeys() {
     }
   };
 
+  // Only an agent key goes into an app; a full key is for scripts, not agents.
+  const agentKey = created?.scope === AGENT_SCOPE ? created.api_key : null;
   const activeKeys = keys.filter((key) => !key.revoked_at);
   const revokedKeys = keys.filter((key) => key.revoked_at);
 
@@ -234,22 +218,7 @@ function ApiKeys() {
               </p>
               <code class="api-keys__secret">${created.api_key}</code>
               ${created.scope === AGENT_SCOPE
-                ? html`
-                    <p>
-                      To use it from an agent, put this line in your shell
-                      profile, not in a chat:
-                    </p>
-                    <pre class="api-keys__command">
-${exportLine(created.api_key)}</pre
-                    >
-                    ${renderAgentSetup(
-                      agentSetups(window.location.origin, created.api_key),
-                      agentIndex,
-                      handleSelectAgent,
-                      copied,
-                      handleCopy,
-                    )}
-                  `
+                ? html`<p>Connect an app with it below.</p>`
                 : null}
             </div>
           `
@@ -265,8 +234,14 @@ ${exportLine(created.api_key)}</pre
       )}
     </section>
 
+    ${renderConnectApp(
+      agentSetups(window.location.origin, agentKey),
+      agentIndex,
+      handleSelectAgent,
+      copied,
+      handleCopy,
+    )}
     <connected-apps></connected-apps>
-    ${renderChatGpt(window.location.origin, copied, handleCopy)}
     ${renderRevokedKeys(revokedKeys)}
   `;
 }

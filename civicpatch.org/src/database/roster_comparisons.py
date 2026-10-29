@@ -15,10 +15,28 @@ from schemas.roster_comparisons import (
     RosterComparison,
     RosterComparisonListRow,
     RosterComparisonRun,
+    RunJurisdiction,
+    RunOrganization,
     RunPerson,
 )
 
 _STARTED_AT = """to_char(roster_comparison_runs.started_at AT TIME ZONE 'UTC', 'YYYY-MM-DD"T"HH24:MI:SS') || '+00:00'"""
+
+# A person counts unless civicpatch-only in none of %(organizations)s; one saved before
+# organizations were kept (none listed) always counts.
+_COMPARED = """(
+    roster_comparison_people.outcome <> 'only_in_civicpatch'
+
+    OR jsonb_array_length(
+        coalesce(
+            roster_comparison_people.comparison -> 'organizations',
+            '[]'::jsonb
+        )
+    ) = 0
+
+    OR roster_comparison_people.comparison -> 'organizations'
+        ?| %(organizations)s::text[]
+)"""
 
 # Each column aliased to the model's field, so reading the row needs no second list to keep in step.
 _RUN_COLUMNS = f"""
@@ -146,15 +164,95 @@ async def get_roster_comparison_jurisdictions(run_id: str) -> list[JurisdictionR
     return [JurisdictionRates(jurisdiction_ocdid=ocdid, rates=rates) for ocdid, rates in rows]
 
 
-async def get_roster_comparison_people(run_id: str, jurisdiction_ocdid: str) -> list[PersonComparison]:
+async def get_roster_comparison_organizations(run_id: str) -> list[RunOrganization]:
+    """Only matched and civicpatch-only people carry organizations, so every row counted is civicpatch's."""
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor(row_factory=dict_row) as cur:
+        await cur.execute(
+            """
+            SELECT organization AS name,
+                   count(DISTINCT jurisdiction_ocdid) AS jurisdictions,
+                   count(*) FILTER (WHERE outcome = 'matched') AS matched,
+                   count(*) AS civicpatch_people
+            FROM roster_comparison_people,
+                 jsonb_array_elements_text(comparison -> 'organizations') AS organization
+            WHERE run_id = %s
+            GROUP BY organization
+            ORDER BY matched DESC, organization
+            """,
+            (run_id,),
+        )
+        rows = await cur.fetchall()
+    return [RunOrganization.model_validate(row) for row in rows]
+
+
+_IN_RUN = """EXISTS (
+    SELECT 1
+    FROM roster_comparison_jurisdictions
+    WHERE roster_comparison_jurisdictions.run_id = %(run_id)s
+      AND roster_comparison_jurisdictions.jurisdiction_ocdid = jurisdictions.jurisdiction_ocdid
+)"""
+
+
+async def get_roster_comparison_run_jurisdictions(
+    run_id: str, state: str, compared: bool | None
+) -> list[RunJurisdiction]:
+    """The run's jurisdictions and the state's other active ones, by name; `compared` keeps only
+    one kind. The state's others are the saved `jurisdictions_not_named` count, listed."""
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor(row_factory=dict_row) as cur:
+        await cur.execute(
+            f"""
+            SELECT *
+            FROM (
+                SELECT jurisdictions.jurisdiction_ocdid,
+                       coalesce(
+                           jurisdictions.data ->> 'display_name',
+                           jurisdictions.data ->> 'name',
+                           jurisdictions.jurisdiction_ocdid
+                       ) AS name,
+                       {_IN_RUN} AS compared
+                FROM jurisdictions
+                WHERE (jurisdictions.state = %(state)s AND jurisdictions.status = 'active')
+                   OR {_IN_RUN}
+            ) AS run_jurisdictions
+            WHERE %(compared)s::boolean IS NULL OR run_jurisdictions.compared = %(compared)s
+            ORDER BY run_jurisdictions.name, run_jurisdictions.jurisdiction_ocdid
+            """,
+            {"run_id": run_id, "state": state, "compared": compared},
+        )
+        rows = await cur.fetchall()
+    return [RunJurisdiction.model_validate(row) for row in rows]
+
+
+async def count_roster_comparison_not_compared(run_id: str, organizations: list[str]) -> dict[str, int]:
+    """Per jurisdiction, the civicpatch-only people in none of `organizations`."""
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            """
-            SELECT comparison FROM roster_comparison_people
-            WHERE run_id = %s AND jurisdiction_ocdid = %s ORDER BY position
+            f"""
+            SELECT jurisdiction_ocdid, count(*) FROM roster_comparison_people
+            WHERE run_id = %(run_id)s AND NOT {_COMPARED}
+            GROUP BY jurisdiction_ocdid
             """,
-            (run_id, jurisdiction_ocdid),
+            {"run_id": run_id, "organizations": organizations},
+        )
+        rows = await cur.fetchall()
+    return {ocdid: count for ocdid, count in rows}
+
+
+async def get_roster_comparison_people(
+    run_id: str, jurisdiction_ocdid: str, organizations: list[str]
+) -> list[PersonComparison]:
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            f"""
+            SELECT comparison FROM roster_comparison_people
+            WHERE run_id = %(run_id)s AND jurisdiction_ocdid = %(ocdid)s AND {_COMPARED}
+            ORDER BY position
+            """,
+            {"run_id": run_id, "ocdid": jurisdiction_ocdid, "organizations": organizations},
         )
         rows = await cur.fetchall()
     return [PersonComparison.model_validate(row[0]) for row in rows]
@@ -165,18 +263,19 @@ async def get_roster_comparison_people_page(
     outcome: PersonOutcome | None,
     field: ComparedField | None,
     levels: list[FieldLevel],
+    organizations: list[str],
     limit: int,
     offset: int,
 ) -> tuple[int, list[RunPerson]]:
-    """One page of a run's people across every jurisdiction, and their total. Each filter applies
-    only when given; `levels` are the ones `field` must have graded at."""
+    """One page of a run's compared people across every jurisdiction, and their total. Each filter
+    applies only when given; `levels` are the ones `field` must have graded at."""
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            """
+            f"""
             SELECT jurisdiction_ocdid, comparison, count(*) OVER ()
             FROM roster_comparison_people
-            WHERE run_id = %(run_id)s
+            WHERE run_id = %(run_id)s AND {_COMPARED}
               AND (%(outcome)s::text IS NULL OR outcome = %(outcome)s)
               AND (%(field)s::text IS NULL OR comparison -> 'fields' -> %(field)s ->> 'level' = ANY(%(levels)s::text[]))
             ORDER BY jurisdiction_ocdid, position
@@ -187,6 +286,7 @@ async def get_roster_comparison_people_page(
                 "outcome": outcome.value if outcome else None,
                 "field": field.value if field else None,
                 "levels": [level.value for level in levels],
+                "organizations": organizations,
                 "limit": limit,
                 "offset": offset,
             },

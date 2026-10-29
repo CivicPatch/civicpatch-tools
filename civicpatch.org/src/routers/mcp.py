@@ -101,7 +101,15 @@ To compare a user's file (usually one state's officials):
 7. The response gives the run's id, its page_url and its rates. End your reply with the page_url
    on a line of its own, then read the run with get_roster_comparison, any jurisdiction the user
    asks about with get_roster_comparison_jurisdiction, and everyone with one outcome across the
-   state (e.g. everyone only in the user's file) with get_roster_comparison_people.
+   state (e.g. everyone only in the user's file) with get_roster_comparison_people. The state's
+   jurisdictions the file has no row for are not compared: count in jurisdictions_not_named,
+   names with list_roster_comparison_jurisdictions(compared=false). A jurisdiction whose matched,
+   possible_match, only_in_civicpatch and only_in_civicpatch_not_compared are all 0 has no one in
+   civicpatch yet: say so, rather than that the user's data disagrees.
+8. Counts compare only some organizations (compared_organizations): by default every one the
+   user's file matched someone in; civicpatch's other people are only_in_civicpatch_not_compared,
+   outside the score. Report which were compared. If the user says their file covers others, or
+   fewer, pass organizations to each read tool.
 """
 
 
@@ -120,8 +128,18 @@ def build_server(instance_url: str) -> MCPServer:
     )
     server.add_tool(get_jurisdiction_people, description="A jurisdiction's current officials (open memberships) and its civicpatch page.")
     server.add_tool(list_roster_comparisons, description="Saved comparisons, newest first, each with its page_url.")
-    server.add_tool(get_roster_comparison, description="A saved comparison: state rates, then jurisdictions, most unmatched first.")
-    server.add_tool(get_roster_comparison_jurisdiction, description="One jurisdiction's people in a saved comparison.")
+    server.add_tool(
+        get_roster_comparison,
+        description=(
+            "A saved comparison: state rates, then jurisdictions, most unmatched first, then the organizations "
+            "of civicpatch's people with their matched counts. Counts compare compared_organizations only."
+        ),
+    )
+    server.add_tool(get_roster_comparison_jurisdiction, description="One jurisdiction's compared people in a saved comparison.")
+    server.add_tool(
+        list_roster_comparison_jurisdictions,
+        description="A saved comparison's jurisdictions and its state's others (not compared), by name.",
+    )
     server.add_tool(
         get_roster_comparison_people,
         description=(
@@ -136,7 +154,10 @@ def build_server(instance_url: str) -> MCPServer:
     )
     server.add_tool(
         add_roster_comparison_rows,
-        description=f"Add up to {MAX_ROWS_PER_BATCH} converted rows to a draft. Call again for the next batch.",
+        description=(
+            f"Add up to {MAX_ROWS_PER_BATCH} converted rows to a draft. Call again for the next batch. "
+            "Safe to resend a batch: a row identical to one already in the draft replaces it."
+        ),
     )
     server.add_tool(
         finish_roster_comparison,
@@ -171,16 +192,28 @@ async def list_roster_comparisons(page: int = 1, per_page: int = 20) -> dict:
     return page_of_runs.model_dump(mode="json")
 
 
-async def get_roster_comparison(run_id: str) -> dict:
+async def get_roster_comparison(run_id: str, organizations: list[str] | None = None) -> dict:
+    """`organizations`: the ones to compare; left out, every one with a match."""
     try:
-        return (await roster_comparisons.get_run_summary(run_id)).model_dump(mode="json")
+        return (await roster_comparisons.get_run_summary(run_id, organizations)).model_dump(mode="json")
     except AGENT_REFUSALS as error:
         raise ToolError(str(error)) from error
 
 
-async def get_roster_comparison_jurisdiction(run_id: str, jurisdiction_ocdid: str) -> list[dict]:
+async def list_roster_comparison_jurisdictions(run_id: str, compared: bool | None = None) -> list[dict]:
+    """`compared`: true for those the uploaded data has rows for, false for the state's others."""
     try:
-        people = await roster_comparisons.get_run_people(run_id, jurisdiction_ocdid)
+        jurisdictions = await roster_comparisons.get_run_jurisdictions(run_id, compared)
+    except AGENT_REFUSALS as error:
+        raise ToolError(str(error)) from error
+    return [jurisdiction.model_dump(mode="json") for jurisdiction in jurisdictions]
+
+
+async def get_roster_comparison_jurisdiction(
+    run_id: str, jurisdiction_ocdid: str, organizations: list[str] | None = None
+) -> list[dict]:
+    try:
+        people = await roster_comparisons.get_run_people(run_id, jurisdiction_ocdid, organizations)
     except AGENT_REFUSALS as error:
         raise ToolError(str(error)) from error
     return [person.model_dump(mode="json") for person in people]
@@ -191,13 +224,14 @@ async def get_roster_comparison_people(
     outcome: PersonOutcome | None = None,
     field: ComparedField | None = None,
     level: FieldFilter | None = None,
+    organizations: list[str] | None = None,
     page: int = 1,
     per_page: int = 50,
 ) -> dict:
     try:
         people_filter = PeopleFilter(outcome=outcome, field=field, level=level)
         page_of_people = await roster_comparisons.get_run_people_page(
-            run_id, people_filter, max(page, 1), max(1, min(per_page, PEOPLE_PAGE_LIMIT))
+            run_id, people_filter, organizations, max(page, 1), max(1, min(per_page, PEOPLE_PAGE_LIMIT))
         )
     except AGENT_REFUSALS as error:
         raise ToolError(str(error)) from error

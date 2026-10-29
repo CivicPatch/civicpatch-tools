@@ -21,6 +21,7 @@ from schemas.roster_comparisons import (
     RosterComparisonListPage,
     RosterComparisonUpload,
     RowsRefused,
+    RunJurisdictionsResponse,
     RunPeoplePage,
     RunPeopleQuery,
     SummaryResponse,
@@ -29,6 +30,11 @@ from schemas.roster_comparisons import (
 # Enforced by `lib.body_limit.PathBodyLimit` in main.py, before the body is read.
 MAX_UPLOAD_BYTES = 20 * 1024 * 1024
 UPLOAD_PATH = "/api/v1/roster-comparisons"
+
+_Organizations = Annotated[
+    list[str] | None,
+    Query(description="The organizations to compare; left out, every one with a match."),
+]
 
 
 def _maintainer() -> Identity:
@@ -81,17 +87,31 @@ def get_router() -> APIRouter:
         return await service.list_runs(page, per_page)
 
     @router.get("/{run_id}", response_model=SummaryResponse)
-    async def get_roster_comparison_endpoint(run_id: uuid.UUID, _: Identity = _maintainer()) -> dict:
-        """A run's rates for the state and each jurisdiction, most unmatched first."""
-        return {"data": await _or_404(service.get_run_summary(str(run_id)))}
+    async def get_roster_comparison_endpoint(
+        run_id: uuid.UUID, organizations: _Organizations = None, _: Identity = _maintainer()
+    ) -> dict:
+        """A run's rates for the state and each jurisdiction, most unmatched first, and the
+        organizations of civicpatch's people in it."""
+        return {"data": await _or_404(service.get_run_summary(str(run_id), organizations))}
+
+    @router.get("/{run_id}/jurisdictions", response_model=RunJurisdictionsResponse)
+    async def list_roster_comparison_jurisdictions_endpoint(
+        run_id: uuid.UUID,
+        compared: bool | None = Query(
+            None, description="true: those the uploaded data has rows for; false: the state's others. Left out, both."
+        ),
+        _: Identity = _maintainer(),
+    ) -> dict:
+        """A run's jurisdictions and its state's others, by name. Their counts are in the summary."""
+        return {"data": await _or_404(service.get_run_jurisdictions(str(run_id), compared))}
 
     @router.get("/{run_id}/jurisdictions/{jurisdiction_ocdid:path}", response_model=PeopleResponse)
     async def get_roster_comparison_jurisdiction_endpoint(
-        run_id: uuid.UUID, jurisdiction_ocdid: str, _: Identity = _maintainer()
+        run_id: uuid.UUID, jurisdiction_ocdid: str, organizations: _Organizations = None, _: Identity = _maintainer()
     ) -> dict:
         """One jurisdiction's people: uploaded rows with their outcome, field levels and warnings,
         then civicpatch's people no row matched."""
-        return {"data": await _or_404(service.get_run_people(str(run_id), jurisdiction_ocdid))}
+        return {"data": await _or_404(service.get_run_people(str(run_id), jurisdiction_ocdid, organizations))}
 
     @router.get("/{run_id}/people", response_model=RunPeoplePage)
     async def get_roster_comparison_people_endpoint(
@@ -100,7 +120,9 @@ def get_router() -> APIRouter:
         """A run's people across every jurisdiction, paged: those with one outcome, or the matched
         people behind a field's conflict or one-side-has-more count."""
         people_filter = PeopleFilter(outcome=query.outcome, field=query.field, level=query.level)
-        return await _or_404(service.get_run_people_page(str(run_id), people_filter, query.page, query.per_page))
+        return await _or_404(
+            service.get_run_people_page(str(run_id), people_filter, query.organizations, query.page, query.per_page)
+        )
 
     return router
 

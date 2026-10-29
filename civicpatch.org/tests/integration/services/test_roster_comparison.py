@@ -14,7 +14,7 @@ from database.database import get_pool
 from database.roster_comparison_drafts import get_roster_comparison_draft
 from database.roster_comparisons import get_roster_comparison_people, get_roster_comparison_run
 from schemas.roster_comparisons import PersonOutcome, RosterComparisonHeader, RosterComparisonUpload, UploadedRow
-from services.roster_comparison import RowsOutsideState, run_roster_comparison
+from services.roster_comparison import RowsOutsideState, get_run_jurisdictions, run_roster_comparison
 from services.roster_comparison_drafts import (
     DraftIsEmpty,
     DraftNotFound,
@@ -124,8 +124,13 @@ async def test_an_upload_is_compared_per_jurisdiction_and_saved(user_id):
     assert run is not None
     assert (run.rates.outcomes.matched, run.rates.outcomes.only_in_uploaded_data) == (1, 1)
     assert run.jurisdictions_not_named == 1
-    [jane] = await get_roster_comparison_people(run_id, _BARRE)
+    [jane] = await get_roster_comparison_people(run_id, _BARRE, [])
     assert (jane.outcome, jane.person_id) == (PersonOutcome.MATCHED, _JANE)
+    assert jane.organizations == ["Officers"]
+    everyone = await get_run_jurisdictions(run_id, None)
+    not_compared = await get_run_jurisdictions(run_id, False)
+    assert {(j.jurisdiction_ocdid, j.compared) for j in everyone} == {(_BARRE, True), (_STOWE, True), (_RUTLAND, False)}
+    assert [j.jurisdiction_ocdid for j in not_compared] == [_RUTLAND]
 
 
 _HEADER = RosterComparisonHeader(state="zr", source_columns={"name": ["Official"]})

@@ -8,7 +8,9 @@ import pytest_asyncio
 
 from database.database import get_pool
 from database.roster_comparisons import (
+    count_roster_comparison_not_compared,
     get_roster_comparison_jurisdictions,
+    get_roster_comparison_organizations,
     get_roster_comparison_people,
     get_roster_comparison_people_page,
     get_roster_comparison_run,
@@ -112,9 +114,65 @@ async def test_a_run_reads_back_in_its_parts(user_id):
     jurisdictions = await get_roster_comparison_jurisdictions(run_id)
     assert [j.jurisdiction_ocdid for j in jurisdictions] == [_BARRE, _STOWE]
 
-    people = await get_roster_comparison_people(run_id, _BARRE)
+    people = await get_roster_comparison_people(run_id, _BARRE, [])
     assert [p.outcome for p in people] == [PersonOutcome.MATCHED] * 3 + [PersonOutcome.ONLY_IN_CIVICPATCH]
     assert people[0].uploaded is not None and people[0].uploaded.source_row == 2
+
+
+@pytest.mark.integration
+@pytest.mark.asyncio
+async def test_a_runs_organizations_count_civicpatchs_people_most_matched_first(user_id):
+    def civicpatch(outcome: PersonOutcome, *organizations: str) -> PersonComparison:
+        return PersonComparison(outcome=outcome, person_id=_PERSON_ID, organizations=list(organizations))
+
+    matched, only = PersonOutcome.MATCHED, PersonOutcome.ONLY_IN_CIVICPATCH
+    comparison = _comparison().model_copy(update={"jurisdictions": [
+        JurisdictionComparison(jurisdiction_ocdid=_BARRE, rates=ComparisonRates(), people=[
+            civicpatch(matched, "Selectboard", "Board of Listers"), civicpatch(only, "Town Auditors"),
+        ]),
+        JurisdictionComparison(jurisdiction_ocdid=_STOWE, rates=ComparisonRates(), people=[
+            civicpatch(matched, "Selectboard"), civicpatch(only, "Board of Listers"),
+        ]),
+    ]})
+    run_id = await insert_roster_comparison(user_id, comparison)
+
+    organizations = await get_roster_comparison_organizations(run_id)
+
+    assert [(o.name, o.jurisdictions, o.matched, o.civicpatch_people) for o in organizations] == [
+        ("Selectboard", 2, 2, 2),
+        ("Board of Listers", 2, 1, 2),
+        ("Town Auditors", 1, 0, 1),
+    ]
+
+
+@pytest.mark.integration
+@pytest.mark.asyncio
+async def test_civicpatch_only_people_outside_the_compared_organizations_are_left_out(user_id):
+    def civicpatch(name: str, outcome: PersonOutcome, *organizations: str) -> PersonComparison:
+        return PersonComparison(
+            outcome=outcome, person_id=_PERSON_ID, person_name=name, organizations=list(organizations)
+        )
+
+    only = PersonOutcome.ONLY_IN_CIVICPATCH
+    people = [
+        civicpatch("Matched lister", PersonOutcome.MATCHED, "Board of Listers"),
+        civicpatch("Selectboard", only, "Selectboard"),
+        civicpatch("Both", only, "Board of Listers", "Selectboard"),
+        civicpatch("Lister", only, "Board of Listers"),
+        civicpatch("Saved before organizations", only),
+    ]
+    comparison = _comparison().model_copy(update={"jurisdictions": [
+        JurisdictionComparison(jurisdiction_ocdid=_BARRE, rates=ComparisonRates(), people=people),
+    ]})
+    run_id = await insert_roster_comparison(user_id, comparison)
+
+    not_compared = await count_roster_comparison_not_compared(run_id, ["Selectboard"])
+    listed = await get_roster_comparison_people(run_id, _BARRE, ["Selectboard"])
+    total, page = await get_roster_comparison_people_page(run_id, only, None, [], ["Selectboard"], limit=50, offset=0)
+
+    assert not_compared == {_BARRE: 1}
+    assert [p.person_name for p in listed] == ["Matched lister", "Selectboard", "Both", "Saved before organizations"]
+    assert (total, [p.person.person_name for p in page]) == (3, ["Selectboard", "Both", "Saved before organizations"])
 
 
 @pytest.mark.integration
@@ -123,7 +181,7 @@ async def test_a_fields_people_page_by_level(user_id):
     run_id = await insert_roster_comparison(user_id, _comparison())
 
     total, page = await get_roster_comparison_people_page(
-        run_id, None, ComparedField.EMAILS, [FieldLevel.DIFFERS], limit=1, offset=1
+        run_id, None, ComparedField.EMAILS, [FieldLevel.DIFFERS], [], limit=1, offset=1
     )
 
     assert total == 2
@@ -136,9 +194,9 @@ async def test_an_outcomes_people_across_the_run(user_id):
     run_id = await insert_roster_comparison(user_id, _comparison())
 
     total, page = await get_roster_comparison_people_page(
-        run_id, PersonOutcome.ONLY_IN_CIVICPATCH, None, [], limit=50, offset=0
+        run_id, PersonOutcome.ONLY_IN_CIVICPATCH, None, [], [], limit=50, offset=0
     )
-    everyone, _ = await get_roster_comparison_people_page(run_id, None, None, [], limit=50, offset=0)
+    everyone, _ = await get_roster_comparison_people_page(run_id, None, None, [], [], limit=50, offset=0)
 
     assert total == 1
     assert [(p.jurisdiction_ocdid, p.person.person_name) for p in page] == [(_BARRE, "Maria")]

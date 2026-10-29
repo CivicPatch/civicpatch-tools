@@ -37,6 +37,7 @@ DOCUMENTED_ROUTES = {
     ("POST", "/api/v1/roster-comparisons/drafts/{draft_id}/finish"),
     ("GET", "/api/v1/roster-comparisons/{run_id}"),
     ("GET", "/api/v1/roster-comparisons/{run_id}/jurisdictions/{jurisdiction_ocdid}"),
+    ("GET", "/api/v1/roster-comparisons/{run_id}/jurisdictions"),
     ("GET", "/api/v1/roster-comparisons/{run_id}/people"),
 }
 

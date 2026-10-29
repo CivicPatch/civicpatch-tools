@@ -2,7 +2,7 @@ import { html } from "lit-html";
 import { CANDIDATE_REASON_LABELS, OUTCOME_LABELS } from "./labels.js";
 import { outcomeBar } from "./summary.js";
 import { fieldValues, rowRef, warningIcon, warningList } from "./values.js";
-import type { JurisdictionRates, PersonComparison } from "./types.js";
+import type { JurisdictionRates, OutcomeCounts, PersonComparison } from "./types.js";
 
 export interface JurisdictionsView {
   jurisdictions: JurisdictionRates[];
@@ -59,6 +59,7 @@ function jurisdictionRows(jurisdiction: JurisdictionRates, view: JurisdictionsVi
     >
       <td>
         <a href=${view.pageUrl(ocdid)} @click=${(e: Event) => e.stopPropagation()}>${placeName(ocdid)}</a>
+        ${civicpatchHasNoOne(outcomes) ? html`<span class="rc-muted">civicpatch has no one</span>` : null}
         ${jurisdiction.rates.rows_with_warnings
           ? html`<span class="rc-warning-count">${warningIcon} ${jurisdiction.rates.rows_with_warnings}</span>`
           : null}
@@ -118,6 +119,16 @@ export function civicpatchSide(person: PersonComparison, pageUrl: string) {
       ><a href=${pageUrl}>${candidate.name}</a>
       <span class="rc-muted">(${CANDIDATE_REASON_LABELS[candidate.reason] ?? candidate.reason})</span></span
     >`,
+  );
+}
+
+/** No one of civicpatch's in the jurisdiction, compared or not: every row is only in the uploaded data. */
+export function civicpatchHasNoOne(outcomes: OutcomeCounts): boolean {
+  return !(
+    outcomes.matched ||
+    outcomes.possible_match ||
+    outcomes.only_in_civicpatch ||
+    outcomes.only_in_civicpatch_not_compared
   );
 }
 
