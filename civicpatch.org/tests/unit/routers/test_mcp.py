@@ -64,6 +64,7 @@ async def test_the_server_lists_its_read_tools_and_names_itself_in_the_instructi
         "get_roster_comparison",
         "get_roster_comparison_jurisdiction",
         "list_roster_comparison_jurisdictions",
+        "get_roster_comparison_report",
         "get_roster_comparison_people",
         "start_roster_comparison",
         "add_roster_comparison_rows",

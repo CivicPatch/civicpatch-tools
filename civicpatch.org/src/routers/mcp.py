@@ -98,8 +98,9 @@ To compare a user's file (usually one state's officials):
    jurisdiction_ocdid is not in the state. Nothing was saved: the whole upload, or with batches
    only that batch (earlier batches stay). Fix those rows as in step 3, tell the user which rows
    failed and what you changed each to, then send again, with those fixes in corrections.
-7. The response gives the run's id, its page_url and its rates. End your reply with the page_url
-   on a line of its own, then read the run with get_roster_comparison, any jurisdiction the user
+7. The response gives the run's id, its page_url and its rates. End your reply with
+   get_roster_comparison_report's markdown, as it is: it ends with the page's link. Do not count
+   or summarise the run yourself. Then read the run with get_roster_comparison, any jurisdiction the user
    asks about with get_roster_comparison_jurisdiction, and everyone with one outcome across the
    state (e.g. everyone only in the user's file) with get_roster_comparison_people. The state's
    jurisdictions the file has no row for are not compared: count in jurisdictions_not_named,
@@ -134,6 +135,10 @@ def build_server(instance_url: str) -> MCPServer:
             "A saved comparison: state rates, then jurisdictions, most unmatched first, then the organizations "
             "of civicpatch's people with their matched counts. Counts compare compared_organizations only."
         ),
+    )
+    server.add_tool(
+        get_roster_comparison_report,
+        description="A saved comparison as Markdown, from its saved counts: give it to the user as it is.",
     )
     server.add_tool(get_roster_comparison_jurisdiction, description="One jurisdiction's compared people in a saved comparison.")
     server.add_tool(
@@ -196,6 +201,14 @@ async def get_roster_comparison(run_id: str, organizations: list[str] | None = N
     """`organizations`: the ones to compare; left out, every one with a match."""
     try:
         return (await roster_comparisons.get_run_summary(run_id, organizations)).model_dump(mode="json")
+    except AGENT_REFUSALS as error:
+        raise ToolError(str(error)) from error
+
+
+async def get_roster_comparison_report(run_id: str, organizations: list[str] | None = None) -> dict:
+    """`organizations`: the ones to compare; left out, every one with a match."""
+    try:
+        return (await roster_comparisons.get_run_report(run_id, organizations)).model_dump(mode="json")
     except AGENT_REFUSALS as error:
         raise ToolError(str(error)) from error
 
