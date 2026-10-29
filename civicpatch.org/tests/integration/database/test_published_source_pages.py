@@ -193,3 +193,19 @@ async def test_the_page_comes_with_its_live_records_and_their_photos():
     assert [(r.name, r.cdn_image) for r in page.known_records] == [
         ("Ana Reyes", "https://cdn.zz/ana.jpg")
     ]
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_a_record_comes_back_with_the_organization_label_the_page_wrote():
+    changeset_id, _ = await _scrape(_T0)
+    await insert_source_records(
+        changeset_id,
+        _OCDID,
+        {_PERSON: [{"name": "Carol Bingham", "label": "Lister", "organization_label": "Listers",
+                    "source_url": _URL, "organization_id": _ORGANIZATION}]},
+    )
+
+    [page] = await published_source_pages(_OCDID)
+
+    assert [(r.name, r.organization_label) for r in page.known_records] == [("Carol Bingham", "Listers")]

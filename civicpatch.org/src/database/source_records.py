@@ -16,9 +16,9 @@ from database.database import get_pool
 
 _INSERT_RECORD = """
     INSERT INTO source_records
-        (id, changeset_id, jurisdiction_ocdid, name, other_names, label, source_url,
+        (id, changeset_id, jurisdiction_ocdid, name, other_names, label, organization_label, source_url,
          url, phone, email, image, cdn_image, start_date, end_date, organization_id, person_id)
-    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
 """
 
 
@@ -32,6 +32,7 @@ def _record_row(
         record["name"],
         record.get("other_names") or [],
         record["label"],
+        record.get("organization_label"),
         record["source_url"],
         record.get("url"),
         record.get("phone"),

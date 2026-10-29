@@ -142,6 +142,29 @@ def test_merge_labels_skips_empty():
 # --- normalize_record ---
 
 
+def test_normalize_record_keeps_a_photo_already_served():
+    """A record replayed from an unchanged page arrives with its photo already on the CDN."""
+    record = PersonSourceRecord(
+        name="Carol Bingham", label="Lister", source_url="test", cdn_image="https://cdn.zz/carol.jpg"
+    )
+
+    assert _normalize(record).cdn_image == "https://cdn.zz/carol.jpg"
+
+
+def test_normalize_record_leaves_the_record_it_was_given_untouched():
+    record = PersonSourceRecord(name="John Doe", label="mayor", email="www.example.com", source_url="test")
+
+    _normalize(record)
+
+    assert record.url is None and record.email == "www.example.com"
+
+
+def test_normalize_record_keeps_the_organization_label_as_the_page_wrote_it():
+    record = PersonSourceRecord(name="Carol Bingham", label="Lister", organization_label="Listers", source_url="test")
+
+    assert _normalize(record).organization_label == "Listers"
+
+
 def test_normalize_record_strips_whitespace_from_email():
     record = PersonSourceRecord(
         name="John Doe",
