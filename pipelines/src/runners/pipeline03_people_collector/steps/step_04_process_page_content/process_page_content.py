@@ -6,7 +6,7 @@ from urllib.parse import urljoin
 
 import services.open_router.llm as open_router_llm
 import shared.utils.name_utils as name_utils
-from runners.pipeline03_people_collector.constants import CHUNK_OVERLAP_CHARS, DIVISION_REQUIREMENT_TOLERANCE, MINIMUM_NUM_PEOPLE, RELEVANCE_MAX_OUTPUT_TOKENS
+from runners.pipeline03_people_collector.constants import DIVISION_REQUIREMENT_TOLERANCE, MINIMUM_NUM_PEOPLE, RELEVANCE_MAX_OUTPUT_TOKENS
 from runners.pipeline03_people_collector.schemas import (
     ExpectedMembership,
     Link,
@@ -21,6 +21,10 @@ from runners.pipeline03_people_collector.schemas import (
     ProcessPageContentStep,
     ProgressState,
     RelevantPageResponseSchema,
+)
+from runners.pipeline03_people_collector.steps.step_04_process_page_content.content_chunks import (
+    content_chunks,
+    merged_relevance,
 )
 from runners.pipeline03_people_collector.steps.step_04_process_page_content.organization_progress import (
     organization_needs,
@@ -51,7 +55,6 @@ from runners.pipeline03_people_collector.utils.link_discovery import (
     update_links,
 )
 from pydantic import BaseModel
-from semantic_text_splitter import MarkdownSplitter
 from shared.utils import (
     config_utils,
     data_path_utils,
@@ -89,12 +92,6 @@ class ProcessingSetup:
 
 
 
-def _split_content_into_chunks(content: str, max_chars: int) -> list[str]:
-    if len(content) <= max_chars:
-        return [content]
-    return MarkdownSplitter(max_chars, overlap=CHUNK_OVERLAP_CHARS).chunks(content)
-
-
 async def _process_with_llm_in_chunks(
     source_url: str,
     pipeline_run_id,
@@ -107,9 +104,7 @@ async def _process_with_llm_in_chunks(
     seed: Optional[int],
     logger,
 ) -> List[PersonSourceRecord]:
-    chunks = _split_content_into_chunks(
-        content, open_router_llm.max_content_chars(prompt)
-    )
+    chunks = content_chunks(content, prompt)
     if len(chunks) > 1:
         logger.info(f"Content split into {len(chunks)} chunks for LLM: open_router")
     all_found: List[PersonSourceRecord] = []
@@ -353,22 +348,27 @@ async def check_page_relevance(
     prompt = relevance_prompt(
         page_to_process.url, context.data.config, known_roles, known_organizations
     )
-    raw_response = await open_router_llm.run_prompt(
-        context.pipeline_run_id,
-        context.data.jurisdiction_ocdid,
-        prompt,
-        prompt_name="relevant_page",
-        response_schema=RelevantPageResponseSchema,
-        content=content,
-        source_url=page_to_process.url,
-        max_output_tokens=RELEVANCE_MAX_OUTPUT_TOKENS,
-    )
-    response = RelevantPageResponseSchema.model_validate(raw_response)
+    chunks = content_chunks(content, prompt)
+    answers: List[RelevantPageResponseSchema] = []
+    for index, chunk in enumerate(chunks, start=1):
+        raw_response = await open_router_llm.run_prompt(
+            context.pipeline_run_id,
+            context.data.jurisdiction_ocdid,
+            prompt,
+            prompt_name="relevant_page",
+            response_schema=RelevantPageResponseSchema,
+            content=chunk,
+            source_url=page_to_process.url,
+            chunk_index=index,
+            chunk_count=len(chunks),
+            max_output_tokens=RELEVANCE_MAX_OUTPUT_TOKENS,
+        )
+        answers.append(RelevantPageResponseSchema.model_validate(raw_response))
     return apply_relevance(
         context,
         page_to_process,
         content,
-        response,
+        merged_relevance(answers),
         known_roles,
         known_organizations,
         expected_memberships,
