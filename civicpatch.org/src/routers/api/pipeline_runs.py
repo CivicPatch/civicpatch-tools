@@ -329,6 +329,20 @@ def get_router(api_key_header):
             raise HTTPException(status_code=404, detail="Jurisdiction not found")
         return {**config.model_dump(mode="json"), "pipeline_run_cap_usd": pipeline_run.get("pipeline_run_cap_usd")}
 
+    @router.get("/{pipeline_run_id}/extras_organizations/{input_hash}", include_in_schema=False)
+    async def get_extras_organizations_by_input_hash_endpoint(
+        pipeline_run_id: str,
+        input_hash: str,
+        _: Identity = Depends(require_route_access(RouteCategory.SERVICE)),
+    ):
+        """An organizations run's way to copy another jurisdiction's answer read from the same inputs."""
+        if not await get_pipeline_run(pipeline_run_id):
+            raise HTTPException(status_code=404, detail="Pipeline run not found")
+        organizations = await extras_organizations_service.get_extras_organizations_by_input_hash(input_hash)
+        if organizations is None:
+            raise HTTPException(status_code=404, detail="No answer read from these inputs")
+        return {"data": organizations.model_dump(mode="json")}
+
     @router.post("/{pipeline_run_id}/llm_calls", include_in_schema=False)
     async def record_llm_calls_endpoint(
         pipeline_run_id: str,

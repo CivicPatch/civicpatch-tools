@@ -596,6 +596,9 @@ class GoverningLawPost(BaseModel):
 class GoverningLawOrganizationsExtras(BaseModel):
     # The `extras_governing_law.collected_at` these were read from: a newer one means read again.
     governing_law_collected_at: datetime
+    # Everything the answer was read from, hashed: a run with the same hash copies these posts.
+    # None on answers written before it existed, which are never copied.
+    input_hash: str | None = None
 
 
 class GoverningLawOrganizations(BaseModel):

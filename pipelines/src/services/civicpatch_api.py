@@ -4,7 +4,7 @@ from typing import List, Optional
 import httpx
 from fastapi import Request
 from pipelines_environment import get_env_vars
-from shared.schemas import JurisdictionExtras, KnownOrganization, LLMCall
+from shared.schemas import GoverningLawOrganizations, JurisdictionExtras, KnownOrganization, LLMCall
 from shared.utils.config_utils import (
     RoleConfig,
 )
@@ -282,6 +282,23 @@ async def fetch_collector_config(client: httpx.AsyncClient, logger, pipeline_run
         )
         resp.raise_for_status()
         return resp.json()
+
+    return await with_retry(logger, _fetch)
+
+
+async def get_extras_organizations_by_input_hash(
+    client: httpx.AsyncClient, logger, pipeline_run_id: str, input_hash: str
+) -> GoverningLawOrganizations | None:
+    """Another jurisdiction's answer read from the same inputs, or None when there is none yet."""
+    async def _fetch() -> GoverningLawOrganizations | None:
+        env = get_env_vars()
+        resp = await client.get(
+            f"{env['CIVICPATCH_ORG_URL']}/api/v1/pipeline_runs/{pipeline_run_id}/extras_organizations/{input_hash}"
+        )
+        if resp.status_code == httpx.codes.NOT_FOUND:
+            return None
+        resp.raise_for_status()
+        return GoverningLawOrganizations.model_validate(resp.json()["data"])
 
     return await with_retry(logger, _fetch)
 

@@ -510,6 +510,30 @@ def test_a_people_run_started_without_the_cache_is_given_no_published_pages(serv
 
 
 @pytest.mark.unit
+@pytest.mark.parametrize("stored", [True, False])
+def test_an_organizations_run_finds_an_answer_by_its_input_hash(service_client, stored):
+    organizations = GoverningLawOrganizations(
+        posts=[], extras=GoverningLawOrganizationsExtras(governing_law_collected_at=datetime(2026, 10, 22, tzinfo=timezone.utc), input_hash="7c21")
+    )
+    found = AsyncMock(return_value=organizations if stored else None)
+    with patch("routers.api.pipeline_runs.get_pipeline_run", new_callable=AsyncMock, return_value={"jurisdiction_ocdid": TEST_OCDID}), patch(
+        "routers.api.pipeline_runs.extras_organizations_service.get_extras_organizations_by_input_hash", new=found
+    ):
+        response = service_client.get(f"/pipeline_runs/{TEST_CHANGESET_ID}/extras_organizations/7c21")
+
+    assert response.status_code == (200 if stored else 404), response.text
+    if stored:
+        assert response.json() == {"data": organizations.model_dump(mode="json")}
+    found.assert_awaited_once_with("7c21")
+
+
+@pytest.mark.unit
+def test_an_unknown_run_finds_no_answer_by_input_hash(service_client):
+    with patch("routers.api.pipeline_runs.get_pipeline_run", new_callable=AsyncMock, return_value=None):
+        assert service_client.get(f"/pipeline_runs/{TEST_CHANGESET_ID}/extras_organizations/7c21").status_code == 404
+
+
+@pytest.mark.unit
 def test_the_collector_config_of_an_unknown_run_or_a_scrape_is_404(service_client):
     with patch("routers.api.pipeline_runs.get_pipeline_run", new_callable=AsyncMock, return_value=None):
         assert service_client.get(f"/pipeline_runs/{TEST_CHANGESET_ID}/collector_config").status_code == 404

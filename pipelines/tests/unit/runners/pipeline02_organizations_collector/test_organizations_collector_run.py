@@ -16,7 +16,18 @@ from runners.pipeline02_organizations_collector.schemas import (
 )
 from runners.pipeline02_organizations_collector.transitions.graph import ORGANIZATIONS_COLLECTOR_TRANSITIONS
 from runners.pipeline02_organizations_collector.transitions.main import TRANSITION_MAP
-from shared.schemas import FoundBy, GovernmentForm, GoverningLaw, GoverningLawKind
+from shared.schemas import (
+    FoundBy,
+    GovernmentForm,
+    GoverningLaw,
+    GoverningLawKind,
+    GoverningLawOrganizations,
+    GoverningLawOrganizationsExtras,
+    GoverningLawPost,
+    QuoteScope,
+    Source,
+    SourceExtras,
+)
 from shared.utils.government_forms import DerivedOrganization
 from shared.utils.layered_config import (
     Classification,
@@ -92,10 +103,17 @@ class _Run(NamedTuple):
     states: list[str]
     context: OrganizationsCollectorContext
     pick: AsyncMock
+    api: MagicMock
 
 
-async def _walk(context: OrganizationsCollectorContext, pages: dict[str, str] | None = None, picked: list[str] | None = None) -> _Run:
-    """`pages` maps a source page id to its cached text; `picked` is the model's heading pick."""
+async def _walk(
+    context: OrganizationsCollectorContext,
+    pages: dict[str, str] | None = None,
+    picked: list[str] | None = None,
+    stored: GoverningLawOrganizations | None = None,
+) -> _Run:
+    """`pages` maps a source page id to its cached text; `picked` is the model's heading pick;
+    `stored` is an answer cp.org holds for the run's input hash."""
     pages = pages or {}
     engine_api = MagicMock()
     engine_api.fetch_pipeline_run_status = AsyncMock(return_value=PipelineRunStatus.RUNNING)
@@ -104,6 +122,7 @@ async def _walk(context: OrganizationsCollectorContext, pages: dict[str, str] | 
     api.get_governing_law_source_page = AsyncMock(
         side_effect=lambda _client, _logger, _ocdid, page_id: {"id": page_id, "source_url": f"{_CHAPTERS}/{page_id}", "text": pages[page_id]}
     )
+    api.get_extras_organizations_by_input_hash = AsyncMock(return_value=stored)
     api.patch_jurisdiction_extras = AsyncMock()
     pick = AsyncMock(return_value={"sections": picked or []})
     seen: list[OrganizationsCollectorContext] = []
@@ -118,7 +137,7 @@ async def _walk(context: OrganizationsCollectorContext, pages: dict[str, str] | 
     ), patch(f"{MAIN}.open_router_llm.run_prompt", new=pick):
         walked = await run_pipeline(context, MagicMock(), Machine(transitions=ORGANIZATIONS_COLLECTOR_TRANSITIONS, handlers=handlers), MagicMock())
     states = [call.kwargs["status"] for call in engine_api.update_pipeline_run_status.call_args_list]
-    return _Run(states=states, context=seen[0] if seen else walked, pick=pick)
+    return _Run(states=states, context=seen[0] if seen else walked, pick=pick, api=api)
 
 
 def test_every_state_the_engine_handles_is_in_the_graph_and_vice_versa():
@@ -187,6 +206,40 @@ async def test_a_pick_naming_nothing_falls_back_to_the_headings_that_name_the_go
     run = await _walk(_context(_governing_law(["page-1"])), {"page-1": _LONG_CHARTER}, picked=[])
 
     assert run.context.data.selected_governing_law_text == "# Charter\n\n- **§ 2. Selectboard; election**\nThe Selectboard shall consist of five members elected at large."
+
+
+def _stored_answer() -> GoverningLawOrganizations:
+    """Another town's answer from the same page: it cites that town's row for the page."""
+    member = GoverningLawPost(
+        role="member", label="Selectboard member", organization_id="Select Board", maximum_memberships=5,
+        sources=[Source(url=f"{_CHAPTERS}/page-1", note="five members", extras=SourceExtras(source_page_id="other-town-row", matched_in=QuoteScope.SENTENCE))],
+    )
+    return GoverningLawOrganizations(
+        posts=[member], extras=GoverningLawOrganizationsExtras(governing_law_collected_at=datetime(2026, 10, 1, tzinfo=timezone.utc), input_hash="7c21")
+    )
+
+
+@pytest.mark.asyncio
+async def test_an_answer_read_from_the_same_inputs_is_copied_without_asking_the_model():
+    run = await _walk(_context(_governing_law(["page-1"])), {"page-1": _LONG_CHARTER}, stored=_stored_answer())
+
+    assert run.states == ["INIT", "SELECT_SECTIONS", "WRITE", "SUCCESS"]
+    run.pick.assert_not_called()
+    [call] = run.api.patch_jurisdiction_extras.await_args_list
+    written = call.args[2].extras_organizations
+    assert [post.label for post in written.posts] == ["Selectboard member"]
+    assert written.posts[0].sources[0].extras.source_page_id == "page-1"
+    assert written.extras.governing_law_collected_at == datetime(2026, 10, 19, tzinfo=timezone.utc)
+    assert written.extras.input_hash == run.api.get_extras_organizations_by_input_hash.await_args.args[3]
+
+
+@pytest.mark.asyncio
+async def test_with_nothing_to_copy_the_law_is_read_and_the_hash_kept_for_write():
+    run = await _walk(_context(_governing_law(["page-1"])), {"page-1": _SHORT_CHARTER})
+
+    [call] = run.api.get_extras_organizations_by_input_hash.await_args_list
+    assert run.context.data.input_hash == call.args[3]
+    assert run.context.data.pending_asks
 
 
 @pytest.mark.asyncio

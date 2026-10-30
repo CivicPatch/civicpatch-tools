@@ -118,6 +118,8 @@ class OrganizationsCollectorData(BaseModel):
     stopped_at_cost_cap: bool = False
     # VERIFY's latest decision on every role asked.
     outcomes: Optional[RoleOutcomes] = None
+    # SELECT_SECTIONS' hash of what this run reads and asks; None when there was no law to read.
+    input_hash: Optional[str] = None
     organizations: Optional[GoverningLawOrganizations] = None
 
 

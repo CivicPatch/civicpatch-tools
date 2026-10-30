@@ -57,6 +57,10 @@ async def get_extras_organizations(jurisdiction_ocdid: str) -> GoverningLawOrgan
     return row.extras_organizations if row else None
 
 
+async def get_extras_organizations_by_input_hash(input_hash: str) -> GoverningLawOrganizations | None:
+    return await extras_organizations_db.get_extras_organizations_by_input_hash(input_hash)
+
+
 async def collector_config(jurisdiction_ocdid: str) -> CollectorConfig:
     """The jurisdiction's name, its extras_governing_law, its merged config, and its
     government form. The caller adds the run's cap."""
