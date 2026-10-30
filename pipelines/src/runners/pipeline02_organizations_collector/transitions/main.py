@@ -10,6 +10,7 @@ import services.open_router.llm as open_router_llm
 import services.open_router.prompts as open_router_prompts
 from runners.pipeline02_organizations_collector import sections
 from runners.pipeline02_organizations_collector import verify as verify_rules
+from runners.pipeline02_organizations_collector.input_hash import input_hash
 from ..role_asks import RoleAsk, presiding_asks, role_asks
 from ..schemas import (
     FilledBy,
@@ -21,8 +22,16 @@ from ..schemas import (
     PresidingOffice,
     RoleAnswer,
     RoleClaim,
+    RoleOutcomes,
 )
-from shared.schemas import GoverningLawOrganizations, GoverningLawOrganizationsExtras, JurisdictionExtras, PipelineRunLimits
+from shared.schemas import (
+    GoverningLawOrganizations,
+    GoverningLawOrganizationsExtras,
+    GoverningLawPost,
+    JurisdictionExtras,
+    PipelineRunLimits,
+    Source,
+)
 from shared.utils.statuses import PipelineRunStatus
 from utils import cost_utils
 from utils.log_utils import PipelineRunLogger
@@ -47,18 +56,40 @@ async def select_sections(_limits: PipelineRunLimits, logger: PipelineRunLogger,
         )
         for page_id in governing_law.source_page_ids
     ]
-    selected = [
-        f"{sections.PAGE_KIND_TITLES[kind]}\n\n{await _selected_governing_law_text(context, logger, kind_pages)}"
-        for kind, kind_pages in sections.pages_by_kind(pages, governing_law, context.data.config.jurisdiction_config.governing_law)
-    ]
     config = context.data.config
+    law = sections.pages_by_kind(pages, governing_law, config.jurisdiction_config.governing_law)
     asks = role_asks(config.jurisdiction_config, config.name, config.government_form)
     presiding = presiding_asks(config.jurisdiction_config, config.name, config.government_form)
+    hashed = input_hash(law, asks, presiding, ASKS_PER_QUESTION)
+    copied = await civicpatch_api.get_extras_organizations_by_input_hash(client, logger, context.pipeline_run_id, hashed)
+    if copied is not None:
+        logger.info(f"same law and questions as an answer already read: copying its {len(copied.posts)} posts")
+        outcomes = RoleOutcomes(posts=with_page_ids(copied.posts, pages))
+        return _next(context, governing_law_pages=pages, input_hash=hashed, outcomes=outcomes), OrganizationsCollectorStep.WRITE
+    selected = [
+        f"{sections.PAGE_KIND_TITLES[kind]}\n\n{await _selected_governing_law_text(context, logger, kind_pages)}"
+        for kind, kind_pages in law
+    ]
     logger.info(f"{len(asks)} roles to ask about, {len(presiding)} presiding candidates in one question")
     next_context = _next(
-        context, governing_law_pages=pages, selected_governing_law_text="\n\n".join(selected), pending_asks=asks, presiding_asks=presiding
+        context,
+        governing_law_pages=pages,
+        selected_governing_law_text="\n\n".join(selected),
+        pending_asks=asks,
+        presiding_asks=presiding,
+        input_hash=hashed,
     )
     return next_context, OrganizationsCollectorStep.EXTRACT
+
+
+def with_page_ids(posts: List[GoverningLawPost], pages: List[sections.GoverningLawPage]) -> List[GoverningLawPost]:
+    """A copied answer cites another place's page rows; cite this place's, at the same url."""
+    page_ids = {page.source_url: page.id for page in pages}
+    return [post.model_copy(update={"sources": [_with_page_id(source, page_ids) for source in post.sources]}) for post in posts]
+
+
+def _with_page_id(source: Source, page_ids: dict[str, str]) -> Source:
+    return source.model_copy(update={"extras": source.extras.model_copy(update={"source_page_id": page_ids[source.url]})})
 
 
 async def _selected_governing_law_text(context: OrganizationsCollectorContext, logger: PipelineRunLogger, pages: List[sections.GoverningLawPage]) -> str:
@@ -193,7 +224,9 @@ async def write(_limits: PipelineRunLimits, logger: PipelineRunLogger, context: 
         logger.warning(f"cost cap reached: writing {len(outcomes.posts)} posts, some roles unasked")
     organizations = GoverningLawOrganizations(
         posts=outcomes.posts,
-        extras=GoverningLawOrganizationsExtras(governing_law_collected_at=governing_law.collected_at),
+        extras=GoverningLawOrganizationsExtras(
+            governing_law_collected_at=governing_law.collected_at, input_hash=context.data.input_hash
+        ),
     )
     await civicpatch_api.patch_jurisdiction_extras(
         client, context.data.jurisdiction_ocdid, JurisdictionExtras(extras_organizations=organizations)

@@ -40,6 +40,24 @@ async def get_extras_organizations(cur, jurisdiction_ocdid: str) -> GoverningLaw
     return _parsed(row[0]) if row else None
 
 
+async def get_extras_organizations_by_input_hash(input_hash: str) -> GoverningLawOrganizations | None:
+    """The newest answer, from any active jurisdiction, read from the same inputs."""
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            """
+            SELECT extras_organizations
+            FROM jurisdictions
+            WHERE extras_organizations->'extras'->>'input_hash' = %s AND status = 'active'
+            ORDER BY (extras_organizations->'extras'->>'governing_law_collected_at')::timestamptz DESC
+            LIMIT 1
+            """,
+            (input_hash,),
+        )
+        row = await cur.fetchone()
+    return _parsed(row[0]) if row else None
+
+
 async def save_extras_organizations(cur, jurisdiction_ocdid: str, organizations: GoverningLawOrganizations) -> None:
     await cur.execute(
         "UPDATE jurisdictions SET extras_organizations = %s::jsonb WHERE jurisdiction_ocdid = %s",

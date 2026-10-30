@@ -75,6 +75,17 @@ async def test_the_posts_are_written_with_the_law_they_were_read_from():
 
 
 @pytest.mark.asyncio
+async def test_the_posts_are_written_with_the_hash_of_what_was_read():
+    context = _context(_LAW, RoleOutcomes(posts=[_MEMBER]))
+    hashed = context.model_copy(update={"data": context.data.model_copy(update={"input_hash": "7c21"})})
+
+    _, _, patch_extras = await _write(hashed)
+
+    [call] = patch_extras.await_args_list
+    assert call.args[2].extras_organizations.extras.input_hash == "7c21"
+
+
+@pytest.mark.asyncio
 async def test_a_law_that_establishes_nothing_is_written_as_no_posts():
     _, _, patch_extras = await _write(_context(_LAW, RoleOutcomes()))
 

@@ -6,13 +6,14 @@ from unittest.mock import AsyncMock, MagicMock, patch
 
 from services.civicpatch_api import (
     fetch_collector_config,
+    get_extras_organizations_by_input_hash,
     get_governing_law_source_page,
     get_organizations,
     get_roster_source_urls,
     patch_jurisdiction_extras,
     store_governing_law_source_page,
 )
-from shared.schemas import FoundBy, GoverningLaw, GoverningLawKind, JurisdictionExtras
+from shared.schemas import FoundBy, GoverningLaw, GoverningLawKind, GoverningLawOrganizations, JurisdictionExtras
 
 pytestmark = pytest.mark.unit
 
@@ -112,6 +113,30 @@ async def test_a_governing_law_source_page_is_stored_through_cp_org_and_read_bac
     client.get.assert_awaited_once_with(f"https://civicpatch.org/api/v1/jurisdictions/{_OCDID}/governing_law_source_pages/row-1")
     assert stored == row
     assert found["text"] == "§ 1."
+
+
+@pytest.mark.asyncio
+async def test_an_answer_read_from_the_same_inputs_is_asked_for_by_its_hash():
+    stored = {"posts": [], "extras": {"governing_law_collected_at": "2026-10-21T00:00:00Z", "input_hash": "7c21"}}
+    client = MagicMock()
+    client.get = AsyncMock(return_value=_response(stored))
+
+    with patch(f"{MODULE}.get_env_vars", return_value=_ENV):
+        found = await get_extras_organizations_by_input_hash(client, MagicMock(), "run-1", "7c21")
+
+    client.get.assert_awaited_once_with("https://civicpatch.org/api/v1/pipeline_runs/run-1/extras_organizations/7c21")
+    assert found == GoverningLawOrganizations.model_validate(stored)
+
+
+@pytest.mark.asyncio
+async def test_no_answer_read_from_the_same_inputs_is_none():
+    missing = MagicMock()
+    missing.status_code = 404
+    client = MagicMock()
+    client.get = AsyncMock(return_value=missing)
+
+    with patch(f"{MODULE}.get_env_vars", return_value=_ENV):
+        assert await get_extras_organizations_by_input_hash(client, MagicMock(), "run-1", "7c21") is None
 
 
 @pytest.mark.asyncio
