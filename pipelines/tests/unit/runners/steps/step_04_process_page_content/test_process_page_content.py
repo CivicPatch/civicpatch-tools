@@ -21,7 +21,6 @@ from runners.pipeline03_people_collector.steps.step_04_process_page_content.heur
 )
 from runners.pipeline03_people_collector.steps.step_04_process_page_content.process_page_content import (
     _resolve_candidate_urls,
-    _split_content_into_chunks,
     check_page_relevance,
     process_page_content,
     process_with_llm,
@@ -939,6 +938,30 @@ async def test_check_page_relevance_filters_cross_domain_relevant_urls():
     assert "https://seattle.gov/city-council" in result_pending_urls
 
 
+@pytest.mark.asyncio
+async def test_a_page_too_large_for_one_relevance_call_is_asked_in_pieces():
+    """Hancock's ~163k-token page failed the whole run when sent to the relevance check at once."""
+    page = Link(url="https://seattle.gov/council", status=LinkStatus.PREPROCESSED.value, folder_name="council")
+    context = pipeline_run_context_factory(steps={})
+    context = context.model_copy(update={"data": context.data.model_copy(update={"frontier": make_frontier(page)})})
+    content = "".join(f"## Section {i}\n\n" + "Minutes of the meeting. " * 40 + "\n\n" for i in range(20))
+    answers = [
+        RelevantPageResponseSchema(is_relevant=False, relevant_urls=["https://seattle.gov/agendas"]).model_dump(),
+        RelevantPageResponseSchema(is_relevant=True, relevant_urls=["https://seattle.gov/city-council"]).model_dump(),
+    ]
+    run_prompt = AsyncMock(side_effect=lambda *args, **kwargs: answers[min(kwargs["chunk_index"], 2) - 1])
+
+    with patch("services.open_router.llm.max_content_chars", return_value=4_000), patch(
+        f"{_LLM}.open_router_llm.run_prompt", new=run_prompt
+    ):
+        result_frontier, is_relevant = await check_page_relevance(context, page, content, [], [], [])
+
+    assert run_prompt.await_count > 1
+    assert all(len(call.kwargs["content"]) <= 4_000 + 500 for call in run_prompt.await_args_list)
+    assert is_relevant is True
+    assert {"https://seattle.gov/agendas", "https://seattle.gov/city-council"} <= set(pending_urls(result_frontier))
+
+
 _LLM = "runners.pipeline03_people_collector.steps.step_04_process_page_content.process_page_content"
 
 
@@ -984,41 +1007,6 @@ async def test_an_irrelevant_page_still_gets_both_hashes(tmp_path):
     assert link.is_relevant is False
     assert link.page_hash == content_hash("# Parks")
     assert link.prompt_hash is not None
-
-
-def test_split_content_into_chunks_no_split_when_fits():
-    content = "## Section\n\nSome content here."
-    chunks = _split_content_into_chunks(content, max_chars=10_000)
-    assert chunks == [content]
-
-
-def test_split_content_into_chunks_splits_large_content():
-    # Each section is ~300 chars; max_chars = 2000 keeps the overlap (500) well within capacity
-    section = (
-        "## Councilmember Jane Smith\n\n"
-        + "Contact: 555-1234, jane@city.gov. " * 8
-        + "\n\n"
-    )
-    content = section * 20  # ~6000 chars total
-    max_chars = 2_000
-    chunks = _split_content_into_chunks(content, max_chars=max_chars)
-    assert len(chunks) > 1
-    for chunk in chunks:
-        assert len(chunk) <= max_chars + 500  # tolerance for overlap
-
-
-def test_split_content_into_chunks_overlap_carries_context():
-    # Each section is ~300 chars; max_chars fits ~3 sections, overlap carries context across boundaries
-    sections = [
-        f"## Member {i}\n\n" + f"Email: member{i}@city.gov. " * 10 + "\n\n"
-        for i in range(10)
-    ]
-    content = "".join(sections)
-    max_chars = 2_000
-    chunks = _split_content_into_chunks(content, max_chars=max_chars)
-    assert len(chunks) > 1
-    # The tail of chunk 0 should appear somewhere in chunk 1 (overlap)
-    assert chunks[0][-100:].strip() in chunks[1]
 
 
 @pytest.mark.asyncio
