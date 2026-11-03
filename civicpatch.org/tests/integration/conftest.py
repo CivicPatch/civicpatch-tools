@@ -78,8 +78,10 @@ async def patch_db_url(monkeypatch):
         db_module._pool = None
 
 
-_LEVEL_ROLES = yaml.safe_load((Path(__file__).parent / "level_roles.yml").read_text())
-_LEVEL_PATHS = [level_config_path(JurisdictionLevel.LOCAL), level_config_path(JurisdictionLevel.COUNTIES)]
+_LEVEL_ROLES = {
+    level_config_path(level): yaml.safe_load((Path(__file__).parent / f"level_roles_{level}.yml").read_text())
+    for level in (JurisdictionLevel.LOCAL, JurisdictionLevel.COUNTIES)
+}
 
 
 @pytest_asyncio.fixture(autouse=True)
@@ -87,13 +89,13 @@ async def level_configs(patch_db_url):
     """The fold reads roles from the stored config files. Written before every test, since a test
     that stores its own level file deletes it when it finishes; one that stores its own replaces it."""
     async with await psycopg.AsyncConnection.connect(TEST_DB_URL) as conn, conn.cursor() as cur:
-        for path in _LEVEL_PATHS:
+        for path, roles in _LEVEL_ROLES.items():
             await cur.execute(
                 """
                 INSERT INTO jurisdiction_configs (path, content, commit_sha) VALUES (%s, %s, 'test')
                 ON CONFLICT (path) DO UPDATE SET content = EXCLUDED.content
                 """,
-                (path, psycopg.types.json.Jsonb(_LEVEL_ROLES)),
+                (path, psycopg.types.json.Jsonb(roles)),
             )
         await conn.commit()
     yield

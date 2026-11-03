@@ -68,3 +68,14 @@ def test_get_roles_is_open_to_everyone():
         response = _client(UserRole.CONTRIBUTORS).get(_PREFIX, params={"level": "local"})
 
     assert response.status_code == 200
+
+
+@pytest.mark.unit
+def test_a_broken_stored_config_is_not_blamed_on_the_ocdid():
+    ocdid = "ocd-jurisdiction/country:us/state:vt/place:whiting/government"
+    with patch(
+        "services.role_config.load_jurisdiction_roles",
+        new_callable=AsyncMock,
+        side_effect=ValueError("role_aliases name no role of this level"),
+    ), pytest.raises(ValueError):
+        _client(UserRole.CONTRIBUTORS).get(_PREFIX, params={"jurisdiction_ocdid": ocdid})
