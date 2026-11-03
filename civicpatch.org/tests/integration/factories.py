@@ -41,17 +41,17 @@ class SeededMembership(BaseModel):
 
 
 async def seed_jurisdiction(
-    jurisdiction_ocdid: str, state: str, name: str = "Zy Place"
+    jurisdiction_ocdid: str, state: str, name: str = "Zy Place", level: str = "local"
 ) -> None:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
-            INSERT INTO jurisdictions (jurisdiction_ocdid, state, data, updated_at)
-            VALUES (%s, %s, %s::jsonb, now())
+            INSERT INTO jurisdictions (jurisdiction_ocdid, state, level, name, data, updated_at)
+            VALUES (%s, %s, %s, %s, %s::jsonb, now())
             ON CONFLICT (jurisdiction_ocdid) DO NOTHING
             """,
-            (jurisdiction_ocdid, state, f'{{"name": "{name}"}}'),
+            (jurisdiction_ocdid, state, level, name, f'{{"name": "{name}"}}'),
         )
         await conn.commit()
 

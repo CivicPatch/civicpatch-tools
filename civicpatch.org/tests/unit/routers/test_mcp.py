@@ -23,6 +23,7 @@ from schemas.roster_comparisons import (
     ComparedField,
     ComparisonRates,
     FieldFilter,
+    IncomingRow,
     PeopleFilter,
     PersonOutcome,
     RejectedReason,
@@ -33,7 +34,6 @@ from schemas.roster_comparisons import (
     RosterComparisonRun,
     RosterComparisonSummary,
     RunPeoplePage,
-    UploadedRow,
 )
 from services.roster_comparison import RowsOutsideState, RunNotFound
 from shared.schemas import Person
@@ -45,7 +45,7 @@ _OCDID = "ocd-jurisdiction/country:us/state:vt/place:barre/government"
 
 def _run() -> RosterComparisonRun:
     return RosterComparisonRun(
-        id=_RUN_ID, state="vt", started_by_user_id="u", started_at="2026-10-22T00:00:00+00:00",
+        id=_RUN_ID, state="vt", level="local", started_by_user_id="u", started_at="2026-10-22T00:00:00+00:00",
         source_columns={}, corrections=[], rates=ComparisonRates(), jurisdictions_not_named=0,
     )
 
@@ -73,8 +73,9 @@ async def test_the_server_lists_its_read_tools_and_names_itself_in_the_instructi
     }
     assert f"{_INSTANCE}/api/v1/roster-comparisons" in (instructions or "")
     assert "$CIVICPATCH_API_KEY" in (instructions or "")
-    assert "list_jurisdictions" in (instructions or "")
-    assert f"{_INSTANCE}/api/v1/jurisdictions/search?state=<state>&limit={mcp_router.LIST_PAGE_SIZE}" in (instructions or "")
+    assert "Send the file's own values first, without looking anything up" in (instructions or "")
+    assert "find_jurisdiction" in (instructions or "")
+    assert (instructions or "").index("Once the report is") < 512
 
 
 @pytest.mark.asyncio
@@ -135,7 +136,7 @@ async def test_a_batch_of_rows_goes_to_the_callers_draft():
     draft = RosterComparisonDraft(id="d", rows=1, expires_at="2026-10-24T00:00:00+00:00")
     row = {"source_row": 2, "jurisdiction_ocdid": "ocd-jurisdiction/x", "name": "Jane Doe"}
     with patch.object(mcp_router.drafts, "add_draft_rows", AsyncMock(return_value=draft)) as add:
-        result = await mcp_router.add_roster_comparison_rows("d", [UploadedRow.model_validate(row)], _ctx(caller))
+        result = await mcp_router.add_roster_comparison_rows("d", [IncomingRow.model_validate(row)], _ctx(caller))
 
     draft_id, rows, owner = add.await_args.args
     assert (draft_id, [r.name for r in rows], owner) == ("d", ["Jane Doe"], caller.user_id)
@@ -157,10 +158,10 @@ async def test_finishing_is_the_routes_finish_for_the_caller():
 @pytest.mark.asyncio
 @pytest.mark.unit
 async def test_a_refused_batch_reaches_the_agent_with_its_reasons():
-    row = UploadedRow.model_validate({"source_row": 560, "jurisdiction_ocdid": "ocd-jurisdiction/x", "name": "Jane Doe"})
+    row = IncomingRow.model_validate({"source_row": 560, "jurisdiction_ocdid": "ocd-jurisdiction/x", "name": "Jane Doe"})
     rejected = RejectedRow(source_row=560, jurisdiction_ocdid="ocd-jurisdiction/x", reason=RejectedReason.UNKNOWN_JURISDICTION)
     with patch.object(mcp_router.drafts, "add_draft_rows", AsyncMock(side_effect=RowsOutsideState("vt", [rejected]))):
-        with pytest.raises(ToolError, match="row 560: ocd-jurisdiction/x"):
+        with pytest.raises(ToolError, match="rows 560: ocd-jurisdiction/x"):
             await mcp_router.add_roster_comparison_rows("d", [row], _ctx(_caller()))
 
 
@@ -230,6 +231,38 @@ async def test_find_jurisdiction_searches_the_lowercased_state():
 
     search.assert_awaited_once_with("vt", "Barre", mcp_router.SEARCH_LIMIT, 0)
     assert result == [found.model_dump(mode="json")]
+
+
+@pytest.mark.asyncio
+@pytest.mark.unit
+async def test_a_tool_call_is_logged_by_name_and_outcome_without_its_arguments(caplog):
+    found = JurisdictionSearchResult(jurisdiction_ocdid=_OCDID, level="local", name="Barre")
+    missing = AsyncMock(side_effect=RunNotFound(_RUN_ID))
+    with (
+        caplog.at_level("INFO", logger=mcp_router.__name__),
+        patch.object(mcp_router, "search_in_state", AsyncMock(return_value=(1, [found]))),
+        patch.object(mcp_router.roster_comparisons, "get_run_summary", missing),
+    ):
+        async with mcp.Client(mcp_router.build_server(_INSTANCE)) as client:
+            await client.call_tool("find_jurisdiction", {"state": "vt", "name": "Barre"})
+            await client.call_tool("get_roster_comparison", {"run_id": _RUN_ID})
+
+    lines = [record.getMessage() for record in caplog.records if record.name == mcp_router.__name__]
+    assert [line.split(" ms=")[0] for line in lines] == ["mcp tool=find_jurisdiction", "mcp tool=get_roster_comparison"]
+    assert lines[0].endswith("outcome=ok")
+    assert lines[1].endswith("outcome=error")
+    assert not any("Barre" in line for line in lines)
+
+
+@pytest.mark.asyncio
+@pytest.mark.unit
+async def test_a_tool_call_that_raises_is_logged_as_raised_and_still_raises(caplog):
+    ctx = SimpleNamespace(method=mcp_router.TOOL_CALL_METHOD, params={"name": "get_roster_comparison"})
+
+    with caplog.at_level("INFO", logger=mcp_router.__name__), pytest.raises(RuntimeError):
+        await mcp_router.log_tool_call(ctx, AsyncMock(side_effect=RuntimeError("boom")))
+
+    assert caplog.records[-1].getMessage().endswith("outcome=raised")
 
 
 # ── the real path: gated route → SDK app (host check, session manager) ───────

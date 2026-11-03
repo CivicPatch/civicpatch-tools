@@ -64,7 +64,7 @@ def _client(identity: Identity | None = None) -> TestClient:
 def _run() -> RosterComparisonRun:
     return RosterComparisonRun(
         id=_RUN_ID,
-        state="vt",
+        state="vt", level="local",
         started_by_user_id="00000000-0000-4000-8000-000000000001",
         started_at="2026-10-22T14:05:00+00:00",
         source_columns={"name": ["Official"]},

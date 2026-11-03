@@ -22,7 +22,7 @@ def _summary(rates: ComparisonRates, corrections: list[str]) -> RosterComparison
     granby = ComparisonRates(outcomes=OutcomeCounts(only_in_uploaded_data=6))
     return RosterComparisonSummary(
         run=RosterComparisonRun(
-            id="run-1", state="vt", started_by_user_id="u", started_at="2026-10-29T00:00:00+00:00",
+            id="run-1", state="vt", level="local", started_by_user_id="u", started_at="2026-10-29T00:00:00+00:00",
             source_columns={}, corrections=corrections, rates=rates, jurisdictions_not_named=268,
         ),
         page_url=_PAGE,

@@ -6,10 +6,12 @@ import logging
 from shared.schemas import Person, RoleConfig
 from shared.utils.taxonomy import build_taxonomy
 
-from core.roster_comparison_run import build_comparison, rejected_rows
+from core.roster_comparison_jurisdictions import ocdids_of, resolve_rows
+from core.roster_comparison_refusal import MAX_REJECTED_LISTED, refusal_message
+from core.roster_comparison_run import build_comparison
 import database.organizations as organizations_db
 from database.database import get_pool
-from database.jurisdictions import get_state_jurisdiction_sets
+from database.jurisdictions import get_state_jurisdictions
 from database.people import get_rosters_by_jurisdiction
 from database.roles import get_roles
 import database.roster_comparisons as database
@@ -17,11 +19,14 @@ import environment
 from core.page_urls import roster_comparison_page_url
 from core.roster_comparison_rates import LEVELS_BY_FILTER, compared_organizations, with_not_compared, worst_first
 from core.roster_comparison_report import report_markdown
+from schemas.jurisdictions import StateJurisdiction
 from schemas.pagination import paginated_response, pagination_offset
 from schemas.roster_comparisons import (
+    IncomingRow,
     PeopleFilter,
     PersonComparison,
     RejectedRow,
+    ResolvedUpload,
     RosterComparisonCreated,
     RosterComparisonListItem,
     RosterComparisonListPage,
@@ -36,40 +41,38 @@ from schemas.roster_comparisons import (
 
 logger = logging.getLogger(__name__)
 
-# Enough to see what went wrong; a large bad upload usually repeats one mistake.
-MAX_REJECTED_LISTED = 50
-
-
 class RowsOutsideState(ValueError):
-    """Rows naming no jurisdiction of the upload's state: nothing is saved until they are fixed."""
+    """Rows with no single jurisdiction in the upload's state: nothing is saved until they are fixed."""
 
     def __init__(self, state: str, rejected: list[RejectedRow]):
         self.rejected = rejected
         self.listed = rejected[:MAX_REJECTED_LISTED]
-        rows = "; ".join(f"row {row.source_row}: {row.jurisdiction_ocdid} ({row.reason})" for row in self.listed)
-        more = f"; and {len(rejected) - len(self.listed)} more" if len(rejected) > len(self.listed) else ""
-        super().__init__(
-            f"Not saved (the whole upload, or this batch): rows naming no jurisdiction in {state}: "
-            f"{len(rejected)}. Find each in {state}'s jurisdictions (list or search by name), fix its "
-            f"jurisdiction_ocdid, tell the user which rows failed and what you changed each to, then "
-            f"send again. {rows}{more}"
-        )
+        super().__init__(refusal_message(state, rejected))
 
 
-async def check_rows_in_state(state: str, rows: list[UploadedRow], user_id: str) -> set[str]:
-    """Returns the state's jurisdiction ocdids; raises RowsOutsideState if any row names another."""
-    state_ocdids = (await get_state_jurisdiction_sets(state)).total
-    rejected = rejected_rows(rows, state_ocdids, state)
+async def resolve_incoming_rows(
+    state: str, rows: list[IncomingRow], jurisdictions: list[StateJurisdiction], user_id: str
+) -> list[UploadedRow]:
+    """Raises RowsOutsideState if any row has no single jurisdiction in the state."""
+    # Name matching is CPU work: off the event loop, so other requests keep moving.
+    resolved, rejected = await asyncio.to_thread(resolve_rows, rows, jurisdictions, state)
     if rejected:
         # Counts only, no row data: how often agents miss, to judge the instructions by.
         logger.info("roster comparison refused: state=%s user_id=%s rows=%d of %d", state, user_id, len(rejected), len(rows))
         raise RowsOutsideState(state, rejected)
-    return state_ocdids
+    return resolved
 
 
 async def run_roster_comparison(upload: RosterComparisonUpload, started_by_user_id: str) -> str:
     """Returns the saved run's id."""
-    state_ocdids = await check_rows_in_state(upload.state, upload.rows, started_by_user_id)
+    jurisdictions = await get_state_jurisdictions(upload.state, upload.level)
+    rows = await resolve_incoming_rows(upload.state, upload.rows, jurisdictions, started_by_user_id)
+    resolved_upload = ResolvedUpload(**upload.model_dump(exclude={"rows"}), rows=rows)
+    return await compare_and_save(resolved_upload, ocdids_of(jurisdictions), started_by_user_id)
+
+
+async def compare_and_save(upload: ResolvedUpload, state_ocdids: set[str], started_by_user_id: str) -> str:
+    """Returns the saved run's id."""
     named = sorted({row.jurisdiction_ocdid for row in upload.rows})
     rosters = {
         ocdid: [Person(**person) for person in people]
@@ -145,7 +148,7 @@ async def get_run_report(run_id: str, organizations: list[str] | None) -> Roster
 
 async def get_run_jurisdictions(run_id: str, compared: bool | None) -> list[RunJurisdiction]:
     run = await _run(run_id)
-    return await database.get_roster_comparison_run_jurisdictions(run_id, run.state, compared)
+    return await database.get_roster_comparison_run_jurisdictions(run_id, run.state, run.level, compared)
 
 
 async def get_run_people(

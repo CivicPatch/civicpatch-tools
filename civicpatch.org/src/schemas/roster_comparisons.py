@@ -4,7 +4,10 @@ an agent reads, in OpenAPI."""
 from enum import StrEnum
 from typing import Annotated, Any
 
-from pydantic import AfterValidator, BaseModel, BeforeValidator, Field, StringConstraints, model_validator
+from pydantic import AfterValidator, BaseModel, Field, StringConstraints, model_validator
+from shared.schemas import JurisdictionLevel
+
+from schemas.jurisdictions import StateJurisdiction
 
 MAX_ROWS = 20_000
 MAX_ROWS_PER_BATCH = 500
@@ -14,19 +17,17 @@ MAX_EXTRA_COLUMNS = 50
 MAX_CORRECTIONS = 1000
 
 
-def _no_nul(value: str) -> str:
-    # Postgres text and jsonb refuse NUL; refused here, it is a 422 instead of a 500 on insert.
+def _refuse_nul_character(value: str) -> str:
+    # Postgres can't store NUL: refusing it here makes a bad row a 422, not a 500 on insert.
     if "\x00" in value:
         raise ValueError("contains a NUL character")
     return value
 
 
-def _lowercase(value: Any) -> Any:
-    return value.lower() if isinstance(value, str) else value
-
-
-ShortText = Annotated[str, StringConstraints(max_length=300), AfterValidator(_no_nul)]
-LongText = Annotated[str, StringConstraints(max_length=2000), AfterValidator(_no_nul)]
+ShortText = Annotated[str, StringConstraints(max_length=300), AfterValidator(_refuse_nul_character)]
+LongText = Annotated[str, StringConstraints(max_length=2000), AfterValidator(_refuse_nul_character)]
+# A spreadsheet's geoid column often arrives as a number.
+GeoidText = Annotated[str, Field(max_length=300, coerce_numbers_to_str=True), AfterValidator(_refuse_nul_character)]
 Values = Annotated[list[ShortText], Field(max_length=MAX_VALUES_PER_FIELD)]
 ExtraValue = LongText | int | float | bool | None
 
@@ -65,15 +66,13 @@ class CandidateReason(StrEnum):
     NICKNAME = "nickname"
 
 
-class UploadedRow(BaseModel):
-    """One person from the uploaded data, already converted by the agent."""
-
+class _RowFields(BaseModel):
     source_row: int = Field(
         ge=1, le=MAX_ROW_NUMBER, description="This person's row number in the original file."
     )
-    jurisdiction_ocdid: ShortText = Field(
-        min_length=1,
-        description="The jurisdiction's ocdid. Look it up with find_jurisdiction; never guess.",
+    geoid: GeoidText | None = Field(default=None, description="The jurisdiction's Census geoid, as the file has it.")
+    jurisdiction_name: ShortText | None = Field(
+        default=None, description="The jurisdiction's name (town, city, village), as the file has it."
     )
     name: ShortText = Field(min_length=1, description="The person's name, first name first, no title.")
     role: ShortText | None = Field(default=None, description="The role as the uploaded data states it.")
@@ -98,11 +97,37 @@ class UploadedRow(BaseModel):
         return {**kept, "not_compared": {**kept.get("not_compared", {}), **extra}}
 
 
+class IncomingRow(_RowFields):
+    """One person from the uploaded data, already converted by the agent."""
+
+    jurisdiction_ocdid: ShortText | None = Field(
+        default=None,
+        description="The jurisdiction's ocdid, when the file has it; never guess one.",
+    )
+
+    @model_validator(mode="after")
+    def _names_a_jurisdiction(self) -> "IncomingRow":
+        if not (self.jurisdiction_ocdid or self.geoid or self.jurisdiction_name):
+            raise ValueError("a row needs jurisdiction_ocdid, geoid or jurisdiction_name")
+        return self
+
+
+class UploadedRow(_RowFields):
+    """An incoming row once its jurisdiction is resolved: what is compared and kept."""
+
+    jurisdiction_ocdid: ShortText = Field(min_length=1)
+
+
 class RosterComparisonHeader(BaseModel):
     """What a batched upload starts with; its rows come in batches and its corrections at finish."""
 
-    state: Annotated[str, BeforeValidator(_lowercase)] = Field(
-        pattern=r"^[a-z]{2}$", description="Two-letter state code (lowercased)."
+    # Pydantic checks the pattern before lowercasing, so it has to allow both cases.
+    state: Annotated[str, StringConstraints(to_lower=True, pattern=r"^[A-Za-z]{2}$")] = Field(
+        description="Two-letter state code (lowercased)."
+    )
+    level: JurisdictionLevel = Field(
+        default=JurisdictionLevel.LOCAL,
+        description="Which of the state's jurisdictions the rows are of. A row resolves only within this level.",
     )
     source_columns: dict[ShortText, Values] = Field(
         max_length=MAX_EXTRA_COLUMNS,
@@ -115,7 +140,7 @@ Corrections = Annotated[
     Field(
         max_length=MAX_CORRECTIONS,
         description=(
-            "Everything the conversion changed, citing row numbers: jurisdictions matched by search, "
+            "Everything the conversion changed, citing row numbers: jurisdictions the user chose for refused rows, "
             "names corrected, rows the user agreed to leave out. An empty list says nothing was changed."
         ),
     ),
@@ -126,11 +151,18 @@ class RosterComparisonUpload(RosterComparisonHeader):
     """A state's roster, converted from the user's file by the agent."""
 
     corrections: Corrections
+    rows: list[IncomingRow] = Field(min_length=1, max_length=MAX_ROWS)
+
+
+class ResolvedUpload(RosterComparisonHeader):
+    """An upload whose rows all name a jurisdiction of its state and level: ready to compare."""
+
+    corrections: Corrections
     rows: list[UploadedRow] = Field(min_length=1, max_length=MAX_ROWS)
 
 
 class DraftRows(BaseModel):
-    rows: list[UploadedRow] = Field(
+    rows: list[IncomingRow] = Field(
         min_length=1, max_length=MAX_ROWS_PER_BATCH, description=f"Up to {MAX_ROWS_PER_BATCH} rows."
     )
 
@@ -229,16 +261,24 @@ class ComparisonRates(BaseModel):
 class RejectedReason(StrEnum):
     UNKNOWN_JURISDICTION = "unknown_jurisdiction"
     OUTSIDE_STATE = "outside_state"
+    UNKNOWN_GEOID = "unknown_geoid"
+    UNKNOWN_NAME = "unknown_name"
+    AMBIGUOUS = "ambiguous"
 
 
 class RejectedRow(BaseModel):
     source_row: int
-    jurisdiction_ocdid: str
+    jurisdiction_ocdid: str | None = None
+    geoid: str | None = None
+    jurisdiction_name: str | None = None
     reason: RejectedReason
+    candidates: list[StateJurisdiction] = Field(
+        default_factory=list, description="The state's jurisdictions it could be: ask the user which."
+    )
 
 
 class RowsRefused(BaseModel):
-    """A 422's detail when rows name no jurisdiction of the state: nothing was saved."""
+    """A 422's detail when rows have no single jurisdiction of the state and level: nothing was saved."""
 
     message: str
     rejected_count: int
@@ -253,6 +293,7 @@ class JurisdictionComparison(BaseModel):
 
 class RunResult(BaseModel):
     state: str
+    level: JurisdictionLevel
     source_columns: dict[str, list[str]]
     corrections: list[str]
     rates: ComparisonRates

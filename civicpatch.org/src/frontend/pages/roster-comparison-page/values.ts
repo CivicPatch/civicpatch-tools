@@ -49,7 +49,9 @@ export function levelChip(comparison: FieldComparison | undefined) {
 
 /** "row 847", opening the row as it was uploaded on hover and on keyboard focus. */
 export function rowRef(row: UploadedRow) {
-  const fields = Object.entries(row).filter(([key]) => key !== "not_compared" && key !== "source_row");
+  const fields = Object.entries(row).filter(
+    ([key, value]) => key !== "not_compared" && key !== "source_row" && value != null,
+  );
   return html`<span class="rc-row-ref" tabindex="0">
     row ${row.source_row}
     <span class="rc-row-ref__popup" role="tooltip">
