@@ -86,6 +86,27 @@ async def test_get_roles_round_trips_a_states_roles(client):
 
 @pytest.mark.asyncio
 @pytest.mark.integration
+async def test_a_jurisdiction_gets_its_own_level_and_states_roles(client):
+    place = "ocd-jurisdiction/country:us/state:zz/place:route_town/government"
+    county = "ocd-jurisdiction/country:us/state:zz/county:route_county/government"
+
+    place_roles = client.get(_PREFIX, params={"jurisdiction_ocdid": place}).json()["data"]["roles"]
+    county_roles = client.get(_PREFIX, params={"jurisdiction_ocdid": county}).json()["data"]["roles"]
+
+    assert "zz-route-mayor" in [role["id"] for role in place_roles]
+    assert "zz-route-mayor" not in [role["id"] for role in county_roles]
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_an_ocdid_that_names_no_jurisdiction_is_refused(client):
+    response = client.get(_PREFIX, params={"jurisdiction_ocdid": "not-an-ocdid"})
+
+    assert response.status_code == 422
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
 async def test_a_level_alone_leaves_out_every_states_roles(client):
     response = client.get(_PREFIX, params={"level": "local"})
     assert response.status_code == 200, response.text

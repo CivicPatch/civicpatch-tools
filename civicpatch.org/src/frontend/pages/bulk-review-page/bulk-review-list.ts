@@ -9,7 +9,7 @@ import "../../components/review-card-body/review-card-body.js";
 import { Pagination } from "../../components/pagination/index.js";
 import { jurisdictionOcdidToPath } from "../../components/ocdid-utils.js";
 import { usePagerRef } from "../../hooks/use-pager-ref.js";
-import { useJurisdictionRoles } from "../../hooks/use-jurisdiction-roles.js";
+import { useEveryRole } from "../../hooks/use-jurisdiction-roles.js";
 import { hostDispatch } from "../../utils/host-dispatch.js";
 import { toggleSelection } from "../../utils/toggle-selection.js";
 import type { ReviewCard } from "../../schemas/review-card.js";
@@ -41,7 +41,7 @@ type BulkReviewListHost = HTMLElement & {
 
 function BulkReviewList(host: BulkReviewListHost) {
   const { listRef, scrollToTop } = usePagerRef();
-  const roles = useJurisdictionRoles();
+  const roles = useEveryRole();
 
   if (host.loading) return html`<div>Loading...</div>`;
   if (host.error) return html`<div>Error: ${host.error}</div>`;

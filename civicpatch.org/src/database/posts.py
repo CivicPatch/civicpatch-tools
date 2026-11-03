@@ -7,7 +7,7 @@ from database.changesets import create_roster_edit_changeset
 from database.database import get_pool
 from database.post_claims import accept_fields, set_post_label, undo_deletion
 from database.post_listings import get
-from core.projection.post_labels import label_without_page
+from core.projection.post_labels import post_role_label
 from database.roles import get_taxonomy_for
 from schemas.activity import Change, FieldChange
 from schemas.claims import EntityType
@@ -121,7 +121,7 @@ async def create(
             raise UnknownOrganization(organization_id)
         await divisions.find_or_create(cur, division_ocdid, jurisdiction_ocdid)
         key = PostKey(organization_id=organization_id, role_id=role_id, division_ocdid=division_ocdid)
-        role_label = label_without_page(
+        role_label = post_role_label(
             key, await organizations.role_labels(cur, jurisdiction_ocdid), await get_taxonomy_for(jurisdiction_ocdid)
         )
         post_id = await create_if_absent(

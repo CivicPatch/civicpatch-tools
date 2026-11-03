@@ -153,7 +153,7 @@ def test_missing_members_are_counted_per_role():
     assert need.missing_terms == ["council", "member", "district"]
 
 
-def test_a_post_the_page_worded_its_own_way_counts_as_found_by_its_role():
+def test_a_post_its_organization_named_its_own_way_counts_as_found_by_its_role():
     records = {"Rob Saka": _person("Rob Saka", "Council Member District 1", "council")}
     post = ExpectedMembership(
         organization_id="council", role_id="council-member", role_label="City Councilor"

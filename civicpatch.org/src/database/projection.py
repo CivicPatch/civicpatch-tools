@@ -23,7 +23,7 @@ from core.projection.facts import Facts, PostKey
 from core.projection.membership_details import MembershipSource
 from core.projection.membership_history import MembershipRow, membership_history
 from core.projection.people import Membership, Person
-from core.projection.post_labels import post_role_labels
+from core.projection.post_labels import post_role_label
 from core.projection.roster import (
     Roster,
     derive_roster,
@@ -291,7 +291,8 @@ async def rebuild_from_facts(
     # From the fold's memberships, not the raw records: a split moves a record to a person whose
     # labels then parse alone, into a post the records as stored never name.
     keys = sorted({row.membership.post for row in history}, key=lambda key: key.post_id)
-    labels = post_role_labels(history, await organizations.role_labels(cur, jurisdiction_ocdid), taxonomy)
+    organization_labels = await organizations.role_labels(cur, jurisdiction_ocdid)
+    labels = {key.post_id: post_role_label(key, organization_labels, taxonomy) for key in keys}
     await rebuild(cur, jurisdiction_ocdid, roster, history, keys, labels, changeset_id)
     return len(roster.people)
 

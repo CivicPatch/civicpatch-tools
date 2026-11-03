@@ -45,8 +45,6 @@ class Membership(BaseModel, frozen=True):
     sources: tuple[MembershipSource, ...] = ()
     # Roles beyond the post's own, parsed from the labels; not stored (226), they feed the label.
     extra_roles: tuple[str, ...] = ()
-    # The post's role as this membership's page wrote it: what names the post.
-    role_text: str | None = None
 
 
 class Person(BaseModel, frozen=True):
@@ -89,7 +87,6 @@ def derive_membership(
         unmatched_text=evidence.details.unmatched_text,
         sources=membership_sources(own_records),
         extra_roles=evidence.details.extra_roles,
-        role_text=evidence.details.role_text,
     )
 
 
