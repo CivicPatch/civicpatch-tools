@@ -232,7 +232,7 @@ async def _roster_and_taxonomy(
     merged_into: dict[str, str] | None = None,
 ) -> tuple[Roster, Taxonomy]:
     """Both, because the caller that turns a roster into rows needs the taxonomy that derived
-    it — asking twice is two `get_taxonomy_for()` round trips for one edit."""
+    it: asking twice is two `get_taxonomy_for()` round trips for one edit."""
     taxonomy = await get_taxonomy_for(jurisdiction_ocdid)
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:

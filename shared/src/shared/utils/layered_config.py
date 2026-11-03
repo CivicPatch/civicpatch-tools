@@ -127,7 +127,7 @@ class MergedConfig(BaseModel):
     """What a jurisdiction in one state and level uses: the level's file plus its state's."""
 
     roles: RoleConfig
-    country_government_forms: GovernmentFormsConfig
+    level_government_forms: GovernmentFormsConfig
     state_government_forms: GovernmentFormsConfig
     governing_law: GoverningLawConfig | None
 
@@ -141,13 +141,13 @@ def merged_config(level: ConfigFile, state: ConfigFile | None) -> MergedConfig:
     config_roles = [*_with_state_aliases(level.roles, state.role_aliases), *state.roles]
     _check_roles_distinct(config_roles)
     _check_aliases_unique(config_roles)
-    _check_country_government_forms(level.government_forms)
+    _check_level_government_forms(level.government_forms)
     _check_state_government_forms(state.government_forms, level.government_forms)
     merged = MergedConfig(
         roles=RoleConfig(
             roles=[_role(config_role, priority) for priority, config_role in enumerate(config_roles)]
         ),
-        country_government_forms=level.government_forms,
+        level_government_forms=level.government_forms,
         state_government_forms=state.government_forms,
         governing_law=state.governing_law,
     )
@@ -220,17 +220,14 @@ def _with_state_aliases(roles: list[ConfigRole], role_aliases: dict[str, list[st
     unknown = sorted(role_id for role_id in role_aliases if role_id not in known)
     if unknown:
         raise ValueError(f"role_aliases name no role of this level: {unknown}")
-    return [
-        role.model_copy(update={"aliases": [*role.aliases, *role_aliases.get(role.id, [])]})
-        for role in roles
-    ]
+    return [_with_aliases(role, role_aliases.get(role.id, [])) for role in roles]
 
 
 def allowed_government_forms(config: MergedConfig, name: str) -> list[GovernmentForm]:
     """The state's government forms for the name's suffix, then its other ones, then the same from
-    the country. A state that lists government forms without suffixes narrows to them."""
+    the level. A state that lists government forms without suffixes narrows to them."""
     suffix = name_suffix(name)
-    for government_forms in (config.state_government_forms, config.country_government_forms):
+    for government_forms in (config.state_government_forms, config.level_government_forms):
         for_suffix = [
             government_form
             for government_form, government_form_config in government_forms.items()
@@ -255,16 +252,16 @@ def in_standard_order(government_forms) -> list[GovernmentForm]:
 
 
 def level_government_forms(config: MergedConfig) -> list[GovernmentForm]:
-    """Every form a jurisdiction at this state and level may have: the country's, plus any the
+    """Every form a jurisdiction at this state and level may have: the level's, plus any the
     state defines for itself (Vermont's village_board)."""
-    return in_standard_order({*config.country_government_forms, *config.state_government_forms})
+    return in_standard_order({*config.level_government_forms, *config.state_government_forms})
 
 
 def government_form_organizations(config: MergedConfig, government_form: GovernmentForm) -> list[DerivedOrganization]:
     state_form = config.state_government_forms.get(government_form)
     if state_form is not None and state_form.organizations:
         return state_form.organizations
-    return config.country_government_forms[government_form].organizations
+    return config.level_government_forms[government_form].organizations
 
 
 def resolve_government_form(
@@ -350,17 +347,17 @@ def _check_aliases_unique(roles: list[ConfigRole]) -> None:
                 raise ValueError(f"{alias!r} is an alias of both {owner!r} and {role.id!r}")
 
 
-def _check_country_government_forms(government_forms: GovernmentFormsConfig) -> None:
+def _check_level_government_forms(government_forms: GovernmentFormsConfig) -> None:
     for government_form, form_config in government_forms.items():
         if not form_config.organizations:
-            raise ValueError(f"country government form {government_form.value} has no organizations")
+            raise ValueError(f"level government form {government_form.value} has no organizations")
 
 
-def _check_state_government_forms(state_government_forms: GovernmentFormsConfig, country_government_forms: GovernmentFormsConfig) -> None:
-    """A state form narrows or renames a country form, or is the state's own and says in full
+def _check_state_government_forms(state_government_forms: GovernmentFormsConfig, level_government_forms: GovernmentFormsConfig) -> None:
+    """A state form narrows or renames a level form, or is the state's own and says in full
     what organizations it has."""
     for government_form, form_config in state_government_forms.items():
-        if government_form not in country_government_forms and not form_config.organizations:
+        if government_form not in level_government_forms and not form_config.organizations:
             raise ValueError(
                 f"{government_form.value} is not a government form at this level, and the state lists no organizations for it"
             )
@@ -380,7 +377,7 @@ def _check_role_labels_resolve(config: MergedConfig) -> None:
 
 
 def _every_organization(config: MergedConfig):
-    for government_forms in (config.country_government_forms, config.state_government_forms):
+    for government_forms in (config.level_government_forms, config.state_government_forms):
         for government_form, form_config in government_forms.items():
             for organization in form_config.organizations:
                 yield government_form, organization
@@ -389,7 +386,7 @@ def _every_organization(config: MergedConfig):
 def _check_one_organization_per_role(config: MergedConfig) -> None:
     """Research files a role into the first organization whose role labels hold it, which is
     only right while that organization is the only one."""
-    for government_form in config.country_government_forms:
+    for government_form in config.level_government_forms:
         seen: set[str] = set()
         for organization in government_form_organizations(config, government_form):
             for label in organization.role_labels:

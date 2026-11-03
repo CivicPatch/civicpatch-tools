@@ -5,7 +5,6 @@ import { fetchRoles } from "../../api.js";
 import { useAuth } from "../../hooks/useAuth.js";
 import "../../components/basic/modal.js";
 
-const STATUS_ACTIVE = "active";
 const ALL_LEVELS = "";
 const LEVEL_OPTIONS = [
   { value: ALL_LEVELS, label: "All levels" },
@@ -17,11 +16,6 @@ function aliasLabel(aliases) {
   if (!aliases?.length) return "—";
   if (aliases.length === 1) return aliases[0];
   return `${aliases.length} aliases`;
-}
-
-function seedState(jurisdictions) {
-  const j = jurisdictions[0];
-  return j?.state || j?.jurisdiction_path?.split("/")[0] || "";
 }
 
 function TermTable({ terms }) {
@@ -86,27 +80,20 @@ customElements.define(
   component(TermTable, { useShadowDOM: false }),
 );
 
-function ConfigEditor(host) {
-  const jurisdictions = host.jurisdictions || [];
-  const inline = Boolean(host.inline);
+function ConfigEditor() {
   const { permissions } = useAuth();
 
   const [terms, setTerms] = useState(null);
   const [loadError, setLoadError] = useState(null);
   const [filter, setFilter] = useState("");
   const [level, setLevel] = useState(ALL_LEVELS);
-  const [stateCode, setStateCode] = useState(seedState(jurisdictions));
-
-  const dispatch = (name, detail) =>
-    host.dispatchEvent(
-      new CustomEvent(name, { detail, bubbles: true, composed: true }),
-    );
+  const [stateCode, setStateCode] = useState("");
 
   const load = () => {
     setTerms(null);
     setLoadError(null);
     fetchRoles({ level, state: stateCode })
-      .then((r) => setTerms((r.data?.roles || []).filter((t) => t.status === STATUS_ACTIVE)))
+      .then((r) => setTerms(r.data?.roles || []))
       .catch((e) => setLoadError(e.message));
   };
 
@@ -122,36 +109,37 @@ function ConfigEditor(host) {
 
   const rolesSection = html`
     <div class="config-editor__section-body">
+      <div class="config-editor__layer">
+        <label>
+          Level
+          <select
+            @change=${(e) => setLevel(e.target.value)}
+          >
+            ${LEVEL_OPTIONS.map(
+              (option) =>
+                html`<option value=${option.value} ?selected=${option.value === level}>
+                  ${option.label}
+                </option>`,
+            )}
+          </select>
+        </label>
+        <label>
+          State
+          <input
+            type="text"
+            maxlength="2"
+            ?disabled=${level === ALL_LEVELS}
+            .value=${stateCode}
+            @change=${(e) => setStateCode(e.target.value.trim().toLowerCase())}
+          />
+        </label>
+      </div>
       ${loadError
         ? html`<p class="config-editor__error">${loadError}</p>`
         : null}
       ${loading ? html`<div>Loading…</div>` : null}
       ${terms !== null
         ? html`
-            <div class="config-editor__layer">
-              <label>
-                Level
-                <select
-                  .value=${level}
-                  @change=${(e) => setLevel(e.target.value)}
-                >
-                  ${LEVEL_OPTIONS.map(
-                    (option) =>
-                      html`<option value=${option.value}>${option.label}</option>`,
-                  )}
-                </select>
-              </label>
-              <label>
-                State
-                <input
-                  type="text"
-                  maxlength="2"
-                  ?disabled=${level === ALL_LEVELS}
-                  .value=${stateCode}
-                  @change=${(e) => setStateCode(e.target.value.trim().toLowerCase())}
-                />
-              </label>
-            </div>
             <div class="config-editor__filter">
               <i
                 class="fa-solid fa-magnifying-glass config-editor__filter-icon"
@@ -176,28 +164,9 @@ function ConfigEditor(host) {
     </div>
   `;
 
-  const content = html`${permissions.can_write_config ? rolesSection : null}`;
-
-  const handleClose = () => dispatch("modal-close", {});
-
-  if (inline) return html`<div class="config-editor__inline">${content}</div>`;
-
-  const title =
-    jurisdictions.length === 1
-      ? "Config: " +
-        (jurisdictions[0].name || jurisdictions[0].jurisdiction_ocdid)
-      : "Config: " + (seedState(jurisdictions).toUpperCase() || "");
-
-  return html`
-    <civ-modal
-      .title=${title}
-      .content=${content}
-      .footer=${html`<button class="btn btn-sm secondary" @click=${handleClose}>
-        Close
-      </button>`}
-      .modalProps=${{ open: true, onClose: handleClose }}
-    ></civ-modal>
-  `;
+  return html`<div class="config-editor__inline">
+    ${permissions.can_write_config ? rolesSection : null}
+  </div>`;
 }
 
 customElements.define(

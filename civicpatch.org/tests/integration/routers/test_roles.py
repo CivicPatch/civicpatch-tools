@@ -72,7 +72,7 @@ async def zz_state_config():
 @pytest.mark.integration
 async def test_get_roles_round_trips_a_states_roles(client):
     """Catches drift between what the config layer emits and what the wire schema
-    expects — a field the schema requires but the merge omits would 500."""
+    expects: a field the schema requires but the merge omits would 500."""
     response = client.get(_PREFIX, params={"level": "local", "state": "zz"})
     assert response.status_code == 200, response.text
 

@@ -35,7 +35,6 @@ async def summary_of(
         for label in fold.taxonomy.unique_roles
         if label in fold.taxonomy.role_ids
     }
-    role_labels = {role_id: label for label, role_id in fold.taxonomy.role_ids.items()}
 
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
@@ -59,7 +58,7 @@ async def summary_of(
         roster_diff(published, proposed),
         fold.known_person_ids,
         read_organization_ids,
-        role_labels,
+        fold.taxonomy.role_labels,
         unique_role_ids,
         names,
     )

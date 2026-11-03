@@ -194,7 +194,7 @@ class Post(BaseModel):
     role_id: str
     division_ocdid: str
     label: str
-    # What this organization calls the role: `post_role_label` in the database, the one resolver.
+    # What this organization calls the role: `posts.role_label`, which the fold writes.
     role_label: str
     meta_headcount: int = 1
 
