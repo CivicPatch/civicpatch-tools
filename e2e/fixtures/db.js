@@ -1,4 +1,5 @@
 import crypto from "node:crypto";
+import { readFileSync } from "node:fs";
 import pg from "pg";
 
 const { Client } = pg;
@@ -454,8 +455,8 @@ async function seatAt(client, ocdid, { organizationId, personId, roleId, divisio
     [division, ocdid],
   );
   const { rows: post } = await client.query(
-    `INSERT INTO posts (id, jurisdiction_ocdid, organization_id, role_id, division_ocdid)
-     VALUES ($1, $2, $3, $4, $5)
+    `INSERT INTO posts (id, jurisdiction_ocdid, organization_id, role_id, division_ocdid, role_label)
+     VALUES ($1, $2, $3, $4, $5, (SELECT label FROM roles WHERE id = $4))
      ON CONFLICT (organization_id, role_id, division_ocdid)
        DO UPDATE SET role_id = EXCLUDED.role_id
      RETURNING id`,
@@ -645,10 +646,23 @@ async function seedFailedRun(client, id, ocdid, ageSeconds) {
   );
 }
 
+// The fold reads a jurisdiction's roles from these stored files, as prod does after a config sync.
+async function seedLevelConfigs(client) {
+  for (const level of ["local", "counties"]) {
+    const config = readFileSync(`fixtures/level-roles-${level}.json`, "utf8");
+    await client.query(
+      `INSERT INTO jurisdiction_configs (path, content, commit_sha) VALUES ($1, $2, 'e2e')
+       ON CONFLICT (path) DO UPDATE SET content = EXCLUDED.content`,
+      [`data_source/${level}/config.yml`, config],
+    );
+  }
+}
+
 export async function seedE2eFixtures() {
   const client = makeClient();
   await client.connect();
   try {
+    await seedLevelConfigs(client);
     for (const [code, name] of STATE_JURISDICTIONS) {
       await client.query(
         `INSERT INTO jurisdictions (jurisdiction_ocdid, state, level, status, data)
