@@ -20,6 +20,7 @@ from schemas.roster_comparisons import (
     PersonOutcome,
     RejectedReason,
     RejectedRow,
+    DraftFinish,
     RosterComparisonCreated,
     RosterComparisonDraft,
     RosterComparisonListItem,
@@ -64,7 +65,7 @@ def _client(identity: Identity | None = None) -> TestClient:
 def _run() -> RosterComparisonRun:
     return RosterComparisonRun(
         id=_RUN_ID,
-        state="vt", level="local",
+        state="vt", level="local", left_out_rows=[],
         started_by_user_id="00000000-0000-4000-8000-000000000001",
         started_at="2026-10-22T14:05:00+00:00",
         source_columns={"name": ["Official"]},
@@ -80,7 +81,7 @@ def _service(name: str, **kwargs):
 
 @pytest.mark.unit
 def test_an_upload_returns_the_runs_id_page_and_rates():
-    created = RosterComparisonCreated(id=_RUN_ID, page_url=_PAGE, rates=_run().rates)
+    created = RosterComparisonCreated(id=_RUN_ID, page_url=_PAGE, rates=_run().rates, markdown="report")
     with _service("run_roster_comparison", return_value=_RUN_ID) as run, _service(
         "get_run_created", return_value=created
     ):
@@ -272,7 +273,7 @@ def test_draft_errors_reach_the_caller_as_statuses(error, status):
 
 @pytest.mark.unit
 def test_a_finished_draft_returns_the_run_like_an_upload():
-    created = RosterComparisonCreated(id=_RUN_ID, page_url=_PAGE, rates=_run().rates)
+    created = RosterComparisonCreated(id=_RUN_ID, page_url=_PAGE, rates=_run().rates, markdown="report")
     with _drafts("finish_draft", return_value=created):
         response = _client().post(f"{_PREFIX}/drafts/{_DRAFT_ID}/finish", json={"corrections": []})
 
@@ -319,11 +320,11 @@ def test_a_batch_with_rows_outside_the_state_is_refused_the_same_way():
 
 @pytest.mark.unit
 def test_finishing_passes_the_complete_corrections():
-    created = RosterComparisonCreated(id=_RUN_ID, page_url=_PAGE, rates=_run().rates)
+    created = RosterComparisonCreated(id=_RUN_ID, page_url=_PAGE, rates=_run().rates, markdown="report")
     with _drafts("finish_draft", return_value=created) as finish:
-        _client().post(f"{_PREFIX}/drafts/{_DRAFT_ID}/finish", json={"corrections": ["row 9: Montpellier to Montpelier"]})
+        _client().post(f"{_PREFIX}/drafts/{_DRAFT_ID}/finish", json={"corrections": ["row 9: Montpellier to Montpelier"], "left_out_rows": [4]})
 
-    assert finish.await_args.args[2] == ["row 9: Montpellier to Montpelier"]
+    assert finish.await_args.args[2] == DraftFinish(corrections=["row 9: Montpellier to Montpelier"], left_out_rows=[4])
 
 
 @pytest.mark.unit

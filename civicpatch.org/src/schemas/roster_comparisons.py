@@ -141,9 +141,14 @@ Corrections = Annotated[
         max_length=MAX_CORRECTIONS,
         description=(
             "Everything the conversion changed, citing row numbers: jurisdictions the user chose for refused rows, "
-            "names corrected, rows the user agreed to leave out. An empty list says nothing was changed."
+            "and names corrected. An empty list says nothing was changed."
         ),
     ),
+]
+
+LeftOutRows = Annotated[
+    list[Annotated[int, Field(ge=1, le=MAX_ROW_NUMBER)]],
+    Field(max_length=MAX_ROWS, description="Row numbers in the original file the user agreed to leave out."),
 ]
 
 
@@ -151,6 +156,7 @@ class RosterComparisonUpload(RosterComparisonHeader):
     """A state's roster, converted from the user's file by the agent."""
 
     corrections: Corrections
+    left_out_rows: LeftOutRows = Field(default_factory=list)
     rows: list[IncomingRow] = Field(min_length=1, max_length=MAX_ROWS)
 
 
@@ -158,6 +164,7 @@ class ResolvedUpload(RosterComparisonHeader):
     """An upload whose rows all name a jurisdiction of its state and level: ready to compare."""
 
     corrections: Corrections
+    left_out_rows: LeftOutRows = Field(default_factory=list)
     rows: list[UploadedRow] = Field(min_length=1, max_length=MAX_ROWS)
 
 
@@ -169,6 +176,7 @@ class DraftRows(BaseModel):
 
 class DraftFinish(BaseModel):
     corrections: Corrections
+    left_out_rows: LeftOutRows = Field(default_factory=list)
 
 
 class RosterComparisonDraft(BaseModel):
@@ -296,6 +304,7 @@ class RunResult(BaseModel):
     level: JurisdictionLevel
     source_columns: dict[str, list[str]]
     corrections: list[str]
+    left_out_rows: list[int]
     rates: ComparisonRates
     jurisdictions_not_named: int
 
@@ -338,6 +347,7 @@ class RosterComparisonCreated(BaseModel):
     id: str
     page_url: str = Field(description="The run's page on civicpatch, to give to the user.")
     rates: ComparisonRates
+    markdown: str = Field(description="The run's report as Markdown: give it to the user as it is.")
 
 
 class RunOrganization(BaseModel):

@@ -43,7 +43,7 @@ _COMPARED = """(
 _RUN_COLUMNS = f"""
     id::text AS id, state, level, started_by_user_id::text AS started_by_user_id,
     {_STARTED_AT} AS started_at,
-    source_columns, corrections, rates, jurisdictions_not_named
+    source_columns, corrections, left_out_rows, rates, jurisdictions_not_named
 """
 
 
@@ -62,9 +62,9 @@ async def _insert_run(cur, started_by_user_id: str, comparison: RosterComparison
     await cur.execute(
         """
         INSERT INTO roster_comparison_runs
-            (state, level, started_by_user_id, source_columns, corrections, rates,
+            (state, level, started_by_user_id, source_columns, corrections, left_out_rows, rates,
              jurisdictions_not_named)
-        VALUES (%s, %s, %s, %s, %s, %s, %s)
+        VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
         RETURNING id::text
         """,
         (
@@ -73,6 +73,7 @@ async def _insert_run(cur, started_by_user_id: str, comparison: RosterComparison
             started_by_user_id,
             json.dumps(comparison.source_columns),
             json.dumps(comparison.corrections),
+            json.dumps(comparison.left_out_rows),
             comparison.rates.model_dump_json(),
             comparison.jurisdictions_not_named,
         ),

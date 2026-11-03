@@ -18,13 +18,14 @@ from database.roster_comparisons import (
     get_roster_comparison_run,
 )
 from schemas.roster_comparisons import (
+    DraftFinish,
     IncomingRow,
     PersonOutcome,
     RejectedReason,
     RosterComparisonHeader,
     RosterComparisonUpload,
 )
-from services.roster_comparison import RowsOutsideState, get_run_jurisdictions, run_roster_comparison
+from services.roster_comparison import RowsOutsideState, get_run_jurisdictions, get_run_report, run_roster_comparison
 from services.roster_comparison_drafts import (
     DraftIsEmpty,
     DraftNotFound,
@@ -207,7 +208,7 @@ async def test_a_batch_naming_its_town_keeps_the_drafts_level_through_finish(use
     draft = await start_draft(_HEADER.model_copy(update={"level": "counties"}), user_id)
 
     await add_draft_rows(draft.id, _rows({"source_row": 2, "jurisdiction_name": "Barre", "name": "Ann Lee"}), user_id)
-    created = await finish_draft(draft.id, user_id, [])
+    created = await finish_draft(draft.id, user_id, DraftFinish(corrections=[]))
 
     run = await get_roster_comparison_run(created.id)
     assert run is not None
@@ -215,6 +216,19 @@ async def test_a_batch_naming_its_town_keeps_the_drafts_level_through_finish(use
     [ann] = await get_roster_comparison_people(created.id, _BARRE_COUNTY, [])
     assert ann.uploaded is not None
     assert (ann.uploaded.jurisdiction_ocdid, ann.uploaded.jurisdiction_name) == (_BARRE_COUNTY, "Barre")
+
+
+@pytest.mark.integration
+@pytest.mark.asyncio
+async def test_rows_left_out_of_an_upload_are_kept_on_the_run(user_id):
+    upload = _upload_of({"source_row": 2, "jurisdiction_ocdid": _BARRE, "name": "Jane Doe"}).model_copy(
+        update={"left_out_rows": [4]}
+    )
+
+    run = await get_roster_comparison_run(await run_roster_comparison(upload, user_id))
+
+    assert run is not None
+    assert run.left_out_rows == [4]
 
 
 @pytest.mark.integration
@@ -276,13 +290,25 @@ async def test_a_draft_sent_in_batches_becomes_the_same_run_and_is_gone(user_id)
     )
     assert second.rows == 2
 
-    created = await finish_draft(draft.id, user_id, [])
+    created = await finish_draft(draft.id, user_id, DraftFinish(corrections=[]))
 
     run = await get_roster_comparison_run(created.id)
     assert run is not None
     assert (run.rates.outcomes.matched, run.rates.outcomes.only_in_uploaded_data) == (1, 1)
     with pytest.raises(DraftNotFound):
-        await finish_draft(draft.id, user_id, [])
+        await finish_draft(draft.id, user_id, DraftFinish(corrections=[]))
+
+
+@pytest.mark.integration
+@pytest.mark.asyncio
+async def test_finishing_a_draft_returns_the_same_report_the_report_tool_reads(user_id):
+    draft = await start_draft(_HEADER, user_id)
+    await add_draft_rows(draft.id, _rows({"source_row": 2, "jurisdiction_ocdid": _BARRE, "name": "Jane Doe"}), user_id)
+
+    created = await finish_draft(draft.id, user_id, DraftFinish(corrections=[]))
+
+    assert created.page_url in created.markdown
+    assert created.markdown == (await get_run_report(created.id, None)).markdown
 
 
 @pytest.mark.integration
@@ -302,7 +328,7 @@ async def test_an_empty_draft_cannot_be_finished(user_id):
     draft = await start_draft(_HEADER, user_id)
 
     with pytest.raises(DraftIsEmpty):
-        await finish_draft(draft.id, user_id, [])
+        await finish_draft(draft.id, user_id, DraftFinish(corrections=[]))
 
 
 @pytest.mark.integration
@@ -350,8 +376,12 @@ async def test_corrections_given_at_finish_reach_the_run(user_id):
     draft = await start_draft(_HEADER, user_id)
     await add_draft_rows(draft.id, _rows({"source_row": 2, "jurisdiction_ocdid": _BARRE, "name": "Jane Doe"}), user_id)
 
-    created = await finish_draft(draft.id, user_id, ["row 9: Montpellier matched to Montpelier"])
+    created = await finish_draft(
+        draft.id, user_id, DraftFinish(corrections=["row 9: Montpellier matched to Montpelier"], left_out_rows=[7, 9])
+    )
 
     run = await get_roster_comparison_run(created.id)
     assert run is not None
     assert run.corrections == ["row 9: Montpellier matched to Montpelier"]
+    assert run.left_out_rows == [7, 9]
+    assert "2 rows left out with your agreement: rows 7, 9." in created.markdown

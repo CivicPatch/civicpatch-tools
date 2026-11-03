@@ -30,7 +30,7 @@ _STOWE = "ocd-jurisdiction/country:us/state:vt/place:stowe/government"
 
 def _run() -> RosterComparisonRun:
     return RosterComparisonRun(
-        id=_RUN_ID, state="vt", level="local", started_by_user_id="u", started_at="2026-10-22T00:00:00+00:00",
+        id=_RUN_ID, state="vt", level="local", left_out_rows=[], started_by_user_id="u", started_at="2026-10-22T00:00:00+00:00",
         source_columns={}, corrections=[], rates=ComparisonRates(), jurisdictions_not_named=0,
     )
 
@@ -102,7 +102,9 @@ async def test_a_created_run_reports_the_rates_the_page_shows_by_default():
         "get_roster_comparison_jurisdictions", return_value=[]
     ), _database(
         "get_roster_comparison_organizations", return_value=[_organization("Selectboard", 2)]
-    ), _database("count_roster_comparison_not_compared", return_value={_BARRE: 4}), patch.object(
+    ), _database("count_roster_comparison_not_compared", return_value={_BARRE: 4}), _database(
+        "get_roster_comparison_run_jurisdictions", return_value=[]
+    ), patch.object(
         service.environment, "instance_url", return_value="https://civicpatch.test"
     ):
         created = await service.get_run_created(_RUN_ID)

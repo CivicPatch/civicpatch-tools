@@ -22,7 +22,7 @@ def _summary(rates: ComparisonRates, corrections: list[str]) -> RosterComparison
     granby = ComparisonRates(outcomes=OutcomeCounts(only_in_uploaded_data=6))
     return RosterComparisonSummary(
         run=RosterComparisonRun(
-            id="run-1", state="vt", level="local", started_by_user_id="u", started_at="2026-10-29T00:00:00+00:00",
+            id="run-1", state="vt", level="local", left_out_rows=[], started_by_user_id="u", started_at="2026-10-29T00:00:00+00:00",
             source_columns={}, corrections=corrections, rates=rates, jurisdictions_not_named=268,
         ),
         page_url=_PAGE,
@@ -46,6 +46,15 @@ _RATES = ComparisonRates(
     people_with_conflicts=2,
     rows_with_warnings=1,
 )
+
+
+@pytest.mark.unit
+def test_the_report_names_the_rows_left_out_and_says_nothing_when_there_are_none():
+    summary = _summary(_RATES, [])
+    left_out = summary.run.model_copy(update={"left_out_rows": [4, 9]})
+
+    assert "2 rows left out with your agreement: rows 4, 9." in report_markdown(summary.model_copy(update={"run": left_out}), {})
+    assert "left out" not in report_markdown(summary, {})
 
 
 @pytest.mark.unit

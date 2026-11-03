@@ -28,6 +28,7 @@ from schemas.roster_comparisons import (
     PersonOutcome,
     RejectedReason,
     RejectedRow,
+    DraftFinish,
     RosterComparisonCreated,
     RosterComparisonDraft,
     RosterComparisonListPage,
@@ -45,7 +46,7 @@ _OCDID = "ocd-jurisdiction/country:us/state:vt/place:barre/government"
 
 def _run() -> RosterComparisonRun:
     return RosterComparisonRun(
-        id=_RUN_ID, state="vt", level="local", started_by_user_id="u", started_at="2026-10-22T00:00:00+00:00",
+        id=_RUN_ID, state="vt", level="local", left_out_rows=[], started_by_user_id="u", started_at="2026-10-22T00:00:00+00:00",
         source_columns={}, corrections=[], rates=ComparisonRates(), jurisdictions_not_named=0,
     )
 
@@ -147,11 +148,11 @@ async def test_a_batch_of_rows_goes_to_the_callers_draft():
 @pytest.mark.unit
 async def test_finishing_is_the_routes_finish_for_the_caller():
     caller = _caller()
-    created = RosterComparisonCreated(id=_RUN_ID, page_url="p", rates=ComparisonRates())
+    created = RosterComparisonCreated(id=_RUN_ID, page_url="p", rates=ComparisonRates(), markdown="report")
     with patch.object(mcp_router.drafts, "finish_draft", AsyncMock(return_value=created)) as finish:
         result = await mcp_router.finish_roster_comparison("d", [], _ctx(caller))
 
-    finish.assert_awaited_once_with("d", caller.user_id, [])
+    finish.assert_awaited_once_with("d", caller.user_id, DraftFinish(corrections=[]))
     assert result["id"] == _RUN_ID
 
 
@@ -447,11 +448,13 @@ def test_the_gate_leaves_the_checked_caller_on_the_request_for_the_tools():
 @pytest.mark.unit
 async def test_finishing_passes_the_corrections_made_while_sending():
     caller = _caller()
-    created = RosterComparisonCreated(id=_RUN_ID, page_url="p", rates=ComparisonRates())
+    created = RosterComparisonCreated(id=_RUN_ID, page_url="p", rates=ComparisonRates(), markdown="report")
     with patch.object(mcp_router.drafts, "finish_draft", AsyncMock(return_value=created)) as finish:
-        await mcp_router.finish_roster_comparison("d", ["row 9: Montpellier to Montpelier"], _ctx(caller))
+        await mcp_router.finish_roster_comparison("d", ["row 9: Montpellier to Montpelier"], _ctx(caller), [4])
 
-    finish.assert_awaited_once_with("d", caller.user_id, ["row 9: Montpellier to Montpelier"])
+    finish.assert_awaited_once_with(
+        "d", caller.user_id, DraftFinish(corrections=["row 9: Montpellier to Montpelier"], left_out_rows=[4])
+    )
 
 
 @pytest.mark.asyncio

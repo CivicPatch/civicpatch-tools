@@ -23,14 +23,14 @@ def _refusal_lines(rejected: list[RejectedRow]) -> list[str]:
     """Rows refused for the same values, however capitalized, are one line for the user, not one per person."""
     rows_by_refusal: dict[str, list[RejectedRow]] = {}
     for row in rejected:
-        rows_by_refusal.setdefault(_refusal(row).casefold(), []).append(row)
+        rows_by_refusal.setdefault(_refusal_text(row).casefold(), []).append(row)
     return [
-        f"rows {_row_numbers([row.source_row for row in rows])}: {_refusal(rows[0])}"
+        f"rows {row_numbers([row.source_row for row in rows])}: {_refusal_text(rows[0])}"
         for rows in rows_by_refusal.values()
     ]
 
 
-def _refusal(row: RejectedRow) -> str:
+def _refusal_text(row: RejectedRow) -> str:
     return f"{_values_given(row)} ({_reason_and_candidates(row)})"
 
 
@@ -53,7 +53,7 @@ def _reason_and_candidates(row: RejectedRow) -> str:
     return f"{row.reason}: {candidate_list}"
 
 
-def _row_numbers(source_rows: list[int]) -> str:
+def row_numbers(source_rows: list[int]) -> str:
     listed = ", ".join(str(row) for row in source_rows[:MAX_ROW_NUMBERS_LISTED])
     not_listed = len(source_rows) - MAX_ROW_NUMBERS_LISTED
     if not_listed > 0:

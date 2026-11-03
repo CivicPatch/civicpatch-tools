@@ -33,6 +33,7 @@ def build_comparison(
         level=upload.level,
         source_columns=upload.source_columns,
         corrections=upload.corrections,
+        left_out_rows=upload.left_out_rows,
         rates=total([jurisdiction.rates for jurisdiction in jurisdictions]),
         jurisdictions_not_named=len(state_ocdids - rows_by_ocdid.keys()),
         jurisdictions=jurisdictions,

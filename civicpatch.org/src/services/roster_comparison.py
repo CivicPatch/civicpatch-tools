@@ -110,7 +110,9 @@ class RunNotFound(LookupError):
 async def get_run_created(run_id: str) -> RosterComparisonCreated:
     """The rates as the summary counts them by default, so the agent's first report matches the page."""
     summary = await get_run_summary(run_id, None)
-    return RosterComparisonCreated(id=run_id, page_url=summary.page_url, rates=summary.run.rates)
+    return RosterComparisonCreated(
+        id=run_id, page_url=summary.page_url, rates=summary.run.rates, markdown=await _report_of(summary)
+    )
 
 
 async def list_runs(page: int, per_page: int) -> RosterComparisonListPage:
@@ -141,9 +143,13 @@ async def get_run_summary(run_id: str, organizations: list[str] | None) -> Roste
 
 async def get_run_report(run_id: str, organizations: list[str] | None) -> RosterComparisonReport:
     summary = await get_run_summary(run_id, organizations)
-    jurisdictions = await get_run_jurisdictions(run_id, True)
+    return RosterComparisonReport(markdown=await _report_of(summary))
+
+
+async def _report_of(summary: RosterComparisonSummary) -> str:
+    jurisdictions = await get_run_jurisdictions(summary.run.id, True)
     names = {jurisdiction.jurisdiction_ocdid: jurisdiction.name for jurisdiction in jurisdictions}
-    return RosterComparisonReport(markdown=report_markdown(summary, names))
+    return report_markdown(summary, names)
 
 
 async def get_run_jurisdictions(run_id: str, compared: bool | None) -> list[RunJurisdiction]:

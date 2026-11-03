@@ -374,6 +374,7 @@ erDiagram
         timestamptz     started_at
         jsonb           source_columns      "our field → the original file's column(s), as the agent reported them"
         jsonb           corrections         "what the agent's conversion changed in jurisdiction_ocdid or name; its own account, never checked"
+        jsonb           left_out_rows       "263, default []: the original file's row numbers the user agreed to leave out; the agent's own account, never checked"
         jsonb           rates               "ComparisonRates for the state: counts only, percentages derived where shown"
         int             jurisdictions_not_named "civicpatch jurisdictions of the state at this level the upload never named; saved before 262, it counts every level"
     }

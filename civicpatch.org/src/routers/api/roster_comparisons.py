@@ -76,7 +76,7 @@ def get_router() -> APIRouter:
         draft_id: uuid.UUID, finish: DraftFinish, user: Identity = _maintainer()
     ) -> dict:
         """Compare the draft's rows and keep the run, as a one-shot upload would; the draft is gone after."""
-        return {"data": await _draft_errors(drafts.finish_draft(str(draft_id), _owner(user), finish.corrections))}
+        return {"data": await _draft_errors(drafts.finish_draft(str(draft_id), _owner(user), finish))}
 
     @router.get("", response_model=RosterComparisonListPage)
     async def list_roster_comparisons_endpoint(

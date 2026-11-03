@@ -115,6 +115,7 @@ export interface RosterComparisonRun {
   started_at: string;
   source_columns: Record<string, string[]>;
   corrections: string[];
+  left_out_rows: number[];
   rates: ComparisonRates;
   jurisdictions_not_named: number;
 }
