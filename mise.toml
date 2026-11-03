@@ -323,6 +323,10 @@ mise run tcp-integration
 run = "uv run ruff check ."
 description = "Run ruff on the AGENTS.md rules"
 
+[tasks.hotspots]
+run = "scripts/hotspots.sh"
+description = "Rank files by commits x cyclomatic complexity; args: days (180) top (20)"
+
 [tasks.typecheck-fe]
 run = "npm run typecheck"
 dir = "civicpatch.org/src/frontend"

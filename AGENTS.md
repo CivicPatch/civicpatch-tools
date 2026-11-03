@@ -28,6 +28,7 @@ These rules keep diffs small enough for a human to reason about one thing at a t
 - No abbreviations on data-layer names: DB columns, API fields, cross-boundary keys use full words (`pull_request_url`, not `pr_url`).
 - No magic strings: a literal that is compared, dispatched, stored under or repeated gets a named module-level constant. One-off display strings are fine.
 - `mise run lint` enforces the rest: function length, imports at the top, bare and blind excepts, boolean flag arguments, magic numbers. Run it before saying a task is done. An import that must sit inside a function (circular import, optional heavy dependency) carries `# noqa: PLC0415` and the reason.
+- `mise run hotspots` ranks files by commits times complexity. A change that lands in a top-ten file is a reason to simplify that file first, or to say why not.
 
 ## Security
 
