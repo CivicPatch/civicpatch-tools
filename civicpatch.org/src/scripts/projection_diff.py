@@ -23,14 +23,12 @@ from core.projection.roster import Roster, derive_roster, with_published_images
 from database.database import get_pool
 from database.facts import load_facts
 from database.projection import jurisdictions_with_a_roster, stored_roster
-from database.roles import get_roles
+from database.roles import get_taxonomies_for
 from lib import buckets
 from pydantic import BaseModel
-from shared.schemas import RoleConfig
 from shared.utils.taxonomy import (
     UNMATCHED_ROLE_ID,
     Taxonomy,
-    build_taxonomy,
     is_designation,
     lookup_key,
 )
@@ -99,15 +97,16 @@ def unmatched_in(
 
 
 async def diff_all() -> list[Comparison]:
-    roles = await get_roles()
-    taxonomy = build_taxonomy(RoleConfig(roles=roles))
     as_of = datetime.now(timezone.utc)
     friendly_host = environment.get_env_vars()["FRIENDLY_STORAGE_HOST"]
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await conn.set_read_only(True)
         results = []
-        for jurisdiction_ocdid in await jurisdictions_with_a_roster(cur):
+        jurisdiction_ocdids = await jurisdictions_with_a_roster(cur)
+        taxonomies = await get_taxonomies_for(jurisdiction_ocdids)
+        for jurisdiction_ocdid in jurisdiction_ocdids:
+            taxonomy = taxonomies[jurisdiction_ocdid]
             facts = await load_facts(cur, jurisdiction_ocdid, as_of)
             derived = with_published_images(
                 derive_roster(facts, jurisdiction_ocdid, taxonomy),

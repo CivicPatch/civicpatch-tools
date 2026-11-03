@@ -17,15 +17,13 @@ from services.government_form import (
 )
 from shared.schemas import GovernmentForm
 from shared.utils.government_forms import DerivedOrganization
-from shared.utils.layered_config import COUNTRY_ROLES_PATH, ConfigFile, ConfigRole, GovernmentFormConfig
+from shared.utils.layered_config import ConfigFile, ConfigRole, GovernmentFormConfig
 
 _CITY = "ocd-jurisdiction/country:us/state:wa/place:zysave_city/government"
 
 _CONFIGS = {
-    COUNTRY_ROLES_PATH: ConfigFile(
-        roles=[ConfigRole(id="mayor", label="Mayor"), ConfigRole(id="council-member", label="Council Member")]
-    ),
     "data_source/local/config.yml": ConfigFile(
+        roles=[ConfigRole(id="mayor", label="Mayor"), ConfigRole(id="council-member", label="Council Member")],
         government_forms={
             GovernmentForm.MAYOR_COUNCIL: GovernmentFormConfig(
                 organizations=[

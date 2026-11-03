@@ -13,7 +13,7 @@ from tests.prompts.tests.evals.generate_relevance_cases import (
 )
 from shared.schemas import GovernmentForm
 from shared.utils.government_forms import DerivedOrganization
-from shared.utils.layered_config import COUNTRY_ROLES_PATH, ConfigFile, ConfigRole, GovernmentFormConfig
+from shared.utils.layered_config import ConfigFile, ConfigRole, GovernmentFormConfig
 
 pytestmark = pytest.mark.unit
 
@@ -105,6 +105,10 @@ def _forms(forms: dict[GovernmentForm, GovernmentFormConfig]) -> ConfigFile:
     return ConfigFile(government_forms=forms)
 
 
+def _level(forms: dict[GovernmentForm, GovernmentFormConfig]) -> ConfigFile:
+    return ConfigFile(roles=[ConfigRole(id=label.lower(), label=label) for label in _ROLES], government_forms=forms)
+
+
 _TOWNSHIP_BOARD = DerivedOrganization(name="Board", role_labels=["Supervisor", "Clerk", "Treasurer", "Trustee"])
 _COUNCIL = DerivedOrganization(name="Council", role_labels=["Council Member"])
 _WA_BOARD = DerivedOrganization(name="Board of County Commissioners", role_labels=["Commissioner", "Chair"])
@@ -112,14 +116,13 @@ _ROLES = ["Supervisor", "Clerk", "Treasurer", "Trustee", "Council Member", "Comm
 
 # Shaped like open-data's files for the states used here.
 CONFIGS = {
-    COUNTRY_ROLES_PATH: ConfigFile(roles=[ConfigRole(id=label.lower(), label=label) for label in _ROLES]),
-    "data_source/local/config.yml": _forms(
+    "data_source/local/config.yml": _level(
         {
             GovernmentForm.TOWNSHIP_BOARD: GovernmentFormConfig(organizations=[_TOWNSHIP_BOARD]),
             GovernmentForm.MAYOR_COUNCIL: GovernmentFormConfig(organizations=[_COUNCIL]),
         }
     ),
-    "data_source/counties/config.yml": _forms({GovernmentForm.COMMISSION: GovernmentFormConfig(organizations=[_WA_BOARD])}),
+    "data_source/counties/config.yml": _level({GovernmentForm.COMMISSION: GovernmentFormConfig(organizations=[_WA_BOARD])}),
     "data_source/mi/local/config.yml": _forms({GovernmentForm.TOWNSHIP_BOARD: GovernmentFormConfig(suffixes=["township"])}),
     "data_source/wa/counties/config.yml": _forms(
         {GovernmentForm.COMMISSION: GovernmentFormConfig(organizations=[_WA_BOARD])}

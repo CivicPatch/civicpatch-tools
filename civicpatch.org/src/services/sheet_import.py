@@ -47,7 +47,7 @@ from database.facts import load_facts_for
 from database import changeset_batches, dismissals
 from database import sites as sites_db
 from database.jurisdictions import get_jurisdiction_geoids
-from database.roles import get_roles
+from database.roles import get_taxonomies_for
 from database.source_records import insert_source_records
 from pydantic import BaseModel
 from lib import sheets
@@ -55,8 +55,7 @@ from lib.csv import READ_ONLY_MARKER, REQUIRED_MARKER
 from schemas.imports import ImportPreview
 from services import entry_sheet, import_report, roster_ingest
 from services.roster import card_fold, sides_of
-from shared.schemas import RoleConfig
-from shared.utils.taxonomy import Taxonomy, build_taxonomy
+from shared.utils.taxonomy import Taxonomy
 
 logger = logging.getLogger(__name__)
 
@@ -110,11 +109,11 @@ async def import_rows(
     later. The volunteer decides: clear a row's status cell and it comes back.
     """
     # Read once: a roles edit landing mid-import would classify jurisdictions differently.
-    roles = await get_roles()
-    taxonomy = build_taxonomy(RoleConfig(roles=roles))
+    by_jurisdiction = rows_by_jurisdiction(rows)
+    taxonomies = await get_taxonomies_for(list(by_jurisdiction))
 
     results = []
-    for jurisdiction_ocdid, jurisdiction_rows in rows_by_jurisdiction(rows).items():
+    for jurisdiction_ocdid, jurisdiction_rows in by_jurisdiction.items():
         if already_handled(jurisdiction_rows):
             results.append(
                 JurisdictionResult(
@@ -126,7 +125,7 @@ async def import_rows(
             continue
         results.append(
             await _import_jurisdiction(
-                jurisdiction_ocdid, jurisdiction_rows, user_id, batch_id, taxonomy
+                jurisdiction_ocdid, jurisdiction_rows, user_id, batch_id, taxonomies[jurisdiction_ocdid]
             )
         )
     return results

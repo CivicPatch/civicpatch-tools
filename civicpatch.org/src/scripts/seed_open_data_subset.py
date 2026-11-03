@@ -43,6 +43,7 @@ from database.jurisdiction_configs import sync_jurisdiction_config_on
 from schemas.jurisdiction_configs import JurisdictionConfigVersion
 from services.jurisdiction_config_sync import parse_jurisdiction_config
 from services.sources.open_data import read_jurisdiction_files
+from shared.utils.taxonomy import UNMATCHED_ROLE_LABEL
 
 logger = logging.getLogger(__name__)
 
@@ -147,7 +148,7 @@ def organization_row(row: dict[str, Any]) -> dict[str, Any]:
     }
 
 
-def post_row(row: dict[str, Any]) -> dict[str, Any]:
+def post_row(row: dict[str, Any], role_labels: dict[str, str]) -> dict[str, Any]:
     # Exports from before 218 carry random ids; the id is the key's now.
     return {
         "id": post_id_of(row),
@@ -155,6 +156,7 @@ def post_row(row: dict[str, Any]) -> dict[str, Any]:
         "organization_id": row["organization_id"],
         "role_id": row["role_id"],
         "division_ocdid": row["division_ocdid"],
+        "role_label": role_labels.get(row["role_id"], UNMATCHED_ROLE_LABEL),
         "created_at": row["created_at"],
     }
 
@@ -231,10 +233,11 @@ INSERT_SQL: dict[str, LiteralString] = {
         ON CONFLICT DO NOTHING
     """,
     "posts": """
-        INSERT INTO posts (id, jurisdiction_ocdid, organization_id, role_id, division_ocdid, created_at)
+        INSERT INTO posts
+            (id, jurisdiction_ocdid, organization_id, role_id, division_ocdid, role_label, created_at)
         VALUES
             (%(id)s, %(jurisdiction_ocdid)s, %(organization_id)s, %(role_id)s, %(division_ocdid)s,
-             %(created_at)s)
+             %(role_label)s, %(created_at)s)
         -- No conflict target: `posts_identity_uq` (organization_id, role_id, division_ocdid)
         -- can collide independently of the id PK — same reasoning as organizations above.
         ON CONFLICT DO NOTHING
@@ -425,7 +428,8 @@ async def load_rosters(
     logger.info("seed_open_data_subset: organizations: %d row(s)", len(organization_rows))
 
     posts_in_scope = [row for row in downloads.posts if row["organization_id"] in organization_ids]
-    post_rows = [post_row(row) for row in posts_in_scope]
+    role_labels = {row["id"]: row["label"] for row in downloads.roles}
+    post_rows = [post_row(row, role_labels) for row in posts_in_scope]
     post_ids = {row["id"]: post_id_of(row) for row in posts_in_scope}
     await insert_ignoring_conflicts(conn, "posts", post_rows)
     logger.info("seed_open_data_subset: posts: %d row(s)", len(post_rows))

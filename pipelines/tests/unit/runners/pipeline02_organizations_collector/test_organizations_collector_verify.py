@@ -163,7 +163,7 @@ def _context(claims: list[RoleClaim], stopped_at_cost_cap: bool = False) -> Orga
             config=OrganizationsCollectorConfig(
                 name="Stowe town",
                 governing_law=_LAW,
-                jurisdiction_config=merged_config(ConfigFile(), ConfigFile(), ConfigFile(governing_law=_VERMONT)),
+                jurisdiction_config=merged_config(ConfigFile(), ConfigFile(governing_law=_VERMONT)),
                 government_form=None,
             ),
             governing_law_pages=[_CHARTER, _STATUTE],

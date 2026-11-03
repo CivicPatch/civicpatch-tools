@@ -109,7 +109,6 @@ A page the visitor can't view redirects to `/`.
 - Choose a jurisdiction's default organization. (Creating, editing and deleting organizations is
   off while they come only from the config sync.)
 - Store a collected governing-law source page; the service key may too.
-- Add, edit and remove roles (each opens a PR on open-data's `data_source/config.yml`).
 - Scrape a single jurisdiction; read pipeline run details; resume a paused run.
 - Run a curated-sheet import and publish what it produced. Starting one is paused in the UI;
   `POST /api/v1/imports` still accepts it.
@@ -123,7 +122,6 @@ A page the visitor can't view redirects to `/`.
 
 ### Admins
 
-- Reorder roles (opens a PR, like the other role changes).
 - `/pipelines`: scrape costs, batch scrapes, cadence, cost caps and in-progress runs.
 - Start a governing-law collection, for one jurisdiction or a whole state (API only), and set the
   collectors' cost caps.

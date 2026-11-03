@@ -57,7 +57,7 @@ def _config():
             ),
         }
     )
-    return merged_config(roles, country, state)
+    return merged_config(country.model_copy(update={"roles": roles.roles}), state)
 
 
 def _rows(name: str, government_form: GovernmentForm | None = None):

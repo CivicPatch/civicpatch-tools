@@ -1,8 +1,8 @@
-"""Route-level integration tests for the role endpoints.
+"""Route-level integration tests for the role endpoint.
 
 These run TestClient against the real test DB with auth mocked so the full
-HTTP → Pydantic → service → DB stack is exercised. Writes become open-data pull
-requests (GitHub, unreachable here), so only the read is covered at this layer.
+HTTP → Pydantic → service → DB stack is exercised. Roles are read from the stored
+config files: a level's, with a state's additions when one is named.
 
 Run with: mise run tcp-integration
 """
@@ -15,9 +15,17 @@ from database.database import get_pool
 from lib.auth import get_optional_user
 from routers.api import roles as roles_router
 from schemas.common import Identity
+from shared.utils.layered_config import ConfigFile, ConfigRole
 
 _PREFIX = "/api/v1/roles"
-_SENTINEL_ID_PATTERN = "zz-route-%"
+_ZZ_LOCAL = "data_source/zz/local/config.yml"
+_ZZ_LOCAL_CONFIG = ConfigFile(
+    roles=[
+        ConfigRole(id="zz-route-mayor", label="ZZ Route Mayor", is_unique=True, aliases=["zz mayor"]),
+        ConfigRole(id="zz-route-clerk", label="ZZ Route Clerk"),
+    ],
+    role_aliases={"member": ["zz route alderperson"]},
+)
 
 
 def _fake_admin() -> Identity:
@@ -42,39 +50,30 @@ def client():
 async def _wipe():
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        await cur.execute("DELETE FROM roles WHERE id LIKE %s", (_SENTINEL_ID_PATTERN,))
+        await cur.execute("DELETE FROM jurisdiction_configs WHERE path = %s", (_ZZ_LOCAL,))
         await conn.commit()
 
 
 @pytest_asyncio.fixture(autouse=True)
-async def clean_roles():
+async def zz_state_config():
     await _wipe()
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "INSERT INTO jurisdiction_configs (path, content, commit_sha) VALUES (%s, %s, 'test')",
+            (_ZZ_LOCAL, _ZZ_LOCAL_CONFIG.model_dump_json()),
+        )
+        await conn.commit()
     yield
     await _wipe()
 
 
-async def _seed():
-    pool = await get_pool()
-    async with pool.connection() as conn, conn.cursor() as cur:
-        await cur.execute(
-            "INSERT INTO roles (id, label, status, is_unique) VALUES"
-            " ('zz-route-mayor', 'ZZ Route Mayor', 'active', true),"
-            " ('zz-route-clerk', 'ZZ Route Clerk', 'active', false)"
-        )
-        await cur.execute(
-            "INSERT INTO role_aliases (role_id, label, status) VALUES ('zz-route-mayor', 'zz mayor', 'active')"
-        )
-        await conn.commit()
-
-
 @pytest.mark.asyncio
 @pytest.mark.integration
-async def test_get_roles_round_trips_stored_roles(client):
-    """Catches drift between what the DB layer emits and what the wire schema
-    expects — a field the schema requires but the query omits would 500."""
-    await _seed()
-
-    response = client.get(_PREFIX)
+async def test_get_roles_round_trips_a_states_roles(client):
+    """Catches drift between what the config layer emits and what the wire schema
+    expects — a field the schema requires but the merge omits would 500."""
+    response = client.get(_PREFIX, params={"level": "local", "state": "zz"})
     assert response.status_code == 200, response.text
 
     by_id = {r["id"]: r for r in response.json()["data"]["roles"]}
@@ -82,3 +81,27 @@ async def test_get_roles_round_trips_stored_roles(client):
     assert by_id["zz-route-mayor"]["is_unique"] is True
     assert by_id["zz-route-mayor"]["aliases"] == ["zz mayor"]
     assert by_id["zz-route-clerk"]["is_unique"] is False
+    assert "zz route alderperson" in by_id["member"]["aliases"]
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_a_level_alone_leaves_out_every_states_roles(client):
+    response = client.get(_PREFIX, params={"level": "local"})
+    assert response.status_code == 200, response.text
+
+    by_id = {r["id"]: r for r in response.json()["data"]["roles"]}
+    assert "member" in by_id
+    assert "zz-route-mayor" not in by_id
+    assert "zz route alderperson" not in by_id["member"]["aliases"]
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_no_level_is_every_role_with_every_files_aliases(client):
+    response = client.get(_PREFIX)
+    assert response.status_code == 200, response.text
+
+    by_id = {r["id"]: r for r in response.json()["data"]["roles"]}
+    assert "zz-route-mayor" in by_id
+    assert "zz route alderperson" in by_id["member"]["aliases"]

@@ -51,45 +51,11 @@
     justify-content: space-between;
     gap: 0.5rem;
 }
-.config-editor__toast {
-    position: fixed;
-    bottom: 1.5rem;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 1000;
-    background: var(--action);
-    color: var(--action-text);
-    padding: 0.5rem 1rem;
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    font-size: var(--font-size-sm);
-}
-.config-editor__toast a {
-    color: inherit;
-    text-decoration: underline;
-}
 .config-editor__empty {
     color: var(--text-muted);
     font-style: italic;
     text-align: center;
     padding: 0.75rem;
-}
-.config-editor__add-btn {
-    font-size: var(--font-size-sm);
-    font-weight: 500;
-    color: var(--action);
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 0.35rem 0;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.3rem;
-    opacity: 0.7;
-    transition: opacity 0.1s;
-    min-height: unset;
-    margin: 0;
-    width: auto;
 }
 .config-editor__inline {
     display: flex;
@@ -177,6 +143,24 @@ details.config-editor__section[open] > summary .config-editor__chevron {
 summary.config-editor__section-title + .config-editor__section-body {
     padding-top: 0.85rem;
 }
+/* Level and state */
+.config-editor__layer {
+    display: flex;
+    gap: 0.75rem;
+    margin-bottom: 0.5rem;
+}
+
+.config-editor__layer label {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    font-size: var(--font-size-sm);
+}
+
+.config-editor__layer input {
+    width: 4rem;
+}
+
 .config-editor__filter {
     display: flex;
     align-items: center;
@@ -211,47 +195,9 @@ input.config-editor__filter-input {
     font-weight: 400;
     font-style: italic;
 }
-.config-editor__edit-form {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-}
-.config-editor__edit-form label {
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-    font-size: var(--font-size-sm);
-    margin: 0;
-}
-.config-editor__edit-form input[type="text"],
-.config-editor__edit-form textarea {
-    font-size: var(--font-size-sm);
-    padding: 0.3em 0.5em;
-    margin: 0;
-}
-.config-editor__edit-form textarea {
-    resize: vertical;
-    min-height: 5rem;
-}
-.config-editor__edit-form td {
-    padding: 0;
-}
-label.config-editor__checkbox-label {
-    flex-direction: row;
-    align-items: center;
-    gap: 0.4rem;
-    cursor: pointer;
-}
 civ-role-table {
     display: block;
     width: 100%;
-}
-.config-editor__actions {
-    text-align: right;
-    white-space: nowrap;
-}
-.config-editor__table th:last-child {
-    text-align: right;
 }
 .config-editor__error {
     color: var(--diff-removed);

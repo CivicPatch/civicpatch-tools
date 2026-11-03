@@ -1,9 +1,7 @@
-"""Decisions about the role taxonomy shared by the config sync and the config edits. Pure — no
-I/O, no DB. Role writes go through open-data's config file (`core.role_config_edits`); the sync
-applies a merged file to `roles` (`core.jurisdiction_config_sync`).
+"""Decisions about the role taxonomy for the config sync. Pure — no I/O, no DB. Roles are edited in
+open-data's config files; the sync applies a merged file to `roles` (`core.jurisdiction_config_sync`).
 """
 
-import re
 from enum import Enum
 
 
@@ -12,12 +10,6 @@ class RoleOp(str, Enum):
     EDIT = "edit"  # UPDATE the stored row's tracked fields
     # NO_CHANGE: row stays as-is; its aliases may still change.
     NO_CHANGE = "no_change"
-
-
-def slugify_label(label: str) -> str:
-    # Must match migration 109's backfill expression exactly, or a role minted
-    # here and one minted by the migration disagree.
-    return re.sub(r"[^a-zA-Z0-9]+", "-", label).lower().strip("-")
 
 
 def diff_aliases(stored: list[str], incoming: list[str]) -> tuple[set[str], set[str]]:

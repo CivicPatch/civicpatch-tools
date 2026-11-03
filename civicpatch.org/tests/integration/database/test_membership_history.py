@@ -93,7 +93,7 @@ async def test_jane_mayor_then_member_then_mayor_is_three_rows():
 
     assert await _periods(jane) == [
         ("mayor", _T0, _T1),
-        ("council-member", _T1, _T2),
+        ("member", _T1, _T2),
         ("mayor", _T2, None),
     ]
 
@@ -102,7 +102,7 @@ async def test_jane_mayor_then_member_then_mayor_is_three_rows():
 @pytest.mark.integration
 @pytest.mark.parametrize(
     "day, role_id",
-    [(date(2026, 3, 15), "mayor"), (date(2026, 4, 10), "council-member"), (date(2026, 5, 10), "mayor")],
+    [(date(2026, 3, 15), "mayor"), (date(2026, 4, 10), "member"), (date(2026, 5, 10), "mayor")],
     ids=["first-mayor-period", "member-period", "second-mayor-period"],
 )
 async def test_as_of_a_date_returns_the_period_that_covers_it(day, role_id):

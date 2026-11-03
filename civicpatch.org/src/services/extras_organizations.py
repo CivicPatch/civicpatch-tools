@@ -6,7 +6,7 @@ from database.activity import record_change
 from database.database import get_pool
 from database.extras_organizations import ExtrasOrganizationsRow
 from database.jurisdiction_configs import get_jurisdiction_configs
-from database.roles import get_roles
+from database.roles import get_taxonomy_for
 from pydantic import BaseModel
 from schemas.activity import Change, FieldChange
 from schemas.claims import EntityType
@@ -43,7 +43,7 @@ async def set_extras_organizations(
     row = await extras_organizations_db.get_extras_organizations_row(jurisdiction_ocdid)
     if row is None:
         raise UnknownJurisdiction(jurisdiction_ocdid)
-    unknown = _unknown_roles(organizations, {role.id for role in await get_roles()})
+    unknown = _unknown_roles(organizations, set((await get_taxonomy_for(jurisdiction_ocdid)).role_ids.values()))
     if unknown:
         raise UnknownRole(", ".join(unknown))
     pool = await get_pool()

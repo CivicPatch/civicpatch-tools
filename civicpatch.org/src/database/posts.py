@@ -7,6 +7,8 @@ from database.changesets import create_roster_edit_changeset
 from database.database import get_pool
 from database.post_claims import accept_fields, set_post_label, undo_deletion
 from database.post_listings import get
+from core.projection.post_labels import label_without_page
+from database.roles import get_taxonomy_for
 from schemas.activity import Change, FieldChange
 from schemas.claims import EntityType
 from shared.utils.id_utils import make_id
@@ -31,6 +33,7 @@ async def create_if_absent(
     organization_id: str,
     role_id: str,
     division_ocdid: str,
+    role_label: str,
 ) -> str | None:
     """Insert a post, or None if the triple is taken. The only INSERT in this module.
 
@@ -41,12 +44,12 @@ async def create_if_absent(
     ).post_id
     await cur.execute(
         """
-        INSERT INTO posts (id, jurisdiction_ocdid, organization_id, role_id, division_ocdid)
-        VALUES (%s, %s, %s, %s, %s)
+        INSERT INTO posts (id, jurisdiction_ocdid, organization_id, role_id, division_ocdid, role_label)
+        VALUES (%s, %s, %s, %s, %s, %s)
         ON CONFLICT (organization_id, role_id, division_ocdid) DO NOTHING
         RETURNING id::text
         """,
-        (post_id, jurisdiction_ocdid, organization_id, role_id, division_ocdid),
+        (post_id, jurisdiction_ocdid, organization_id, role_id, division_ocdid, role_label),
     )
     row = await cur.fetchone()
     return row[0] if row else None
@@ -117,8 +120,12 @@ async def create(
         if jurisdiction_ocdid is None:
             raise UnknownOrganization(organization_id)
         await divisions.find_or_create(cur, division_ocdid, jurisdiction_ocdid)
+        key = PostKey(organization_id=organization_id, role_id=role_id, division_ocdid=division_ocdid)
+        role_label = label_without_page(
+            key, await organizations.role_labels(cur, jurisdiction_ocdid), await get_taxonomy_for(jurisdiction_ocdid)
+        )
         post_id = await create_if_absent(
-            cur, jurisdiction_ocdid, organization_id, role_id, division_ocdid
+            cur, jurisdiction_ocdid, organization_id, role_id, division_ocdid, role_label
         )
         # Nothing to log when the triple was taken: no post was created.
         if post_id:

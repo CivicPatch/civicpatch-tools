@@ -18,12 +18,12 @@ _SOURCES: dict[EntityType | str, str] = {
 # A claim payload stores only ids, unlike person and post payloads which carry their own
 # name. So a badge for one has to look its subject up — same keying, for the same reason.
 #
-# A post has no name of its own since migration 148 dropped `posts.label`; `roles.label` is what
-# a reader recognises it by. A membership is named by whoever holds it.
+# A post is named by `posts.role_label`, which the fold writes (263). A membership is named by
+# whoever holds it.
 _NAMES: dict[EntityType | str, str] = {
     EntityType.PERSON: "SELECT name FROM people WHERE id::text = %s",
     EntityType.POST: (
-        "SELECT r.label FROM posts p JOIN roles r ON r.id = p.role_id WHERE p.id::text = %s"
+        "SELECT role_label FROM posts WHERE id::text = %s"
     ),
     EntityType.MEMBERSHIP: (
         "SELECT pe.name FROM memberships m JOIN people pe ON pe.id = m.person_id "

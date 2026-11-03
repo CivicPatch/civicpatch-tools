@@ -30,13 +30,12 @@ from database.changesets import (
 )
 from database.database import get_pool
 from database.publications import publish_changeset_on
-from database.roles import get_roles
+from database.roles import get_taxonomy_for
 from schemas.claims import Claim
 from schemas.jurisdictions import PersonEdit
 from services.publish import publish_roster, write_roster_changes
-from shared.schemas import RoleConfig
 from shared.utils.id_utils import make_id
-from shared.utils.taxonomy import Taxonomy, build_taxonomy
+from shared.utils.taxonomy import Taxonomy
 
 
 class AnonymousEdit(Exception):
@@ -233,8 +232,8 @@ async def _roster_and_taxonomy(
     merged_into: dict[str, str] | None = None,
 ) -> tuple[Roster, Taxonomy]:
     """Both, because the caller that turns a roster into rows needs the taxonomy that derived
-    it — asking twice is two `get_roles()` round trips for one edit."""
-    taxonomy = build_taxonomy(RoleConfig(roles=await get_roles()))
+    it — asking twice is two `get_taxonomy_for()` round trips for one edit."""
+    taxonomy = await get_taxonomy_for(jurisdiction_ocdid)
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         roster = await projection_db.derived_roster(

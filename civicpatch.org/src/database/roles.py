@@ -1,11 +1,13 @@
-"""Reads of the role taxonomy (roles). Writes go through open-data's config file: a Role Taxonomy
-edit opens a pull request (`services.role_config_pull_request`), and the post-merge sync writes
-`roles` (`database.jurisdiction_configs`). `id` is a slug ("council-member"), immutable once
+"""Reads of the role taxonomy (roles). Roles are edited in open-data's config files, and the
+post-merge sync writes `roles` (`database.jurisdiction_configs`). `id` is a slug ("council-member"), immutable once
 minted; removal is `status='inactive'`, nothing is hard-deleted.
 """
 
 from database.database import get_pool
-from shared.schemas import Role, RoleAliasStatus
+from database.jurisdiction_configs import get_jurisdiction_configs
+from shared.schemas import Role, RoleAliasStatus, RoleConfig
+from shared.utils.layered_config import jurisdiction_roles
+from shared.utils.taxonomy import Taxonomy, build_taxonomy
 
 
 async def _fetch_roles(cur) -> list[Role]:
@@ -64,3 +66,18 @@ async def get_roles() -> list[Role]:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         return await _fetch_roles(cur)
+
+
+async def get_taxonomy_for(jurisdiction_ocdid: str) -> Taxonomy:
+    """The taxonomy of the jurisdiction's level and state, from the stored config files."""
+    return _taxonomy(jurisdiction_roles(await get_jurisdiction_configs(), jurisdiction_ocdid))
+
+
+async def get_taxonomies_for(jurisdiction_ocdids: list[str]) -> dict[str, Taxonomy]:
+    """`get_taxonomy_for` for many jurisdictions, reading the config files once."""
+    configs = await get_jurisdiction_configs()
+    return {ocdid: _taxonomy(jurisdiction_roles(configs, ocdid)) for ocdid in jurisdiction_ocdids}
+
+
+def _taxonomy(roles: list[Role]) -> Taxonomy:
+    return build_taxonomy(RoleConfig(roles=roles))

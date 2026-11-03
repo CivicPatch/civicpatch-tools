@@ -1,14 +1,15 @@
 import pytest
 
-from core.jurisdiction_config_sync import COUNTRY_ROLES_PATH, StoredRole, role_changes
+from core.jurisdiction_config_sync import StoredRole, role_changes
 from core.role_taxonomy import RoleOp
 from shared.schemas import RoleStatus, SelectionMethod
 from shared.utils.layered_config import ConfigRole
 
+LEVEL_PATH = "data_source/local/config.yml"
 TENNESSEE = "data_source/tn/counties/config.yml"
 
 
-def _stored(id_: str, label: str, path: str | None = COUNTRY_ROLES_PATH, **fields) -> StoredRole:
+def _stored(id_: str, label: str, path: str | None = LEVEL_PATH, **fields) -> StoredRole:
     return StoredRole(id=id_, label=label, config_path=path, **fields)
 
 
@@ -16,7 +17,7 @@ def _stored(id_: str, label: str, path: str | None = COUNTRY_ROLES_PATH, **field
 def test_a_new_role_is_added_with_its_aliases_and_file_position():
     role = ConfigRole(id="mayor", label="Mayor", aliases=["town mayor"])
 
-    changes = role_changes(COUNTRY_ROLES_PATH, [role], [])
+    changes = role_changes(LEVEL_PATH, [role], [])
 
     [upsert] = changes.upserts
     assert (upsert.op, upsert.priority, upsert.aliases_added) == (RoleOp.ADD, 0, {"town mayor"})
@@ -26,7 +27,7 @@ def test_a_new_role_is_added_with_its_aliases_and_file_position():
 def test_an_unchanged_role_needs_nothing():
     stored = _stored("mayor", "Mayor", priority=0, aliases=["town mayor"])
 
-    changes = role_changes(COUNTRY_ROLES_PATH, [ConfigRole(id="mayor", label="Mayor", aliases=["town mayor"])], [stored])
+    changes = role_changes(LEVEL_PATH, [ConfigRole(id="mayor", label="Mayor", aliases=["town mayor"])], [stored])
 
     assert changes.upserts == []
     assert changes.deactivations == []
@@ -36,7 +37,7 @@ def test_an_unchanged_role_needs_nothing():
 def test_a_new_label_on_a_known_id_is_a_rename():
     stored = _stored("select-board-member", "Selectman", priority=0)
 
-    changes = role_changes(COUNTRY_ROLES_PATH, [ConfigRole(id="select-board-member", label="Select Board Member")], [stored])
+    changes = role_changes(LEVEL_PATH, [ConfigRole(id="select-board-member", label="Select Board Member")], [stored])
 
     assert [upsert.op for upsert in changes.upserts] == [RoleOp.EDIT]
 
@@ -46,7 +47,7 @@ def test_a_changed_selection_method_is_an_edit():
     stored = _stored("vice-mayor", "Vice Mayor", priority=0)
 
     changes = role_changes(
-        COUNTRY_ROLES_PATH,
+        LEVEL_PATH,
         [ConfigRole(id="vice-mayor", label="Vice Mayor", selection_method=SelectionMethod.ELECTED_BY_MEMBERS)],
         [stored],
     )
@@ -59,7 +60,7 @@ def test_a_changed_selection_method_is_an_edit():
 def test_an_alias_change_alone_is_not_an_edit():
     stored = _stored("mayor", "Mayor", priority=0, aliases=["town mayor"])
 
-    changes = role_changes(COUNTRY_ROLES_PATH, [ConfigRole(id="mayor", label="Mayor", aliases=["city mayor"])], [stored])
+    changes = role_changes(LEVEL_PATH, [ConfigRole(id="mayor", label="Mayor", aliases=["city mayor"])], [stored])
 
     [upsert] = changes.upserts
     assert (upsert.op, upsert.aliases_added, upsert.aliases_removed) == (
@@ -74,7 +75,7 @@ def test_a_moved_role_gets_its_new_priority():
     stored = [_stored("mayor", "Mayor", priority=0), _stored("council-member", "Council Member", priority=1)]
     file_roles = [ConfigRole(id="council-member", label="Council Member"), ConfigRole(id="mayor", label="Mayor")]
 
-    changes = role_changes(COUNTRY_ROLES_PATH, file_roles, stored)
+    changes = role_changes(LEVEL_PATH, file_roles, stored)
 
     assert [(upsert.role.id, upsert.priority) for upsert in changes.upserts] == [("council-member", 0), ("mayor", 1)]
 
@@ -83,7 +84,7 @@ def test_a_moved_role_gets_its_new_priority():
 def test_an_inactive_role_listed_again_is_reactivated():
     stored = _stored("chair", "Chair", priority=0, status=RoleStatus.INACTIVE)
 
-    changes = role_changes(COUNTRY_ROLES_PATH, [ConfigRole(id="chair", label="Chair")], [stored])
+    changes = role_changes(LEVEL_PATH, [ConfigRole(id="chair", label="Chair")], [stored])
 
     assert [upsert.op for upsert in changes.upserts] == [RoleOp.EDIT]
 
@@ -92,7 +93,7 @@ def test_an_inactive_role_listed_again_is_reactivated():
 def test_a_role_the_file_dropped_is_deactivated():
     stored = [_stored("mayor", "Mayor", priority=0), _stored("select-board-chair", "Select Board Chair", priority=1)]
 
-    changes = role_changes(COUNTRY_ROLES_PATH, [ConfigRole(id="mayor", label="Mayor")], stored)
+    changes = role_changes(LEVEL_PATH, [ConfigRole(id="mayor", label="Mayor")], stored)
 
     assert [role.id for role in changes.deactivations] == ["select-board-chair"]
 
@@ -101,7 +102,7 @@ def test_a_role_the_file_dropped_is_deactivated():
 def test_a_role_another_file_defines_is_left_alone():
     stored = [_stored("county-mayor", "County Mayor", path=TENNESSEE), _stored("unmatched", "Unmatched", path=None)]
 
-    assert role_changes(COUNTRY_ROLES_PATH, [], stored).deactivations == []
+    assert role_changes(LEVEL_PATH, [], stored).deactivations == []
 
 
 @pytest.mark.unit

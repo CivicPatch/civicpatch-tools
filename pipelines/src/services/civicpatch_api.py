@@ -8,6 +8,7 @@ from shared.schemas import GoverningLawOrganizations, JurisdictionExtras, KnownO
 from shared.utils.config_utils import (
     RoleConfig,
 )
+from shared.utils.id_utils import parse_jurisdiction_ocdid
 from utils.request_utils import with_retry
 
 SERVER_SOURCE = os.getenv("CIVICPATCH_SERVER_SOURCE")
@@ -139,18 +140,17 @@ async def get_active_people(
     return await search_people(client, logger, jurisdiction_ocdid, status="active")
 
 
-async def get_role_config(logger) -> RoleConfig:
-    """Fetch the role taxonomy from the backend API. It is one flat global list
-    — migration 109 dropped per-jurisdiction scoping, so there is nothing to
-    key the request on."""
+async def get_role_config(logger, jurisdiction_ocdid: str) -> RoleConfig:
     env = get_env_vars()
+    parsed = parse_jurisdiction_ocdid(jurisdiction_ocdid)
+    params = {"level": parsed.level, "state": parsed.state}
 
     async def _fetch():
         async with httpx.AsyncClient(
             headers={"Authorization": env["SERVICE_API_KEY"]},
             timeout=10,
         ) as client:
-            response = await client.get(f"{env['CIVICPATCH_ORG_URL']}/api/v1/roles")
+            response = await client.get(f"{env['CIVICPATCH_ORG_URL']}/api/v1/roles", params=params)
             response.raise_for_status()
             return response.json()
 

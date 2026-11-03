@@ -39,7 +39,7 @@ def test_rows_are_compared_per_jurisdiction_and_the_state_totals_add_up():
     upload = _upload([(2, _BARRE, "Jane Doe"), (3, _STOWE, "Lee Park"), (4, _BARRE, "Pat Lin")])
     rosters = {_BARRE: [_person("jane", "Jane Doe", _BARRE)], _STOWE: []}
 
-    run = build_comparison(upload, {_BARRE, _STOWE, _RUTLAND}, rosters, TAXONOMY, {})
+    run = build_comparison(upload, {_BARRE, _STOWE, _RUTLAND}, rosters, {_BARRE: TAXONOMY, _STOWE: TAXONOMY, _RUTLAND: TAXONOMY}, {})
 
     assert [j.jurisdiction_ocdid for j in run.jurisdictions] == [_BARRE, _STOWE]
     barre = run.jurisdictions[0]
@@ -56,7 +56,7 @@ def test_each_civicpatch_person_carries_their_organizations_by_name():
     lee = _person("lee", "Lee Park", _BARRE, ("auditors",))
     names = {"board": "Selectboard", "listers": "Board of Listers", "auditors": "Town Auditors"}
 
-    run = build_comparison(upload, {_BARRE}, {_BARRE: [jane, lee]}, TAXONOMY, names)
+    run = build_comparison(upload, {_BARRE}, {_BARRE: [jane, lee]}, {_BARRE: TAXONOMY}, names)
 
     by_outcome = {p.outcome: p.organizations for p in run.jurisdictions[0].people}
     assert by_outcome == {

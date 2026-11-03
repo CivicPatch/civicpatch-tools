@@ -34,7 +34,7 @@ _FORMS = ConfigFile(
         ),
     }
 )
-CONFIG = merged_config(_ROLES, _FORMS, None)
+CONFIG = merged_config(_FORMS.model_copy(update={"roles": _ROLES.roles}), None)
 
 
 def _asked(asks) -> list[tuple[str, str, str]]:
@@ -99,7 +99,7 @@ _VT_FORMS = ConfigFile(
         ),
     }
 )
-_VT_CONFIG = merged_config(_VT_ROLES, _VT_FORMS, None)
+_VT_CONFIG = merged_config(_VT_FORMS.model_copy(update={"roles": _VT_ROLES.roles}), None)
 
 
 def test_town_officers_are_asked_under_their_own_organization_after_the_boards():

@@ -17,7 +17,7 @@ from services.roster_ingest import reconcile_scrape
 from tests.integration import factories
 from shared.schemas import GovernmentForm, Role, RoleConfig, SelectionMethod
 from shared.utils.government_forms import DerivedOrganization
-from shared.utils.layered_config import COUNTRY_ROLES_PATH, ConfigFile, ConfigRole, GovernmentFormConfig
+from shared.utils.layered_config import ConfigFile, ConfigRole, GovernmentFormConfig
 from shared.utils.taxonomy import build_taxonomy
 
 _TOWN = "ocd-jurisdiction/country:us/state:ma/place:zyplace_town/government"
@@ -28,8 +28,8 @@ _ROLES = [
     ConfigRole(id="moderator", label="Moderator", is_unique=True),
 ]
 _CONFIGS = {
-    COUNTRY_ROLES_PATH: ConfigFile(roles=_ROLES),
     "data_source/local/config.yml": ConfigFile(
+        roles=_ROLES,
         government_forms={
             GovernmentForm.OPEN_TOWN_MEETING: GovernmentFormConfig(
                 organizations=[

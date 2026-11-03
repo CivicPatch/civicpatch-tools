@@ -17,11 +17,11 @@ from database import post_listings as post_listings_db
 from database import projection as projection_db
 from database.database import get_pool
 from database.people import get_people_by_ids, get_roster
-from database.roles import get_roles
+from database.roles import get_taxonomy_for
 from database.source_records import get_source_records_for_changeset
 from schemas.claims import EntityType
-from shared.schemas import POST_FIELD, RoleConfig
-from shared.utils.taxonomy import Taxonomy, build_taxonomy
+from shared.schemas import POST_FIELD
+from shared.utils.taxonomy import Taxonomy
 
 logger = logging.getLogger(__name__)
 
@@ -36,15 +36,15 @@ async def _roster(
     person_ids = list({source_record["person_id"] for source_record in source_records})
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        published, roles, claimed = await asyncio.gather(
+        published, taxonomy, claimed = await asyncio.gather(
             get_people_by_ids(person_ids),
-            get_roles(),
+            get_taxonomy_for(jurisdiction_ocdid),
             claims.claimed_values(cur, EntityType.PERSON, person_ids),
         )
     return roster_from_source_records(
         source_records,
         published,
-        build_taxonomy(RoleConfig(roles=roles)),
+        taxonomy,
         jurisdiction_ocdid,
         logger,
     ), claimed
@@ -54,7 +54,7 @@ async def _fold_for_card(
     jurisdiction_ocdid: str, including: str | None
 ) -> tuple[list[dict], Facts, Taxonomy]:
     """One fold, and the facts behind it, for a caller that wants more than the rows."""
-    taxonomy = build_taxonomy(RoleConfig(roles=await get_roles()))
+    taxonomy = await get_taxonomy_for(jurisdiction_ocdid)
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         roster, facts = await projection_db.derived_roster_and_facts(
@@ -113,7 +113,7 @@ async def card_fold(changeset_id: str, jurisdiction_ocdid: str) -> CardFold:
     and a claim landing between them would reach one side of the card and not the other —
     which is `derived_roster`'s own warning. One connection because they are one question.
     """
-    taxonomy = build_taxonomy(RoleConfig(roles=await get_roles()))
+    taxonomy = await get_taxonomy_for(jurisdiction_ocdid)
     as_of = datetime.now(timezone.utc)
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:

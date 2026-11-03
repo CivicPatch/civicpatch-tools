@@ -24,11 +24,11 @@ from core.people_roster import (
 )
 from database import organizations, projection
 from database.database import get_pool
-from database.roles import get_roles
+from database.roles import get_taxonomy_for
 from shared.utils.name_utils import person_list_to_identities
-from shared.schemas import Person, RoleConfig
+from shared.schemas import Person
 from shared.utils.person_id_utils import resolve_people_ids
-from shared.utils.taxonomy import Taxonomy, build_taxonomy
+from shared.utils.taxonomy import Taxonomy
 
 logger = logging.getLogger(__name__)
 
@@ -36,7 +36,7 @@ logger = logging.getLogger(__name__)
 async def matcher_pool(jurisdiction_ocdid: str) -> list[Person]:
     """Who a new record may be linked to: one person per base identity, never a merged cluster,
     so an unmerge leaves each record with the half it was linked to (plan §8)."""
-    taxonomy = build_taxonomy(RoleConfig(roles=await get_roles()))
+    taxonomy = await get_taxonomy_for(jurisdiction_ocdid)
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         roster = await projection.base_identities(cur, jurisdiction_ocdid, taxonomy)

@@ -43,7 +43,7 @@ def _context(pending: list[RoleAsk], claims: list[RoleClaim] | None = None, pres
         data=OrganizationsCollectorData(
             jurisdiction_ocdid="ocd-jurisdiction/country:us/state:vt/place:stowe/government",
             config=OrganizationsCollectorConfig(
-                name="Stowe town", governing_law=None, jurisdiction_config=merged_config(ConfigFile(), ConfigFile(), None), government_form=None
+                name="Stowe town", governing_law=None, jurisdiction_config=merged_config(ConfigFile(), None), government_form=None
             ),
             selected_governing_law_text=_LAW,
             pending_asks=pending,

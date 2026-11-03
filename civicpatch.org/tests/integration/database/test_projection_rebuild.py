@@ -12,8 +12,6 @@ import uuid
 
 import pytest
 import pytest_asyncio
-from shared.schemas import RoleConfig
-from shared.utils.taxonomy import build_taxonomy
 
 from core.projection.diff import on_roster, roster_diff
 from core.projection.roster import derive_roster
@@ -21,7 +19,7 @@ from database.database import get_pool
 from database.facts import load_facts
 from database.projection import derived_roster, rebuild_from_facts, stored_roster
 from database.publications import publish_changeset
-from database.roles import get_roles
+from database.roles import get_taxonomy_for
 from database.source_records import insert_source_records
 from services.roster import card_sides, published_card_rows
 from tests.integration import factories
@@ -101,8 +99,7 @@ async def _rebuild() -> None:
 
 
 async def _stored_and_derived():
-    roles = await get_roles()
-    taxonomy = build_taxonomy(RoleConfig(roles=roles))
+    taxonomy = await get_taxonomy_for(_OCDID)
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         stored = await stored_roster(cur, _OCDID)
@@ -305,3 +302,34 @@ async def test_a_preview_writes_nothing():
     # proposes just does not put her in anything.
     assert [person.id for person in on_roster(preview).people] == [ids["ben"]]
     assert await _membership_rows() == before
+
+
+async def _post_role_labels() -> dict[str, str]:
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute("SELECT role_id, role_label FROM posts WHERE jurisdiction_ocdid = %s", (_OCDID,))
+        return {row[0]: row[1] for row in await cur.fetchall()}
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_a_post_is_named_as_the_page_wrote_its_role():
+    ids = await _seed()
+    await _scrape(ids, _T0, {"ana": "Alderman", "ben": "Mayor"})
+
+    await _rebuild()
+
+    assert await _post_role_labels() == {"member": "Alderman", "mayor": "Mayor"}
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_a_newer_page_wording_renames_the_post():
+    ids = await _seed()
+    await _scrape(ids, _T0, {"ana": "Alderman"})
+    await _rebuild()
+
+    await _scrape(ids, _T1, {"ana": "Alderperson"})
+    await _rebuild()
+
+    assert await _post_role_labels() == {"member": "Alderperson"}

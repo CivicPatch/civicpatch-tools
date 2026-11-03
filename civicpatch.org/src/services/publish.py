@@ -29,12 +29,10 @@ from database.publications import (
     dismiss_changeset,
     publish_changeset,
 )
-from database.roles import get_roles
+from database.roles import get_taxonomy_for
 from schemas.activity import Change
 from services.roster import proposed_roster
-from shared.schemas import RoleConfig
 from shared.utils.statuses import DismissalReason
-from shared.utils.taxonomy import build_taxonomy
 
 logger = logging.getLogger(__name__)
 
@@ -145,14 +143,13 @@ async def _post_labels(
     }
     if not posts:
         return {}
-    taxonomy = build_taxonomy(RoleConfig(roles=await get_roles()))
-    role_labels = {role_id: label for label, role_id in taxonomy.role_ids.items()}
+    taxonomy = await get_taxonomy_for(jurisdiction_ocdid)
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         claimed = await post_claims_db.claimed_labels_by_key(cur, jurisdiction_ocdid)
     return {
         post_id: post_label(
-            role_labels.get(post.role_id, post.role_id),
+            taxonomy.role_labels.get(post.role_id, post.role_id),
             post.division_ocdid,
             claimed.get((post.organization_id, post.role_id, post.division_ocdid)),
         )
@@ -162,7 +159,7 @@ async def _post_labels(
 
 async def _published_roster(jurisdiction_ocdid: str) -> Roster:
     """Who is on the roster right now, as the fold answers it."""
-    taxonomy = build_taxonomy(RoleConfig(roles=await get_roles()))
+    taxonomy = await get_taxonomy_for(jurisdiction_ocdid)
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         roster = await projection_db.derived_roster(

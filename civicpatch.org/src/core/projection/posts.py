@@ -10,7 +10,7 @@ from collections.abc import Sequence
 from shared.utils.taxonomy import MEMBER_ROLE_ID, UNMATCHED_ROLE_ID, Taxonomy
 
 from core.membership_label import MembershipLabel, render
-from core.people_roles import derive_roles, holds_a_member_post
+from core.people_roles import DerivedRoles, derive_roles, holds_a_member_post
 from core.projection.facts import PostKey, SourceRecord, latest_first
 from core.projection.membership_details import LabelDetails, MembershipRecords
 
@@ -65,8 +65,16 @@ def parse_labels(
             )
         )
         or None,
+        role_text=_role_as_written(parsed, post.role_id),
     )
     return post, details
+
+
+def _role_as_written(parsed: DerivedRoles, role_id: str) -> str | None:
+    for part in parsed.parts:
+        if role_id in part.parsed.role_texts:
+            return part.parsed.role_texts[role_id]
+    return None
 
 
 def post_keys(

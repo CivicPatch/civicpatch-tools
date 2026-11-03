@@ -47,7 +47,7 @@ def _context(governing_law: GoverningLaw | None, outcomes: RoleOutcomes | None) 
             jurisdiction_ocdid=_OCDID,
             config=OrganizationsCollectorConfig(
                 name="Stowe town", governing_law=governing_law,
-                jurisdiction_config=merged_config(ConfigFile(), ConfigFile(), ConfigFile()), government_form=None,
+                jurisdiction_config=merged_config(ConfigFile(), ConfigFile()), government_form=None,
             ),
             outcomes=outcomes,
         ),

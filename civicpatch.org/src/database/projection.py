@@ -23,23 +23,23 @@ from core.projection.facts import Facts, PostKey
 from core.projection.membership_details import MembershipSource
 from core.projection.membership_history import MembershipRow, membership_history
 from core.projection.people import Membership, Person
+from core.projection.post_labels import post_role_labels
 from core.projection.roster import (
     Roster,
     derive_roster,
     unpublished_images,
     with_published_images,
 )
-from database import divisions, posts
+from database import divisions, organizations, posts
 from database.activity import record_change
 from database.extras_organizations import get_extras_organizations
 from database.facts import load_facts
-from database.roles import get_roles
+from database.roles import get_taxonomy_for
 from schemas.activity import Change
 from schemas.claims import EntityType
-from shared.schemas import RoleConfig
 from shared.utils.membership_ids import membership_id
 from shared.utils.statuses import ActivityType
-from shared.utils.taxonomy import Taxonomy, build_taxonomy, with_selection_methods
+from shared.utils.taxonomy import Taxonomy, with_selection_methods
 
 logger = logging.getLogger(__name__)
 
@@ -126,6 +126,18 @@ _DELETE_PEOPLE_NOT_DERIVED = """
     DELETE FROM people WHERE jurisdiction_ocdid = %s AND id <> ALL(%s::uuid[])
 """
 
+_SET_POST_ROLE_LABEL = """
+    UPDATE posts SET role_label = %s WHERE id = %s
+"""
+
+# Claims name posts with no FK, so a post a claim names is kept.
+_DELETE_EMPTY_POSTS = """
+    DELETE FROM posts p
+    WHERE p.role_id = ANY(%s) AND p.jurisdiction_ocdid = ANY(%s)
+      AND NOT EXISTS (SELECT 1 FROM memberships m WHERE m.post_id = p.id)
+      AND NOT EXISTS (SELECT 1 FROM claims c WHERE c.entity_type = 'post' AND c.entity_id = p.id)
+"""
+
 _PUBLISHED_AT = """
     SELECT id::text, published_at FROM changesets
     WHERE id::text = ANY(%s) AND published_at IS NOT NULL
@@ -144,7 +156,7 @@ _INSERT_MEMBERSHIP = """
 
 
 async def _ensure_posts(
-    cur, jurisdiction_ocdid: str, keys: Sequence[PostKey], changeset_id: str | None
+    cur, jurisdiction_ocdid: str, keys: Sequence[PostKey], labels: Mapping[str, str], changeset_id: str | None
 ) -> None:
     """Mint the posts the roster names that do not exist yet, logging each mint."""
     for key in keys:
@@ -155,6 +167,7 @@ async def _ensure_posts(
             key.organization_id,
             key.role_id,
             key.division_ocdid,
+            labels[key.post_id],
         )
         if minted:
             await record_change(
@@ -169,17 +182,17 @@ async def _ensure_posts(
             )
 
 
-async def _taxonomy(taxonomy: Taxonomy | None) -> Taxonomy:
+async def _taxonomy(jurisdiction_ocdid: str, taxonomy: Taxonomy | None) -> Taxonomy:
     if taxonomy is not None:
         return taxonomy
-    return build_taxonomy(RoleConfig(roles=await get_roles()))
+    return await get_taxonomy_for(jurisdiction_ocdid)
 
 
 async def _jurisdiction_taxonomy(
     cur, jurisdiction_ocdid: str, taxonomy: Taxonomy | None
 ) -> Taxonomy:
     """The config's taxonomy with this jurisdiction's own selection methods, from its law."""
-    base = await _taxonomy(taxonomy)
+    base = await _taxonomy(jurisdiction_ocdid, taxonomy)
     organizations = await get_extras_organizations(cur, jurisdiction_ocdid)
     return (
         with_selection_methods(base, organizations.selection_methods())
@@ -278,7 +291,8 @@ async def rebuild_from_facts(
     # From the fold's memberships, not the raw records: a split moves a record to a person whose
     # labels then parse alone, into a post the records as stored never name.
     keys = sorted({row.membership.post for row in history}, key=lambda key: key.post_id)
-    await rebuild(cur, jurisdiction_ocdid, roster, history, keys, changeset_id)
+    labels = post_role_labels(history, await organizations.role_labels(cur, jurisdiction_ocdid), taxonomy)
+    await rebuild(cur, jurisdiction_ocdid, roster, history, keys, labels, changeset_id)
     return len(roster.people)
 
 
@@ -324,12 +338,15 @@ async def rebuild(
     roster: Roster,
     history: Sequence[MembershipRow],
     keys: Sequence[PostKey],
+    labels: Mapping[str, str],
     changeset_id: str | None = None,
 ) -> None:
     """Replace the jurisdiction's projection: every person in `roster` upserted and nobody else
-    kept, and every membership row, open or closed, deleted and re-inserted from `history`."""
+    kept, and every membership row, open or closed, deleted and re-inserted from `history`.
+    `labels` names each post, by its id."""
     await cur.execute(_LOCK_JURISDICTION, (jurisdiction_ocdid,))
-    await _ensure_posts(cur, jurisdiction_ocdid, keys, changeset_id)
+    await _ensure_posts(cur, jurisdiction_ocdid, keys, labels, changeset_id)
+    await cur.executemany(_SET_POST_ROLE_LABEL, [(label, post_id) for post_id, label in labels.items()])
     people = person_rows(roster.people, jurisdiction_ocdid)
     if people:
         await cur.executemany(PERSON_UPSERT, people)
@@ -341,6 +358,13 @@ async def rebuild(
     memberships = membership_rows(history)
     if memberships:
         await cur.executemany(_INSERT_MEMBERSHIP, memberships)
+
+
+async def delete_empty_posts(cur, role_ids: list[str], jurisdiction_ocdids: list[str]) -> int:
+    """Posts on these roles that no membership or claim names: what a rebuild leaves behind
+    when a role stops winning posts. Returns how many were deleted."""
+    await cur.execute(_DELETE_EMPTY_POSTS, (role_ids, jurisdiction_ocdids))
+    return cur.rowcount
 
 
 def membership_rows(history: Iterable[MembershipRow]) -> list[dict]:

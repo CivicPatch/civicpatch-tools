@@ -30,8 +30,7 @@ import uuid
 import pytest
 import pytest_asyncio
 
-from shared.schemas import RoleConfig
-from shared.utils.taxonomy import UNMATCHED_ROLE_ID, build_taxonomy
+from shared.utils.taxonomy import UNMATCHED_ROLE_ID
 
 from core.projection.diff import RosterDiff, roster_diff
 from core.projection.roster import derive_roster
@@ -40,7 +39,7 @@ from database.database import get_pool
 from database.facts import load_facts
 from database.projection import stored_roster
 from database.publications import publish_changeset
-from database.roles import get_roles
+from database.roles import get_taxonomy_for
 from database.source_records import insert_source_records
 from schemas.claims import Claim, ClaimKind, EntityType, Source
 from tests.integration import factories
@@ -110,7 +109,7 @@ async def _seed() -> dict:
         ids["mayors_office"] = mayor_org
         await divisions.find_or_create(cur, _BASE, _OCDID)
         await divisions.find_or_create(cur, _WARD_2, _OCDID)
-        await factories.seed_post(cur, _OCDID, ids["council"], "council-member", _WARD_2)
+        await factories.seed_post(cur, _OCDID, ids["council"], "member", _WARD_2)
         await factories.seed_post(cur, _OCDID, mayor_org, "mayor", _BASE)
         await conn.commit()
     return ids
@@ -261,12 +260,12 @@ async def _projection(ids: dict) -> dict:
 async def _projection_diff() -> RosterDiff:
     """The roster diff of stored against derived: the rows today's path wrote, against
     `derive_roster` over the same facts. Empty is R6."""
-    roles = await get_roles()
+    taxonomy = await get_taxonomy_for(_OCDID)
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         stored = await stored_roster(cur, _OCDID)
         facts = await load_facts(cur, _OCDID, datetime.datetime.now(datetime.timezone.utc))
-    derived = derive_roster(facts, _OCDID, build_taxonomy(RoleConfig(roles=roles)))
+    derived = derive_roster(facts, _OCDID, taxonomy)
     return roster_diff(stored, derived)
 
 
@@ -309,21 +308,21 @@ async def test_publishing_two_bodies_derives_this_projection():
         ],
         "posts": [
             {
-                "organization": "council",
-                "role_id": "council-member",
-                "division_ocdid": _WARD_2,
-            },
-            {
                 "organization": "mayors_office",
                 "role_id": "mayor",
                 "division_ocdid": _BASE,
+            },
+            {
+                "organization": "council",
+                "role_id": "member",
+                "division_ocdid": _WARD_2,
             },
         ],
         "memberships": [
             {
                 "person": "ana",
                 "organization": "council",
-                "role_id": "council-member",
+                "role_id": "member",
                 "division_ocdid": _WARD_2,
                 "label": None,
                 "opened_at": _T0,
@@ -388,21 +387,21 @@ async def test_a_second_scrape_of_one_body_leaves_the_other_alone():
         ],
         "posts": [
             {
-                "organization": "council",
-                "role_id": "council-member",
-                "division_ocdid": _WARD_2,
-            },
-            {
                 "organization": "mayors_office",
                 "role_id": "mayor",
                 "division_ocdid": _BASE,
+            },
+            {
+                "organization": "council",
+                "role_id": "member",
+                "division_ocdid": _WARD_2,
             },
         ],
         "memberships": [
             {
                 "person": "ana",
                 "organization": "council",
-                "role_id": "council-member",
+                "role_id": "member",
                 "division_ocdid": _WARD_2,
                 "label": None,
                 "opened_at": _T0,
@@ -555,7 +554,7 @@ async def test_mayor_then_member_then_mayor_again():
     ids = await _seed()
     steps = (
         (_T0, "Mayor", "mayor", _BASE),
-        (_T1, "Council Member Ward 2", "council-member", _WARD_2),
+        (_T1, "Council Member Ward 2", "member", _WARD_2),
         (_T2, "Mayor", "mayor", _BASE),
     )
     first = await _changeset(_T0)
