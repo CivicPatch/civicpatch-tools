@@ -24,8 +24,6 @@ class LabelDetails(BaseModel, frozen=True):
     extra_roles: tuple[str, ...] = ()
     # The three above as one string, what a membership is called when nobody has said.
     derived_membership_label: str | None = None
-    # The post's role as the page wrote it ("City Councilor"); None when the labels never named it.
-    role_text: str | None = None
 
 
 class MembershipRecords(BaseModel, frozen=True):

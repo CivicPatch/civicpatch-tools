@@ -313,23 +313,17 @@ async def _post_role_labels() -> dict[str, str]:
 
 @pytest.mark.asyncio
 @pytest.mark.integration
-async def test_a_post_is_named_as_the_page_wrote_its_role():
+async def test_a_post_is_named_by_its_organization_not_the_page():
     ids = await _seed()
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            """UPDATE organizations SET extras_role_labels = '{"member": "Select Board Member"}'::jsonb WHERE id = %s""",
+            (ids["council"],),
+        )
+        await conn.commit()
     await _scrape(ids, _T0, {"ana": "Alderman", "ben": "Mayor"})
 
     await _rebuild()
 
-    assert await _post_role_labels() == {"member": "Alderman", "mayor": "Mayor"}
-
-
-@pytest.mark.asyncio
-@pytest.mark.integration
-async def test_a_newer_page_wording_renames_the_post():
-    ids = await _seed()
-    await _scrape(ids, _T0, {"ana": "Alderman"})
-    await _rebuild()
-
-    await _scrape(ids, _T1, {"ana": "Alderperson"})
-    await _rebuild()
-
-    assert await _post_role_labels() == {"member": "Alderperson"}
+    assert await _post_role_labels() == {"member": "Select Board Member", "mayor": "Mayor"}

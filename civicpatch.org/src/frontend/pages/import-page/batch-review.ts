@@ -13,7 +13,7 @@ import { formatDateTime } from "../../utils/date-utils.js";
 import { hostDispatch } from "../../utils/host-dispatch.js";
 import "../../components/review-card-body/review-card-body.js";
 import { fetchReviewCards } from "../../api.js";
-import { useJurisdictionRoles } from "../../hooks/use-jurisdiction-roles.js";
+import { useEveryRole } from "../../hooks/use-jurisdiction-roles.js";
 import type { ReviewCard } from "../../schemas/review-card.js";
 import {
   REVIEW_FILTER,
@@ -81,7 +81,7 @@ function BatchReviewPanel(host: BatchReviewHost) {
   const [cards, setCards] = useState<Record<string, ReviewCard>>({});
   const [cardsError, setCardsError] = useState<string | null>(null);
   const [cardsLoading, setCardsLoading] = useState(false);
-  const roles = useJurisdictionRoles();
+  const roles = useEveryRole();
   const review = host.review;
   const items = review
     ? byChangeRank(localities(review.jurisdictions, host.errors))

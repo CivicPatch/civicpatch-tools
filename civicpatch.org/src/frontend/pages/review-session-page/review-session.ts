@@ -128,7 +128,7 @@ function ReviewSession(host: ReviewSessionHost) {
   // first-sorted one until the picker carries its own organization select (step 9's UI half).
   const { organizations } = useOrganizations(jurisdictionOcdid);
   const organizationId = organizations[0]?.id ?? "";
-  const roles = useJurisdictionRoles();
+  const roles = useJurisdictionRoles(jurisdictionOcdid ?? "");
   const { url: publishedUrl, status: reviewStatus = null } = pr ?? {};
   const isBaseline = mode === ReviewMode.BASELINE;
   const {

@@ -68,9 +68,6 @@ class ParsedLabel(BaseModel):
     # for what the parser established, not for what happens next: triage may promote some to
     # a role or a post, and the text alone cannot say which. Empty means the label was understood.
     unmatched: List[str] = []
-    # By role id, each role in `roles` as the page wrote it ("City Councilor" for member): what
-    # the post a role wins is called. The first wording wins when a label names a role twice.
-    role_texts: Dict[str, str] = {}
 
 
 class _Word(BaseModel):
@@ -243,13 +240,10 @@ def parse_label(label: str, taxonomy: Taxonomy) -> ParsedLabel:
     divisions: List[Division] = []
     other_designations: List[str] = []
     unmatched: List[str] = []
-    role_texts: Dict[str, str] = {}
     for part in parts:
         for role in part.roles:
             if role not in roles:
                 roles.append(role)
-        for role_id, text in part.role_texts.items():
-            role_texts.setdefault(role_id, text)
         for division in part.divisions:
             if division not in divisions:
                 divisions.append(division)
@@ -270,7 +264,6 @@ def parse_label(label: str, taxonomy: Taxonomy) -> ParsedLabel:
         divisions=divisions,
         other_designations=other_designations,
         unmatched=unmatched,
-        role_texts=role_texts,
     )
 
 
@@ -329,17 +322,11 @@ def _parse_segment(label: str, taxonomy: Taxonomy) -> ParsedLabel:
         found = _find_alias(words, designation_aliases, start=max(span) + 1)
 
     roles: List[str] = []
-    role_texts: Dict[str, str] = {}
-    tokens = label.split()
     role_match = _find_alias(words, taxonomy.role_aliases)
     while role_match:
         canonical, first, last = role_match
         if canonical not in roles:
             roles.append(canonical)
-            role_id = taxonomy.role_ids.get(canonical)
-            wording = _page_wording(tokens, words, first, last)
-            if role_id and wording:
-                role_texts[role_id] = wording
         used.update(words[i].token for i in range(first, last + 1))
         role_match = _find_alias(words, taxonomy.role_aliases, start=last + 1)
 
@@ -350,20 +337,7 @@ def _parse_segment(label: str, taxonomy: Taxonomy) -> ParsedLabel:
         divisions=divisions,
         other_designations=other_designations,
         unmatched=_unmatched(label, used),
-        role_texts=role_texts,
     )
-
-
-def _page_wording(tokens: List[str], words: List[_Word], first: int, last: int) -> Optional[str]:
-    """None when the match covers only part of a hyphenated token: "Mayor-Elect" names a mayor,
-    but no slice of whole tokens says just that."""
-    first_token = words[first].token
-    last_token = words[last].token
-    starts_inside = first > 0 and words[first - 1].token == first_token
-    ends_inside = last + 1 < len(words) and words[last + 1].token == last_token
-    if starts_inside or ends_inside:
-        return None
-    return _EDGE_PUNCTUATION.sub("", " ".join(tokens[first_token : last_token + 1]))
 
 
 def _primary_division(divisions: List[Division]) -> Optional[Division]:

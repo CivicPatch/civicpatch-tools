@@ -227,8 +227,10 @@ export const batchResolvePeople = async (jurisdictionOcdid, people) => {
 };
 
 // No level is every role; a level narrows to it, with one state's additions when a state is named.
-export const fetchRoles = async ({ level = "", state = "" } = {}) => {
+// A jurisdiction gets its own level's and state's.
+export const fetchRoles = async ({ level = "", state = "", jurisdictionOcdid = "" } = {}) => {
   const params = new URLSearchParams();
+  if (jurisdictionOcdid) params.set("jurisdiction_ocdid", jurisdictionOcdid);
   if (level) params.set("level", level);
   if (level && state) params.set("state", state);
   const query = params.toString();

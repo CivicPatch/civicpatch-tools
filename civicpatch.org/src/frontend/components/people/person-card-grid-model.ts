@@ -1,6 +1,5 @@
-// Role-rank ordering for the officials card grid. `/api/roles` already returns roles in
-// canonical priority order (the config file's order), so rank is
-// just an index lookup — no separate priority field to keep in sync.
+// Role-rank ordering for the officials card grid: `/api/v1/roles` returns roles in priority order,
+// so rank is just an index lookup.
 
 // The only fields this module reads off a membership — a real `PersonMembership` (a
 // published seat) satisfies this, and so does a proposal's role, which has no post yet.

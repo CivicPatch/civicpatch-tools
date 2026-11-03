@@ -6,10 +6,20 @@ import { useAsyncData } from "./use-async-data.js";
 // bound as a property, and a new identity each render is a changed prop.
 const NO_ROLES: RoleOption[] = [];
 
-/** The role vocabulary, for the post-add form. Jurisdiction-independent — roles are global —
- * but the hook keeps the call out of the page. Empty while loading and on failure, which
- * leaves the form's role select with nothing to choose and its save guarded on `NO_ROLE`. */
-export function useJurisdictionRoles(): RoleOption[] {
+/** A jurisdiction's roles, for the post-add form. Empty while loading, on failure and before the
+ * jurisdiction is known, which leaves the form's role select with nothing to choose and its save
+ * guarded on `NO_ROLE`. */
+export function useJurisdictionRoles(jurisdictionOcdid: string): RoleOption[] {
+  const { data } = useAsyncData<RoleOption[]>(async () => {
+    if (!jurisdictionOcdid) return NO_ROLES;
+    const body = await fetchRoles({ jurisdictionOcdid });
+    return body.data?.roles ?? [];
+  }, [jurisdictionOcdid]);
+  return data ?? NO_ROLES;
+}
+
+/** Every role, to sort people on pages that mix jurisdictions and offer no post-add form. */
+export function useEveryRole(): RoleOption[] {
   const { data } = useAsyncData<RoleOption[]>(async () => {
     const body = await fetchRoles();
     return body.data?.roles ?? [];

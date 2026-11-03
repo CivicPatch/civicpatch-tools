@@ -283,7 +283,7 @@ class ExpectedMembership(BaseModel):
     organization_id: str
     # What two expected memberships are compared by: their labels can word one role two ways.
     role_id: str
-    # Search wording: a post's label can be how a page wrote the role, so count by `role_id`.
+    # Search wording: a post's label can be what its organization calls the role, so count by `role_id`.
     role_label: str
     # As `divisions.filter_divisions` gives it ("ward 3"); None for an at-large post.
     division: Optional[str] = None

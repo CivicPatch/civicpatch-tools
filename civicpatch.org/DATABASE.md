@@ -319,7 +319,7 @@ erDiagram
         text            jurisdiction_ocdid  FK "denormalised for direct queries; 121 dropped the composite FK — a mismatch is visible, not silent"
         uuid            organization_id     FK
         text            role_id             FK "ON UPDATE CASCADE; the POST's own role — other roles the label named are parsed from it, not stored (226)"
-        text_null       role_label          "264: what the post is called, written by the fold on every rebuild: its role as the newest membership's page wrote it, else the organization's extras_role_labels, else the role's label. Replaced the post_role_label() function"
+        text_null       role_label          "264: what the post is called, written by the fold on every rebuild: the organization's extras_role_labels, else the role's label. Replaced the post_role_label() function"
         text            division_ocdid      FK "ON UPDATE CASCADE"
         timestamptz     created_at          "default: now(). Headcount and tracked are claims since 243 (defaults 1 / true), so a row is only its key"
     }

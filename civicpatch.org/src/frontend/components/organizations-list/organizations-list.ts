@@ -192,7 +192,7 @@ function OrganizationsList(host: OrganizationsListHost) {
   const [deleting, setDeleting] = useState<Deleting>(null);
   const ocdid = host.jurisdictionOcdid;
   const canManage = !!host.canManage;
-  const roles = useJurisdictionRoles();
+  const roles = useJurisdictionRoles(ocdid ?? "");
 
   const { data, error: loadError, reload } = useAsyncData<Organization[]>(async () => {
     if (!ocdid) return [];

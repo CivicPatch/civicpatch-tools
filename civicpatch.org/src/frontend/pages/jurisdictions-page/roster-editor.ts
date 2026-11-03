@@ -68,7 +68,7 @@ function RosterEditor({
   // No changeset: this page edits live data, so a claim applies to the published roster as soon
   // as the next publish re-derives it.
   const { memberships } = useRosterMemberships(jurisdictionOcdid);
-  const roles = useJurisdictionRoles();
+  const roles = useJurisdictionRoles(jurisdictionOcdid);
   // Where "Add" was clicked for a not-yet-saved person, since they hold no post yet to place
   // them by. Session-local — once they're given an office their held post takes over.
   const [addedUnderOrg, setAddedUnderOrg] = useState<Map<string, string>>(

@@ -1,5 +1,5 @@
--- A post's name, written by the fold: its role as the page wrote it, else the organization's
--- label, else the role's. Replaces post_role_label, which read the roles table being retired.
+-- A post's name, written by the fold: what its organization calls the role, else the role's label.
+-- Replaces post_role_label, which read the roles table being retired.
 
 BEGIN;
 

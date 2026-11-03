@@ -417,19 +417,3 @@ def test_no_preferred_roles_is_parse_label():
     assert parse_label_preferring(label, _SELECT_BOARD_TAXONOMY, []) == parse_label(
         label, _SELECT_BOARD_TAXONOMY
     )
-
-
-@pytest.mark.parametrize(
-    "label, role_texts",
-    [
-        ("Councilman", {"council-member": "Councilman"}),
-        ("Councilmember, Ward 3", {"council-member": "Councilmember"}),
-        ("Mayor Pro-Tem (Ward 2)", {"mayor-pro-tem": "Mayor Pro-Tem"}),
-        ("Mayor and Alderman", {"mayor": "Mayor", "council-member": "Alderman"}),
-        ("Zoning Administrator", {}),
-        ("Councilmember-Ward 3", {}),
-        ("Mayor-Elect", {}),
-    ],
-)
-def test_parse_label_keeps_each_roles_wording_from_the_page(label, role_texts):
-    assert parse_label(label, _TAXONOMY).role_texts == role_texts
