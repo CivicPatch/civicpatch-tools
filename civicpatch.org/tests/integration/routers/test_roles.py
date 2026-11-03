@@ -99,6 +99,17 @@ async def test_a_jurisdiction_gets_its_own_level_and_states_roles(client):
 
 @pytest.mark.asyncio
 @pytest.mark.integration
+async def test_a_states_own_government_has_no_roles(client):
+    response = client.get(
+        _PREFIX, params={"jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:zz/government"}
+    )
+
+    assert response.status_code == 200, response.text
+    assert response.json()["data"]["roles"] == []
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
 async def test_a_malformed_ocdid_is_refused(client):
     response = client.get(_PREFIX, params={"jurisdiction_ocdid": "not-an-ocdid"})
 

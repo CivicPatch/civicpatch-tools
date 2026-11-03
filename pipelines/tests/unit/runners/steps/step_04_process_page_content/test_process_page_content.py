@@ -1,6 +1,7 @@
 from unittest.mock import AsyncMock, patch
 
 import pytest
+from pydantic import ValidationError
 from runners.pipeline03_people_collector.schemas import (
     Link,
     LinkFrontier,
@@ -970,6 +971,56 @@ def _context_with_page(page: Link):
     return context.model_copy(
         update={"data": context.data.model_copy(update={"frontier": make_frontier(page)})}
     )
+
+
+def _ran_out_of_output() -> ValidationError:
+    with pytest.raises(ValidationError) as caught:
+        RelevantPageResponseSchema.model_validate_json(None)  # type: ignore[arg-type]
+    return caught.value
+
+
+@pytest.mark.asyncio
+async def test_a_page_whose_relevance_answer_failed_is_not_relevant_and_the_run_goes_on():
+    page = Link(url="https://seattle.gov/council", status=LinkStatus.PREPROCESSED.value)
+    run_prompt = AsyncMock(side_effect=_ran_out_of_output())
+
+    with patch(f"{_LLM}.open_router_llm.run_prompt", new=run_prompt):
+        frontier, is_relevant = await check_page_relevance(_context_with_page(page), page, "text", [], [], [])
+
+    assert is_relevant is False
+    assert frontier.get(page.url).is_relevant is False
+    assert run_prompt.await_args.kwargs["not_retried"] == (ValidationError,)
+
+
+@pytest.mark.asyncio
+async def test_one_failed_piece_of_a_page_keeps_the_answers_of_the_others():
+    page = Link(url="https://seattle.gov/council", status=LinkStatus.PREPROCESSED.value)
+    content = "".join(f"## Section {i}\n\n" + "Minutes of the meeting. " * 40 + "\n\n" for i in range(20))
+    answer = RelevantPageResponseSchema(is_relevant=True, relevant_urls=[]).model_dump()
+    run_prompt = AsyncMock(side_effect=lambda *args, **kwargs: _fail_first(kwargs["chunk_index"], answer))
+
+    with patch("services.open_router.llm.max_content_chars", return_value=4_000), patch(
+        f"{_LLM}.open_router_llm.run_prompt", new=run_prompt
+    ):
+        _, is_relevant = await check_page_relevance(_context_with_page(page), page, content, [], [], [])
+
+    assert run_prompt.await_count > 1
+    assert is_relevant is True
+
+
+def _fail_first(chunk_index: int, answer: dict) -> dict:
+    if chunk_index == 1:
+        raise _ran_out_of_output()
+    return answer
+
+
+@pytest.mark.asyncio
+async def test_a_failed_call_that_is_not_a_bad_answer_still_ends_the_run():
+    page = Link(url="https://seattle.gov/council", status=LinkStatus.PREPROCESSED.value)
+    run_prompt = AsyncMock(side_effect=ValueError("OPEN_ROUTER_TOKEN is not set"))
+
+    with patch(f"{_LLM}.open_router_llm.run_prompt", new=run_prompt), pytest.raises(ValueError):
+        await check_page_relevance(_context_with_page(page), page, "text", [], [], [])
 
 
 @pytest.mark.asyncio

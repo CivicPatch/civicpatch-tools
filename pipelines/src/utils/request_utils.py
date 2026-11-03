@@ -33,6 +33,7 @@ async def with_retry(
     func: Callable[..., Awaitable[T]],
     *args: Any,
     max_retries: int = DEFAULT_MAX_RETRIES,
+    not_retried: tuple[type[Exception], ...] = (),
     **kwargs: Any,
 ) -> T:
     """
@@ -54,6 +55,8 @@ async def with_retry(
             else:
                 return cast(T, result)
         except Exception as e:
+            if isinstance(e, not_retried):
+                raise
             if (
                 isinstance(e, requests.HTTPError)
                 and e.response is not None

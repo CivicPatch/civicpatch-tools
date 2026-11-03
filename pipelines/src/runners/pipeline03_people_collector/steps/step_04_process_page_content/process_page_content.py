@@ -54,7 +54,7 @@ from runners.pipeline03_people_collector.utils.link_discovery import (
     jurisdiction_name_suffix,
     update_links,
 )
-from pydantic import BaseModel
+from pydantic import BaseModel, ValidationError
 from shared.utils import (
     config_utils,
     data_path_utils,
@@ -350,19 +350,26 @@ async def check_page_relevance(
     )
     chunks = content_chunks(content, prompt)
     answers: List[RelevantPageResponseSchema] = []
+    logger = log_utils.get_pipeline_run_logger(context.data.jurisdiction_ocdid)
     for index, chunk in enumerate(chunks, start=1):
-        raw_response = await open_router_llm.run_prompt(
-            context.pipeline_run_id,
-            context.data.jurisdiction_ocdid,
-            prompt,
-            prompt_name="relevant_page",
-            response_schema=RelevantPageResponseSchema,
-            content=chunk,
-            source_url=page_to_process.url,
-            chunk_index=index,
-            chunk_count=len(chunks),
-            max_output_tokens=RELEVANCE_MAX_OUTPUT_TOKENS,
-        )
+        try:
+            raw_response = await open_router_llm.run_prompt(
+                context.pipeline_run_id,
+                context.data.jurisdiction_ocdid,
+                prompt,
+                prompt_name="relevant_page",
+                response_schema=RelevantPageResponseSchema,
+                content=chunk,
+                source_url=page_to_process.url,
+                chunk_index=index,
+                chunk_count=len(chunks),
+                max_output_tokens=RELEVANCE_MAX_OUTPUT_TOKENS,
+                # A run-out repeats at the same cap: one bad answer costs one piece of a page, not the run.
+                not_retried=(ValidationError,),
+            )
+        except ValidationError as error:
+            logger.warning(f"Relevance answer failed for {page_to_process.url}, piece {index}: {error}")
+            continue
         answers.append(RelevantPageResponseSchema.model_validate(raw_response))
     return apply_relevance(
         context,
