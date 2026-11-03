@@ -18,14 +18,14 @@ def build_comparison(
     upload: ResolvedUpload,
     state_ocdids: set[str],
     rosters: dict[str, list[Person]],
-    taxonomy: Taxonomy,
+    taxonomies: dict[str, Taxonomy],
     organization_names: dict[str, str],
 ) -> RosterComparison:
     """`state_ocdids` are the state's jurisdictions at the upload's level; `rosters` holds the people
-    with an open membership in those the upload names."""
+    with an open membership in those the upload names; `taxonomies` each one's taxonomy."""
     rows_by_ocdid = _rows_by_ocdid(upload.rows)
     jurisdictions = [
-        _jurisdiction(ocdid, rows, rosters.get(ocdid, []), taxonomy, organization_names)
+        _jurisdiction(ocdid, rows, rosters.get(ocdid, []), taxonomies[ocdid], organization_names)
         for ocdid, rows in rows_by_ocdid.items()
     ]
     return RosterComparison(

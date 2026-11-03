@@ -153,6 +153,17 @@ def test_missing_members_are_counted_per_role():
     assert need.missing_terms == ["council", "member", "district"]
 
 
+def test_a_post_the_page_worded_its_own_way_counts_as_found_by_its_role():
+    records = {"Rob Saka": _person("Rob Saka", "Council Member District 1", "council")}
+    post = ExpectedMembership(
+        organization_id="council", role_id="council-member", role_label="City Councilor"
+    )
+
+    [need] = organization_needs([_organization("council")], [post], records, _TAXONOMY)
+
+    assert need.missing_terms == []
+
+
 def test_a_cold_start_organization_is_worded_by_what_it_expects():
     """"Government" is a generic word and a first scrape has no posts, so without its expected
     memberships no link would serve it and its shortfall would rank nothing."""

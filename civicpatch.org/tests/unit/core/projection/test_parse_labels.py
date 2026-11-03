@@ -169,7 +169,7 @@ def test_the_answer_does_not_depend_on_the_order_the_records_arrive():
 
 @pytest.mark.unit
 def test_a_plain_label_carries_nothing_beyond_its_role():
-    assert details("Mayor") == LabelDetails()
+    assert details("Mayor") == LabelDetails(role_text="Mayor")
 
 
 @pytest.mark.unit
@@ -201,7 +201,7 @@ def test_labels_across_records_are_parsed_together():
 @pytest.mark.unit
 def test_at_large_with_no_value_names_the_whole_jurisdiction_and_leaves_nothing_over():
     assert post_for([record("r1", "Council Member At-Large")]) == key("council-member")
-    assert details("Council Member At-Large") == LabelDetails()
+    assert details("Council Member At-Large") == LabelDetails(role_text="Council Member")
 
 
 @pytest.mark.unit

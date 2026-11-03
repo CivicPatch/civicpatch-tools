@@ -9,6 +9,7 @@ from services.civicpatch_api import (
     get_extras_organizations_by_input_hash,
     get_governing_law_source_page,
     get_organizations,
+    get_role_config,
     get_roster_source_urls,
     patch_jurisdiction_extras,
     store_governing_law_source_page,
@@ -28,6 +29,22 @@ def _response(data: dict | list) -> MagicMock:
     response.json.return_value = {"data": data}
     response.raise_for_status = MagicMock()
     return response
+
+
+@pytest.mark.asyncio
+async def test_the_role_config_is_asked_for_by_the_jurisdictions_level_and_state():
+    client = AsyncMock()
+    client.get.return_value = _response({"roles": []})
+    with (
+        patch(f"{MODULE}.get_env_vars", return_value={**_ENV, "SERVICE_API_KEY": "key"}),
+        patch(f"{MODULE}.httpx.AsyncClient") as client_class,
+    ):
+        client_class.return_value.__aenter__.return_value = client
+        await get_role_config(MagicMock(), _OCDID)
+
+    client.get.assert_awaited_once_with(
+        "https://civicpatch.org/api/v1/roles", params={"level": "local", "state": "wa"}
+    )
 
 
 def _post(post_id: str, organization_id: str) -> dict:

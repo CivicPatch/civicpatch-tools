@@ -158,13 +158,13 @@ async def test_a_match_never_overwrites_a_human_edit():
     async with pool.connection() as conn, conn.cursor() as cur:
         org = await organizations.find_or_create(cur, _OCDID, "Officers")
         await divisions.find_or_create(cur, _BASE, _OCDID)
-        post_id = await factories.seed_post(cur, _OCDID, org, "council-member", _BASE)
+        post_id = await factories.seed_post(cur, _OCDID, org, "member", _BASE)
         await conn.commit()
 
     await posts.update(post_id, 9, SYSTEM_USER_ID)
 
     async with pool.connection() as conn, conn.cursor() as cur:
-        await factories.seed_post(cur, _OCDID, org, "council-member", _BASE)
+        await factories.seed_post(cur, _OCDID, org, "member", _BASE)
         post = await post_listings.get(cur, post_id)
         assert post is not None
         assert post.meta_headcount == 9
@@ -327,9 +327,9 @@ async def test_create_returns_none_when_the_identity_is_taken():
         org = await organizations.find_or_create(cur, _OCDID, "Officers")
         await divisions.find_or_create(cur, _BASE, _OCDID)
 
-        first = await posts.create_if_absent(cur, _OCDID, org, "mayor", _BASE)
+        first = await posts.create_if_absent(cur, _OCDID, org, "mayor", _BASE, "Mayor")
         assert first is not None
-        assert await posts.create_if_absent(cur, _OCDID, org, "mayor", _BASE) is None
+        assert await posts.create_if_absent(cur, _OCDID, org, "mayor", _BASE, "Mayor") is None
         await conn.rollback()
 
 
@@ -484,7 +484,8 @@ async def _mint(identities: list[tuple[str, str]], changeset_id: str) -> None:
             PostKey(organization_id=organization_id, role_id=role_id, division_ocdid=division_ocdid)
             for role_id, division_ocdid in identities
         ]
-        await projection._ensure_posts(cur, _OCDID, keys, changeset_id)
+        labels = {key.post_id: key.role_id.replace("-", " ").title() for key in keys}
+        await projection._ensure_posts(cur, _OCDID, keys, labels, changeset_id)
         await conn.commit()
 
 
@@ -528,10 +529,10 @@ async def test_only_the_new_seat_is_logged_when_a_scrape_mixes_both():
     await _mint([("mayor", _BASE)], changeset_id)
 
     later = await _seed_request()
-    await _mint([("mayor", _BASE), ("council-member", _WARD_3)], later)
+    await _mint([("mayor", _BASE), ("member", _WARD_3)], later)
 
     logs = await _add_post_logs(later)
-    assert [log["changes"]["subject"] for log in logs] == ["council-member"]
+    assert [log["changes"]["subject"] for log in logs] == ["member"]
 
 
 @pytest.mark.asyncio
@@ -875,8 +876,8 @@ async def test_a_person_in_two_organizations_holds_an_open_membership_in_each():
     )
 
     assert await _open_memberships(person_id) == [
-        (council, "council-member", _WARD_3),
         (mayors_office, "mayor", _BASE),
+        (council, "member", _WARD_3),
     ]
 
 
@@ -898,8 +899,8 @@ async def test_a_move_in_one_organization_leaves_the_others_membership_open():
     )
 
     assert await _open_memberships(person_id) == [
-        (council, "council-member", _BASE),
         (mayors_office, "mayor", _BASE),
+        (council, "member", _BASE),
     ]
 
 
@@ -942,7 +943,7 @@ async def test_a_proposal_names_a_post_by_the_name_a_human_gave_it():
     async with pool.connection() as conn, conn.cursor() as cur:
         council = await organizations.find_or_create(cur, _OCDID, "Officers")
         await divisions.find_or_create(cur, _BASE, _OCDID)
-        post_id = await factories.seed_post(cur, _OCDID, council, "council-member", _BASE)
+        post_id = await factories.seed_post(cur, _OCDID, council, "member", _BASE)
         await cur.execute(
             "INSERT INTO users (email, provider, provider_user_id, username, role) "
             "VALUES (%s, 'email', %s, %s, 'admins') RETURNING id::text",
@@ -1063,7 +1064,7 @@ async def test_a_body_the_scrape_never_read_keeps_its_people():
 
     await _publish((mayors_office, other_id, "Mayor"), at=_T1)
 
-    assert await _open_memberships(person_id) == [(council, "council-member", _WARD_3)]
+    assert await _open_memberships(person_id) == [(council, "member", _WARD_3)]
     assert await _open_memberships(other_id) == [(mayors_office, "mayor", _BASE)]
 
 
@@ -1078,7 +1079,7 @@ async def test_a_body_whose_extraction_returned_nobody_closes_nobody():
 
     await _publish(at=_T1)
 
-    assert await _open_memberships(person_id) == [(council, "council-member", _WARD_3)]
+    assert await _open_memberships(person_id) == [(council, "member", _WARD_3)]
 
 
 async def _curator_id(cur) -> str:
@@ -1148,7 +1149,7 @@ async def test_a_membership_somebody_said_never_held_closes_at_publish():
     await _publish((council, person_id, "Council Member Ward 3"))
 
     await _reject_post(person_id)
-    assert await _open_memberships(person_id) == [(council, "council-member", _WARD_3)]
+    assert await _open_memberships(person_id) == [(council, "member", _WARD_3)]
 
     await _publish(at=_T1)
 
@@ -1182,7 +1183,7 @@ async def test_withdrawing_the_claim_reopens_the_membership_on_the_next_publish(
 
     await _publish(at=_T2)
 
-    assert await _open_memberships(person_id) == [(council, "council-member", _WARD_3)]
+    assert await _open_memberships(person_id) == [(council, "member", _WARD_3)]
 
 
 # --- page rows as reads (source_pages, step 9b) -----------------------------------------------
@@ -1235,7 +1236,7 @@ async def test_a_page_listing_nobody_raises_an_issue_instead_of_retiring_quietly
     summary = await review_summary_for_changeset(changeset_id)
 
     assert IssueCode.NOBODY_FOUND_IN_ORGANIZATION in {issue.code for issue in summary.issues}
-    assert await _open_memberships(person_id) == [(council, "council-member", _WARD_3)]
+    assert await _open_memberships(person_id) == [(council, "member", _WARD_3)]
 
 
 @pytest.mark.asyncio
@@ -1292,7 +1293,7 @@ async def test_a_delete_the_rebuild_cannot_finish_leaves_nothing_behind():
     council, council_mayor, office_mayor = await _council_mayor_deleted_into_the_office()
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        await posts.create_if_absent(cur, _OCDID, council, "mayor", _BASE)
+        await posts.create_if_absent(cur, _OCDID, council, "mayor", _BASE, "Mayor")
         await conn.commit()
     edits_before = await _roster_edit_count()
 

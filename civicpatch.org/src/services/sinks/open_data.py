@@ -26,18 +26,14 @@ from core.sinks.open_data_commit import commit_body
 from database import output_hashes as output_hashes_db
 from database.people import get_roster
 from database.publications import publish_attributions, record_change_url
-from database.roles import get_roles
+from database.roles import get_taxonomy_for
 from lib.temporal.types import OpenDataCommitItem
-from shared.schemas import DerivedPerson, OpenStatesPersonRecord, RoleConfig
+from shared.schemas import DerivedPerson, OpenStatesPersonRecord
 from shared.utils.people_utils import person_sort_key
-from shared.utils.taxonomy import Taxonomy, build_taxonomy
+from shared.utils.taxonomy import Taxonomy
 from shared.utils.yaml_utils import yaml_dump
 
 logger = logging.getLogger(__name__)
-
-
-async def _taxonomy() -> Taxonomy:
-    return build_taxonomy(RoleConfig(roles=await get_roles()))
 
 
 # Every list whose order carries no meaning. Sorted at this boundary so the same values always
@@ -140,9 +136,9 @@ async def commit_rendered_files(
     items: list[OpenDataCommitItem], commit_message: str
 ) -> str | None:
     contents = {}
-    taxonomy = await _taxonomy()
     for item in items:
         roster = await get_roster(jurisdiction_ocdid=item.jurisdiction_ocdid)
+        taxonomy = await get_taxonomy_for(item.jurisdiction_ocdid)
         contents[item.file_path] = yaml_dump(open_data_records(roster, taxonomy))
 
     hashes = {path: hash_text(body) for path, body in contents.items()}

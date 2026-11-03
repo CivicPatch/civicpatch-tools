@@ -3,8 +3,7 @@
 import asyncio
 import logging
 
-from shared.schemas import Person, RoleConfig
-from shared.utils.taxonomy import build_taxonomy
+from shared.schemas import Person
 
 from core.roster_comparison_jurisdictions import ocdids_of, resolve_rows
 from core.roster_comparison_refusal import MAX_REJECTED_LISTED, refusal_message
@@ -13,7 +12,7 @@ import database.organizations as organizations_db
 from database.database import get_pool
 from database.jurisdictions import get_state_jurisdictions
 from database.people import get_rosters_by_jurisdiction
-from database.roles import get_roles
+from database.roles import get_taxonomies_for
 import database.roster_comparisons as database
 import environment
 from core.page_urls import roster_comparison_page_url
@@ -78,11 +77,11 @@ async def compare_and_save(upload: ResolvedUpload, state_ocdids: set[str], start
         ocdid: [Person(**person) for person in people]
         for ocdid, people in (await get_rosters_by_jurisdiction(named)).items()
     }
-    taxonomy = build_taxonomy(RoleConfig(roles=await get_roles()))
+    taxonomies = await get_taxonomies_for(named)
     organization_names = await _organization_names(rosters)
     # Name matching is CPU work: off the event loop, so other requests keep moving.
     comparison = await asyncio.to_thread(
-        build_comparison, upload, state_ocdids, rosters, taxonomy, organization_names
+        build_comparison, upload, state_ocdids, rosters, taxonomies, organization_names
     )
     return await database.insert_roster_comparison(started_by_user_id, comparison)
 

@@ -40,7 +40,7 @@ async def list_for_jurisdiction(
                membership_source_labels(m.sources) AS source_labels,
                p.role_id, p.division_ocdid,
                p.organization_id::text, o.name AS organization_name,
-               post_role_label(p.organization_id, p.role_id) AS role_label
+               p.role_label AS role_label
         FROM memberships m
         JOIN posts p ON p.id = m.post_id
         JOIN people pe ON pe.id = m.person_id
@@ -120,7 +120,7 @@ _STATE_ROWS = """
                    p.id::text       AS post_id,
                    p.role_id        AS post_role_id,
                    p.division_ocdid AS post_division_ocdid,
-                   post_role_label(p.organization_id, p.role_id) AS role_label,
+                   p.role_label AS role_label,
                    m.id::text       AS membership_id,
                    m.label          AS membership_label,
                    m.start_date     AS membership_start_date,

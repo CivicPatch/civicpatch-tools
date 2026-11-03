@@ -5,31 +5,10 @@ from core.role_taxonomy import (
     build_event_payload,
     change_log_type,
     diff_aliases,
-    slugify_label,
 )
 
 
 # Pure helpers — unit-tested directly, no DB.
-
-
-# ── slugify_label ───────────────────────────────────────────────────────
-
-
-@pytest.mark.unit
-def test_slugify_lowercases_and_hyphenates():
-    assert slugify_label("Council Member") == "council-member"
-
-
-@pytest.mark.unit
-def test_slugify_collapses_punctuation_runs():
-    assert slugify_label("Mayor Pro-Tem (Acting)") == "mayor-pro-tem-acting"
-
-
-@pytest.mark.unit
-def test_slugify_trims_leading_and_trailing_separators():
-    """The migration's backfill wraps its regexp_replace in trim(both '-'),
-    so a label with edge punctuation must not produce a dangling hyphen."""
-    assert slugify_label("  Clerk & Treasurer  ") == "clerk-treasurer"
 
 
 # ── change_log_type ─────────────────────────────────────────────────────

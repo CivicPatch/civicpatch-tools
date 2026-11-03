@@ -16,7 +16,7 @@ _OCDID = "ocd-jurisdiction/country:us/state:vt/place:stowe/government"
 _CONFIG = OrganizationsCollectorConfig(
     name="Stowe town",
     governing_law=None,
-    jurisdiction_config=merged_config(ConfigFile(), ConfigFile(), None),
+    jurisdiction_config=merged_config(ConfigFile(), None),
     government_form=None,
 )
 _CALL = LLMCall(prompt_name="governing_role", gateway="openrouter", model="deepseek/deepseek-v4-flash", input_tokens=10, output_tokens=5)

@@ -12,11 +12,15 @@ env var (not CIVICPATCH_API_DB_URL) because the root conftest poisons that name
 via os.environ.setdefault before this module loads.
 """
 import os
+from pathlib import Path
 
 import psycopg
 import pytest
 import pytest_asyncio
+import yaml
 
+from shared.utils.layered_config import level_config_path
+from shared.schemas import JurisdictionLevel
 from shared.utils.statuses import TERMINAL_PIPELINE_RUN_STATUSES
 
 TEST_DB_URL = os.environ.get(
@@ -72,3 +76,24 @@ async def patch_db_url(monkeypatch):
     if db_module._pool is not None:
         await db_module._pool.close()
         db_module._pool = None
+
+
+_LEVEL_ROLES = yaml.safe_load((Path(__file__).parent / "level_roles.yml").read_text())
+_LEVEL_PATHS = [level_config_path(JurisdictionLevel.LOCAL), level_config_path(JurisdictionLevel.COUNTIES)]
+
+
+@pytest_asyncio.fixture(autouse=True)
+async def level_configs(patch_db_url):
+    """The fold reads roles from the stored config files. Written before every test, since a test
+    that stores its own level file deletes it when it finishes; one that stores its own replaces it."""
+    async with await psycopg.AsyncConnection.connect(TEST_DB_URL) as conn, conn.cursor() as cur:
+        for path in _LEVEL_PATHS:
+            await cur.execute(
+                """
+                INSERT INTO jurisdiction_configs (path, content, commit_sha) VALUES (%s, %s, 'test')
+                ON CONFLICT (path) DO UPDATE SET content = EXCLUDED.content
+                """,
+                (path, psycopg.types.json.Jsonb(_LEVEL_ROLES)),
+            )
+        await conn.commit()
+    yield

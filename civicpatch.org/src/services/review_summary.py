@@ -11,10 +11,7 @@ from database import source_pages
 from database import changesets as changesets_db
 from database import organizations as organizations_db
 from database.database import get_pool
-from database.roles import get_roles
 from services.roster import CardFold, card_fold
-from shared.schemas import RoleConfig
-from shared.utils.config_utils import get_unique_roles
 
 
 async def review_summary_for_changeset(changeset_id: str) -> ReviewSummary:
@@ -33,10 +30,9 @@ async def summary_of(
     Split from `review_summary_for_changeset` so a page of cards folds once per card rather
     than once for its rows and again for its summary.
     """
-    role_config = RoleConfig(roles=await get_roles())
     unique_role_ids = {
         fold.taxonomy.role_ids[label]
-        for label in get_unique_roles(role_config)
+        for label in fold.taxonomy.unique_roles
         if label in fold.taxonomy.role_ids
     }
     role_labels = {role_id: label for label, role_id in fold.taxonomy.role_ids.items()}

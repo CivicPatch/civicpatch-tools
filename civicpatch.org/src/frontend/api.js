@@ -226,8 +226,13 @@ export const batchResolvePeople = async (jurisdictionOcdid, people) => {
   return res.json();
 };
 
-export const fetchRoles = async () => {
-  const res = await fetch(`/api/v1/roles`, {
+// No level is every role; a level narrows to it, with one state's additions when a state is named.
+export const fetchRoles = async ({ level = "", state = "" } = {}) => {
+  const params = new URLSearchParams();
+  if (level) params.set("level", level);
+  if (level && state) params.set("state", state);
+  const query = params.toString();
+  const res = await fetch(`/api/v1/roles${query ? `?${query}` : ""}`, {
     credentials: "include",
   });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
@@ -291,66 +296,6 @@ export const fetchUnmatchedText = async (page = 1, perPage = 20) => {
   });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   return res.json();
-};
-
-// A role change opens an open-data pull request; a 409 may name the one already open.
-const roleChangeResponse = async (res) => {
-  const body = await res.json();
-  if (!res.ok) {
-    throw new Error([body.error || `HTTP ${res.status}`, body.pull_request_url].filter(Boolean).join(" "));
-  }
-  return body;
-};
-
-export const addRole = async (role) => {
-  const res = await fetch(`/api/v1/roles`, {
-    method: "POST",
-    credentials: "include",
-    headers: {
-      "Content-Type": "application/json",
-      "X-CSRF-Token": getCsrfCookie(),
-    },
-    body: JSON.stringify(role),
-  });
-  return roleChangeResponse(res);
-};
-
-export const editRole = async (roleId, role) => {
-  const res = await fetch(`/api/v1/roles/${encodeURIComponent(roleId)}`, {
-    method: "PUT",
-    credentials: "include",
-    headers: {
-      "Content-Type": "application/json",
-      "X-CSRF-Token": getCsrfCookie(),
-    },
-    body: JSON.stringify(role),
-  });
-  return roleChangeResponse(res);
-};
-
-export const reorderRoles = async ({ roleOrder, movedRoles }) => {
-  const res = await fetch(`/api/v1/roles/reorder`, {
-    method: "PUT",
-    credentials: "include",
-    headers: {
-      "Content-Type": "application/json",
-      "X-CSRF-Token": getCsrfCookie(),
-    },
-    body: JSON.stringify({ role_order: roleOrder, moved_roles: movedRoles }),
-  });
-  return roleChangeResponse(res);
-};
-
-export const deleteRole = async (roleId) => {
-  const res = await fetch(
-    `/api/v1/roles/${encodeURIComponent(roleId)}`,
-    {
-      method: "DELETE",
-      credentials: "include",
-      headers: { "X-CSRF-Token": getCsrfCookie() },
-    },
-  );
-  return roleChangeResponse(res);
 };
 
 export const fetchJurisdictionActivity = async (

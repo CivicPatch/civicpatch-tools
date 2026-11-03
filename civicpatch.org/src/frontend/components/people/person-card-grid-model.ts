@@ -1,5 +1,5 @@
 // Role-rank ordering for the officials card grid. `/api/roles` already returns roles in
-// canonical priority order (role-reorder.ts writes that order by array position), so rank is
+// canonical priority order (the config file's order), so rank is
 // just an index lookup — no separate priority field to keep in sync.
 
 // The only fields this module reads off a membership — a real `PersonMembership` (a

@@ -8,6 +8,8 @@ FUZZY_SCORE_CUTOFF = 85
 UNRANKED = float("inf")
 # A label resolving to no role still gets a post, so nobody is postless. Seeded by 118.
 UNMATCHED_ROLE_ID = "unmatched"
+# What a post on the placeholder is called: it has no role in any config file.
+UNMATCHED_ROLE_LABEL = "Unmatched"
 # Every governing body's ordinary post: a label naming only member-elected roles lands here.
 MEMBER_ROLE_ID = "member"
 
@@ -36,6 +38,8 @@ class Taxonomy(NamedTuple):
     # canonical role name -> role id. A match names a role by its label; every caller that
     # then wants the id used to be handed the role list a second time to build this itself.
     role_ids: dict[str, str] = {}
+    # role id -> canonical role name: the other way round, for callers holding an id.
+    role_labels: dict[str, str] = {}
     # canonical role name -> how the office is filled: the fold lets only elected_by_voters win a post.
     selection_methods: dict[str, SelectionMethod] = {}
     # canonical role names with one holder per organization (Mayor, Clerk).
@@ -53,6 +57,7 @@ def build_taxonomy(role_config: RoleConfig | None) -> Taxonomy:
         designation_aliases=designation_aliases,
         role_priority={entry.label: i for i, entry in enumerate(roles)},
         role_ids={entry.label: entry.id for entry in roles},
+        role_labels={entry.id: entry.label for entry in roles},
         selection_methods={entry.label: entry.selection_method for entry in roles},
         unique_roles=frozenset(entry.label for entry in roles if entry.is_unique),
         designation_priority={

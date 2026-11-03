@@ -180,7 +180,8 @@ async def seed_post(
     cur, jurisdiction_ocdid: str, organization_id: str, role_id: str, division_ocdid: str
 ) -> str:
     """Make sure this post exists, as the rebuild would mint it. Returns its id."""
-    await posts.create_if_absent(cur, jurisdiction_ocdid, organization_id, role_id, division_ocdid)
+    role_label = role_id.replace("-", " ").title()
+    await posts.create_if_absent(cur, jurisdiction_ocdid, organization_id, role_id, division_ocdid, role_label)
     return PostKey(organization_id=organization_id, role_id=role_id, division_ocdid=division_ocdid).post_id
 
 

@@ -11,7 +11,7 @@ from database.changesets import register_scrape_changeset
 from database.issues import has_pending_issues, upsert_issue
 from database.llm_calls import record_calls
 from database.pipeline_runs import get_pipeline_run
-from database.roles import get_roles
+from database.roles import get_taxonomy_for
 from database.source_pages import insert_source_pages
 from database.source_records import insert_source_records
 from schemas.pipeline_runs import (
@@ -22,14 +22,13 @@ from services import publish, roster_ingest
 from services import pipeline_runs as pipeline_run_service
 from services.jurisdiction_url import record_resolved_url, resolved_url
 from services.review_summary import review_summary_for_changeset
-from shared.schemas import RoleConfig
 from shared.utils.statuses import (
     RUN_LEVEL_ISSUE_TYPES,
     PipelineIssueType,
     PipelineRunStatus,
 )
 from shared.utils.id_utils import parse_jurisdiction_ocdid
-from shared.utils.taxonomy import Taxonomy, build_taxonomy
+from shared.utils.taxonomy import Taxonomy
 from shared.utils.yaml_utils import yaml_dump, yaml_load
 
 PUBLIC_BUCKET = buckets.ARTIFACTS
@@ -192,7 +191,7 @@ async def _ingest_roster(
     # Reconciliation classifies each source record's label against this. Post derivation used to
     # read it here too and no longer does — `review_summary_for_changeset` builds its own, at the
     # point it needs one.
-    taxonomy = build_taxonomy(RoleConfig(roles=await get_roles()))
+    taxonomy = await get_taxonomy_for(request.jurisdiction_ocdid)
 
     roster, records_by_person = await _reconcile_roster(
         request.jurisdiction_ocdid, data, workflow_context, taxonomy

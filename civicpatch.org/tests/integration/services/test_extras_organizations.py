@@ -9,10 +9,13 @@ import pytest_asyncio
 from database.database import get_pool
 from services.extras_organizations import UnknownJurisdiction, UnknownRole, get_extras_organizations, set_extras_organizations
 from shared.schemas import GoverningLawOrganizations
+from shared.utils.layered_config import ConfigFile, ConfigRole
 
 _TOWN = "ocd-jurisdiction/country:us/state:vt/place:zyorg_town/government"
 _UNKNOWN = "ocd-jurisdiction/country:us/state:vt/place:zyorg_nowhere/government"
 _ROLE = "zz-test-trustee"
+_VT_LOCAL = "data_source/vt/local/config.yml"
+_VT_LOCAL_CONFIG = ConfigFile(roles=[ConfigRole(id=_ROLE, label="ZZ Test Trustee")])
 
 
 def _organizations(role: str, maximum_memberships: int = 5) -> GoverningLawOrganizations:
@@ -32,7 +35,7 @@ async def _wipe():
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute("DELETE FROM activity WHERE jurisdiction_ocdid = %s", (_TOWN,))
         await cur.execute("DELETE FROM jurisdictions WHERE jurisdiction_ocdid = %s", (_TOWN,))
-        await cur.execute("DELETE FROM roles WHERE id = %s", (_ROLE,))
+        await cur.execute("DELETE FROM jurisdiction_configs WHERE path = %s", (_VT_LOCAL,))
         await conn.commit()
 
 
@@ -45,7 +48,10 @@ async def _seeded():
             "INSERT INTO jurisdictions (jurisdiction_ocdid, state, data, updated_at) VALUES (%s, 'vt', %s, now())",
             (_TOWN, json.dumps({"name": "Zyorg town"})),
         )
-        await cur.execute("INSERT INTO roles (id, label, status) VALUES (%s, 'ZZ Test Trustee', 'active')", (_ROLE,))
+        await cur.execute(
+            "INSERT INTO jurisdiction_configs (path, content, commit_sha) VALUES (%s, %s, 'test')",
+            (_VT_LOCAL, _VT_LOCAL_CONFIG.model_dump_json()),
+        )
         await conn.commit()
     yield
     await _wipe()

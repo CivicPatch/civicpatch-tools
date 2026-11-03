@@ -126,6 +126,15 @@ async def names(cur, organization_ids: list[str]) -> dict[str, str]:
     return {row[0]: row[1] for row in await cur.fetchall()}
 
 
+async def role_labels(cur, jurisdiction_ocdid: str) -> dict[str, dict[str, str]]:
+    """Each organization's `extras_role_labels`, by its id."""
+    await cur.execute(
+        "SELECT id::text, extras_role_labels FROM organizations WHERE jurisdiction_ocdid = %s",
+        (jurisdiction_ocdid,),
+    )
+    return {row[0]: row[1] for row in await cur.fetchall()}
+
+
 async def list_for_jurisdiction(cur, jurisdiction_ocdid: str) -> list[dict]:
     by_jurisdiction = await list_for_jurisdictions(cur, [jurisdiction_ocdid])
     return by_jurisdiction.get(jurisdiction_ocdid, [])

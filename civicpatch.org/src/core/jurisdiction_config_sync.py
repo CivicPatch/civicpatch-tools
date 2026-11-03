@@ -10,7 +10,7 @@ from pydantic import BaseModel
 
 from core.role_taxonomy import RoleOp, diff_aliases
 from shared.schemas import Role, RoleStatus
-from shared.utils.layered_config import COUNTRY_ROLES_PATH, ConfigRole, GovernmentFormsConfig
+from shared.utils.layered_config import ConfigRole, GovernmentFormsConfig, config_path_layer
 
 
 class StoredRole(Role):
@@ -31,8 +31,9 @@ class RoleChanges(BaseModel):
 
 
 def role_priority(path: str, position: int) -> int | None:
-    """Country roles rank in file order; a state's roles rank after them, unranked."""
-    return position if path == COUNTRY_ROLES_PATH else None
+    """A level's roles rank in file order; a state's roles rank after them, unranked."""
+    layer = config_path_layer(path)
+    return position if layer is not None and layer[0] is None else None
 
 
 def role_changes(path: str, file_roles: list[ConfigRole], stored: list[StoredRole]) -> RoleChanges:

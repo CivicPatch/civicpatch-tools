@@ -174,10 +174,12 @@ def test_post_row_drops_the_derived_state_column():
             "role_id": "mayor",
             "division_ocdid": "ocd-division/country:us/state:wa/place:seattle",
             "created_at": "2026-01-01T00:00:00Z",
-        }
+        },
+        {"mayor": "Mayor"},
     )
 
     assert "state" not in row
+    assert row["role_label"] == "Mayor"
 
 
 @pytest.mark.unit

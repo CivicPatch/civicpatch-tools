@@ -13,7 +13,8 @@ from shared.utils.taxonomy import Taxonomy, build_taxonomy
 
 from core.unmatched_terms import TriageTerm, triage_terms
 from database.memberships import open_membership_labels
-from database.roles import get_roles
+from database.jurisdiction_configs import get_jurisdiction_configs
+from shared.utils.layered_config import every_role
 
 # One entry, for the roles as they stand: parses of labels under any other roles are stale.
 _PARSES: dict[str, dict[str, tuple[str, ...]]] = {}
@@ -21,7 +22,7 @@ _PARSES: dict[str, dict[str, tuple[str, ...]]] = {}
 
 async def unmatched_terms_page(limit: int, offset: int) -> tuple[int, list[TriageTerm]]:
     """How many terms there are, and one page of them."""
-    roles = await get_roles()
+    roles = every_role(await get_jurisdiction_configs())
     unmatched_of = _remembering(_fingerprint(roles), build_taxonomy(RoleConfig(roles=roles)))
     terms = triage_terms(await open_membership_labels(), unmatched_of)
     return len(terms), terms[offset : offset + limit]

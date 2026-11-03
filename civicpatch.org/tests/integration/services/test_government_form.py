@@ -19,7 +19,7 @@ from services.government_form import (
 )
 from shared.schemas import GovernmentForm
 from shared.utils.government_forms import DerivedOrganization
-from shared.utils.layered_config import COUNTRY_ROLES_PATH, ConfigFile, ConfigRole, GovernmentFormConfig
+from shared.utils.layered_config import ConfigFile, ConfigRole, GovernmentFormConfig
 
 _MI_TOWNSHIP = "ocd-jurisdiction/country:us/state:mi/place:zyform_township/government"
 _WA_CITY = "ocd-jurisdiction/country:us/state:wa/place:zyform_city/government"
@@ -66,13 +66,11 @@ _ROLE_LABELS = [
     "Mayor", "Council Member", "Commissioner", "Supervisor", "Treasurer", "Trustee",
     "Select Board Member", "Chair", "Vice Chair", "Moderator", "County Executive",
 ]
+_LEVEL_ROLES = [
+    *[ConfigRole(id=label.lower().replace(" ", "-"), label=label) for label in _ROLE_LABELS],
+    ConfigRole(id="clerk", label="Clerk", aliases=["Town Clerk"]),
+]
 _CONFIGS = {
-    COUNTRY_ROLES_PATH: ConfigFile(
-        roles=[
-            *[ConfigRole(id=label.lower().replace(" ", "-"), label=label) for label in _ROLE_LABELS],
-            ConfigRole(id="clerk", label="Clerk", aliases=["Town Clerk"]),
-        ]
-    ),
     "data_source/local/config.yml": _forms(
         mayor_council=[_organization("Council", "Council Member"), _organization("Office of the Mayor", "Mayor")],
         council_manager=[_organization("Council", "Council Member", "Mayor")],
@@ -82,14 +80,14 @@ _CONFIGS = {
             _organization("Town Meeting", "Moderator"),
             _organization("Town Officers", "Town Clerk", "Treasurer"),
         ],
-    ),
+    ).model_copy(update={"roles": _LEVEL_ROLES}),
     "data_source/counties/config.yml": _forms(
         commission=[_organization("Board of Commissioners", "Commissioner", "Chair")],
         county_executive=[
             _organization("County Council", "Council Member", "Chair"),
             _organization("County Executive", "County Executive"),
         ],
-    ),
+    ).model_copy(update={"roles": _LEVEL_ROLES}),
     "data_source/mi/local/config.yml": ConfigFile(
         government_forms={GovernmentForm.TOWNSHIP_BOARD: GovernmentFormConfig(suffixes=["township"])}
     ),

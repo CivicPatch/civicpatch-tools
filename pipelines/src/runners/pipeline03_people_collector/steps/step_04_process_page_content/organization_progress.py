@@ -115,15 +115,15 @@ def _missing_phrases(
     """A role with its divisions and designations, when fewer people were found in it than hold
     it. Per role, not per post: as tokens, "District 3" and "District 7" are the same words."""
     found_by_role: Counter[str] = Counter(
-        role
+        taxonomy.role_ids[role]
         for group in found
         for role in {parse_label(record.label, taxonomy).role for record in group if record.label}
         if role
     )
-    held_by_role = Counter(membership.role_label for membership in held)
+    held_by_role = Counter(membership.role_id for membership in held)
     return [
         phrase
         for membership in held
-        if found_by_role[membership.role_label] < held_by_role[membership.role_label]
+        if found_by_role[membership.role_id] < held_by_role[membership.role_id]
         for phrase in _membership_phrases(membership)
     ]

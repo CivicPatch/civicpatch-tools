@@ -50,8 +50,8 @@ _VERMONT = GoverningLawConfig(
     classifications={"town": Classification(governed_by=GovernedBy.CHARTER_OR_GENERAL_LAW, general_law=[f"{_CHAPTERS}/statute"])},
 )
 _CONFIG = merged_config(
-    ConfigFile(roles=[ConfigRole(id="member", label="Member", aliases=["Select Board Member"])]),
     ConfigFile(
+        roles=[ConfigRole(id="member", label="Member", aliases=["Select Board Member"])],
         government_forms={
             GovernmentForm.OPEN_TOWN_MEETING: GovernmentFormConfig(
                 organizations=[DerivedOrganization(name="Select Board", role_labels=["Select Board Member"])]

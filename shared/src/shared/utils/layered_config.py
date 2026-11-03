@@ -4,14 +4,14 @@ from enum import StrEnum
 from pydantic import BaseModel, model_validator
 from shared.schemas import GovernmentForm, JurisdictionLevel, Role, RoleConfig, SelectionMethod
 from shared.utils.government_forms import DerivedOrganization, name_suffix
+from shared.utils.id_utils import parse_jurisdiction_ocdid
 from shared.utils.taxonomy import lookup_key
 
-COUNTRY_ROLES_PATH = "data_source/config.yml"
 # Every layer's file. Mirrored by CONFIG_PATH in open-data's scripts/github_actions/merge_config_pr.py.
 CONFIG_PATH = re.compile(r"^data_source/(([a-z]{2}/)?(local|counties)/)?config\.yml$")
 
 
-def country_forms_path(level: JurisdictionLevel) -> str:
+def level_config_path(level: JurisdictionLevel) -> str:
     return f"data_source/{level}/config.yml"
 
 
@@ -20,8 +20,7 @@ def state_config_path(state: str, level: JurisdictionLevel) -> str:
 
 
 def config_path_layer(path: str) -> tuple[str | None, JurisdictionLevel] | None:
-    """(state, level) for a state's file, (None, level) for a country level's file, None for the
-    country roles file, which governs no level's organizations."""
+    """(state, level) for a state's file, (None, level) for a level's file, None for any other path."""
     match = CONFIG_PATH.match(path)
     if match is None or match.group(3) is None:
         return None
@@ -107,11 +106,13 @@ class GoverningLawConfig(BaseModel):
 
 
 class ConfigFile(BaseModel):
-    """One `data_source/.../config.yml`: the country's roles (`data_source/config.yml`), the
-    country's government forms for one level, or one state's roles, government forms and
+    """One `data_source/.../config.yml`: a level's roles and government forms
+    (`data_source/local/config.yml`), or one state's roles, aliases, government forms and
     governing law for one level."""
 
     roles: list[ConfigRole] = []
+    # A state's own wording for a level role: {member: [Assistant Judge]} in vt/counties.
+    role_aliases: dict[str, list[str]] = {}
     government_forms: GovernmentFormsConfig = {}
     governing_law: GoverningLawConfig | None = None
 
@@ -123,7 +124,7 @@ class ConfigFile(BaseModel):
 
 
 class MergedConfig(BaseModel):
-    """What a jurisdiction in one state and level uses: the country's file plus its state's."""
+    """What a jurisdiction in one state and level uses: the level's file plus its state's."""
 
     roles: RoleConfig
     country_government_forms: GovernmentFormsConfig
@@ -131,24 +132,22 @@ class MergedConfig(BaseModel):
     governing_law: GoverningLawConfig | None
 
 
-def merged_config(
-    country_roles: ConfigFile, country_government_forms: ConfigFile, state: ConfigFile | None
-) -> MergedConfig:
+def merged_config(level: ConfigFile, state: ConfigFile | None) -> MergedConfig:
     state = state or ConfigFile()
-    if country_roles.government_forms or country_government_forms.roles:
-        raise ValueError("country roles and country government forms belong in separate files")
-    if country_roles.governing_law or country_government_forms.governing_law:
+    if level.governing_law:
         raise ValueError("governing law belongs in a state's file")
-    config_roles = [*country_roles.roles, *state.roles]
+    if level.role_aliases:
+        raise ValueError("role_aliases belong in a state's file; a level's file lists its roles' aliases")
+    config_roles = [*_with_state_aliases(level.roles, state.role_aliases), *state.roles]
     _check_roles_distinct(config_roles)
     _check_aliases_unique(config_roles)
-    _check_country_government_forms(country_government_forms.government_forms)
-    _check_state_government_forms(state.government_forms, country_government_forms.government_forms)
+    _check_country_government_forms(level.government_forms)
+    _check_state_government_forms(state.government_forms, level.government_forms)
     merged = MergedConfig(
         roles=RoleConfig(
             roles=[_role(config_role, priority) for priority, config_role in enumerate(config_roles)]
         ),
-        country_government_forms=country_government_forms.government_forms,
+        country_government_forms=level.government_forms,
         state_government_forms=state.government_forms,
         governing_law=state.governing_law,
     )
@@ -162,16 +161,69 @@ def jurisdiction_config(
 ) -> MergedConfig:
     """The merged config for one state and level, from every stored file keyed by its path."""
     return merged_config(
-        configs.get(COUNTRY_ROLES_PATH, ConfigFile()),
-        configs.get(country_forms_path(level), ConfigFile()),
+        configs.get(level_config_path(level), ConfigFile()),
         configs.get(state_config_path(state, level)),
     )
 
 
+def layer_roles(configs: dict[str, ConfigFile], level: JurisdictionLevel, state: str | None) -> list[Role]:
+    """A level's roles, with one state's added when a state is named."""
+    level_file = configs.get(level_config_path(level), ConfigFile())
+    state_file = configs.get(state_config_path(state, level)) if state else None
+    return merged_config(level_file, state_file).roles.roles
+
+
+def jurisdiction_roles(configs: dict[str, ConfigFile], jurisdiction_ocdid: str) -> list[Role]:
+    """The roles a jurisdiction's level and state use. A state's own government has no config."""
+    parsed = parse_jurisdiction_ocdid(jurisdiction_ocdid)
+    if parsed.level == JurisdictionLevel.STATE:
+        return []
+    return layer_roles(configs, parsed.level, parsed.state)
+
+
+def every_role(configs: dict[str, ConfigFile]) -> list[Role]:
+    """One role per id across every level and state, with every alias any file gives it: for a
+    reader that has no jurisdiction (the roles list, unmatched-term triage)."""
+    level_paths: list[str] = []
+    state_paths: list[str] = []
+    for path in sorted(configs):
+        layer = config_path_layer(path)
+        if layer is None:
+            continue
+        if layer[0] is None:
+            level_paths.append(path)
+        else:
+            state_paths.append(path)
+    by_id: dict[str, ConfigRole] = {}
+    for path in [*level_paths, *state_paths]:
+        file = configs[path]
+        for role in file.roles:
+            by_id[role.id] = _with_aliases(by_id[role.id], role.aliases) if role.id in by_id else role
+        for role_id, aliases in file.role_aliases.items():
+            if role_id in by_id:
+                by_id[role_id] = _with_aliases(by_id[role_id], aliases)
+    return [_role(config_role, priority) for priority, config_role in enumerate(by_id.values())]
+
+
+def _with_aliases(role: ConfigRole, aliases: list[str]) -> ConfigRole:
+    return role.model_copy(update={"aliases": list(dict.fromkeys([*role.aliases, *aliases]))})
+
+
 def check_roles_distinct_across(files: list[ConfigFile]) -> None:
-    """Role ids and labels are global, so no two files may share one, even files that never
-    merge. An alias may repeat across roles and files."""
+    """The files of one level: no two may share a role id or label, even states' files that never
+    merge. An alias may repeat across roles and files. Another level may reuse an id."""
     _check_roles_distinct([role for file in files for role in file.roles])
+
+
+def _with_state_aliases(roles: list[ConfigRole], role_aliases: dict[str, list[str]]) -> list[ConfigRole]:
+    known = {role.id for role in roles}
+    unknown = sorted(role_id for role_id in role_aliases if role_id not in known)
+    if unknown:
+        raise ValueError(f"role_aliases name no role of this level: {unknown}")
+    return [
+        role.model_copy(update={"aliases": [*role.aliases, *role_aliases.get(role.id, [])]})
+        for role in roles
+    ]
 
 
 def allowed_government_forms(config: MergedConfig, name: str) -> list[GovernmentForm]:

@@ -151,13 +151,13 @@ async def test_a_hand_made_post_without_a_label_override_keeps_the_derived_one()
         organization_id = await organizations.find_or_create(cur, _OCDID, "Officers")
         await conn.commit()
 
-    post_id = await posts.create(organization_id, "council-member", _BASE, 1, user_id)
+    post_id = await posts.create(organization_id, "member", _BASE, 1, user_id)
     assert post_id is not None
 
     async with pool.connection() as conn, conn.cursor() as cur:
         minted = await post_listings.get(cur, post_id)
     assert minted is not None
-    assert minted.label == "Council Member"
+    assert minted.label == "Member"
 
 
 @pytest.mark.asyncio
