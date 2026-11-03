@@ -15,3 +15,26 @@ members = ["pipelines", "civicpatch.org", "shared"]
 dev = [
     "hatchling>=1.29.0",
 ]
+
+[tool.ruff]
+target-version = "py312"
+
+[tool.ruff.lint]
+# Each rule enforces one sentence of AGENTS.md; the prose for it is gone.
+select = [
+    "E722",    # bare except
+    "BLE001",  # except Exception without re-raise
+    "S110",    # except: pass
+    "PLC0415", # import inside a function
+    "PLR0915", # function over the 50-line ceiling
+    "C901",    # function with too many branches
+    "FBT001",  # boolean flag argument
+    "FBT002",  # boolean flag argument with a default
+    "PLR2004", # magic number compared against
+]
+
+[tool.ruff.lint.pylint]
+max-statements = 50
+
+[tool.ruff.lint.per-file-ignores]
+"**/tests/**" = ["PLR2004", "FBT001", "FBT002"]
