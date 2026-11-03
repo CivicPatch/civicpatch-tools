@@ -130,14 +130,6 @@ _SET_POST_ROLE_LABEL = """
     UPDATE posts SET role_label = %s WHERE id = %s
 """
 
-# Claims name posts with no FK, so a post a claim names is kept.
-_DELETE_EMPTY_POSTS = """
-    DELETE FROM posts p
-    WHERE p.role_id = ANY(%s) AND p.jurisdiction_ocdid = ANY(%s)
-      AND NOT EXISTS (SELECT 1 FROM memberships m WHERE m.post_id = p.id)
-      AND NOT EXISTS (SELECT 1 FROM claims c WHERE c.entity_type = 'post' AND c.entity_id = p.id)
-"""
-
 _PUBLISHED_AT = """
     SELECT id::text, published_at FROM changesets
     WHERE id::text = ANY(%s) AND published_at IS NOT NULL
@@ -359,13 +351,6 @@ async def rebuild(
     memberships = membership_rows(history)
     if memberships:
         await cur.executemany(_INSERT_MEMBERSHIP, memberships)
-
-
-async def delete_empty_posts(cur, role_ids: list[str], jurisdiction_ocdids: list[str]) -> int:
-    """Posts on these roles that no membership or claim names: what a rebuild leaves behind
-    when a role stops winning posts. Returns how many were deleted."""
-    await cur.execute(_DELETE_EMPTY_POSTS, (role_ids, jurisdiction_ocdids))
-    return cur.rowcount
 
 
 def membership_rows(history: Iterable[MembershipRow]) -> list[dict]:
