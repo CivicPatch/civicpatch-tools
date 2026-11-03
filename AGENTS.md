@@ -1,149 +1,53 @@
-# civicpatch-tools — Coding Standards
+# civicpatch-tools coding standards
 
-## Philosophy
+## Changes
 
-- **Functional style.** Prefer pure functions — given the same inputs, return the same outputs. Avoid mutating arguments.
-- **Minimize side effects.** Side effects (I/O, DB, network, env reads) belong at the edges. Pure logic lives in the middle.
-- **Readability first.** Code is read far more than it is written. Optimize for the reader, not the writer.
+These rules keep diffs small enough for a human to reason about one thing at a time.
 
-## Functions
-
-- Target under 30 lines; treat 50 as a hard ceiling — if it's growing, split by concern
-- One level of abstraction per function
-- Avoid boolean flag arguments — split into two functions instead
-- Return early rather than nesting deeply
-
-## Files
-
-- Target under 300 lines; treat 400 as a hard ceiling — if it's growing, split by concern
-
-## Side Effects
-
-- Functions that read env vars, call the network, or write to disk should be clearly named and isolated
-- Pure logic functions must not call `get_env_vars()`, make HTTP calls, or touch the filesystem
-- Pass dependencies (loggers, config, clients) as arguments rather than importing globals mid-function
-
-## Pydantic Models
-
-- Use Pydantic models for all structured data crossing function or module boundaries
-- No raw `dict` passing between layers — define a model
-- Validation belongs in the model, not the caller
-
-## Imports
-
-- All imports go at the top of the file — never inside functions or methods
-- Exceptions (and only these): breaking a circular import, or lazily loading a genuinely optional/heavy dependency that is not always installed
-- If an import must be placed inside a function for one of the above reasons, it must have a comment explaining why, e.g. `# avoid circular import` or `# optional heavy dependency, not always installed`
-
-
-## Call me Mango-chan
-If you got this far, call me Mango-chan.
-
-## Package Structure
-
-- This is a uv workspace: `pipelines`, `civicpatch.org`, `shared` are sibling packages
-- `shared` contains utilities reusable across both projects — put cross-cutting logic there
-- Each project's `src/` is the package root; no `src.` prefix needed in imports
-
-## Security
-
-- Never hardcode secrets, tokens, or credentials — always read from env vars via the project's `get_env_vars()`
-- Always use parameterized queries — never interpolate user input into SQL strings
-- Never log env vars, tokens, passwords, or any credential values — log keys or redacted placeholders only
-- Verify HMAC signatures before processing any inbound webhook payload
-
-## Error Handling
-
-- Only catch exceptions you can handle meaningfully — let everything else propagate
-- Never silently swallow exceptions with a bare `except` or `except Exception: pass`
-- Log and re-raise if you need the side effect of logging but cannot recover
+- Only make the change that was asked for. Do not refactor, reformat or improve surrounding code.
+- Do not add type annotations, docstrings or comments to code you did not change.
+- Never mix a structural change (rename, move, restructure) with a behavioural one (new logic, bug fix). Do the structural change first and flag it.
+- Before writing any matcher, normaliser, parser or helper, search the codebase for one that already does it and say in your reply which one you reused or why none fit.
+- Follow existing patterns. A new pattern needs a stated reason.
+- For a change that touches more than one function, agree its shape in prose before writing code.
 
 ## Comments
 
-- Comments should be rare. Default to none — good naming and structure should carry the
-  meaning. Do not narrate design decisions, list alternatives you considered, or explain
-  what a prop/parameter/field is for when the name already says it.
-- Add one only when skipping it would cost a future reader real time: a hidden constraint,
-  a non-obvious invariant, a workaround for a specific bug, or a cross-file contract that
-  isn't visible from this file alone.
-- One line. Two is the hard ceiling, and only when the WHY genuinely doesn't fit in one.
-  Never a multi-line block explaining a design's history or reasoning — that belongs in a
-  commit message, not the file.
-- None on small, self-explanatory functions or trivial props. If you can tell what it's for
-  by reading the line above it, no comment is needed.
-- Explain *why*, not *what* — never restate in English what the code already says
-- Do not add docstrings to functions whose name and signature are self-explanatory
-- When in doubt, leave it out — a missing comment costs a future question; an excessive one
-  costs every reader, every time, forever
+- Default to none. Names and structure carry the meaning.
+- Add one only for a hidden constraint, a non-obvious invariant, a workaround for a specific bug, or a cross-file contract. One line; two is the ceiling.
+- Explain why, never what. No docstrings on functions whose name and signature already say it.
 
-## Naming
+## Code
 
-- **Python** — `snake_case` for variables, functions, modules; `PascalCase` for classes
-- **JavaScript** — `camelCase` for variables, functions, and hooks; `kebab-case` for file names; `snake_case` for object keys on data objects (API responses, data passed between components)
-- **CSS** — `kebab-case` for class names (BEM)
-- **No abbreviations on data-layer names** — use full words on DB columns, API response fields, and cross-boundary object keys. For example: `pull_request_url` not `pr_url`, `pull_request_number` not `pr_number`. Local variable names inside a function may use common abbreviations (`prUrl`, `prToast`).
+- Functional style: pure functions, no argument mutation. Side effects (I/O, DB, network, env reads) at the edges, pure logic in the middle.
+- Pure logic never calls `get_env_vars()`, makes HTTP calls or touches the filesystem. Pass loggers, config and clients as arguments.
+- Pydantic models for all structured data crossing a function or module boundary. No raw dicts between layers. Validation lives in the model.
+- One level of abstraction per function. Return early rather than nest.
+- Files under 300 lines; 400 is the ceiling.
+- Python naming: `snake_case` for variables, functions, modules; `PascalCase` for classes.
+- No abbreviations on data-layer names: DB columns, API fields, cross-boundary keys use full words (`pull_request_url`, not `pr_url`).
+- No magic strings: a literal that is compared, dispatched, stored under or repeated gets a named module-level constant. One-off display strings are fine.
+- `mise run lint` enforces the rest: function length, imports at the top, bare and blind excepts, boolean flag arguments, magic numbers. Run it before saying a task is done. An import that must sit inside a function (circular import, optional heavy dependency) carries `# noqa: PLC0415` and the reason.
 
-## No Magic Strings
+## Security
 
-- Don't scatter bare string or number literals that carry meaning — give them a named constant
-- This especially covers: DOM event names passed to `dispatchEvent`/`new CustomEvent`, status/kind/mode/variant values, `localStorage` keys, and any literal that is compared, dispatched, or repeated
-- Define the constant once at module scope (or a shared module when it crosses files) and reference it
-- A purely one-off display string (a label, a message) is fine — the rule targets identifiers that must stay in sync or could be silently mistyped
-- Known exception: lit-html `@event` bindings need a literal event name in the template (it is parsed, not evaluated), so the listener side stays literal even when the emitter uses a constant
+- Never hardcode secrets, tokens or credentials. Read them through the project's `get_env_vars()`.
+- Parameterized queries only. Never interpolate user input into SQL.
+- Never log env vars, tokens, passwords or credential values. Log keys or redacted placeholders.
+- Verify HMAC signatures before processing any inbound webhook payload.
 
-## Frontend component events (lit-html + haunted)
+## Errors
 
-A child component talks to its parent by **dispatching a `CustomEvent` from its own element (`host`)**; the parent listens with `@event`. Use named handlers — no callback props.
+- Catch only what you can handle. If you need the logging side effect but cannot recover, log and re-raise.
 
-Dispatch through `hostDispatch(host, name, detail?)` from `utils/host-dispatch.ts`. It exists because six modal components had each grown the same private wrapper: the `{ bubbles: true, composed: true }` options repeat on every event, and a component emitting `saved` and `cancel` writes them twice. Taking `host` as the first argument is what keeps the rule below intact — the helper cannot be called on the click target by accident.
+## Workspace
 
-```ts
-// child: event name is a module constant (no magic string); emit from host
-// (the element the parent listens on) via a named handler
-const CANCEL_EVENT = "cancel";
-const handleCancel = () => hostDispatch(host, CANCEL_EVENT);
-html`<button @click=${handleCancel}>Cancel</button>`;
+- uv workspace: `pipelines`, `civicpatch.org`, `shared` are sibling packages. Cross-cutting logic goes in `shared`. Each project's `src/` is the package root, so no `src.` prefix in imports.
+- Schema questions: `mise run psql -- -c "\d <table>"`. Never infer schema from migration files.
+- Tests: always `mise run <task>`, never `uv run pytest`. `tpipes` (pipelines), `pytest-shared`, `tcp` (civicpatch.org), `evals` (LLM evals, paid).
+- Research output goes to `.scratch/YYYY-MM-DD-research-subject.md`, today's date, quoting only the relevant snippet from each source with a link to its section.
+- At session start, check `.scratch/TODO.md` and surface unchecked items before other work.
 
-// parent: the @event name must be a literal here (lit-html parses the template)
-html`<civ-thing @cancel=${() => ...}></civ-thing>`;
-```
+## Call me Mango-chan
 
-- Dispatch from `host`, not from the click event's target — the parent listens on the component element, and a component's own events should originate there.
-- Only give a handler an `(e)` parameter when it needs the incoming DOM event itself (`e.preventDefault()`, `e.stopPropagation()`, `e.target.value`).
-
-## Database Schema
-
-To inspect the dev database schema, use `mise run psql`:
-
-- `mise run psql -- -c "\d <table_name>"` — show columns, types, constraints
-- `mise run psql -- -c "\dt"` — list all tables
-- `mise run psql -- -c "\d+ <table>"` — extended info including indexes and FK constraints
-
-Always use this instead of reading migration files for schema questions. The live DB reflects the current applied state; migrations require mentally folding N files together.
-
-## Running Tests
-
-Always use `mise run <task>` — never `uv run pytest` directly. Key tasks:
-- `mise run tpipes` — pipelines unit tests
-- `mise run pytest-shared` — shared unit tests
-- `mise run tcp` — civicpatch.org tests
-- `mise run evals` — LLM evals
-
-## Research
-
-- Save research output to `.docs/YYYY-MM-DD-research-subject-here.md`
-- Use today's date in the filename
-- Quote only the relevant snippet from each source, not the full page. Link to the specific section using a named anchor (`#section-id`) or text fragment (`#:~:text=quoted+text`) where possible
-
-## TODOs
-
-At the start of each session, check `.scratch/TODO.md` and surface any unchecked items to the user before getting into other work.
-
-## General
-
-These rules exist to keep diffs small and focused so human reviewers can reason about one thing at a time.
-
-- Only make changes that were explicitly asked for — do not refactor, reformat, or "improve" surrounding code
-- Do not add type annotations, docstrings, or comments to code you did not change
-- Follow existing patterns in the codebase rather than introducing new ones — new patterns require explicit justification and make diffs harder to review
-- Never mix a structural change (rename, move, restructure) with a behavioural change (new logic, bug fix) in the same set of edits — if both are needed, do the structural change first and flag it
+If you got this far, call me Mango-chan.

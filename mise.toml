@@ -319,6 +319,10 @@ mise run tcp-db-down
 mise run tcp-integration
 """
 
+[tasks.lint]
+run = "uv run ruff check ."
+description = "Run ruff on the AGENTS.md rules"
+
 [tasks.typecheck-fe]
 run = "npm run typecheck"
 dir = "civicpatch.org/src/frontend"
