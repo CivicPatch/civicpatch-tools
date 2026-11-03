@@ -3,6 +3,7 @@
 import json
 
 from psycopg.rows import dict_row
+from shared.schemas import JurisdictionLevel
 
 from database.database import get_pool
 from schemas.roster_comparisons import (
@@ -40,7 +41,7 @@ _COMPARED = """(
 
 # Each column aliased to the model's field, so reading the row needs no second list to keep in step.
 _RUN_COLUMNS = f"""
-    id::text AS id, state, started_by_user_id::text AS started_by_user_id,
+    id::text AS id, state, level, started_by_user_id::text AS started_by_user_id,
     {_STARTED_AT} AS started_at,
     source_columns, corrections, rates, jurisdictions_not_named
 """
@@ -61,13 +62,14 @@ async def _insert_run(cur, started_by_user_id: str, comparison: RosterComparison
     await cur.execute(
         """
         INSERT INTO roster_comparison_runs
-            (state, started_by_user_id, source_columns, corrections, rates,
+            (state, level, started_by_user_id, source_columns, corrections, rates,
              jurisdictions_not_named)
-        VALUES (%s, %s, %s, %s, %s, %s)
+        VALUES (%s, %s, %s, %s, %s, %s, %s)
         RETURNING id::text
         """,
         (
             comparison.state,
+            comparison.level,
             started_by_user_id,
             json.dumps(comparison.source_columns),
             json.dumps(comparison.corrections),
@@ -195,10 +197,10 @@ _IN_RUN = """EXISTS (
 
 
 async def get_roster_comparison_run_jurisdictions(
-    run_id: str, state: str, compared: bool | None
+    run_id: str, state: str, level: JurisdictionLevel, compared: bool | None
 ) -> list[RunJurisdiction]:
-    """The run's jurisdictions and the state's other active ones, by name; `compared` keeps only
-    one kind. The state's others are the saved `jurisdictions_not_named` count, listed."""
+    """The run's jurisdictions and the state's other active ones at its level, by name; `compared` keeps
+    only one kind. The state's others are the saved `jurisdictions_not_named` count, listed."""
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor(row_factory=dict_row) as cur:
         await cur.execute(
@@ -213,13 +215,17 @@ async def get_roster_comparison_run_jurisdictions(
                        ) AS name,
                        {_IN_RUN} AS compared
                 FROM jurisdictions
-                WHERE (jurisdictions.state = %(state)s AND jurisdictions.status = 'active')
+                WHERE (
+                    jurisdictions.state = %(state)s
+                    AND jurisdictions.level = %(level)s
+                    AND jurisdictions.status = 'active'
+                )
                    OR {_IN_RUN}
             ) AS run_jurisdictions
             WHERE %(compared)s::boolean IS NULL OR run_jurisdictions.compared = %(compared)s
             ORDER BY run_jurisdictions.name, run_jurisdictions.jurisdiction_ocdid
             """,
-            {"run_id": run_id, "state": state, "compared": compared},
+            {"run_id": run_id, "state": state, "level": level, "compared": compared},
         )
         rows = await cur.fetchall()
     return [RunJurisdiction.model_validate(row) for row in rows]

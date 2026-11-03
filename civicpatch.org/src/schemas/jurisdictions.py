@@ -136,6 +136,14 @@ class JurisdictionRosterEditRequest(BaseModel):
     changeset_id: str | None = None
 
 
+class StateJurisdiction(BaseModel):
+    """One of a state's active jurisdictions, with both ids a row can name it by."""
+
+    jurisdiction_ocdid: str
+    name: str
+    geoid: str | None
+
+
 class JurisdictionSearchResult(BaseModel):
     jurisdiction_ocdid: str
     level: str

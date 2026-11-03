@@ -2,15 +2,13 @@ import pytest
 from shared.schemas import Membership, Person, Role, RoleConfig
 from shared.utils.taxonomy import build_taxonomy
 
-from core.roster_comparison_run import build_comparison, rejected_rows
-from schemas.roster_comparisons import PersonOutcome, RejectedReason, RosterComparisonUpload
+from core.roster_comparison_run import build_comparison
+from schemas.roster_comparisons import PersonOutcome, ResolvedUpload
 
 TAXONOMY = build_taxonomy(RoleConfig(roles=[Role(id="member", label="Member")]))
 _BARRE = "ocd-jurisdiction/country:us/state:vt/place:barre/government"
 _STOWE = "ocd-jurisdiction/country:us/state:vt/place:stowe/government"
 _RUTLAND = "ocd-jurisdiction/country:us/state:vt/place:rutland/government"
-_NOWHERE = "ocd-jurisdiction/country:us/state:vt/place:nowhere/government"
-_KEENE = "ocd-jurisdiction/country:us/state:nh/place:keene/government"
 
 
 def _person(person_id: str, name: str, ocdid: str, organization_ids: tuple[str, ...] = ()) -> Person:
@@ -27,8 +25,8 @@ def _person(person_id: str, name: str, ocdid: str, organization_ids: tuple[str, 
     return Person(id=person_id, name=name, jurisdiction_ocdid=ocdid, memberships=members)
 
 
-def _upload(rows: list[tuple[int, str, str]]) -> RosterComparisonUpload:
-    return RosterComparisonUpload(
+def _upload(rows: list[tuple[int, str, str]]) -> ResolvedUpload:
+    return ResolvedUpload(
         state="vt",
         source_columns={"name": ["Official"]},
         corrections=[],
@@ -66,25 +64,3 @@ def test_each_civicpatch_person_carries_their_organizations_by_name():
         PersonOutcome.ONLY_IN_UPLOADED_DATA: [],
         PersonOutcome.ONLY_IN_CIVICPATCH: ["Town Auditors"],
     }
-
-
-@pytest.mark.unit
-def test_rows_outside_the_known_jurisdictions_are_rejected_with_the_reason():
-    upload = _upload([(2, _NOWHERE, "Jane Doe"), (3, _KEENE, "Lee Park"), (4, _BARRE, "Pat Lin")])
-
-    rejected = rejected_rows(upload.rows, {_BARRE}, "vt")
-
-    assert [(r.source_row, r.reason) for r in rejected] == [
-        (2, RejectedReason.UNKNOWN_JURISDICTION),
-        (3, RejectedReason.OUTSIDE_STATE),
-    ]
-
-
-@pytest.mark.unit
-def test_a_state_level_ocdid_in_the_uploaded_state_is_unknown_not_outside():
-    state_level = "ocd-jurisdiction/country:us/state:vt/government"
-    upload = _upload([(2, state_level, "Phil Scott")])
-
-    rejected = rejected_rows(upload.rows, {_BARRE}, "vt")
-
-    assert [r.reason for r in rejected] == [RejectedReason.UNKNOWN_JURISDICTION]

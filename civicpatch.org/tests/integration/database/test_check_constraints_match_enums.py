@@ -22,7 +22,7 @@ from database.review_sessions import ReviewSessionEntryStatus
 from schemas.claims import ClaimKind, EntityType
 from schemas.common import ApiKeyScope, UserRole
 from schemas.roster_comparisons import PersonOutcome
-from shared.schemas import GovernmentForm, RoleAliasStatus, RoleStatus, SelectionMethod
+from shared.schemas import GovernmentForm, JurisdictionLevel, RoleAliasStatus, RoleStatus, SelectionMethod
 from shared.utils.statuses import COLLECTOR_RUN_KINDS, ChangesetKind, DismissalReason, PipelineIssueStatus, PipelineRunKind
 
 # Constraint name → the enum it copies, every member of it.
@@ -46,6 +46,8 @@ EXACT = {
     # A subset, not a whole enum: every kind but the scrape.
     "collector_settings_kind_check": COLLECTOR_RUN_KINDS,
     "roster_comparison_people_outcome_check": PersonOutcome,
+    "roster_comparison_runs_level_check": JurisdictionLevel,
+    "roster_comparison_drafts_level_check": JurisdictionLevel,
     "api_keys_scope_check": ApiKeyScope,
 }
 

@@ -1,9 +1,13 @@
 """civicpatch as a remote MCP server at `/mcp`: read-only tools, each calling the same function
 as its `/api/v1/` route. Uploading is `curl`, not a tool, so the rows never pass through the chat."""
 
+import logging
+import time
+from typing import Any
 from urllib.parse import urlparse
 
 from fastapi import APIRouter, Depends, HTTPException, Request, Response, Security
+from mcp.server.context import CallNext, HandlerResult, ServerRequestContext
 from mcp.server.mcpserver import Context, MCPServer
 from mcp.server.mcpserver.exceptions import ToolError
 from mcp.server.transport_security import TransportSecuritySettings
@@ -17,6 +21,7 @@ from lib.auth import API_COOKIE, API_HEADER, get_optional_user, require_route_ac
 from lib.supabase_tokens import fetch_authorization_server_metadata, fetch_issuer
 from routers.api.jurisdictions import MAX_SEARCH_LIMIT, search_in_state
 from routers.api.people import current_roster
+from routers.mcp_instructions import INSTRUCTIONS
 from schemas.common import AgentKey, Identity, RouteCategory, UserRole
 from schemas.pagination import paginated_response, pagination_offset
 from schemas.roster_comparisons import (
@@ -25,13 +30,18 @@ from schemas.roster_comparisons import (
     DraftFinish,
     DraftRows,
     FieldFilter,
+    IncomingRow,
     PeopleFilter,
     PersonOutcome,
     RosterComparisonHeader,
-    UploadedRow,
 )
+from shared.schemas import JurisdictionLevel
+
+logger = logging.getLogger(__name__)
 
 MCP_PATH = "/mcp"
+TOOL_CALL_METHOD = "tools/call"
+WIRE_IS_ERROR = "isError"
 PROTECTED_RESOURCE_PATH = "/.well-known/oauth-protected-resource"
 # ChatGPT looks for the authorization server's document on the MCP server's own origin, whatever the
 # protected resource names; each path serves Supabase's, unchanged.
@@ -58,67 +68,12 @@ AGENT_REFUSALS = (
     drafts.DraftIsEmpty,
 )
 
-INSTRUCTIONS = """\
-civicpatch keeps rosters of local elected officials. These tools read them, and run and read
-roster comparisons: a user's own list of officials compared with civicpatch's.
-
-To compare a user's file (usually one state's officials):
-1. Read the header and a few rows only. Never read every row into the conversation.
-2. Write a script that converts every row into the JSON body of POST /api/v1/roster-comparisons
-   (its schema is in {instance_url}/openapi.json): state, source_columns, corrections, rows. Each row needs
-   source_row (its row number in the original file), jurisdiction_ocdid and name; role, emails,
-   phones, urls and start_date when the file has them. Any other column goes in as is.
-3. Never write an ocdid yourself. Get the state's local jurisdictions and map each row's
-   jurisdiction (town, city, village) to its jurisdiction_ocdid. The list is one search, reachable two ways. If your script can reach
-   {instance_url}, have it call
-   GET {instance_url}/api/v1/jurisdictions/search?state=<state>&limit={page_size}&page=N
-   (public, no key needed; the names never enter the conversation). Otherwise use the
-   list_jurisdictions tool, page by page. Search the names that do not match (find_jurisdiction,
-   or the same URL with &q=<name>). Tell the user which rows did not match and what you matched
-   each to, and ask them about any that search cannot settle (two candidates, or none) before
-   sending. A row you cannot place cannot be sent: leave it out only if the user agrees.
-4. Correct names only when obviously wrong: "Smith, Bob" to "Bob Smith"; "Mayor Bob Smith" to
-   "Bob Smith". Leave every other value exactly as the file has it, even if it looks wrong: the
-   comparison is measuring the user's data. List in corrections, citing row numbers, every
-   jurisdiction you matched by search, every name you changed, and every row the user agreed to
-   leave out. Send an empty list if you changed nothing.
-5. Send it one of two ways, whichever works where you run:
-   a. Your shell has CIVICPATCH_API_KEY and can reach {instance_url}: run the script, then
-        curl -sS -X POST "{instance_url}/api/v1/roster-comparisons" \\
-          -H "Authorization: Bearer $CIVICPATCH_API_KEY" -H "Content-Type: application/json" \\
-          --data-binary @comparison.json
-      Never print, echo or ask the user for the key: use the variable.
-   b. Otherwise (no key in the shell, or the network is blocked, as in a browser chat's
-      sandbox): start_roster_comparison with state and source_columns, then
-      add_roster_comparison_rows in batches of up to {batch} rows, then finish_roster_comparison
-      with corrections.
-      This sends every row through the conversation, so use it only when (a) cannot work.
-      Never ask the user for the key instead.
-6. A refusal naming rows (HTTP 422 from curl, an error from a tool) means some
-   jurisdiction_ocdid is not in the state. Nothing was saved: the whole upload, or with batches
-   only that batch (earlier batches stay). Fix those rows as in step 3, tell the user which rows
-   failed and what you changed each to, then send again, with those fixes in corrections.
-7. The response gives the run's id, its page_url and its rates. End your reply with
-   get_roster_comparison_report's markdown, as it is: it ends with the page's link. Do not count
-   or summarise the run yourself. Then read the run with get_roster_comparison, any jurisdiction the user
-   asks about with get_roster_comparison_jurisdiction, and everyone with one outcome across the
-   state (e.g. everyone only in the user's file) with get_roster_comparison_people. The state's
-   jurisdictions the file has no row for are not compared: count in jurisdictions_not_named,
-   names with list_roster_comparison_jurisdictions(compared=false). A jurisdiction whose matched,
-   possible_match, only_in_civicpatch and only_in_civicpatch_not_compared are all 0 has no one in
-   civicpatch yet: say so, rather than that the user's data disagrees.
-8. Counts compare only some organizations (compared_organizations): by default every one the
-   user's file matched someone in; civicpatch's other people are only_in_civicpatch_not_compared,
-   outside the score. Report which were compared. If the user says their file covers others, or
-   fewer, pass organizations to each read tool.
-"""
-
 
 def build_server(instance_url: str) -> MCPServer:
     instructions = INSTRUCTIONS.replace("{instance_url}", instance_url.rstrip("/")).replace(
         "{batch}", str(MAX_ROWS_PER_BATCH)
-    ).replace("{page_size}", str(LIST_PAGE_SIZE))
-    server = MCPServer(name="civicpatch", instructions=instructions)
+    )
+    server = MCPServer(name="civicpatch", instructions=instructions, middleware=[log_tool_call])
     server.add_tool(
         find_jurisdiction,
         description=f"Up to {SEARCH_LIMIT} local jurisdictions in a state whose name is closest, with their ocdids.",
@@ -172,6 +127,29 @@ def build_server(instance_url: str) -> MCPServer:
         ),
     )
     return server
+
+
+async def log_tool_call(ctx: ServerRequestContext[Any, Any], call_next: CallNext) -> HandlerResult:
+    """Each tool call's name, duration and outcome. Never its arguments: rows carry contact data."""
+    if ctx.method != TOOL_CALL_METHOD:
+        return await call_next(ctx)
+    name = ctx.params.get("name") if ctx.params else None
+    started = time.monotonic()
+    outcome = "raised"
+    try:
+        result = await call_next(ctx)
+        outcome = _tool_outcome(result)
+        return result
+    finally:
+        elapsed_ms = (time.monotonic() - started) * 1000
+        logger.info("mcp tool=%s ms=%d outcome=%s", name, elapsed_ms, outcome)
+
+
+def _tool_outcome(result: HandlerResult) -> str:
+    # Middleware sees the result already shaped for the wire: a dict, not CallToolResult.
+    if isinstance(result, dict) and result.get(WIRE_IS_ERROR):
+        return "error"
+    return "ok"
 
 
 async def find_jurisdiction(state: str, name: str) -> list[dict]:
@@ -260,15 +238,17 @@ def caller_id(ctx: Context) -> str:
     return identity.user_id
 
 
-async def start_roster_comparison(state: str, source_columns: dict[str, list[str]], ctx: Context) -> dict:
+async def start_roster_comparison(
+    state: str, source_columns: dict[str, list[str]], ctx: Context, level: JurisdictionLevel = JurisdictionLevel.LOCAL
+) -> dict:
     try:
-        header = RosterComparisonHeader(state=state, source_columns=source_columns)
+        header = RosterComparisonHeader(state=state, level=level, source_columns=source_columns)
         return (await drafts.start_draft(header, caller_id(ctx))).model_dump(mode="json")
     except AGENT_REFUSALS as error:
         raise ToolError(str(error)) from error
 
 
-async def add_roster_comparison_rows(draft_id: str, rows: list[UploadedRow], ctx: Context) -> dict:
+async def add_roster_comparison_rows(draft_id: str, rows: list[IncomingRow], ctx: Context) -> dict:
     try:
         batch = DraftRows(rows=rows)
         return (await drafts.add_draft_rows(draft_id, batch.rows, caller_id(ctx))).model_dump(mode="json")

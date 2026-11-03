@@ -30,9 +30,10 @@ from schemas.common import (
 from schemas.jurisdictions import (
     JurisdictionActivityEntry,
     JurisdictionSearchResult,
+    StateJurisdiction,
     TimelineIssue,
 )
-from shared.schemas import Person
+from shared.schemas import JurisdictionLevel, Person
 from shared.utils.statuses import ActivityType
 
 logger = logging.getLogger(__name__)
@@ -1067,6 +1068,22 @@ async def get_stale_jurisdictions(state: str) -> list[Jurisdiction]:
         )
         rows = await cur.fetchall()
     return [Jurisdiction(id=row[0], name=row[1], url=row[2]) for row in rows]
+
+
+async def get_state_jurisdictions(state: str, level: JurisdictionLevel) -> list[StateJurisdiction]:
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            """
+            SELECT jurisdiction_ocdid, COALESCE(name, ''), NULLIF(geoid, '')
+            FROM jurisdictions
+            WHERE state = %s AND level = %s AND status = 'active'
+            ORDER BY jurisdiction_ocdid
+            """,
+            (state, level),
+        )
+        rows = await cur.fetchall()
+    return [StateJurisdiction(jurisdiction_ocdid=ocdid, name=name, geoid=geoid) for ocdid, name, geoid in rows]
 
 
 async def get_state_jurisdiction_sets(state: str) -> StateJurisdictionSets:

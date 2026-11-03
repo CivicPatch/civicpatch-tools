@@ -369,12 +369,13 @@ erDiagram
     roster_comparison_runs {
         uuid            id                  PK "256: an uploaded roster (an agent's conversion of a state's officials) compared with civicpatch's. Kept forever, so a state's numbers can be followed across runs. Writes nothing else"
         text            state               "idx: (state, started_at DESC)"
+        text            level               "262, CHECK state|counties|local, default local. Rows resolve only within it; runs saved before 262 are local"
         uuid            started_by_user_id  FK
         timestamptz     started_at
         jsonb           source_columns      "our field → the original file's column(s), as the agent reported them"
         jsonb           corrections         "what the agent's conversion changed in jurisdiction_ocdid or name; its own account, never checked"
         jsonb           rates               "ComparisonRates for the state: counts only, percentages derived where shown"
-        int             jurisdictions_not_named "civicpatch jurisdictions in the state the upload never named"
+        int             jurisdictions_not_named "civicpatch jurisdictions of the state at this level the upload never named; saved before 262, it counts every level"
     }
 
     roster_comparison_jurisdictions {
@@ -398,6 +399,7 @@ erDiagram
         uuid            owner_user_id       FK "ON DELETE CASCADE; only the owner may add rows or finish"
         timestamptz     created_at          "idx"
         text            state
+        text            level               "262, CHECK state|counties|local, default local"
         jsonb           source_columns
         jsonb           rows                "UploadedRow[] appended batch by batch"
         int             row_count           "kept beside rows so the 20,000-row cap is checked without reading them"

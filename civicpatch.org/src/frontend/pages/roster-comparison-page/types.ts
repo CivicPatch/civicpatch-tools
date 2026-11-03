@@ -24,6 +24,8 @@ export type FieldFilter = typeof FIELD_FILTER_CONFLICT | typeof FIELD_FILTER_ONE
 export interface UploadedRow {
   source_row: number;
   jurisdiction_ocdid: string;
+  geoid: string | null;
+  jurisdiction_name: string | null;
   name: string;
   role: string | null;
   emails: string[];
@@ -108,6 +110,7 @@ export interface ComparisonRates {
 export interface RosterComparisonRun {
   id: string;
   state: string;
+  level: string;
   started_by_user_id: string;
   started_at: string;
   source_columns: Record<string, string[]>;

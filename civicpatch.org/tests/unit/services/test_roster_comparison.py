@@ -5,7 +5,9 @@ from unittest.mock import AsyncMock, patch
 
 import pytest
 
+from core.roster_comparison_refusal import MAX_ROW_NUMBERS_LISTED
 import services.roster_comparison as service
+from schemas.jurisdictions import StateJurisdiction
 from schemas.roster_comparisons import (
     ComparedField,
     ComparisonRates,
@@ -28,7 +30,7 @@ _STOWE = "ocd-jurisdiction/country:us/state:vt/place:stowe/government"
 
 def _run() -> RosterComparisonRun:
     return RosterComparisonRun(
-        id=_RUN_ID, state="vt", started_by_user_id="u", started_at="2026-10-22T00:00:00+00:00",
+        id=_RUN_ID, state="vt", level="local", started_by_user_id="u", started_at="2026-10-22T00:00:00+00:00",
         source_columns={}, corrections=[], rates=ComparisonRates(), jurisdictions_not_named=0,
     )
 
@@ -145,10 +147,61 @@ async def test_a_summary_moves_the_not_compared_out_of_only_in_civicpatch(asked,
 
 def _refused(count: int) -> service.RowsOutsideState:
     rejected = [
-        RejectedRow(source_row=row, jurisdiction_ocdid=f"{_BARRE}x", reason=RejectedReason.UNKNOWN_JURISDICTION)
+        RejectedRow(source_row=row, jurisdiction_ocdid=f"{_BARRE}{row}", reason=RejectedReason.UNKNOWN_JURISDICTION)
         for row in range(2, 2 + count)
     ]
     return service.RowsOutsideState("vt", rejected)
+
+
+@pytest.mark.unit
+def test_rows_refused_for_the_same_values_are_one_line():
+    barre = [RejectedRow(source_row=row, jurisdiction_name="Barre", reason=RejectedReason.AMBIGUOUS) for row in (2, 3)]
+    stowe = RejectedRow(source_row=4, geoid="1", jurisdiction_name="Stowe", reason=RejectedReason.UNKNOWN_NAME)
+
+    message = str(service.RowsOutsideState("vt", [*barre, stowe]))
+
+    assert "rows 2, 3: 'Barre' (ambiguous)" in message
+    assert "rows 4: geoid 1 + 'Stowe' (unknown_name)" in message
+
+
+@pytest.mark.unit
+def test_a_refusal_names_its_candidates_and_their_ocdids():
+    barre = StateJurisdiction(jurisdiction_ocdid=_BARRE, name="Barre town", geoid=None)
+    row = RejectedRow(source_row=2, jurisdiction_name="Barre", reason=RejectedReason.AMBIGUOUS, candidates=[barre])
+
+    assert f"(ambiguous: Barre town ({_BARRE}))" in str(service.RowsOutsideState("vt", [row]))
+
+
+@pytest.mark.unit
+def test_spellings_differing_only_by_case_are_one_line():
+    rows = [
+        RejectedRow(source_row=2, jurisdiction_name="Barre", reason=RejectedReason.AMBIGUOUS),
+        RejectedRow(source_row=3, jurisdiction_name="BARRE", reason=RejectedReason.AMBIGUOUS),
+    ]
+
+    assert "rows 2, 3: 'Barre' (ambiguous)" in str(service.RowsOutsideState("vt", rows))
+
+
+@pytest.mark.unit
+def test_a_refusal_says_to_ask_once_per_place():
+    assert "Ask the user once per place" in str(_refused(1))
+
+
+@pytest.mark.unit
+def test_one_value_on_many_rows_keeps_the_message_short():
+    rejected = [
+        RejectedRow(source_row=row, jurisdiction_name="Barre", reason=RejectedReason.AMBIGUOUS) for row in range(1, 20_001)
+    ]
+
+    message = str(service.RowsOutsideState("vt", rejected))
+
+    assert f"and {20_000 - MAX_ROW_NUMBERS_LISTED} more rows" in message
+    assert len(message) < 1_000
+
+
+@pytest.mark.unit
+def test_a_refusal_says_to_send_the_whole_upload_again():
+    assert "send the whole upload, or this batch, again" in str(_refused(1))
 
 
 @pytest.mark.unit

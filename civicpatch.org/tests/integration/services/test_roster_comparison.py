@@ -12,8 +12,18 @@ import pytest_asyncio
 
 from database.database import get_pool
 from database.roster_comparison_drafts import get_roster_comparison_draft
-from database.roster_comparisons import get_roster_comparison_people, get_roster_comparison_run
-from schemas.roster_comparisons import PersonOutcome, RosterComparisonHeader, RosterComparisonUpload, UploadedRow
+from database.roster_comparisons import (
+    get_roster_comparison_jurisdictions,
+    get_roster_comparison_people,
+    get_roster_comparison_run,
+)
+from schemas.roster_comparisons import (
+    IncomingRow,
+    PersonOutcome,
+    RejectedReason,
+    RosterComparisonHeader,
+    RosterComparisonUpload,
+)
 from services.roster_comparison import RowsOutsideState, get_run_jurisdictions, run_roster_comparison
 from services.roster_comparison_drafts import (
     DraftIsEmpty,
@@ -66,8 +76,8 @@ async def _wipe() -> None:
 
 async def _seed() -> str:
     """Three jurisdictions; Jane Doe seated in Barre. Returns the user id."""
-    for ocdid in _JURISDICTIONS:
-        await factories.seed_jurisdiction(ocdid, "zr")
+    for ocdid, name in zip(_JURISDICTIONS, ["Barre town", "Stowe town", "Rutland city"]):
+        await factories.seed_jurisdiction(ocdid, "zr", name)
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
@@ -133,11 +143,127 @@ async def test_an_upload_is_compared_per_jurisdiction_and_saved(user_id):
     assert [j.jurisdiction_ocdid for j in not_compared] == [_RUTLAND]
 
 
+_STATE_ROW = "ocd-jurisdiction/country:us/state:zr/government"
+_BARRE_COUNTY = "ocd-jurisdiction/country:us/state:zr/county:zr_barre/government"
+
+
+async def _seed_other_levels() -> None:
+    await factories.seed_jurisdiction(_STATE_ROW, "zr", "Barre", level="state")
+    await factories.seed_jurisdiction(_BARRE_COUNTY, "zr", "Barre County", level="counties")
+
+
+def _upload_of(row: dict, level: str = "local") -> RosterComparisonUpload:
+    return RosterComparisonUpload(
+        state="zr", level=level, source_columns={"name": ["Official"]}, corrections=[], rows=[row]
+    )
+
+
+@pytest.mark.integration
+@pytest.mark.asyncio
+async def test_a_local_upload_only_sees_local_jurisdictions(user_id):
+    await _seed_other_levels()
+
+    run_id = await run_roster_comparison(_upload_of({"source_row": 2, "jurisdiction_name": "Barre", "name": "Jane Doe"}), user_id)
+
+    run = await get_roster_comparison_run(run_id)
+    assert run is not None
+    assert (run.level, run.jurisdictions_not_named) == ("local", 2)
+    assert [j.jurisdiction_ocdid for j in await get_roster_comparison_jurisdictions(run_id)] == [_BARRE]
+    assert {j.jurisdiction_ocdid for j in await get_run_jurisdictions(run_id, False)} == {_STOWE, _RUTLAND}
+
+
+@pytest.mark.integration
+@pytest.mark.asyncio
+async def test_a_county_upload_resolves_and_lists_only_counties(user_id):
+    await _seed_other_levels()
+
+    run_id = await run_roster_comparison(
+        _upload_of({"source_row": 2, "jurisdiction_name": "Barre", "name": "Ann Lee"}, level="counties"), user_id
+    )
+
+    run = await get_roster_comparison_run(run_id)
+    assert run is not None
+    assert (run.level, run.jurisdictions_not_named) == ("counties", 0)
+    assert [j.jurisdiction_ocdid for j in await get_run_jurisdictions(run_id, None)] == [_BARRE_COUNTY]
+
+
+@pytest.mark.integration
+@pytest.mark.asyncio
+async def test_a_county_upload_refuses_a_town(user_id):
+    await _seed_other_levels()
+
+    with pytest.raises(RowsOutsideState) as refused:
+        await run_roster_comparison(
+            _upload_of({"source_row": 2, "jurisdiction_ocdid": _BARRE, "name": "Jane Doe"}, level="counties"), user_id
+        )
+
+    assert [row.reason for row in refused.value.rejected] == [RejectedReason.UNKNOWN_JURISDICTION]
+
+
+@pytest.mark.integration
+@pytest.mark.asyncio
+async def test_a_batch_naming_its_town_keeps_the_drafts_level_through_finish(user_id):
+    await _seed_other_levels()
+    draft = await start_draft(_HEADER.model_copy(update={"level": "counties"}), user_id)
+
+    await add_draft_rows(draft.id, _rows({"source_row": 2, "jurisdiction_name": "Barre", "name": "Ann Lee"}), user_id)
+    created = await finish_draft(draft.id, user_id, [])
+
+    run = await get_roster_comparison_run(created.id)
+    assert run is not None
+    assert (run.level, run.jurisdictions_not_named) == ("counties", 0)
+    [ann] = await get_roster_comparison_people(created.id, _BARRE_COUNTY, [])
+    assert ann.uploaded is not None
+    assert (ann.uploaded.jurisdiction_ocdid, ann.uploaded.jurisdiction_name) == (_BARRE_COUNTY, "Barre")
+
+
+@pytest.mark.integration
+@pytest.mark.asyncio
+async def test_rows_naming_their_town_are_resolved_and_kept_as_the_file_had_them(user_id):
+    upload = RosterComparisonUpload(
+        state="zr",
+        source_columns={"name": ["Official"], "jurisdiction_name": ["Town"]},
+        corrections=[],
+        rows=[{"source_row": 2, "jurisdiction_name": "Town of Barre", "name": "Jane Doe"}],
+    )
+
+    run_id = await run_roster_comparison(upload, user_id)
+
+    [jane] = await get_roster_comparison_people(run_id, _BARRE, [])
+    assert (jane.outcome, jane.person_id) == (PersonOutcome.MATCHED, _JANE)
+    assert jane.uploaded is not None
+    assert (jane.uploaded.jurisdiction_ocdid, jane.uploaded.jurisdiction_name) == (_BARRE, "Town of Barre")
+
+
+@pytest.mark.integration
+@pytest.mark.asyncio
+async def test_a_batch_whose_geoid_and_name_disagree_is_refused_and_not_added(user_id):
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "UPDATE jurisdictions SET geoid = '9970001' WHERE jurisdiction_ocdid = %s",
+            (_STOWE,),
+        )
+        await conn.commit()
+    draft = await start_draft(_HEADER, user_id)
+
+    with pytest.raises(RowsOutsideState) as refused:
+        await add_draft_rows(
+            draft.id, _rows({"source_row": 2, "geoid": "9970001", "jurisdiction_name": "Barre", "name": "Jane Doe"}), user_id
+        )
+
+    [row] = refused.value.rejected
+    assert row.reason == RejectedReason.AMBIGUOUS
+    assert {candidate.jurisdiction_ocdid for candidate in row.candidates} == {_BARRE, _STOWE}
+    stored = await get_roster_comparison_draft(draft.id, user_id)
+    assert stored is not None and stored[2] == 0
+
+
 _HEADER = RosterComparisonHeader(state="zr", source_columns={"name": ["Official"]})
 
 
-def _rows(*rows: dict) -> list[UploadedRow]:
-    return [UploadedRow.model_validate(row) for row in rows]
+def _rows(*rows: dict) -> list[IncomingRow]:
+    return [IncomingRow.model_validate(row) for row in rows]
 
 
 @pytest.mark.integration
