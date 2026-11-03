@@ -138,6 +138,7 @@ async def get_run_summary(run_id: str, organizations: list[str] | None) -> Roste
         jurisdictions=worst_first(jurisdictions),
         organizations=run_organizations,
         compared_organizations=compared,
+        nickname_matches=await database.get_roster_comparison_nickname_matches(run_id),
     )
 
 

@@ -10,6 +10,7 @@ from database.database import get_pool
 from database.roster_comparisons import (
     count_roster_comparison_not_compared,
     get_roster_comparison_jurisdictions,
+    get_roster_comparison_nickname_matches,
     get_roster_comparison_organizations,
     get_roster_comparison_people,
     get_roster_comparison_people_page,
@@ -99,6 +100,25 @@ def _comparison() -> RosterComparison:
             JurisdictionComparison(jurisdiction_ocdid=_STOWE, rates=ComparisonRates(), people=[]),
         ],
     )
+
+
+@pytest.mark.integration
+@pytest.mark.asyncio
+async def test_nickname_matches_are_read_back_from_the_saved_people(user_id):
+    comparison = _comparison()
+    bob = PersonComparison(
+        outcome=PersonOutcome.MATCHED,
+        uploaded=UploadedRow(source_row=9, jurisdiction_ocdid=_STOWE, name="Bob Smith"),
+        person_id=_PERSON_ID,
+        person_name="Robert Smith",
+        matched_by_nickname=True,
+    )
+    comparison.jurisdictions[1].people.append(bob)
+
+    run_id = await insert_roster_comparison(user_id, comparison)
+
+    [match] = await get_roster_comparison_nickname_matches(run_id)
+    assert (match.jurisdiction_ocdid, match.uploaded_name, match.civicpatch_name) == (_STOWE, "Bob Smith", "Robert Smith")
 
 
 @pytest.mark.integration

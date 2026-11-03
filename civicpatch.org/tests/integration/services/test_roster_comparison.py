@@ -220,6 +220,20 @@ async def test_a_batch_naming_its_town_keeps_the_drafts_level_through_finish(use
 
 @pytest.mark.integration
 @pytest.mark.asyncio
+async def test_a_nickname_match_is_counted_as_matched_and_named_in_the_report(user_id):
+    run_id = await run_roster_comparison(
+        _upload_of({"source_row": 2, "jurisdiction_ocdid": _BARRE, "name": "Jennie Doe"}), user_id
+    )
+
+    run = await get_roster_comparison_run(run_id)
+    assert run is not None
+    assert run.rates.outcomes.matched == 1
+    report = (await get_run_report(run_id, None)).markdown
+    assert "| Jennie Doe | Jane Doe | Barre town |" in report
+
+
+@pytest.mark.integration
+@pytest.mark.asyncio
 async def test_rows_left_out_of_an_upload_are_kept_on_the_run(user_id):
     upload = _upload_of({"source_row": 2, "jurisdiction_ocdid": _BARRE, "name": "Jane Doe"}).model_copy(
         update={"left_out_rows": [4]}

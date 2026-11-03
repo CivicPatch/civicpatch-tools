@@ -2,7 +2,7 @@
 
 from shared.schemas import Person
 from shared.utils.name_utils import build_canonical_map, nickname_tie, person_list_to_identities
-from shared.utils.person_id_utils import resolve_person_id
+from shared.utils.person_id_utils import nickname_ties, resolve_person_id
 from shared.utils.taxonomy import Taxonomy
 
 from core.roster_comparison_fields import (
@@ -36,12 +36,17 @@ def compare_people(
     matched = _sure_matches(matches)
     people_by_id = {person.id: person for person in roster}
     matched_by_row = {person_id: rows[index].source_row for index, person_id in matched.items()}
+    decided = {
+        **{index: _matched(rows[index], people_by_id[person_id], taxonomy) for index, person_id in matched.items()},
+        **{
+            index: _matched(rows[index], person, taxonomy).model_copy(update={"matched_by_nickname": True})
+            for index, person in _nickname_matches(rows, matches, roster, matched).items()
+        },
+    }
     compared = [
         _with_warnings(
             row,
-            _matched(row, people_by_id[matched[index]], taxonomy)
-            if index in matched
-            else _uncertain(row, row_matches, roster, matched_by_row),
+            decided[index] if index in decided else _uncertain(row, row_matches, roster, matched_by_row),
             taxonomy,
         )
         for index, (row, row_matches) in enumerate(zip(rows, matches))
@@ -84,13 +89,22 @@ def _sure_matches(matches: list[list[Person]]) -> dict[int, str]:
     return claimed
 
 
+def _nickname_matches(
+    rows: list[UploadedRow], matches: list[list[Person]], roster: list[Person], sure: dict[int, str]
+) -> dict[int, Person]:
+    """The pipeline's rule, on rows that fit no one and people no row is sure of."""
+    no_match = {index: rows[index].name for index, row_matches in enumerate(matches) if not row_matches}
+    absent = [person for person in roster if person.id not in sure.values()]
+    return nickname_ties(no_match, absent)
+
+
 def _uncertain(
     row: UploadedRow,
     matches: list[Person],
     roster: list[Person],
     matched_by_row: dict[str, int],
 ) -> PersonComparison:
-    """Several people the name fits, one another row took, or people only a nickname links."""
+    """Several people the name fits, one another row took, or people a nickname links but doesn't settle."""
     if matches:
         reason, candidates = CandidateReason.SAME_NAME, matches
     else:

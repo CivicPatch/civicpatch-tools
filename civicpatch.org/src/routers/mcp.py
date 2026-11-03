@@ -88,29 +88,47 @@ def build_server(instance_url: str) -> MCPServer:
         get_roster_comparison,
         description=(
             "A saved comparison: state rates, then jurisdictions, most unmatched first, then the organizations "
-            "of civicpatch's people with their matched counts. Counts compare compared_organizations only."
+            "of civicpatch's people with their matched counts. Counts compare only compared_organizations: by "
+            "default every one the user's file matched someone in. civicpatch's other people are "
+            "only_in_civicpatch_not_compared, outside the score. Say which were compared. If the user says their "
+            "file covers others, or fewer, pass organizations."
         ),
     )
     server.add_tool(
         get_roster_comparison_report,
         description="A saved comparison as Markdown, from its saved counts: give it to the user as it is.",
     )
-    server.add_tool(get_roster_comparison_jurisdiction, description="One jurisdiction's compared people in a saved comparison.")
+    server.add_tool(
+        get_roster_comparison_jurisdiction,
+        description=(
+            "One jurisdiction's compared people in a saved comparison. If its matched, possible_match, "
+            "only_in_civicpatch and only_in_civicpatch_not_compared are all 0, civicpatch has no one there yet: "
+            "say so, rather than that the user's data disagrees."
+        ),
+    )
     server.add_tool(
         list_roster_comparison_jurisdictions,
-        description="A saved comparison's jurisdictions and its state's others (not compared), by name.",
+        description=(
+            "A saved comparison's jurisdictions and its state's others (not compared), by name. compared=false lists "
+            "the state's jurisdictions at the run's level with no rows in the file, the ones jurisdictions_not_named counts."
+        ),
     )
     server.add_tool(
         get_roster_comparison_people,
         description=(
             "A saved comparison's people across every jurisdiction, paged: those with one outcome "
             "(e.g. only_in_uploaded_data), or the matched people behind a field's conflict or "
-            "one_side_has_more count (field and level together)."
+            "one_side_has_more count (field and level together). Use it for everyone with one outcome across "
+            "the state, such as everyone only in the user's file."
         ),
     )
     server.add_tool(
         start_roster_comparison,
-        description="Start an upload sent in batches (when curl cannot reach civicpatch): state and source_columns. Returns a draft id.",
+        description=(
+            "Start an upload sent in batches, only when curl can't reach civicpatch: this sends every row through "
+            "the conversation. Takes state, level and source_columns, and returns a draft id. Then "
+            "add_roster_comparison_rows, then finish_roster_comparison."
+        ),
     )
     server.add_tool(
         add_roster_comparison_rows,

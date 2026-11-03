@@ -148,6 +148,7 @@ def test_a_run_comes_back_with_its_page_and_jurisdictions():
         jurisdictions=[JurisdictionRates(jurisdiction_ocdid=_BARRE, rates=ComparisonRates())],
         organizations=[],
         compared_organizations=[],
+        nickname_matches=[],
     )
     with _service("get_run_summary", return_value=summary) as get_summary:
         response = _client().get(f"{_PREFIX}/{_RUN_ID}?organizations=Selectboard&organizations=Board+of+Listers")

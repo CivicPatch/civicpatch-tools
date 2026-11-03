@@ -58,6 +58,7 @@ export interface PersonComparison {
   uploaded: UploadedRow | null;
   person_id: string | null;
   person_name: string | null;
+  matched_by_nickname: boolean;
   candidates: Candidate[];
   fields: Partial<Record<ComparedField, FieldComparison>>;
   warnings: RowWarning[];
@@ -138,12 +139,19 @@ export interface RunOrganization {
   civicpatch_people: number;
 }
 
+export interface NicknameMatch {
+  jurisdiction_ocdid: string;
+  uploaded_name: string;
+  civicpatch_name: string;
+}
+
 export interface RosterComparisonSummary {
   run: RosterComparisonRun;
   page_url: string;
   jurisdictions: JurisdictionRates[];
   organizations: RunOrganization[];
   compared_organizations: string[];
+  nickname_matches: NicknameMatch[];
 }
 
 export interface RosterComparisonListItem {

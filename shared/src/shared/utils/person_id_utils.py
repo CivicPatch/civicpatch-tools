@@ -85,7 +85,7 @@ def resolve_people_ids(
         for index, (person, result) in enumerate(zip(people_to_resolve, results))
         if result["person"] is None and not result["duplicate_match"]
     }
-    ties = _nickname_ties(unmatched, _absent(people, claimed_ids))
+    ties = nickname_ties(unmatched, _absent(people, claimed_ids))
     return [
         _resolution(people_to_resolve[index], [ties[index]], set()) if index in ties else result
         for index, result in enumerate(results)
@@ -97,7 +97,7 @@ def _absent(people: List[Person], claimed_ids: set[str]) -> List[Person]:
     return [person for person in people if person.id not in claimed_ids and person.memberships]
 
 
-def _nickname_ties(unmatched: Dict[int, str], absent: List[Person]) -> Dict[int, Person]:
+def nickname_ties(unmatched: Dict[int, str], absent: List[Person]) -> Dict[int, Person]:
     """An unmatched entry and an absent person, when they are the only two sharing a surname
     and their first names are a nickname pair: one leaves, one arrives, "Dave" for "David"."""
     ties = {}
