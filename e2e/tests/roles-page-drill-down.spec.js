@@ -30,6 +30,7 @@ test("a chosen level and state are asked for, and the select keeps showing the l
   await page.goto("/roles");
 
   const level = page.getByLabel("Level");
+  await level.focus();
   await level.selectOption("counties");
   await expect(level).toHaveValue("counties");
   await expect(level).toBeFocused();
