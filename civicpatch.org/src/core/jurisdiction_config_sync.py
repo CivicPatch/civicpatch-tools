@@ -1,7 +1,7 @@
 """What syncing one open-data config file changes: its roles in `roles` and `role_aliases`, and
 its government government forms for the activity row. Pure.
 
-Roles are matched by id, not label (unlike `role_taxonomy`, which serves the editor): the file
+Roles are matched by id, not label: the file
 carries ids, so a new label on a known id is a rename. A role the file used to define and no
 longer lists is deactivated, never deleted, since posts may still point at it.
 """
@@ -33,7 +33,10 @@ class RoleChanges(BaseModel):
 def role_priority(path: str, position: int) -> int | None:
     """A level's roles rank in file order; a state's roles rank after them, unranked."""
     layer = config_path_layer(path)
-    return position if layer is not None and layer[0] is None else None
+    if layer is None:
+        return None
+    state, _ = layer
+    return position if state is None else None
 
 
 def role_changes(path: str, file_roles: list[ConfigRole], stored: list[StoredRole]) -> RoleChanges:

@@ -26,7 +26,7 @@ from core.sinks.open_data_commit import commit_body
 from database import output_hashes as output_hashes_db
 from database.people import get_roster
 from database.publications import publish_attributions, record_change_url
-from database.roles import get_taxonomy_for
+from database.roles import get_taxonomies_for
 from lib.temporal.types import OpenDataCommitItem
 from shared.schemas import DerivedPerson, OpenStatesPersonRecord
 from shared.utils.people_utils import person_sort_key
@@ -135,11 +135,11 @@ class OpenDataWriteRejected(RuntimeError):
 async def commit_rendered_files(
     items: list[OpenDataCommitItem], commit_message: str
 ) -> str | None:
+    taxonomies = await get_taxonomies_for([item.jurisdiction_ocdid for item in items])
     contents = {}
     for item in items:
         roster = await get_roster(jurisdiction_ocdid=item.jurisdiction_ocdid)
-        taxonomy = await get_taxonomy_for(item.jurisdiction_ocdid)
-        contents[item.file_path] = yaml_dump(open_data_records(roster, taxonomy))
+        contents[item.file_path] = yaml_dump(open_data_records(roster, taxonomies[item.jurisdiction_ocdid]))
 
     hashes = {path: hash_text(body) for path, body in contents.items()}
     stored = await output_hashes_db.get_hashes(list(hashes))

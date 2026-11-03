@@ -18,7 +18,7 @@ _SOURCES: dict[EntityType | str, str] = {
 # A claim payload stores only ids, unlike person and post payloads which carry their own
 # name. So a badge for one has to look its subject up — same keying, for the same reason.
 #
-# A post is named by `posts.role_label`, which the fold writes (263). A membership is named by
+# A post is named by `posts.role_label`, which the fold writes (264). A membership is named by
 # whoever holds it.
 _NAMES: dict[EntityType | str, str] = {
     EntityType.PERSON: "SELECT name FROM people WHERE id::text = %s",

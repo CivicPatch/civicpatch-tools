@@ -19,7 +19,7 @@ function RolesPage() {
       <div class="sectioned">
         ${SectionNav("manage", manageSection(permissions, globalSummary?.open_prs), "/roles")}
         <div class="secbody">
-          <issues-config-editor .inline=${true}></issues-config-editor>
+          <issues-config-editor></issues-config-editor>
           <section>
             <h2>Unmatched</h2>
             <unmatched-text></unmatched-text>

@@ -65,12 +65,6 @@ def get_designation_alias_map() -> Dict[str, str]:
     return alias_map
 
 
-def get_unique_roles(role_config_override: Optional[RoleConfig] = None) -> List[str]:
-    return [
-        entry.label for entry in get_role_configs(role_config_override) if entry.is_unique
-    ]
-
-
 def search_keywords(type="local") -> Dict[str, List[str]]:
     return _load_config_file("search.yml").get("keywords", {})
 

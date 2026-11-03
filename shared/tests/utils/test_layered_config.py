@@ -245,7 +245,7 @@ def test_a_states_own_form_is_offered_nowhere_else():
 def test_a_country_form_needs_organizations():
     level = _level_with_forms({GovernmentForm.MAYOR_COUNCIL: GovernmentFormConfig()})
 
-    with pytest.raises(ValueError, match="country government form mayor_council has no organizations"):
+    with pytest.raises(ValueError, match="level government form mayor_council has no organizations"):
         merged_config(level, None)
 
 
@@ -486,7 +486,7 @@ def test_a_forms_role_label_may_be_an_alias_of_a_role():
         }
     )
 
-    assert merged_config(level, None).country_government_forms[GovernmentForm.OPEN_TOWN_MEETING].organizations[0].role_labels == ["Select Board Member"]
+    assert merged_config(level, None).level_government_forms[GovernmentForm.OPEN_TOWN_MEETING].organizations[0].role_labels == ["Select Board Member"]
 
 
 @pytest.mark.parametrize(

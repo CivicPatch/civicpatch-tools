@@ -34,7 +34,7 @@ async def get_many(cur, post_ids: list[str]) -> dict[str, Post]:
         """
         SELECT posts.id::text, posts.jurisdiction_ocdid, posts.organization_id::text,
                posts.role_id, posts.division_ocdid,
-               posts.role_label AS role_label
+               posts.role_label
         FROM posts
         WHERE posts.id::text = ANY(%s)
         """,
@@ -90,7 +90,7 @@ async def list_for_jurisdictions(cur, jurisdiction_ocdids: list[str]) -> dict[st
         f"""
         SELECT posts.id::text, posts.jurisdiction_ocdid, posts.organization_id::text,
                posts.role_id, posts.division_ocdid,
-               posts.role_label AS role_label
+               posts.role_label
         FROM posts
         WHERE posts.jurisdiction_ocdid = ANY(%(jurisdiction_ocdids)s)
         ORDER BY posts.role_id, posts.division_ocdid
@@ -124,7 +124,7 @@ async def list_page_for_state(
                    posts.jurisdiction_ocdid,
                    posts.id::text, posts.organization_id::text, posts.role_id,
                    posts.division_ocdid,
-                   posts.role_label AS role_label
+                   posts.role_label
             FROM posts
             WHERE posts.jurisdiction_ocdid LIKE %(prefix)s
             ORDER BY posts.jurisdiction_ocdid, posts.role_id, posts.division_ocdid

@@ -322,7 +322,7 @@ app.include_router(
     api_roles_router.get_router(),
     prefix="/api/v1/roles",
     tags=["roles"],
-    # Dependencies set within router
+    # Public: see README's Permissions.
 )
 
 app.include_router(

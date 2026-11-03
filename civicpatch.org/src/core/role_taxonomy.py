@@ -1,4 +1,4 @@
-"""Decisions about the role taxonomy for the config sync. Pure — no I/O, no DB. Roles are edited in
+"""Decisions about the role taxonomy for the config sync. Pure: no I/O, no DB. Roles are edited in
 open-data's config files; the sync applies a merged file to `roles` (`core.jurisdiction_config_sync`).
 """
 

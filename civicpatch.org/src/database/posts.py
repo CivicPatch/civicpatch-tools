@@ -1,13 +1,13 @@
 """Writing posts: minting, editing and deleting the rows."""
 
 from core.projection.facts import PostKey
+from core.projection.post_labels import post_role_label
 from database import divisions, organizations
 from database.activity import record_change
 from database.changesets import create_roster_edit_changeset
 from database.database import get_pool
 from database.post_claims import accept_fields, set_post_label, undo_deletion
 from database.post_listings import get
-from core.projection.post_labels import post_role_label
 from database.roles import get_taxonomy_for
 from schemas.activity import Change, FieldChange
 from schemas.claims import EntityType
