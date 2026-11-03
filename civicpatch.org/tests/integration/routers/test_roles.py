@@ -99,7 +99,7 @@ async def test_a_jurisdiction_gets_its_own_level_and_states_roles(client):
 
 @pytest.mark.asyncio
 @pytest.mark.integration
-async def test_an_ocdid_that_names_no_jurisdiction_is_refused(client):
+async def test_a_malformed_ocdid_is_refused(client):
     response = client.get(_PREFIX, params={"jurisdiction_ocdid": "not-an-ocdid"})
 
     assert response.status_code == 422

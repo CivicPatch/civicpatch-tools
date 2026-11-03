@@ -2,6 +2,7 @@ from fastapi import APIRouter, HTTPException
 
 import services.role_config as role_config_service
 from shared.schemas import JurisdictionLevel
+from shared.utils.id_utils import parse_jurisdiction_ocdid
 
 
 def get_router() -> APIRouter:
@@ -17,9 +18,10 @@ def get_router() -> APIRouter:
             roles = await role_config_service.load_roles(level, state)
         else:
             try:
-                roles = await role_config_service.load_jurisdiction_roles(jurisdiction_ocdid)
+                parse_jurisdiction_ocdid(jurisdiction_ocdid)
             except ValueError as error:
                 raise HTTPException(status_code=422, detail=str(error)) from error
+            roles = await role_config_service.load_jurisdiction_roles(jurisdiction_ocdid)
         return {"data": {"roles": [r.model_dump() for r in roles]}}
 
     return router
