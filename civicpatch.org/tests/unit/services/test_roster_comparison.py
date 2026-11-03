@@ -50,8 +50,7 @@ async def test_a_summary_lists_jurisdictions_most_unmatched_first_with_the_runs_
         "get_roster_comparison_jurisdictions", return_value=jurisdictions
     ), _database("get_roster_comparison_organizations", return_value=[]), _database(
         "count_roster_comparison_not_compared", return_value={}
-    ), patch.object(
-        service.environment, "instance_url", return_value="https://civicpatch.test"
+    ), _database("get_roster_comparison_nickname_matches", return_value=[]), patch.object(service.environment, "instance_url", return_value="https://civicpatch.test"
     ):
         summary = await service.get_run_summary(_RUN_ID, None)
 
@@ -104,8 +103,7 @@ async def test_a_created_run_reports_the_rates_the_page_shows_by_default():
         "get_roster_comparison_organizations", return_value=[_organization("Selectboard", 2)]
     ), _database("count_roster_comparison_not_compared", return_value={_BARRE: 4}), _database(
         "get_roster_comparison_run_jurisdictions", return_value=[]
-    ), patch.object(
-        service.environment, "instance_url", return_value="https://civicpatch.test"
+    ), _database("get_roster_comparison_nickname_matches", return_value=[]), patch.object(service.environment, "instance_url", return_value="https://civicpatch.test"
     ):
         created = await service.get_run_created(_RUN_ID)
 
@@ -135,7 +133,7 @@ async def test_a_summary_moves_the_not_compared_out_of_only_in_civicpatch(asked,
         "get_roster_comparison_jurisdictions", return_value=jurisdictions
     ), _database("get_roster_comparison_organizations", return_value=organizations), _database(
         "count_roster_comparison_not_compared", return_value={_BARRE: 4}
-    ) as count, patch.object(service.environment, "instance_url", return_value="https://civicpatch.test"):
+    ) as count, _database("get_roster_comparison_nickname_matches", return_value=[]), patch.object(service.environment, "instance_url", return_value="https://civicpatch.test"):
         summary = await service.get_run_summary(_RUN_ID, asked)
 
     count.assert_awaited_once_with(_RUN_ID, compared)

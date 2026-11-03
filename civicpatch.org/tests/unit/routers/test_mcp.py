@@ -81,6 +81,18 @@ async def test_the_server_lists_its_read_tools_and_names_itself_in_the_instructi
 
 @pytest.mark.asyncio
 @pytest.mark.unit
+async def test_the_guidance_on_reading_a_run_is_on_the_tools_that_read_it():
+    async with mcp.Client(mcp_router.build_server(_INSTANCE)) as client:
+        tools = {tool.name: tool.description or "" for tool in (await client.list_tools()).tools}
+
+    assert "compared_organizations" in tools["get_roster_comparison"]
+    assert "civicpatch has no one there yet" in tools["get_roster_comparison_jurisdiction"]
+    assert "jurisdictions_not_named" in tools["list_roster_comparison_jurisdictions"]
+    assert "finish_roster_comparison" in tools["start_roster_comparison"]
+
+
+@pytest.mark.asyncio
+@pytest.mark.unit
 async def test_a_runs_summary_is_the_routes_summary():
     summary = RosterComparisonSummary(
         run=_run(),
@@ -88,6 +100,7 @@ async def test_a_runs_summary_is_the_routes_summary():
         jurisdictions=[],
         organizations=[],
         compared_organizations=[],
+        nickname_matches=[],
     )
     with patch.object(mcp_router.roster_comparisons, "get_run_summary", AsyncMock(return_value=summary)) as get:
         result = await mcp_router.get_roster_comparison(_RUN_ID, ["Selectboard"])

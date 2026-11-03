@@ -64,6 +64,29 @@ def test_a_nickname_only_one_person_fits_is_a_possible_match_not_a_match():
 
 
 @pytest.mark.unit
+def test_a_nickname_is_a_match_when_they_are_the_only_two_sharing_a_surname():
+    [bob] = compare_people([_row("Bob Smith")], [_person("robert", "Robert Smith")], TAXONOMY)
+
+    assert (bob.outcome, bob.person_id, bob.matched_by_nickname) == (PersonOutcome.MATCHED, "robert", True)
+    assert bob.candidates == []
+
+
+@pytest.mark.unit
+def test_two_rows_sharing_the_surname_leave_a_nickname_possible():
+    bob, zed = compare_people([_row("Bob Smith", 2), _row("Zed Smith", 3)], [_person("robert", "Robert Smith")], TAXONOMY)
+
+    assert (bob.outcome, zed.outcome) == (PersonOutcome.POSSIBLE_MATCH, PersonOutcome.ONLY_IN_UPLOADED_DATA)
+    assert not bob.matched_by_nickname
+
+
+@pytest.mark.unit
+def test_a_sure_match_is_not_marked_as_a_nickname():
+    [robert] = compare_people([_row("Robert Smith")], [_person("robert", "Robert Smith")], TAXONOMY)
+
+    assert (robert.outcome, robert.matched_by_nickname) == (PersonOutcome.MATCHED, False)
+
+
+@pytest.mark.unit
 def test_a_nickname_guess_never_blocks_another_rows_exact_match():
     roster = [_person("robert", "Robert Smith"), _person("roberta", "Roberta Smith")]
 

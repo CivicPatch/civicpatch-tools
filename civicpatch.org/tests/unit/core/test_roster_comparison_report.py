@@ -1,11 +1,12 @@
 import pytest
 
-from core.roster_comparison_report import report_markdown
+from core.roster_comparison_report import MAX_NICKNAME_MATCHES_LISTED, report_markdown
 from schemas.roster_comparisons import (
     ComparedField,
     ComparisonRates,
     FieldCounts,
     JurisdictionRates,
+    NicknameMatch,
     OutcomeCounts,
     RosterComparisonRun,
     RosterComparisonSummary,
@@ -32,6 +33,7 @@ def _summary(rates: ComparisonRates, corrections: list[str]) -> RosterComparison
         ],
         organizations=[RunOrganization(name="Selectboard", jurisdictions=1, matched=8, civicpatch_people=10)],
         compared_organizations=["Selectboard"],
+        nickname_matches=[],
     )
 
 
@@ -55,6 +57,31 @@ def test_the_report_names_the_rows_left_out_and_says_nothing_when_there_are_none
 
     assert "2 rows left out with your agreement: rows 4, 9." in report_markdown(summary.model_copy(update={"run": left_out}), {})
     assert "left out" not in report_markdown(summary, {})
+
+
+def _with_nickname_matches(count: int) -> RosterComparisonSummary:
+    matches = [
+        NicknameMatch(jurisdiction_ocdid=_BARRE, uploaded_name=f"Bob {n}", civicpatch_name=f"Robert {n}") for n in range(count)
+    ]
+    return _summary(_RATES, []).model_copy(update={"nickname_matches": matches})
+
+
+@pytest.mark.unit
+def test_the_report_lists_nickname_matches_and_leaves_the_section_out_when_there_are_none():
+    report = report_markdown(_with_nickname_matches(1), {_BARRE: "Barre"})
+
+    assert "### Matched by nickname" in report
+    assert "| Bob 0 | Robert 0 | Barre |" in report
+    assert "nickname" not in report_markdown(_with_nickname_matches(0), {})
+
+
+@pytest.mark.unit
+def test_the_report_caps_its_nickname_list_and_counts_the_rest():
+    report = report_markdown(_with_nickname_matches(MAX_NICKNAME_MATCHES_LISTED + 3), {})
+
+    assert f"| Bob {MAX_NICKNAME_MATCHES_LISTED - 1} |" in report
+    assert f"| Bob {MAX_NICKNAME_MATCHES_LISTED} |" not in report
+    assert "And 3 more." in report
 
 
 @pytest.mark.unit

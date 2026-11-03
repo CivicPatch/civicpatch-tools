@@ -11,6 +11,7 @@ from schemas.roster_comparisons import (
     FieldLevel,
     JurisdictionComparison,
     JurisdictionRates,
+    NicknameMatch,
     PersonComparison,
     PersonOutcome,
     RosterComparison,
@@ -187,6 +188,25 @@ async def get_roster_comparison_organizations(run_id: str) -> list[RunOrganizati
         )
         rows = await cur.fetchall()
     return [RunOrganization.model_validate(row) for row in rows]
+
+
+async def get_roster_comparison_nickname_matches(run_id: str) -> list[NicknameMatch]:
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor(row_factory=dict_row) as cur:
+        await cur.execute(
+            """
+            SELECT jurisdiction_ocdid,
+                   comparison -> 'uploaded' ->> 'name' AS uploaded_name,
+                   comparison ->> 'person_name' AS civicpatch_name
+            FROM roster_comparison_people
+            WHERE run_id = %s
+              AND comparison @> '{"matched_by_nickname": true}'
+            ORDER BY jurisdiction_ocdid, position
+            """,
+            (run_id,),
+        )
+        rows = await cur.fetchall()
+    return [NicknameMatch.model_validate(row) for row in rows]
 
 
 _IN_RUN = """EXISTS (

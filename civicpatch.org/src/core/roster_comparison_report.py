@@ -5,6 +5,7 @@ from core.roster_comparison_refusal import row_numbers
 from schemas.roster_comparisons import ComparedField, ComparisonRates, RosterComparisonSummary
 
 MAX_ORGANIZATIONS_NAMED = 8
+MAX_NICKNAME_MATCHES_LISTED = 20
 
 FIELD_NAMES = {
     ComparedField.ROLE: "Role",
@@ -21,6 +22,7 @@ def report_markdown(summary: RosterComparisonSummary, names: dict[str, str]) -> 
         _heading(summary),
         _people(summary.run.rates),
         _fields(summary.run.rates),
+        _nickname_matches(summary, names),
         _worth_a_look(summary, names),
         f"[Open the comparison]({summary.page_url})",
     ]
@@ -90,6 +92,21 @@ def _fields(rates: ComparisonRates) -> str:
         f"({_percent(rates.people_with_conflicts, matched)}) conflict in at least one field. "
         "A person can conflict in more than one field.",
     ]
+    return "\n".join(lines)
+
+
+def _nickname_matches(summary: RosterComparisonSummary, names: dict[str, str]) -> str:
+    matches = summary.nickname_matches
+    if not matches:
+        return ""
+    lines = ["### Matched by nickname", "| Your data | civicpatch | Jurisdiction |", "|---|---|---|"]
+    lines += [
+        f"| {match.uploaded_name} | {match.civicpatch_name} | {names.get(match.jurisdiction_ocdid, match.jurisdiction_ocdid)} |"
+        for match in matches[:MAX_NICKNAME_MATCHES_LISTED]
+    ]
+    not_listed = len(matches) - MAX_NICKNAME_MATCHES_LISTED
+    if not_listed > 0:
+        lines += ["", f"And {not_listed} more."]
     return "\n".join(lines)
 
 

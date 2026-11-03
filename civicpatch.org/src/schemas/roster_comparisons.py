@@ -221,6 +221,7 @@ class PersonComparison(BaseModel):
     uploaded: UploadedRow | None = None
     person_id: str | None = None
     person_name: str | None = None
+    matched_by_nickname: bool = False
     candidates: list[Candidate] = Field(default_factory=list)
     fields: dict[ComparedField, FieldComparison] = Field(default_factory=dict)
     warnings: list[RowWarning] = Field(default_factory=list)
@@ -367,6 +368,12 @@ class RunJurisdiction(BaseModel):
     compared: bool = Field(description="Whether the uploaded data has rows for it; without any, it is not compared.")
 
 
+class NicknameMatch(BaseModel):
+    jurisdiction_ocdid: str
+    uploaded_name: str
+    civicpatch_name: str
+
+
 class RosterComparisonSummary(BaseModel):
     run: RosterComparisonRun
     page_url: str
@@ -377,6 +384,7 @@ class RosterComparisonSummary(BaseModel):
     compared_organizations: list[str] = Field(
         description="The organizations these counts compare: the ones asked for, else every one with a match."
     )
+    nickname_matches: list[NicknameMatch] = Field(description="Matched people whose names differ by a nickname.")
 
 
 class FieldFilter(StrEnum):
