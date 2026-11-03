@@ -103,6 +103,7 @@ async def run_prompt(
     chunk_index: int | None = None,
     chunk_count: int | None = None,
     max_output_tokens: int = _MAX_OUTPUT_TOKENS,
+    not_retried: tuple[type[Exception], ...] = (),
 ):
     logger = get_pipeline_run_logger(jurisdiction_ocdid)
     logger.info("Running OpenRouter prompt")
@@ -262,7 +263,7 @@ async def run_prompt(
             return await loop.run_in_executor(None, execute)
 
     start_time = time.time()
-    result = await with_retry(logger, execute_async)
+    result = await with_retry(logger, execute_async, not_retried=not_retried)
     end_time = time.time()
     logger.info(f"open_router LLM call took {end_time - start_time:.2f} seconds")
     return result
