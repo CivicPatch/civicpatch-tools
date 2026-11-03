@@ -7,6 +7,7 @@ import database.roster_comparison_drafts as database
 import services.roster_comparison as runs
 from schemas.roster_comparisons import (
     MAX_ROWS,
+    DraftFinish,
     IncomingRow,
     ResolvedUpload,
     RosterComparisonCreated,
@@ -51,14 +52,14 @@ async def add_draft_rows(draft_id: str, rows: list[IncomingRow], owner_user_id: 
     raise DraftTooLarge()
 
 
-async def finish_draft(draft_id: str, owner_user_id: str, corrections: list[str]) -> RosterComparisonCreated:
+async def finish_draft(draft_id: str, owner_user_id: str, finish: DraftFinish) -> RosterComparisonCreated:
     draft = await database.get_roster_comparison_draft(draft_id, owner_user_id)
     if draft is None:
         raise DraftNotFound(draft_id)
     header, rows, _ = draft
     if not rows:
         raise DraftIsEmpty()
-    upload = ResolvedUpload(**header.model_dump(), corrections=corrections, rows=rows)
+    upload = ResolvedUpload(**header.model_dump(), **finish.model_dump(), rows=rows)
     state_ocdids = ocdids_of(await get_state_jurisdictions(header.state, header.level))
     run_id = await runs.compare_and_save(upload, state_ocdids, owner_user_id)
     await database.delete_roster_comparison_draft(draft_id)

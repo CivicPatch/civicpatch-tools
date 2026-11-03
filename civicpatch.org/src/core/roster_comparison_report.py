@@ -1,6 +1,7 @@
 """A saved run as Markdown, so every agent reports the same numbers, word for word."""
 
 from core.roster_comparison_rates import civicpatch_has_no_one
+from core.roster_comparison_refusal import row_numbers
 from schemas.roster_comparisons import ComparedField, ComparisonRates, RosterComparisonSummary
 
 MAX_ORGANIZATIONS_NAMED = 8
@@ -35,6 +36,8 @@ def _heading(summary: RosterComparisonSummary) -> str:
         f"**{_count(len(summary.jurisdictions), 'jurisdiction')}** compared, from {_count(rows, 'row')}. "
         f"{_count(run.jurisdictions_not_named, 'jurisdiction')} of the state had no rows and were not compared.",
     ]
+    if run.left_out_rows:
+        lines.append(f"{_count(len(run.left_out_rows), 'row')} left out with your agreement: rows {row_numbers(run.left_out_rows)}.")
     if summary.organizations:
         lines.append(f"Organizations compared: {_organizations_named(summary.compared_organizations)}.")
     return "\n".join(lines)

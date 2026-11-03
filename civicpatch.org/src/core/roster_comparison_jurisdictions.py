@@ -27,10 +27,10 @@ def ocdids_of(jurisdictions: list[StateJurisdiction]) -> set[str]:
 def resolve_row(row: IncomingRow, jurisdictions: list[StateJurisdiction], state: str) -> UploadedRow | RejectedRow:
     ocdid = row.jurisdiction_ocdid
     if not ocdid:
-        return _by_geoid_and_name(row, jurisdictions)
+        return _resolve_by_geoid_and_name(row, jurisdictions)
     if any(jurisdiction.jurisdiction_ocdid == ocdid for jurisdiction in jurisdictions):
         return _resolved_row(row, ocdid)
-    return _rejected(row, _reason_for_unknown_ocdid(ocdid, state), [])
+    return _rejected_row(row, _reason_for_unknown_ocdid(ocdid, state), [])
 
 
 def _reason_for_unknown_ocdid(ocdid: str, state: str) -> RejectedReason:
@@ -39,31 +39,31 @@ def _reason_for_unknown_ocdid(ocdid: str, state: str) -> RejectedReason:
     return RejectedReason.OUTSIDE_STATE
 
 
-def _by_geoid_and_name(row: IncomingRow, jurisdictions: list[StateJurisdiction]) -> UploadedRow | RejectedRow:
-    by_geoid = _with_geoid(row.geoid or "", jurisdictions)
+def _resolve_by_geoid_and_name(row: IncomingRow, jurisdictions: list[StateJurisdiction]) -> UploadedRow | RejectedRow:
+    by_geoid = _jurisdictions_with_geoid(row.geoid or "", jurisdictions)
     name = row.jurisdiction_name or ""
-    by_name = _with_name(name, jurisdictions)
+    by_name = _jurisdictions_matching_name(name, jurisdictions)
     if row.geoid and not by_geoid:
-        return _rejected(row, RejectedReason.UNKNOWN_GEOID, by_name)
+        return _rejected_row(row, RejectedReason.UNKNOWN_GEOID, by_name)
     if name and not by_name:
-        same_name = _with_same_name(name, jurisdictions)
+        same_name = _jurisdictions_ignoring_type(name, jurisdictions)
         others = [jurisdiction for jurisdiction in by_geoid if jurisdiction not in same_name]
-        return _rejected(row, RejectedReason.UNKNOWN_NAME, [*same_name, *others])
+        return _rejected_row(row, RejectedReason.UNKNOWN_NAME, [*same_name, *others])
     if not (row.geoid and name):
-        return _the_only_one(row, by_geoid or by_name)
+        return _resolved_or_ambiguous(row, by_geoid or by_name)
     in_both =[jurisdiction for jurisdiction in by_geoid if jurisdiction in by_name]
     if not in_both:
-        return _rejected(row, RejectedReason.AMBIGUOUS, [*by_geoid, *by_name])
-    return _the_only_one(row, in_both)
+        return _rejected_row(row, RejectedReason.AMBIGUOUS, [*by_geoid, *by_name])
+    return _resolved_or_ambiguous(row, in_both)
 
 
-def _the_only_one(row: IncomingRow, candidates: list[StateJurisdiction]) -> UploadedRow | RejectedRow:
+def _resolved_or_ambiguous(row: IncomingRow, candidates: list[StateJurisdiction]) -> UploadedRow | RejectedRow:
     if len(candidates) == 1:
         return _resolved_row(row, candidates[0].jurisdiction_ocdid)
-    return _rejected(row, RejectedReason.AMBIGUOUS, candidates)
+    return _rejected_row(row, RejectedReason.AMBIGUOUS, candidates)
 
 
-def _with_geoid(geoid: str, jurisdictions: list[StateJurisdiction]) -> list[StateJurisdiction]:
+def _jurisdictions_with_geoid(geoid: str, jurisdictions: list[StateJurisdiction]) -> list[StateJurisdiction]:
     # Blank after normalizing would otherwise match every jurisdiction with no geoid.
     wanted = normalize_geoid(geoid)
     if not wanted:
@@ -71,13 +71,13 @@ def _with_geoid(geoid: str, jurisdictions: list[StateJurisdiction]) -> list[Stat
     return [jurisdiction for jurisdiction in jurisdictions if normalize_geoid(jurisdiction.geoid) == wanted]
 
 
-def _with_name(name: str, jurisdictions: list[StateJurisdiction]) -> list[StateJurisdiction]:
+def _jurisdictions_matching_name(name: str, jurisdictions: list[StateJurisdiction]) -> list[StateJurisdiction]:
     """Barre fits Barre city and Barre town; Barre City only the city; Fayston City not Fayston town."""
-    same_name = _with_same_name(name, jurisdictions)
+    same_name = _jurisdictions_ignoring_type(name, jurisdictions)
     return [jurisdiction for jurisdiction in same_name if _types_agree(name, jurisdiction.name)]
 
 
-def _with_same_name(name: str, jurisdictions: list[StateJurisdiction]) -> list[StateJurisdiction]:
+def _jurisdictions_ignoring_type(name: str, jurisdictions: list[StateJurisdiction]) -> list[StateJurisdiction]:
     wanted = _distinguishing_words(name)
     if not wanted:
         return []
@@ -111,7 +111,7 @@ def _resolved_row(row: IncomingRow, ocdid: str) -> UploadedRow:
     return UploadedRow.model_validate({**row.model_dump(), "jurisdiction_ocdid": ocdid})
 
 
-def _rejected(row: IncomingRow, reason: RejectedReason, candidates: list[StateJurisdiction]) -> RejectedRow:
+def _rejected_row(row: IncomingRow, reason: RejectedReason, candidates: list[StateJurisdiction]) -> RejectedRow:
     return RejectedRow(
         source_row=row.source_row,
         jurisdiction_ocdid=row.jurisdiction_ocdid,

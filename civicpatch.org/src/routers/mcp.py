@@ -122,8 +122,8 @@ def build_server(instance_url: str) -> MCPServer:
     server.add_tool(
         finish_roster_comparison,
         description=(
-            "Compare a draft's rows with civicpatch and keep the run. Returns its id, page_url and rates. "
-            "corrections: everything you changed, citing row numbers."
+            "Compare a draft's rows with civicpatch and keep the run. Returns its id, page_url, rates and report markdown. "
+            "corrections: everything you changed, citing row numbers. left_out_rows: row numbers the user agreed to leave out."
         ),
     )
     return server
@@ -256,10 +256,12 @@ async def add_roster_comparison_rows(draft_id: str, rows: list[IncomingRow], ctx
         raise ToolError(str(error)) from error
 
 
-async def finish_roster_comparison(draft_id: str, corrections: list[str], ctx: Context) -> dict:
+async def finish_roster_comparison(
+    draft_id: str, corrections: list[str], ctx: Context, left_out_rows: list[int] | None = None
+) -> dict:
     try:
-        finish = DraftFinish(corrections=corrections)
-        return (await drafts.finish_draft(draft_id, caller_id(ctx), finish.corrections)).model_dump(mode="json")
+        finish = DraftFinish(corrections=corrections, left_out_rows=left_out_rows or [])
+        return (await drafts.finish_draft(draft_id, caller_id(ctx), finish)).model_dump(mode="json")
     except AGENT_REFUSALS as error:
         raise ToolError(str(error)) from error
 

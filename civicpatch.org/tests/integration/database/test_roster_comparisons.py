@@ -89,7 +89,7 @@ def _comparison() -> RosterComparison:
     barre_rates = ComparisonRates(outcomes=OutcomeCounts(matched=3, only_in_civicpatch=1))
     return RosterComparison(
         state="zz",
-        level="local",
+        level="local", left_out_rows=[],
         source_columns={"name": ["Official"]},
         corrections=["212 names reordered"],
         rates=barre_rates,
