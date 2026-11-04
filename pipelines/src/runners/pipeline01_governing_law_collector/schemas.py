@@ -26,10 +26,40 @@ class GoverningLawCollectorConfig(BaseModel):
     """What cp.org answers at `/pipeline_runs/{id}/collector_config` for this kind."""
 
     name: str
+    # The place's own site, where the search finder looks for its charter; many places have none.
+    url: Optional[str] = None
     # Read by the engine, as the scrape's is; None inherits `pipeline.yml`'s default.
     pipeline_run_cap_usd: Optional[Decimal] = None
     # The state's merged block; None for a state that has none yet, which finds nothing.
     governing_law: Optional[GoverningLawConfig]
+
+
+class TriedReason(StrEnum):
+    REFUSED = "refused"
+    OFF_LIMITS = "off_limits"
+    FAILED = "failed"
+    NOT_A_CHARTER = "not_a_charter"
+    # The place's own site, crawled to its budget without a charter.
+    SITE_CRAWLED = "site_crawled"
+
+
+class TriedUrl(BaseModel):
+    url: str
+    reason: TriedReason
+
+
+class Missing(StrEnum):
+    CHARTER = "charter"
+    EVERYTHING = "everything"
+
+
+class GoverningLawNotFound(BaseModel):
+    """What the `governing_law_not_found` issue tells the human: what is missing, where the
+    search looked and why each url was rejected, and which of the answer's urls the run skipped."""
+
+    missing: Missing
+    tried: List[TriedUrl]
+    skipped_urls: List[str]
 
 
 class FinderAnswer(BaseModel):
@@ -40,6 +70,8 @@ class FinderAnswer(BaseModel):
     classification: Optional[str]
     charter_urls: List[str] = []
     general_law_urls: List[str] = []
+    # Urls the search rejected, for the issue when nothing confirms; empty for the other finders.
+    tried: List[TriedUrl] = []
 
     @property
     def urls(self) -> List[str]:

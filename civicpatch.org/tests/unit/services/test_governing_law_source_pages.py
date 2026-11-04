@@ -23,7 +23,7 @@ MODULE = "services.governing_law_source_pages"
 _OCDID = "ocd-jurisdiction/country:us/state:vt/place:stowe/government"
 _URL = "https://legislature.vermont.gov/statutes/fullchapter/24APPENDIX/153"
 _TEXT = "# Chapter 153\n\n§ 1. Corporate existence retained.\n"
-_ROW = GoverningLawRow(jurisdiction_ocdid=_OCDID, name="Stowe town", governing_law=None)
+_ROW = GoverningLawRow(jurisdiction_ocdid=_OCDID, name="Stowe town", url=None, governing_law=None)
 _PAGE = GoverningLawSourcePage(
     id="row-1", jurisdiction_ocdid=_OCDID, source_url=_URL, page_hash="abc", cache_path="governing_law/abc.md",
     collected_at=datetime(2026, 10, 18, tzinfo=timezone.utc),

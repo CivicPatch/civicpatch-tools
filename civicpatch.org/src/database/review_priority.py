@@ -22,6 +22,8 @@ _ISSUE_WEIGHT = {
     PipelineIssueType.COST_CAP_REACHED: 10,     # the run stopped before it had the roster
     PipelineIssueType.USER_REPORTED: 8,         # a person flagged it
     PipelineIssueType.PIPELINE_ERROR: 5,
+    # Filed by a governing-law run, which mints no changeset, so it never sorts the pool.
+    PipelineIssueType.GOVERNING_LAW_NOT_FOUND: 5,
 }
 # A stored issue can still name a type since renamed out of the enum.
 _UNKNOWN_ISSUE = 1

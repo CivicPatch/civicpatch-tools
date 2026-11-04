@@ -5,6 +5,7 @@ export const ISSUE_TYPE = {
   DOMAIN_NAVIGATION_ERROR: "domain_navigation_error",
   USER_REPORTED: "user_reported",
   COST_CAP_REACHED: "cost_cap_reached",
+  GOVERNING_LAW_NOT_FOUND: "governing_law_not_found",
 };
 
 export const KNOWN_ISSUE_TYPES = [
@@ -14,4 +15,5 @@ export const KNOWN_ISSUE_TYPES = [
   { value: ISSUE_TYPE.DOMAIN_NAVIGATION_ERROR, label: "Navigation error" },
   { value: ISSUE_TYPE.USER_REPORTED, label: "User reported" },
   { value: ISSUE_TYPE.COST_CAP_REACHED, label: "Cost cap reached" },
+  { value: ISSUE_TYPE.GOVERNING_LAW_NOT_FOUND, label: "Governing law not found" },
 ];

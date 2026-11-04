@@ -10,6 +10,8 @@ class GoverningLawRow(BaseModel):
 
     jurisdiction_ocdid: str
     name: str
+    # The place's own site from the registry; many places have none.
+    url: str | None
     governing_law: GoverningLaw | None
 
 
@@ -19,7 +21,7 @@ async def get_governing_law_row(jurisdiction_ocdid: str) -> GoverningLawRow | No
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
-            SELECT jurisdiction_ocdid, data->>'name', extras_governing_law
+            SELECT jurisdiction_ocdid, data->>'name', data->>'url', extras_governing_law
             FROM jurisdictions
             WHERE jurisdiction_ocdid = %s AND status = 'active'
             """,
@@ -31,7 +33,8 @@ async def get_governing_law_row(jurisdiction_ocdid: str) -> GoverningLawRow | No
     return GoverningLawRow(
         jurisdiction_ocdid=row[0],
         name=row[1] or "",
-        governing_law=GoverningLaw.model_validate(row[2]) if row[2] is not None else None,
+        url=row[2] or None,
+        governing_law=GoverningLaw.model_validate(row[3]) if row[3] is not None else None,
     )
 
 

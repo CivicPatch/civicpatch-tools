@@ -28,7 +28,11 @@ GOVERNING_LAW_COLLECTOR_TRANSITIONS: Transitions = {
         GoverningLawCollectorStep.FETCH_SOURCE,
         GoverningLawCollectorStep.WRITE_GOVERNING_LAW,
     }),
-    GoverningLawCollectorStep.WRITE_GOVERNING_LAW: frozenset({PipelineRunStatus.SUCCESS}),
+    GoverningLawCollectorStep.WRITE_GOVERNING_LAW: frozenset({
+        PipelineRunStatus.SUCCESS,
+        # What was stored is written either way; the run fails when it is not what governs the place.
+        PipelineRunStatus.SEND_ERROR,
+    }),
     PipelineRunStatus.SEND_ERROR: frozenset({PipelineRunStatus.ERROR}),
     PipelineRunStatus.SUCCESS: frozenset(),
     PipelineRunStatus.ERROR: frozenset(),

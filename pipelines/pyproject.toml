@@ -43,6 +43,7 @@ dependencies = [
     "pip>=26.0.1",
     "shared",
     "semantic-text-splitter>=0.20.0,<1.0.0",
+    "pypdfium2 (>=5.14.0,<6.0.0)",
 ]
 
 [tool.pytest.ini_options]

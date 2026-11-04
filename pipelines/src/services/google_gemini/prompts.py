@@ -143,6 +143,28 @@ def county_government_form_prompt(
     )
 
 
+# charter_terms: what the state calls a charter ("Charter", "Home Rule Charter"), so the
+# question names the document as the place's own site does.
+# url: the place's site when known, a hint toward the right domain; None otherwise.
+def charter_search_prompt(jurisdiction_ocdid: str, name: str, charter_terms: list[str], url: str | None) -> str:
+    terms = " or ".join(f'"{term}"' for term in charter_terms)
+    site = f"\n    Its official website is {url}." if url else ""
+    return f"""
+    Find the current municipal or county charter of {_location(jurisdiction_ocdid, name)}: the
+    document the state calls a {terms}, which sets up its government and offices.{site}
+
+    Return the URL of the charter's full text itself (a PDF or a web page holding the text), not a
+    page that only links to it, and not a code or ordinance that is not the charter. Prefer the
+    government's own site or the official code publisher. If the place has no charter online, answer
+    an empty list.
+
+    Answer only with JSON:
+    ```json
+    {{"charter_urls": ["..."]}}
+    ```
+    """
+
+
 def _location(jurisdiction_ocdid: str, name: str) -> str:
     county = id_utils.parse_jurisdiction_ocdid(jurisdiction_ocdid).county
     county_str = f"{county.replace('_', ' ').title()} County" if county else None

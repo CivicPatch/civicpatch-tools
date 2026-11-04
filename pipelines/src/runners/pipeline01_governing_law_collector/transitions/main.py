@@ -5,10 +5,10 @@ from datetime import datetime, timezone
 
 import httpx
 import services.civicpatch_api as civicpatch_api
-from runners.pipeline01_governing_law_collector import converters, fetchers, finders
+from runners.pipeline01_governing_law_collector import converters, fetchers, finders, issues
 from ..schemas import GoverningLawCollectorContext, GoverningLawCollectorState, GoverningLawCollectorStep
 from shared.schemas import GoverningLaw, GoverningLawKind, JurisdictionExtras, PipelineRunLimits
-from shared.utils.statuses import PipelineRunStatus
+from shared.utils.statuses import PipelineIssueType, PipelineRunStatus
 from utils import cost_utils
 from utils.log_utils import PipelineRunLogger
 
@@ -31,7 +31,7 @@ async def start(_limits: PipelineRunLimits, _logger: PipelineRunLogger, context:
 
 
 async def find_source(_limits: PipelineRunLimits, logger: PipelineRunLogger, context: GoverningLawCollectorContext, _client: httpx.AsyncClient) -> Step:
-    answer = await finders.find(context.data.config)
+    answer = await finders.find(context.data.config, context.pipeline_run_id, context.data.jurisdiction_ocdid, logger)
     logger.info(f"{answer.found_by}: {len(answer.charter_urls)} charter url(s), {len(answer.general_law_urls)} general law url(s)")
     next_context = _next(context, answer=answer, pending_urls=answer.urls)
     return next_context, GoverningLawCollectorStep.FETCH_SOURCE if answer.urls else GoverningLawCollectorStep.WRITE_GOVERNING_LAW
@@ -48,6 +48,9 @@ async def fetch_source(_limits: PipelineRunLimits, logger: PipelineRunLogger, co
         page = await fetchers.fetch(url, by_browser=context.data.escalate)
     except fetchers.RefusedByHost as refused:
         logger.warning(f"{url}: refused with {refused.status_code}, not retried")
+        return _after_url(context, skipped_urls=[*context.data.skipped_urls, url])
+    except fetchers.OffLimits as off_limits:
+        logger.warning(f"{off_limits}; skipped")
         return _after_url(context, skipped_urls=[*context.data.skipped_urls, url])
     except httpx.HTTPError as error:
         logger.warning(f"{url}: failed, {type(error).__name__}: {error}; skipped")
@@ -86,12 +89,17 @@ def _recorded(context: GoverningLawCollectorContext, url: str, source_page_id: s
     return _after_url(context, general_law_source_page_ids=[*context.data.general_law_source_page_ids, source_page_id])
 
 
-async def write_governing_law(_limits: PipelineRunLimits, _logger: PipelineRunLogger, context: GoverningLawCollectorContext, client: httpx.AsyncClient) -> Step:
+async def write_governing_law(_limits: PipelineRunLimits, logger: PipelineRunLogger, context: GoverningLawCollectorContext, client: httpx.AsyncClient) -> Step:
     governing_law = governing_law_from(context)
     await civicpatch_api.patch_jurisdiction_extras(
         client, context.data.jurisdiction_ocdid, JurisdictionExtras(extras_governing_law=governing_law)
     )
-    return _next(context, governing_law=governing_law), PipelineRunStatus.SUCCESS
+    not_found = issues.governing_law_not_found(context.data)
+    if not_found is None:
+        return _next(context, governing_law=governing_law), PipelineRunStatus.SUCCESS
+    # A failed run, until every run sends its context and cp.org files the issue from it.
+    logger.warning(f"{PipelineIssueType.GOVERNING_LAW_NOT_FOUND}: {not_found.missing} missing, tried {[tried.url for tried in not_found.tried]}")
+    return _next(context, governing_law=governing_law), PipelineRunStatus.SEND_ERROR
 
 
 async def send_error(_limits: PipelineRunLimits, _logger: PipelineRunLogger, context: GoverningLawCollectorContext, _client: httpx.AsyncClient) -> Step:

@@ -54,7 +54,7 @@ async def check(config_url: ConfigUrl) -> UrlCheck:
         markdown = converters.to_markdown(page)
     except RefusedByHost as error:
         return UrlCheck(config_url=config_url, status=UrlStatus.REFUSED, detail=str(error.status_code))
-    except (httpx.HTTPError, converters.UnsupportedContentType) as error:
+    except (httpx.HTTPError, plain.OffLimits, converters.UnsupportedContentType) as error:
         return UrlCheck(config_url=config_url, status=UrlStatus.FAILED, detail=f"{type(error).__name__}: {error}")
     status = UrlStatus.NEARLY_EMPTY if converters.is_nearly_empty(markdown) else UrlStatus.OK
     return UrlCheck(config_url=config_url, status=status, detail=f"{len(markdown.strip())} chars")

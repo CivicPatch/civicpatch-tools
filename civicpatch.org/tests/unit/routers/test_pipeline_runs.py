@@ -447,14 +447,14 @@ def _as(client, role):
 
 @pytest.mark.unit
 def test_a_collector_run_is_told_its_kinds_config_and_its_cap(service_client):
-    collector_config = AsyncMock(return_value=CollectorConfig(name="Stowe town", governing_law=None))
+    collector_config = AsyncMock(return_value=CollectorConfig(name="Stowe town", url="https://townofstowevt.org", governing_law=None))
     with patch("routers.api.pipeline_runs.get_pipeline_run", new_callable=AsyncMock, return_value={
         "jurisdiction_ocdid": TEST_OCDID, "pipeline_run_cap_usd": "0.5000", "kind": PipelineRunKind.GOVERNING_LAW_COLLECTOR,
     }), patch.dict("routers.api.pipeline_runs.COLLECTOR_CONFIGS", {PipelineRunKind.GOVERNING_LAW_COLLECTOR: collector_config}):
         response = service_client.get(f"/pipeline_runs/{TEST_CHANGESET_ID}/collector_config")
 
     assert response.status_code == 200, response.text
-    assert response.json() == {"name": "Stowe town", "governing_law": None, "pipeline_run_cap_usd": "0.5000"}
+    assert response.json() == {"name": "Stowe town", "url": "https://townofstowevt.org", "governing_law": None, "pipeline_run_cap_usd": "0.5000"}
     collector_config.assert_awaited_once_with(TEST_OCDID)
 
 
