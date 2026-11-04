@@ -48,19 +48,24 @@ _LOG_JURISDICTION = "ocd-jurisdiction/country:us/state:vt/place:eval/government"
 
 
 def load_cases(base_dir: str) -> list[dict]:
+    """`EVAL_CASE_PREFIX` keeps only the cases whose folder starts with it (`or_`): one state at a time."""
+    prefix = os.getenv("EVAL_CASE_PREFIX", "")
     cases = []
     for case_dir in sorted(pathlib.Path(base_dir).iterdir()):
         expected_path = case_dir / "expected.yml"
-        if expected_path.exists():
+        if expected_path.exists() and case_dir.name.startswith(prefix):
             expected = yaml.safe_load(expected_path.read_text())
             cases.append({"id": case_dir.name, "case_path": str(case_dir), "expected": expected, "law": _law((case_dir / "input.md").read_text(), expected["source_url"])})
     return cases
 
 
 def _law(text: str, source_url: str) -> str:
+    """As SELECT_SECTIONS reads: whole when it fits or its publisher has no section format."""
     if sections.fits_whole(text):
         return text
     found = sections.split_sections([sections.GoverningLawPage(id="eval", source_url=source_url, text=text)])
+    if not found:
+        return text
     return "# Charter\n\n" + sections.joined(sections.keyword_sections(found))
 
 
@@ -206,7 +211,9 @@ def _write_report(results_by_case: dict[str, list[dict]], elapsed_seconds: float
         "roles_right": sum(result["right"] for result in roles) / len(roles),
         "single_ask_right": sum(sum(result["each_right"]) for result in roles) / (len(roles) * ASKS_PER_QUESTION),
         "agreement": sum(result["agreed"] for result in roles) / len(roles),
-        "presiding_gold_right": f"{sum(r['right'] for r in roles if r['presiding'])} of {sum(r['presiding'] for r in roles)}",
+        # Two numbers, not "35 of 35": the dashboard's HistoryRun.scores holds floats only.
+        "presiding_gold_right": sum(r["right"] for r in roles if r["presiding"]),
+        "presiding_gold_asked": sum(r["presiding"] for r in roles),
         "roles_re_asked": sum(result["rounds"] > 1 for result in every_role),
         "candidates_asked": len(candidates),
         "candidates_verified": sum(not result["right"] for result in candidates),
@@ -266,5 +273,5 @@ async def test_governing_role_eval():
 
     summary = _write_report({case["id"]: result for case, result in zip(_eval_cases, case_results)}, elapsed_seconds)
     print(f"roles right {summary['roles_right']:.0%}, one ask right {summary['single_ask_right']:.0%}, agreement {summary['agreement']:.0%}")
-    print(f"presiding in one question: gold {summary['presiding_gold_right']} right; {summary['candidates_verified']} of {summary['candidates_asked']} candidates came back as a verified post, listed under candidates_to_read")
+    print(f"presiding in one question: gold {summary['presiding_gold_right']} of {summary['presiding_gold_asked']} right; {summary['candidates_verified']} of {summary['candidates_asked']} candidates came back as a verified post, listed under candidates_to_read")
     assert summary["roles_right"] == 1.0, f"Roles answered wrong: see {EVALS_DIR}/{MODEL_NAME}-eval-report.yml"

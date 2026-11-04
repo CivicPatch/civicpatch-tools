@@ -65,7 +65,8 @@ runs:
     agreement: 0.9798657718120806
     candidates_asked: 625
     candidates_verified: 6
-    presiding_gold_right: 35 of 35
+    presiding_gold_right: 35
+    presiding_gold_asked: 35
     roles_right: 0.9932885906040269
     single_ask_right: 0.959731543624161
   cases:
@@ -124,7 +125,8 @@ runs:
     agreement: 0.9731543624161074
     candidates_asked: 625
     candidates_verified: 6
-    presiding_gold_right: 35 of 35
+    presiding_gold_right: 35
+    presiding_gold_asked: 35
     roles_right: 0.9932885906040269
     single_ask_right: 0.9530201342281879
   cases:
@@ -183,7 +185,8 @@ runs:
     agreement: 0.9671052631578947
     candidates_asked: 625
     candidates_verified: 6
-    presiding_gold_right: 36 of 37
+    presiding_gold_right: 36
+    presiding_gold_asked: 37
     roles_re_asked: 2
     roles_right: 0.9868421052631579
     single_ask_right: 0.944078947368421
@@ -244,7 +247,8 @@ runs:
     agreement: 0.9802631578947368
     candidates_asked: 625
     candidates_verified: 4
-    presiding_gold_right: 36 of 36
+    presiding_gold_right: 36
+    presiding_gold_asked: 36
     roles_re_asked: 2
     roles_right: 1.0
     single_ask_right: 0.9736842105263158
@@ -305,7 +309,8 @@ runs:
     agreement: 0.9802631578947368
     candidates_asked: 625
     candidates_verified: 5
-    presiding_gold_right: 36 of 36
+    presiding_gold_right: 36
+    presiding_gold_asked: 36
     roles_re_asked: 2
     roles_right: 0.993421052631579
     single_ask_right: 0.9572368421052632
@@ -355,4 +360,26 @@ runs:
     vt_ch289: 1.0
     vt_ch291: 1.0
     vt_johnson_village: 1.0
+  dispositions: {}
+- timestamp: '2026-11-04T00:56:25+00:00'
+  provider: open_router
+  model: deepseek/deepseek-v4-flash
+  prompt_sha256: 78237d1a9cdf
+  cost_usd: 0.145213488
+  elapsed_seconds: 238.18
+  scores:
+    agreement: 0.9696969696969697
+    candidates_asked: 6
+    candidates_verified: 1
+    presiding_gold_right: 5
+    presiding_gold_asked: 7
+    roles_re_asked: 5
+    roles_right: 0.7878787878787878
+    single_ask_right: 0.6515151515151515
+  cases:
+    or_corvallis: 0.8333333333333334
+    or_lakeview: 1.0
+    or_lane: 0.3333333333333333
+    or_malheur: 1.0
+    or_portland: 1.0
   dispositions: {}

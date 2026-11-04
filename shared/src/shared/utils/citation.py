@@ -18,10 +18,11 @@ _ELISION = re.compile(r"\s*(?:\[\s*(?:\.\.\.|…)\s*\]|\.\.\.|…)\s*")
 WIDEST_QUOTE_CHARS = 1500
 
 METHOD_WORDS: dict[SelectionMethod, tuple[str, ...]] = {
-    SelectionMethod.ELECTED_BY_VOTERS: ("elect", "elected", "election", "elections", "chosen", "vote"),
+    SelectionMethod.ELECTED_BY_VOTERS: ("elect", "elected", "election", "elections", "elective", "chosen", "vote"),
+    # "designate": Oregon charters' word for a board naming its own chair (Lane Sec. 14).
     SelectionMethod.ELECTED_BY_MEMBERS: (
-        "elect", "elected", "election", "chosen", "vote", "from its number", "from among its members",
-        "from among the board", "from among themselves", "from among their number",
+        "elect", "elected", "election", "chosen", "vote", "designate", "designated", "designates",
+        "from its number", "from among its members", "from among the board", "from among themselves", "from among their number",
     ),
     SelectionMethod.APPOINTED: ("appoint", "appointed", "appointment", "appoints", "appointive"),
 }

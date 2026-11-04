@@ -1,0 +1,172 @@
+source_url: https://cdnsm5-hosted.civiclive.com/UserFiles/Servers/Server_3585797/File/Government/County%20Departments/County%20Counsel/Homepage%20Information/HOME%20RULE%20CHARTER%20FOR%20LANE%20COUNTY%2012_3_2024.pdf
+roles:
+- organization_name: Board of County Commissioners
+  role_id: member
+  role_label: Commissioner
+  expected: elected_by_voters
+  presiding: false
+  names:
+  - Commissioner
+  - Member
+  - alder
+  - alderman
+  - aldermen
+  - Alderperson
+  - alderwoman
+  - board of selectmen
+  - board of selectmen member
+  - city alderman
+  - city alderwoman
+  - city commissioner
+  - city council
+  - city council alderman
+  - city council alderwoman
+  - city council member
+  - city councilman
+  - city councilmember
+  - city councilor
+  - city councilwoman
+  - Committee Member
+  - committee person
+  - Committee Woman
+  - committeeman
+  - Committeeperson
+  - committeewoman
+  - Committeewomen
+  - council
+  - council at large
+  - Council Member
+  - council member at-large
+  - council members
+  - council person
+  - council-member
+  - councillor
+  - councilman
+  - councilman-at-large
+  - councilmember
+  - councilmembers
+  - councilmen
+  - councilor
+  - councilperson
+  - councilperson at-large
+  - councilwoman
+  - councilwoman at large
+  - councilwoman-at-large
+  - councilwomen
+  - representative
+  - select board
+  - Select Board Member
+  - select board representative
+  - Select Person
+  - selectboard
+  - selectboard member
+  - selectman
+  - selectmen
+  - Selectperson
+  - selectwoman
+  - town board member
+  - town council
+  - town council member
+  - town council representative
+  - town councilmember
+  - town councilor
+  - township committee member
+  - Township Trustee
+  - Trustee
+  - Trustees
+  - Village Trustee
+- organization_name: Board of County Commissioners
+  role_id: chair
+  role_label: Chair
+  expected: elected_by_members
+  presiding: true
+  names:
+  - Chair
+  - Chairperson
+  - chairman
+  - chairwoman
+  - commissioner director
+  - council chair
+  - council chairman
+  - council chairwoman
+  - town council chair
+- organization_name: Board of County Commissioners
+  role_id: vice-chair
+  role_label: Vice Chair
+  expected: elected_by_members
+  presiding: true
+  names:
+  - Vice Chair
+  - Vice Chairperson
+  - Vice-Chairperson
+  - commissioner deputy director
+  - council vice chair
+  - council vice chairman
+  - council vice chairwoman
+  - council vice-chair
+  - council vice-chairman
+  - council vice-chairwoman
+  - vice chairman
+  - vice chairwoman
+  - vice-chair
+  - vice-chairman
+  - vice-chairwoman
+- organization_name: County Officers
+  role_id: sheriff
+  role_label: Sheriff
+  expected: elected_by_voters
+  presiding: false
+  names:
+  - Sheriff
+  - County Sheriff
+- organization_name: County Officers
+  role_id: assessor
+  role_label: County Assessor
+  expected: elected_by_voters
+  presiding: false
+  names:
+  - County Assessor
+  - Assessor
+  - City Assessor
+  - Township Assessor
+- organization_name: County Officers
+  role_id: clerk
+  role_label: County Clerk
+  expected: appointed
+  presiding: false
+  names:
+  - County Clerk
+  - Clerk
+  - Borough Clerk
+  - City Clerk
+  - Municipal Clerk
+  - Town Clerk
+  - Township Clerk
+  - Village Clerk
+- organization_name: County Officers
+  role_id: treasurer
+  role_label: County Treasurer
+  expected: appointed
+  presiding: false
+  names:
+  - County Treasurer
+  - Treasurer
+  - City Treasurer
+  - Town Treasurer
+  - Township Treasurer
+  - Village Treasurer
+- organization_name: County Officers
+  role_id: surveyor
+  role_label: County Surveyor
+  expected: appointed
+  presiding: false
+  names:
+  - County Surveyor
+  - Surveyor
+- organization_name: County Court
+  role_id: county-judge
+  role_label: County Judge
+  expected: not_established
+  presiding: false
+  names:
+  - County Judge
