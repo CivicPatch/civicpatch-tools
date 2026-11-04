@@ -14,8 +14,11 @@ from runners.pipeline01_governing_law_collector.schemas import (
     GoverningLawCollectorConfig,
     GoverningLawCollectorContext,
     GoverningLawCollectorData,
+    LawKind,
+    LawUrl,
     TriedReason,
     TriedUrl,
+    as_law_urls,
 )
 from runners.pipeline01_governing_law_collector.transitions.graph import (
     GOVERNING_LAW_COLLECTOR_TRANSITIONS,
@@ -38,6 +41,10 @@ _OREGON = GoverningLawConfig.model_validate({
     "charter_terms": ["Charter"],
     "classifications": {"county": {"lsad": ["county"], "governed_by": "charter_else_general_law", "general_law": [_STATUTE]}},
 })
+
+
+def _law(charter: tuple = (), statutes: tuple = ()) -> list[LawUrl]:
+    return [*as_law_urls(list(charter), LawKind.CHARTER), *as_law_urls(list(statutes), LawKind.STATUTE)]
 
 
 def _context(config: GoverningLawCollectorConfig | None = None) -> GoverningLawCollectorContext:
@@ -84,7 +91,7 @@ def test_the_graph_ends_where_every_run_ends_and_every_state_has_a_handler():
 
 @pytest.mark.asyncio
 async def test_a_charter_is_fetched_converted_stored_and_written():
-    answer = FinderAnswer(found_by=FoundBy.STATE_INDEX, classification="town", charter_urls=[_CHARTER])
+    answer = FinderAnswer(found_by=FoundBy.STATE_INDEX, classification="town", law_urls=_law(charter=(_CHARTER,)))
     fetch = AsyncMock(return_value=_html(_CHARTER, _TEXT))
 
     context, api = await _run(answer, fetch)
@@ -113,7 +120,7 @@ async def test_nothing_to_fetch_is_written_as_none_found():
 @pytest.mark.asyncio
 async def test_a_search_that_confirmed_no_charter_writes_the_statutes_it_stored_and_fails():
     tried = [TriedUrl(url="https://www.lanecountyor.gov", reason=TriedReason.SITE_CRAWLED)]
-    answer = FinderAnswer(found_by=FoundBy.SEARCH, classification="county", general_law_urls=[_STATUTE], tried=tried)
+    answer = FinderAnswer(found_by=FoundBy.SEARCH, classification="county", law_urls=_law(statutes=(_STATUTE,)), tried=tried)
     fetch = AsyncMock(side_effect=lambda url, by_browser: _html(url, _TEXT))
 
     with pytest.raises(PipelineRunError) as failed:
@@ -125,7 +132,7 @@ async def test_a_search_that_confirmed_no_charter_writes_the_statutes_it_stored_
 
 @pytest.mark.asyncio
 async def test_a_refusal_skips_that_url_and_is_never_retried_by_browser():
-    answer = FinderAnswer(found_by=FoundBy.STATE_INDEX, classification="town", charter_urls=[_CHARTER], general_law_urls=[_STATUTE])
+    answer = FinderAnswer(found_by=FoundBy.STATE_INDEX, classification="town", law_urls=_law(charter=(_CHARTER,), statutes=(_STATUTE,)))
 
     async def fetch(url, by_browser):
         if url == _CHARTER:
@@ -153,7 +160,7 @@ async def test_a_refusal_skips_that_url_and_is_never_retried_by_browser():
     ids=["404", "tls", "timeout", "off-limits"],
 )
 async def test_a_url_that_fails_to_fetch_is_skipped_and_the_next_one_stored(error: Exception):
-    answer = FinderAnswer(found_by=FoundBy.STATE_INDEX, classification="town", charter_urls=[_CHARTER], general_law_urls=[_STATUTE])
+    answer = FinderAnswer(found_by=FoundBy.STATE_INDEX, classification="town", law_urls=_law(charter=(_CHARTER,), statutes=(_STATUTE,)))
 
     async def fetch(url, by_browser):
         if url == _CHARTER:
@@ -170,7 +177,7 @@ async def test_a_url_that_fails_to_fetch_is_skipped_and_the_next_one_stored(erro
 
 @pytest.mark.asyncio
 async def test_a_page_with_no_converter_is_skipped_and_the_next_one_stored():
-    answer = FinderAnswer(found_by=FoundBy.STATE_INDEX, classification="town", charter_urls=[_CHARTER], general_law_urls=[_STATUTE])
+    answer = FinderAnswer(found_by=FoundBy.STATE_INDEX, classification="town", law_urls=_law(charter=(_CHARTER,), statutes=(_STATUTE,)))
 
     async def fetch(url, by_browser):
         if url == _CHARTER:
@@ -188,7 +195,7 @@ async def test_a_page_with_no_converter_is_skipped_and_the_next_one_stored():
 
 @pytest.mark.asyncio
 async def test_a_nearly_empty_page_is_fetched_once_more_by_browser():
-    answer = FinderAnswer(found_by=FoundBy.STATE_INDEX, classification="town", charter_urls=[_CHARTER])
+    answer = FinderAnswer(found_by=FoundBy.STATE_INDEX, classification="town", law_urls=_law(charter=(_CHARTER,)))
 
     async def fetch(url, by_browser):
         return _html(url, _TEXT, by_browser=True) if by_browser else _html(url, "Loading…")
@@ -202,7 +209,7 @@ async def test_a_nearly_empty_page_is_fetched_once_more_by_browser():
 
 @pytest.mark.asyncio
 async def test_urls_none_of_which_could_be_stored_write_none_found_and_fail_the_run():
-    answer = FinderAnswer(found_by=FoundBy.STATE_INDEX, classification="town", charter_urls=[_CHARTER])
+    answer = FinderAnswer(found_by=FoundBy.STATE_INDEX, classification="town", law_urls=_law(charter=(_CHARTER,)))
     fetch = AsyncMock(side_effect=RefusedByHost(_CHARTER, 429))
 
     with pytest.raises(PipelineRunError) as failed:
@@ -215,7 +222,7 @@ async def test_urls_none_of_which_could_be_stored_write_none_found_and_fail_the_
 
 @pytest.mark.asyncio
 async def test_a_charter_with_its_general_law_is_a_charter_with_both_pages():
-    answer = FinderAnswer(found_by=FoundBy.STATE_INDEX, classification="town", charter_urls=[_CHARTER], general_law_urls=[_STATUTE])
+    answer = FinderAnswer(found_by=FoundBy.STATE_INDEX, classification="town", law_urls=_law(charter=(_CHARTER,), statutes=(_STATUTE,)))
     fetch = AsyncMock(side_effect=lambda url, by_browser: _html(url, _TEXT))
 
     _, api = await _run(answer, fetch)
@@ -228,7 +235,7 @@ async def test_a_charter_with_its_general_law_is_a_charter_with_both_pages():
 
 @pytest.mark.asyncio
 async def test_a_page_another_run_stored_today_is_not_fetched_again():
-    answer = FinderAnswer(found_by=FoundBy.STATE_INDEX, classification="town", charter_urls=[_CHARTER], general_law_urls=[_STATUTE])
+    answer = FinderAnswer(found_by=FoundBy.STATE_INDEX, classification="town", law_urls=_law(charter=(_CHARTER,), statutes=(_STATUTE,)))
     fetch = AsyncMock(side_effect=lambda url, by_browser: _html(url, _TEXT))
 
     context, api = await _run(answer, fetch, reusable={_STATUTE: "stowes-statute"})

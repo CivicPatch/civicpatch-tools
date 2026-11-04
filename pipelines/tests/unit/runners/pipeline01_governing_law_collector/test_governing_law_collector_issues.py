@@ -7,9 +7,12 @@ from runners.pipeline01_governing_law_collector.schemas import (
     FinderAnswer,
     GoverningLawCollectorConfig,
     GoverningLawCollectorData,
+    LawKind,
+    LawUrl,
     Missing,
     TriedReason,
     TriedUrl,
+    as_law_urls,
 )
 from shared.schemas import FoundBy
 from shared.utils.layered_config import GoverningLawConfig
@@ -19,6 +22,10 @@ pytestmark = pytest.mark.unit
 _OCDID = "ocd-jurisdiction/country:us/state:or/county:lane/government"
 _STATUTE = "https://www.oregonlegislature.gov/bills_laws/ors/ors203.html"
 _TRIED = [TriedUrl(url="https://www.lanecountyor.gov", reason=TriedReason.SITE_CRAWLED)]
+
+
+def _law(charter: tuple = (), statutes: tuple = ()) -> list[LawUrl]:
+    return [*as_law_urls(list(charter), LawKind.CHARTER), *as_law_urls(list(statutes), LawKind.STATUTE)]
 
 
 def _oregon(governed_by: str) -> GoverningLawCollectorConfig:
@@ -39,7 +46,7 @@ def _data(
 
 
 def test_a_search_that_stored_the_statutes_but_no_charter_is_missing_the_charter():
-    answer = FinderAnswer(found_by=FoundBy.SEARCH, classification="county", general_law_urls=[_STATUTE], tried=_TRIED)
+    answer = FinderAnswer(found_by=FoundBy.SEARCH, classification="county", law_urls=_law(statutes=(_STATUTE,)), tried=_TRIED)
 
     issue = governing_law_not_found(_data(answer, _oregon("charter_else_general_law"), statute_pages=("page-1",)))
 
@@ -48,13 +55,13 @@ def test_a_search_that_stored_the_statutes_but_no_charter_is_missing_the_charter
 
 
 def test_a_search_for_a_general_law_classification_expects_no_charter():
-    answer = FinderAnswer(found_by=FoundBy.SEARCH, classification="county", general_law_urls=[_STATUTE], tried=_TRIED)
+    answer = FinderAnswer(found_by=FoundBy.SEARCH, classification="county", law_urls=_law(statutes=(_STATUTE,)), tried=_TRIED)
 
     assert governing_law_not_found(_data(answer, _oregon("general_law"), statute_pages=("page-1",))) is None
 
 
 def test_a_run_that_stored_none_of_its_urls_is_missing_everything():
-    answer = FinderAnswer(found_by=FoundBy.SEARCH, classification="county", general_law_urls=[_STATUTE], tried=_TRIED)
+    answer = FinderAnswer(found_by=FoundBy.SEARCH, classification="county", law_urls=_law(statutes=(_STATUTE,)), tried=_TRIED)
 
     issue = governing_law_not_found(_data(answer, _oregon("charter_else_general_law"), skipped=(_STATUTE,)))
 
@@ -63,13 +70,13 @@ def test_a_run_that_stored_none_of_its_urls_is_missing_everything():
 
 
 def test_a_search_that_stored_the_charter_files_nothing():
-    answer = FinderAnswer(found_by=FoundBy.SEARCH, classification="county", charter_urls=["https://www.lanecountyor.gov/charter"])
+    answer = FinderAnswer(found_by=FoundBy.SEARCH, classification="county", law_urls=_law(charter=("https://www.lanecountyor.gov/charter",)))
 
     assert governing_law_not_found(_data(answer, _oregon("charter_else_general_law"), charter_pages=("page-1",))) is None
 
 
 def test_an_index_that_lists_no_charter_is_an_answer_not_an_issue():
-    answer = FinderAnswer(found_by=FoundBy.STATE_INDEX, classification="county", general_law_urls=[_STATUTE])
+    answer = FinderAnswer(found_by=FoundBy.STATE_INDEX, classification="county", law_urls=_law(statutes=(_STATUTE,)))
 
     assert governing_law_not_found(_data(answer, _oregon("charter_or_general_law"), statute_pages=("page-1",))) is None
 

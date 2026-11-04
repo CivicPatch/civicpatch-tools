@@ -38,8 +38,8 @@ class TriedReason(StrEnum):
     REFUSED = "refused"
     OFF_LIMITS = "off_limits"
     FAILED = "failed"
-    NOT_A_CHARTER = "not_a_charter"
-    # The place's own site, crawled to its budget without a charter.
+    NOT_THE_TARGET = "not_the_target"
+    # The place's own site, crawled to its budget without finding what was searched for.
     SITE_CRAWLED = "site_crawled"
 
 
@@ -62,20 +62,58 @@ class GoverningLawNotFound(BaseModel):
     skipped_urls: List[str]
 
 
+class LawKind(StrEnum):
+    CONSTITUTION = "constitution"
+    STATUTE = "statute"
+    CHARTER = "charter"
+    CODE = "code"
+
+
+class LawUrl(BaseModel):
+    url: str
+    kind: LawKind
+
+
+def as_law_urls(urls: List[str], kind: LawKind) -> List[LawUrl]:
+    return [LawUrl(url=url, kind=kind) for url in urls]
+
+
+class LawTarget(BaseModel):
+    """What a search looks for: everything in it that is particular to one kind of law."""
+
+    kind: LawKind
+    # How the question to the model names it: "municipal or county charter".
+    description: str
+    # What the state calls it; a link or sitemap entry naming one of these is followed first.
+    terms: List[str]
+    # A link naming one of these never is: a "charter school" is not the government's charter.
+    skip_words: List[str] = []
+    # The page check's labels that count as this target.
+    kept_labels: List[str] = []
+
+
+class SearchResult(BaseModel):
+    law_urls: List[LawUrl] = []
+    # Urls the search rejected, for the issue when nothing confirms.
+    tried: List[TriedUrl] = []
+
+
 class FinderAnswer(BaseModel):
-    """What a finder says governs the jurisdiction, and where its texts are. The kind is not
-    here: it follows from which of these texts the run actually stores."""
+    """What a finder says governs the jurisdiction, and where its texts are. The governing kind is
+    not here: it follows from which of these texts the run actually stores."""
 
     found_by: FoundBy
     classification: Optional[str]
-    charter_urls: List[str] = []
-    general_law_urls: List[str] = []
+    law_urls: List[LawUrl] = []
     # Urls the search rejected, for the issue when nothing confirms; empty for the other finders.
     tried: List[TriedUrl] = []
 
     @property
     def urls(self) -> List[str]:
-        return [*self.charter_urls, *self.general_law_urls]
+        return [law_url.url for law_url in self.law_urls]
+
+    def urls_of(self, kind: LawKind) -> List[str]:
+        return [law_url.url for law_url in self.law_urls if law_url.kind == kind]
 
 
 class FetchedPage(BaseModel):

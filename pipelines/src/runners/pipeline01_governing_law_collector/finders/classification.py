@@ -1,6 +1,6 @@
 from typing import Optional
 
-from ..schemas import FinderAnswer
+from ..schemas import FinderAnswer, LawKind, as_law_urls
 from shared.schemas import FoundBy
 from shared.utils.layered_config import GoverningLawConfig, resolve_classification
 
@@ -10,4 +10,4 @@ def find(governing_law: Optional[GoverningLawConfig], name: str) -> FinderAnswer
     allows no single classification, or that classification lists no general law."""
     classification_id = resolve_classification(governing_law, name, None) if governing_law else None
     urls = governing_law.classifications[classification_id].general_law if governing_law and classification_id else []
-    return FinderAnswer(found_by=FoundBy.CLASSIFICATION, classification=classification_id, general_law_urls=urls)
+    return FinderAnswer(found_by=FoundBy.CLASSIFICATION, classification=classification_id, law_urls=as_law_urls(urls, LawKind.STATUTE))

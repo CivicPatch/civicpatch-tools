@@ -6,7 +6,7 @@ from urllib.parse import urljoin
 
 from bs4 import BeautifulSoup
 from ..fetchers import plain
-from ..schemas import FinderAnswer
+from ..schemas import FinderAnswer, LawKind, as_law_urls
 from shared.schemas import FoundBy
 from shared.utils.government_forms import name_suffix
 from shared.utils.layered_config import PLACE_PLACEHOLDER, CharterLinkList, GoverningLawConfig, resolve_classification
@@ -17,11 +17,14 @@ async def find(governing_law: GoverningLawConfig, name: str) -> FinderAnswer:
     assert charter_link_list is not None, "finders.find calls this only for a state with a link list"
     index = await plain.fetch(charter_link_list.url)
     classification_id = resolve_classification(governing_law, name, None)
+    general_law = governing_law.classifications[classification_id].general_law if classification_id else []
     return FinderAnswer(
         found_by=FoundBy.STATE_INDEX,
         classification=classification_id,
-        charter_urls=charter_links(charter_link_list, index.body, index.url, name),
-        general_law_urls=governing_law.classifications[classification_id].general_law if classification_id else [],
+        law_urls=[
+            *as_law_urls(charter_links(charter_link_list, index.body, index.url, name), LawKind.CHARTER),
+            *as_law_urls(general_law, LawKind.STATUTE),
+        ],
     )
 
 

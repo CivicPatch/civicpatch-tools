@@ -6,7 +6,7 @@ from datetime import datetime, timezone
 import httpx
 import services.civicpatch_api as civicpatch_api
 from runners.pipeline01_governing_law_collector import converters, fetchers, finders, issues
-from ..schemas import GoverningLawCollectorContext, GoverningLawCollectorState, GoverningLawCollectorStep
+from ..schemas import GoverningLawCollectorContext, GoverningLawCollectorState, GoverningLawCollectorStep, LawKind
 from shared.schemas import GoverningLaw, GoverningLawKind, JurisdictionExtras, PipelineRunLimits
 from shared.utils.statuses import PipelineIssueType, PipelineRunStatus
 from utils import cost_utils
@@ -32,7 +32,7 @@ async def start(_limits: PipelineRunLimits, _logger: PipelineRunLogger, context:
 
 async def find_source(_limits: PipelineRunLimits, logger: PipelineRunLogger, context: GoverningLawCollectorContext, _client: httpx.AsyncClient) -> Step:
     answer = await finders.find(context.data.config, context.pipeline_run_id, context.data.jurisdiction_ocdid, logger)
-    logger.info(f"{answer.found_by}: {len(answer.charter_urls)} charter url(s), {len(answer.general_law_urls)} general law url(s)")
+    logger.info(f"{answer.found_by}: {len(answer.urls_of(LawKind.CHARTER))} charter url(s), {len(answer.urls_of(LawKind.STATUTE))} general law url(s)")
     next_context = _next(context, answer=answer, pending_urls=answer.urls)
     return next_context, GoverningLawCollectorStep.FETCH_SOURCE if answer.urls else GoverningLawCollectorStep.WRITE_GOVERNING_LAW
 
@@ -108,7 +108,7 @@ async def send_error(_limits: PipelineRunLimits, _logger: PipelineRunLogger, con
 
 def _is_charter(context: GoverningLawCollectorContext, url: str) -> bool:
     answer = context.data.answer
-    return answer is not None and url in answer.charter_urls
+    return answer is not None and url in answer.urls_of(LawKind.CHARTER)
 
 
 def governing_law_from(context: GoverningLawCollectorContext) -> GoverningLaw:
