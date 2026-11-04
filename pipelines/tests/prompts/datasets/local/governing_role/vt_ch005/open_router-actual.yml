@@ -11,7 +11,7 @@
   - established: true
     label: Mayor
     filled_by: elected_by_voters
-    maximum_memberships: 1
+    maximum_memberships: null
     quote: The Mayor shall be elected by and from the qualified voters of Montpelier.
   - established: true
     label: Mayor
@@ -55,13 +55,13 @@
     filled_by: appointed
     maximum_memberships: 1
     quote: The City Manager shall be chosen and appointed by majority vote of the
-      City Council
+      City Council for an indefinite term
   - established: true
     label: City Manager
     filled_by: appointed
     maximum_memberships: 1
     quote: The City Manager shall be chosen and appointed by majority vote of the
-      City Council for an indefinite term
+      City Council
 - role_id: city-attorney
   expected: appointed
   presiding: false
@@ -98,8 +98,8 @@
     label: President
     filled_by: elected_by_members
     maximum_memberships: 1
-    quote: the City Council shall elect from its members a President, Vice President,
-      and Parliamentarian.
+    quote: Following the annual meeting, the City Council shall elect from its members
+      a President, Vice President, and Parliamentarian.
   - established: true
     label: President
     filled_by: elected_by_members
@@ -120,8 +120,8 @@
     label: Vice President
     filled_by: elected_by_members
     maximum_memberships: 1
-    quote: the City Council shall elect from its members a President, Vice President,
-      and Parliamentarian.
+    quote: Following the annual meeting, the City Council shall elect from its members
+      a President, Vice President, and Parliamentarian.
   - established: true
     label: Vice President
     filled_by: elected_by_members

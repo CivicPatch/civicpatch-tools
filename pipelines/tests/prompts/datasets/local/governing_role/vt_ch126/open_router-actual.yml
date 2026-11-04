@@ -13,12 +13,13 @@
     filled_by: elected_by_voters
     maximum_memberships: 5
     quote: 'The municipal officers elected by the Town shall be: (1) five members
-      of the Selectboard;'
+      of the Selectboard'
   - established: true
     label: member of the Selectboard
     filled_by: elected_by_voters
     maximum_memberships: 5
-    quote: five members of the Selectboard
+    quote: 'The municipal officers elected by the Town shall be: (1) five members
+      of the Selectboard;'
 - role_id: moderator
   expected: elected_by_voters
   presiding: false
@@ -27,22 +28,27 @@
   each_right:
   - true
   - false
-  agreed: false
+  agreed: true
   answers:
   - established: true
     label: Moderator
     filled_by: elected_by_voters
     maximum_memberships: 1
-    quote: 'The municipal officers elected by the Town shall be: (1) five members
-      of the Selectboard; (2) one Moderator;'
-  - null
+    quote: The Moderator shall be elected annually and shall perform those duties
+      prescribed by State law.
+  - established: true
+    label: Moderator
+    filled_by: elected_by_voters
+    maximum_memberships: 1
+    quote: All officers identified in section 22 of this charter shall be elected
+      by Australian ballot.
 - role_id: clerk
   expected: elected_by_voters
   presiding: false
   right: true
   rounds: 1
   each_right:
-  - true
+  - false
   - true
   agreed: true
   answers:
@@ -50,7 +56,8 @@
     label: Town Clerk
     filled_by: elected_by_voters
     maximum_memberships: 1
-    quote: The Town Clerk shall be elected for a three-year term
+    quote: All officers identified in section 22 of this charter shall be elected
+      by Australian ballot.
   - established: true
     label: Town Clerk
     filled_by: elected_by_voters
@@ -70,12 +77,7 @@
     label: Town Treasurer
     filled_by: elected_by_voters
     maximum_memberships: 1
-    quote: 'The municipal officers elected by the Town shall be: (1) five members
-      of the Selectboard; (2) one Moderator; (3) five Trustees of the Cobleigh Library;
-      (4) three, four, or five listers, as determined by the Selectboard; (5) one
-      Town Agent; (6) one Town Clerk; (7) three Trustees of the Sanborn School Fund;
-      (8) Justices of the peace, the number of which shall be determined in accordance
-      with the Vermont Constitution; and (9) one Town Treasurer.'
+    quote: The Town Treasurer shall be elected for a three-year term
   - established: true
     label: Town Treasurer
     filled_by: elected_by_voters
@@ -97,13 +99,13 @@
   agreed: true
   answers:
   - established: true
-    label: Chair
+    label: chair
     filled_by: elected_by_members
     maximum_memberships: 1
     quote: the Selectboard shall elect a chair and a vice chair by vote of the majority
       of the entire Selectboard.
   - established: true
-    label: chair
+    label: Chair
     filled_by: elected_by_members
     maximum_memberships: 1
     quote: Immediately after the annual Town meeting, the Selectboard shall elect
@@ -119,13 +121,13 @@
   agreed: true
   answers:
   - established: true
-    label: Vice Chair
+    label: vice chair
     filled_by: elected_by_members
     maximum_memberships: 1
     quote: the Selectboard shall elect a chair and a vice chair by vote of the majority
       of the entire Selectboard.
   - established: true
-    label: vice chair
+    label: Vice Chair
     filled_by: elected_by_members
     maximum_memberships: 1
     quote: Immediately after the annual Town meeting, the Selectboard shall elect

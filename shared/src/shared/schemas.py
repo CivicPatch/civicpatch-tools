@@ -374,6 +374,8 @@ class GovernmentForm(StrEnum):
     COUNTY_EXECUTIVE = "county_executive"
     # A state's own, not the country's: Vermont's and Michigan's statutory villages.
     VILLAGE_BOARD = "village_board"
+    # Oregon's county court, a county judge and commissioners (ORS 203.111).
+    COUNTY_COURT = "county_court"
 
 
 class JurisdictionId(BaseModel):

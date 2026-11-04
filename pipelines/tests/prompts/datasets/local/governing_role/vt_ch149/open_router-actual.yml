@@ -99,13 +99,13 @@
   - established: true
     label: Town Attorney
     filled_by: appointed
-    maximum_memberships: null
+    maximum_memberships: 1
     quote: The Selectboard shall appoint and remove, on the basis of qualifications
       and performance alone, a Town Clerk, Town Treasurer, and Town Attorney.
   - established: true
     label: Town Attorney
     filled_by: appointed
-    maximum_memberships: null
+    maximum_memberships: 1
     quote: The Selectboard shall appoint and remove, on the basis of qualifications
       and performance alone, a Town Clerk, Town Treasurer, and Town Attorney.
 - role_id: chair
@@ -361,7 +361,7 @@
   - established: true
     label: Vice Chair
     filled_by: elected_by_members
-    maximum_memberships: null
+    maximum_memberships: 1
     quote: The Board shall, in a similar manner, choose a Vice Chair to serve in the
       absence or disability of the Chair.
   - established: true

@@ -9,18 +9,19 @@
   agreed: true
   answers:
   - established: true
-    label: Selectboard member
-    filled_by: elected_by_voters
-    maximum_memberships: 5
-    quote: a Selectboard composed of five members chosen by the voters of the Town
-      of Barre.
-  - established: true
-    label: Selectboard member
+    label: Selectboard members
     filled_by: elected_by_voters
     maximum_memberships: 5
     quote: 'The following officers shall be elected by the legal voters of the Town
       of Barre and voting for the officers shall be by Australian ballot: (1) five
-      Selectboard members'
+      Selectboard members;'
+  - established: true
+    label: Selectboard members
+    filled_by: elected_by_voters
+    maximum_memberships: 5
+    quote: 'The following officers shall be elected by the legal voters of the Town
+      of Barre and voting for the officers shall be by Australian ballot: (1) five
+      Selectboard members;'
 - role_id: city-manager
   expected: appointed
   presiding: false
@@ -34,7 +35,7 @@
   - established: true
     label: Town Manager
     filled_by: appointed
-    maximum_memberships: 1
+    maximum_memberships: null
     quote: A Town Manager shall be the Chief Administrative Officer of the Town. He
       or she shall be appointed by a majority of the full Selectboard.
   - established: true
@@ -257,7 +258,8 @@
     label: Chair
     filled_by: elected_by_members
     maximum_memberships: 1
-    quote: elect a Chair
+    quote: The Selectboard shall meet within seven business days after the annual
+      Town election to elect a Chair and a Vice Chair and to designate a Clerk.
   - established: true
     label: Chair
     filled_by: elected_by_members
@@ -278,7 +280,8 @@
     label: Vice Chair
     filled_by: elected_by_members
     maximum_memberships: 1
-    quote: and a Vice Chair
+    quote: The Selectboard shall meet within seven business days after the annual
+      Town election to elect a Chair and a Vice Chair and to designate a Clerk.
   - established: true
     label: Vice Chair
     filled_by: elected_by_members

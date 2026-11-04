@@ -36,14 +36,6 @@ export function formatCount(count, singular, plural = `${singular}s`) {
   return `${count} ${count === 1 ? singular : plural}`;
 }
 
-export function shortModel(model) {
-  return model.split("/").pop();
-}
-
-export function lineageLabel(lineage) {
-  return `${shortModel(lineage.model)} on ${lineage.provider}`;
-}
-
 export function caseInputUrl(section, caseId) {
   return `${section.dataset_dir}/${caseId}/input.md`;
 }
@@ -108,15 +100,6 @@ export function casePromptInputs(section, caseId) {
   `;
 }
 
-export function caseLink(section, caseId) {
-  return html`<a class="case-link" href=${caseInputUrl(section, caseId)}><code>${caseId}</code></a>`;
-}
-
-export function scorePill(score, isBest = false) {
-  return html`
-    <span class="score-pill${isBest ? " score-pill--best" : ""}" style="--score:${score.toFixed(3)}">${score.toFixed(2)}</span>
-  `;
-}
 
 export function joinTemplates(templates, separator = ", ") {
   return templates.map((template, index) => (index === 0 ? template : html`${separator}${template}`));
@@ -124,4 +107,20 @@ export function joinTemplates(templates, separator = ", ") {
 
 export function sectionLabel(section) {
   return html`<p class="eval-label">${section.eval_name}</p>`;
+}
+
+// The sections grouped by the pipeline they exercise, in the order the data lists them.
+export function pipelineGroups(sections) {
+  const groups = new Map();
+  sections.forEach((section) => {
+    if (!groups.has(section.pipeline)) {
+      groups.set(section.pipeline, []);
+    }
+    groups.get(section.pipeline).push(section);
+  });
+  return [...groups.entries()];
+}
+
+export function pipelineLabel(pipeline) {
+  return html`<h3 class="pipeline-label">${pipeline}</h3>`;
 }

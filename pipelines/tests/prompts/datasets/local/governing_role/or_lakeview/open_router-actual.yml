@@ -12,8 +12,8 @@
     label: mayor
     filled_by: elected_by_voters
     maximum_memberships: 1
-    quote: The Town Council consists of a mayor and four councilors elected from the
-      Town at large.
+    quote: At every other general election, a mayor will be elected for a four-year
+      term.
   - established: true
     label: mayor
     filled_by: elected_by_voters
@@ -45,13 +45,24 @@
 - role_id: city-manager
   expected: appointed
   presiding: false
-  right: true
-  rounds: 1
+  right: false
+  rounds: 3
   each_right:
   - false
-  - true
+  - false
   agreed: true
   answers:
+  - established: true
+    label: Town manager
+    filled_by: appointed
+    maximum_memberships: null
+    quote: The office of Town manager is established as the administrative head of
+      the Town government.
+  - established: true
+    label: Town manager
+    filled_by: appointed
+    maximum_memberships: 1
+    quote: A majority of the Council must appoint and may remove the manager.
   - established: true
     label: Town manager
     filled_by: appointed
@@ -60,13 +71,20 @@
   - established: true
     label: Town manager
     filled_by: appointed
-    maximum_memberships: 1
+    maximum_memberships: null
+    quote: A majority of the Council must appoint and may remove the manager.
+  - established: true
+    label: Town manager
+    filled_by: appointed
+    maximum_memberships: null
     quote: The office of Town manager is established as the administrative head of
-      the Town government. The Town manager is responsible to the mayor and Council
-      for the proper administration of all Town business. The Town manager will assist
-      the mayor and Council in the development of Town policies, and carry out policies
-      established by ordinances and resolutions, • A majority of the Council must
-      appoint and may remove the manager.
+      the Town government. A majority of the Council must appoint and may remove the
+      manager.
+  - established: true
+    label: Town manager
+    filled_by: appointed
+    maximum_memberships: null
+    quote: A majority of the Council must appoint and may remove the manager.
 - role_id: recorder
   expected: probably_not_established
   presiding: false
@@ -144,7 +162,7 @@
     quote: At its first meeting each year, the Council shall elect a president from
       its membership.
   - established: true
-    label: president
+    label: Council President
     filled_by: elected_by_members
     maximum_memberships: 1
     quote: At its first meeting each year, the Council shall elect a president from

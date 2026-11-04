@@ -129,7 +129,7 @@ def forms_to_try(configs: dict[str, ConfigFile], run: SavedRun) -> list[tuple[Go
             for form in allowed_government_forms(config, run.jurisdiction_name)
             if _plausible(form, run.jurisdiction_name, config.state_government_forms, parsed.level)
         ]
-    return [(form, decided is not None) for form in forms if derived_organizations(config, form)]
+    return [(form, decided is not None) for form in forms if derived_organizations(config, form, run.jurisdiction_name)]
 
 
 def _plausible(
@@ -290,7 +290,7 @@ def candidate_cases(
     taxonomy = build_taxonomy(config.roles)
     cases = []
     for form, form_was_decided in forms_to_try(configs, run):
-        organizations = derived_organizations(config, form)
+        organizations = derived_organizations(config, form, run.jurisdiction_name)
         for organization in organizations:
             listed = people_in(organization, organizations, people, page_url_key)
             role_labels, found_divisions = roles_and_divisions(listed, taxonomy)

@@ -18,14 +18,15 @@
     label: Mayor
     filled_by: elected_by_voters
     maximum_memberships: 1
-    quote: a Mayor shall be elected for a term of four years.
+    quote: At the biennial general election held in 1954 and every fourth year thereafter,
+      a Mayor shall be elected for a term of four years.
 - role_id: member
   expected: elected_by_voters
   presiding: false
   right: true
   rounds: 1
   each_right:
-  - false
+  - true
   - true
   agreed: true
   answers:
@@ -33,8 +34,8 @@
     label: Councilor
     filled_by: elected_by_voters
     maximum_memberships: 9
-    quote: The Council shall be composed of nine Councilors, one from each ward. There
-      shall be elected one Councilor from each ward at each general municipal election.
+    quote: There shall be elected one Councilor from each ward at each general municipal
+      election.
   - established: true
     label: Councilor
     filled_by: elected_by_voters
@@ -61,16 +62,17 @@
     label: City Manager
     filled_by: appointed
     maximum_memberships: null
-    quote: The Council shall fill each of these offices by appointment as the need
-      so arises.
+    quote: The offices of City Manager, Municipal Judge, and City Attorney are hereby
+      created. The Council shall fill each of these offices by appointment as the
+      need so arises.
 - role_id: recorder
-  expected: not_stated
+  expected: probably_not_established
   presiding: false
-  right: false
+  right: true
   rounds: 1
   each_right:
-  - false
-  - false
+  - true
+  - true
   agreed: true
   answers:
   - established: false
@@ -144,7 +146,7 @@
     filled_by: elected_by_members
     maximum_memberships: 1
     quote: the Council by ballot shall elect a president and a vice-president from
-      its membership
+      its membership.
 - role_id: vice-president
   expected: elected_by_members
   presiding: true
@@ -166,4 +168,4 @@
     filled_by: elected_by_members
     maximum_memberships: 1
     quote: the Council by ballot shall elect a president and a vice-president from
-      its membership
+      its membership.

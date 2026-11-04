@@ -1,7 +1,7 @@
 import pytest
 from pydantic import ValidationError
 from shared.schemas import GovernmentForm, JurisdictionLevel, SelectionMethod
-from shared.utils.government_forms import DerivedOrganization
+from shared.utils.government_forms import DerivedOrganization, default_organization_name
 from shared.utils.layered_config import (
     CharterLinkList,
     Classification,
@@ -231,7 +231,7 @@ def test_a_state_may_define_a_form_of_its_own_with_its_organizations():
     config = merged_config(_LEVEL, state)
 
     assert allowed_government_forms(config, "Hyde Park village") == [GovernmentForm.VILLAGE_BOARD]
-    assert derived_organizations(config, GovernmentForm.VILLAGE_BOARD) == [_TRUSTEES]
+    assert derived_organizations(config, GovernmentForm.VILLAGE_BOARD, "Hyde Park village") == [_TRUSTEES]
     assert GovernmentForm.VILLAGE_BOARD in level_government_forms(config)
 
 
@@ -239,7 +239,7 @@ def test_a_states_own_form_is_offered_nowhere_else():
     config = merged_config(_LEVEL, None)
 
     assert GovernmentForm.VILLAGE_BOARD not in level_government_forms(config)
-    assert derived_organizations(config, GovernmentForm.VILLAGE_BOARD) == []
+    assert derived_organizations(config, GovernmentForm.VILLAGE_BOARD, "Hyde Park village") == []
 
 
 def test_a_country_form_needs_organizations():
@@ -327,19 +327,42 @@ def test_one_allowed_form_decides_it_and_several_leave_it_unknown():
 
 
 def test_no_organizations_until_the_form_is_known():
-    assert derived_organizations(merged_config(_LEVEL, None), None) == []
+    assert derived_organizations(merged_config(_LEVEL, None), None, "Millbury town") == []
 
 
 def test_a_form_saved_at_the_wrong_level_derives_nothing():
     config = merged_config(_LEVEL, None)
 
-    assert derived_organizations(config, GovernmentForm.COUNTY_EXECUTIVE) == []
+    assert derived_organizations(config, GovernmentForm.COUNTY_EXECUTIVE, "Millbury town") == []
 
 
 def test_a_known_form_derives_its_organizations():
     config = merged_config(_LEVEL, None)
 
-    assert derived_organizations(config, GovernmentForm.OPEN_TOWN_MEETING) == [_SELECT_BOARD]
+    assert derived_organizations(config, GovernmentForm.OPEN_TOWN_MEETING, "Millbury town") == [_SELECT_BOARD]
+
+
+def test_organization_names_take_the_jurisdictions_legal_status():
+    state = ConfigFile(
+        government_forms={
+            GovernmentForm.COUNCIL_MANAGER: GovernmentFormConfig(
+                suffixes=["city", "town"],
+                organizations=[
+                    DerivedOrganization(name="{lsad} Council", role_labels=["Council Member"]),
+                    DerivedOrganization(name="{lsad} Officers", role_labels=["Mayor"]),
+                ],
+            )
+        }
+    )
+    config = merged_config(_LEVEL, state)
+
+    def names(jurisdiction_name: str) -> list[str]:
+        return [organization.name for organization in derived_organizations(config, GovernmentForm.COUNCIL_MANAGER, jurisdiction_name)]
+
+    assert names("Corvallis city") == ["City Council", "City Officers"]
+    assert names("Lakeview town") == ["Town Council", "Town Officers"]
+    assert names("Lakeview town")[1] == default_organization_name("Lakeview town")
+    assert names("Princeton") == ["Council", "Officers"]
 
 
 def test_a_role_in_two_organizations_of_one_form_is_rejected():

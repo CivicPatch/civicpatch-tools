@@ -1,0 +1,212 @@
+- role_id: member
+  expected: elected_by_voters
+  presiding: false
+  right: true
+  rounds: 3
+  each_right:
+  - false
+  - false
+  agreed: true
+  answers:
+  - established: true
+    label: county commissioner
+    filled_by: elected_by_voters
+    maximum_memberships: 5
+    quote: The board of commissioners shall consist of five county commissioners.
+      Except as this charter provides to the contrary, each commissioner shall be
+      elected by district for a four-year term.
+  - established: true
+    label: county commissioner
+    filled_by: elected_by_voters
+    maximum_memberships: 5
+    quote: The board of commissioners shall consist of five county commissioners.
+  - established: true
+    label: county commissioner
+    filled_by: elected_by_voters
+    maximum_memberships: 5
+    quote: The board of commissioners shall consist of five county commissioners.
+      Except as this charter provides to the contrary, each commissioner shall be
+      elected by district for a four-year term.
+  - established: true
+    label: county commissioner
+    filled_by: elected_by_voters
+    maximum_memberships: 5
+    quote: The board of commissioners shall consist of five county commissioners.
+  - established: true
+    label: county commissioner
+    filled_by: elected_by_voters
+    maximum_memberships: 5
+    quote: The board of commissioners shall consist of five county commissioners.
+  - established: true
+    label: county commissioner
+    filled_by: elected_by_voters
+    maximum_memberships: 5
+    quote: (1) The board of commissioners shall consist of five county commissioners.
+      (2) Except as this charter provides to the contrary, each commissioner shall
+      be elected by district for a four-year term.
+- role_id: sheriff
+  expected: elected_by_voters
+  presiding: false
+  right: true
+  rounds: 1
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: true
+    label: sheriff
+    filled_by: elected_by_voters
+    maximum_memberships: 1
+    quote: The elective administrative officers of the county shall include, in addition
+      to the county commissioners, the sheriff and the assessor.
+  - established: true
+    label: sheriff
+    filled_by: elected_by_voters
+    maximum_memberships: 1
+    quote: The elective administrative officers of the county shall include, in addition
+      to the county commissioners, the sheriff and the assessor.
+- role_id: assessor
+  expected: elected_by_voters
+  presiding: false
+  right: true
+  rounds: 1
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: true
+    label: assessor
+    filled_by: elected_by_voters
+    maximum_memberships: 1
+    quote: The elective administrative officers of the county shall include, in addition
+      to the county commissioners, the sheriff and the assessor.
+  - established: true
+    label: assessor
+    filled_by: elected_by_voters
+    maximum_memberships: 1
+    quote: The elective administrative officers of the county shall include, in addition
+      to the county commissioners, the sheriff and the assessor.
+- role_id: clerk
+  expected: appointed
+  presiding: false
+  right: false
+  rounds: 1
+  each_right:
+  - false
+  - false
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: treasurer
+  expected: appointed
+  presiding: false
+  right: false
+  rounds: 1
+  each_right:
+  - false
+  - false
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: surveyor
+  expected: appointed
+  presiding: false
+  right: false
+  rounds: 1
+  each_right:
+  - false
+  - false
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: county-judge
+  expected: not_established
+  presiding: false
+  right: true
+  rounds: 1
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: chair
+  expected: elected_by_members
+  presiding: true
+  right: true
+  rounds: 1
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: true
+    label: chair
+    filled_by: elected_by_members
+    maximum_memberships: 1
+    quote: At its first regular meeting each year the board of county commissioners
+      shall designate one of its members chair of the board for the year.
+  - established: true
+    label: chair of the board
+    filled_by: elected_by_members
+    maximum_memberships: 1
+    quote: At its first regular meeting each year the board of county commissioners
+      shall designate one of its members chair of the board for the year.
+- role_id: vice-chair
+  expected: elected_by_members
+  presiding: true
+  right: true
+  rounds: 1
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: true
+    label: vice chair
+    filled_by: elected_by_members
+    maximum_memberships: 1
+    quote: the board shall also designate a vice chair
+  - established: true
+    label: vice chair
+    filled_by: elected_by_members
+    maximum_memberships: 1
+    quote: the board shall also designate a vice chair

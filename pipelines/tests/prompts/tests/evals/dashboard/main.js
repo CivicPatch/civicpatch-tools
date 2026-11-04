@@ -1,7 +1,6 @@
 import { html, render } from "lit-html";
 
-import { caseInputUrl, casePrompts } from "./format.js";
-import { modelsSection } from "./models-section.js";
+import { caseInputUrl, casePrompts, pipelineGroups, pipelineLabel } from "./format.js";
 import { RUN_BROWSER_ID, focusedCaseElementId, runBrowser } from "./run-browser.js";
 import { trendSection } from "./trend-section.js";
 import { verdictSection } from "./verdict-section.js";
@@ -14,7 +13,6 @@ let state = {
   data: null,
   loadError: null,
   selection: null,
-  comparisonChoices: {},
   caseInputs: {},
 };
 
@@ -60,20 +58,22 @@ const actions = {
       casePrompts(section, state.selection.provider, shownCaseId).forEach((prompt) => fetchCaseInput(prompt.url));
     }
   },
-  chooseComparison: (evalName, choice) => setState({
-    comparisonChoices: { ...state.comparisonChoices, [evalName]: choice },
-  }),
 };
+
+// Each part of the page once per pipeline, its evals under the pipeline's heading.
+function perPipeline(sections, part) {
+  return pipelineGroups(sections).map(
+    ([pipeline, group]) => html`${pipelineLabel(pipeline)}<div class="pipeline-group">${part(group)}</div>`,
+  );
+}
 
 function page(data) {
   const sections = data.evals;
   return html`
     <h2 class="civ-section-label">Can I ship it</h2>
-    ${verdictSection(sections, actions)}
-    <h2 class="civ-section-label">Which model and prompt score best</h2>
-    ${modelsSection(sections, state.comparisonChoices, actions)}
+    ${perPipeline(sections, (group) => verdictSection(group, actions))}
     <h2 class="civ-section-label">What is the trend</h2>
-    ${trendSection(sections, actions)}
+    ${perPipeline(sections, (group) => trendSection(group, actions))}
     ${runBrowser(sections, state.selection, state.caseInputs, actions)}
   `;
 }

@@ -6,6 +6,7 @@ import pathlib
 from dashboard_data import (
     dataset_dir,
     eval_dirs,
+    pipeline_of,
     read_case_inputs,
     read_history,
     read_latest_case_prompts,
@@ -29,6 +30,7 @@ def _eval_section(name: str, directory: pathlib.Path, results: EvalResults, runs
     latest_mismatches = read_latest_mismatches(directory)
     return EvalSection(
         eval_name=name,
+        pipeline=pipeline_of(name),
         dataset_dir=dataset_dir(name),
         verdicts=provider_verdicts(results, latest_mismatches),
         matrix=matrix,
@@ -51,8 +53,10 @@ def write_dashboard(output: pathlib.Path = OUTPUT) -> int:
     if not result_count:
         return 0
     histories = {name: read_history(directory) for name, directory in dirs.items()}
+    # Pipeline order, then `eval_dirs` order within one: the page groups them by pipeline.
+    by_pipeline = sorted(dirs.items(), key=lambda item: pipeline_of(item[0]))
     payload = DashboardPayload(
-        evals=[_eval_section(name, directory, results[name], histories[name]) for name, directory in dirs.items()],
+        evals=[_eval_section(name, directory, results[name], histories[name]) for name, directory in by_pipeline],
         issues=issues(results, histories),
     )
     output.parent.mkdir(parents=True, exist_ok=True)

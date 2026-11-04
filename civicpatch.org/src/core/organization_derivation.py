@@ -10,25 +10,13 @@ The form's other organizations come from a state's data migration, never from co
 from pydantic import BaseModel
 
 from shared.schemas import GovernmentForm
-from shared.utils.government_forms import DerivedOrganization, name_suffix
+from shared.utils.government_forms import DerivedOrganization
 from shared.utils.layered_config import (
     MergedConfig,
     allowed_government_forms,
     derived_organizations,
     resolve_government_form,
 )
-
-
-LEGAL_STATUS_WORDS = ("city", "town", "township", "county", "village", "borough", "plantation")
-DEFAULT_ORGANIZATION_SUFFIX = "Officers"
-
-
-def default_organization_name(jurisdiction_name: str) -> str:
-    """"Essex town" -> "Town Officers"; names that end in no legal status word -> "Officers"."""
-    suffix = name_suffix(jurisdiction_name)
-    if suffix not in LEGAL_STATUS_WORDS:
-        return DEFAULT_ORGANIZATION_SUFFIX
-    return f"{suffix.capitalize()} {DEFAULT_ORGANIZATION_SUFFIX}"
 
 
 class ResolvedGovernment(BaseModel):
@@ -52,7 +40,7 @@ def resolve_government(
     return ResolvedGovernment(
         government_form=government_form,
         candidate_government_forms=candidates,
-        candidate_organizations=merged_by_name([derived_organizations(config, form) for form in candidates]),
+        candidate_organizations=merged_by_name([derived_organizations(config, form, name) for form in candidates]),
     )
 
 

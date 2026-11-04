@@ -14,6 +14,7 @@ from runners.pipeline02_organizations_collector.sections import (
     joined,
     keyword_sections,
     page_kind,
+    pages_by_kind,
     picked,
     split_sections,
 )
@@ -150,3 +151,31 @@ def test_with_no_classification_every_page_of_a_charter_jurisdiction_is_its_char
 
 def test_a_general_law_jurisdictions_pages_are_general_law():
     assert page_kind(BURLINGTON, _law(GoverningLawKind.GENERAL_LAW), _VERMONT) == GoverningLawKind.GENERAL_LAW
+
+
+_STATUTE = GoverningLawPage(id="page-3", source_url=_STATUTE_URL, text="")
+_OREGON = GoverningLawConfig(
+    charter_terms=["Charter"],
+    classifications={"county": Classification(governed_by=GovernedBy.CHARTER_ELSE_GENERAL_LAW, general_law=[_STATUTE_URL])},
+)
+
+
+def test_where_a_charter_replaces_the_general_law_a_charter_jurisdiction_reads_its_charter_alone():
+    law = _law(GoverningLawKind.CHARTER, classification="county")
+
+    assert pages_by_kind([BURLINGTON, _STATUTE], law, _OREGON) == [(GoverningLawKind.CHARTER, [BURLINGTON])]
+
+
+def test_where_a_charter_replaces_the_general_law_a_jurisdiction_without_one_reads_the_statutes():
+    law = _law(GoverningLawKind.GENERAL_LAW, classification="county")
+
+    assert pages_by_kind([_STATUTE], law, _OREGON) == [(GoverningLawKind.GENERAL_LAW, [_STATUTE])]
+
+
+def test_where_the_general_law_fills_a_charters_silence_both_are_read():
+    law = _law(GoverningLawKind.CHARTER)
+
+    assert pages_by_kind([BURLINGTON, _STATUTE], law, _VERMONT) == [
+        (GoverningLawKind.CHARTER, [BURLINGTON]),
+        (GoverningLawKind.GENERAL_LAW, [_STATUTE]),
+    ]
