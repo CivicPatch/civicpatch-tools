@@ -3,10 +3,10 @@ out nearly empty. A host that refuses (403, 429) is never retried another way: t
 publisher rules say stop."""
 
 from . import browser, plain
-from .plain import RefusedByHost
+from .plain import OffLimits, RefusedByHost
 from ..schemas import FetchedPage
 
-__all__ = ["RefusedByHost", "fetch"]
+__all__ = ["OffLimits", "RefusedByHost", "fetch"]
 
 
 async def fetch(url: str, by_browser: bool) -> FetchedPage:

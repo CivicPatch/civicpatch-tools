@@ -70,6 +70,10 @@ class PipelineIssueType(StrEnum):
     # named) led it to expect. Short by more than the crawler's own tolerance, so a run that
     # stopped because it had enough never files this.
     FEWER_THAN_EXPECTED = "fewer_than_expected"
+    # Pipeline 1 could not store what the classification says governs the place: no charter
+    # confirmed where one is possible, or no page at all. The run still succeeds with what it
+    # stored; the detail lists every url tried and why, for the human who finds the right one.
+    GOVERNING_LAW_NOT_FOUND = "governing_law_not_found"
 
 
 # Issue types a run can produce, as opposed to ones about a proposal. These are keyed on the
@@ -78,7 +82,8 @@ class PipelineIssueType(StrEnum):
 # the issues endpoint treats as run-shaped, and those two drifting is how a raw exception string
 # became an issue type.
 RUN_LEVEL_ISSUE_TYPES = frozenset(PipelineRunErrorType) | {
-    PipelineIssueType.PIPELINE_ERROR
+    PipelineIssueType.PIPELINE_ERROR,
+    PipelineIssueType.GOVERNING_LAW_NOT_FOUND,
 }
 
 

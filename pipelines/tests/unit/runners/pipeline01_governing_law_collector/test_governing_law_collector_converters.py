@@ -50,9 +50,36 @@ def test_a_script_rendered_shell_is_nearly_empty():
     assert is_nearly_empty(to_markdown(shell))
 
 
-def test_a_pdf_has_no_converter_yet():
+def test_a_pdfs_text_is_read_page_by_page():
+    markdown = to_markdown(_page("charter_page.pdf", content_type="application/pdf"))
+
+    assert "Charter of the Town of Stowe" in markdown
+    assert "The Town Council consists of a mayor and four councilors." in markdown
+
+
+def test_a_pdf_served_as_octet_stream_is_known_by_its_first_bytes():
+    markdown = to_markdown(_page("charter_page.pdf", content_type="application/octet-stream"))
+
+    assert "Charter of the Town of Stowe" in markdown
+
+
+def test_a_scanned_pdf_has_no_text_and_is_nearly_empty():
+    assert is_nearly_empty(to_markdown(_page("scanned_page.pdf", content_type="application/pdf")))
+
+
+def test_a_file_pdfium_cannot_open_has_no_converter():
     with pytest.raises(UnsupportedContentType):
         to_markdown(FetchedPage(url="https://example.gov/c.pdf", content_type="application/pdf", body=b"%PDF-1.7", by_browser=False))
+
+
+def test_a_pdf_that_opens_but_whose_page_will_not_load_has_no_converter():
+    with pytest.raises(UnsupportedContentType):
+        to_markdown(_page("broken_page.pdf", content_type="application/pdf"))
+
+
+def test_an_unknown_content_type_has_no_converter():
+    with pytest.raises(UnsupportedContentType):
+        to_markdown(FetchedPage(url="https://example.gov/c.zip", content_type="application/zip", body=b"PK", by_browser=False))
 
 
 def test_a_tag_trafilatura_leaves_is_dropped_and_its_words_kept():

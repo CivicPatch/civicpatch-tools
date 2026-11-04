@@ -24,6 +24,8 @@ class CollectorConfig(BaseModel):
     `/pipeline_runs/{id}/collector_config` answers for its kind."""
 
     name: str
+    # The place's own site from the registry; None when it has none.
+    url: str | None
     governing_law: GoverningLawConfig | None
 
 
@@ -71,6 +73,6 @@ async def collector_config(jurisdiction_ocdid: str) -> CollectorConfig:
         raise UnknownJurisdiction(jurisdiction_ocdid)
     parsed = parse_jurisdiction_ocdid(jurisdiction_ocdid)
     if parsed.level == JurisdictionLevel.STATE:
-        return CollectorConfig(name=row.name, governing_law=None)
+        return CollectorConfig(name=row.name, url=row.url, governing_law=None)
     configs = await jurisdiction_configs_db.get_jurisdiction_configs()
-    return CollectorConfig(name=row.name, governing_law=jurisdiction_config(configs, parsed.state, parsed.level).governing_law)
+    return CollectorConfig(name=row.name, url=row.url, governing_law=jurisdiction_config(configs, parsed.state, parsed.level).governing_law)
