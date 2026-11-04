@@ -3,6 +3,7 @@ the fetcher and cp.org. What is under test is the walk through its graph."""
 
 from unittest.mock import AsyncMock, MagicMock, patch
 
+import httpx
 import pytest
 from runners.engine import run_pipeline, terminal_states
 from runners.pipeline01_governing_law_collector.fetchers import RefusedByHost
@@ -112,6 +113,50 @@ async def test_a_refusal_skips_that_url_and_is_never_retried_by_browser():
 
     assert [call.args for call in spy.await_args_list] == [(_CHARTER,), (_STATUTE,)]
     assert all(call.kwargs == {"by_browser": False} for call in spy.await_args_list)
+    assert context.data.skipped_urls == [_CHARTER]
+    assert api.patch_jurisdiction_extras.await_args.args[2].extras_governing_law.source_page_ids == ["page-1"]
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize(
+    "error",
+    [
+        httpx.HTTPStatusError("404", request=httpx.Request("GET", _CHARTER), response=httpx.Response(404)),
+        httpx.ConnectError("certificate verify failed"),
+        httpx.ReadTimeout("timed out"),
+    ],
+    ids=["404", "tls", "timeout"],
+)
+async def test_a_url_that_fails_to_fetch_is_skipped_and_the_next_one_stored(error: Exception):
+    answer = FinderAnswer(found_by=FoundBy.STATE_INDEX, classification="town", charter_urls=[_CHARTER], general_law_urls=[_STATUTE])
+
+    async def fetch(url, by_browser):
+        if url == _CHARTER:
+            raise error
+        return _html(url, _TEXT)
+
+    context, api = await _run(answer, AsyncMock(side_effect=fetch))
+
+    assert context.current_state == PipelineRunStatus.SUCCESS
+    assert context.data.skipped_urls == [_CHARTER]
+    written = api.patch_jurisdiction_extras.await_args.args[2].extras_governing_law
+    assert (written.kind, written.source_page_ids) == (GoverningLawKind.GENERAL_LAW, ["page-1"])
+
+
+@pytest.mark.asyncio
+async def test_a_page_with_no_converter_is_skipped_and_the_next_one_stored():
+    answer = FinderAnswer(found_by=FoundBy.STATE_INDEX, classification="town", charter_urls=[_CHARTER], general_law_urls=[_STATUTE])
+
+    async def fetch(url, by_browser):
+        if url == _CHARTER:
+            return FetchedPage(url=url, content_type="application/pdf", body=b"%PDF-1.7", by_browser=False)
+        return _html(url, _TEXT)
+
+    spy = AsyncMock(side_effect=fetch)
+    context, api = await _run(answer, spy)
+
+    assert context.current_state == PipelineRunStatus.SUCCESS
+    assert [call.args for call in spy.await_args_list] == [(_CHARTER,), (_STATUTE,)]
     assert context.data.skipped_urls == [_CHARTER]
     assert api.patch_jurisdiction_extras.await_args.args[2].extras_governing_law.source_page_ids == ["page-1"]
 

@@ -1,7 +1,12 @@
+from datetime import date
+
 import pytest
 import yaml
 
 from lib import elections
+
+# The route reads the clock; here it is a fixed date, so the fixed election stays upcoming.
+_TODAY = date(2026, 1, 1)
 
 
 def _write_yaml(tmp_path, data):
@@ -26,7 +31,7 @@ async def test_get_upcoming_elections_parses_entries(tmp_path, mocker):
     )
     mocker.patch.object(elections, "_ELECTIONS_PATH", path)
 
-    result = await elections.get_upcoming_elections()
+    result = await elections.get_upcoming_elections(_TODAY)
 
     assert len(result) == 1
     assert result[0].state == "wa"
@@ -40,9 +45,18 @@ async def test_get_upcoming_elections_note_is_optional(tmp_path, mocker):
     path = _write_yaml(tmp_path, [{"date": "2026-11-03", "state": "wa", "title": "General Election"}])
     mocker.patch.object(elections, "_ELECTIONS_PATH", path)
 
-    result = await elections.get_upcoming_elections()
+    result = await elections.get_upcoming_elections(_TODAY)
 
     assert result[0].note is None
+
+
+@pytest.mark.unit
+@pytest.mark.asyncio
+async def test_get_upcoming_elections_leaves_out_a_past_election(tmp_path, mocker):
+    path = _write_yaml(tmp_path, [{"date": "2025-11-04", "state": "wa", "title": "General Election"}])
+    mocker.patch.object(elections, "_ELECTIONS_PATH", path)
+
+    assert await elections.get_upcoming_elections(_TODAY) == []
 
 
 @pytest.mark.unit
@@ -51,4 +65,4 @@ async def test_get_upcoming_elections_empty_file(tmp_path, mocker):
     path = _write_yaml(tmp_path, [])
     mocker.patch.object(elections, "_ELECTIONS_PATH", path)
 
-    assert await elections.get_upcoming_elections() == []
+    assert await elections.get_upcoming_elections(_TODAY) == []

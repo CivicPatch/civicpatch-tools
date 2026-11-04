@@ -1,4 +1,4 @@
-from datetime import datetime, timezone
+from datetime import date
 from functools import lru_cache
 from pathlib import Path
 
@@ -17,6 +17,5 @@ def _load_elections() -> list[Election]:
     return [Election.model_validate(e) for e in raw]
 
 
-async def get_upcoming_elections() -> list[Election]:
-    today = datetime.now(timezone.utc).date()
+async def get_upcoming_elections(today: date) -> list[Election]:
     return filter_upcoming(_load_elections(), today)

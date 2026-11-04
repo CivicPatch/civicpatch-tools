@@ -1,0 +1,142 @@
+source_url: https://townoflakeview.org/wp-content/uploads/2021/09/2011-Town-Charter.pdf
+roles:
+- organization_name: Town Council
+  role_id: mayor
+  role_label: Mayor
+  expected: elected_by_voters
+  presiding: false
+  names:
+  - Mayor
+- organization_name: Town Council
+  role_id: member
+  role_label: Councilor
+  expected: elected_by_voters
+  presiding: false
+  names:
+  - Councilor
+  - Member
+  - alder
+  - alderman
+  - aldermen
+  - Alderperson
+  - alderwoman
+  - board of selectmen
+  - board of selectmen member
+  - city alderman
+  - city alderwoman
+  - city commissioner
+  - city council
+  - city council alderman
+  - city council alderwoman
+  - city council member
+  - city councilman
+  - city councilmember
+  - city councilor
+  - city councilwoman
+  - Commissioner
+  - Committee Member
+  - committee person
+  - Committee Woman
+  - committeeman
+  - Committeeperson
+  - committeewoman
+  - Committeewomen
+  - council
+  - council at large
+  - Council Member
+  - council member at-large
+  - council members
+  - council person
+  - council-member
+  - councillor
+  - councilman
+  - councilman-at-large
+  - councilmember
+  - councilmembers
+  - councilmen
+  - councilor
+  - councilperson
+  - councilperson at-large
+  - councilwoman
+  - councilwoman at large
+  - councilwoman-at-large
+  - councilwomen
+  - representative
+  - select board
+  - Select Board Member
+  - select board representative
+  - Select Person
+  - selectboard
+  - selectboard member
+  - selectman
+  - selectmen
+  - Selectperson
+  - selectwoman
+  - town board member
+  - town council
+  - town council member
+  - town council representative
+  - town councilmember
+  - town councilor
+  - township committee member
+  - Township Trustee
+  - Trustee
+  - Trustees
+  - Village Trustee
+- organization_name: Town Council
+  role_id: president
+  role_label: Council President
+  expected: elected_by_members
+  presiding: true
+  names:
+  - Council President
+  - President
+  - city council president
+  - commission president
+  - commissioner president
+  - council member president
+  - council president
+  - president of the council
+  - president of the village
+  - village board president
+  - village president
+- organization_name: City Officers
+  role_id: city-manager
+  role_label: Town Manager
+  expected: appointed
+  presiding: false
+  names:
+  - Town Manager
+  - City Manager
+  - city administrator
+  - town manager
+  - village manager
+- organization_name: City Officers
+  role_id: recorder
+  role_label: Town Recorder
+  expected: probably_not_established
+  presiding: false
+  names:
+  - Town Recorder
+  - Recorder
+  - City Recorder
+- organization_name: City Officers
+  role_id: treasurer
+  role_label: Town Treasurer
+  expected: probably_not_established
+  presiding: false
+  names:
+  - Town Treasurer
+  - Treasurer
+  - City Treasurer
+  - Township Treasurer
+  - Village Treasurer
+- organization_name: City Officers
+  role_id: marshal
+  role_label: Town Marshal
+  expected: probably_not_established
+  presiding: false
+  names:
+  - Town Marshal
+  - Marshal
+  - City Marshal

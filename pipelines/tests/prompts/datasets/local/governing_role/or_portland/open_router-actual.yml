@@ -1,0 +1,152 @@
+- role_id: mayor
+  expected: elected_by_voters
+  presiding: false
+  right: true
+  rounds: 1
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: true
+    label: Mayor
+    filled_by: elected_by_voters
+    maximum_memberships: 1
+    quote: The Mayor and the Auditor are elected at large by the legal voters of the
+      City of Portland.
+  - established: true
+    label: Mayor
+    filled_by: elected_by_voters
+    maximum_memberships: 1
+    quote: The Mayor and the Auditor are elected at large by the legal voters of the
+      City of Portland.
+- role_id: member
+  expected: elected_by_voters
+  presiding: false
+  right: true
+  rounds: 1
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: true
+    label: Councilor
+    filled_by: elected_by_voters
+    maximum_memberships: 12
+    quote: Councilors are elected to represent a geographic district of the City by
+      the legal voters residing in said district.
+  - established: true
+    label: Councilor
+    filled_by: elected_by_voters
+    maximum_memberships: 12
+    quote: Councilors are elected to represent a geographic district of the City by
+      the legal voters residing in said district.
+- role_id: auditor
+  expected: elected_by_voters
+  presiding: false
+  right: true
+  rounds: 1
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: true
+    label: Auditor
+    filled_by: elected_by_voters
+    maximum_memberships: 1
+    quote: The Auditor shall be elected at the general municipal election and shall
+      serve for a term of four (4) years.
+  - established: true
+    label: Auditor
+    filled_by: elected_by_voters
+    maximum_memberships: 1
+    quote: The Auditor shall be elected at the general municipal election and shall
+      serve for a term of four (4) years.
+- role_id: city-administrator
+  expected: appointed
+  presiding: false
+  right: true
+  rounds: 1
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: true
+    label: City Administrator
+    filled_by: appointed
+    maximum_memberships: 1
+    quote: Appoint the City Administrator, subject to Council confirmation
+  - established: true
+    label: City Administrator
+    filled_by: appointed
+    maximum_memberships: 1
+    quote: Appoint the City Administrator, subject to Council confirmation
+- role_id: city-attorney
+  expected: appointed
+  presiding: false
+  right: true
+  rounds: 1
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: true
+    label: City Attorney
+    filled_by: appointed
+    maximum_memberships: 1
+    quote: Appoint, subject to Council confirmation, the City Attorney and the Chief
+      of Police.
+  - established: true
+    label: City Attorney
+    filled_by: appointed
+    maximum_memberships: null
+    quote: Appoint, subject to Council confirmation, the City Attorney and the Chief
+      of Police.
+- role_id: president
+  expected: elected_by_members
+  presiding: true
+  right: true
+  rounds: 1
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: true
+    label: President
+    filled_by: elected_by_members
+    maximum_memberships: 1
+    quote: the Council shall elect a President and Vice President by majority vote
+      of those present.
+  - established: true
+    label: President
+    filled_by: elected_by_members
+    maximum_memberships: 1
+    quote: the Council shall elect a President and Vice President by majority vote
+      of those present.
+- role_id: vice-president
+  expected: elected_by_members
+  presiding: true
+  right: true
+  rounds: 1
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: true
+    label: Vice President
+    filled_by: elected_by_members
+    maximum_memberships: 1
+    quote: the Council shall elect a President and Vice President by majority vote
+      of those present.
+  - established: true
+    label: Vice President
+    filled_by: elected_by_members
+    maximum_memberships: 1
+    quote: the Council shall elect a President and Vice President by majority vote
+      of those present.

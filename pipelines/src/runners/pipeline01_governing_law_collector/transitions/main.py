@@ -49,13 +49,20 @@ async def fetch_source(_limits: PipelineRunLimits, logger: PipelineRunLogger, co
     except fetchers.RefusedByHost as refused:
         logger.warning(f"{url}: refused with {refused.status_code}, not retried")
         return _after_url(context, skipped_urls=[*context.data.skipped_urls, url])
+    except httpx.HTTPError as error:
+        logger.warning(f"{url}: failed, {type(error).__name__}: {error}; skipped")
+        return _after_url(context, skipped_urls=[*context.data.skipped_urls, url])
     return _next(context, fetched=page), GoverningLawCollectorStep.PREPROCESS_PAGE_CONTENT
 
 
 async def preprocess_page_content(_limits: PipelineRunLimits, logger: PipelineRunLogger, context: GoverningLawCollectorContext, _client: httpx.AsyncClient) -> Step:
     page = context.data.fetched
     assert page is not None, "FETCH_SOURCE always leaves a page for PREPROCESS_PAGE_CONTENT"
-    markdown = converters.to_markdown(page)
+    try:
+        markdown = converters.to_markdown(page)
+    except converters.UnsupportedContentType as unsupported:
+        logger.warning(f"{unsupported}; skipped")
+        return _after_url(context, skipped_urls=[*context.data.skipped_urls, context.data.pending_urls[0]])
     if not converters.is_nearly_empty(markdown):
         return _next(context, fetched=None, markdown=markdown), GoverningLawCollectorStep.STORE_SOURCE_PAGE
     if not page.by_browser:

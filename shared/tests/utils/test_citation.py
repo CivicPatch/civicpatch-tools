@@ -189,6 +189,24 @@ def test_pieces_from_two_sections_locate_nothing():
     assert supporting_quote(LUNENBURG, locator, ["Trustee"], SelectionMethod.ELECTED_BY_VOTERS) is None
 
 
+def test_elective_officers_state_election_by_voters():
+    text = "Section 19. ELECTIVE ADMINISTRATIVE OFFICERS. (1) The elective administrative officers of the county shall include, in addition to the county commissioners, the sheriff and the assessor."
+
+    quote = supporting_quote(text, "The elective administrative officers of the county shall include", ["Sheriff"], SelectionMethod.ELECTED_BY_VOTERS)
+
+    assert quote is not None
+    assert quote.scope == QuoteScope.SENTENCE
+
+
+def test_a_board_designating_one_of_its_members_states_election_by_members():
+    text = "At its first regular meeting each year the board of county commissioners shall designate one of its members chair of the board for the year."
+
+    quote = supporting_quote(text, "shall designate one of its members chair", ["Chair"], SelectionMethod.ELECTED_BY_MEMBERS)
+
+    assert quote is not None
+    assert quote.scope == QuoteScope.SENTENCE
+
+
 def test_with_no_method_naming_the_role_is_enough():
     text = "The Village Clerk shall keep the records of the Board."
 
