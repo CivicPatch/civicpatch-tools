@@ -1,0 +1,164 @@
+- role_id: mayor
+  expected: elected_by_voters
+  presiding: false
+  right: true
+  rounds: 1
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: true
+    label: mayor
+    filled_by: elected_by_voters
+    maximum_memberships: 1
+    quote: At every other general election, a mayor will be elected for a four-year
+      term.
+  - established: true
+    label: mayor
+    filled_by: elected_by_voters
+    maximum_memberships: 1
+    quote: At every other general election, a mayor will be elected for a four-year
+      term.
+- role_id: member
+  expected: elected_by_voters
+  presiding: false
+  right: true
+  rounds: 1
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: true
+    label: councilor
+    filled_by: elected_by_voters
+    maximum_memberships: 4
+    quote: The Town Council consists of a mayor and four councilors elected from the
+      Town at large.
+  - established: true
+    label: councilor
+    filled_by: elected_by_voters
+    maximum_memberships: 4
+    quote: The Town Council consists of a mayor and four councilors elected from the
+      Town at large.
+- role_id: city-manager
+  expected: appointed
+  presiding: false
+  right: false
+  rounds: 3
+  each_right:
+  - false
+  - false
+  agreed: true
+  answers:
+  - established: true
+    label: Town manager
+    filled_by: appointed
+    maximum_memberships: null
+    quote: A majority of the Council must appoint and may remove the manager.
+  - established: true
+    label: Town manager
+    filled_by: appointed
+    maximum_memberships: 1
+    quote: A majority of the Council must appoint and may remove the manager.
+  - established: true
+    label: Town manager
+    filled_by: appointed
+    maximum_memberships: 1
+    quote: A majority of the Council must appoint and may remove the manager.
+  - established: true
+    label: Town manager
+    filled_by: appointed
+    maximum_memberships: 1
+    quote: A majority of the Council must appoint and may remove the manager.
+  - established: true
+    label: Town manager
+    filled_by: appointed
+    maximum_memberships: 1
+    quote: A majority of the Council must appoint and may remove the manager.
+  - established: true
+    label: Town manager
+    filled_by: appointed
+    maximum_memberships: 1
+    quote: A majority of the Council must appoint and may remove the manager.
+- role_id: recorder
+  expected: probably_not_established
+  presiding: false
+  right: true
+  rounds: 1
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: treasurer
+  expected: probably_not_established
+  presiding: false
+  right: true
+  rounds: 1
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: marshal
+  expected: probably_not_established
+  presiding: false
+  right: true
+  rounds: 1
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+- role_id: president
+  expected: elected_by_members
+  presiding: true
+  right: true
+  rounds: 1
+  each_right:
+  - true
+  - true
+  agreed: true
+  answers:
+  - established: true
+    label: Council President
+    filled_by: elected_by_members
+    maximum_memberships: null
+    quote: the Council shall elect a president from its membership
+  - established: true
+    label: president
+    filled_by: elected_by_members
+    maximum_memberships: 1
+    quote: the Council shall elect a president from its membership.

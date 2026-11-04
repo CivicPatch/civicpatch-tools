@@ -181,7 +181,7 @@ def prompt_inputs(configs: dict[str, ConfigFile], run: SavedRun) -> PromptInputs
         return PromptInputs(government_form=None, known_roles=[], known_organizations=[_DEFAULT_ORGANIZATION])
     config = jurisdiction_config(configs, parsed.state, parsed.level)
     form = resolve_government_form(config, run.jurisdiction_name, None)
-    derived = derived_organizations(config, form)
+    derived = derived_organizations(config, form, run.jurisdiction_name)
     if not derived:
         return PromptInputs(government_form=None, known_roles=[], known_organizations=[_DEFAULT_ORGANIZATION])
     return PromptInputs(

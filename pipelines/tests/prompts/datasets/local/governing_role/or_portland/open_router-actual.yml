@@ -48,7 +48,7 @@
   right: true
   rounds: 1
   each_right:
-  - true
+  - false
   - true
   agreed: true
   answers:
@@ -56,14 +56,13 @@
     label: Auditor
     filled_by: elected_by_voters
     maximum_memberships: 1
-    quote: The Auditor shall be elected at the general municipal election and shall
-      serve for a term of four (4) years.
+    quote: There shall be an Auditor of the City of Portland. The Auditor shall be
+      elected at the general municipal election
   - established: true
     label: Auditor
     filled_by: elected_by_voters
     maximum_memberships: 1
-    quote: The Auditor shall be elected at the general municipal election and shall
-      serve for a term of four (4) years.
+    quote: There shall be an Auditor of the City of Portland.
 - role_id: city-administrator
   expected: appointed
   presiding: false
@@ -78,7 +77,8 @@
     label: City Administrator
     filled_by: appointed
     maximum_memberships: 1
-    quote: Appoint the City Administrator, subject to Council confirmation
+    quote: must be chosen by the Mayor solely on the basis of executive and administrative
+      qualifications.
   - established: true
     label: City Administrator
     filled_by: appointed

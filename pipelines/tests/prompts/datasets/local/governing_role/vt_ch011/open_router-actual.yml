@@ -12,11 +12,9 @@
     label: member of the City Council
     filled_by: elected_by_voters
     maximum_memberships: 6
-    quote: There shall be elected six members of the City Council, one from each ward,
-      who shall be a legal voter in, and elected by the voters of the ward he or she
-      represents.
+    quote: There shall be elected six members of the City Council, one from each ward
   - established: true
-    label: member of the City Council
+    label: City Council member
     filled_by: elected_by_voters
     maximum_memberships: 6
     quote: There shall be elected six members of the City Council, one from each ward,
@@ -36,7 +34,8 @@
     label: Mayor
     filled_by: elected_by_voters
     maximum_memberships: 1
-    quote: The legal voters of the City shall elect a Mayor
+    quote: The legal voters of the City shall elect a Mayor who shall be a legal voter
+      in the City.
   - established: true
     label: Mayor
     filled_by: elected_by_voters
@@ -62,7 +61,7 @@
   - established: true
     label: City Manager
     filled_by: appointed
-    maximum_memberships: 1
+    maximum_memberships: null
     quote: The City Manager shall be chosen and appointed by majority vote of the
       City Council for an indefinite term
 - role_id: clerk
@@ -83,7 +82,7 @@
   - established: true
     label: City Clerk
     filled_by: appointed
-    maximum_memberships: null
+    maximum_memberships: 1
     quote: The City Council shall appoint a City Clerk.
 - role_id: treasurer
   expected: appointed
@@ -98,12 +97,12 @@
   - established: true
     label: City Treasurer
     filled_by: appointed
-    maximum_memberships: 1
+    maximum_memberships: null
     quote: The City Council shall appoint a City Treasurer.
   - established: true
     label: City Treasurer
     filled_by: appointed
-    maximum_memberships: null
+    maximum_memberships: 1
     quote: The City Council shall appoint a City Treasurer.
 - role_id: council-president
   expected: elected_by_members

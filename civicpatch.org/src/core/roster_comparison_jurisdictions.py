@@ -3,7 +3,7 @@ one, its geoid and name must point to one. Anything else is refused for the user
 
 from shared.utils.name_utils import normalize_text_for_search
 
-from core.organization_derivation import LEGAL_STATUS_WORDS
+from shared.utils.government_forms import LEGAL_STATUS_WORDS
 from core.sheet_import_rows import normalize_geoid
 from schemas.jurisdictions import StateJurisdiction
 from schemas.roster_comparisons import IncomingRow, RejectedReason, RejectedRow, UploadedRow

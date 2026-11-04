@@ -21,10 +21,7 @@
       trustees, Treasurer, Collector of Taxes, a Chief Engineer, and two assistant
       engineers, all of whom, with the exception of the trustees, shall be elected
       annually and shall hold their respective offices for the term of one year and
-      until others are chosen in their places; said trustees shall be elected by ballot,
-      and, except the first two elected, shall hold office for the term of three years,
-      but the term of office for the first two chosen shall be one year for the first
-      and two years for the second.
+      until others are chosen in their places; said trustees shall be elected by ballot
 - role_id: commission-president
   expected: probably_not_established
   presiding: true

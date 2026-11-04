@@ -51,7 +51,7 @@ def presiding_asks(config: MergedConfig, name: str, government_form: GovernmentF
 
 def _organizations(config: MergedConfig, name: str, government_form: GovernmentForm | None) -> List[DerivedOrganization]:
     forms = [government_form] if government_form is not None else allowed_government_forms(config, name)
-    return [organization for form in forms for organization in derived_organizations(config, form)]
+    return [organization for form in forms for organization in derived_organizations(config, form, name)]
 
 
 # The config marks no role as presiding; a default of chosen-by-members is what such offices share.

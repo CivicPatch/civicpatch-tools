@@ -189,6 +189,7 @@ class EvalDetail(BaseModel):
 
 class EvalSection(BaseModel):
     eval_name: str
+    pipeline: str
     dataset_dir: str
     verdicts: list[ProviderVerdict]
     matrix: ModelPromptMatrix

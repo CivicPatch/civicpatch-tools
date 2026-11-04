@@ -77,50 +77,6 @@
   }
 }
 
-/* ── Which model scores best ── */
-
-table.model-matrix .subtext {
-  margin-top: 0.15rem;
-}
-
-.comparison {
-  margin-top: 1rem;
-  padding-top: 0.8rem;
-  border-top: 1px solid var(--border-subtle);
-}
-
-.comparison__pickers {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: 0.6rem;
-  font-size: var(--font-size-md);
-  color: var(--text-secondary);
-}
-
-.comparison__pickers select {
-  width: auto;
-  margin: 0;
-}
-
-.comparison__summary {
-  margin: 0.8rem 0 0;
-  font-size: var(--font-size-md);
-}
-
-.delta {
-  font-weight: 700;
-  font-variant-numeric: tabular-nums;
-}
-
-.delta--worse {
-  color: var(--error);
-}
-
-.delta--better {
-  color: var(--success);
-}
-
 /* ── What do I fix ── */
 
 .issue-list {

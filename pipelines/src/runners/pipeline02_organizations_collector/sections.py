@@ -9,7 +9,7 @@ from urllib.parse import urlparse
 from pydantic import BaseModel
 from .section_formats import SECTION_FORMATS, SectionFormat
 from shared.schemas import GoverningLaw, GoverningLawKind
-from shared.utils.layered_config import GoverningLawConfig
+from shared.utils.layered_config import GovernedBy, GoverningLawConfig
 
 # Most charters fit (Vermont's median is 21k chars); Burlington's 374k does not.
 WHOLE_TEXT_CHARS = 110_000
@@ -52,13 +52,23 @@ def page_kind(page: GoverningLawPage, governing_law: GoverningLaw, governing_law
 def pages_by_kind(
     pages: List[GoverningLawPage], governing_law: GoverningLaw, governing_law_config: GoverningLawConfig | None
 ) -> List[tuple[GoverningLawKind, List[GoverningLawPage]]]:
-    """In `PAGE_KIND_ORDER`, each kind's pages in their stored order; a kind with none is left out."""
+    """In `PAGE_KIND_ORDER`, each kind's pages in their stored order; a kind with none is left out.
+    Where a charter replaces the general law, a charter jurisdiction's statute pages are left out."""
     grouped: List[tuple[GoverningLawKind, List[GoverningLawPage]]] = []
     for kind in PAGE_KIND_ORDER:
         kind_pages = [page for page in pages if page_kind(page, governing_law, governing_law_config) == kind]
         if kind_pages:
             grouped.append((kind, kind_pages))
+    if _charter_replaces_general_law(governing_law, governing_law_config) and grouped and grouped[0][0] == GoverningLawKind.CHARTER:
+        return grouped[:1]
     return grouped
+
+
+def _charter_replaces_general_law(governing_law: GoverningLaw, governing_law_config: GoverningLawConfig | None) -> bool:
+    if governing_law_config is None or governing_law.classification is None:
+        return False
+    classification = governing_law_config.classifications.get(governing_law.classification)
+    return classification is not None and classification.governed_by == GovernedBy.CHARTER_ELSE_GENERAL_LAW
 
 
 def _general_law_urls(governing_law: GoverningLaw, governing_law_config: GoverningLawConfig | None) -> List[str]:

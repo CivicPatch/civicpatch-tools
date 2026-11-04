@@ -1,21 +1,18 @@
 - role_id: county-judge
   expected: not_stated
   presiding: false
-  right: true
+  right: false
   rounds: 1
   each_right:
-  - true
   - false
-  agreed: false
+  - false
+  agreed: true
   answers:
   - established: true
     label: county judge
-    filled_by: not_stated
+    filled_by: elected_by_voters
     maximum_memberships: 1
-    quote: a county court shall be the governing body and shall exercise general legislative
-      authority over all matters of county concern and shall consist of the county
-      judge and two county commissioners and a majority of those persons shall constitute
-      a quorum.
+    quote: an elected county judge
   - established: true
     label: county judge
     filled_by: elected_by_voters
@@ -28,7 +25,7 @@
   rounds: 1
   each_right:
   - true
-  - false
+  - true
   agreed: true
   answers:
   - established: true
@@ -38,14 +35,17 @@
     quote: 'The following county officers shall be elected at the primary election
       or general election, as provided in ORS 249.088: (a) A sheriff. (b) A county
       clerk. (c) A county assessor. (d) A county treasurer. (e) A county commissioner
-      to succeed any commissioner whose term of office expires the following January.'
+      to succeed any commissioner whose term of office expires the following January.
+      (f) In any county where there is a vacancy from any cause in the office of county
+      commissioner, an additional commissioner to fill the vacancy.'
   - established: true
     label: county commissioner
     filled_by: elected_by_voters
     maximum_memberships: 2
     quote: 'The following county officers shall be elected at the primary election
-      or general election, as provided in ORS 249.088: (e) A county commissioner to
-      succeed any commissioner whose term of office expires the following January.'
+      or general election, as provided in ORS 249.088: (a) A sheriff. (b) A county
+      clerk. (c) A county assessor. (d) A county treasurer. (e) A county commissioner
+      to succeed any commissioner whose term of office expires the following January.'
 - role_id: sheriff
   expected: elected_by_voters
   presiding: false
@@ -65,28 +65,41 @@
   - established: true
     label: sheriff
     filled_by: elected_by_voters
-    maximum_memberships: 1
+    maximum_memberships: null
     quote: 'The following county officers shall be elected at the primary election
       or general election, as provided in ORS 249.088: (a) A sheriff.'
 - role_id: clerk
   expected: elected_by_voters
   presiding: false
   right: true
-  rounds: 1
+  rounds: 2
   each_right:
   - false
-  - true
+  - false
   agreed: true
   answers:
   - established: true
     label: county clerk
     filled_by: elected_by_voters
-    maximum_memberships: 1
-    quote: (b) A county clerk.
+    maximum_memberships: null
+    quote: 'The following county officers shall be elected at the primary election
+      or general election, as provided in ORS 249.088: ... (b) A county clerk.'
   - established: true
     label: county clerk
     filled_by: elected_by_voters
     maximum_memberships: 1
+    quote: 'The following county officers shall be elected at the primary election
+      or general election, as provided in ORS 249.088: ... (b) A county clerk.'
+  - established: true
+    label: county clerk
+    filled_by: elected_by_voters
+    maximum_memberships: 1
+    quote: 'The following county officers shall be elected at the primary election
+      or general election, as provided in ORS 249.088: ... (b) A county clerk.'
+  - established: true
+    label: county clerk
+    filled_by: elected_by_voters
+    maximum_memberships: null
     quote: 'The following county officers shall be elected at the primary election
       or general election, as provided in ORS 249.088: (a) A sheriff. (b) A county
       clerk.'
@@ -97,40 +110,26 @@
   rounds: 1
   each_right:
   - true
-  - false
+  - true
   agreed: true
   answers:
   - established: true
     label: county assessor
     filled_by: elected_by_voters
     maximum_memberships: null
-    quote: '(1) The following county officers shall be elected at the primary election
-      or general election, as provided in ORS 249.088:
-
-
-      (a) A sheriff.
-
-
-      (b) A county clerk.
-
-
-      (c) A county assessor.
-
-
-      (d) A county treasurer.
-
-
-      (e) A county commissioner to succeed any commissioner whose term of office expires
-      the following January.
-
-
-      (f) In any county where there is a vacancy from any cause in the office of county
-      commissioner, an additional commissioner to fill the vacancy.'
+    quote: 'The following county officers shall be elected at the primary election
+      or general election, as provided in ORS 249.088: (a) A sheriff. (b) A county
+      clerk. (c) A county assessor.'
   - established: true
     label: county assessor
     filled_by: elected_by_voters
     maximum_memberships: null
-    quote: A county assessor.
+    quote: 'The following county officers shall be elected at the primary election
+      or general election, as provided in ORS 249.088: (a) A sheriff. (b) A county
+      clerk. (c) A county assessor. (d) A county treasurer. (e) A county commissioner
+      to succeed any commissioner whose term of office expires the following January.
+      (f) In any county where there is a vacancy from any cause in the office of county
+      commissioner, an additional commissioner to fill the vacancy.'
 - role_id: treasurer
   expected: elected_by_voters
   presiding: false
@@ -144,10 +143,13 @@
   - established: true
     label: county treasurer
     filled_by: elected_by_voters
-    maximum_memberships: 1
+    maximum_memberships: null
     quote: 'The following county officers shall be elected at the primary election
       or general election, as provided in ORS 249.088: (a) A sheriff. (b) A county
-      clerk. (c) A county assessor. (d) A county treasurer.'
+      clerk. (c) A county assessor. (d) A county treasurer. (e) A county commissioner
+      to succeed any commissioner whose term of office expires the following January.
+      (f) In any county where there is a vacancy from any cause in the office of county
+      commissioner, an additional commissioner to fill the vacancy.'
   - established: true
     label: county treasurer
     filled_by: elected_by_voters
@@ -167,33 +169,32 @@
   - established: true
     label: county surveyor
     filled_by: appointed
-    maximum_memberships: 1
+    maximum_memberships: null
     quote: Unless an adopted county charter or a county ordinance provides otherwise,
       the governing body of a county shall appoint a county surveyor.
   - established: true
     label: county surveyor
     filled_by: appointed
-    maximum_memberships: 1
+    maximum_memberships: null
     quote: Unless an adopted county charter or a county ordinance provides otherwise,
       the governing body of a county shall appoint a county surveyor.
 - role_id: chair
   expected: probably_not_established
   presiding: true
-  right: false
+  right: true
   rounds: 1
   each_right:
-  - false
-  - false
+  - true
+  - true
   agreed: true
   answers:
-  - established: true
-    label: chairperson
-    filled_by: elected_by_members
-    maximum_memberships: 1
-    quote: appoint a chairperson from among their number
-  - established: true
-    label: chairperson
-    filled_by: elected_by_members
-    maximum_memberships: 1
-    quote: appoint a chairperson from among their number who shall serve until the
-      first Monday in January next following appointment.
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''

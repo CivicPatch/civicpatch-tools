@@ -4,7 +4,7 @@
   right: true
   rounds: 1
   each_right:
-  - true
+  - false
   - true
   agreed: true
   answers:
@@ -13,7 +13,8 @@
     filled_by: elected_by_voters
     maximum_memberships: 3
     quote: At each annual meeting the Village shall elect, by ballot if called for
-      by three legal voters, the following officers. One Trustee;
+      by three legal voters, the following officers. One Trustee, one Auditor, a President,
+      a Clerk, and a Treasurer.
   - established: true
     label: Trustee
     filled_by: elected_by_voters
@@ -34,11 +35,11 @@
     label: President
     filled_by: elected_by_voters
     maximum_memberships: 1
-    quote: At each annual meeting the Village shall elect, by ballot if called for
-      by three legal voters, the following officers. One Trustee; one Auditor, a President,
-      a Clerk, and a Treasurer.
+    quote: the Village shall elect, by ballot if called for by three legal voters,
+      the following officers. One Trustee; one Auditor, a President, a Clerk, and
+      a Treasurer.
   - established: true
-    label: Village President
+    label: President
     filled_by: elected_by_voters
     maximum_memberships: 1
     quote: At each annual meeting the Village shall elect, by ballot if called for
@@ -50,10 +51,16 @@
   right: true
   rounds: 1
   each_right:
+  - false
   - true
-  - true
-  agreed: true
+  agreed: false
   answers:
+  - established: true
+    label: Chairman
+    filled_by: appointed
+    maximum_memberships: 1
+    quote: The Trustees shall immediately after the annual meeting appoint from among
+      the Board, a Chairman
   - established: true
     label: Chairman
     filled_by: elected_by_members
@@ -61,9 +68,3 @@
     quote: The Trustees shall immediately after the annual meeting appoint from among
       the Board, a Chairman, and shall file such appointment with the Village Clerk
       for record.
-  - established: true
-    label: Chairman
-    filled_by: elected_by_members
-    maximum_memberships: 1
-    quote: The Trustees shall immediately after the annual meeting appoint from among
-      the Board, a Chairman

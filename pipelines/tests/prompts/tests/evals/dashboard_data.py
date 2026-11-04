@@ -22,6 +22,27 @@ DATASETS = "../../../datasets/local"
 REPORT_SUFFIX = "-eval-report.yml"
 PASS_FAIL_KEY = "failed_cases"
 
+# The pipeline whose prompt each eval exercises; the page groups them so. Pipeline 1 makes no
+# model call, so it has none. A new eval is listed here, never guessed into a pipeline.
+ORGANIZATIONS_COLLECTOR = "Pipeline 2: organizations collector"
+PEOPLE_COLLECTOR = "Pipeline 3: people collector"
+PIPELINE_OF_EVAL = {
+    "governing_sections": ORGANIZATIONS_COLLECTOR,
+    "governing_role": ORGANIZATIONS_COLLECTOR,
+    OFFICIALS: PEOPLE_COLLECTOR,
+    "find_jurisdiction_url": PEOPLE_COLLECTOR,
+    "government_form": PEOPLE_COLLECTOR,
+    "page_covers": PEOPLE_COLLECTOR,
+    "relevant_page": PEOPLE_COLLECTOR,
+    "research_municipality": PEOPLE_COLLECTOR,
+}
+
+
+def pipeline_of(eval_name: str) -> str:
+    if eval_name not in PIPELINE_OF_EVAL:
+        raise ValueError(f"eval {eval_name!r} belongs to no pipeline: add it to PIPELINE_OF_EVAL")
+    return PIPELINE_OF_EVAL[eval_name]
+
 
 def eval_dirs() -> dict[str, pathlib.Path]:
     """Every eval the dashboard shows: officials, then each folder whose report is pass/fail

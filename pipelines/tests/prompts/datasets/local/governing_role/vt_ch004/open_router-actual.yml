@@ -12,12 +12,13 @@
     label: Clerk
     filled_by: elected_by_members
     maximum_memberships: 1
-    quote: the Council shall organize and elect a President, Vice President, and Clerk
-      by a majority vote of the entire Council
+    quote: At the first meeting of the month following the annual City meeting, the
+      Council shall organize and elect a President, Vice President, and Clerk by a
+      majority vote of the entire Council
   - established: true
     label: Clerk
     filled_by: elected_by_members
-    maximum_memberships: 1
+    maximum_memberships: null
     quote: the Council shall organize and elect a President, Vice President, and Clerk
       by a majority vote of the entire Council
 - role_id: city-manager
@@ -33,7 +34,7 @@
   - established: true
     label: City Manager
     filled_by: appointed
-    maximum_memberships: 1
+    maximum_memberships: null
     quote: The Council shall appoint a City Manager under and in accordance with Vermont
       Statutes Annotated.
   - established: true
@@ -56,9 +57,8 @@
     label: President
     filled_by: elected_by_members
     maximum_memberships: 1
-    quote: At the first meeting of the month following the annual City meeting, the
-      Council shall organize and elect a President, Vice President, and Clerk by a
-      majority vote of the entire Council
+    quote: the Council shall organize and elect a President, Vice President, and Clerk
+      by a majority vote of the entire Council
   - established: true
     label: President
     filled_by: elected_by_members
@@ -79,9 +79,8 @@
     label: Vice President
     filled_by: elected_by_members
     maximum_memberships: 1
-    quote: At the first meeting of the month following the annual City meeting, the
-      Council shall organize and elect a President, Vice President, and Clerk by a
-      majority vote of the entire Council
+    quote: the Council shall organize and elect a President, Vice President, and Clerk
+      by a majority vote of the entire Council
   - established: true
     label: Vice President
     filled_by: elected_by_members

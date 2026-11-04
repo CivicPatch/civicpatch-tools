@@ -424,7 +424,7 @@ def governing_role_question(role_label: str, organization_name: str) -> str:
     return f"""
     Question: does this law establish the office of {role_label}, by that name or another, and
     how is it filled? It is asked for as part of the {organization_name}; an office the law makes
-    an officer of the town, city or village itself counts too.
+    an officer of the town, city, village or county itself counts too.
 
     Return {{"established": ..., "label": ..., "filled_by": ..., "maximum_memberships": ...,
     "quote": ...}}: established false, label "", filled_by "not_stated", maximum_memberships
@@ -440,7 +440,7 @@ def governing_presiding_question(organization_name: str, candidates: List[tuple[
     listed = "\n".join(f"    - {role_id}: {', '.join(names)}" for role_id, names in candidates)
     return f"""
     Question: which of these offices of the {organization_name} does this law establish, and how
-    is each filled? An office the law makes an officer of the town, city or village itself counts
+    is each filled? An office the law makes an officer of the town, city, village or county itself counts
     too. Each is listed as its id, then the names it may go by:
 {listed}
 

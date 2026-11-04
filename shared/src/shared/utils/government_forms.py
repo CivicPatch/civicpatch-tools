@@ -20,6 +20,7 @@ GOVERNMENT_FORM_DESCRIPTIONS: dict[GovernmentForm, str] = {
     GovernmentForm.REPRESENTATIVE_TOWN_MEETING: "a select board, with elected town meeting members",
     GovernmentForm.COUNTY_EXECUTIVE: "a county board plus a separately elected county executive",
     GovernmentForm.VILLAGE_BOARD: "an elected board of trustees with a president who sits and votes on it",
+    GovernmentForm.COUNTY_COURT: "a county court: an elected county judge who presides and votes, with elected commissioners",
 }
 
 
@@ -41,3 +42,21 @@ def name_suffix(name: str) -> str:
     is not part of it: "Reno city (Lamar County)" and "San Buenaventura (Ventura) city" -> city."""
     words = PARENTHETICAL.sub("", name).split()
     return words[-1].lower() if words else ""
+
+
+LEGAL_STATUS_WORDS = ("city", "town", "township", "county", "village", "borough", "plantation")
+DEFAULT_ORGANIZATION_SUFFIX = "Officers"
+LSAD_PLACEHOLDER = "{lsad}"
+
+
+def organization_name(name: str, jurisdiction_name: str) -> str:
+    """"{lsad} Council" for "Lakeview town" -> "Town Council"; the placeholder and its space drop
+    out when the name ends in no legal status word."""
+    suffix = name_suffix(jurisdiction_name)
+    lsad = suffix.capitalize() if suffix in LEGAL_STATUS_WORDS else ""
+    return name.replace(f"{LSAD_PLACEHOLDER} ", f"{lsad} " if lsad else "")
+
+
+def default_organization_name(jurisdiction_name: str) -> str:
+    """"Essex town" -> "Town Officers"; names that end in no legal status word -> "Officers"."""
+    return organization_name(f"{LSAD_PLACEHOLDER} {DEFAULT_ORGANIZATION_SUFFIX}", jurisdiction_name)

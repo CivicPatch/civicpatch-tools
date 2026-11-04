@@ -50,7 +50,7 @@ def organizations_to_build(config: MergedConfig, jurisdiction: GovernmentFormInp
     for organization in government.candidate_organizations:
         listed_by_every_form = True
         for form in government.candidate_government_forms:
-            names = [listed.name for listed in derived_organizations(config, form)]
+            names = [listed.name for listed in derived_organizations(config, form, jurisdiction.name)]
             if organization.name not in names:
                 listed_by_every_form = False
         if listed_by_every_form:

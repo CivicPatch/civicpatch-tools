@@ -1,7 +1,7 @@
 import json
 from core.organization_build import FormOrganizationRow
-from core.organization_derivation import default_organization_name
 from database.database import get_pool
+from shared.utils.government_forms import default_organization_name
 
 
 async def ensure_defaults_exist(jurisdiction_ocdids: list[str]) -> None:

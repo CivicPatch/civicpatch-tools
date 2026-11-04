@@ -45,8 +45,6 @@
     maximum_memberships: 1
     quote: The Village shall, at every annual meeting elect a Moderator, Clerk, Treasurer,
       three auditors, and the number of trustees as are necessary to fill vacancies
-      where terms of office have expired or a member has resigned, died, or been removed
-      in order to make a full board of five trustees.
 - role_id: treasurer
   expected: elected_by_voters
   presiding: false
@@ -60,13 +58,15 @@
   - established: true
     label: Treasurer
     filled_by: elected_by_voters
-    maximum_memberships: 1
+    maximum_memberships: null
     quote: The Village shall, at every annual meeting elect a Moderator, Clerk, Treasurer,
       three auditors, and the number of trustees as are necessary to fill vacancies
+      where terms of office have expired or a member has resigned, died, or been removed
+      in order to make a full board of five trustees.
   - established: true
     label: Treasurer
     filled_by: elected_by_voters
-    maximum_memberships: null
+    maximum_memberships: 1
     quote: The Village shall, at every annual meeting elect a Moderator, Clerk, Treasurer,
       three auditors, and the number of trustees as are necessary to fill vacancies
       where terms of office have expired or a member has resigned, died, or been removed
@@ -93,10 +93,7 @@
     label: Moderator
     filled_by: elected_by_voters
     maximum_memberships: 1
-    quote: The Village shall, at every annual meeting elect a Moderator, Clerk, Treasurer,
-      three auditors, and the number of trustees as are necessary to fill vacancies
-      where terms of office have expired or a member has resigned, died, or been removed
-      in order to make a full board of five trustees.
+    quote: The Village shall, at every annual meeting elect a Moderator
 - role_id: chair
   expected: elected_by_members
   presiding: true

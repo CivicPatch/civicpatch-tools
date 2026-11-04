@@ -3,7 +3,7 @@ from enum import StrEnum
 
 from pydantic import BaseModel, model_validator
 from shared.schemas import GovernmentForm, JurisdictionLevel, Role, RoleConfig, SelectionMethod
-from shared.utils.government_forms import DerivedOrganization, name_suffix
+from shared.utils.government_forms import DerivedOrganization, name_suffix, organization_name
 from shared.utils.id_utils import parse_jurisdiction_ocdid
 from shared.utils.taxonomy import lookup_key
 
@@ -48,7 +48,11 @@ GovernmentFormsConfig = dict[GovernmentForm, GovernmentFormConfig]
 class GovernedBy(StrEnum):
     CHARTER = "charter"
     GENERAL_LAW = "general_law"
+    # The charter governs and the general law fills its silences (Vermont's towns).
     CHARTER_OR_GENERAL_LAW = "charter_or_general_law"
+    # A charter replaces the general law; without one, the general law governs (Oregon's
+    # counties, Or. Const. Art. VI § 10). Pipeline 2 reads the charter alone when there is one.
+    CHARTER_ELSE_GENERAL_LAW = "charter_else_general_law"
 
 
 class Classification(BaseModel):
@@ -277,12 +281,16 @@ def resolve_government_form(
 
 
 def derived_organizations(
-    config: MergedConfig, government_form: GovernmentForm | None
+    config: MergedConfig, government_form: GovernmentForm | None, jurisdiction_name: str
 ) -> list[DerivedOrganization]:
-    """Nothing until the government form is known, or for one saved at the wrong level."""
+    """Nothing until the government form is known, or for one saved at the wrong level. Names
+    are the jurisdiction's own: "{lsad} Officers" is its default organization."""
     if government_form is None or government_form not in level_government_forms(config):
         return []
-    return government_form_organizations(config, government_form)
+    return [
+        organization.model_copy(update={"name": organization_name(organization.name, jurisdiction_name)})
+        for organization in government_form_organizations(config, government_form)
+    ]
 
 
 def allowed_classifications(governing_law: GoverningLawConfig, name: str) -> list[str]:
