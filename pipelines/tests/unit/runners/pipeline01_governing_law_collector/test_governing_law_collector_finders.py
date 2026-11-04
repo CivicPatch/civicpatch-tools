@@ -3,7 +3,7 @@ from unittest.mock import AsyncMock, MagicMock, patch
 import pytest
 from runners.pipeline01_governing_law_collector import finders
 from runners.pipeline01_governing_law_collector.finders import classification
-from runners.pipeline01_governing_law_collector.schemas import FinderAnswer, GoverningLawCollectorConfig
+from runners.pipeline01_governing_law_collector.schemas import GoverningLawCollectorConfig, LawKind, LawUrl, SearchResult
 from shared.schemas import FoundBy
 from shared.utils.layered_config import GoverningLawConfig
 
@@ -22,8 +22,8 @@ _VERMONT = GoverningLawConfig.model_validate({
 def test_the_lsads_classification_gives_its_general_law():
     answer = classification.find(_VERMONT, "Weybridge town")
 
-    assert (answer.found_by, answer.classification, answer.charter_urls, answer.general_law_urls) == (
-        FoundBy.CLASSIFICATION, "town", [], ["https://vt.gov/17/2646"]
+    assert (answer.found_by, answer.classification, answer.law_urls) == (
+        FoundBy.CLASSIFICATION, "town", [LawUrl(url="https://vt.gov/17/2646", kind=LawKind.STATUTE)]
     )
 
 
@@ -45,15 +45,18 @@ _OREGON = GoverningLawConfig.model_validate({
 
 
 @pytest.mark.asyncio
-async def test_a_state_without_a_charter_index_searches_for_the_charter():
+async def test_a_state_without_a_charter_index_searches_for_the_charter_with_the_statutes_beside():
     config = GoverningLawCollectorConfig(name="Lane County", url="https://www.lanecountyor.gov", governing_law=_OREGON)
-    searched = AsyncMock(return_value=FinderAnswer(found_by=FoundBy.SEARCH, classification="county"))
+    charter = LawUrl(url="https://www.lanecountyor.gov/charter", kind=LawKind.CHARTER)
+    searched = AsyncMock(return_value=SearchResult(law_urls=[charter]))
 
     with patch(f"{FINDERS}.search.find", new=searched):
         answer = await finders.find(config, "run-1", "ocd-jurisdiction/country:us/state:or/county:lane/government", MagicMock())
 
-    assert answer.found_by == FoundBy.SEARCH
-    assert searched.await_args.args[:3] == (_OREGON, "Lane County", "https://www.lanecountyor.gov")
+    assert (answer.found_by, answer.classification) == (FoundBy.SEARCH, "county")
+    assert answer.law_urls == [charter, LawUrl(url="https://or.gov/203", kind=LawKind.STATUTE)]
+    target, _page_test, name, site = searched.await_args.args[:4]
+    assert (target, name, site) == (finders.charter_target(_OREGON), "Lane County", "https://www.lanecountyor.gov")
 
 
 @pytest.mark.asyncio
