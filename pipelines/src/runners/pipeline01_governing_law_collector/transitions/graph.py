@@ -6,28 +6,9 @@ from ..schemas import GoverningLawCollectorStep
 GOVERNING_LAW_COLLECTOR_TRANSITIONS: Transitions = {
     PipelineRunStatus.PENDING: frozenset({PipelineRunStatus.RUNNING}),
     PipelineRunStatus.RUNNING: frozenset({PipelineRunStatus.INIT}),
-    PipelineRunStatus.INIT: frozenset({GoverningLawCollectorStep.FIND_SOURCE}),
-    GoverningLawCollectorStep.FIND_SOURCE: frozenset({
-        GoverningLawCollectorStep.FETCH_SOURCE,
-        # Nothing to fetch: no charter and no general law on record.
-        GoverningLawCollectorStep.WRITE_GOVERNING_LAW,
-    }),
-    GoverningLawCollectorStep.FETCH_SOURCE: frozenset({
-        GoverningLawCollectorStep.PREPROCESS_PAGE_CONTENT,
-        # The host refused this url; on to the next, or done.
-        GoverningLawCollectorStep.FETCH_SOURCE,
-        GoverningLawCollectorStep.WRITE_GOVERNING_LAW,
-    }),
-    GoverningLawCollectorStep.PREPROCESS_PAGE_CONTENT: frozenset({
-        GoverningLawCollectorStep.STORE_SOURCE_PAGE,
-        # Nearly empty by plain GET: the same url again, by browser. Still nearly empty: the next url.
-        GoverningLawCollectorStep.FETCH_SOURCE,
-        GoverningLawCollectorStep.WRITE_GOVERNING_LAW,
-    }),
-    GoverningLawCollectorStep.STORE_SOURCE_PAGE: frozenset({
-        GoverningLawCollectorStep.FETCH_SOURCE,
-        GoverningLawCollectorStep.WRITE_GOVERNING_LAW,
-    }),
+    PipelineRunStatus.INIT: frozenset({GoverningLawCollectorStep.FIND_SOURCES}),
+    GoverningLawCollectorStep.FIND_SOURCES: frozenset({GoverningLawCollectorStep.STORE_SOURCES}),
+    GoverningLawCollectorStep.STORE_SOURCES: frozenset({GoverningLawCollectorStep.WRITE_GOVERNING_LAW}),
     GoverningLawCollectorStep.WRITE_GOVERNING_LAW: frozenset({
         PipelineRunStatus.SUCCESS,
         # What was stored is written either way; the run fails when it is not what governs the place.

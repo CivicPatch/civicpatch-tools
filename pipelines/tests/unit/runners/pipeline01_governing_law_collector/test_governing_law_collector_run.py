@@ -244,3 +244,35 @@ async def test_a_page_another_run_stored_today_is_not_fetched_again():
     assert context.data.general_law_source_page_ids == ["stowes-statute"]
     assert api.patch_jurisdiction_extras.await_args.args[2].extras_governing_law.source_page_ids == ["page-1", "stowes-statute"]
 
+
+@pytest.mark.asyncio
+async def test_text_the_search_already_read_is_stored_with_no_fetch_and_no_reuse():
+    read = LawUrl(url=_CHARTER, kind=LawKind.CHARTER, markdown=_TEXT)
+    answer = FinderAnswer(found_by=FoundBy.SEARCH, classification="town", law_urls=[read, *_law(statutes=(_STATUTE,))])
+    fetch = AsyncMock(side_effect=lambda url, by_browser: _html(url, _TEXT))
+
+    context, api = await _run(answer, fetch)
+
+    assert [call.args for call in fetch.await_args_list] == [(_STATUTE,)]
+    assert [call.args[2] for call in api.reuse_governing_law_source_page.await_args_list] == [_STATUTE]
+    assert api.store_governing_law_source_page.await_args_list[0].args[3] == _TEXT
+    assert context.data.charter_source_page_ids == ["page-1"]
+
+
+@pytest.mark.asyncio
+async def test_a_page_nearly_empty_even_by_browser_is_skipped():
+    answer = FinderAnswer(found_by=FoundBy.STATE_INDEX, classification="town", law_urls=_law(charter=(_CHARTER,), statutes=(_STATUTE,)))
+
+    async def fetch(url, by_browser):
+        return _html(url, "Loading…", by_browser=by_browser) if url == _CHARTER else _html(url, _TEXT)
+
+    context, _ = await _run(answer, AsyncMock(side_effect=fetch))
+
+    assert context.data.skipped_urls == [_CHARTER]
+    assert context.data.general_law_source_page_ids == ["page-1"]
+
+
+def test_the_text_is_left_out_of_a_dumped_context():
+    law_url = LawUrl(url=_CHARTER, kind=LawKind.CHARTER, markdown=_TEXT)
+
+    assert "markdown" not in law_url.model_dump()

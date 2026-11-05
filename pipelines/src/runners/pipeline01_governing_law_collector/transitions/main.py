@@ -2,13 +2,14 @@
 answers it with the next state; the engine checks the answer against the graph."""
 
 from datetime import datetime, timezone
+from typing import List, Optional
 
 import httpx
 import services.civicpatch_api as civicpatch_api
 from runners.pipeline01_governing_law_collector import converters, fetchers, finders, issues
-from ..schemas import GoverningLawCollectorContext, GoverningLawCollectorState, GoverningLawCollectorStep, LawKind
+from ..schemas import GoverningLawCollectorContext, GoverningLawCollectorState, GoverningLawCollectorStep, LawKind, LawUrl
 from shared.schemas import GoverningLaw, GoverningLawKind, JurisdictionExtras, PipelineRunLimits
-from shared.utils.statuses import PipelineIssueType, PipelineRunStatus
+from shared.utils.statuses import PipelineRunStatus
 from utils import cost_utils
 from utils.log_utils import PipelineRunLogger
 
@@ -19,74 +20,74 @@ def _next(context: GoverningLawCollectorContext, **data_updates) -> GoverningLaw
     return context.model_copy(update={"data": context.data.model_copy(update=data_updates)})
 
 
-def _after_url(context: GoverningLawCollectorContext, **data_updates) -> Step:
-    """Done with the url in hand: the next one, or write what was stored."""
-    remaining = context.data.pending_urls[1:]
-    next_context = _next(context, pending_urls=remaining, fetched=None, markdown=None, escalate=False, **data_updates)
-    return next_context, GoverningLawCollectorStep.FETCH_SOURCE if remaining else GoverningLawCollectorStep.WRITE_GOVERNING_LAW
-
-
 async def start(_limits: PipelineRunLimits, _logger: PipelineRunLogger, context: GoverningLawCollectorContext, _client: httpx.AsyncClient) -> Step:
-    return context, GoverningLawCollectorStep.FIND_SOURCE
+    return context, GoverningLawCollectorStep.FIND_SOURCES
 
 
-async def find_source(_limits: PipelineRunLimits, logger: PipelineRunLogger, context: GoverningLawCollectorContext, _client: httpx.AsyncClient) -> Step:
+async def find_sources(_limits: PipelineRunLimits, logger: PipelineRunLogger, context: GoverningLawCollectorContext, _client: httpx.AsyncClient) -> Step:
     answer = await finders.find(context.data.config, context.pipeline_run_id, context.data.jurisdiction_ocdid, logger)
     logger.info(f"{answer.found_by}: {len(answer.urls_of(LawKind.CHARTER))} charter url(s), {len(answer.urls_of(LawKind.STATUTE))} general law url(s)")
-    next_context = _next(context, answer=answer, pending_urls=answer.urls)
-    return next_context, GoverningLawCollectorStep.FETCH_SOURCE if answer.urls else GoverningLawCollectorStep.WRITE_GOVERNING_LAW
+    return _next(context, answer=answer), GoverningLawCollectorStep.STORE_SOURCES
 
 
-async def fetch_source(_limits: PipelineRunLimits, logger: PipelineRunLogger, context: GoverningLawCollectorContext, client: httpx.AsyncClient) -> Step:
-    url = context.data.pending_urls[0]
-    if not context.data.escalate:
-        reused = await civicpatch_api.reuse_governing_law_source_page(client, context.data.jurisdiction_ocdid, url)
+async def store_sources(_limits: PipelineRunLimits, logger: PipelineRunLogger, context: GoverningLawCollectorContext, client: httpx.AsyncClient) -> Step:
+    answer = context.data.answer
+    assert answer is not None, "FIND_SOURCES always answers before STORE_SOURCES"
+    charter: List[str] = []
+    general_law: List[str] = []
+    skipped: List[str] = []
+    for law_url in answer.law_urls:
+        source_page_id = await _source_page_id(client, context.data.jurisdiction_ocdid, law_url, logger)
+        if source_page_id is None:
+            skipped.append(law_url.url)
+        elif law_url.kind == LawKind.CHARTER:
+            charter.append(source_page_id)
+        else:
+            general_law.append(source_page_id)
+    next_context = _next(context, charter_source_page_ids=charter, general_law_source_page_ids=general_law, skipped_urls=skipped)
+    return next_context, GoverningLawCollectorStep.WRITE_GOVERNING_LAW
+
+
+async def _source_page_id(client: httpx.AsyncClient, jurisdiction_ocdid: str, law_url: LawUrl, logger: PipelineRunLogger) -> Optional[str]:
+    """Text a search already read is stored as it is. Any other url is reused if another run stored
+    it within a day, else fetched. None when it could not be read."""
+    markdown = law_url.markdown
+    if markdown is None:
+        reused = await civicpatch_api.reuse_governing_law_source_page(client, jurisdiction_ocdid, law_url.url)
         if reused is not None:
-            logger.info(f"{url}: stored by another run within a day, not fetched again")
-            return _recorded(context, url, reused["id"])
+            logger.info(f"{law_url.url}: stored by another run within a day, not fetched again")
+            return reused["id"]
+        markdown = await _read(law_url.url, logger)
+    if markdown is None:
+        return None
+    stored = await civicpatch_api.store_governing_law_source_page(client, jurisdiction_ocdid, law_url.url, markdown)
+    return stored["id"]
+
+
+async def _read(url: str, logger: PipelineRunLogger) -> Optional[str]:
+    markdown = await _read_once(url, logger, by_browser=False)
+    if markdown is None or not converters.is_nearly_empty(markdown):
+        return markdown
+    logger.info(f"{url}: nearly empty by plain GET, fetching again by browser")
+    markdown = await _read_once(url, logger, by_browser=True)
+    if markdown is not None and converters.is_nearly_empty(markdown):
+        logger.warning(f"{url}: nearly empty even by browser, skipped")
+        return None
+    return markdown
+
+
+async def _read_once(url: str, logger: PipelineRunLogger, *, by_browser: bool) -> Optional[str]:
     try:
-        page = await fetchers.fetch(url, by_browser=context.data.escalate)
+        return converters.to_markdown(await fetchers.fetch(url, by_browser=by_browser))
     except fetchers.RefusedByHost as refused:
         logger.warning(f"{url}: refused with {refused.status_code}, not retried")
-        return _after_url(context, skipped_urls=[*context.data.skipped_urls, url])
     except fetchers.OffLimits as off_limits:
         logger.warning(f"{off_limits}; skipped")
-        return _after_url(context, skipped_urls=[*context.data.skipped_urls, url])
     except httpx.HTTPError as error:
         logger.warning(f"{url}: failed, {type(error).__name__}: {error}; skipped")
-        return _after_url(context, skipped_urls=[*context.data.skipped_urls, url])
-    return _next(context, fetched=page), GoverningLawCollectorStep.PREPROCESS_PAGE_CONTENT
-
-
-async def preprocess_page_content(_limits: PipelineRunLimits, logger: PipelineRunLogger, context: GoverningLawCollectorContext, _client: httpx.AsyncClient) -> Step:
-    page = context.data.fetched
-    assert page is not None, "FETCH_SOURCE always leaves a page for PREPROCESS_PAGE_CONTENT"
-    try:
-        markdown = converters.to_markdown(page)
     except converters.UnsupportedContentType as unsupported:
         logger.warning(f"{unsupported}; skipped")
-        return _after_url(context, skipped_urls=[*context.data.skipped_urls, context.data.pending_urls[0]])
-    if not converters.is_nearly_empty(markdown):
-        return _next(context, fetched=None, markdown=markdown), GoverningLawCollectorStep.STORE_SOURCE_PAGE
-    if not page.by_browser:
-        logger.info(f"{page.url}: nearly empty by plain GET, fetching again by browser")
-        return _next(context, fetched=None, escalate=True), GoverningLawCollectorStep.FETCH_SOURCE
-    logger.warning(f"{page.url}: nearly empty even by browser, skipped")
-    return _after_url(context, skipped_urls=[*context.data.skipped_urls, context.data.pending_urls[0]])
-
-
-async def store_source_page(_limits: PipelineRunLimits, _logger: PipelineRunLogger, context: GoverningLawCollectorContext, client: httpx.AsyncClient) -> Step:
-    markdown = context.data.markdown
-    assert markdown is not None, "PREPROCESS_PAGE_CONTENT always leaves markdown for STORE_SOURCE_PAGE"
-    url = context.data.pending_urls[0]
-    stored = await civicpatch_api.store_governing_law_source_page(client, context.data.jurisdiction_ocdid, url, markdown)
-    return _recorded(context, url, stored["id"])
-
-
-def _recorded(context: GoverningLawCollectorContext, url: str, source_page_id: str) -> Step:
-    if _is_charter(context, url):
-        return _after_url(context, charter_source_page_ids=[*context.data.charter_source_page_ids, source_page_id])
-    return _after_url(context, general_law_source_page_ids=[*context.data.general_law_source_page_ids, source_page_id])
+    return None
 
 
 async def write_governing_law(_limits: PipelineRunLimits, logger: PipelineRunLogger, context: GoverningLawCollectorContext, client: httpx.AsyncClient) -> Step:
@@ -98,7 +99,7 @@ async def write_governing_law(_limits: PipelineRunLimits, logger: PipelineRunLog
     if not_found is None:
         return _next(context, governing_law=governing_law), PipelineRunStatus.SUCCESS
     # A failed run, until every run sends its context and cp.org files the issue from it.
-    logger.warning(f"{PipelineIssueType.GOVERNING_LAW_NOT_FOUND}: {not_found.missing} missing, tried {[tried.url for tried in not_found.tried]}")
+    logger.warning(f"{issues.issue_type(not_found)}: {not_found.missing} missing, tried {[(tried.url, tried.reason) for tried in not_found.tried]}")
     return _next(context, governing_law=governing_law), PipelineRunStatus.SEND_ERROR
 
 
@@ -106,16 +107,11 @@ async def send_error(_limits: PipelineRunLimits, _logger: PipelineRunLogger, con
     return context, PipelineRunStatus.ERROR
 
 
-def _is_charter(context: GoverningLawCollectorContext, url: str) -> bool:
-    answer = context.data.answer
-    return answer is not None and url in answer.urls_of(LawKind.CHARTER)
-
-
 def governing_law_from(context: GoverningLawCollectorContext) -> GoverningLaw:
     """What the run stored decides the kind, not what the finder hoped for: a charter if one was
     stored, else general law if a statute was, else none found."""
     answer = context.data.answer
-    assert answer is not None, "FIND_SOURCE always answers before WRITE_GOVERNING_LAW"
+    assert answer is not None, "FIND_SOURCES always answers before WRITE_GOVERNING_LAW"
     charter, general_law = context.data.charter_source_page_ids, context.data.general_law_source_page_ids
     kind = GoverningLawKind.CHARTER if charter else GoverningLawKind.GENERAL_LAW if general_law else GoverningLawKind.NONE_FOUND
     return GoverningLaw(
@@ -130,10 +126,8 @@ def governing_law_from(context: GoverningLawCollectorContext) -> GoverningLaw:
 
 TRANSITION_MAP = {
     PipelineRunStatus.INIT: start,
-    GoverningLawCollectorStep.FIND_SOURCE: find_source,
-    GoverningLawCollectorStep.FETCH_SOURCE: fetch_source,
-    GoverningLawCollectorStep.PREPROCESS_PAGE_CONTENT: preprocess_page_content,
-    GoverningLawCollectorStep.STORE_SOURCE_PAGE: store_source_page,
+    GoverningLawCollectorStep.FIND_SOURCES: find_sources,
+    GoverningLawCollectorStep.STORE_SOURCES: store_sources,
     GoverningLawCollectorStep.WRITE_GOVERNING_LAW: write_governing_law,
     PipelineRunStatus.SEND_ERROR: send_error,
 }

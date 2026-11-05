@@ -1,7 +1,7 @@
 """Turning a fetched page into markdown, chosen by content type. Only markdown leaves the process."""
 
 from ..schemas import FetchedPage
-from . import html, pdf
+from . import ecode360, html, pdf
 
 # Shorter than this after conversion, a page is a shell: script-rendered, or a frameset.
 MIN_MARKDOWN_CHARS = 200
@@ -14,6 +14,8 @@ class UnsupportedContentType(Exception):
 
 
 def to_markdown(page: FetchedPage) -> str:
+    if ecode360.is_print_page(page.url):
+        return ecode360.to_markdown(page.body)
     if "html" in page.content_type:
         return html.to_markdown(page.body)
     if "pdf" in page.content_type or page.body.startswith(PDF_MAGIC):

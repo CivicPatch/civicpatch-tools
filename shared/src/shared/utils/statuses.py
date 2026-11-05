@@ -74,6 +74,9 @@ class PipelineIssueType(StrEnum):
     # confirmed where one is possible, or no page at all. The run still succeeds with what it
     # stored; the detail lists every url tried and why, for the human who finds the right one.
     GOVERNING_LAW_NOT_FOUND = "governing_law_not_found"
+    # The same miss, where a host refused us, challenged us or its robots.txt kept us out, so the
+    # law may be there. Left for a person: challenges are not answered.
+    SOURCE_BLOCKED = "source_blocked"
 
 
 # Issue types a run can produce, as opposed to ones about a proposal. These are keyed on the
@@ -84,6 +87,7 @@ class PipelineIssueType(StrEnum):
 RUN_LEVEL_ISSUE_TYPES = frozenset(PipelineRunErrorType) | {
     PipelineIssueType.PIPELINE_ERROR,
     PipelineIssueType.GOVERNING_LAW_NOT_FOUND,
+    PipelineIssueType.SOURCE_BLOCKED,
 }
 
 
