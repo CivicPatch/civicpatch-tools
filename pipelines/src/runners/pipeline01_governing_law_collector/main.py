@@ -21,7 +21,7 @@ MACHINE = Machine(transitions=GOVERNING_LAW_COLLECTOR_TRANSITIONS, handlers=TRAN
 async def start(
     pipeline_run_id: str, jurisdiction_ocdid: str, config: GoverningLawCollectorConfig
 ) -> GoverningLawCollectorContext:
-    """No `persist_fn`: the context, and the raw page it briefly holds, is never written to disk."""
+    """No `persist_fn`: the context, and the page text it holds between steps, is never written to disk."""
     context = GoverningLawCollectorContext(
         pipeline_run_id=pipeline_run_id,
         current_state=PipelineRunStatus.INIT,

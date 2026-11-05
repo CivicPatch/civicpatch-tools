@@ -24,6 +24,7 @@ _ISSUE_WEIGHT = {
     PipelineIssueType.PIPELINE_ERROR: 5,
     # Filed by a governing-law run, which mints no changeset, so it never sorts the pool.
     PipelineIssueType.GOVERNING_LAW_NOT_FOUND: 5,
+    PipelineIssueType.SOURCE_BLOCKED: 5,
 }
 # A stored issue can still name a type since renamed out of the enum.
 _UNKNOWN_ISSUE = 1

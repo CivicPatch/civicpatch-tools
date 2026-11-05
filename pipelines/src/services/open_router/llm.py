@@ -61,11 +61,12 @@ def _get_semaphore() -> asyncio.Semaphore:
 #
 # `providers` is OpenRouter's fallback order, and the officials eval runs every one of them.
 # Dropped: NextBit (no longer offered), DigitalOcean (leaves `url` empty for most people),
-# Alibaba (its shared upstream quota keeps returning 429s).
+# Alibaba (its shared upstream quota keeps returning 429s), AtlasCloud (ignores the strict schema:
+# answers in prose or with values outside an enum).
 MODELS_BY_TYPE = {
     "STANDARD": {
         "model": "deepseek/deepseek-v4-flash",
-        "providers": ["AtlasCloud"],
+        "providers": ["StreamLake"],
     },
 }
 

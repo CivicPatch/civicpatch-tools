@@ -2,13 +2,14 @@
 possible, or a run that stored nothing it was sent for. An index's silence is not an issue."""
 
 import pytest
-from runners.pipeline01_governing_law_collector.issues import governing_law_not_found
+from runners.pipeline01_governing_law_collector.issues import governing_law_not_found, issue_type
 from runners.pipeline01_governing_law_collector.schemas import (
     FinderAnswer,
     GoverningLawCollectorConfig,
     GoverningLawCollectorData,
     LawKind,
     LawUrl,
+    GoverningLawNotFound,
     Missing,
     TriedReason,
     TriedUrl,
@@ -16,6 +17,7 @@ from runners.pipeline01_governing_law_collector.schemas import (
 )
 from shared.schemas import FoundBy
 from shared.utils.layered_config import GoverningLawConfig
+from shared.utils.statuses import PipelineIssueType
 
 pytestmark = pytest.mark.unit
 
@@ -85,3 +87,19 @@ def test_a_place_with_nothing_to_look_for_files_nothing():
     answer = FinderAnswer(found_by=FoundBy.CLASSIFICATION, classification=None)
 
     assert governing_law_not_found(_data(answer, GoverningLawCollectorConfig(name="Stowe town", governing_law=None))) is None
+
+
+@pytest.mark.parametrize(
+    "reason,expected",
+    [
+        (TriedReason.CHALLENGED, PipelineIssueType.SOURCE_BLOCKED),
+        (TriedReason.REFUSED, PipelineIssueType.SOURCE_BLOCKED),
+        (TriedReason.DISALLOWED_BY_ROBOTS, PipelineIssueType.SOURCE_BLOCKED),
+        (TriedReason.SITE_CRAWLED, PipelineIssueType.GOVERNING_LAW_NOT_FOUND),
+        (TriedReason.NOT_THE_TARGET, PipelineIssueType.GOVERNING_LAW_NOT_FOUND),
+    ],
+)
+def test_a_miss_a_host_blocked_is_its_own_issue(reason: TriedReason, expected: PipelineIssueType):
+    not_found = GoverningLawNotFound(missing=Missing.CHARTER, tried=[TriedUrl(url="https://ecode360.com/AL4334", reason=reason)], skipped_urls=[])
+
+    assert issue_type(not_found) == expected

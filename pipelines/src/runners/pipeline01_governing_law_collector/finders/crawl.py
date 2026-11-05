@@ -1,20 +1,23 @@
-"""A place's own site searched for a target under a budget: sitemap entries naming it, then every
-link on the site one hop out, then only links naming it for two hops more. Pure parts take bytes;
-`crawl` takes the fetch and the page test."""
+"""A search for a target under a budget: the starting points it was given, sitemap entries naming it,
+then every link on the site one hop out, then only links naming it for two hops more. Pure parts take
+bytes; `crawl` takes the fetch and the page test."""
 
 import re
 from typing import Awaitable, Callable, List, Optional
 from urllib.parse import urljoin, urlparse
 
+from pydantic import BaseModel, ConfigDict
 from utils.page_links import PageLink, page_links
-from ..schemas import FetchedPage, LawTarget
-from .. import converters
+from ..schemas import FetchedPage, LawTarget, ReadPage
+from . import publishers
+from .. import converters, fetchers
 
 MAX_PAGES = 60
 MAX_SITEMAPS = 6
 MAX_DEPTH = 3
-# A page the sitemap names counts as one hop from home: only its links naming the target are followed.
-SITEMAP_PAGE_DEPTH = 1
+# A page named outright, by the sitemap or a starting point, counts as one hop from home: only its
+# links naming the target are followed.
+NAMED_PAGE_DEPTH = 1
 # Google Translate's copy of a site: Washington County's menu gave eleven of one page.
 TRANSLATE_PROXY_HOST = ".translate.goog"
 SITEMAP_PATH = "/sitemap.xml"
@@ -40,17 +43,23 @@ def on_site(url: str, site: str) -> bool:
 
 
 def links(html: bytes, base: str, site: str, target: LawTarget, *, named_only: bool) -> List[PageLink]:
-    """Links naming the target first, so the budget goes to the likely pages."""
+    """Links naming the target and ways into a publisher first, so the budget goes to the likely pages."""
     found: List[PageLink] = []
+    # A publisher's own links stay out: its handler picks the one part wanted from dozens.
+    into_publisher = not fetchers.is_publisher(base)
     for link in page_links(html, base):
         if _has_skip_word(_link_words(link), target) or urlparse(link.url).netloc.endswith(TRANSLATE_PROXY_HOST):
             continue
+        if into_publisher and fetchers.is_publisher(link.url):
+            found.append(link)
+            continue
         if named_only and not link_names_target(link, target):
             continue
-        if not named_only and not on_site(link.url, site):
+        # A home page often links its charter straight on a publisher's host.
+        if not named_only and not on_site(link.url, site) and not link_names_target(link, target):
             continue
         found.append(link)
-    return sorted(found, key=lambda link: not link_names_target(link, target))
+    return sorted(found, key=lambda link: not _is_likely(link, target))
 
 
 def sitemap_urls(robots: bytes) -> List[str]:
@@ -85,6 +94,10 @@ def link_names_target(link: PageLink, target: LawTarget) -> bool:
     return _names_target(_link_words(link), target)
 
 
+def _is_likely(link: PageLink, target: LawTarget) -> bool:
+    return link_names_target(link, target) or fetchers.is_publisher(link.url)
+
+
 def markdown_of(page: FetchedPage) -> Optional[str]:
     try:
         return converters.to_markdown(page)
@@ -102,50 +115,99 @@ class Budget:
         return self.pages >= MAX_PAGES
 
 
-async def crawl(site: str, target: LawTarget, page_test: PageTest, fetch: Fetch) -> List[str]:
-    """Every url on the site that passes the page test, within the budget: a law can span several
-    pages and its amendments others, so a hit never ends the crawl."""
+class Crawled(BaseModel):
+    model_config = ConfigDict(frozen=True)
 
-    async def is_hit(page: FetchedPage) -> bool:
-        markdown = markdown_of(page)
-        return markdown is not None and await page_test(markdown, page.url)
+    found: List[ReadPage]
+    # Starting points that fetched but did not pass the page test.
+    missed: List[str]
 
+
+class _Visited(BaseModel):
+    model_config = ConfigDict(frozen=True)
+
+    fetched: List[str]
+    hits: List[ReadPage]
+    frontier: List[tuple[PageLink, int]]
+
+
+async def crawl(site: Optional[str], starting_points: List[str], target: LawTarget, page_test: PageTest, fetch: Fetch) -> Crawled:
+    """Every page that passes the page test, within the budget: a law can span several pages and its
+    amendments others, so a hit never ends the crawl. With no site, the first starting point that
+    fetches off a publisher's host stands for it."""
     budget = Budget()
     seen: set[str] = set()
+    started = await _visit(starting_points, site or "", target, page_test, fetch, budget, seen)
+    hit_urls = {hit.url for hit in started.hits}
+    missed = [url for url in started.fetched if url not in hit_urls]
+    home = site or _home_of(started.fetched)
+    if home is None:
+        return Crawled(found=started.hits, missed=missed)
+    mapped = await _visit(await _sitemap_target_urls(home, target, fetch, budget), home, target, page_test, fetch, budget, seen)
+    # A starting point may be the home page itself, whose links are still to be walked.
+    seen.discard(home)
+    walked = await _walk([*started.frontier, *mapped.frontier, (PageLink(url=home), 0)], home, target, page_test, fetch, budget, seen)
+    return Crawled(found=_one_per_url([*started.hits, *mapped.hits, *walked]), missed=missed)
+
+
+def _home_of(urls: List[str]) -> Optional[str]:
+    parsed = next((urlparse(url) for url in urls if not fetchers.is_publisher(url)), None)
+    return f"{parsed.scheme}://{parsed.netloc}" if parsed else None
+
+
+def _one_per_url(pages: List[ReadPage]) -> List[ReadPage]:
+    by_url: dict[str, ReadPage] = {}
+    for page in pages:
+        by_url.setdefault(page.url, page)
+    return list(by_url.values())
+
+
+async def _hit(page: FetchedPage, page_test: PageTest) -> Optional[ReadPage]:
+    markdown = markdown_of(page)
+    if markdown is not None and await page_test(markdown, page.url):
+        return ReadPage(url=page.url, markdown=markdown)
+    return None
+
+
+async def _visit(urls: List[str], site: str, target: LawTarget, page_test: PageTest, fetch: Fetch, budget: Budget, seen: set[str]) -> _Visited:
+    """Pages named outright: each is tested, and its links naming the target join the frontier."""
+    fetched: List[str] = []
+    hits: List[ReadPage] = []
     frontier: List[tuple[PageLink, int]] = []
-    found: List[str] = []
-    for url in await _sitemap_target_urls(site, target, fetch, budget):
+    for url in urls:
         if budget.spent():
             break
-        page = await _fetch(url, fetch, budget, seen)
+        if url in seen:
+            continue
+        page = await _fetch(url, target, fetch, budget, seen)
         if page is None:
             continue
-        if await is_hit(page):
-            found.append(page.url)
+        fetched.append(page.url)
+        hit = await _hit(page, page_test)
+        if hit:
+            hits.append(hit)
         if _is_html(page):
-            frontier.extend((link, SITEMAP_PAGE_DEPTH + 1) for link in links(page.body, page.url, site, target, named_only=True))
-    walked = await _walk([*frontier, (PageLink(url=site), 0)], site, target, is_hit, fetch, budget, seen)
-    return list(dict.fromkeys([*found, *walked]))
+            frontier.extend((link, NAMED_PAGE_DEPTH + 1) for link in links(page.body, page.url, site, target, named_only=True))
+    return _Visited(fetched=fetched, hits=hits, frontier=frontier)
 
 
-async def _walk(
-    frontier: List[tuple[PageLink, int]], site: str, target: LawTarget, is_hit: Callable[[FetchedPage], Awaitable[bool]], fetch: Fetch, budget: Budget, seen: set[str]
-) -> List[str]:
-    """Breadth first from the frontier, links naming the target ahead, until it empties or the budget."""
-    found: List[str] = []
+async def _walk(frontier: List[tuple[PageLink, int]], site: str, target: LawTarget, page_test: PageTest, fetch: Fetch, budget: Budget, seen: set[str]) -> List[ReadPage]:
+    """Breadth first from the frontier, likely links ahead, until it empties or the budget."""
+    found: List[ReadPage] = []
     while frontier and not budget.spent():
         link, depth = frontier.pop(0)
         if link.url in seen:
             continue
-        page = await _fetch(link.url, fetch, budget, seen)
+        page = await _fetch(link.url, target, fetch, budget, seen)
         if page is None:
             continue
-        if depth > 0 and await is_hit(page):
-            found.append(page.url)
+        hit = await _hit(page, page_test) if depth > 0 else None
+        if hit:
+            found.append(hit)
         if depth < MAX_DEPTH and _is_html(page):
             on_page = links(page.body, page.url, site, target, named_only=depth > 0)
             new = [(on_page_link, depth + 1) for on_page_link in on_page if on_page_link.url not in seen]
-            frontier = sorted([*frontier, *new], key=lambda item: not link_names_target(item[0], target))
+            frontier = sorted([*frontier, *new], key=lambda item: not _is_likely(item[0], target))
     return found
 
 
@@ -169,10 +231,15 @@ async def _sitemap_target_urls(site: str, target: LawTarget, fetch: Fetch, budge
     return found
 
 
-async def _fetch(url: str, fetch: Fetch, budget: Budget, seen: set[str]) -> Optional[FetchedPage]:
+async def _fetch(url: str, target: LawTarget, fetch: Fetch, budget: Budget, seen: set[str]) -> Optional[FetchedPage]:
     seen.add(url)
     budget.pages += 1
-    return await fetch(url)
+    page = await fetch(url)
+    if page is None:
+        return None
+    resolved = await publishers.resolved(page, target, fetch)
+    seen.add(resolved.url)
+    return resolved
 
 
 def _is_html(page: FetchedPage) -> bool:

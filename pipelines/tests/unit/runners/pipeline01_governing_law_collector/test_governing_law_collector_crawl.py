@@ -45,7 +45,7 @@ _CHARTER_FILE = _html(f"{SITE}/files/charter.pdf", f"<article>{CHARTER_TEXT}</ar
 async def test_a_charter_three_hops_from_home_is_found_through_charter_named_links():
     fetch, fetched = _site({SITE: _HOME, _BOARD.url: _BOARD, _CHARTER_PAGE.url: _CHARTER_PAGE, _CHARTER_FILE.url: _CHARTER_FILE})
 
-    found = await crawl.crawl(SITE, TARGET, _is_charter_page, fetch)
+    found = [page.url for page in (await crawl.crawl(SITE, [], TARGET, _is_charter_page, fetch)).found]
 
     assert found == [_CHARTER_FILE.url]
     assert f"{SITE}/departments/board/agendas" not in fetched
@@ -56,7 +56,7 @@ async def test_a_sitemap_entry_naming_the_charter_is_read_first_and_its_links_fo
     sitemap = _text(f"{SITE}/sitemap.xml", f"<urlset><url><loc>{SITE}/departments/board/charter</loc></url></urlset>", "application/xml")
     fetch, fetched = _site({sitemap.url: sitemap, _CHARTER_PAGE.url: _CHARTER_PAGE, _CHARTER_FILE.url: _CHARTER_FILE})
 
-    found = await crawl.crawl(SITE, TARGET, _is_charter_page, fetch)
+    found = [page.url for page in (await crawl.crawl(SITE, [], TARGET, _is_charter_page, fetch)).found]
 
     assert found == [_CHARTER_FILE.url]
     assert fetched.index(_CHARTER_PAGE.url) < fetched.index(SITE)
@@ -69,7 +69,7 @@ async def test_every_page_of_a_charter_is_found_and_the_links_of_each_followed()
     home = _html(SITE, '<a href="/charter">City Charter</a>')
     fetch, _ = _site({SITE: home, contents.url: contents, chapter.url: chapter})
 
-    assert await crawl.crawl(SITE, TARGET, _is_charter_page, fetch) == [contents.url, chapter.url]
+    assert [page.url for page in (await crawl.crawl(SITE, [], TARGET, _is_charter_page, fetch)).found] == [contents.url, chapter.url]
 
 
 @pytest.mark.asyncio
@@ -78,7 +78,7 @@ async def test_a_sitemap_index_is_recursed():
     pages = _text(f"{SITE}/pages.xml", f"<urlset><url><loc>{_CHARTER_FILE.url}</loc></url></urlset>", "application/xml")
     fetch, _ = _site({index.url: index, pages.url: pages, _CHARTER_FILE.url: _CHARTER_FILE})
 
-    assert await crawl.crawl(SITE, TARGET, _is_charter_page, fetch) == [_CHARTER_FILE.url]
+    assert [page.url for page in (await crawl.crawl(SITE, [], TARGET, _is_charter_page, fetch)).found] == [_CHARTER_FILE.url]
 
 
 @pytest.mark.asyncio
@@ -87,7 +87,7 @@ async def test_the_crawl_stops_at_its_budget():
     home = _html(SITE, "".join(f'<a href="/page{n}">Page {n}</a>' for n in range(200)))
     fetch, fetched = _site({SITE: home, **many})
 
-    assert await crawl.crawl(SITE, TARGET, _is_charter_page, fetch) == []
+    assert [page.url for page in (await crawl.crawl(SITE, [], TARGET, _is_charter_page, fetch)).found] == []
     assert len(fetched) == crawl.MAX_PAGES
 
 
@@ -98,7 +98,7 @@ async def test_a_link_only_its_anchor_text_calls_a_charter_is_read_ahead_of_a_lo
     home = _html(SITE, f'{menu} <a href="/DocumentCenter/View/123">City Charter</a>')
     fetch, fetched = _site({SITE: home, charter.url: charter})
 
-    assert await crawl.crawl(SITE, TARGET, _is_charter_page, fetch) == [charter.url]
+    assert [page.url for page in (await crawl.crawl(SITE, [], TARGET, _is_charter_page, fetch)).found] == [charter.url]
     assert fetched.index(charter.url) < fetched.index(f"{SITE}/page0")
 
 
@@ -111,6 +111,12 @@ def test_the_first_hop_keeps_the_site_and_its_subdomains_and_drops_other_hosts()
         f"{SITE}/departments/board",
         "https://counsel.example-county.gov/",
     ]
+
+
+def test_the_first_hop_keeps_a_link_on_another_host_that_names_the_target():
+    html = b'<a href="https://ecode360.com/AL4334">City Charter</a> <a href="https://other.example.org/x">Partner</a>'
+
+    assert _link_urls(html, named_only=False) == ["https://ecode360.com/AL4334"]
 
 
 def test_deeper_hops_keep_only_charter_named_links_on_any_host():

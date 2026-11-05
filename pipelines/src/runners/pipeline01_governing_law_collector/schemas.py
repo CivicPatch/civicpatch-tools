@@ -12,10 +12,8 @@ from shared.utils.statuses import PipelineRunStatus
 class GoverningLawCollectorStep(StrEnum):
     """The governing_law_collector's own steps; the lifecycle every pipeline shares is `PipelineRunStatus`."""
 
-    FIND_SOURCE = "FIND_SOURCE"
-    FETCH_SOURCE = "FETCH_SOURCE"
-    PREPROCESS_PAGE_CONTENT = "PREPROCESS_PAGE_CONTENT"
-    STORE_SOURCE_PAGE = "STORE_SOURCE_PAGE"
+    FIND_SOURCES = "FIND_SOURCES"
+    STORE_SOURCES = "STORE_SOURCES"
     WRITE_GOVERNING_LAW = "WRITE_GOVERNING_LAW"
 
 
@@ -36,6 +34,8 @@ class GoverningLawCollectorConfig(BaseModel):
 
 class TriedReason(StrEnum):
     REFUSED = "refused"
+    CHALLENGED = "challenged"
+    DISALLOWED_BY_ROBOTS = "disallowed_by_robots"
     OFF_LIMITS = "off_limits"
     FAILED = "failed"
     NOT_THE_TARGET = "not_the_target"
@@ -72,6 +72,13 @@ class LawKind(StrEnum):
 class LawUrl(BaseModel):
     url: str
     kind: LawKind
+    # The text a search already read and approved, stored as it is; None for a url yet to be fetched.
+    markdown: Optional[str] = Field(default=None, exclude=True)
+
+
+class ReadPage(BaseModel):
+    url: str
+    markdown: str
 
 
 def as_law_urls(urls: List[str], kind: LawKind) -> List[LawUrl]:
@@ -127,13 +134,6 @@ class GoverningLawCollectorData(BaseModel):
     jurisdiction_ocdid: str
     config: GoverningLawCollectorConfig
     answer: Optional[FinderAnswer] = None
-    # The answer's urls not yet stored, first one in hand.
-    pending_urls: List[str] = []
-    # The raw page and its markdown live only between their steps, and never in a saved context.
-    fetched: Optional[FetchedPage] = Field(default=None, exclude=True)
-    markdown: Optional[str] = Field(default=None, exclude=True)
-    # The url in hand was nearly empty by plain GET, so the next fetch of it is by browser.
-    escalate: bool = False
     charter_source_page_ids: List[str] = []
     general_law_source_page_ids: List[str] = []
     # Urls a host refused (403, 429), or that stayed empty even by browser. Never retried.
