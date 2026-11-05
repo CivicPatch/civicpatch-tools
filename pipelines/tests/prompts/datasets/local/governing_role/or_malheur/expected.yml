@@ -3,7 +3,7 @@ roles:
 - organization_name: County Court
   role_id: county-judge
   role_label: County Judge
-  expected: not_stated
+  expected: elected_by_voters
   presiding: false
   names:
   - County Judge

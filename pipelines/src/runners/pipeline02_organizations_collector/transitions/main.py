@@ -5,6 +5,7 @@ import asyncio
 from typing import List
 
 import httpx
+from pydantic import ValidationError
 import services.civicpatch_api as civicpatch_api
 import services.open_router.llm as open_router_llm
 import services.open_router.prompts as open_router_prompts
@@ -94,12 +95,20 @@ def _with_page_id(source: Source, page_ids: dict[str, str]) -> Source:
 
 async def _selected_governing_law_text(context: OrganizationsCollectorContext, logger: PipelineRunLogger, pages: List[sections.GoverningLawPage]) -> str:
     """One kind's pages: all of them when they fit; else the sections picked from their headings,
-    else those whose headings name the government; pages with no sections to pick from go whole."""
+    else those whose headings name the government; with no sections to pick from, all of them."""
     whole = "\n\n".join(page.text for page in pages)
     found = sections.split_sections(pages)
     if sections.fits_whole(whole) or not found:
         return whole
-    chosen = sections.picked(found, await _pick(context, found)) or sections.keyword_sections(found)
+    if sections.unheaded_share(found) > sections.UNHEADED_WARNING_SHARE:
+        logger.warning(f"{len(whole):,} chars: headings unrecognised in {sections.unheaded_share(found):.0%} of {len(found)} sections")
+    try:
+        ids = await _pick(context, found)
+    except ValidationError as error:
+        # Flash can reason past its output limit on a long listing (Burlington's, every retry).
+        logger.warning(f"heading pick failed, reading the headings that name the government: {type(error).__name__}")
+        ids = []
+    chosen = sections.picked(found, ids) or sections.keyword_sections(found)
     logger.info(f"{len(whole):,} chars in {len(found)} sections: reading {len(chosen)}")
     return sections.joined(chosen) if chosen else whole
 

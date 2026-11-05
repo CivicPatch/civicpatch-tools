@@ -1,10 +1,10 @@
 - role_id: member
   expected: elected_by_voters
   presiding: false
-  right: true
-  rounds: 1
+  right: false
+  rounds: 3
   each_right:
-  - true
+  - false
   - false
   agreed: true
   answers:
@@ -13,8 +13,32 @@
     filled_by: elected_by_voters
     maximum_memberships: 5
     quote: The board of commissioners shall consist of five county commissioners.
-      (2) Except as this charter provides to the contrary, each commissioner shall
-      be elected by district for a four-year term.
+      Except as this charter provides to the contrary, each commissioner shall be
+      elected by district for a four-year term.
+  - established: true
+    label: county commissioner
+    filled_by: elected_by_voters
+    maximum_memberships: 5
+    quote: The board of commissioners shall consist of five county commissioners.
+      ... each commissioner shall be elected by district for a four-year term.
+  - established: true
+    label: county commissioner
+    filled_by: elected_by_voters
+    maximum_memberships: 5
+    quote: The board of commissioners shall consist of five county commissioners.
+      ... each commissioner shall be elected by district for a four-year term.
+  - established: true
+    label: county commissioner
+    filled_by: elected_by_voters
+    maximum_memberships: 5
+    quote: The board of commissioners shall consist of five county commissioners.
+      Except as this charter provides to the contrary, each commissioner shall be
+      elected by district for a four-year term.
+  - established: true
+    label: county commissioner
+    filled_by: elected_by_voters
+    maximum_memberships: 5
+    quote: The board of commissioners shall consist of five county commissioners.
   - established: true
     label: county commissioner
     filled_by: elected_by_voters
@@ -39,7 +63,7 @@
   - established: true
     label: sheriff
     filled_by: elected_by_voters
-    maximum_memberships: 1
+    maximum_memberships: null
     quote: The elective administrative officers of the county shall include, in addition
       to the county commissioners, the sheriff and the assessor.
 - role_id: assessor
@@ -53,28 +77,50 @@
   agreed: true
   answers:
   - established: true
-    label: county assessor
+    label: assessor
     filled_by: elected_by_voters
     maximum_memberships: 1
-    quote: 'The following county officers shall be elected at the primary election
-      or general election, as provided in ORS 249.088: (a) A sheriff. (b) A county
-      clerk. (c) A county assessor.'
+    quote: The elective administrative officers of the county shall include, in addition
+      to the county commissioners, the sheriff and the assessor.
   - established: true
     label: assessor
     filled_by: elected_by_voters
-    maximum_memberships: null
+    maximum_memberships: 1
     quote: The elective administrative officers of the county shall include, in addition
       to the county commissioners, the sheriff and the assessor.
 - role_id: clerk
   expected: appointed
   presiding: false
   right: false
-  rounds: 1
+  rounds: 3
   each_right:
   - false
   - false
-  agreed: true
+  agreed: false
   answers:
+  - established: true
+    label: county clerk
+    filled_by: elected_by_voters
+    maximum_memberships: null
+    quote: The following county officers shall be elected at the primary election
+      or general election... (b) A county clerk.
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: true
+    label: county clerk
+    filled_by: appointed
+    maximum_memberships: null
+    quote: all administrative officers and employees of the county other than elective
+      administrative officers shall be appointed by the board or pursuant to its authority
+  - established: true
+    label: county clerk
+    filled_by: elected_by_voters
+    maximum_memberships: null
+    quote: 'The following county officers shall be elected at the primary election
+      or general election, as provided in ORS 249.088: ... (b) A county clerk.'
   - established: false
     label: ''
     filled_by: not_stated
@@ -89,17 +135,39 @@
   expected: appointed
   presiding: false
   right: false
-  rounds: 1
+  rounds: 3
   each_right:
   - false
   - false
-  agreed: true
+  agreed: false
   answers:
   - established: false
     label: ''
     filled_by: not_stated
     maximum_memberships: null
     quote: ''
+  - established: true
+    label: county treasurer
+    filled_by: appointed
+    maximum_memberships: null
+    quote: all administrative officers and employees of the county other than elective
+      administrative officers shall be appointed by the board or pursuant to its authority
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
+  - established: true
+    label: county treasurer
+    filled_by: appointed
+    maximum_memberships: null
+    quote: all administrative officers and employees of the county other than elective
+      administrative officers shall be appointed by the board or pursuant to its authority.
   - established: false
     label: ''
     filled_by: not_stated
@@ -158,13 +226,13 @@
   agreed: true
   answers:
   - established: true
-    label: chair
+    label: chair of the board
     filled_by: elected_by_members
     maximum_memberships: 1
     quote: At its first regular meeting each year the board of county commissioners
       shall designate one of its members chair of the board for the year.
   - established: true
-    label: chair
+    label: chair of the board
     filled_by: elected_by_members
     maximum_memberships: 1
     quote: At its first regular meeting each year the board of county commissioners

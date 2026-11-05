@@ -7,6 +7,9 @@ from pathlib import Path
 import pytest
 
 from runners.pipeline02_organizations_collector.sections import (
+    NO_HEADING,
+    SECTION_MAX_CHARS,
+    WHOLE_TEXT_CHARS,
     GoverningLawPage,
     Section,
     fits_whole,
@@ -17,6 +20,7 @@ from runners.pipeline02_organizations_collector.sections import (
     pages_by_kind,
     picked,
     split_sections,
+    unheaded_share,
 )
 from shared.schemas import FoundBy, GoverningLaw, GoverningLawKind
 from shared.utils.layered_config import Classification, GovernedBy, GoverningLawConfig
@@ -45,10 +49,86 @@ def test_every_section_anchor_starts_a_section():
     ]
 
 
-def test_a_page_from_a_publisher_with_no_known_format_splits_into_nothing():
-    municode = GoverningLawPage(id="page-2", source_url="https://library.municode.com/tn/nashville/codes/code_of_ordinances", text=BURLINGTON.text)
+LAKEVIEW = GoverningLawPage(
+    id="page-3",
+    source_url="https://www.townoflakeview.org/charter.pdf",
+    text=(
+        "THE CHARTER FOR THE TOWN OF LAKEVIEW\n"
+        "WE THE PEOPLE of Lakeview, Oregon, confer upon our Town the following powers.\n"
+        "Chapter I\n"
+        "NAME AND BOUNDARIES\n"
+        "Section 1. Title. This Charter may be referred to as the 2011 Town of Lakeview Charter.\n"
+        "Section 2. Name. The Town continues as a municipal corporation, organized under\n"
+        "chapter 345, General Laws of Oregon 1913.\n"
+        "Chapter II\n"
+        "COUNCIL\n"
+        "Section 8. Council. The council consists of a mayor and four councilors.\n"
+    ),
+)
 
-    assert split_sections([municode]) == []
+
+def test_a_page_with_no_known_format_splits_at_its_own_headings():
+    assert _headings(split_sections([LAKEVIEW])) == [
+        f"{NO_HEADING} THE CHARTER FOR THE TOWN OF LAKEVIEW",
+        "Chapter I NAME AND BOUNDARIES",
+        "Section 1. Title. This Charter may be referred to as the 2011 Town of Lakeview Charter.",
+        "Section 2. Name. The Town continues as a municipal corporation, organized under",
+        "Chapter II COUNCIL",
+        "Section 8. Council. The council consists of a mayor and four councilors.",
+    ]
+
+
+def test_a_wrapped_reference_to_a_chapter_stays_in_its_section():
+    name = split_sections([LAKEVIEW])[3]
+
+    assert "chapter 345, General Laws of Oregon 1913." in name.text
+
+
+def test_a_chapter_line_groups_the_sections_after_it():
+    assert [section.group for section in split_sections([LAKEVIEW])][-1] == "Chapter II COUNCIL"
+
+
+def test_a_page_with_no_known_format_loses_no_text():
+    assert "".join(section.text for section in split_sections([LAKEVIEW])) == LAKEVIEW.text
+
+
+def test_other_states_heading_styles_start_sections():
+    page = LAKEVIEW.model_copy(update={"text": "Intro.\nSec. 2.04.010 Mayor elected.\nThe mayor is elected.\n## Article 3 Council\nThe council has seven members.\n"})
+
+    assert _headings(split_sections([page])) == [f"{NO_HEADING} Intro.", "Sec. 2.04.010 Mayor elected.", "Article 3 Council"]
+
+
+def test_a_page_whose_headings_go_unrecognised_reads_as_mostly_unheaded():
+    page = LAKEVIEW.model_copy(update={"text": "MAYOR ELECTED\n" + "The mayor is elected by the voters. " * 400})
+
+    assert unheaded_share(split_sections([page])) == 1.0
+    assert unheaded_share(split_sections([LAKEVIEW])) < 0.5
+
+
+def test_text_under_no_recognised_heading_is_listed_by_its_first_line():
+    page = LAKEVIEW.model_copy(update={"text": "MAYOR ELECTED\nThe mayor is elected by the voters for two years.\n"})
+
+    assert _headings(split_sections([page])) == [f"{NO_HEADING} MAYOR ELECTED"]
+
+
+def test_each_unheaded_part_is_listed_by_its_own_first_line():
+    page = LAKEVIEW.model_copy(update={"text": "MAYOR ELECTED\n" + "The mayor is elected. " * 200 + "\n\nCOUNCIL\n" + "The council has five members. " * 200})
+
+    previews = _headings(split_sections([page]))
+
+    assert previews[0] == f"{NO_HEADING} MAYOR ELECTED"
+    assert f"{NO_HEADING} COUNCIL" in previews
+
+
+def test_a_long_section_is_cut_into_parts_under_its_heading():
+    long_page = LAKEVIEW.model_copy(update={"text": "Section 9. Powers.\n" + "The Town may act. " * 600})
+
+    found = split_sections([long_page])
+
+    assert len(found) > 1
+    assert {section.heading for section in found} == {"Section 9. Powers."}
+    assert all(len(section.text) <= SECTION_MAX_CHARS for section in found)
+    assert "".join(section.text for section in found) == long_page.text
 
 
 def test_the_sites_header_belongs_to_no_section():
@@ -110,9 +190,10 @@ def test_the_keyword_fallback_leaves_out_reserved_sections():
     assert "§§ 32-35. \\[Reserved.\\]" not in _headings(keyword_sections(split_sections([BURLINGTON])))
 
 
-def test_most_charters_fit_whole():
+def test_charters_up_to_burlingtons_length_fit_whole():
     assert fits_whole("x" * 21_000)
-    assert not fits_whole("x" * 374_000)
+    assert fits_whole("x" * 374_000)
+    assert not fits_whole("x" * (WHOLE_TEXT_CHARS + 1))
 
 
 _STATUTE_URL = "https://legislature.vermont.gov/statutes/section/24/033/00871"

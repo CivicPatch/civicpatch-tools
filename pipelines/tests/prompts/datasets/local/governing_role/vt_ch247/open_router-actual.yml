@@ -13,9 +13,7 @@
     filled_by: elected_by_voters
     maximum_memberships: 3
     quote: The officers of the corporation shall consist of a Moderator, three trustees,
-      a Clerk, a Treasurer, and three auditors. The officers shall be elected at the
-      annual meeting of the corporation for the term of one year and until their successors
-      are elected, except that trustees shall hold office for three years.
+      a Clerk, a Treasurer, and three auditors.
   - established: true
     label: trustee
     filled_by: elected_by_voters
@@ -23,7 +21,8 @@
     quote: The officers of the corporation shall consist of a Moderator, three trustees,
       a Clerk, a Treasurer, and three auditors. The officers shall be elected at the
       annual meeting of the corporation for the term of one year and until their successors
-      are elected, except that trustees shall hold office for three years.
+      are elected, except that trustees shall hold office for three years. One trustee
+      shall be elected at each annual meeting.
 - role_id: moderator
   expected: elected_by_voters
   presiding: false
@@ -40,7 +39,8 @@
     maximum_memberships: 1
     quote: The officers of the corporation shall consist of a Moderator, three trustees,
       a Clerk, a Treasurer, and three auditors. The officers shall be elected at the
-      annual meeting of the corporation for the term of one year
+      annual meeting of the corporation for the term of one year and until their successors
+      are elected, except that trustees shall hold office for three years.
   - established: true
     label: Moderator
     filled_by: elected_by_voters
@@ -62,15 +62,16 @@
     label: Clerk
     filled_by: elected_by_voters
     maximum_memberships: 1
-    quote: The officers shall be elected at the annual meeting of the corporation
+    quote: The officers of the corporation shall consist of a Moderator, three trustees,
+      a Clerk, a Treasurer, and three auditors. The officers shall be elected at the
+      annual meeting of the corporation for the term of one year and until their successors
+      are elected, except that trustees shall hold office for three years.
   - established: true
     label: Clerk
     filled_by: elected_by_voters
     maximum_memberships: 1
-    quote: The officers of the corporation shall consist of a Moderator, three trustees,
-      a Clerk, a Treasurer, and three auditors. The officers shall be elected at the
-      annual meeting of the corporation for the term of one year and until their successors
-      are elected
+    quote: The officers shall be elected at the annual meeting of the corporation
+      for the term of one year
 - role_id: treasurer
   expected: elected_by_voters
   presiding: false
@@ -88,7 +89,7 @@
     quote: The officers of the corporation shall consist of a Moderator, three trustees,
       a Clerk, a Treasurer, and three auditors. The officers shall be elected at the
       annual meeting of the corporation for the term of one year and until their successors
-      are elected, except that trustees shall hold office for three years.
+      are elected
   - established: true
     label: Treasurer
     filled_by: elected_by_voters
@@ -110,7 +111,7 @@
   - established: true
     label: Chair
     filled_by: elected_by_members
-    maximum_memberships: 1
+    maximum_memberships: null
     quote: the trustees shall organize and elect a Chair
   - established: true
     label: Chair

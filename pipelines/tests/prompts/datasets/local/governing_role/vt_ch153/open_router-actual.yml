@@ -14,10 +14,11 @@
     maximum_memberships: 5
     quote: All Selectboard members shall be elected at large.
   - established: true
-    label: Selectboard member
+    label: Selectboard members
     filled_by: elected_by_voters
     maximum_memberships: 5
-    quote: There shall be a Selectboard consisting of five members.
+    quote: 'The elected officers of the Town of Stowe shall be: Selectboard members,
+      Moderator, and listers.'
 - role_id: city-manager
   expected: appointed
   presiding: false
@@ -85,23 +86,29 @@
 - role_id: treasurer
   expected: appointed
   presiding: false
-  right: false
+  right: true
   rounds: 1
   each_right:
-  - false
-  - false
+  - true
+  - true
   agreed: true
   answers:
-  - established: false
-    label: ''
-    filled_by: not_stated
+  - established: true
+    label: Town Treasurer
+    filled_by: appointed
     maximum_memberships: null
-    quote: ''
-  - established: false
-    label: ''
-    filled_by: not_stated
+    quote: The Town Manager shall have authority to hire, appoint, fix the salary
+      of, discipline, suspend, and remove the Zoning Administrator, Town Clerk, Town
+      Treasurer, Assistant Town Clerk(s), Assistant Treasurer(s), and all other employees
+      of the Town not hired or appointed by the Selectboard
+  - established: true
+    label: Town Treasurer
+    filled_by: appointed
     maximum_memberships: null
-    quote: ''
+    quote: The Town Manager shall have authority to hire, appoint, fix the salary
+      of, discipline, suspend, and remove the Zoning Administrator, Town Clerk, Town
+      Treasurer, Assistant Town Clerk(s), Assistant Treasurer(s), and all other employees
+      of the Town not hired or appointed by the Selectboard
 - role_id: chair
   expected: elected_by_members
   presiding: true
@@ -116,10 +123,8 @@
     label: Chair
     filled_by: elected_by_members
     maximum_memberships: 1
-    quote: Forthwith after their election and qualification, the Selectboard shall
-      organize and elect a Chair, Vice Chair, and Clerk by a majority vote of the
-      entire Selectboard, and shall file a certificate of such election for record
-      in the office of the Town Clerk.
+    quote: the Selectboard shall organize and elect a Chair, Vice Chair, and Clerk
+      by a majority vote of the entire Selectboard
   - established: true
     label: Chair
     filled_by: elected_by_members
@@ -140,10 +145,8 @@
     label: Vice Chair
     filled_by: elected_by_members
     maximum_memberships: 1
-    quote: Forthwith after their election and qualification, the Selectboard shall
-      organize and elect a Chair, Vice Chair, and Clerk by a majority vote of the
-      entire Selectboard, and shall file a certificate of such election for record
-      in the office of the Town Clerk.
+    quote: the Selectboard shall organize and elect a Chair, Vice Chair, and Clerk
+      by a majority vote of the entire Selectboard
   - established: true
     label: Vice Chair
     filled_by: elected_by_members

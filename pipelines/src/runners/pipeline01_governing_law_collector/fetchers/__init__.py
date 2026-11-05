@@ -1,5 +1,5 @@
 """Turning a url into raw bytes. A plain GET first; the browser when the plain page turned out nearly
-empty, or when a law publisher answers 403. Every other refusal stands: no other way is tried."""
+empty, or once when any host answers 403. Every other refusal stands: no other way is tried."""
 
 from http import HTTPStatus
 from urllib.parse import urlparse
@@ -31,7 +31,8 @@ async def fetch_plain_first(url: str) -> FetchedPage:
     try:
         return await plain.fetch(url)
     except RefusedByHost as refused:
-        if refused.status_code != HTTPStatus.FORBIDDEN or not is_publisher(refused.url):
+        # A place's own 403 too: the browser got 9 of 20 refused Oregon sites back (2026-11-05 probe).
+        if refused.status_code != HTTPStatus.FORBIDDEN:
             raise
         return await browser.fetch(refused.url)
 

@@ -9,7 +9,7 @@
   agreed: true
   answers:
   - established: true
-    label: trustees
+    label: Trustee
     filled_by: elected_by_voters
     maximum_memberships: 5
     quote: The officers of the corporation shall be a Board of five trustees, a Clerk,
@@ -17,11 +17,13 @@
       be chosen at each annual meeting of the legal voters of the corporation or at
       a special meeting as hereinafter provided.
   - established: true
-    label: Trustee
+    label: trustee
     filled_by: elected_by_voters
     maximum_memberships: 5
-    quote: all of which officers shall be chosen at each annual meeting of the legal
-      voters of the corporation
+    quote: The officers of the corporation shall be a Board of five trustees, a Clerk,
+      a Treasurer, a Collector of Taxes, and an Auditor, all of which officers shall
+      be chosen at each annual meeting of the legal voters of the corporation or at
+      a special meeting as hereinafter provided.
 - role_id: clerk
   expected: elected_by_voters
   presiding: false
@@ -36,14 +38,16 @@
     label: Clerk
     filled_by: elected_by_voters
     maximum_memberships: 1
-    quote: all of which officers shall be chosen at each annual meeting of the legal
-      voters of the corporation
+    quote: The officers of the corporation shall be a Board of five trustees, a Clerk,
+      a Treasurer, a Collector of Taxes, and an Auditor, all of which officers shall
+      be chosen at each annual meeting of the legal voters of the corporation or at
+      a special meeting as hereinafter provided.
   - established: true
     label: Clerk
     filled_by: elected_by_voters
     maximum_memberships: 1
     quote: all of which officers shall be chosen at each annual meeting of the legal
-      voters of the corporation or at a special meeting as hereinafter provided.
+      voters of the corporation
 - role_id: treasurer
   expected: elected_by_voters
   presiding: false
@@ -68,7 +72,8 @@
     maximum_memberships: 1
     quote: The officers of the corporation shall be a Board of five trustees, a Clerk,
       a Treasurer, a Collector of Taxes, and an Auditor, all of which officers shall
-      be chosen at each annual meeting of the legal voters of the corporation
+      be chosen at each annual meeting of the legal voters of the corporation or at
+      a special meeting as hereinafter provided.
 - role_id: commission-president
   expected: probably_not_established
   presiding: true

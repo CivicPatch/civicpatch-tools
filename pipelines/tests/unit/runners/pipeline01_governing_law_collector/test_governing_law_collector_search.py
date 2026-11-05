@@ -11,6 +11,7 @@ from runners.pipeline01_governing_law_collector.schemas import FetchedPage, LawK
 pytestmark = pytest.mark.unit
 
 SEARCH = "runners.pipeline01_governing_law_collector.finders.search"
+FETCHERS = "runners.pipeline01_governing_law_collector.fetchers"
 _OCDID = "ocd-jurisdiction/country:us/state:or/county:lane/government"
 _TARGET = LawTarget(kind=LawKind.CHARTER, description="municipal or county charter", terms=["Charter", "Home Rule Charter"], skip_words=["school"])
 _CLAUSE = "Section {n}. The board of county commissioners shall consist of five county commissioners. "
@@ -32,7 +33,10 @@ def _kept(found) -> list[tuple[str, LawKind]]:
 
 
 async def _run(answer, fetch, url: str | None = "https://www.lanecountyor.gov", target=_TARGET, page_test=_is_charter_page):
-    with patch(f"{SEARCH}.gemini.run_prompt", new=AsyncMock(side_effect=answer)), patch(f"{SEARCH}.plain.fetch", new=fetch):
+    # The browser a 403 goes to meets the same answers as the plain fetch.
+    with patch(f"{SEARCH}.gemini.run_prompt", new=AsyncMock(side_effect=answer)), patch(f"{SEARCH}.plain.fetch", new=fetch), patch(
+        f"{FETCHERS}.browser.fetch", new=fetch
+    ):
         return await search.find(target, page_test, "Lane County", url, "run-1", _OCDID, MagicMock())
 
 

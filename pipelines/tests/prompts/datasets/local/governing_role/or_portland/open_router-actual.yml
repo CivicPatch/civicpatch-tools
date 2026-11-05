@@ -12,8 +12,11 @@
     label: Mayor
     filled_by: elected_by_voters
     maximum_memberships: 1
-    quote: The Mayor and the Auditor are elected at large by the legal voters of the
-      City of Portland.
+    quote: There shall be no elective officers of the City of Portland other than
+      twelve (12) Councilors, the Mayor and the Auditor. Councilors are elected to
+      represent a geographic district of the City by the legal voters residing in
+      said district. The Mayor and the Auditor are elected at large by the legal voters
+      of the City of Portland.
   - established: true
     label: Mayor
     filled_by: elected_by_voters
@@ -48,7 +51,7 @@
   right: true
   rounds: 1
   each_right:
-  - false
+  - true
   - true
   agreed: true
   answers:
@@ -56,13 +59,14 @@
     label: Auditor
     filled_by: elected_by_voters
     maximum_memberships: 1
-    quote: There shall be an Auditor of the City of Portland. The Auditor shall be
-      elected at the general municipal election
+    quote: The Mayor and the Auditor are elected at large by the legal voters of the
+      City of Portland.
   - established: true
     label: Auditor
     filled_by: elected_by_voters
     maximum_memberships: 1
-    quote: There shall be an Auditor of the City of Portland.
+    quote: The Mayor and the Auditor are elected at large by the legal voters of the
+      City of Portland.
 - role_id: city-administrator
   expected: appointed
   presiding: false
@@ -77,12 +81,11 @@
     label: City Administrator
     filled_by: appointed
     maximum_memberships: 1
-    quote: must be chosen by the Mayor solely on the basis of executive and administrative
-      qualifications.
+    quote: Appoint the City Administrator, subject to Council confirmation
   - established: true
     label: City Administrator
     filled_by: appointed
-    maximum_memberships: 1
+    maximum_memberships: null
     quote: Appoint the City Administrator, subject to Council confirmation
 - role_id: city-attorney
   expected: appointed
@@ -104,8 +107,8 @@
     label: City Attorney
     filled_by: appointed
     maximum_memberships: null
-    quote: Appoint, subject to Council confirmation, the City Attorney and the Chief
-      of Police.
+    quote: The Mayor appoints, subject to Council confirmation, the City Administrator,
+      the City Attorney and the Chief of Police.
 - role_id: president
   expected: elected_by_members
   presiding: true
@@ -127,7 +130,7 @@
     filled_by: elected_by_members
     maximum_memberships: 1
     quote: the Council shall elect a President and Vice President by majority vote
-      of those present.
+      of those present
 - role_id: vice-president
   expected: elected_by_members
   presiding: true
@@ -149,4 +152,4 @@
     filled_by: elected_by_members
     maximum_memberships: 1
     quote: the Council shall elect a President and Vice President by majority vote
-      of those present.
+      of those present

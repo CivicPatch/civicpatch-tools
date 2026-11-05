@@ -156,10 +156,23 @@ async def test_a_redirect_to_a_publishers_403_goes_to_the_browser_at_the_publish
 
 
 @pytest.mark.asyncio
-@pytest.mark.parametrize("url,status", [(_CHARTER, 403), (_PUBLISHER, 429)])
-async def test_a_places_own_403_and_a_publishers_429_stay_refused(httpx_mock: HTTPXMock, url: str, status: int):
+async def test_a_places_own_403_goes_to_the_browser_once(httpx_mock: HTTPXMock):
     _no_robots(httpx_mock)
-    httpx_mock.add_response(url=url, status_code=status)
+    httpx_mock.add_response(url=_CHARTER, status_code=403)
+    own_page = _BROWSER_PAGE.model_copy(update={"url": _CHARTER})
+
+    with patch.object(fetchers.browser, "fetch", new=AsyncMock(return_value=own_page)) as by_browser:
+        page = await fetchers.fetch_plain_first(_CHARTER)
+
+    by_browser.assert_awaited_once_with(_CHARTER)
+    assert page == own_page
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize("url", [_CHARTER, _PUBLISHER])
+async def test_a_429_stays_refused(httpx_mock: HTTPXMock, url: str):
+    _no_robots(httpx_mock)
+    httpx_mock.add_response(url=url, status_code=429)
 
     with patch.object(fetchers.browser, "fetch", new=AsyncMock()) as by_browser, pytest.raises(plain.RefusedByHost):
         await fetchers.fetch_plain_first(url)

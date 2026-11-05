@@ -5,20 +5,19 @@
   rounds: 1
   each_right:
   - true
-  - true
-  agreed: true
+  - false
+  agreed: false
   answers:
   - established: true
     label: Clerk
     filled_by: elected_by_members
     maximum_memberships: 1
-    quote: At the first meeting of the month following the annual City meeting, the
-      Council shall organize and elect a President, Vice President, and Clerk by a
-      majority vote of the entire Council
+    quote: the Council shall organize and elect a President, Vice President, and Clerk
+      by a majority vote of the entire Council
   - established: true
     label: Clerk
-    filled_by: elected_by_members
-    maximum_memberships: null
+    filled_by: not_stated
+    maximum_memberships: 1
     quote: the Council shall organize and elect a President, Vice President, and Clerk
       by a majority vote of the entire Council
 - role_id: city-manager
@@ -34,9 +33,8 @@
   - established: true
     label: City Manager
     filled_by: appointed
-    maximum_memberships: null
-    quote: The Council shall appoint a City Manager under and in accordance with Vermont
-      Statutes Annotated.
+    maximum_memberships: 1
+    quote: The Council shall appoint a City Manager
   - established: true
     label: City Manager
     filled_by: appointed

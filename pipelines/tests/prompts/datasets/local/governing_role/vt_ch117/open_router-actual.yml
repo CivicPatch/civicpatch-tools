@@ -9,12 +9,13 @@
   agreed: true
   answers:
   - established: true
-    label: Selectboard member
+    label: Selectboard members
     filled_by: elected_by_voters
     maximum_memberships: 5
-    quote: All Selectboard members shall be elected at large.
+    quote: The elected officers of the Town of Essex shall be Selectboard members
+      and Moderator.
   - established: true
-    label: Selectboard members
+    label: Selectboard member
     filled_by: elected_by_voters
     maximum_memberships: 5
     quote: All Selectboard members shall be elected at large.

@@ -2,10 +2,10 @@
   expected: elected_by_voters
   presiding: false
   right: true
-  rounds: 3
+  rounds: 1
   each_right:
   - false
-  - false
+  - true
   agreed: true
   answers:
   - established: true
@@ -15,28 +15,6 @@
     quote: The board of commissioners shall consist of five county commissioners.
       Except as this charter provides to the contrary, each commissioner shall be
       elected by district for a four-year term.
-  - established: true
-    label: county commissioner
-    filled_by: elected_by_voters
-    maximum_memberships: 5
-    quote: The board of commissioners shall consist of five county commissioners.
-  - established: true
-    label: county commissioner
-    filled_by: elected_by_voters
-    maximum_memberships: 5
-    quote: The board of commissioners shall consist of five county commissioners.
-      Except as this charter provides to the contrary, each commissioner shall be
-      elected by district for a four-year term.
-  - established: true
-    label: county commissioner
-    filled_by: elected_by_voters
-    maximum_memberships: 5
-    quote: The board of commissioners shall consist of five county commissioners.
-  - established: true
-    label: county commissioner
-    filled_by: elected_by_voters
-    maximum_memberships: 5
-    quote: The board of commissioners shall consist of five county commissioners.
   - established: true
     label: county commissioner
     filled_by: elected_by_voters
@@ -185,7 +163,7 @@
     quote: At its first regular meeting each year the board of county commissioners
       shall designate one of its members chair of the board for the year.
   - established: true
-    label: chair of the board
+    label: chair
     filled_by: elected_by_members
     maximum_memberships: 1
     quote: At its first regular meeting each year the board of county commissioners

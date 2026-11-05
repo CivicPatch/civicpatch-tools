@@ -7,12 +7,13 @@ from typing import List
 from urllib.parse import urlparse
 
 from pydantic import BaseModel
+from semantic_text_splitter import TextSplitter
 from .section_formats import SECTION_FORMATS, SectionFormat
 from shared.schemas import GoverningLaw, GoverningLawKind
 from shared.utils.layered_config import GovernedBy, GoverningLawConfig
 
-# Most charters fit (Vermont's median is 21k chars); Burlington's 374k does not.
-WHOLE_TEXT_CHARS = 110_000
+# Whole text beat every pick on laws up to Burlington's 374k, at under 2 cents a place.
+WHOLE_TEXT_CHARS = 400_000
 
 
 # When the pick names nothing: headings about the governing body and its officers, not its
@@ -28,6 +29,28 @@ _OTHER_WORDS = (
 # "Board of Aldermen" is the governing body; any other "Board of" is not.
 _OTHER_BOARD = re.compile(r"board of (?!aldermen)", re.IGNORECASE)
 
+
+# A page with no known format splits at the law's own headings: `CHAPTER II`, `Section 5.`,
+# `§ 101.`, `221.160`. A comma or lower-case word after the number is a wrapped reference.
+_OPENING = r"[^\w\n]*"
+_NOT_REFERENCE = r"(?!,|[ \t]+[a-z])"
+_GROUP_LINE = re.compile(rf"(?m:^{_OPENING}(?i:chapter|article|part|title|subchapter)\s+(?i:[ivxlc\d]+)\b{_NOT_REFERENCE})")
+_SECTION_LINE = re.compile(
+    rf"(?m:^{_OPENING}(?i:§+|section|sec\.)\s*\d+(?:[-.]\d+)*\b{_NOT_REFERENCE})|(?m:^{_OPENING}\d+(?:\.\d+)+\.?\s+[A-Z])"
+    # A markdown heading, as the publisher converters write them, whatever the state's wording.
+    r"|(?m:^#{1,6}[ \t]+\S)"
+)
+# Over this share of a page's sections without a heading, its headings went unrecognised.
+UNHEADED_WARNING_SHARE = 0.5
+# A longer section is cut into parts of this size, each under its own heading.
+SECTION_MAX_CHARS = 4_000
+# "Chapter I" alone takes its title from the next line.
+_BARE_HEADING_CHARS = 16
+_HEADING_CHARS = 90
+# Text under no recognised heading is listed by its first line, so the pick can still tell it apart.
+NO_HEADING = "(no heading)"
+_MARKUP = re.compile(r"[*#_`\\]+")
+_LINK = re.compile(r"\[([^\]]*)\]\([^)]*\)")
 
 # The charter first: it governs, and the general law applies where it says nothing.
 PAGE_KIND_ORDER = (GoverningLawKind.CHARTER, GoverningLawKind.GENERAL_LAW)
@@ -93,14 +116,23 @@ def fits_whole(markdown: str) -> bool:
 
 
 def split_sections(pages: List[GoverningLawPage]) -> List[Section]:
-    """Every section of every page whose publisher's format is known, numbered across pages."""
+    """Every section of every page, numbered across pages: by the publisher's format where it is
+    known, else at the law's own headings."""
     sections: List[Section] = []
     for page in pages:
         section_format = SECTION_FORMATS.get(urlparse(page.source_url).hostname or "")
+        first_number = len(sections) + 1
         if section_format is None:
-            continue
-        sections.extend(_page_sections(page.text, section_format, first_number=len(sections) + 1))
+            sections.extend(_headed_sections(page.text, first_number))
+        else:
+            sections.extend(_page_sections(page.text, section_format, first_number))
     return sections
+
+
+def unheaded_share(sections: List[Section]) -> float:
+    if not sections:
+        return 0.0
+    return sum(section.heading.startswith(NO_HEADING) for section in sections) / len(sections)
 
 
 def heading_listing(sections: List[Section]) -> str:
@@ -154,6 +186,50 @@ def _page_sections(page: str, section_format: SectionFormat, first_number: int) 
         elif found:
             body.append(line)
     return _with_body(found, body)
+
+
+def _headed_sections(page: str, first_number: int) -> List[Section]:
+    """Every character lands in a section, so a wrong split can cost a pick but never text."""
+    found: List[Section] = []
+    group = ""
+    starts = _heading_starts(page)
+    for start, end in zip(starts, [*starts[1:], len(page)]):
+        headed = bool(_SECTION_LINE.match(page, start) or _GROUP_LINE.match(page, start))
+        heading = _heading_at(page, start) if headed else ""
+        if _GROUP_LINE.match(page, start):
+            group = heading
+        for part in _parts(page[start:end]):
+            label = heading or f"{NO_HEADING} {_preview(part)}"
+            found.append(Section(id=f"H{first_number + len(found):04d}", group=group, heading=label, text=part))
+    return found
+
+
+def _preview(part: str) -> str:
+    first_line = next((line for line in part.splitlines() if line.strip()), "")
+    return _clean_heading(first_line)[:_HEADING_CHARS]
+
+
+def _heading_starts(page: str) -> List[int]:
+    headings = {match.start() for pattern in (_GROUP_LINE, _SECTION_LINE) for match in pattern.finditer(page)}
+    return sorted(headings | {0})
+
+
+def _heading_at(page: str, start: int) -> str:
+    lines = page[start:start + 2 * _HEADING_CHARS].split("\n")
+    heading = _clean_heading(lines[0])
+    if len(heading) < _BARE_HEADING_CHARS and len(lines) > 1:
+        heading = f"{heading} {_clean_heading(lines[1])}".strip()
+    return heading[:_HEADING_CHARS]
+
+
+def _clean_heading(line: str) -> str:
+    return " ".join(_MARKUP.sub("", _LINK.sub(r"\1", line)).split()).strip(" -")
+
+
+def _parts(text: str) -> List[str]:
+    if len(text) <= SECTION_MAX_CHARS:
+        return [text]
+    return TextSplitter(SECTION_MAX_CHARS, trim=False).chunks(text)
 
 
 def _with_body(found: List[Section], body: List[str]) -> List[Section]:

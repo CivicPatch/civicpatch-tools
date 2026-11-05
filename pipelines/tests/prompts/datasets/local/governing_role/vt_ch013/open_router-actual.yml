@@ -2,32 +2,12 @@
   expected: elected_by_voters
   presiding: false
   right: true
-  rounds: 3
+  rounds: 1
   each_right:
-  - false
-  - false
+  - true
+  - true
   agreed: true
   answers:
-  - established: true
-    label: Council Member
-    filled_by: elected_by_voters
-    maximum_memberships: 5
-    quote: All Council members shall be elected at large.
-  - established: true
-    label: Council member
-    filled_by: elected_by_voters
-    maximum_memberships: 5
-    quote: All Council members shall be elected at large.
-  - established: true
-    label: Council member
-    filled_by: elected_by_voters
-    maximum_memberships: 5
-    quote: All Council members shall be elected at large.
-  - established: true
-    label: Council member
-    filled_by: elected_by_voters
-    maximum_memberships: 5
-    quote: All Council members shall be elected at large.
   - established: true
     label: Council member
     filled_by: elected_by_voters
@@ -73,12 +53,12 @@
   - established: true
     label: City Manager
     filled_by: appointed
-    maximum_memberships: 1
+    maximum_memberships: null
     quote: The Council shall appoint a City Manager for an indefinite term.
   - established: true
     label: City Manager
     filled_by: appointed
-    maximum_memberships: 1
+    maximum_memberships: null
     quote: The Council shall appoint a City Manager for an indefinite term.
 - role_id: city-attorney
   expected: appointed
@@ -93,7 +73,7 @@
   - established: true
     label: City Attorney
     filled_by: appointed
-    maximum_memberships: 1
+    maximum_memberships: null
     quote: The Council by majority vote of all its members shall appoint annually
       the City Treasurer, whose office shall be no longer elective, and the City Attorney,
       Zoning Administrator, Auditor, First and Second Constable, Grand Juror, and
@@ -101,7 +81,7 @@
   - established: true
     label: City Attorney
     filled_by: appointed
-    maximum_memberships: 1
+    maximum_memberships: null
     quote: The Council by majority vote of all its members shall appoint annually
       the City Treasurer, whose office shall be no longer elective, and the City Attorney,
       Zoning Administrator, Auditor, First and Second Constable, Grand Juror, and
@@ -123,7 +103,7 @@
     quote: the Council shall organize and elect a Chair, a Vice Chair and a Clerk
       by a majority vote of the entire Council
   - established: true
-    label: Chair
+    label: Vice Chair
     filled_by: elected_by_members
     maximum_memberships: 1
     quote: the Council shall organize and elect a Chair, a Vice Chair and a Clerk
@@ -135,8 +115,8 @@
   rounds: 1
   each_right:
   - true
-  - true
-  agreed: true
+  - false
+  agreed: false
   answers:
   - established: true
     label: Vice Chair
@@ -144,12 +124,11 @@
     maximum_memberships: 1
     quote: the Council shall organize and elect a Chair, a Vice Chair and a Clerk
       by a majority vote of the entire Council
-  - established: true
-    label: Vice Chair
-    filled_by: elected_by_members
-    maximum_memberships: 1
-    quote: the Council shall organize and elect a Chair, a Vice Chair and a Clerk
-      by a majority vote of the entire Council
+  - established: false
+    label: ''
+    filled_by: not_stated
+    maximum_memberships: null
+    quote: ''
 - role_id: commission-president
   expected: probably_not_established
   presiding: true

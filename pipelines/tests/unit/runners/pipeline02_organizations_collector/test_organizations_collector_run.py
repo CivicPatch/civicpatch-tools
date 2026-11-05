@@ -6,6 +6,7 @@ from typing import NamedTuple
 from unittest.mock import AsyncMock, MagicMock, patch
 
 import pytest
+from pydantic import ValidationError
 
 from runners.engine import Machine, run_pipeline, terminal_states
 from runners.pipeline02_organizations_collector.schemas import (
@@ -93,7 +94,7 @@ def _context(governing_law: GoverningLaw | None) -> OrganizationsCollectorContex
 MAIN = "runners.pipeline02_organizations_collector.transitions.main"
 _SHORT_CHARTER = "- **§ 1. Selectboard**\nThe Selectboard shall consist of five members elected at large.\n"
 _LONG_CHARTER = (
-    "- **§ 1. Corporate existence**\n" + "The town continues. " * 6_000 + "\n"
+    "- **§ 1. Corporate existence**\n" + "The town continues. " * 21_000 + "\n"
     "- **§ 2. Selectboard; election**\nThe Selectboard shall consist of five members elected at large.\n"
     "- **§ 3. Water department**\nThe water department supplies water.\n"
 )
@@ -111,9 +112,10 @@ async def _walk(
     pages: dict[str, str] | None = None,
     picked: list[str] | None = None,
     stored: GoverningLawOrganizations | None = None,
+    pick_error: Exception | None = None,
 ) -> _Run:
-    """`pages` maps a source page id to its cached text; `picked` is the model's heading pick;
-    `stored` is an answer cp.org holds for the run's input hash."""
+    """`pages` maps a source page id to its cached text; `picked` is the model's heading pick, or
+    `pick_error` what it raised; `stored` is an answer cp.org holds for the run's input hash."""
     pages = pages or {}
     engine_api = MagicMock()
     engine_api.fetch_pipeline_run_status = AsyncMock(return_value=PipelineRunStatus.RUNNING)
@@ -124,7 +126,7 @@ async def _walk(
     )
     api.get_extras_organizations_by_input_hash = AsyncMock(return_value=stored)
     api.patch_jurisdiction_extras = AsyncMock()
-    pick = AsyncMock(return_value={"sections": picked or []})
+    pick = AsyncMock(side_effect=pick_error) if pick_error else AsyncMock(return_value={"sections": picked or []})
     seen: list[OrganizationsCollectorContext] = []
 
     async def capture(_limits, _logger, extracted, _client):
@@ -205,6 +207,16 @@ async def test_a_long_charter_is_read_as_the_sections_the_model_picks():
 async def test_a_pick_naming_nothing_falls_back_to_the_headings_that_name_the_government():
     run = await _walk(_context(_governing_law(["page-1"])), {"page-1": _LONG_CHARTER}, picked=[])
 
+    assert run.context.data.selected_governing_law_text == "# Charter\n\n- **§ 2. Selectboard; election**\nThe Selectboard shall consist of five members elected at large."
+
+
+@pytest.mark.asyncio
+async def test_a_pick_whose_output_stays_invalid_falls_back_to_the_headings_that_name_the_government():
+    invalid = ValidationError.from_exception_data("GoverningSectionsResponse", [])
+
+    run = await _walk(_context(_governing_law(["page-1"])), {"page-1": _LONG_CHARTER}, pick_error=invalid)
+
+    assert run.states[-1] == "SUCCESS"
     assert run.context.data.selected_governing_law_text == "# Charter\n\n- **§ 2. Selectboard; election**\nThe Selectboard shall consist of five members elected at large."
 
 

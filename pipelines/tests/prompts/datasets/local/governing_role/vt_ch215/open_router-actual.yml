@@ -9,12 +9,13 @@
   agreed: true
   answers:
   - established: true
-    label: Trustee
+    label: trustee
     filled_by: elected_by_voters
     maximum_memberships: 3
-    quote: one trustee for a term of one year, one trustee for a term of two years,
-      and one trustee for a term of three years, and thereafter at each annual meeting
-      one trustee for a term of three years
+    quote: there shall be elected, by ballot if called for, for the ensuing year and
+      until their successors are chosen, a Moderator, ... one trustee for a term of
+      one year, one trustee for a term of two years, and one trustee for a term of
+      three years
   - established: true
     label: Trustee
     filled_by: elected_by_voters
@@ -38,15 +39,13 @@
     maximum_memberships: 1
     quote: At the annual meeting of said corporation, there shall be elected, by ballot
       if called for, for the ensuing year and until their successors are chosen, a
-      Moderator, who shall preside at all meetings of said corporation, with powers
-      of moderators at town meetings;
+      Moderator
   - established: true
     label: Moderator
     filled_by: elected_by_voters
     maximum_memberships: 1
-    quote: At the annual meeting of said corporation, there shall be elected, by ballot
-      if called for, for the ensuing year and until their successors are chosen, a
-      Moderator
+    quote: there shall be elected, by ballot if called for, for the ensuing year and
+      until their successors are chosen, a Moderator
 - role_id: clerk
   expected: elected_by_voters
   presiding: false
@@ -70,7 +69,7 @@
   - established: true
     label: Clerk
     filled_by: elected_by_voters
-    maximum_memberships: 1
+    maximum_memberships: null
     quote: At the annual meeting of said corporation, there shall be elected, by ballot
       if called for, for the ensuing year and until their successors are chosen, a
       Moderator, who shall preside at all meetings of said corporation, with powers
