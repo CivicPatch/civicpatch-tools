@@ -12,7 +12,8 @@
     label: Mayor
     filled_by: elected_by_voters
     maximum_memberships: 1
-    quote: a Mayor shall be elected for a term of four years.
+    quote: At the biennial general election held in 1954 and every fourth year thereafter,
+      a Mayor shall be elected for a term of four years.
   - established: true
     label: Mayor
     filled_by: elected_by_voters
@@ -25,7 +26,7 @@
   right: true
   rounds: 1
   each_right:
-  - false
+  - true
   - true
   agreed: true
   answers:
@@ -33,14 +34,13 @@
     label: Councilor
     filled_by: elected_by_voters
     maximum_memberships: 9
-    quote: The Council shall be composed of nine Councilors, one from each ward. There
-      shall be elected one Councilor from each ward at each general municipal election.
+    quote: There shall be elected one Councilor from each ward at each general municipal
+      election.
   - established: true
     label: Councilor
     filled_by: elected_by_voters
     maximum_memberships: 9
-    quote: There shall be elected one Councilor from each ward at each general municipal
-      election.
+    quote: The Council shall be composed of nine Councilors, one from each ward.
 - role_id: city-manager
   expected: appointed
   presiding: false
@@ -139,14 +139,15 @@
     label: president
     filled_by: elected_by_members
     maximum_memberships: 1
-    quote: the Council by ballot shall elect a president and a vice-president from
-      its membership.
+    quote: At its first meeting after this Charter takes effect and thereafter at
+      its first meeting of each odd-numbered year, the Council by ballot shall elect
+      a president and a vice-president from its membership.
   - established: true
-    label: President of the Council
+    label: president
     filled_by: elected_by_members
     maximum_memberships: 1
     quote: the Council by ballot shall elect a president and a vice-president from
-      its membership
+      its membership.
 - role_id: vice-president
   expected: elected_by_members
   presiding: true
@@ -161,11 +162,12 @@
     label: vice-president
     filled_by: elected_by_members
     maximum_memberships: 1
-    quote: the Council by ballot shall elect a president and a vice-president from
-      its membership.
+    quote: At its first meeting after this Charter takes effect and thereafter at
+      its first meeting of each odd-numbered year, the Council by ballot shall elect
+      a president and a vice-president from its membership.
   - established: true
     label: vice-president
     filled_by: elected_by_members
     maximum_memberships: 1
     quote: the Council by ballot shall elect a president and a vice-president from
-      its membership
+      its membership.

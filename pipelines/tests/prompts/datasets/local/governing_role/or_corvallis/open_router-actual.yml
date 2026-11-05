@@ -34,13 +34,13 @@
     label: Councilor
     filled_by: elected_by_voters
     maximum_memberships: 9
-    quote: There shall be elected one Councilor from each ward at each general municipal
-      election.
+    quote: The Council shall be composed of nine Councilors, one from each ward.
   - established: true
     label: Councilor
     filled_by: elected_by_voters
     maximum_memberships: 9
-    quote: The Council shall be composed of nine Councilors, one from each ward.
+    quote: There shall be elected one Councilor from each ward at each general municipal
+      election.
 - role_id: city-manager
   expected: appointed
   presiding: false
@@ -62,9 +62,8 @@
     label: City Manager
     filled_by: appointed
     maximum_memberships: null
-    quote: The offices of City Manager, Municipal Judge, and City Attorney are hereby
-      created. The Council shall fill each of these offices by appointment as the
-      need so arises.
+    quote: The Council shall fill each of these offices by appointment as the need
+      so arises.
 - role_id: recorder
   expected: probably_not_established
   presiding: false

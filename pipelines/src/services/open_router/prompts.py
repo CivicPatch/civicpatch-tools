@@ -402,7 +402,8 @@ def governing_law_reader_prompt() -> str:
 
     How an office is filled, as the text says:
     - elected_by_voters: the voters elect or choose the person to that office, as a town or
-      village does at its annual meeting.
+      village does at its annual meeting. An office the text calls elected, without naming who
+      elects it, is this.
     - elected_by_members: a body chooses one of its own members for it (a chair, a mayor chosen
       by the council), whatever verb the text uses: "appoint from among the board" is this.
     - appointed: a body or officer appoints, hires or employs the person, who need not be one of

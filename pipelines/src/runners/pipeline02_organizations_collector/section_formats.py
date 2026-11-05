@@ -1,7 +1,7 @@
 """How each publisher's pages, through plan 1's converter, mark a section and the group it sits in.
 By the page's host, since the markdown's shape follows the publisher, not the state. A host not
-listed splits into nothing, and its page is read whole. Each new publisher adds an entry, a
-fixture and its eval cases."""
+listed splits at the law's own headings (`sections._headed_sections`). Each new publisher adds an
+entry, a fixture and its eval cases."""
 
 import re
 from typing import NamedTuple

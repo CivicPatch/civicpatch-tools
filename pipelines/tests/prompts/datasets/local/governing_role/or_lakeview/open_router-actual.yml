@@ -12,14 +12,14 @@
     label: mayor
     filled_by: elected_by_voters
     maximum_memberships: 1
-    quote: At every other general election, a mayor will be elected for a four-year
-      term.
+    quote: The Town Council consists of a mayor and four councilors elected from the
+      Town at large.
   - established: true
     label: mayor
     filled_by: elected_by_voters
     maximum_memberships: 1
-    quote: At every other general election, a mayor will be elected for a four-year
-      term.
+    quote: The Town Council consists of a mayor and four councilors elected from the
+      Town at large.
 - role_id: member
   expected: elected_by_voters
   presiding: false
@@ -56,8 +56,22 @@
     label: Town manager
     filled_by: appointed
     maximum_memberships: null
-    quote: The office of Town manager is established as the administrative head of
-      the Town government.
+    quote: A majority of the Council must appoint and may remove the manager.
+  - established: true
+    label: Town manager
+    filled_by: appointed
+    maximum_memberships: null
+    quote: A majority of the Council must appoint and may remove the manager.
+  - established: true
+    label: Town manager
+    filled_by: appointed
+    maximum_memberships: null
+    quote: A majority of the Council must appoint and may remove the manager.
+  - established: true
+    label: Town manager
+    filled_by: appointed
+    maximum_memberships: null
+    quote: A majority of the Council must appoint and may remove the manager.
   - established: true
     label: Town manager
     filled_by: appointed
@@ -66,25 +80,9 @@
   - established: true
     label: Town manager
     filled_by: appointed
-    maximum_memberships: null
-    quote: A majority of the Council must appoint and may remove the manager.
-  - established: true
-    label: Town manager
-    filled_by: appointed
-    maximum_memberships: null
-    quote: A majority of the Council must appoint and may remove the manager.
-  - established: true
-    label: Town manager
-    filled_by: appointed
-    maximum_memberships: null
+    maximum_memberships: 1
     quote: The office of Town manager is established as the administrative head of
-      the Town government. A majority of the Council must appoint and may remove the
-      manager.
-  - established: true
-    label: Town manager
-    filled_by: appointed
-    maximum_memberships: null
-    quote: A majority of the Council must appoint and may remove the manager.
+      the Town government.
 - role_id: recorder
   expected: probably_not_established
   presiding: false

@@ -16,7 +16,7 @@
   - established: true
     label: Vice Chair
     filled_by: elected_by_members
-    maximum_memberships: null
+    maximum_memberships: 1
     quote: The Selectboard shall elect a Vice Chair at its organizational meeting.
 - role_id: commission-president
   expected: probably_not_established
@@ -228,16 +228,16 @@
   - true
   agreed: true
   answers:
-  - established: true
-    label: Chair
+  - established: false
+    label: ''
     filled_by: not_stated
     maximum_memberships: null
-    quote: The Chair of the Selectboard shall preside at all meetings of the Selectboard.
-  - established: true
-    label: Chair
+    quote: ''
+  - established: false
+    label: ''
     filled_by: not_stated
     maximum_memberships: null
-    quote: The Chair of the Selectboard shall preside at all meetings of the Selectboard.
+    quote: ''
 - role_id: commissioner-vice-president
   expected: probably_not_established
   presiding: true

@@ -1,52 +1,47 @@
 run:
-  timestamp: '2026-11-04T02:44:52+00:00'
-  prompt_sha256: 78237d1a9cdf
-  prompt_file: _prompts/78237d1a9cdf.txt
+  timestamp: '2026-11-05T23:07:20+00:00'
+  prompt_sha256: 38e82ee685c8
+  prompt_file: _prompts/38e82ee685c8.txt
 cost_summary:
   model: deepseek/deepseek-v4-flash
-  elapsed_seconds: 966.45
-  total_input_tokens: 5781993
-  total_cached_input_tokens: 4356736
-  total_output_tokens: 308376
-  total_cost_usd: 0.407869868
+  elapsed_seconds: 1159.74
+  total_input_tokens: 6505003
+  total_cached_input_tokens: 5515264
+  total_output_tokens: 400268
+  total_cost_usd: 0.202532946
 total_cases: 53
-passed_cases: 47
+passed_cases: 49
 failed_cases:
 - case_id: or_lakeview
   wrong_roles:
   - city-manager
 - case_id: or_lane
   wrong_roles:
+  - member
   - clerk
   - treasurer
-- case_id: or_malheur
-  wrong_roles:
-  - county-judge
-- case_id: orc_lakeview
-  wrong_roles:
-  - city-manager
 - case_id: orc_lane
   wrong_roles:
   - clerk
   - treasurer
   - surveyor
-- case_id: vt_ch153
+- case_id: vt_ch113
   wrong_roles:
   - treasurer
-roles_right: 0.9554455445544554
+roles_right: 0.9603960396039604
 single_ask_right: 0.9108910891089109
-agreement: 0.9801980198019802
+agreement: 0.9752475247524752
 presiding_gold_right: 48
 presiding_gold_asked: 48
-roles_re_asked: 6
+roles_re_asked: 7
 candidates_asked: 638
-candidates_verified: 6
+candidates_verified: 7
 by_expected:
   elected_by_voters:
     right: 100
-    total: 100
+    total: 101
   appointed:
-    right: 35
+    right: 36
     total: 43
   elected_by_members:
     right: 49
@@ -56,8 +51,38 @@ by_expected:
     total: 8
   not_stated:
     right: 1
-    total: 2
+    total: 1
 candidates_to_read:
+  or_malheur:
+  - role_id: chair
+    answers:
+    - established: true
+      label: chairperson
+      filled_by: elected_by_members
+      maximum_memberships: 1
+      quote: appoint a chairperson from among their number
+    - established: true
+      label: chairperson
+      filled_by: elected_by_members
+      maximum_memberships: 1
+      quote: Except as otherwise provided in ORS 203.230 (5) or an order issued under
+        ORS 203.230 (1), appoint a chairperson from among their number who shall serve
+        until the first Monday in January next following appointment.
+  vt_ch007:
+  - role_id: council-president
+    answers:
+    - established: true
+      label: President of the Board of Aldermen
+      filled_by: elected_by_members
+      maximum_memberships: 1
+      quote: The Board of Aldermen shall consist of four aldermen, who shall elect
+        one of their number President of said Board.
+    - established: true
+      label: President of the Board of Aldermen
+      filled_by: elected_by_members
+      maximum_memberships: 1
+      quote: The Board of Aldermen shall consist of four aldermen, who shall elect
+        one of their number President of said Board.
   vt_ch101:
   - role_id: chair
     answers:
@@ -71,8 +96,7 @@ candidates_to_read:
       label: Chair
       filled_by: elected_by_members
       maximum_memberships: 1
-      quote: The Selectboard shall meet within seven business days after the annual
-        Town election to elect a Chair and a Vice Chair and to designate a Clerk.
+      quote: to elect a Chair and a Vice Chair
   - role_id: vice-chair
     answers:
     - established: true
@@ -85,25 +109,8 @@ candidates_to_read:
       label: Vice Chair
       filled_by: elected_by_members
       maximum_memberships: 1
-      quote: The Selectboard shall meet within seven business days after the annual
-        Town election to elect a Chair and a Vice Chair and to designate a Clerk.
+      quote: to elect a Chair and a Vice Chair
   vt_ch207:
-  - role_id: council-president
-    answers:
-    - established: true
-      label: President
-      filled_by: elected_by_voters
-      maximum_memberships: 1
-      quote: All officers of said Village shall be residents and elected at the annual
-        meeting of said Village, except Collector of Taxes, who shall be appointed
-        by the Board of Trustees.
-    - established: true
-      label: President
-      filled_by: elected_by_voters
-      maximum_memberships: 1
-      quote: All officers of said Village shall be residents and elected at the annual
-        meeting of said Village, except Collector of Taxes, who shall be appointed
-        by the Board of Trustees.
   - role_id: chair
     answers:
     - established: true
@@ -113,11 +120,11 @@ candidates_to_read:
       quote: In the absence of the President, the Trustees shall elect a chair from
         among their number.
     - established: true
-      label: chair
-      filled_by: elected_by_members
+      label: President
+      filled_by: elected_by_voters
       maximum_memberships: 1
-      quote: In the absence of the President, the Trustees shall elect a chair from
-        among their number.
+      quote: By virtue of the office, the President shall be a member of the Board
+        of Trustees and shall preside over meetings of the Board of Trustees.
   vt_ch227:
   - role_id: council-president
     answers:
@@ -135,17 +142,22 @@ candidates_to_read:
   - role_id: council-president
     answers:
     - established: true
-      label: President
+      label: President of the Board of Trustees
       filled_by: elected_by_voters
       maximum_memberships: 1
       quote: the Village shall, by ballot, if called for by three or more legal voters
         in the meeting, elect for the ensuing year, and, until their successors are
-        chosen; a President
+        chosen; a President, who shall preside at all Village meetings, and be vested
+        with the powers of a moderator at town meeting and who shall be, by virtue
+        of this office, one of the trustees of the Village and President of the Board
+        of Trustees
     - established: true
-      label: President
+      label: President of the Board of Trustees
       filled_by: elected_by_voters
       maximum_memberships: 1
-      quote: elect for the ensuing year, and, until their successors are chosen; a
-        President, who shall preside at all Village meetings, and be vested with the
-        powers of a moderator at town meeting and who shall be, by virtue of this
-        office, one of the trustees of the Village and President of the Board of Trustees
+      quote: At the annual meeting to be held on the second Monday of July, the Village
+        shall, by ballot, if called for by three or more legal voters in the meeting,
+        elect for the ensuing year, and, until their successors are chosen; a President,
+        who shall preside at all Village meetings, and be vested with the powers of
+        a moderator at town meeting and who shall be, by virtue of this office, one
+        of the trustees of the Village and President of the Board of Trustees
