@@ -1,7 +1,7 @@
 people:
 - name: Rob Saka
   label: Councilmember District 1
-  organization_label: City Council
+  organization_label: Councilmembers
   phone: (206) 684-8888
   email: council@seattle.gov
   url: https://seattle.gov/council/members/rob-saka
@@ -10,7 +10,7 @@ people:
   image: local://8ac384d14474.png
 - name: Eddie Lin
   label: Councilmember District 2
-  organization_label: City Council
+  organization_label: Councilmembers
   phone: (206) 684-8888
   email: council@seattle.gov
   url: https://seattle.gov/council/members/eddie-lin
@@ -19,7 +19,7 @@ people:
   image: local://8518b717839c.png
 - name: Joy Hollingsworth
   label: Council President District 3
-  organization_label: City Council
+  organization_label: Councilmembers
   phone: (206) 684-8888
   email: council@seattle.gov
   url: https://seattle.gov/council/members/joy-hollingsworth
@@ -28,7 +28,7 @@ people:
   image: local://ef06d9a9e07d.png
 - name: Maritza Rivera
   label: Councilmember District 4
-  organization_label: City Council
+  organization_label: Councilmembers
   phone: (206) 684-8888
   email: council@seattle.gov
   url: https://seattle.gov/council/members/maritza-rivera
@@ -37,7 +37,7 @@ people:
   image: local://ed071cb84224.png
 - name: Debora Juarez
   label: Councilmember District 5
-  organization_label: City Council
+  organization_label: Councilmembers
   phone: (206) 684-8888
   email: council@seattle.gov
   url: https://seattle.gov/council/members/debora-juarez
@@ -46,7 +46,7 @@ people:
   image: local://183bf92d4c48.png
 - name: Dan Strauss
   label: Councilmember District 6
-  organization_label: City Council
+  organization_label: Councilmembers
   phone: (206) 684-8888
   email: council@seattle.gov
   url: https://seattle.gov/council/members/dan-strauss
@@ -55,7 +55,7 @@ people:
   image: local://ada6b13ec0d1.png
 - name: Bob Kettle
   label: Councilmember District 7
-  organization_label: City Council
+  organization_label: Councilmembers
   phone: (206) 684-8888
   email: council@seattle.gov
   url: https://seattle.gov/council/members/bob-kettle
@@ -64,7 +64,7 @@ people:
   image: local://f490e8055573.png
 - name: Alexis Mercedes Rinck
   label: Councilmember Position 8
-  organization_label: City Council
+  organization_label: Councilmembers
   phone: (206) 684-8888
   email: council@seattle.gov
   url: https://seattle.gov/council/members/alexis-mercedes-rinck
@@ -73,7 +73,7 @@ people:
   image: local://ce027a08f3f1.png
 - name: Dionne Foster
   label: Councilmember Position 9
-  organization_label: City Council
+  organization_label: Councilmembers
   phone: (206) 684-8888
   email: council@seattle.gov
   url: https://seattle.gov/council/members/dionne-foster

@@ -28,7 +28,7 @@ people:
   image: null
 - name: John Hooker
   label: Trustee
-  organization_label: Township Officials
+  organization_label: Trustees
   phone: (616) 813-0594
   email: jhook1566@gmail.com
   url: https://leightontownship.org/officials/
@@ -37,7 +37,7 @@ people:
   image: null
 - name: Brian Bonnema
   label: Trustee
-  organization_label: Township Officials
+  organization_label: Trustees
   phone: (616) 293-2106
   email: bbonnema75@gmail.com
   url: https://leightontownship.org/officials/

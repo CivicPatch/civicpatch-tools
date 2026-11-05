@@ -1,18 +1,22 @@
 providers:
-  open_router-AtlasCloud:
-    elapsed_seconds: 274.69
-    cost_usd: 0.064073184
-    f1_primary_role: 0.9797297297297297
+  open_router-StreamLake:
+    elapsed_seconds: 448.58
+    cost_usd: 0.056452802
+    f1_primary_role: 0.9805269186712485
     f1_district: 1.0
-    image: 1.0
-    designations: 0.9986111111111111
-    roles_precision: 0.9759449404761905
-    start_date: 1.0
-    designations_precision: 1.0
-    url: 0.8611111111111112
     end_date: 1.0
-    name: 0.9986111111111111
-    phone: 0.895429292929293
-    roles: 0.9611111111111111
-    email: 0.9861111111111112
-failures: {}
+    phone: 0.9023844211344212
+    designations_precision: 1.0
+    start_date: 1.0
+    roles: 0.9530662393162393
+    url: 0.8476495726495726
+    designations: 0.9976495726495727
+    image: 1.0
+    roles_precision: 0.9880282738095238
+    email: 0.9851495726495727
+    name: 0.9976495726495727
+failures:
+  open_router-AtlasCloud: "1 validation error for PeopleArrayLLMResponseSchema\n \
+    \ Invalid JSON: expected ident at line 1 column 2 [type=json_invalid, input_value='I\u2019\
+    ve got the Acton, MA...ers, or something else?', input_type=str]\n    For further\
+    \ information visit https://errors.pydantic.dev/2.12/v/json_invalid"

@@ -1,6 +1,6 @@
 people:
 - name: Alysa Jarvis
-  label: Council
+  label: Council Member
   organization_label: null
   phone: 713-703-8662
   email: null
@@ -9,7 +9,7 @@ people:
   end_date: null
   image: null
 - name: Tracey Johnson
-  label: Council
+  label: Council Member
   organization_label: null
   phone: 361-746-8488
   email: null
@@ -18,7 +18,7 @@ people:
   end_date: null
   image: null
 - name: Kenneth Reese
-  label: Council
+  label: Council Member
   organization_label: null
   phone: null
   email: null
