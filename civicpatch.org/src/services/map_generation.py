@@ -5,6 +5,7 @@ tippecanoe, and the R2 upload. See .scratch/2026-09-11-plan-map-pipeline-migrati
 
 import asyncio
 import json
+import logging
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 from tempfile import TemporaryDirectory
@@ -33,6 +34,12 @@ from database.jurisdictions import (
     set_parent_ocdids,
 )
 
+logger = logging.getLogger(__name__)
+
+STATE_MAX_ZOOM = 14
+# The overview is only seen whole-US; a click opens the state's own tiles, and MapLibre overzooms past this.
+NATIONAL_MAX_ZOOM = 8
+
 
 async def generate_and_upload_state_pmtiles(state: str) -> str:
     """Build {state}.pmtiles (states/counties/local layers) and upload it to R2, returning
@@ -49,6 +56,7 @@ async def generate_and_upload_state_pmtiles(state: str) -> str:
         _build_and_upload_pmtiles, state, fips, lookup
     )
     await set_parent_ocdids(parent_ocdids_by_ocdid)
+    logger.info("[%s] parent_ocdids written for %d jurisdictions", state, len(parent_ocdids_by_ocdid))
     return url
 
 
@@ -60,13 +68,16 @@ def _build_and_upload_pmtiles(
     tippecanoe subprocess are all blocking calls.
     """
     state_gdf, county_gdf, local_gdf = _fetch_state_geometry(fips)
+    logger.info("[%s] geometry loaded: %d counties, %d local", state, len(county_gdf), len(local_gdf))
 
     county_ocdids_by_geoid = local_county_ocdids(local_gdf, county_gdf, lookup)
     parent_ocdids_by_ocdid = _parent_ocdids_by_ocdid(county_ocdids_by_geoid, lookup, fips)
+    logger.info("[%s] county overlay done", state)
 
     state_features = [enrich_state_feature(f, lookup) for f in _to_features(state_gdf)]
     county_features = [enrich_county_feature(f, lookup) for f in _to_features(county_gdf)]
     local_features = _enrich_local_features(local_gdf, county_ocdids_by_geoid, lookup)
+    logger.info("[%s] features enriched", state)
 
     pmtiles_bytes = _build_pmtiles(
         [
@@ -75,9 +86,12 @@ def _build_and_upload_pmtiles(
             ("local", local_features, 8),
         ],
         f"{state}.pmtiles",
+        max_zoom=STATE_MAX_ZOOM,
         label=state,
     )
+    logger.info("[%s] pmtiles built: %d bytes", state, len(pmtiles_bytes))
     url = _upload(f"maps/{state}.pmtiles", pmtiles_bytes)
+    logger.info("[%s] pmtiles uploaded", state)
     return url, parent_ocdids_by_ocdid
 
 
@@ -140,7 +154,7 @@ def _parent_ocdids_by_ocdid(
 
 
 def _build_pmtiles(
-    layers: list[tuple[str, list[dict], int]], output_name: str, label: str
+    layers: list[tuple[str, list[dict], int]], output_name: str, max_zoom: int, label: str
 ) -> bytes:
     with TemporaryDirectory() as tmp:
         tmp_path = Path(tmp)
@@ -150,7 +164,7 @@ def _build_pmtiles(
             path = tmp_path / f"{name}.geojson"
             path.write_text(json.dumps(feature_collection(features)))
             tippecanoe_layers.append((name, path, min_zoom))
-        tippecanoe.run_tippecanoe(tippecanoe_layers, output_path, label=label)
+        tippecanoe.run_tippecanoe(tippecanoe_layers, output_path, max_zoom=max_zoom, label=label)
         return output_path.read_bytes()
 
 
@@ -179,5 +193,7 @@ def _build_and_upload_national_overview(lookup: dict[str, GeoidEntry]) -> str:
     )
     features = [enrich_state_feature(f, lookup) for f in _to_features(active_gdf)]
 
-    body = _build_pmtiles([("states", features, 0)], "states.pmtiles", label="national")
+    body = _build_pmtiles(
+        [("states", features, 0)], "states.pmtiles", max_zoom=NATIONAL_MAX_ZOOM, label="national"
+    )
     return _upload("maps/states.pmtiles", body)

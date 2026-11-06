@@ -66,7 +66,7 @@ def _cousubs_gdf():
     )
 
 
-def _fake_tippecanoe(layers, output_path, label=""):
+def _fake_tippecanoe(layers, output_path, max_zoom, label=""):
     output_path.write_bytes(b"fake-pmtiles-bytes")
 
 
@@ -91,6 +91,8 @@ async def test_generates_and_uploads_pmtiles_and_writes_parent_ocdids():
         url = await generate_and_upload_state_pmtiles("co")
 
     assert url == "https://cdn.example.com/maps/co.pmtiles"
+
+    assert mock_tippecanoe.call_args.kwargs["max_zoom"] == 14
 
     # Three named layers, in the established order/minzooms.
     layers = mock_tippecanoe.call_args[0][0]
@@ -137,8 +139,10 @@ async def test_national_overview_filters_to_onboarded_states_and_uploads():
         "53": GeoidEntry("ocd-jurisdiction/country:us/state:wa/government", "Washington"),
     }
     captured_layers = []
+    captured_max_zooms = []
 
-    def fake_tippecanoe(layers, output_path, label=""):
+    def fake_tippecanoe(layers, output_path, max_zoom, label=""):
+        captured_max_zooms.append(max_zoom)
         # Read the geojson back before this call returns — the temp dir it lives in is
         # gone by the time the `with` block below exits.
         captured_layers.append(
@@ -167,4 +171,5 @@ async def test_national_overview_filters_to_onboarded_states_and_uploads():
     # Only the one named layer, and only the onboarded states' features in it.
     [(name, geojson, minzoom)] = captured_layers[0]
     assert (name, minzoom) == ("states", 0)
+    assert captured_max_zooms == [8]
     assert {f["properties"]["code"] for f in geojson["features"]} == {"co", "wa"}

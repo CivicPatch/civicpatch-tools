@@ -18,6 +18,7 @@ logger = logging.getLogger(__name__)
 # Bumped by hand each autumn after Census publishes, then every state's maps are rebuilt.
 TIGER_VINTAGE = "2026"
 _TIGER_BASE_URL = f"https://www2.census.gov/geo/tiger/TIGER{TIGER_VINTAGE}"
+DOWNLOAD_CHUNK_BYTES = 1024 * 1024
 
 _STATE_SHP_URL = f"{_TIGER_BASE_URL}/STATE/tl_{TIGER_VINTAGE}_us_state.zip"
 _COUNTY_SHP_URL = f"{_TIGER_BASE_URL}/COUNTY/tl_{TIGER_VINTAGE}_us_county.zip"
@@ -34,10 +35,12 @@ def _cousub_shp_url(fips: str) -> str:
 def _download_and_extract(url: str, dest_dir: Path) -> Path:
     """Download a TIGER shapefile ZIP and extract it. Returns the .shp path."""
     logger.info("Downloading TIGER shapefile: %s", url)
-    response = requests.get(url, timeout=120)
-    response.raise_for_status()
     zip_path = dest_dir / "data.zip"
-    zip_path.write_bytes(response.content)
+    with requests.get(url, timeout=120, stream=True) as response:
+        response.raise_for_status()
+        with zip_path.open("wb") as zip_file:
+            for chunk in response.iter_content(chunk_size=DOWNLOAD_CHUNK_BYTES):
+                zip_file.write(chunk)
     with zipfile.ZipFile(zip_path) as zf:
         zf.extractall(dest_dir)
     shp_files = list(dest_dir.glob("*.shp"))
@@ -51,13 +54,15 @@ def _fetch_shapefile(url: str) -> geopandas.GeoDataFrame:
         return geopandas.read_file(_download_and_extract(url, Path(tmp)))
 
 
-def _filter_by_state(gdf: geopandas.GeoDataFrame, fips: str) -> geopandas.GeoDataFrame:
-    return geopandas.GeoDataFrame(gdf[gdf["STATEFP"] == fips].copy())
+def _fetch_state_rows(url: str, fips: str) -> geopandas.GeoDataFrame:
+    # Filtered while reading: the whole national county file does not fit the prod worker's memory.
+    with TemporaryDirectory() as tmp:
+        return geopandas.read_file(_download_and_extract(url, Path(tmp)), where=f"STATEFP = '{fips}'")
 
 
 def fetch_national_states(fips: str) -> geopandas.GeoDataFrame:
     """One state's boundary, filtered from the national TIGER state shapefile."""
-    return _filter_by_state(_fetch_shapefile(_STATE_SHP_URL), fips)
+    return _fetch_state_rows(_STATE_SHP_URL, fips)
 
 
 def fetch_all_states() -> geopandas.GeoDataFrame:
@@ -67,7 +72,7 @@ def fetch_all_states() -> geopandas.GeoDataFrame:
 
 def fetch_national_counties(fips: str) -> geopandas.GeoDataFrame:
     """One state's counties, filtered from the national TIGER county shapefile."""
-    return _filter_by_state(_fetch_shapefile(_COUNTY_SHP_URL), fips)
+    return _fetch_state_rows(_COUNTY_SHP_URL, fips)
 
 
 def fetch_places(fips: str) -> geopandas.GeoDataFrame:
