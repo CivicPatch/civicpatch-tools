@@ -13,9 +13,13 @@ import time
 from datetime import datetime, timezone
 import httpx
 import services.civicpatch_api as civicpatch_api
+from shared.utils.run_reports import RunFailure
 from shared.utils.statuses import PipelineRunStatus
 import psutil
 
+
+# A failure's message is kept for a person reading the issue, not as a log.
+FAILURE_ERROR_CHARS = 500
 
 # A state is a pipeline's own step or a shared lifecycle state: a member of either StrEnum.
 Transitions = dict[StrEnum, frozenset[StrEnum]]
@@ -119,7 +123,7 @@ async def run_pipeline(
     jurisdiction_ocdid = ctx.data.jurisdiction_ocdid
 
     created_at = time.time()
-    ctx = ctx.copy(update={"created_at": created_at, "updated_at": created_at})
+    ctx = ctx.model_copy(update={"created_at": created_at, "updated_at": created_at})
 
     terminal = set(terminal_states(machine.transitions))
 
@@ -130,7 +134,7 @@ async def run_pipeline(
                 current_status = await civicpatch_api.fetch_pipeline_run_status(api_client, logger, ctx.pipeline_run_id)
                 if current_status == PipelineRunStatus.CANCELLED:
                     logger.info(f"Pipeline run {ctx.pipeline_run_id} cancelled — stopping.")
-                    ctx = ctx.copy(
+                    ctx = ctx.model_copy(
                         update={
                             "current_state": PipelineRunStatus.CANCELLED,
                             "updated_at": time.time(),
@@ -158,13 +162,14 @@ async def run_pipeline(
                     f"Unhandled exception in {current} transition: {e}\n"
                     f"{traceback.format_exc()}"
                 )
-                ctx = ctx.copy(update={"current_state": PipelineRunStatus.SEND_ERROR, "updated_at": time.time()})
+                failure = RunFailure(failed_state=str(current), error=f"{type(e).__name__}: {e}"[:FAILURE_ERROR_CHARS])
+                ctx = ctx.model_copy(update={"current_state": PipelineRunStatus.SEND_ERROR, "updated_at": time.time(), "failure": failure})
             else:
                 # Outside the except: a step failing ends a run, a step naming an impossible
                 # state is a bug, and SEND_ERROR would hide the second as the first.
                 if next_state not in next_states(machine.transitions, current):
                     raise IllegalTransition(current, next_state)
-                ctx = ctx.copy(update={"current_state": next_state, "updated_at": time.time()})
+                ctx = ctx.model_copy(update={"current_state": next_state, "updated_at": time.time()})
 
             if persist_fn:
                 persist_fn(ctx)

@@ -1,6 +1,6 @@
 import pytest
 
-from core.jurisdiction_config_sync import StoredRole, role_changes
+from core.jurisdiction_config_sync import StoredRole, level_files_first, role_changes
 from core.role_taxonomy import RoleOp
 from shared.schemas import RoleStatus, SelectionMethod
 from shared.utils.layered_config import ConfigRole
@@ -113,3 +113,11 @@ def test_state_roles_are_unranked_and_move_to_their_file():
 
     [upsert] = changes.upserts
     assert (upsert.op, upsert.priority) == (RoleOp.EDIT, None)
+
+
+@pytest.mark.unit
+def test_level_files_sync_before_state_files_whatever_order_github_lists_them():
+    oregon = "data_source/or/counties/config.yml"
+    counties = "data_source/counties/config.yml"
+
+    assert level_files_first([TENNESSEE, oregon, counties, LEVEL_PATH]) == [counties, LEVEL_PATH, TENNESSEE, oregon]

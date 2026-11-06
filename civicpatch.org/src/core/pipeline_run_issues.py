@@ -7,8 +7,11 @@ from typing import Any, Callable, List, Optional
 from pydantic import BaseModel
 from shared.schemas import FoundBy
 from shared.utils.layered_config import GovernedBy
-from shared.utils.run_reports import GoverningLawReport, OrganizationsRunReport, TriedUrl
-from shared.utils.statuses import PipelineIssueType, PipelineRunKind
+from shared.utils.run_reports import GoverningLawReport, OrganizationsRunReport, RunOutcome, TriedUrl
+from shared.utils.statuses import PipelineIssueType, PipelineRunKind, PipelineRunStatus
+
+
+UNKNOWN_FAILURE = "the run ended in error without saying why"
 
 
 class Missing(StrEnum):
@@ -22,6 +25,12 @@ class MissDetail(BaseModel):
     missing: Missing
     tried: List[TriedUrl]
     skipped_urls: List[str]
+
+
+class FailureDetail(BaseModel):
+    # `error` is what the issues page shows for a run-level issue.
+    error: str
+    failed_state: Optional[str] = None
 
 
 class Issue(BaseModel):
@@ -62,8 +71,27 @@ def organizations_issue(report: OrganizationsRunReport) -> Optional[Issue]:
     if report.input_hash is None:
         return Issue(issue_type=PipelineIssueType.NO_GOVERNING_LAW)
     if report.stopped_at_cost_cap:
-        return Issue(issue_type=PipelineIssueType.ROLES_UNASKED)
+        detail = report.cost_cap.model_dump(mode="json") if report.cost_cap else {}
+        return Issue(issue_type=PipelineIssueType.COST_CAP_REACHED, data=detail)
     return None
+
+
+def failure_issue(outcome: RunOutcome) -> Optional[Issue]:
+    """A run that ended in error files `pipeline_error`, whatever its kind; nothing else it reports
+    can be trusted then."""
+    if outcome.current_state != PipelineRunStatus.ERROR:
+        return None
+    failure = outcome.failure
+    detail = FailureDetail(error=failure.error, failed_state=failure.failed_state) if failure else FailureDetail(error=UNKNOWN_FAILURE)
+    return Issue(issue_type=PipelineIssueType.PIPELINE_ERROR, data=detail.model_dump(mode="json"))
+
+
+def run_issue(kind: PipelineRunKind, context: dict[str, Any]) -> Optional[Issue]:
+    """The one issue a collector run files: its failure if it failed, else what its kind reads."""
+    failed = failure_issue(RunOutcome.model_validate(context))
+    if failed is not None:
+        return failed
+    return ISSUE_READERS[kind](context["data"])
 
 
 def _read_governing_law(data: dict[str, Any]) -> Optional[Issue]:

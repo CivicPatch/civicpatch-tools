@@ -14,7 +14,7 @@ from unittest.mock import AsyncMock, MagicMock, patch
 import httpx
 import pytest
 
-from runners.engine import IllegalTransition, Machine, run_pipeline
+from runners.engine import IllegalTransition, Machine, PipelineRunError, run_pipeline
 from runners.pipeline03_people_collector.schemas import PeopleCollectorState, PeopleCollectorStep
 from runners.pipeline03_people_collector.transitions.graph import PEOPLE_COLLECTOR_TRANSITIONS
 from shared.utils.statuses import TERMINAL_PIPELINE_RUN_STATUSES, PipelineRunStatus
@@ -28,7 +28,7 @@ def _reported_statuses(update_mock) -> list[str]:
 
 
 def _at(state: PeopleCollectorState):
-    return pipeline_run_context_factory({}).copy(update={"current_state": state})
+    return pipeline_run_context_factory({}).model_copy(update={"current_state": state})
 
 
 def _returning(next_state: PeopleCollectorState):
@@ -263,3 +263,21 @@ async def test_a_machine_that_does_not_submit_sends_nothing():
         api.stop()
 
     mock.submit_job_artifacts.assert_not_awaited()
+
+
+@pytest.mark.unit
+@pytest.mark.asyncio
+async def test_a_step_that_raises_records_its_state_and_error_for_the_issue():
+    async def raises(_limits, _logger, _context, _api_client):
+        raise TimeoutError("the crawl ran out of time")
+
+    api, _ = _patched_api()
+    try:
+        with patch("runners.engine.log_system_usage"), pytest.raises(PipelineRunError) as failed:
+            await run_pipeline(_at(PeopleCollectorStep.SCRAPE_PAGE), MagicMock(), _machine({PeopleCollectorStep.SCRAPE_PAGE: raises, PipelineRunStatus.SEND_ERROR: _returning(PipelineRunStatus.ERROR)}), AsyncMock())
+    finally:
+        api.stop()
+
+    failure = failed.value.context.failure
+    assert failure is not None
+    assert (failure.failed_state, failure.error) == (str(PeopleCollectorStep.SCRAPE_PAGE), "TimeoutError: the crawl ran out of time")

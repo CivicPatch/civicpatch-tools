@@ -20,6 +20,7 @@ from runners.pipeline02_organizations_collector.transitions.main import (
     extract,
     presiding_claims,
 )
+from shared.utils.run_reports import CostCapDetail
 from shared.schemas import PipelineRunLimits
 from shared.utils.layered_config import ConfigFile, merged_config
 
@@ -129,6 +130,7 @@ async def test_nothing_is_asked_once_the_cap_is_spent():
     model.assert_not_called()
     assert extracted.data.stopped_at_cost_cap
     assert extracted.data.pending_asks == []
+    assert extracted.data.cost_cap == CostCapDetail(spent_usd=Decimal("1"), cap_usd=Decimal("1"), unfinished=[_MEMBER.role_id])
     assert next_state == OrganizationsCollectorStep.VERIFY
 
 

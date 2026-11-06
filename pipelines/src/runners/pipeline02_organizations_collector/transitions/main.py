@@ -33,6 +33,7 @@ from shared.schemas import (
     PipelineRunLimits,
     Source,
 )
+from shared.utils.run_reports import CostCapDetail
 from shared.utils.statuses import PipelineRunStatus
 from utils import cost_utils
 from utils.log_utils import PipelineRunLogger
@@ -132,9 +133,13 @@ def _next(context: OrganizationsCollectorContext, **data_updates) -> Organizatio
 async def extract(limits: PipelineRunLimits, logger: PipelineRunLogger, context: OrganizationsCollectorContext, _client: httpx.AsyncClient) -> Step:
     """Every pending question, each `ASKS_PER_QUESTION` times; on the first pass, the presiding
     candidates as well. Stops before asking once the run's cap is spent."""
-    if cost_utils.total_cost(context.pipeline_run_id) >= limits.pipeline_run_cap_usd:
-        logger.warning(f"cost cap reached with {len(context.data.pending_asks)} roles unasked")
-        return _next(context, pending_asks=[], stopped_at_cost_cap=True), OrganizationsCollectorStep.VERIFY
+    spent = cost_utils.total_cost(context.pipeline_run_id)
+    if spent >= limits.pipeline_run_cap_usd:
+        unasked = [ask.role_id for ask in context.data.pending_asks]
+        logger.warning(f"cost cap reached with {len(unasked)} roles unasked")
+        cost_cap = CostCapDetail(spent_usd=spent, cap_usd=limits.pipeline_run_cap_usd, unfinished=unasked)
+        stopped = _next(context, pending_asks=[], stopped_at_cost_cap=True, cost_cap=cost_cap)
+        return stopped, OrganizationsCollectorStep.VERIFY
     asked = [ask for ask in context.data.pending_asks for _ in range(ASKS_PER_QUESTION)]
     first_pass = not context.data.claims
     answers = await asyncio.gather(*[_answer(context, logger, ask) for ask in asked])

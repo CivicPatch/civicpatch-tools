@@ -6,7 +6,7 @@ import logging
 import shutil
 import zipfile
 
-from core.pipeline_run_issues import ISSUE_READERS
+from core.pipeline_run_issues import run_issue
 from database.issues import upsert_issue
 from database.llm_calls import record_calls
 from shared.utils.statuses import PipelineRunKind
@@ -25,7 +25,7 @@ async def handle_pipeline_run_submission(kind: PipelineRunKind, pipeline_run_id:
             costs = json.loads(zipf.read(COSTS_FILE))
         recorded = await record_calls(pipeline_run_id, costs["llm_costs"])
         logger.info(f"[{pipeline_run_id}] Recorded {recorded} LLM call(s)")
-        issue = ISSUE_READERS[kind](context["data"])
+        issue = run_issue(kind, context)
         if issue is not None:
             await upsert_issue(pipeline_run_id, issue.issue_type, [issue.data])
     except Exception:

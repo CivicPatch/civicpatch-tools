@@ -79,8 +79,6 @@ class PipelineIssueType(StrEnum):
     SOURCE_BLOCKED = "source_blocked"
     # Pipeline 2 had no law to read: pipeline 1 has stored none for the place.
     NO_GOVERNING_LAW = "no_governing_law"
-    # Pipeline 2 stopped at its spend ceiling with roles still unasked, so some are missing.
-    ROLES_UNASKED = "roles_unasked"
 
 
 # Issue types a run can produce, as opposed to ones about a proposal. These are keyed on the
@@ -93,7 +91,6 @@ RUN_LEVEL_ISSUE_TYPES = frozenset(PipelineRunErrorType) | {
     PipelineIssueType.GOVERNING_LAW_NOT_FOUND,
     PipelineIssueType.SOURCE_BLOCKED,
     PipelineIssueType.NO_GOVERNING_LAW,
-    PipelineIssueType.ROLES_UNASKED,
 }
 
 

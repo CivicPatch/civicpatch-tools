@@ -4,6 +4,7 @@ import database.jurisdiction_configs as jurisdiction_configs_db
 import lib.github.api as github_service
 import services.government_form as government_form_service
 import yaml
+from core.jurisdiction_config_sync import level_files_first
 from schemas.jurisdiction_configs import JurisdictionConfigSyncRequest, JurisdictionConfigVersion
 from shared.utils.layered_config import ConfigFile
 
@@ -17,7 +18,7 @@ def parse_jurisdiction_config(raw: str) -> ConfigFile:
 async def sync_jurisdiction_configs(request: JurisdictionConfigSyncRequest) -> None:
     """Read each merged config file at its commit, apply its roles, then give the jurisdictions it
     governs the organizations its forms list."""
-    for path in request.paths:
+    for path in level_files_first(request.paths):
         raw = await github_service.get_github_file_contents(path, ref=request.commit_sha)
         if raw is None:
             raise RuntimeError(f"sync_jurisdiction_configs: could not read {path} at {request.commit_sha}")

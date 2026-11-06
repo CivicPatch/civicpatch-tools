@@ -26,7 +26,6 @@ _ISSUE_WEIGHT = {
     PipelineIssueType.GOVERNING_LAW_NOT_FOUND: 5,
     PipelineIssueType.SOURCE_BLOCKED: 5,
     PipelineIssueType.NO_GOVERNING_LAW: 5,
-    PipelineIssueType.ROLES_UNASKED: 5,
 }
 # A stored issue can still name a type since renamed out of the enum.
 _UNKNOWN_ISSUE = 1

@@ -23,7 +23,7 @@ def _upload(context_data: dict) -> tuple[str, str]:
     temp_dir = tempfile.mkdtemp()
     zip_path = os.path.join(temp_dir, "run.zip")
     with zipfile.ZipFile(zip_path, "w") as zipf:
-        zipf.writestr(CONTEXT_FILE, json.dumps({"pipeline_run_id": _RUN_ID, "data": context_data}))
+        zipf.writestr(CONTEXT_FILE, json.dumps({"pipeline_run_id": _RUN_ID, "current_state": "SUCCESS", "data": context_data}))
         zipf.writestr(COSTS_FILE, json.dumps({"llm_costs": [_CALL]}))
     return zip_path, temp_dir
 
