@@ -40,7 +40,7 @@ class Issue(BaseModel):
 
 def governing_law_issue(report: GoverningLawReport) -> Optional[Issue]:
     """Only a search can miss: a state index that names no charter is an answer."""
-    if not report.searched_anything:
+    if report.answer is None or report.answer.found_by != FoundBy.SEARCH:
         return None
     if not report.stored_anything:
         return _miss(report, Missing.EVERYTHING)

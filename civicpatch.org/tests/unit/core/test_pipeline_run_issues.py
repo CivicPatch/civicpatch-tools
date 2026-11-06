@@ -57,6 +57,15 @@ def test_a_city_whose_search_was_refused_is_source_blocked():
     assert issue.issue_type == PipelineIssueType.SOURCE_BLOCKED
 
 
+def test_a_city_whose_search_tried_nothing_is_not_found():
+    # No website on record and no url from the search: Oregon's 38 small cities, 2026-11-06.
+    issue = governing_law_issue(_report(_CITY, [], general_law_ids=()))
+
+    assert issue is not None
+    assert issue.issue_type == PipelineIssueType.GOVERNING_LAW_NOT_FOUND
+    assert issue.data["missing"] == Missing.EVERYTHING
+
+
 def test_a_found_charter_files_nothing():
     assert governing_law_issue(_report(_CITY, _CRAWLED, charter_ids=("charter-row",))) is None
 

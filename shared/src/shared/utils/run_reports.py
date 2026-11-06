@@ -56,10 +56,6 @@ class GoverningLawRunReport(BaseModel, Generic[TSearch]):
         return bool(self.charter_source_page_ids or self.general_law_source_page_ids)
 
     @property
-    def searched_anything(self) -> bool:
-        return self.answer is not None and bool(self.answer.tried or self.skipped_urls or self.stored_anything)
-
-    @property
     def blocked(self) -> bool:
         return self.answer is not None and any(tried.reason in BLOCKED_REASONS for tried in self.answer.tried)
 
