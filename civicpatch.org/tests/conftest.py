@@ -13,6 +13,8 @@ if shared_path.exists() and str(shared_path) not in sys.path:
 # Set env vars before any module imports so module-level get_env_vars() calls succeed
 import src.environment
 _test_env = {var: f"test-{var.lower()}" for var in src.environment.REQUIRED_ENV_VARS + src.environment.OPTIONAL_ENV_VARS}
+# get_pool() parses these as ints: a placeholder would break every test that opens one.
+_test_env.update({"DB_POOL_MIN_SIZE": "4", "DB_POOL_MAX_SIZE": "20"})
 for _var, _val in _test_env.items():
     os.environ.setdefault(_var, _val)
 
