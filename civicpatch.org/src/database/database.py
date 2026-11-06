@@ -23,8 +23,8 @@ async def get_pool() -> AsyncConnectionPool:
         _pool = AsyncConnectionPool(
             db_url,
             open=False,
-            min_size=int(env.get("DB_POOL_MIN_SIZE", 4)),
-            max_size=int(env.get("DB_POOL_MAX_SIZE", 20)),
+            min_size=int(env["DB_POOL_MIN_SIZE"]),
+            max_size=int(env["DB_POOL_MAX_SIZE"]),
             reconnect_failed=_on_reconnect_failed,
         )
         try:

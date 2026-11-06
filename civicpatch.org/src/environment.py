@@ -32,6 +32,9 @@ OPTIONAL_ENV_VARS = [
     # changeset asked for it. Passed to the workflow as an argument, never read inside it —
     # Temporal replays a workflow, so a value that changed between runs would diverge.
     "PIPELINE_RUN_CONCURRENCY",
+    # Each deployment's pool size; dropped here, every process fell back to get_pool()'s 4-20 and filled Postgres.
+    "DB_POOL_MIN_SIZE",
+    "DB_POOL_MAX_SIZE",
     # Optional - needed for GitHub webhook verification
     "GITHUB_WEBHOOK_SECRET",
     # Optional - needed for the blog-sync webhook (HMAC verification)
@@ -80,6 +83,8 @@ def get_env_vars():
     _optional_defaults = {
         "FRIENDLY_STORAGE_HOST": "https://cdn.civicpatch.org",
         "PIPELINE_RUN_CONCURRENCY": "25",
+        "DB_POOL_MIN_SIZE": "4",
+        "DB_POOL_MAX_SIZE": "20",
     }
     for var in OPTIONAL_ENV_VARS:
         value = os.getenv(var, _optional_defaults.get(var))
