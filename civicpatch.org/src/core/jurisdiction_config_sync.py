@@ -87,3 +87,14 @@ def government_form_changes(before: GovernmentFormsConfig, after: GovernmentForm
         removed=sorted(government_form.value for government_form in before if government_form not in after),
         changed=sorted(government_form.value for government_form in after if government_form in before and after[government_form] != before[government_form]),
     )
+
+
+def level_files_first(paths: list[str]) -> list[str]:
+    """A state file is checked against its level file as stored, so the level file syncs first: a
+    state file synced before its changed level file failed the check against the old one."""
+    return sorted(paths, key=_is_state_file)
+
+
+def _is_state_file(path: str) -> bool:
+    layer = config_path_layer(path)
+    return layer is not None and layer[0] is not None

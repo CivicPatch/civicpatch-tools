@@ -668,7 +668,8 @@ def get_router(api_key_header):
 
         is_admin = has_at_least(identity.role, UserRole.ADMINS)
 
-        if issue_type in RUN_LEVEL_ISSUE_TYPES:
+        # A collector's cost_cap_reached hangs off its run: collectors mint no changeset.
+        if issue_type in RUN_LEVEL_ISSUE_TYPES or not issue.get("changeset_id"):
             # A run-level issue names its run; `issue_key` used to carry that id.
             changeset_id = issue.get("changeset_id") or issue.get("pipeline_run_id")
             base_rows = [

@@ -8,7 +8,6 @@ export const ISSUE_TYPE = {
   GOVERNING_LAW_NOT_FOUND: "governing_law_not_found",
   SOURCE_BLOCKED: "source_blocked",
   NO_GOVERNING_LAW: "no_governing_law",
-  ROLES_UNASKED: "roles_unasked",
 };
 
 export const KNOWN_ISSUE_TYPES = [
@@ -21,5 +20,4 @@ export const KNOWN_ISSUE_TYPES = [
   { value: ISSUE_TYPE.GOVERNING_LAW_NOT_FOUND, label: "Governing law not found" },
   { value: ISSUE_TYPE.SOURCE_BLOCKED, label: "Source blocked" },
   { value: ISSUE_TYPE.NO_GOVERNING_LAW, label: "No governing law" },
-  { value: ISSUE_TYPE.ROLES_UNASKED, label: "Roles unasked" },
 ];

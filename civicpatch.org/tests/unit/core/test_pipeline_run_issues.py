@@ -4,10 +4,12 @@ and pipeline 2's runs that read nothing or stopped at the cap."""
 import pytest
 from shared.schemas import FoundBy
 from shared.utils.layered_config import GovernedBy
-from shared.utils.run_reports import GoverningLawReport, GoverningLawSearch, OrganizationsRunReport, TriedReason, TriedUrl
+from shared.utils.run_reports import CostCapDetail, GoverningLawReport, GoverningLawSearch, OrganizationsRunReport, TriedReason, TriedUrl
 from shared.utils.statuses import PipelineIssueType, PipelineRunKind
 
-from core.pipeline_run_issues import ISSUE_READERS, Missing, governing_law_issue, organizations_issue
+from decimal import Decimal
+
+from core.pipeline_run_issues import ISSUE_READERS, Missing, governing_law_issue, organizations_issue, run_issue
 
 pytestmark = pytest.mark.unit
 
@@ -88,7 +90,7 @@ def test_the_reader_takes_a_pipeline_1_context_with_fields_it_does_not_need():
     "report,expected",
     [
         (OrganizationsRunReport(input_hash=None), PipelineIssueType.NO_GOVERNING_LAW),
-        (OrganizationsRunReport(input_hash="7c21", stopped_at_cost_cap=True), PipelineIssueType.ROLES_UNASKED),
+        (OrganizationsRunReport(input_hash="7c21", stopped_at_cost_cap=True), PipelineIssueType.COST_CAP_REACHED),
     ],
 )
 def test_pipeline_2_files_when_it_read_nothing_or_stopped_at_the_cap(report: OrganizationsRunReport, expected: PipelineIssueType):
@@ -100,3 +102,36 @@ def test_pipeline_2_files_when_it_read_nothing_or_stopped_at_the_cap(report: Org
 
 def test_a_pipeline_2_run_that_read_and_asked_everything_files_nothing():
     assert organizations_issue(OrganizationsRunReport(input_hash="7c21")) is None
+
+
+def test_a_capped_pipeline_2_run_says_which_roles_went_unasked_and_what_it_spent():
+    cost_cap = CostCapDetail(spent_usd=Decimal("0.05"), cap_usd=Decimal("0.05"), unfinished=["clerk", "treasurer"])
+    report = OrganizationsRunReport(input_hash="7c21", stopped_at_cost_cap=True, cost_cap=cost_cap)
+
+    issue = organizations_issue(report)
+
+    assert issue is not None
+    assert issue.data == {"spent_usd": "0.05", "cap_usd": "0.05", "unfinished": ["clerk", "treasurer"]}
+
+
+def test_a_run_that_ended_in_error_files_pipeline_error_with_its_failure_whatever_its_kind():
+    context = {
+        "current_state": "ERROR",
+        "failure": {"failed_state": "FIND_SOURCES", "error": "TimeoutError: crawl"},
+        "data": _report(_CITY, _CRAWLED).model_dump(mode="json"),
+    }
+
+    issue = run_issue(PipelineRunKind.GOVERNING_LAW_COLLECTOR, context)
+
+    assert issue is not None
+    assert issue.issue_type == PipelineIssueType.PIPELINE_ERROR
+    assert issue.data == {"error": "TimeoutError: crawl", "failed_state": "FIND_SOURCES"}
+
+
+def test_a_run_that_ended_well_files_what_its_kind_reads():
+    context = {"current_state": "SUCCESS", "data": {"input_hash": None}}
+
+    issue = run_issue(PipelineRunKind.ORGANIZATIONS_COLLECTOR, context)
+
+    assert issue is not None
+    assert issue.issue_type == PipelineIssueType.NO_GOVERNING_LAW

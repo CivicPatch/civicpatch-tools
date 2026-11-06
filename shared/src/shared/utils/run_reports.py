@@ -1,6 +1,7 @@
 """What a collector run reports at its end, the part of its context cp.org reads to file the run's issue.
 Each pipeline's own data model extends these, so the fields that cross the boundary are defined once."""
 
+from decimal import Decimal
 from enum import StrEnum
 from typing import Generic, List, Optional, TypeVar
 
@@ -67,8 +68,32 @@ class GoverningLawRunReport(BaseModel, Generic[TSearch]):
 GoverningLawReport = GoverningLawRunReport[GoverningLawSearch]
 
 
+class CostCapDetail(BaseModel):
+    """`cost_cap_reached`'s detail in every pipeline: the spend against the cap, and the work left undone
+    (pipeline 2's unasked role ids; pipeline 3's uncrawled pages, when it moves over)."""
+
+    spent_usd: Decimal
+    cap_usd: Decimal
+    unfinished: List[str] = []
+
+
 class OrganizationsRunReport(BaseModel):
     # The hash of what the run read and asked; None when there was no law to read.
     input_hash: Optional[str] = None
-    # The run's cap was reached before every question was asked.
+    # The run's cap was reached before every question was asked; `cost_cap` says what was left.
     stopped_at_cost_cap: bool = False
+    cost_cap: Optional[CostCapDetail] = None
+
+
+class RunFailure(BaseModel):
+    """Why a run ended in error: the state whose step raised, and what it raised."""
+
+    failed_state: str
+    error: str
+
+
+class RunOutcome(BaseModel):
+    """Every run's context, whatever its pipeline: how it ended."""
+
+    current_state: str
+    failure: Optional[RunFailure] = None
