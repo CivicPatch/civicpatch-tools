@@ -49,5 +49,5 @@ def test_fetch_all_states_returns_every_row(tmp_path):
 
 
 def test_place_and_cousub_urls_are_state_scoped():
-    assert "tl_2025_06_place.zip" in tiger._place_shp_url("06")
-    assert "tl_2025_06_cousub.zip" in tiger._cousub_shp_url("06")
+    assert f"tl_{tiger.TIGER_VINTAGE}_06_place.zip" in tiger._place_shp_url("06")
+    assert f"tl_{tiger.TIGER_VINTAGE}_06_cousub.zip" in tiger._cousub_shp_url("06")

@@ -131,6 +131,9 @@ A page the visitor can't view redirects to `/`.
 - Open the debug copies of the pages a scrape read.
 - The admin-bus endpoints (`od_sync`, `sheet_sync` and the rest).
 
+The service key alone, no person: syncing configs (`POST /api/admin/jurisdiction_configs/sync`)
+and starting a state's map build (`POST /api/admin/maps/{state}`).
+
 ### API keys
 
 A key acts as its owner, at its owner's level, but only as far as its access allows:
