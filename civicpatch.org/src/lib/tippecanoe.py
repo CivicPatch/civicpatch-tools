@@ -15,7 +15,9 @@ logger = logging.getLogger(__name__)
 _TIPPECANOE_TIMEOUT_SECONDS = 300
 
 
-def run_tippecanoe(layers: list[tuple[str, Path, int]], output_path: Path, label: str = "") -> None:
+def run_tippecanoe(
+    layers: list[tuple[str, Path, int]], output_path: Path, max_zoom: int, label: str = ""
+) -> None:
     """Build one .pmtiles file from named GeoJSON layers.
 
     layers: (layer_name, geojson_path, min_zoom) tuples, one per source-layer in the
@@ -24,7 +26,7 @@ def run_tippecanoe(layers: list[tuple[str, Path, int]], output_path: Path, label
     cmd = [
         "tippecanoe",
         "-o", str(output_path),
-        "--maximum-zoom", "14",
+        "--maximum-zoom", str(max_zoom),
         "--no-feature-limit",
         "--simplification", "10",
         "--force",

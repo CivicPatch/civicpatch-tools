@@ -24,11 +24,13 @@ def test_calls_tippecanoe_with_named_layers(tmp_path):
         run_tippecanoe(
             [("states", states, 0), ("counties", counties, 5)],
             output,
+            max_zoom=14,
             label="co",
         )
 
     args = mock_popen.call_args[0][0]
     assert args[0] == "tippecanoe"
+    assert args[args.index("--maximum-zoom") + 1] == "14"
     assert "-o" in args
     assert str(output) in args
     assert "--no-feature-limit" in args
@@ -52,7 +54,7 @@ def test_raises_on_nonzero_exit(tmp_path):
     with patch("lib.tippecanoe.subprocess.Popen") as mock_popen:
         mock_popen.return_value = mock_proc
         with pytest.raises(Exception):
-            run_tippecanoe([("states", states, 0)], output)
+            run_tippecanoe([("states", states, 0)], output, max_zoom=14)
 
 
 class _ImmediateTimer:
@@ -85,6 +87,6 @@ def test_kills_and_raises_timeout_error_when_wedged(tmp_path):
     ):
         mock_popen.return_value = mock_proc
         with pytest.raises(TimeoutError):
-            run_tippecanoe([("states", states, 0)], output)
+            run_tippecanoe([("states", states, 0)], output, max_zoom=14)
 
     mock_proc.kill.assert_called_once()
