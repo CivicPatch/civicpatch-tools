@@ -52,9 +52,13 @@ KEY_ROUTES = [
     ("POST", "/api/v1/pipeline_runs/{pipeline_run_id}/submit"),
     ("POST", "/api/v1/pipeline_runs/batch/claim"),
     ("POST", "/api/admin/jurisdiction_configs/sync"),
+    ("POST", "/api/admin/maps/{state}"),
 ]
 
-SERVICE_ONLY_ADMIN_ROUTE = ("POST", "/api/admin/jurisdiction_configs/sync")
+SERVICE_ONLY_ADMIN_ROUTES = {
+    ("POST", "/api/admin/jurisdiction_configs/sync"),
+    ("POST", "/api/admin/maps/{state}"),
+}
 
 
 def _route(method: str, path: str) -> APIRoute:
@@ -206,7 +210,7 @@ async def test_every_admin_route_but_sync_refuses_a_non_admin():
     assert admin_routes
     maintainer = _person(UserRole.MAINTAINERS)
     for route in admin_routes:
-        if (next(iter(route.methods)), route.path) == SERVICE_ONLY_ADMIN_ROUTE:
+        if (next(iter(route.methods)), route.path) in SERVICE_ONLY_ADMIN_ROUTES:
             continue
         assert not await _passes(route, maintainer), f"{route.methods} {route.path}"
         assert await _passes(route, _person(UserRole.ADMINS)), f"{route.methods} {route.path}"

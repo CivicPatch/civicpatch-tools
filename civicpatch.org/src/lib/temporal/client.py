@@ -18,6 +18,7 @@ from lib.temporal.types import (
     PEOPLE_COLLECTOR_EXECUTION_TIMEOUT,
     collector_state_workflow_id,
     collector_workflow_id,
+    MAPS_TASK_QUEUE,
     PIPELINE_RUNS_TASK_QUEUE,
     SINKS_TASK_QUEUE,
     OpenDataBatchCommitRequest,
@@ -159,6 +160,19 @@ async def enqueue_write_open_data_batch(request: OpenDataBatchCommitRequest) -> 
         task_queue=SINKS_TASK_QUEUE,
         id_conflict_policy=WorkflowIDConflictPolicy.USE_EXISTING,
     )
+
+
+async def start_generate_maps_workflow(state: str) -> str:
+    # Named by string: importing the workflow class pulls the map-building activities into the API.
+    client = await get_client()
+    handle = await client.start_workflow(
+        "GenerateMapsWorkflow",
+        state,
+        id=f"generate-maps-{state}",
+        task_queue=MAPS_TASK_QUEUE,
+        id_conflict_policy=WorkflowIDConflictPolicy.FAIL,
+    )
+    return handle.id
 
 
 async def describe_workflow(jurisdiction_ocdid: str) -> TemporalWorkflowState | None:

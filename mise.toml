@@ -72,6 +72,28 @@ curl --fail-with-body -sS -X POST "http://localhost:8000/api/admin/jurisdiction_
 echo
 """
 
+[tasks.generate-maps]
+description = "Build states' maps (pmtiles, county ancestry) through the admin route. Usage: mise run generate-maps -- <dev|prod> <state>..."
+usage = '''
+arg "<target>" help="dev or prod"
+arg "<states>" var=#true help="state codes, e.g. or vt"
+'''
+run = """
+set -eu
+case "$usage_target" in
+  dev)  BASE_URL="http://localhost:8000"; KEY="$SERVICE_API_KEY" ;;
+  prod) BASE_URL="https://civicpatch.org"; KEY="${PROD_SERVICE_API_KEY:?PROD_SERVICE_API_KEY is not set}"
+        printf "Start map builds on prod for: %s ? [y/N] " "$usage_states"
+        read -r answer
+        [ "$answer" = "y" ] || { echo "not sent"; exit 1; } ;;
+  *)    echo "target must be dev or prod, got: $usage_target"; exit 1 ;;
+esac
+for STATE in $usage_states; do
+  curl --fail-with-body -sS -X POST "$BASE_URL/api/admin/maps/$STATE" -H "Authorization: $KEY"
+  echo
+done
+"""
+
 [tasks.clear_dashboard_cache]
 description = "Drop the cached dashboard data (local). Prod: cp-infrastructure's prod-clear-dashboard-cache"
 run = """

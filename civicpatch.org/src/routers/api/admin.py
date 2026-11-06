@@ -4,6 +4,7 @@ import database.jurisdictions as jurisdictions_db
 import database.users as users_db
 import lib.auth_session as auth_session
 import lib.cache as cache_service
+import lib.temporal.client as temporal_service
 from fastapi import APIRouter, Depends, HTTPException
 from lib.auth import require_route_access
 from schemas.common import (
@@ -28,6 +29,16 @@ def get_router() -> APIRouter:
     ):
         await jurisdiction_config_sync.sync_jurisdiction_configs(request)
         return {"data": {"paths": request.paths}}
+
+    @router.post("/maps/{state}", include_in_schema=False)
+    async def generate_maps_endpoint(
+        state: str,
+        _: Identity = Depends(require_route_access(RouteCategory.SERVICE)),
+    ):
+        if await jurisdictions_db.get_state_fips(state) is None:
+            raise HTTPException(status_code=404, detail=f"No active state jurisdiction for '{state}'")
+        workflow_id = await temporal_service.start_generate_maps_workflow(state)
+        return {"data": {"workflow_id": workflow_id, "state": state}}
 
     @router.post("/clear_dashboard_cache", include_in_schema=False)
     async def clear_dashboard_cache_endpoint(

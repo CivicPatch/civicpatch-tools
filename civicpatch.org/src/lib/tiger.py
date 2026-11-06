@@ -15,16 +15,20 @@ import requests
 
 logger = logging.getLogger(__name__)
 
-_STATE_SHP_URL = "https://www2.census.gov/geo/tiger/TIGER2025/STATE/tl_2025_us_state.zip"
-_COUNTY_SHP_URL = "https://www2.census.gov/geo/tiger/TIGER2025/COUNTY/tl_2025_us_county.zip"
+# Bumped by hand each autumn after Census publishes, then every state's maps are rebuilt.
+TIGER_VINTAGE = "2026"
+_TIGER_BASE_URL = f"https://www2.census.gov/geo/tiger/TIGER{TIGER_VINTAGE}"
+
+_STATE_SHP_URL = f"{_TIGER_BASE_URL}/STATE/tl_{TIGER_VINTAGE}_us_state.zip"
+_COUNTY_SHP_URL = f"{_TIGER_BASE_URL}/COUNTY/tl_{TIGER_VINTAGE}_us_county.zip"
 
 
 def _place_shp_url(fips: str) -> str:
-    return f"https://www2.census.gov/geo/tiger/TIGER2025/PLACE/tl_2025_{fips}_place.zip"
+    return f"{_TIGER_BASE_URL}/PLACE/tl_{TIGER_VINTAGE}_{fips}_place.zip"
 
 
 def _cousub_shp_url(fips: str) -> str:
-    return f"https://www2.census.gov/geo/tiger/TIGER2025/COUSUB/tl_2025_{fips}_cousub.zip"
+    return f"{_TIGER_BASE_URL}/COUSUB/tl_{TIGER_VINTAGE}_{fips}_cousub.zip"
 
 
 def _download_and_extract(url: str, dest_dir: Path) -> Path:

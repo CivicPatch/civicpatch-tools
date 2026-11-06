@@ -390,3 +390,51 @@ def test_rollback_user_forbidden_without_admins_role():
 
     assert response.status_code == 403
     rollback_mock.assert_not_awaited()
+
+
+# ── Start a state's map build ────────────────────────────────────────────────
+
+SERVICE_IDENTITY = Identity(
+    type="service_api_key",
+    provider="system",
+    provider_user_id="service_api_key",
+    email="service@civicpatch.org",
+)
+
+
+@pytest.mark.unit
+def test_generate_maps_starts_the_states_workflow():
+    with (
+        patch("database.jurisdictions.get_state_fips", new_callable=AsyncMock, return_value="41"),
+        patch(
+            "lib.temporal.client.start_generate_maps_workflow",
+            new_callable=AsyncMock,
+            return_value="generate-maps-or",
+        ) as start,
+    ):
+        response = _client(SERVICE_IDENTITY).post("/api/admin/maps/or")
+
+    assert response.status_code == 200
+    assert response.json() == {"data": {"workflow_id": "generate-maps-or", "state": "or"}}
+    start.assert_awaited_once_with("or")
+
+
+@pytest.mark.unit
+def test_generate_maps_refuses_a_state_with_no_jurisdiction():
+    with (
+        patch("database.jurisdictions.get_state_fips", new_callable=AsyncMock, return_value=None),
+        patch("lib.temporal.client.start_generate_maps_workflow", new_callable=AsyncMock) as start,
+    ):
+        response = _client(SERVICE_IDENTITY).post("/api/admin/maps/zz")
+
+    assert response.status_code == 404
+    start.assert_not_awaited()
+
+
+@pytest.mark.unit
+def test_generate_maps_refuses_an_admin_session():
+    with patch("lib.temporal.client.start_generate_maps_workflow", new_callable=AsyncMock) as start:
+        response = _client(ADMIN_IDENTITY).post("/api/admin/maps/or")
+
+    assert response.status_code == 403
+    start.assert_not_awaited()
