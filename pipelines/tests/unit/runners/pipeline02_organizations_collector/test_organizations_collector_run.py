@@ -137,7 +137,7 @@ async def _walk(
     with patch("runners.engine.civicpatch_api", engine_api), patch("runners.engine.log_system_usage"), patch(
         f"{MAIN}.civicpatch_api", api
     ), patch(f"{MAIN}.open_router_llm.run_prompt", new=pick):
-        walked = await run_pipeline(context, MagicMock(), Machine(transitions=ORGANIZATIONS_COLLECTOR_TRANSITIONS, handlers=handlers), MagicMock())
+        walked = await run_pipeline(context, MagicMock(), Machine(transitions=ORGANIZATIONS_COLLECTOR_TRANSITIONS, handlers=handlers, submits_context=False), MagicMock())
     states = [call.kwargs["status"] for call in engine_api.update_pipeline_run_status.call_args_list]
     return _Run(states=states, context=seen[0] if seen else walked, pick=pick, api=api)
 

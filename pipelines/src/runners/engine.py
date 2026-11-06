@@ -8,7 +8,7 @@ from domain.pipeline_run_context import PipelineRunContext
 
 TContext = TypeVar("TContext", bound=PipelineRunContext)
 from shared.utils.config_utils import load_pipeline_run_limits
-from utils import log_utils
+from utils import cost_utils, file_utils, log_utils
 import time
 from datetime import datetime, timezone
 import httpx
@@ -42,6 +42,8 @@ class Machine:
 
     transitions: Transitions
     handlers: Dict[StrEnum, Callable[..., Any]]
+    # The engine sends the run's context and costs to cp.org when it ends. Pipeline 3 sends its own.
+    submits_context: bool
 
 
 class IllegalTransition(Exception):
@@ -58,6 +60,41 @@ class PipelineRunError(Exception):
         self.jurisdiction_ocdid = jurisdiction_ocdid
         self.context = context
         super().__init__(f"Pipeline run failed for {jurisdiction_ocdid}")
+
+
+async def _finish(ctx: PipelineRunContext, logger: log_utils.PipelineRunLogger, machine: Machine, api_client: httpx.AsyncClient) -> None:
+    """The run's last word, whatever ended it: its final status, then its context where the machine sends one."""
+    log_system_usage()
+    final_progress = 100 if ctx.current_state == PipelineRunStatus.SUCCESS else ctx.progress
+    try:
+        await civicpatch_api.update_pipeline_run_status(
+            api_client, logger, ctx.pipeline_run_id, ctx.data.jurisdiction_ocdid,
+            status=ctx.current_state.value, progress=final_progress,
+            error_type=getattr(ctx.data, 'error_step', None),
+        )
+    except Exception as e:
+        logger.warning(f"Failed to update final job status (non-fatal): {e}")
+    if machine.submits_context:
+        await _submit_context(ctx, logger, api_client)
+
+
+async def _submit_context(ctx: PipelineRunContext, logger: log_utils.PipelineRunLogger, api_client: httpx.AsyncClient) -> None:
+    """cp.org files the run's issues and records its costs from this. A failed send leaves the run's
+    status standing, as a failed status update does."""
+    jurisdiction_ocdid = ctx.data.jurisdiction_ocdid
+    zip_path = file_utils.zip_run_context(
+        ctx.pipeline_run_id, jurisdiction_ocdid, ctx.model_dump_json(), cost_utils.get_cost_tracker(ctx.pipeline_run_id)
+    )
+    try:
+        response = await civicpatch_api.submit_job_artifacts(
+            api_client, ctx.pipeline_run_id, jurisdiction_ocdid, zip_path, pipeline_run_status=ctx.current_state.value
+        )
+        if not response.is_success:
+            logger.warning(f"Context submit answered {response.status_code} (non-fatal): {response.text[:200]}")
+    except httpx.HTTPError as e:
+        logger.warning(f"Failed to submit the run's context (non-fatal): {e}")
+    finally:
+        cost_utils.reset_cost_tracker(ctx.pipeline_run_id)
 
 
 def log_system_usage():
@@ -132,16 +169,7 @@ async def run_pipeline(
             if persist_fn:
                 persist_fn(ctx)
     finally:
-        log_system_usage()
-        final_progress = 100 if ctx.current_state == PipelineRunStatus.SUCCESS else ctx.progress
-        try:
-            await civicpatch_api.update_pipeline_run_status(
-                api_client, logger, ctx.pipeline_run_id, ctx.data.jurisdiction_ocdid,
-                status=ctx.current_state.value, progress=final_progress,
-                error_type=getattr(ctx.data, 'error_step', None),
-            )
-        except Exception as e:
-            logger.warning(f"Failed to update final job status (non-fatal): {e}")
+        await _finish(ctx, logger, machine, api_client)
 
     if ctx.current_state == PipelineRunStatus.ERROR:
         raise PipelineRunError(jurisdiction_ocdid, ctx)

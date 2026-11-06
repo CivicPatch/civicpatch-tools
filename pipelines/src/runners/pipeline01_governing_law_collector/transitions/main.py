@@ -6,9 +6,10 @@ from typing import List, Optional
 
 import httpx
 import services.civicpatch_api as civicpatch_api
-from runners.pipeline01_governing_law_collector import converters, fetchers, finders, issues
-from ..schemas import GoverningLawCollectorContext, GoverningLawCollectorState, GoverningLawCollectorStep, LawKind, LawUrl
+from runners.pipeline01_governing_law_collector import converters, fetchers, finders
+from ..schemas import FinderAnswer, GoverningLawCollectorContext, GoverningLawCollectorState, GoverningLawCollectorStep, LawKind, LawUrl
 from shared.schemas import GoverningLaw, GoverningLawKind, JurisdictionExtras, PipelineRunLimits
+from shared.utils.layered_config import GovernedBy
 from shared.utils.statuses import PipelineRunStatus
 from utils import cost_utils
 from utils.log_utils import PipelineRunLogger
@@ -27,7 +28,15 @@ async def start(_limits: PipelineRunLimits, _logger: PipelineRunLogger, context:
 async def find_sources(_limits: PipelineRunLimits, logger: PipelineRunLogger, context: GoverningLawCollectorContext, _client: httpx.AsyncClient) -> Step:
     answer = await finders.find(context.data.config, context.pipeline_run_id, context.data.jurisdiction_ocdid, logger)
     logger.info(f"{answer.found_by}: {len(answer.urls_of(LawKind.CHARTER))} charter url(s), {len(answer.urls_of(LawKind.STATUTE))} general law url(s)")
-    return _next(context, answer=answer), GoverningLawCollectorStep.STORE_SOURCES
+    return _next(context, answer=answer, governed_by=_governed_by(context, answer)), GoverningLawCollectorStep.STORE_SOURCES
+
+
+def _governed_by(context: GoverningLawCollectorContext, answer: FinderAnswer) -> Optional[GovernedBy]:
+    governing_law = context.data.config.governing_law
+    if governing_law is None or answer.classification is None:
+        return None
+    classification = governing_law.classifications.get(answer.classification)
+    return classification.governed_by if classification else None
 
 
 async def store_sources(_limits: PipelineRunLimits, logger: PipelineRunLogger, context: GoverningLawCollectorContext, client: httpx.AsyncClient) -> Step:
@@ -90,17 +99,13 @@ async def _read_once(url: str, logger: PipelineRunLogger, *, by_browser: bool) -
     return None
 
 
-async def write_governing_law(_limits: PipelineRunLimits, logger: PipelineRunLogger, context: GoverningLawCollectorContext, client: httpx.AsyncClient) -> Step:
+async def write_governing_law(_limits: PipelineRunLimits, _logger: PipelineRunLogger, context: GoverningLawCollectorContext, client: httpx.AsyncClient) -> Step:
     governing_law = governing_law_from(context)
     await civicpatch_api.patch_jurisdiction_extras(
         client, context.data.jurisdiction_ocdid, JurisdictionExtras(extras_governing_law=governing_law)
     )
-    not_found = issues.governing_law_not_found(context.data)
-    if not_found is None:
-        return _next(context, governing_law=governing_law), PipelineRunStatus.SUCCESS
-    # A failed run, until every run sends its context and cp.org files the issue from it.
-    logger.warning(f"{issues.issue_type(not_found)}: {not_found.missing} missing, tried {[(tried.url, tried.reason) for tried in not_found.tried]}")
-    return _next(context, governing_law=governing_law), PipelineRunStatus.SEND_ERROR
+    # A miss is not a failed run: cp.org files its issue from the context the engine sends.
+    return _next(context, governing_law=governing_law), PipelineRunStatus.SUCCESS
 
 
 async def send_error(_limits: PipelineRunLimits, _logger: PipelineRunLogger, context: GoverningLawCollectorContext, _client: httpx.AsyncClient) -> Step:

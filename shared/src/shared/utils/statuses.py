@@ -75,8 +75,12 @@ class PipelineIssueType(StrEnum):
     # stored; the detail lists every url tried and why, for the human who finds the right one.
     GOVERNING_LAW_NOT_FOUND = "governing_law_not_found"
     # The same miss, where a host refused us, challenged us or its robots.txt kept us out, so the
-    # law may be there. Left for a person: challenges are not answered.
+    # law may be there. Left for a person: the browser retry did not get through either.
     SOURCE_BLOCKED = "source_blocked"
+    # Pipeline 2 had no law to read: pipeline 1 has stored none for the place.
+    NO_GOVERNING_LAW = "no_governing_law"
+    # Pipeline 2 stopped at its spend ceiling with roles still unasked, so some are missing.
+    ROLES_UNASKED = "roles_unasked"
 
 
 # Issue types a run can produce, as opposed to ones about a proposal. These are keyed on the
@@ -88,6 +92,8 @@ RUN_LEVEL_ISSUE_TYPES = frozenset(PipelineRunErrorType) | {
     PipelineIssueType.PIPELINE_ERROR,
     PipelineIssueType.GOVERNING_LAW_NOT_FOUND,
     PipelineIssueType.SOURCE_BLOCKED,
+    PipelineIssueType.NO_GOVERNING_LAW,
+    PipelineIssueType.ROLES_UNASKED,
 }
 
 

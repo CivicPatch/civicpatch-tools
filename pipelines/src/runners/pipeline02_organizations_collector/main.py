@@ -10,13 +10,12 @@ from .schemas import (
 )
 from .transitions.graph import ORGANIZATIONS_COLLECTOR_TRANSITIONS
 from .transitions.main import TRANSITION_MAP
-import services.civicpatch_api as civicpatch_api
 from shared.utils.statuses import PipelineRunStatus
-from utils import cost_utils, log_utils
+from utils import log_utils
 
 logger = logging.getLogger(__name__)
 
-MACHINE = Machine(transitions=ORGANIZATIONS_COLLECTOR_TRANSITIONS, handlers=TRANSITION_MAP)
+MACHINE = Machine(transitions=ORGANIZATIONS_COLLECTOR_TRANSITIONS, handlers=TRANSITION_MAP, submits_context=True)
 
 
 async def start(
@@ -36,6 +35,3 @@ async def start(
         except PipelineRunError as e:
             logger.error(f"Organizations collection failed for {e.jurisdiction_ocdid}: {e}")
             raise
-        finally:
-            await civicpatch_api.record_llm_calls(api_client, run_logger, pipeline_run_id, cost_utils.get_cost_tracker(pipeline_run_id))
-            cost_utils.reset_cost_tracker(pipeline_run_id)

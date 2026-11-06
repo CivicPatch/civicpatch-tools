@@ -560,31 +560,20 @@ def test_the_collector_config_of_a_jurisdiction_gone_from_the_database_is_404(se
     collector_config.assert_awaited_once_with(TEST_OCDID)
 
 
-_LLM_CALL = {
-    "prompt_name": "governing_role", "gateway": "openrouter", "model": "deepseek/deepseek-v4-flash",
-    "generation_id": "gen-1", "input_tokens": 2774, "output_tokens": 436, "cost_usd": "0.000510",
-}
-
-
 @pytest.mark.unit
-def test_a_collector_run_records_its_llm_calls(service_client):
-    with patch("routers.api.pipeline_runs.get_pipeline_run", new_callable=AsyncMock, return_value={"kind": PipelineRunKind.ORGANIZATIONS_COLLECTOR}), patch(
-        "routers.api.pipeline_runs.record_calls", new_callable=AsyncMock, return_value=1
-    ) as record:
-        response = service_client.post(f"/pipeline_runs/{TEST_CHANGESET_ID}/llm_calls", json={"llm_calls": [_LLM_CALL]})
+def test_a_collector_runs_upload_goes_to_the_collector_handler_not_the_scrapes(service_client):
+    with patch(
+        "routers.api.pipeline_runs.get_pipeline_run", new_callable=AsyncMock, return_value={"kind": PipelineRunKind.GOVERNING_LAW_COLLECTOR}
+    ), patch("routers.api.pipeline_runs.pipeline_run_submissions.handle_pipeline_run_submission", new_callable=AsyncMock) as collector, patch(
+        "routers.api.pipeline_runs.people_collector.handle_submit_pipeline_run_artifacts", new_callable=AsyncMock
+    ) as scrape:
+        response = service_client.post(
+            f"/pipeline_runs/{TEST_CHANGESET_ID}/submit",
+            data={"jurisdiction_ocdid": TEST_OCDID, "pipeline_run_status": "SUCCESS"},
+            files={"file": ("run.zip", b"PK\x05\x06" + b"\x00" * 18, "application/zip")},
+        )
 
     assert response.status_code == 200, response.text
-    assert response.json() == {"data": {"recorded": 1}}
-    assert record.await_args is not None
-    run_id, [call] = record.await_args.args
-    assert (run_id, call["generation_id"], str(call["cost_usd"])) == (TEST_CHANGESET_ID, "gen-1", "0.000510")
-
-
-@pytest.mark.unit
-def test_the_llm_calls_of_an_unknown_run_are_404_and_only_the_service_key_records_them(client, service_client):
-    with patch("routers.api.pipeline_runs.get_pipeline_run", new_callable=AsyncMock, return_value=None), patch(
-        "routers.api.pipeline_runs.record_calls", new_callable=AsyncMock
-    ) as record:
-        assert service_client.post(f"/pipeline_runs/{TEST_CHANGESET_ID}/llm_calls", json={"llm_calls": [_LLM_CALL]}).status_code == 404
-        assert client.post(f"/pipeline_runs/{TEST_CHANGESET_ID}/llm_calls", json={"llm_calls": [_LLM_CALL]}).status_code == 403
-    record.assert_not_awaited()
+    assert collector.await_args is not None
+    assert collector.await_args.args[:2] == (PipelineRunKind.GOVERNING_LAW_COLLECTOR, TEST_CHANGESET_ID)
+    scrape.assert_not_awaited()

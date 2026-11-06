@@ -82,10 +82,11 @@ def log_costs(pipeline_run_id, jurisdiction_ocdid):
     costs_file_path = os.path.join(data_path, "costs.json")
 
     with open(costs_file_path, mode='w') as file:
-        file.write(
-            json.dumps(
-                {"llm_costs": [call.model_dump() for call in calls]}, indent=4, default=str
-            )
-        )
+        file.write(costs_json(calls))
 
     _CALLS_BY_RUN.pop(pipeline_run_id, None)
+
+
+def costs_json(calls: list[LLMCall]) -> str:
+    """`costs.json`'s text, as cp.org reads it back into `llm_calls`."""
+    return json.dumps({"llm_costs": [call.model_dump() for call in calls]}, indent=4, default=str)

@@ -4,7 +4,7 @@ from typing import List, Optional
 import httpx
 from fastapi import Request
 from pipelines_environment import get_env_vars
-from shared.schemas import GoverningLawOrganizations, JurisdictionExtras, KnownOrganization, LLMCall
+from shared.schemas import GoverningLawOrganizations, JurisdictionExtras, KnownOrganization
 from shared.utils.config_utils import (
     RoleConfig,
 )
@@ -252,7 +252,6 @@ async def store_governing_law_source_page(
     return response.json()["data"]
 
 
-
 async def reuse_governing_law_source_page(client: httpx.AsyncClient, jurisdiction_ocdid: str, source_url: str) -> dict | None:
     """A page another run stored from this url within a day, as this jurisdiction's row; None when
     there is none, and the url has to be fetched."""
@@ -303,14 +302,3 @@ async def get_extras_organizations_by_input_hash(
     return await with_retry(logger, _fetch)
 
 
-async def record_llm_calls(client: httpx.AsyncClient, logger, pipeline_run_id: str, calls: list[LLMCall]) -> None:
-    """For a run that submits no artifacts. Safe to retry: cp.org skips a call it already holds."""
-    async def _post():
-        env = get_env_vars()
-        resp = await client.post(
-            f"{env['CIVICPATCH_ORG_URL']}/api/v1/pipeline_runs/{pipeline_run_id}/llm_calls",
-            json={"llm_calls": [call.model_dump(mode="json") for call in calls]},
-        )
-        resp.raise_for_status()
-
-    await with_retry(logger, _post)

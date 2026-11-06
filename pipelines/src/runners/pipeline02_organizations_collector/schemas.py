@@ -9,6 +9,7 @@ from .sections import GoverningLawPage
 from shared.schemas import GovernmentForm, GoverningLaw, GoverningLawKind, GoverningLawOrganizations, GoverningLawPost, SelectionMethod
 from shared.utils.citation import SupportingQuote
 from shared.utils.layered_config import MergedConfig
+from shared.utils.run_reports import OrganizationsRunReport
 from shared.utils.statuses import PipelineRunStatus
 
 
@@ -102,7 +103,7 @@ class RoleOutcomes(BaseModel):
     re_ask: List[RoleAsk] = []
 
 
-class OrganizationsCollectorData(BaseModel):
+class OrganizationsCollectorData(OrganizationsRunReport):
     jurisdiction_ocdid: str
     config: OrganizationsCollectorConfig
     # The cached pages, whole: what VERIFY checks quotes against. Never saved.
@@ -114,12 +115,8 @@ class OrganizationsCollectorData(BaseModel):
     # Asked together on EXTRACT's first pass; one VERIFY sends back is re-asked on its own.
     presiding_asks: List[RoleAsk] = []
     claims: List[RoleClaim] = []
-    # The run's cap was reached before every question was asked; WRITE reports it.
-    stopped_at_cost_cap: bool = False
     # VERIFY's latest decision on every role asked.
     outcomes: Optional[RoleOutcomes] = None
-    # SELECT_SECTIONS' hash of what this run reads and asks; None when there was no law to read.
-    input_hash: Optional[str] = None
     organizations: Optional[GoverningLawOrganizations] = None
 
 

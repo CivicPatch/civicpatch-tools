@@ -2,7 +2,6 @@ from typing import Optional
 
 from pydantic import BaseModel, Field
 
-from shared.schemas import LLMCall
 
 
 # ── Shared ────────────────────────────────────────────────────────────────────
@@ -55,12 +54,6 @@ class RegisterPipelineRunRequest(BaseModel):
     jurisdiction_ocdid: str
     name: Optional[str] = None
     url: Optional[str] = None
-
-
-# ── POST /api/v1/pipeline_runs/{pipeline_run_id}/llm_calls (internal) ─────────
-
-class RecordLLMCallsRequest(BaseModel):
-    llm_calls: list[LLMCall]
 
 
 # ── PATCH /api/v1/pipeline_runs/{pipeline_run_id}/status ──────────────────────────
