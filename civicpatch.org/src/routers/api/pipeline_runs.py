@@ -24,7 +24,6 @@ from database.issue_listings import (
     get_pipeline_run_issues_page,
 )
 from database.issues import resolve_issue, resolve_issues, set_issue_flagged
-from database.llm_calls import record_calls
 import database.users
 from database.publications import dismiss_changeset
 from database.source_pages import published_source_pages
@@ -62,13 +61,12 @@ from schemas.pipeline_runs import (
     FlagPipelineIssueRequest,
     GetPipelineRunStatusResponse,
     HandleSubmitPipelineRunArtifactsRequest,
-    RecordLLMCallsRequest,
     RegisterPipelineRunRequest,
     ServerDetail,
     UpdatePipelineRunStatusRequest,
     UpdatePipelineRunStatusResponse,
 )
-from services import people_collector
+from services import people_collector, pipeline_run_submissions
 from shared.utils.statuses import (
     RUN_LEVEL_ISSUE_TYPES,
     ChangesetKind,
@@ -343,18 +341,6 @@ def get_router(api_key_header):
             raise HTTPException(status_code=404, detail="No answer read from these inputs")
         return {"data": organizations.model_dump(mode="json")}
 
-    @router.post("/{pipeline_run_id}/llm_calls", include_in_schema=False)
-    async def record_llm_calls_endpoint(
-        pipeline_run_id: str,
-        request: RecordLLMCallsRequest,
-        _: Identity = Depends(require_route_access(RouteCategory.SERVICE)),
-    ):
-        """For runs that submit no artifacts, so no `costs.json`: the collectors."""
-        if not await get_pipeline_run(pipeline_run_id):
-            raise HTTPException(status_code=404, detail="Pipeline run not found")
-        recorded = await record_calls(pipeline_run_id, [call.model_dump() for call in request.llm_calls])
-        return {"data": {"recorded": recorded}}
-
     # ── Pipeline Runs: Status & Progress ──────────────
 
     @router.patch(
@@ -423,6 +409,14 @@ def get_router(api_key_header):
         logger.info(f"Processing intake for {pipeline_run_id} - {jurisdiction_ocdid}")
 
         file_path, temp_dir = await file_utils.save_upload_to_temp(file)
+
+        pipeline_run = await get_pipeline_run(pipeline_run_id)
+        if pipeline_run is None:
+            raise HTTPException(status_code=404, detail="Pipeline run not found")
+        kind = PipelineRunKind(pipeline_run["kind"])
+        if kind != PipelineRunKind.PEOPLE_COLLECTOR:
+            background_tasks.add_task(pipeline_run_submissions.handle_pipeline_run_submission, kind, pipeline_run_id, file_path, temp_dir)
+            return {"pipeline_run_id": pipeline_run_id, "status": "processing"}
 
         request_obj = HandleSubmitPipelineRunArtifactsRequest(
             pipeline_run_id=pipeline_run_id,

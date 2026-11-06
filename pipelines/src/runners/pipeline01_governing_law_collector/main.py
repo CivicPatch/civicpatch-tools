@@ -15,7 +15,7 @@ from utils import log_utils
 
 logger = logging.getLogger(__name__)
 
-MACHINE = Machine(transitions=GOVERNING_LAW_COLLECTOR_TRANSITIONS, handlers=TRANSITION_MAP)
+MACHINE = Machine(transitions=GOVERNING_LAW_COLLECTOR_TRANSITIONS, handlers=TRANSITION_MAP, submits_context=True)
 
 
 async def start(

@@ -7,14 +7,19 @@ so a handler that returns an impossible state fails here rather than writing tha
 stubs: what is under test is the loop, not any step.
 """
 
+import json
+import zipfile
 from unittest.mock import AsyncMock, MagicMock, patch
 
+import httpx
 import pytest
 
 from runners.engine import IllegalTransition, Machine, run_pipeline
 from runners.pipeline03_people_collector.schemas import PeopleCollectorState, PeopleCollectorStep
 from runners.pipeline03_people_collector.transitions.graph import PEOPLE_COLLECTOR_TRANSITIONS
 from shared.utils.statuses import TERMINAL_PIPELINE_RUN_STATUSES, PipelineRunStatus
+from shared.schemas import LLMCall
+from utils import cost_utils
 from tests.factories.pipeline_run_context import pipeline_run_context_factory
 
 
@@ -34,7 +39,7 @@ def _returning(next_state: PeopleCollectorState):
 
 
 def _machine(handlers) -> Machine:
-    return Machine(transitions=PEOPLE_COLLECTOR_TRANSITIONS, handlers=handlers)
+    return Machine(transitions=PEOPLE_COLLECTOR_TRANSITIONS, handlers=handlers, submits_context=False)
 
 
 def _patched_api(reported_status=PipelineRunStatus.RUNNING):
@@ -134,14 +139,14 @@ async def test_a_run_is_held_to_its_own_pipelines_graph():
             walked = await run_pipeline(
                 _at(PeopleCollectorStep.SAVE_OUTPUT),
                 MagicMock(),
-                Machine(transitions=shortcut, handlers={PeopleCollectorStep.SAVE_OUTPUT: _returning(PipelineRunStatus.SUCCESS)}),
+                Machine(transitions=shortcut, handlers={PeopleCollectorStep.SAVE_OUTPUT: _returning(PipelineRunStatus.SUCCESS)}, submits_context=False),
                 AsyncMock(),
             )
             with pytest.raises(IllegalTransition):
                 await run_pipeline(
                     _at(PeopleCollectorStep.SAVE_OUTPUT),
                     MagicMock(),
-                    Machine(transitions=shortcut, handlers={PeopleCollectorStep.SAVE_OUTPUT: _returning(PeopleCollectorStep.SEND_SUCCESS)}),
+                    Machine(transitions=shortcut, handlers={PeopleCollectorStep.SAVE_OUTPUT: _returning(PeopleCollectorStep.SEND_SUCCESS)}, submits_context=False),
                     AsyncMock(),
                 )
     finally:
@@ -186,3 +191,75 @@ def test_no_pipelines_step_reuses_a_lifecycle_name():
     lifecycle = {status.value for status in PipelineRunStatus}
     for steps in (PeopleCollectorStep, GoverningLawCollectorStep, OrganizationsCollectorStep):
         assert lifecycle.isdisjoint(step.value for step in steps), steps.__name__
+
+
+_SHORTCUT = {
+    PeopleCollectorStep.SAVE_OUTPUT: frozenset({PipelineRunStatus.SUCCESS}),
+    PipelineRunStatus.SUCCESS: frozenset(),
+}
+
+
+async def _walk_submitting(submit: AsyncMock):
+    api, mock = _patched_api()
+    mock.submit_job_artifacts = submit
+    try:
+        with patch("runners.engine.log_system_usage"):
+            walked = await run_pipeline(
+                _at(PeopleCollectorStep.SAVE_OUTPUT),
+                MagicMock(),
+                Machine(transitions=_SHORTCUT, handlers={PeopleCollectorStep.SAVE_OUTPUT: _returning(PipelineRunStatus.SUCCESS)}, submits_context=True),
+                AsyncMock(),
+            )
+    finally:
+        api.stop()
+    return walked, mock
+
+
+@pytest.mark.unit
+@pytest.mark.asyncio
+async def test_a_machine_that_submits_sends_its_context_and_costs_after_the_final_status():
+    call = LLMCall(prompt_name="governing_role", gateway="openrouter", model="deepseek/deepseek-v4-flash", input_tokens=10, output_tokens=5)
+    run_id = _at(PeopleCollectorStep.SAVE_OUTPUT).pipeline_run_id
+    cost_utils.get_cost_tracker(run_id).append(call)
+    sent: dict[str, str] = {}
+
+    async def submit(_client, _run_id, _ocdid, zip_path, pipeline_run_status):
+        with zipfile.ZipFile(zip_path) as zipf:
+            sent.update({name: zipf.read(name).decode() for name in zipf.namelist()})
+        sent["status"] = pipeline_run_status
+        return MagicMock(is_success=True)
+
+    walked, mock = await _walk_submitting(AsyncMock(side_effect=submit))
+
+    assert json.loads(sent["context.json"])["pipeline_run_id"] == walked.pipeline_run_id
+    assert [row["prompt_name"] for row in json.loads(sent["costs.json"])["llm_costs"]] == ["governing_role"]
+    assert sent["status"] == PipelineRunStatus.SUCCESS.value
+    assert [name for name, *_ in mock.mock_calls if name in ("update_pipeline_run_status", "submit_job_artifacts")][-1] == "submit_job_artifacts"
+    assert cost_utils.get_cost_tracker(run_id) == []
+
+
+@pytest.mark.unit
+@pytest.mark.asyncio
+async def test_a_submit_that_fails_leaves_the_run_as_it_ended():
+    walked, _ = await _walk_submitting(AsyncMock(side_effect=httpx.ConnectError("cp.org is down")))
+
+    assert walked.current_state == PipelineRunStatus.SUCCESS
+
+
+@pytest.mark.unit
+@pytest.mark.asyncio
+async def test_a_machine_that_does_not_submit_sends_nothing():
+    api, mock = _patched_api()
+    mock.submit_job_artifacts = AsyncMock()
+    try:
+        with patch("runners.engine.log_system_usage"):
+            await run_pipeline(
+                _at(PeopleCollectorStep.SAVE_OUTPUT),
+                MagicMock(),
+                Machine(transitions=_SHORTCUT, handlers={PeopleCollectorStep.SAVE_OUTPUT: _returning(PipelineRunStatus.SUCCESS)}, submits_context=False),
+                AsyncMock(),
+            )
+    finally:
+        api.stop()
+
+    mock.submit_job_artifacts.assert_not_awaited()

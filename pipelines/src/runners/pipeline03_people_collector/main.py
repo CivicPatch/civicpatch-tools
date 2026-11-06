@@ -64,7 +64,7 @@ async def start(
             return await run_pipeline(
                 context,
                 pipeline_run_logger,
-                Machine(transitions=PEOPLE_COLLECTOR_TRANSITIONS, handlers=TRANSITION_MAP),
+                Machine(transitions=PEOPLE_COLLECTOR_TRANSITIONS, handlers=TRANSITION_MAP, submits_context=False),
                 api_client,
                 persist_context,
             )

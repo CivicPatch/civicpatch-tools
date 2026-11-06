@@ -4,8 +4,10 @@ from typing import List, Optional
 
 from domain.pipeline_run_context import PipelineRunContext
 from pydantic import BaseModel, Field
-from shared.schemas import FoundBy, GoverningLaw
+from shared.schemas import GoverningLaw
 from shared.utils.layered_config import GoverningLawConfig
+# TriedReason and TriedUrl are re-exported: pipeline 1 has always imported them from here.
+from shared.utils.run_reports import GoverningLawRunReport, GoverningLawSearch, TriedReason, TriedUrl  # noqa: F401
 from shared.utils.statuses import PipelineRunStatus
 
 
@@ -30,36 +32,6 @@ class GoverningLawCollectorConfig(BaseModel):
     pipeline_run_cap_usd: Optional[Decimal] = None
     # The state's merged block; None for a state that has none yet, which finds nothing.
     governing_law: Optional[GoverningLawConfig]
-
-
-class TriedReason(StrEnum):
-    REFUSED = "refused"
-    CHALLENGED = "challenged"
-    DISALLOWED_BY_ROBOTS = "disallowed_by_robots"
-    OFF_LIMITS = "off_limits"
-    FAILED = "failed"
-    NOT_THE_TARGET = "not_the_target"
-    # The place's own site, crawled to its budget without finding what was searched for.
-    SITE_CRAWLED = "site_crawled"
-
-
-class TriedUrl(BaseModel):
-    url: str
-    reason: TriedReason
-
-
-class Missing(StrEnum):
-    CHARTER = "charter"
-    EVERYTHING = "everything"
-
-
-class GoverningLawNotFound(BaseModel):
-    """What the `governing_law_not_found` issue tells the human: what is missing, where the
-    search looked and why each url was rejected, and which of the answer's urls the run skipped."""
-
-    missing: Missing
-    tried: List[TriedUrl]
-    skipped_urls: List[str]
 
 
 class LawKind(StrEnum):
@@ -105,15 +77,11 @@ class SearchResult(BaseModel):
     tried: List[TriedUrl] = []
 
 
-class FinderAnswer(BaseModel):
+class FinderAnswer(GoverningLawSearch):
     """What a finder says governs the jurisdiction, and where its texts are. The governing kind is
     not here: it follows from which of these texts the run actually stores."""
 
-    found_by: FoundBy
-    classification: Optional[str]
     law_urls: List[LawUrl] = []
-    # Urls the search rejected, for the issue when nothing confirms; empty for the other finders.
-    tried: List[TriedUrl] = []
 
     @property
     def urls(self) -> List[str]:
@@ -130,14 +98,9 @@ class FetchedPage(BaseModel):
     by_browser: bool
 
 
-class GoverningLawCollectorData(BaseModel):
+class GoverningLawCollectorData(GoverningLawRunReport[FinderAnswer]):
     jurisdiction_ocdid: str
     config: GoverningLawCollectorConfig
-    answer: Optional[FinderAnswer] = None
-    charter_source_page_ids: List[str] = []
-    general_law_source_page_ids: List[str] = []
-    # Urls a host refused (403, 429), or that stayed empty even by browser. Never retried.
-    skipped_urls: List[str] = []
     governing_law: Optional[GoverningLaw] = None
 
 

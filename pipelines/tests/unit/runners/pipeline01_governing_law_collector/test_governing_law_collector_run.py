@@ -5,7 +5,7 @@ from unittest.mock import AsyncMock, MagicMock, patch
 
 import httpx
 import pytest
-from runners.engine import PipelineRunError, run_pipeline, terminal_states
+from runners.engine import run_pipeline, terminal_states
 from runners.pipeline01_governing_law_collector.fetchers import OffLimits, RefusedByHost
 from runners.pipeline01_governing_law_collector.main import MACHINE
 from runners.pipeline01_governing_law_collector.schemas import (
@@ -25,7 +25,7 @@ from runners.pipeline01_governing_law_collector.transitions.graph import (
 )
 from runners.pipeline01_governing_law_collector.transitions.main import TRANSITION_MAP
 from shared.schemas import FoundBy, GoverningLawKind
-from shared.utils.layered_config import GoverningLawConfig
+from shared.utils.layered_config import GovernedBy, GoverningLawConfig
 from shared.utils.statuses import TERMINAL_PIPELINE_RUN_STATUSES, PipelineRunStatus
 
 pytestmark = pytest.mark.unit
@@ -74,6 +74,7 @@ async def _run(
     engine_api = MagicMock()
     engine_api.fetch_pipeline_run_status = AsyncMock(return_value=PipelineRunStatus.RUNNING)
     engine_api.update_pipeline_run_status = AsyncMock()
+    engine_api.submit_job_artifacts = AsyncMock(return_value=MagicMock(is_success=True))
     with patch(f"{MAIN}.civicpatch_api", api), patch("runners.engine.civicpatch_api", engine_api), patch(
         "runners.engine.log_system_usage"
     ), patch(f"{MAIN}.finders.find", new=AsyncMock(return_value=answer)), patch(f"{MAIN}.fetchers.fetch", new=fetch):
@@ -118,15 +119,16 @@ async def test_nothing_to_fetch_is_written_as_none_found():
 
 
 @pytest.mark.asyncio
-async def test_a_search_that_confirmed_no_charter_writes_the_statutes_it_stored_and_fails():
+async def test_a_search_that_confirmed_no_charter_writes_the_statutes_it_stored_and_succeeds():
     tried = [TriedUrl(url="https://www.lanecountyor.gov", reason=TriedReason.SITE_CRAWLED)]
     answer = FinderAnswer(found_by=FoundBy.SEARCH, classification="county", law_urls=_law(statutes=(_STATUTE,)), tried=tried)
     fetch = AsyncMock(side_effect=lambda url, by_browser: _html(url, _TEXT))
 
-    with pytest.raises(PipelineRunError) as failed:
-        await _run(answer, fetch, config=GoverningLawCollectorConfig(name="Lane County", governing_law=_OREGON))
+    context, _ = await _run(answer, fetch, config=GoverningLawCollectorConfig(name="Lane County", governing_law=_OREGON))
 
-    written = failed.value.context.data.governing_law
+    assert context.current_state == PipelineRunStatus.SUCCESS
+    assert context.data.governed_by == GovernedBy.CHARTER_ELSE_GENERAL_LAW
+    written = context.data.governing_law
     assert written is not None and written.kind == GoverningLawKind.GENERAL_LAW
 
 
@@ -208,14 +210,14 @@ async def test_a_nearly_empty_page_is_fetched_once_more_by_browser():
 
 
 @pytest.mark.asyncio
-async def test_urls_none_of_which_could_be_stored_write_none_found_and_fail_the_run():
+async def test_urls_none_of_which_could_be_stored_write_none_found_and_the_run_succeeds():
     answer = FinderAnswer(found_by=FoundBy.STATE_INDEX, classification="town", law_urls=_law(charter=(_CHARTER,)))
     fetch = AsyncMock(side_effect=RefusedByHost(_CHARTER, 429))
 
-    with pytest.raises(PipelineRunError) as failed:
-        await _run(answer, fetch)
+    context, _ = await _run(answer, fetch)
 
-    written = failed.value.context.data.governing_law
+    assert context.current_state == PipelineRunStatus.SUCCESS
+    written = context.data.governing_law
     assert written is not None and written.kind == GoverningLawKind.NONE_FOUND
 
 
