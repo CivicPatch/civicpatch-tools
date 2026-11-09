@@ -12,6 +12,7 @@ COUNTY_GOVERNMENT_FORM_DESCRIPTIONS: dict[GovernmentForm, str] = {
     GovernmentForm.COUNCIL_MANAGER: "one elected board with an appointed administrator or manager",
     GovernmentForm.COUNTY_EXECUTIVE: "an elected board plus a separately elected county executive, "
     "mayor or parish president who does not sit on it",
+    GovernmentForm.COUNTY_COURT: GOVERNMENT_FORM_DESCRIPTIONS[GovernmentForm.COUNTY_COURT],
 }
 
 _MUNICIPAL_TEST = (
@@ -21,6 +22,11 @@ _MUNICIPAL_TEST = (
 )
 _COUNTY_TEST = (
     "A presiding county judge or chair who sits and votes on the board still counts as commission."
+)
+# Where county_court is offered, an elected county judge is what tells it from commission.
+_COUNTY_COURT_TEST = (
+    "A board led by an elected county judge who presides and votes is county_court; a board whose "
+    "chair is one of its commissioners is commission."
 )
 
 
@@ -137,9 +143,10 @@ def municipal_government_form_prompt(
 def county_government_form_prompt(
     jurisdiction_ocdid: str, county_name: str, forms: list[GovernmentForm]
 ) -> str:
+    test = _COUNTY_COURT_TEST if GovernmentForm.COUNTY_COURT in forms else _COUNTY_TEST
     return _government_form_prompt(
         "county", _location(jurisdiction_ocdid, county_name), forms,
-        COUNTY_GOVERNMENT_FORM_DESCRIPTIONS, _COUNTY_TEST,
+        COUNTY_GOVERNMENT_FORM_DESCRIPTIONS, test,
     )
 
 
