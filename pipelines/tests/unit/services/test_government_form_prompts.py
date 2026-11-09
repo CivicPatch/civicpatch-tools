@@ -12,6 +12,7 @@ pytestmark = pytest.mark.unit
 
 _SEATTLE = "ocd-jurisdiction/country:us/state:wa/place:seattle/government"
 _KING = "ocd-jurisdiction/country:us/state:wa/county:king/government"
+_BAKER = "ocd-jurisdiction/country:us/state:or/county:baker/government"
 
 
 def test_a_municipal_prompt_offers_only_the_forms_it_is_given():
@@ -33,6 +34,17 @@ def test_a_county_prompt_describes_commission_as_a_county_board():
     assert "- commission: one elected board" in prompt
     assert "each head a department" not in prompt
     assert "presiding county judge" in prompt
+
+
+def test_an_oregon_county_prompt_offers_county_court_and_tells_it_from_commission():
+    prompt = county_government_form_prompt(
+        _BAKER, "Baker County", [GovernmentForm.COMMISSION, GovernmentForm.COUNTY_COURT]
+    )
+
+    assert "- commission: one elected board" in prompt
+    assert "- county_court: a county court: an elected county judge" in prompt
+    assert "elected county judge who presides and votes is county_court" in prompt
+    assert "still counts as commission" not in prompt
 
 
 def test_a_county_is_not_named_twice():
