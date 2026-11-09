@@ -8,8 +8,9 @@ from typing import Any, Dict, List, Optional
 import httpx
 from pydantic import BaseModel
 
+import environment
 import lib.cache as cache_service
-from lib.github.auth import _get_github_config, get_default_headers
+from lib.github.auth import get_default_headers, get_read_headers
 
 timeout = httpx.Timeout(60.0)
 
@@ -51,9 +52,9 @@ async def cached_github_get(
     cached_etag = cached.get("etag") if cached else None
     cached_content = cached.get("content") if cached else None
 
-    default_headers = await get_default_headers()
+    read_headers = await get_read_headers()
     headers = {
-        **default_headers,
+        **read_headers,
         "Accept": accept,
     }
     if cached_etag:
@@ -100,7 +101,7 @@ async def get_github_file_contents(
     ref: Optional[str] = None,
     repo_url: str | None = None,
 ) -> str | None:
-    _, _, _, open_data_repo_url = _get_github_config()
+    open_data_repo_url = environment.open_data_repo_url()
     target_repo = repo_url or open_data_repo_url
     # The repo is part of the key: open-data and the jurisdictions repo share file paths.
     cache_key = f"github:file:{target_repo}:{github_file_path}:{ref or 'main'}"
@@ -113,7 +114,7 @@ async def get_github_file_contents(
 
 
 async def get_all_open_prs_raw(per_page: int = 100) -> List[Dict]:
-    _, _, _, open_data_repo_url = _get_github_config()
+    open_data_repo_url = environment.open_data_repo_url()
     results = []
     page = 1
     while True:
@@ -149,7 +150,7 @@ async def upsert_github_file(
     A URL rather than a bool because callers need somewhere to point at what they wrote;
     both are truthy-checked the same way.
     """
-    _, _, _, open_data_repo_url = _get_github_config()
+    open_data_repo_url = environment.open_data_repo_url()
     target_repo = repo_url or open_data_repo_url
     auth_headers = headers if headers is not None else await get_default_headers()
     contents_url = f"{target_repo}/contents/{file_path}?ref={branch_name}"
@@ -190,7 +191,7 @@ async def get_pull_request_mergeability(
 
     If wait_for_change_from is provided, keeps polling until the state differs from
     that value — useful after a branch update to avoid reading a stale result."""
-    _, _, _, open_data_repo_url = _get_github_config()
+    open_data_repo_url = environment.open_data_repo_url()
     async with httpx.AsyncClient() as client:
         default_headers = await get_default_headers()
         for _ in range(10):
@@ -222,7 +223,7 @@ async def merge_pull_request(
         "merge_method": "squash",
     }
 
-    _, _, _, open_data_repo_url = _get_github_config()
+    open_data_repo_url = environment.open_data_repo_url()
     async with httpx.AsyncClient() as client:
         default_headers = await get_default_headers()
         github_message = "Unknown error"
@@ -264,7 +265,7 @@ async def create_branch(
     """Creates a new branch off base_ref in the target repo. With `base_repo_url`, base_ref is read
     from that repo instead: a fork's branch starts at its parent's commit, which a fork can point
     at because the two share objects. Returns None on success, or an error message string."""
-    _, _, _, open_data_repo_url = _get_github_config()
+    open_data_repo_url = environment.open_data_repo_url()
     target_repo = repo_url or open_data_repo_url
     auth_headers = headers if headers is not None else await get_default_headers()
     async with httpx.AsyncClient(timeout=timeout) as client:
@@ -310,7 +311,7 @@ async def create_pull_request(
     `head_repo`: the fork as `owner/name` when branch_name lives in a fork in the same org; GitHub
     requires it then, and rejects the bare name the docs describe. A fork PR asks for no
     maintainer edits: the bot opening it cannot write the fork, so it cannot grant them."""
-    _, _, _, open_data_repo_url = _get_github_config()
+    open_data_repo_url = environment.open_data_repo_url()
     target_repo = repo_url or open_data_repo_url
     auth_headers = headers if headers is not None else await get_default_headers()
     async with httpx.AsyncClient(timeout=timeout) as client:
@@ -434,7 +435,7 @@ async def create_issue(
 ) -> tuple[int, str] | tuple[None, str]:
     """Opens an issue in the target repo.
     Returns (issue_number, issue_url) on success, or (None, error_message) on failure."""
-    _, _, _, open_data_repo_url = _get_github_config()
+    open_data_repo_url = environment.open_data_repo_url()
     target_repo = repo_url or open_data_repo_url
     auth_headers = headers if headers is not None else await get_default_headers()
     async with httpx.AsyncClient(timeout=timeout) as client:

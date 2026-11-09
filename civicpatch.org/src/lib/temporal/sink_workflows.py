@@ -220,6 +220,6 @@ class WriteOpenDataBatchWorkflow:
                 backoff_coefficient=2.0,
                 maximum_interval=timedelta(minutes=10),
                 maximum_attempts=0,
-                non_retryable_error_types=["ValueError"],
+                non_retryable_error_types=["GitHubNotConfigured", "ValueError"],
             ),
         )

@@ -62,10 +62,7 @@ def _happy_path() -> _FakeClient:
 
 def _github(client: _FakeClient):
     return (
-        patch(
-            "lib.github.git_data._get_github_config",
-            return_value=("app", "key", "install", REPO),
-        ),
+        patch("environment.open_data_repo_url", return_value=REPO),
         patch(
             "lib.github.git_data.get_default_headers",
             new_callable=AsyncMock,
