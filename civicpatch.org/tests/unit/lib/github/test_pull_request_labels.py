@@ -22,7 +22,7 @@ def _client_creating_pr(number: int) -> AsyncMock:
 
 async def _open(labels_applied: bool):
     with (
-        patch("lib.github.api._get_github_config", return_value=("", "", "", REPO_URL)),
+        patch("environment.open_data_repo_url", return_value=REPO_URL),
         patch("lib.github.api.httpx.AsyncClient", return_value=_client_creating_pr(5)),
         patch("lib.github.api.add_pr_labels", new_callable=AsyncMock, return_value=labels_applied),
         patch("lib.github.api.close_pull_request", new_callable=AsyncMock) as mock_close,
@@ -54,7 +54,7 @@ async def test_a_fork_pr_names_its_fork_and_asks_for_no_maintainer_edits():
     opening the PR cannot write the fork, so it cannot grant maintainer edits."""
     client = _client_creating_pr(5)
     with (
-        patch("lib.github.api._get_github_config", return_value=("", "", "", REPO_URL)),
+        patch("environment.open_data_repo_url", return_value=REPO_URL),
         patch("lib.github.api.httpx.AsyncClient", return_value=client),
     ):
         await create_pull_request(

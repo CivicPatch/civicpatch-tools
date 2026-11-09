@@ -1,4 +1,5 @@
 import base64
+import binascii
 import logging
 import time
 from datetime import datetime, timezone
@@ -16,19 +17,34 @@ logger = logging.getLogger(__name__)
 # token can't die mid-request.
 TOKEN_REFRESH_MARGIN_SECONDS = 300
 
+GITHUB_API_VERSION = "2022-11-28"
+
+_warned_reading_anonymously = False
+
+
+class GitHubNotConfigured(Exception):
+    """No usable GitHub App credentials. Reads fall back to anonymous; writes cannot."""
+
 
 def _get_github_config():
     env = environment.get_env_vars()
     app_id = env["GITHUB_APP_ID"]
-    private_key = base64.b64decode(env["GITHUB_APP_PRIVATE_KEY_BASE64"]).decode()
+    encoded_key = env["GITHUB_APP_PRIVATE_KEY_BASE64"]
     installation_id = env["GITHUB_APP_INSTALLATION_ID"]
-    open_data_repo_url = env["OPEN_DATA_REPO_URL"]
-    return app_id, private_key, installation_id, open_data_repo_url
+    if not (app_id and encoded_key and installation_id):
+        raise GitHubNotConfigured(
+            "GITHUB_APP_ID, GITHUB_APP_PRIVATE_KEY_BASE64 and GITHUB_APP_INSTALLATION_ID must all be set."
+        )
+    try:
+        private_key = base64.b64decode(encoded_key).decode()
+    except (binascii.Error, UnicodeDecodeError) as e:
+        raise GitHubNotConfigured(f"GITHUB_APP_PRIVATE_KEY_BASE64 is not valid base64: {e}") from e
+    return app_id, private_key, installation_id
 
 
 def _generate_jwt() -> str:
     logger.debug("Generating JWT for GitHub App authentication.")
-    app_id, private_key, _, _ = _get_github_config()
+    app_id, private_key, _ = _get_github_config()
     now = int(time.time())
     return jwt.encode(
         {"iat": now - 60, "exp": now + 600, "iss": app_id},
@@ -39,7 +55,7 @@ def _generate_jwt() -> str:
 
 async def _fetch_github_token() -> tuple[str, float]:
     logger.debug("Fetching new GitHub installation access token.")
-    _, _, installation_id, _ = _get_github_config()
+    _, _, installation_id = _get_github_config()
     async with httpx.AsyncClient() as client:
         response = await client.post(
             f"https://api.github.com/app/installations/{installation_id}/access_tokens",
@@ -59,7 +75,7 @@ async def _fetch_github_token() -> tuple[str, float]:
 
 
 async def get_github_token():
-    _, _, installation_id, _ = _get_github_config()
+    _, _, installation_id = _get_github_config()
     cache_key = f"github:installation:{installation_id}"
     logger.debug(f"Retrieving GitHub token from cache with key: {cache_key}")
     cached_token = await cache_service.get_cached(cache_key)
@@ -79,8 +95,19 @@ async def get_default_headers() -> Dict[str, str]:
     github_token = await get_github_token()
     return {
         "Authorization": f"Bearer {github_token}",
-        "X-GitHub-Api-Version": "2022-11-28",
+        "X-GitHub-Api-Version": GITHUB_API_VERSION,
     }
+
+
+async def get_read_headers() -> Dict[str, str]:
+    global _warned_reading_anonymously
+    try:
+        return await get_default_headers()
+    except GitHubNotConfigured as e:
+        if not _warned_reading_anonymously:
+            logger.warning(f"Reading GitHub anonymously, capped at 60 requests an hour: {e}")
+            _warned_reading_anonymously = True
+        return {"X-GitHub-Api-Version": GITHUB_API_VERSION}
 
 
 def _get_jurisdictions_sync_config():

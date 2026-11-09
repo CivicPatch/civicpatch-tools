@@ -13,8 +13,9 @@ import logging
 
 import httpx
 
+import environment
 from lib.github.api import timeout
-from lib.github.auth import _get_github_config, get_default_headers
+from lib.github.auth import get_default_headers
 
 logger = logging.getLogger(__name__)
 
@@ -63,7 +64,7 @@ async def commit_github_files(
     if not contents:
         return None
 
-    _, _, _, open_data_repo_url = _get_github_config()
+    open_data_repo_url = environment.open_data_repo_url()
     repo = repo_url or open_data_repo_url
     auth = headers if headers is not None else await get_default_headers()
 

@@ -7,9 +7,6 @@ import os
 
 REQUIRED_ENV_VARS = [
     # Required
-    "GITHUB_APP_ID",
-    "GITHUB_APP_PRIVATE_KEY_BASE64",
-    "GITHUB_APP_INSTALLATION_ID",
     "CIVICPATCH_API_DB_URL",
     "INSTANCE_URL",
     "OPEN_DATA_REPO_URL",
@@ -26,6 +23,10 @@ REQUIRED_ENV_VARS = [
 
 OPTIONAL_ENV_VARS = [
     "APP_ENVIRONMENT",
+    # Without them GitHub reads go anonymous and writes raise GitHubNotConfigured.
+    "GITHUB_APP_ID",
+    "GITHUB_APP_PRIVATE_KEY_BASE64",
+    "GITHUB_APP_INSTALLATION_ID",
     # How many pipeline runs may be in flight at once. A state scrape takes every jurisdiction
     # that is due — 1,293 for Michigan — and dispatches a run for each, so they go a slice at a
     # time. Named for the run, not the scrape: the limit is on the pipeline, whatever kind of
@@ -99,6 +100,10 @@ def get_env_vars():
 def instance_url() -> str:
     """This site's own address, for absolute links in responses (`http://localhost:8000` on dev)."""
     return get_env_vars()["INSTANCE_URL"]
+
+
+def open_data_repo_url() -> str:
+    return get_env_vars()["OPEN_DATA_REPO_URL"]
 
 
 def mcp_allowed_hosts() -> list[str]:
