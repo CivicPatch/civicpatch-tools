@@ -516,3 +516,230 @@ description = "Image sizes, largest last"
 run = """
 {% raw %}docker image ls --format '{{.Size}}\t{{.Repository}}:{{.Tag}}' | sort -h | tail -20{% endraw %}
 """
+
+# Forwarders: each runs the same-named task in the sub-project's own mise.toml.
+# Names that clash across projects carry the project prefix.
+
+[tasks."typecheck"]
+dir = "civicpatch.org"
+run = "mise run typecheck"
+
+[tasks."civicpatch.org:unit"]
+dir = "civicpatch.org"
+run = "mise run unit"
+
+[tasks."civicpatch.org:dev"]
+dir = "civicpatch.org"
+run = "mise run dev"
+
+[tasks."seed-dev-data"]
+description = "Populate the dev database with a subset of the published open-data dataset (for new devs) (civicpatch.org)"
+dir = "civicpatch.org"
+run = "mise run seed-dev-data"
+
+[tasks."civicpatch.org:containsh"]
+dir = "civicpatch.org"
+run = "mise run containsh"
+
+[tasks."deploy_civicpatch_org"]
+dir = "civicpatch.org"
+run = "mise run deploy_civicpatch_org"
+
+[tasks."generate-url"]
+dir = "civicpatch.org"
+run = "mise run generate-url"
+
+[tasks."trigger-github"]
+dir = "civicpatch.org"
+run = "mise run trigger-github"
+
+[tasks."process-zip"]
+dir = "civicpatch.org"
+run = "mise run process-zip"
+
+[tasks."test-r2"]
+description = "Test Cloudflare R2 credentials by uploading a small test file (civicpatch.org)"
+dir = "civicpatch.org"
+run = "mise run test-r2"
+
+[tasks."q_jurisdictions"]
+dir = "civicpatch.org"
+run = "mise run q_jurisdictions"
+
+[tasks."query_jurisdictions"]
+dir = "civicpatch.org"
+run = "mise run query_jurisdictions"
+
+[tasks."get_state"]
+dir = "civicpatch.org"
+run = "mise run get_state"
+
+[tasks."search_jurisdictions"]
+dir = "civicpatch.org"
+run = "mise run search_jurisdictions"
+
+[tasks."create_job"]
+dir = "civicpatch.org"
+run = "mise run create_job"
+
+[tasks."update_job_pull_request_url"]
+dir = "civicpatch.org"
+run = "mise run update_job_pull_request_url"
+
+[tasks."get_job_status"]
+dir = "civicpatch.org"
+run = "mise run get_job_status"
+
+[tasks."get_job"]
+dir = "civicpatch.org"
+run = "mise run get_job"
+
+[tasks."get_people"]
+dir = "civicpatch.org"
+run = "mise run get_people"
+
+[tasks."get_api_usage"]
+dir = "civicpatch.org"
+run = "mise run get_api_usage"
+
+[tasks."blog_sync"]
+description = "Manually trigger the blog-sync webhook against local server (fetches Announcements from CivicPatch/civicpatch via gh) (civicpatch.org)"
+dir = "civicpatch.org"
+run = "mise run blog_sync"
+
+[tasks."blog_sync_prod"]
+description = "Trigger the blog-sync webhook against production (uses $BLOG_SYNC_WEBHOOK_SECRET from env) (civicpatch.org)"
+dir = "civicpatch.org"
+run = "mise run blog_sync_prod"
+
+[tasks."supabase-push"]
+description = "Push local supabase/ config to the linked Supabase project (civicpatch.org)"
+dir = "civicpatch.org"
+run = "mise run supabase-push"
+
+[tasks."webp"]
+description = "Convert a blog image to WebP. Usage: mise run webp <filename> (civicpatch.org)"
+dir = "civicpatch.org"
+run = "mise run webp"
+
+[tasks."container"]
+dir = "pipelines"
+run = "mise run container"
+
+[tasks."pipelines:containsh"]
+dir = "pipelines"
+run = "mise run containsh"
+
+[tasks."containsh-fe"]
+dir = "pipelines"
+run = "mise run containsh-fe"
+
+[tasks."devinttest"]
+dir = "pipelines"
+run = "mise run devinttest"
+
+[tasks."pipelines:unit"]
+dir = "pipelines"
+run = "mise run unit"
+
+[tasks."integration"]
+dir = "pipelines"
+run = "mise run integration"
+
+[tasks."integration-preprocess"]
+dir = "pipelines"
+run = "mise run integration-preprocess"
+
+[tasks."contracts"]
+dir = "pipelines"
+run = "mise run contracts"
+
+[tasks."pipelines:evals"]
+dir = "pipelines"
+run = "mise run evals"
+
+[tasks."evals_relevant"]
+dir = "pipelines"
+run = "mise run evals_relevant"
+
+[tasks."evals_relevant_case"]
+dir = "pipelines"
+run = "mise run evals_relevant_case"
+
+[tasks."evals_relevant_case_provider"]
+dir = "pipelines"
+run = "mise run evals_relevant_case_provider"
+
+[tasks."evals_case"]
+dir = "pipelines"
+run = "mise run evals_case"
+
+[tasks."evals_case_provider"]
+dir = "pipelines"
+run = "mise run evals_case_provider"
+
+[tasks."scratchtest"]
+dir = "pipelines"
+run = "mise run scratchtest"
+
+[tasks."pipelines:dev"]
+dir = "pipelines"
+run = "mise run dev"
+
+[tasks."manual"]
+dir = "pipelines"
+run = "mise run manual"
+
+[tasks."stop"]
+dir = "pipelines"
+run = "mise run stop"
+
+[tasks."status"]
+dir = "pipelines"
+run = "mise run status"
+
+[tasks."get_m"]
+dir = "pipelines"
+run = "mise run get_m"
+
+[tasks."get_jurisdictions_prod"]
+dir = "pipelines"
+run = "mise run get_jurisdictions_prod"
+
+[tasks."scratch"]
+dir = "pipelines"
+run = "mise run scratch"
+
+[tasks."pipeline-run"]
+dir = "pipelines"
+run = "mise run pipeline-run"
+
+[tasks."test-openrouter"]
+description = "Send a minimal OpenRouter request matching production config and dump response headers + body (pipelines)"
+dir = "pipelines"
+run = "mise run test-openrouter"
+
+[tasks."test-openrouter-grounded"]
+description = "Probe the grounded (web-search) Gemini path through OpenRouter — the step-0 probe (pipelines)"
+dir = "pipelines"
+run = "mise run test-openrouter-grounded"
+
+[tasks."test-pipeline-run-cicd"]
+dir = "pipelines"
+run = "mise run test-pipeline-run-cicd"
+
+[tasks."pipeline-run-cicd"]
+dir = "pipelines"
+run = "mise run pipeline-run-cicd"
+
+[tasks."get-juds"]
+dir = "pipelines"
+run = "mise run get-juds"
+
+[tasks."cli-test"]
+dir = "pipelines"
+run = "mise run cli-test"
+
+[tasks."jurisdiction-ocdid-state"]
+dir = "pipelines"
+run = "mise run jurisdiction-ocdid-state"
