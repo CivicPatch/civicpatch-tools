@@ -14,6 +14,16 @@ CLEANUP_TASK_QUEUE = "civicpatch-cleanup"  # retiring work time or a newer arriv
 PIPELINE_RUNS_TASK_QUEUE = "civicpatch-pipeline-runs"  # dispatching and polling scrape runs
 MAPS_TASK_QUEUE = "civicpatch-maps"  # building and uploading pmtiles
 
+# The client starts these by name, so the API never imports the activities behind them.
+WRITE_SHEET_ROSTER_WORKFLOW = "WriteSheetRosterWorkflow"
+WRITE_SHEET_JURISDICTIONS_WORKFLOW = "WriteSheetJurisdictionsWorkflow"
+WRITE_OPEN_DATA_BATCH_WORKFLOW = "WriteOpenDataBatchWorkflow"
+PEOPLE_COLLECTOR_WORKFLOW = "PeopleCollectorWorkflow"
+PEOPLE_COLLECTOR_STATE_WORKFLOW = "PeopleCollectorStateWorkflow"
+COLLECTOR_WORKFLOW = "CollectorWorkflow"
+COLLECTOR_STATE_WORKFLOW = "CollectorStateWorkflow"
+GENERATE_MAPS_WORKFLOW = "GenerateMapsWorkflow"
+
 # Maximum wall-clock time for a single people-collector workflow execution.
 # Covers the full run including any retry after human_approval.
 PEOPLE_COLLECTOR_EXECUTION_TIMEOUT = timedelta(hours=2)

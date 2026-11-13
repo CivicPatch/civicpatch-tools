@@ -10,7 +10,12 @@ from datetime import timedelta
 from temporalio import workflow
 from temporalio.common import RetryPolicy
 
-from lib.temporal.types import OpenDataBatchCommitRequest
+from lib.temporal.types import (
+    WRITE_OPEN_DATA_BATCH_WORKFLOW,
+    WRITE_SHEET_JURISDICTIONS_WORKFLOW,
+    WRITE_SHEET_ROSTER_WORKFLOW,
+    OpenDataBatchCommitRequest,
+)
 
 with workflow.unsafe.imports_passed_through():
     from routers.temporal.sink_activities import (
@@ -47,7 +52,7 @@ _SHEET_RETRY = RetryPolicy(
 )
 
 
-@workflow.defn
+@workflow.defn(name=WRITE_SHEET_ROSTER_WORKFLOW)
 class WriteSheetRosterWorkflow:
     """Rewrite one state's tabs, coalescing everything that asks while it waits.
 
@@ -82,7 +87,7 @@ class WriteSheetRosterWorkflow:
         workflow.continue_as_new(state)
 
 
-@workflow.defn
+@workflow.defn(name=WRITE_SHEET_JURISDICTIONS_WORKFLOW)
 class WriteSheetJurisdictionsWorkflow:
     """Rewrite the all-states dropdown source. Triggered by the open-data read, but its own workflow —
     that schedule is SKIP-overlap and a forever-retrying write would wedge it."""
@@ -197,7 +202,7 @@ class WriteEverythingWorkflow:
         )
 
 
-@workflow.defn
+@workflow.defn(name=WRITE_OPEN_DATA_BATCH_WORKFLOW)
 class WriteOpenDataBatchWorkflow:
     """Write every jurisdiction a bulk publish made live, as one commit.
 

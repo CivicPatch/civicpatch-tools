@@ -7,6 +7,8 @@ from datetime import timedelta
 from temporalio import workflow
 from temporalio.common import RetryPolicy
 
+from lib.temporal.types import GENERATE_MAPS_WORKFLOW
+
 with workflow.unsafe.imports_passed_through():
     from routers.temporal.map_generation_activities import (
         build_and_upload_national_overview,
@@ -14,7 +16,7 @@ with workflow.unsafe.imports_passed_through():
     )
 
 
-@workflow.defn
+@workflow.defn(name=GENERATE_MAPS_WORKFLOW)
 class GenerateMapsWorkflow:
     """A state's pmtiles, then the national overview — chained so the coverage picker
     (`browse-map.ts`'s always-loaded `states.pmtiles`) can never silently omit a newly
