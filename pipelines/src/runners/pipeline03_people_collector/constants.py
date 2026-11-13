@@ -15,6 +15,8 @@ SPA_SETTLE_MS = 2000
 SPA_NETWORKIDLE_TIMEOUT_MS = 8000
 
 IMAGE_DOWNLOAD_TIMEOUT_S = 5
+# One page's images share this: Marion OR's embedded map spent 409 per-image timeouts (34 min).
+IMAGE_PAGE_BUDGET_S = 30
 
 # Playwright waits 30s for a hidden button to become clickable; a real accordion responds at once.
 ACCORDION_CLICK_TIMEOUT_MS = 2000

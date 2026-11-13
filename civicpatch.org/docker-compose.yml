@@ -47,9 +47,11 @@ services:
       # sharing, not this id. Prod sets its own.
       ENTRY_SPREADSHEET_ID: ${ENTRY_SPREADSHEET_ID:-11xjGyzgOJAZX2bT5Ed61gHdXS8_atLuomzOKHxv2xr4}
 
-      STORAGE_ENDPOINT: ${STORAGE_ENDPOINT:-NO_KEY_PROVIDED}
-      STORAGE_ACCESS_KEY_ID: ${STORAGE_ACCESS_KEY_ID:-NO_KEY_PROVIDED}
-      STORAGE_SECRET_ACCESS_KEY: ${STORAGE_SECRET_ACCESS_KEY:-NO_KEY_PROVIDED}
+      # Dev defaults point at the local s2 server; setting real R2 keys in the env overrides them.
+      STORAGE_ENDPOINT: ${STORAGE_ENDPOINT:-http://s2.localhost:9000}
+      STORAGE_ACCESS_KEY_ID: ${STORAGE_ACCESS_KEY_ID:-s2-dev}
+      STORAGE_SECRET_ACCESS_KEY: ${STORAGE_SECRET_ACCESS_KEY:-s2-dev-secret}
+      STORAGE_ARTIFACTS_PUBLIC_URL: ${STORAGE_ARTIFACTS_PUBLIC_URL:-http://civicpatch-artifacts-nonprod.s2.localhost:9000}
 
       # Local Supabase stack is managed by the Supabase CLI (`supabase start`,
       # invoked by `mise run dev`). The backend reaches it via the host gateway;
@@ -117,6 +119,20 @@ services:
     networks:
       - civicpatch_net
 
+  # Stands in for R2 on dev, so dev needs no storage keys. Buckets match lib/buckets.py's defaults.
+  # No S2_SERVER_USER: auth is off, so any key signs and photo urls load without a signature.
+  civicpatch-org-s2:
+    container_name: civicpatch-org-s2
+    image: mojatter/s2-server:0.27.0
+    environment:
+      S2_SERVER_BUCKETS: civicpatch-artifacts-nonprod,civicpatch-nonprod,civicpatch-debug-nonprod
+    ports:
+      - "9001:9001"
+    volumes:
+      - civicpatch_org_s2_data:/var/lib/s2
+    networks:
+      - civicpatch_net
+
   # ── Workers ────────────────────────────────────────────────────────────────
   # Three of the four run `get_pool()`, which goes through `environment.get_env_vars()` and so
   # needs the whole required set — hence one shared block rather than three copies. The scrape
@@ -159,9 +175,10 @@ services:
       MAINTAINER_EMAIL: ${MAINTAINER_EMAIL:-admin@civicpatch.org}
       DATABASE_HASH_KEY: ${DATABASE_HASH_KEY:-development_hash_key}
       SERVICE_API_KEY: "service-api-key"
-      STORAGE_ENDPOINT: ${STORAGE_ENDPOINT}
-      STORAGE_ACCESS_KEY_ID: ${STORAGE_ACCESS_KEY_ID}
-      STORAGE_SECRET_ACCESS_KEY: ${STORAGE_SECRET_ACCESS_KEY}
+      STORAGE_ENDPOINT: ${STORAGE_ENDPOINT:-http://s2.localhost:9000}
+      STORAGE_ACCESS_KEY_ID: ${STORAGE_ACCESS_KEY_ID:-s2-dev}
+      STORAGE_SECRET_ACCESS_KEY: ${STORAGE_SECRET_ACCESS_KEY:-s2-dev-secret}
+      STORAGE_ARTIFACTS_PUBLIC_URL: ${STORAGE_ARTIFACTS_PUBLIC_URL:-http://civicpatch-artifacts-nonprod.s2.localhost:9000}
       # Must match the civicpatch-org service above — pointing dev workers at cdn.civicpatch.org
       # would upload to (and read from) production's bucket.
       FRIENDLY_STORAGE_HOST: ${FRIENDLY_STORAGE_HOST:-https://civicpatch-nonprod.civicpatch.org}
@@ -230,6 +247,7 @@ services:
 
 volumes:
   api_civicpatch_org_db_data:
+  civicpatch_org_s2_data:
   #test_pgdata:
 
 networks:

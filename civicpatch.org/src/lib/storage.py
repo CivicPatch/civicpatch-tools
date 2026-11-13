@@ -8,10 +8,6 @@ import os
 from datetime import datetime, timedelta
 from urllib.parse import urlparse
 import environment
-import lib.buckets as buckets
-
-# Buckets are served as subdomains of the instance host.
-ARTIFACTS_HOST_SUFFIX = "civicpatch.org"
 
 logger = logging.getLogger(__name__)
 
@@ -249,12 +245,6 @@ def get_presigned_url_from_object_url(
     key = path_parts[1]
     
     return get_presigned_url_cached(bucket_name, key, expiration)
-
-def get_civicpatch_artifacts_url(key: str) -> str:
-    # The bucket is served as a subdomain, so the host follows whichever bucket this
-    # environment writes to rather than being spelled out again.
-    return f"https://{buckets.ARTIFACTS}.{ARTIFACTS_HOST_SUFFIX}/{key}"
-
 
 def get_bucket_url(bucket: str, prefix: str) -> str:
     env = environment.get_env_vars()

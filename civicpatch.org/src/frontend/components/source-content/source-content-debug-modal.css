@@ -4,91 +4,56 @@
   margin-bottom: 0.75rem;
 }
 
-/* Scraped pages carry long unbroken URLs, preformatted blocks and wide layout tables; all of it
-   wraps inside the box so the only scroll is vertical. */
-.source-content-debug-modal__markdown {
-  border: 1px solid var(--field-border);
-  border-radius: var(--radius);
-  padding: 0.75rem;
-  max-height: 60vh;
-  overflow-wrap: anywhere;
-  overflow-x: hidden;
-  overflow-y: auto;
+/* Columns: the page as fetched beside the markdown the pipeline read */
+.source-content-debug-modal__columns {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr 1fr;
 }
 
-.source-content-debug-modal__markdown pre {
-  white-space: pre-wrap;
+.source-content-debug-modal__column {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
 }
 
-.source-content-debug-modal__markdown table {
-  table-layout: fixed;
-  width: 100%;
-}
-
-.source-content-debug-modal__markdown img {
-  height: auto;
-  max-width: 100%;
-}
-
-/* A scraped page's structure, in the app's own tokens: headings sized for a modal and set in the
-   accent so sections stand out, code and quotes on the stripe surface, tables striped like the
-   app's data tables. */
-.source-content-debug-modal__markdown :is(h1, h2, h3, h4, h5, h6) {
-  --heading-space-top: 1.25rem;
-  color: var(--accent);
-  font-weight: 700;
+.source-content-debug-modal__heading {
+  --font-size: 1rem;
+  --heading-space-top: 0;
+  align-items: baseline;
+  display: flex;
+  gap: 0.75rem;
   margin-bottom: 0.5rem;
 }
 
-.source-content-debug-modal__markdown h1 {
-  --font-size: 1.35rem;
+.source-content-debug-modal__source {
+  font-size: 0.85rem;
+  font-weight: 400;
 }
 
-.source-content-debug-modal__markdown h2 {
-  --font-size: 1.2rem;
-}
-
-.source-content-debug-modal__markdown :is(h3, h4, h5, h6) {
-  --font-size: 1.05rem;
-}
-
-.source-content-debug-modal__markdown :is(code, pre) {
+/* Scraped pages carry long unbroken URLs; everything wraps so the only scroll is vertical. */
+.source-content-debug-modal__text {
   background: var(--surface-stripe);
+  border: 1px solid var(--field-border);
   border-radius: var(--radius);
   font-family: var(--font-mono);
-  font-size: 0.85em;
-}
-
-.source-content-debug-modal__markdown code {
-  padding: 0.1rem 0.3rem;
-}
-
-.source-content-debug-modal__markdown pre {
+  font-size: 0.8rem;
+  height: 60vh;
+  margin: 0;
+  overflow-wrap: anywhere;
+  overflow-x: hidden;
+  overflow-y: auto;
   padding: 0.75rem;
+  white-space: pre-wrap;
 }
 
-.source-content-debug-modal__markdown pre code {
-  background: none;
-  padding: 0;
-}
+@media (max-width: 768px) {
+  .source-content-debug-modal__columns {
+    grid-template-columns: 1fr;
+  }
 
-.source-content-debug-modal__markdown blockquote {
-  background: var(--surface-stripe);
-  border-radius: var(--radius);
-  color: var(--text-muted);
-  margin: 0 0 var(--space-prose);
-  padding: 0.5rem 0.75rem;
-}
-
-.source-content-debug-modal__markdown tbody td {
-  border-bottom: none;
-}
-
-.source-content-debug-modal__markdown tbody tr:nth-child(even) td {
-  background-color: var(--surface-stripe);
-}
-
-.source-content-debug-modal__markdown hr {
-  border-color: var(--border-subtle);
+  .source-content-debug-modal__text {
+    height: 40vh;
+  }
 }
 }

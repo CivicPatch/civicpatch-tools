@@ -1,31 +1,13 @@
 # civicpatch-tools
 
-A collection of tools and projects supporting the collection, processing, and publication of data on elected municipal officials across the United States.
-
-To view the full dataset, see the [open-data](https://github.com/CivicPatch/open-data/) repository.
-
-## Table of Contents
-
-- [Description](#description)
-- [Projects](#projects)
-- [Summary](#summary)
-- [Development](#development)
-- [Testing](#testing)
-- [License](#license)
-- [Contact](#contact)
-
-## Description
-
-This repository contains supporting infrastructure for the CivicPatch initiative, which aims to make information about municipal officials more accessible and transparent. It includes scrapers, APIs, and automation for data collection and publication.
+Tools that collect, process and publish data on elected municipal officials in the US.
+The data lives in [open-data](https://github.com/CivicPatch/open-data/).
 
 ## Projects
 
-- [pipelines](./pipelines/README.md)
-  The main project. Scrapes municipal websites for contact information on elected officials. Scrape jobs are run via GitHub Actions or by volunteers, and results are submitted to the open-data repo.
-- [civicpatch.org](./civicpatch.org/README.md)
-  Coordinates data submissions between civicpatch servers and the open-data repo. Receives GitHub webhook events to keep pull request state in sync.
-- [shared](./shared/)
-  Python utilities shared across both projects — import as `from shared.utils import ...`. Put cross-cutting logic here rather than duplicating it.
+- [pipelines](./pipelines/README.md): scrapes municipal websites for elected officials.
+- [civicpatch.org](./civicpatch.org/README.md): the API and review site; syncs results with open-data.
+- [shared](./shared/): Python code both use.
 
 ## Architecture
 
@@ -33,179 +15,123 @@ This repository contains supporting infrastructure for the CivicPatch initiative
   ┌─────────────────────────────────────────────────────────────────────┐
   │  Temporal (workflow engine)                        UI :8002 (local) │
   │                                                                     │
-  │  Schedules:  open-data-sync (hourly)                                │
-  │               sinks-write-recent-changes (5m)                       │
-  │               sinks-write-everything (daily)                        │
-  │               two cleanups (10m / 15m)                              │
+  │  Schedules:  one scrape per state with a cadence (state_settings)   │
+  │              open-data-sync (hourly)                                │
+  │              sinks: activity feed (1m), recent changes (5m),        │
+  │                     everything (daily)                              │
+  │              two cleanups (10m / 15m)                               │
   └───────────┬──────────────────────────────┬──────────────────────────┘
               │ orchestrates                 │ orchestrates
               ▼                              ▼
   ┌───────────────────────┐      ┌───────────────────────────────────┐
-  │  scrape worker        │      │  three background workers         │
+  │  scrape worker        │      │  four background workers          │
   │  (civicpatch-         │      │                                   │
-  │   pipeline-runs)      │      │  jurisdictions  open-data → DB    │
-  │                       │      │  sinks          DB → sheet,       │
-  │  · trigger pipelines  │      │                 open-data, R2     │
-  │    or GitHub Actions  │      │  expiry         retire stale work │
-  │  · poll job status    │      └───────────┬───────────────────────┘
-  └──────────┬────────────┘                  │ reads/writes
-             │ calls                         ▼
-             ▼                   ┌───────────────────────┐
-  ┌──────────────────────┐       │  civicpatch.org API   │◄── GitHub webhooks
-  │  pipelines           │       │  :8000 (local)        │◄── browser / frontend
-  │  :8001 (local)       │       │                       │
-  │                      │       │  · job registration   │
-  │  · scrapes municipal │       │  · PR review UI       │
-  │    websites          │       │  · data API           │
-  │  · formats output    │       └──────────┬────────────┘
-  │  · submits ZIP       │                  │ reads/writes
-  └──────────┬───────────┘                  ▼
-             │ submits ZIP       ┌───────────────────────┐
-             └──────────────────►│  PostgreSQL DB        │
-                                 │  :8003 (local)        │
-                                 └───────────────────────┘
-                                              │
+  │   pipeline-runs)      │      │  source   open-data → DB          │
+  │                       │      │  sinks    DB → sheet, open-data,  │
+  │  - trigger pipelines  │      │           R2, live activity feed  │
+  │    or GitHub Actions  │      │  cleanup  retire stale work       │
+  │  - poll job status    │      │  maps     map tiles → R2 (CDN)    │
+  └──────────┬────────────┘      └───────────┬───────────────────────┘
+             │ calls                         │ reads/writes
+             ▼                               ▼
+  ┌──────────────────────┐       ┌───────────────────────┐
+  │  pipelines           │       │  civicpatch.org API   │◄── GitHub webhooks
+  │  :8001 (local)       │       │  :8000 (local)        │◄── browser / frontend
+  │                      │       │                       │◄── agents (MCP, API keys)
+  │  - scrapes municipal │       │  - job registration   │
+  │    websites          │       │  - PR review UI       │
+  │  - formats output    │       │  - data API           │
+  │  - submits ZIP       │       │  - MCP server, OAuth  │
+  │                      │       │  - roster comparisons │
+  └──────────┬───────────┘       └──────────┬────────────┘
+             │                              │ reads/writes
+             │                              ├─────────────────────────┐
+             │                              ▼                         ▼
+             │ submits ZIP       ┌───────────────────────┐   ┌──────────────────────┐
+             └──────────────────►│  PostgreSQL DB        │   │  Redis :6379         │
+                                 │  :8003 (local)        │   │  cache, locks,       │
+                                 └───────────────────────┘   │  activity pub/sub    │
+                                              │              └──────────────────────┘
   ┌───────────────────────────────────────────┘
-  │ on merge / data sync
+  │ sinks worker commits YAML
   ▼
-  open-data repo (GitHub)  ──►  PR created  ──►  data consumers
+  open-data repo (GitHub)  ──►  data consumers
 ```
-
-## Support
-
-[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/civicpatch)
 
 ## Contributing
 
-Join the [Unified - Civic Data Tech](https://unified.me/chat/!NcnsrToWrvzzzoLHWn) group and
-join our weekly sync and biweekly hackathon meetings.
+Join [Unified - Civic Data Tech](https://unified.me/chat/!NcnsrToWrvzzzoLHWn) for the weekly sync and
+the biweekly hackathons. Work is tracked in [Issues](https://github.com/orgs/CivicPatch/projects/3).
 
-- Weekly Sync — Introductions and Updates
-- Biweekly Hackathons — Onboarding, bug bashing
-
-[Issues](https://github.com/orgs/CivicPatch/projects/3)
+Support us on [ko-fi](https://ko-fi.com/civicpatch).
 
 ## Development
 
 ### Requirements
 
-- Docker (required for running services; tested on OSX)
-- [mise](https://mise.jdx.dev/getting-started.html) (for managing environments and scripts)
-  - `brew install openssl readline` (for postgres tool)
-
-- A [github](https://github.com/) account
-  - Poke a maintainer [michelle@civicpatch.org], or see [Contributing](#contributing) guide for onboarding
-    for additional setup as needed. This project integrates heavily with the [open-data](https://github.com/CivicPatch/open-data)
-    repo and multiple other services so you'll either want to set up your own mirror repos and corresponding
-    github apps, or you can use keys provided for you during onboarding.
+- [mise](https://mise.jdx.dev/getting-started.html), Docker, and a GitHub account
+- `gh auth login`
 
 ### Setup
 
-1. Install workspace dependencies (mise tools, pre-commit hooks, uv packages):
-
-   ```sh
-   mise setup
-   ```
-
-2. Set up environment variables for **civicpatch** (optional — skip if you don't need to run scrapes):
-   - Reference [pipelines/docker-compose.yml](./pipelines/docker-compose.yml) for available variables
-   - Create `../pipelines.env` with the variables you need
-
-3. Set up environment variables for **civicpatch.org**:
-   - Create `../civicpatch.org.env` (reference [civicpatch.org/docker-compose.yml](./civicpatch.org/docker-compose.yml) for the full list)
-   - The app boots without any of these, but specific features won't work until you set them:
-     - GitHub PR / open-data sync — needs `GITHUB_APP_ID`, `GITHUB_APP_PRIVATE_KEY_BASE64`, `GITHUB_APP_INSTALLATION_ID`
-     - Jurisdiction edits — needs `JURISDICTIONS_SYNC_APP_ID`, `JURISDICTIONS_SYNC_APP_PRIVATE_KEY_BASE64`, `JURISDICTIONS_SYNC_APP_INSTALLATION_ID`
-     - File uploads / CDN — needs `STORAGE_ENDPOINT`, `STORAGE_ACCESS_KEY_ID`, `STORAGE_SECRET_ACCESS_KEY`
-     - Google Sheets sync — needs `GOOGLE_SHEETS_*`
-     - GitHub webhook verification — needs `GITHUB_WEBHOOK_SECRET`
-   - Contact a maintainer for GitHub App keys, or set up your own mirror apps
-
-4. Start the dev environment:
-
-   ```sh
-   mise dev
-   ```
-
-   This brings up two layers:
-   - **Local Supabase stack** (via the Supabase CLI) — handles auth and captures all outbound email in Mailpit at http://localhost:54324. The CLI-generated `SUPABASE_SECRET_KEY` is auto-injected into docker compose.
-   - **Docker compose stack** — civicpatch.org API, pipelines, Temporal, Redis, Postgres, FE dev server.
-
-   The Temporal worker hot-reloads when files under `worker/` or `shared/` change. Migrations run automatically on startup; to run them manually:
-
-   ```sh
-   mise migrate_up
-   ```
-
-   Ctrl+C tears both layers down.
-
-5. Populate the database with sample data — every jurisdiction, plus people and memberships for
-   the first `--limit` organizations (default 10), pulled from the
-   [public open-data dataset](https://open-data.civicpatch.org/). No GitHub App keys needed for
-   this step:
-
-   ```sh
-   mise run seed-dev-data
-   ```
-
-### Logging in (local)
-
-civicpatch.org uses Supabase email-OTP. Locally, no real email is sent — Mailpit captures everything.
-
-1. Open http://localhost:8000 and start the sign-in flow
-2. Enter any email address (it doesn't need to exist; Mailpit catches it locally)
-3. Grab the 6-digit code one of these ways:
-
-   ```sh
-   mise otp
-   ```
-
-   …or open Mailpit in a browser: http://localhost:54324
-
-4. Enter the code on the verify screen
-
-To grant your local user a role (e.g. for `/admin/users` access):
-
 ```sh
-mise run grant_role you@example.com admins
+mise run setup
 ```
 
-Roles, lowest → highest: `default`, `contributors`, `maintainers`, `admins`.
+Safe to rerun: it only fills in what's missing. It:
 
-### Local services
+1. Installs tools, dependencies and git hooks.
+2. Asks for LLM keys (OpenRouter, Gemini) and saves them to `../pipelines.env`. Only evals need them.
+3. Optionally sets up your own GitHub, so the app can update repos: an org `dev-cp-<login>`, forks of
+   open-data and jurisdictions, and two GitHub Apps. Keys go to `civicpatch.org.env` in the folder
+   that holds this repo (not inside it), and setup prints the full path when it finishes.
 
-| Port  | Service                                   |
-| ----- | ----------------------------------------- |
-| 5173  | Frontend (Vite dev)                       |
-| 6379  | Redis                                     |
-| 7233  | Temporal (gRPC)                           |
-| 8000  | civicpatch.org API                        |
-| 8001  | pipelines                                 |
-| 8002  | Temporal UI                               |
-| 8003  | PostgreSQL (civicpatch.org DB)            |
-| 54321 | Supabase (local, managed by Supabase CLI) |
-| 54324 | Mailpit (captures local OTP emails)       |
+Keys off disk instead: set `INFISICAL_DOMAIN` and `INFISICAL_PROJECT_ID` in your own mise config,
+`infisical login`, then `mise run setup-github -- --store infisical`.
+
+### Run
+
+```sh
+mise run dev            # Supabase + docker compose; Ctrl+C stops both
+mise run seed-dev-data  # sample data from the public open-data dataset
+```
+
+Migrations run on startup.
+
+### Log in
+
+1. Open http://localhost:8000 and sign in with any email.
+2. `mise run otp` prints the code (or open Mailpit: http://localhost:54324).
+
+Give yourself a role: `mise run grant_role you@example.com admins`
+(lowest to highest: `default`, `contributors`, `maintainers`, `admins`).
+
+### Ports
+
+| Port  | Service                        |
+| ----- | ------------------------------ |
+| 6379  | Redis                          |
+| 7233  | Temporal (gRPC)                |
+| 8000  | civicpatch.org API             |
+| 8001  | pipelines                      |
+| 8002  | Temporal UI                    |
+| 8003  | PostgreSQL (civicpatch.org DB) |
+| 8004  | Frontend (Vite dev)            |
+| 9000  | Object storage (s2, R2 stand-in) |
+| 9001  | s2 web console                 |
+| 54321 | Supabase                       |
+| 54324 | Mailpit (local OTP emails)     |
+
+Photos and Debug copies load from `*.s2.localhost:9000`, so on a remote machine forward 9000 along with 8000.
 
 ## Testing
 
-- Each project contains its own test suite.
-
-### pipelines
-
 ```sh
-mise tpipes
-```
-
-### civicpatch.org
-
-```sh
-mise tcp
+mise run tpipes   # pipelines
+mise run tcp      # civicpatch.org
+mise run evalsm   # LLM evals: paid, needs the LLM keys
 ```
 
 ## License
 
-[MIT License](LICENSE.txt)
-
-## Contact
-
-For questions or contributions, open an issue or contact the maintainers via GitHub.
+[MIT](LICENSE.txt)

@@ -20,3 +20,5 @@ import os
 ARTIFACTS = os.environ.get("STORAGE_ARTIFACTS_BUCKET", "civicpatch-artifacts-nonprod")
 CDN = os.environ.get("STORAGE_CDN_BUCKET", "civicpatch-nonprod")
 DEBUG = os.environ.get("STORAGE_DEBUG_BUCKET", "civicpatch-debug-nonprod")
+# R2 serves each artifacts bucket as a civicpatch.org subdomain; dev's local s2 sets its own.
+ARTIFACTS_PUBLIC_URL = os.environ.get("STORAGE_ARTIFACTS_PUBLIC_URL", f"https://{ARTIFACTS}.civicpatch.org")

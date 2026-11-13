@@ -7,9 +7,9 @@ from urllib.parse import urljoin
 
 import aiofiles
 import httpx
-from patchright.async_api import Page
+from patchright.async_api import Error as BrowserError, Page
 
-from runners.pipeline03_people_collector.constants import IMAGE_DOWNLOAD_TIMEOUT_S
+from runners.pipeline03_people_collector.constants import IMAGE_DOWNLOAD_TIMEOUT_S, IMAGE_PAGE_BUDGET_S
 
 
 IMAGE_URL_BLACKLIST = ["https://google.com"]
@@ -102,11 +102,9 @@ async def _register_image(img, image_dir: str, temp_path: str, image_map: dict, 
     await img.evaluate('(el, name) => el.setAttribute("src", "local://" + name)', file_name)
 
 
-async def _download_single_image(page: Page, img, image_dir: str, image_map: dict, logger):
-    src = None
+async def _download_single_image(page: Page, img, src: str | None, image_dir: str, image_map: dict, logger):
     temp_path = None
     try:
-        src = await img.get_attribute("src")
         if not is_valid_image(src):
             log_src = src[:80] + "..." if src and len(src) > 80 else src
             logger.debug(f"Skipping blacklisted or invalid image: {log_src}")
@@ -171,7 +169,14 @@ async def _download_single_image(page: Page, img, image_dir: str, image_map: dic
             os.remove(temp_path)
 
 
-async def download_images(browser, logger, page: Page, image_dir: str, timeout_s: int = IMAGE_DOWNLOAD_TIMEOUT_S):
+async def download_images(
+    browser,
+    logger,
+    page: Page,
+    image_dir: str,
+    timeout_s: float = IMAGE_DOWNLOAD_TIMEOUT_S,
+    page_budget_s: float = IMAGE_PAGE_BUDGET_S,
+):
     await convert_background_divs_to_imgs(page)
     os.makedirs(image_dir, exist_ok=True)
     image_map = {}
@@ -182,11 +187,25 @@ async def download_images(browser, logger, page: Page, image_dir: str, timeout_s
         logger.warning(f"Could not query images (DOM too large/complex): {e}")
         imgs = []
 
-    for img in imgs:
+    clock = asyncio.get_running_loop()
+    deadline = clock.time() + page_budget_s
+    for index, img in enumerate(imgs):
+        remaining_s = deadline - clock.time()
+        if remaining_s <= 0:
+            logger.warning(f"Image budget of {page_budget_s}s spent on {page.url}: skipped the last {len(imgs) - index} of {len(imgs)} images.")
+            break
         try:
-            await asyncio.wait_for(_download_single_image(page, img, image_dir, image_map, logger), timeout=timeout_s)
+            src = await img.get_attribute("src")
+        except BrowserError as e:
+            logger.warning(f"Could not read an image's src, skipping to next: {e}")
+            continue
+        try:
+            await asyncio.wait_for(
+                _download_single_image(page, img, src, image_dir, image_map, logger),
+                timeout=min(timeout_s, remaining_s),
+            )
         except asyncio.TimeoutError:
-            logger.warning("Timeout processing image, skipping to next.")
+            logger.warning(f"Timeout processing image {src}, skipping to next.")
 
     map_file_path = os.path.join(image_dir, "image_map.json")
     if os.path.exists(map_file_path):

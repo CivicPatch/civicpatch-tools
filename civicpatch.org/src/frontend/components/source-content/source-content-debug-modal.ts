@@ -1,12 +1,11 @@
 import "./source-content-debug-modal.css";
 import { html } from "lit-html";
 import { component, useState, useEffect } from "haunted";
-import { unsafeHTML } from "lit-html/directives/unsafe-html.js";
-import DOMPurify from "dompurify";
-import { marked } from "marked";
 import { buildSourceUrlMap } from "../../utils/source-color-utils.js";
+import { MODAL_SIZE_WIDE } from "../basic/modal.js";
 import "../basic/modal.js";
 import "../civ-tab-bar/civ-tab-bar.js";
+import { pageText } from "./page-text.js";
 
 // `markdown` and `html` are the debug bucket's copies of the page: what the pipeline read, and
 // what it fetched. Admins only; null for everyone else, who never open this modal.
@@ -20,31 +19,45 @@ type SourceContentDebugModalHost = HTMLElement & {
   sourceContentUrls: SourceContentUrl[] | null;
 };
 
+type PageCopies = { fetched: string; read: string };
+
+const NO_COPIES: PageCopies = { fetched: "", read: "" };
+const FAILED_TO_LOAD = "Failed to load.";
+
+async function fetchText(url: string | null): Promise<string> {
+  if (!url) return "";
+  const response = await fetch(url);
+  if (!response.ok) throw new Error(`HTTP ${response.status}`);
+  return response.text();
+}
+
+async function loadCopies(source: SourceContentUrl): Promise<PageCopies> {
+  const [fetchedHtml, read] = await Promise.all([
+    fetchText(source.html).catch(() => null),
+    fetchText(source.markdown).catch(() => FAILED_TO_LOAD),
+  ]);
+  return {
+    fetched: fetchedHtml === null ? FAILED_TO_LOAD : pageText(fetchedHtml),
+    read,
+  };
+}
+
 function SourceContentDebugModal(host: SourceContentDebugModalHost) {
   const sourceContentUrls = host.sourceContentUrls ?? [];
   const [debugTab, setDebugTab] = useState(0);
-  const [markdownHtml, setMarkdownHtml] = useState("");
+  const [copies, setCopies] = useState<PageCopies>(NO_COPIES);
 
   const safeTab = sourceContentUrls.length > 0
     ? Math.min(debugTab, sourceContentUrls.length - 1)
     : 0;
 
   useEffect(() => {
-    if (sourceContentUrls.length === 0) {
-      setMarkdownHtml("");
-      return;
-    }
+    setCopies(NO_COPIES);
+    if (sourceContentUrls.length === 0) return;
     let isMounted = true;
-    const markdownUrl = sourceContentUrls[safeTab].markdown;
-    if (!markdownUrl) {
-      setMarkdownHtml("");
-      return;
-    }
-    fetch(markdownUrl)
-      .then((res) => res.text())
-      .then((markdown) => DOMPurify.sanitize(marked.parse(markdown) as string))
-      .then((cleanHtml) => { if (isMounted) setMarkdownHtml(cleanHtml); })
-      .catch(() => { if (isMounted) setMarkdownHtml("<p>Failed to load markdown.</p>"); });
+    loadCopies(sourceContentUrls[safeTab]).then((loaded) => {
+      if (isMounted) setCopies(loaded);
+    });
     return () => { isMounted = false; };
   }, [safeTab, sourceContentUrls]);
 
@@ -71,22 +84,33 @@ function SourceContentDebugModal(host: SourceContentDebugModalHost) {
       target="_blank"
       rel="noopener noreferrer"
     >Live page</a>
-    ${sourceContentUrls[safeTab].html
-      ? html`<a
-          class="source-content-debug-modal__link"
-          href=${sourceContentUrls[safeTab].html}
-          target="_blank"
-          rel="noopener noreferrer"
-        >Fetched HTML</a>`
-      : null}
-    <div class="source-content-debug-modal__markdown">${unsafeHTML(markdownHtml)}</div>
+    <div class="source-content-debug-modal__columns">
+      <section class="source-content-debug-modal__column">
+        <h3 class="source-content-debug-modal__heading">
+          Page text
+          ${sourceContentUrls[safeTab].html
+            ? html`<a
+                class="source-content-debug-modal__source"
+                href=${sourceContentUrls[safeTab].html}
+                target="_blank"
+                rel="noopener noreferrer"
+              >Fetched HTML</a>`
+            : null}
+        </h3>
+        <pre class="source-content-debug-modal__text">${copies.fetched}</pre>
+      </section>
+      <section class="source-content-debug-modal__column">
+        <h3 class="source-content-debug-modal__heading">Markdown the pipeline read</h3>
+        <pre class="source-content-debug-modal__text">${copies.read}</pre>
+      </section>
+    </div>
   `;
 
   return html`
     <civ-modal
       .title=${"Source content"}
       .content=${content}
-      .modalProps=${{ open: true, onClose: handleClose }}
+      .modalProps=${{ open: true, onClose: handleClose, size: MODAL_SIZE_WIDE }}
     ></civ-modal>
   `;
 }

@@ -236,8 +236,20 @@ def test_a_url_written_at_ingest_is_readable_at_publish():
         {"jane.jpg": f"https://s3.example.com/{ARTIFACTS_BUCKET}/{_ARTIFACTS_KEY}"},
         "https://s3.example.com",
         ARTIFACTS_BUCKET,
-        "civicpatch.org",
+        f"https://{ARTIFACTS_BUCKET}.civicpatch.org",
     )
+    assert artifacts_key(written["jane.jpg"], ARTIFACTS_BUCKET) == _ARTIFACTS_KEY
+
+
+@pytest.mark.unit
+def test_a_dev_url_on_the_local_s2_server_is_readable_at_publish():
+    written = cdn_urls(
+        {"jane.jpg": f"http://s2.localhost:9000/{ARTIFACTS_BUCKET}/{_ARTIFACTS_KEY}"},
+        "http://s2.localhost:9000",
+        ARTIFACTS_BUCKET,
+        f"http://{ARTIFACTS_BUCKET}.s2.localhost:9000",
+    )
+    assert written["jane.jpg"] == f"http://{ARTIFACTS_BUCKET}.s2.localhost:9000/{_ARTIFACTS_KEY}"
     assert artifacts_key(written["jane.jpg"], ARTIFACTS_BUCKET) == _ARTIFACTS_KEY
 
 
