@@ -17,6 +17,32 @@ services:
       service: civicpatch-org-redis
     networks:
       - civicpatch_net
+  civicpatch-org-s2:
+    extends:
+      file: civicpatch.org/docker-compose.yml
+      service: civicpatch-org-s2
+    networks:
+      - civicpatch_net
+  # R2 is addressed as <bucket>.<host>, which s2 does not speak: this turns it into s2's /<bucket>/<key>.
+  # s2.localhost is one name for containers (the aliases below) and browsers (*.localhost is loopback).
+  civicpatch-org-s2-proxy:
+    container_name: civicpatch-org-s2-proxy
+    image: caddy:2.11.7-alpine
+    configs:
+      - source: s2_proxy_caddyfile
+        target: /etc/caddy/Caddyfile
+    ports:
+      - "9000:9000"
+    depends_on:
+      - civicpatch-org-s2
+    networks:
+      civicpatch_net:
+        # The storage endpoint and each bucket's virtual host, as boto3 addresses them.
+        aliases:
+          - s2.localhost
+          - civicpatch-artifacts-nonprod.s2.localhost
+          - civicpatch-nonprod.s2.localhost
+          - civicpatch-debug-nonprod.s2.localhost
 
   api-frontend:
     build:
@@ -263,7 +289,21 @@ networks:
         - subnet: 172.21.0.0/16
           gateway: 172.21.0.1
 
+configs:
+  s2_proxy_caddyfile:
+    content: |
+      {
+        auto_https off
+        admin off
+      }
+      :9000 {
+        @bucket header_regexp bucket Host ^([a-z0-9-]+)\.s2\.localhost(:[0-9]+)?$$
+        rewrite @bucket /{re.bucket.1}{uri}
+        reverse_proxy civicpatch-org-s2:9000
+      }
+
 volumes:
   api_civicpatch_org_db_data:
   temporal_db_data:
   api_frontend_node_modules:
+  civicpatch_org_s2_data:

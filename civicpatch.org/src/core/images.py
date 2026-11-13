@@ -61,12 +61,12 @@ def with_images(person: dict, source_urls: dict, cdn_urls: dict) -> dict:
 
 
 def cdn_urls(
-    filenames_to_urls: dict, storage_endpoint: str, bucket: str, domain: str
+    filenames_to_urls: dict, storage_endpoint: str, bucket: str, bucket_public_url: str
 ) -> dict:
     """Where each uploaded photo is served from, keyed by downloaded filename."""
     return {
         basename: url.replace(
-            f"{storage_endpoint}/{bucket}", f"https://{bucket}.{domain}"
+            f"{storage_endpoint}/{bucket}", bucket_public_url.rstrip("/")
         )
         for basename, url in filenames_to_urls.items()
     }

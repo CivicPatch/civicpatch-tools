@@ -34,8 +34,6 @@ from shared.utils.yaml_utils import yaml_dump, yaml_load
 PUBLIC_BUCKET = buckets.ARTIFACTS
 PRIVATE_BUCKET = buckets.DEBUG
 
-INSTANCE_DOMAIN = "civicpatch.org"  # Just hardcode it for now...
-
 # The value `people.status` is checked against; the column's CHECK constraint is the guard.
 
 logger = logging.getLogger(__name__)
@@ -101,7 +99,7 @@ def _image_url_maps(image_file_dir: str, filenames_to_urls: dict) -> tuple[dict,
     `core.images.cdn_urls`."""
     env = environment.get_env_vars()
     return artifacts.read_image_map(image_file_dir), cdn_urls(
-        filenames_to_urls, env["STORAGE_ENDPOINT"], PUBLIC_BUCKET, INSTANCE_DOMAIN
+        filenames_to_urls, env["STORAGE_ENDPOINT"], PUBLIC_BUCKET, buckets.ARTIFACTS_PUBLIC_URL
     )
 
 

@@ -101,7 +101,6 @@ COLLECTOR_CONFIGS = {
 PIPELINE_RUN_ISSUES = "pipeline_run"
 CHANGESET_ISSUES = "changeset"
 
-ARTIFACTS_BASE_URL = storage_service.get_civicpatch_artifacts_url("").rstrip("/")
 PAUSED_CONTEXT_BUCKET = buckets.ARTIFACTS
 
 

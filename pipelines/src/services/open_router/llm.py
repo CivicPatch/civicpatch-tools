@@ -66,7 +66,7 @@ def _get_semaphore() -> asyncio.Semaphore:
 MODELS_BY_TYPE = {
     "STANDARD": {
         "model": "deepseek/deepseek-v4-flash",
-        "providers": ["StreamLake"],
+        "providers": ["StreamLake", "Venice", "Wafer", "mancer", "Fireworks"],
     },
 }
 

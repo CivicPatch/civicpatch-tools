@@ -305,8 +305,14 @@ function renderAttention(props: EditorFieldProps) {
 }
 
 export function renderEditorField(props: EditorFieldProps) {
-  const { field, newRecord, state } = props;
+  const { field, oldRecord, newRecord, state } = props;
   const grouped = !props.isReadOnly && groupsControls(field);
+  // A person the scrape dropped has only an old record: show it, read-only, rather than dashes.
+  const control = newRecord
+    ? renderControl(props, newRecord)
+    : oldRecord
+      ? renderControl({ ...props, isReadOnly: true }, oldRecord)
+      : DASH;
   return html`
     <div class="person-editor__field person-editor__field--${state}">
       <div class="person-editor__label">${field.label}${field.required
@@ -317,7 +323,7 @@ export function renderEditorField(props: EditorFieldProps) {
         role=${grouped ? "group" : nothing}
         aria-label=${grouped ? field.label : nothing}
       >
-        ${newRecord ? renderControl(props, newRecord) : DASH}
+        ${control}
       </div>
       ${renderAssertionSummary(props.claimSummary, props.lock)}
       ${renderWas(props)} ${renderAttention(props)}
