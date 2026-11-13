@@ -23,9 +23,13 @@ def _make_test_env():
     return env
 
 
+# Evals read the real environment: a fake LLM token there turned a missing key into silent 401s.
+_LLM_TOKEN_VARS = {"OPEN_ROUTER_TOKEN", "GOOGLE_GEMINI_TOKEN"}
+
 _test_env = _make_test_env()
 for _var, _val in _test_env.items():
-    os.environ.setdefault(_var, _val)
+    if _var not in _LLM_TOKEN_VARS:
+        os.environ.setdefault(_var, _val)
 
 
 @pytest.fixture(autouse=True)

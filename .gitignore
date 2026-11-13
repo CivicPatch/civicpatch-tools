@@ -58,3 +58,5 @@ e2e/node_modules/
 e2e/visual-results/
 e2e/test-results/
 e2e/behaviour-results/
+
+/plans

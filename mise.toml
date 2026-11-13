@@ -1,3 +1,9 @@
+# Sub-project tasks run from here as //civicpatch.org:<task>, //pipelines:<task>.
+monorepo_root = true
+
+[monorepo]
+config_roots = ["civicpatch.org", "pipelines"]
+
 [tools]
 pre-commit = "latest"
 python = "3.12"
@@ -22,8 +28,13 @@ SERVICE_API_KEY = "service-api-key"
 ENTRY_SPREADSHEET_ID = "11xjGyzgOJAZX2bT5Ed61gHdXS8_atLuomzOKHxv2xr4"
 
 
+[tasks.setup-github]
+hide = true  # mise run setup runs it
+description = "Create your own dev-cp-open-data fork and dev-cp-<login> GitHub App for the dev stack (two browser clicks). --store infisical to keep the keys off disk"
+run = "uv run --package civicpatch.org python scripts/setup_github.py"
+
 [tasks.setup]
-run = "mise install && pre-commit install && pre-commit install --hook-type pre-push && uv sync --all-packages"
+run = "mise install && pre-commit install && pre-commit install --hook-type pre-push && uv sync --all-packages && { python3 scripts/dev_env.py check || echo 'Setup finished; evals need the keys above.'; } && { [ ! -t 0 ] || mise run setup-github -- --ask; }"
 description = "Install all workspace dependencies"
 
 ###################################################
@@ -155,12 +166,12 @@ run = "docker compose -f pipelines/docker-compose-files/docker-compose.integrati
 # -s disables pytest's stdout capture. Without it the run is silent for minutes:
 # both the per-case progress lines and PipelineRunLogger's retry warnings go to stdout,
 # and pytest buffers them until the test ends.
-run = "uv run pytest -s tests/prompts/tests/evals/test_local_municipal_officials_eval.py"
+run = "python3 ../scripts/dev_env.py run -- uv run pytest -s tests/prompts/tests/evals/test_local_municipal_officials_eval.py"
 dir = "pipelines"
 
 [tasks.evalsr]
 # -s: see the note on evalsm
-run = "uv run pytest -s tests/prompts/tests/evals/test_local_relevant_page_eval.py"
+run = "python3 ../scripts/dev_env.py run -- uv run pytest -s tests/prompts/tests/evals/test_local_relevant_page_eval.py"
 dir = "pipelines"
 
 [tasks.frontier-report]
@@ -177,33 +188,33 @@ dir = "pipelines"
 
 [tasks.evals]
 # -s: see the note on evalsm
-run = "uv run pytest -s -m evals tests/prompts"
+run = "python3 ../scripts/dev_env.py run -- uv run pytest -s -m evals tests/prompts"
 dir = "pipelines"
 
 [tasks.evalsd]
-run = "uv run pytest tests/prompts/tests/evals/test_find_jurisdiction_url_eval.py"
+run = "python3 ../scripts/dev_env.py run -- uv run pytest tests/prompts/tests/evals/test_find_jurisdiction_url_eval.py"
 dir = "pipelines"
 
 [tasks.evalsrole]
 description = "Role eval: how each charter says a role is filled, asked twice per role (plan 2's 2.13); about 300 calls"
 # -s: see the note on evalsm
-run = "uv run pytest -s tests/prompts/tests/evals/test_governing_role_eval.py"
+run = "python3 ../scripts/dev_env.py run -- uv run pytest -s tests/prompts/tests/evals/test_governing_role_eval.py"
 dir = "pipelines"
 
 [tasks.evalssections]
 description = "Section pick eval: which charter sections the model reads, from the headings alone (plan 2's 2.11)"
 # -s: see the note on evalsm
-run = "uv run pytest -s tests/prompts/tests/evals/test_governing_sections_eval.py"
+run = "python3 ../scripts/dev_env.py run -- uv run pytest -s tests/prompts/tests/evals/test_governing_sections_eval.py"
 dir = "pipelines"
 
 [tasks.evalsg]
 description = "Government form eval: Gemini grounded, one call per case against the grounding quota"
-run = "uv run pytest tests/prompts/tests/evals/test_government_form_eval.py"
+run = "python3 ../scripts/dev_env.py run -- uv run pytest tests/prompts/tests/evals/test_government_form_eval.py"
 dir = "pipelines"
 
 [tasks.evalsresearch]
 description = "Research prompt eval: Gemini grounded, one call per case against the grounding quota"
-run = "uv run pytest tests/prompts/tests/evals/test_research_municipality_eval.py"
+run = "python3 ../scripts/dev_env.py run -- uv run pytest tests/prompts/tests/evals/test_research_municipality_eval.py"
 dir = "pipelines"
 
 
@@ -390,6 +401,8 @@ run = "uv run python scripts/{{ arg(name=\"script\") }}.py {{ args() }}"
 description = "Start the full local stack: Supabase CLI (auth + inbucket + minimal services per civicpatch.org/supabase/config.toml) + docker compose with worker hot-reload. Ctrl+C tears both layers down."
 run = """
 set -e
+python3 scripts/dev_env.py require-setup
+[ -n "${GITHUB_APP_ID:-}" ] || printf 'No dev GitHub App, so GitHub writes and PRs are off. mise run setup creates one.\\n\\n'
 cleanup_ran=0
 cleanup() {
   [ "$cleanup_ran" = 1 ] && return
