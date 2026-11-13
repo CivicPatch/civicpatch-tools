@@ -37,6 +37,7 @@ from core.scrape_schedule import interval_offset, schedule_id as state_schedule_
 from database.state_settings import get_all_state_settings, get_state_settings
 from lib.temporal.types import (
     CLEANUP_TASK_QUEUE,
+    PEOPLE_COLLECTOR_STATE_WORKFLOW,
     PIPELINE_RUNS_TASK_QUEUE,
     SINKS_TASK_QUEUE,
     SOURCE_TASK_QUEUE,
@@ -149,7 +150,7 @@ async def _register_state_schedules(client: Client) -> set[str]:
                 # arguments, and PeopleCollectorStateWorkflow.run defaults the rest deliberately so a
                 # scheduled scrape and a hand-started one take the same path.
                 action=ScheduleActionStartWorkflow(
-                    "PeopleCollectorStateWorkflow",
+                    PEOPLE_COLLECTOR_STATE_WORKFLOW,
                     args=[state],
                     id=f"people-collector-state-{state}",
                     task_queue=PIPELINE_RUNS_TASK_QUEUE,
@@ -269,7 +270,7 @@ async def reconcile_state_schedule(client: Client, state: str) -> None:
         schedule_id,
         Schedule(
             action=ScheduleActionStartWorkflow(
-                "PeopleCollectorStateWorkflow",
+                PEOPLE_COLLECTOR_STATE_WORKFLOW,
                 args=[state],
                 id=f"people-collector-state-{state}",
                 task_queue=PIPELINE_RUNS_TASK_QUEUE,

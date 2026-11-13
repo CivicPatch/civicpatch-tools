@@ -8,11 +8,6 @@ from temporalio.common import WorkflowIDConflictPolicy
 from temporalio.service import RPCError, RPCStatusCode
 
 from core.temporal_workflow_state import TemporalWorkflowState, summarize
-from lib.temporal.sink_workflows import (
-    WriteSheetJurisdictionsWorkflow,
-    WriteOpenDataBatchWorkflow,
-    WriteSheetRosterWorkflow,
-)
 from lib.temporal.types import (
     COLLECTOR_EXECUTION_TIMEOUT,
     PEOPLE_COLLECTOR_EXECUTION_TIMEOUT,
@@ -21,6 +16,14 @@ from lib.temporal.types import (
     MAPS_TASK_QUEUE,
     PIPELINE_RUNS_TASK_QUEUE,
     SINKS_TASK_QUEUE,
+    COLLECTOR_STATE_WORKFLOW,
+    COLLECTOR_WORKFLOW,
+    GENERATE_MAPS_WORKFLOW,
+    PEOPLE_COLLECTOR_STATE_WORKFLOW,
+    PEOPLE_COLLECTOR_WORKFLOW,
+    WRITE_OPEN_DATA_BATCH_WORKFLOW,
+    WRITE_SHEET_JURISDICTIONS_WORKFLOW,
+    WRITE_SHEET_ROSTER_WORKFLOW,
     OpenDataBatchCommitRequest,
 )
 from shared.utils.statuses import PipelineRunKind
@@ -30,7 +33,6 @@ _client: Client | None = None
 
 TEMPORAL_HOST = os.environ.get("TEMPORAL_HOST", "temporal:7233")
 TEMPORAL_NAMESPACE = os.environ.get("TEMPORAL_NAMESPACE", "default")
-WORKFLOW_CLASS_NAME = "PeopleCollectorWorkflow"
 
 
 def _workflow_id(jurisdiction_ocdid: str) -> str:
@@ -63,7 +65,7 @@ async def start_people_collector_workflow(
     # TERMINATE_EXISTING cleans up zombie Temporal workflows (e.g. after a worker crash).
     # The frontend is responsible for not calling this endpoint when a job is actively running.
     handle = await client.start_workflow(
-        WORKFLOW_CLASS_NAME,
+        PEOPLE_COLLECTOR_WORKFLOW,
         args=[jurisdiction_ocdid, pipeline_run_id, dispatch_mode, url, source_urls],
         id=workflow_id,
         task_queue=PIPELINE_RUNS_TASK_QUEUE,
@@ -95,7 +97,7 @@ async def start_people_collector_state_workflow(
     """
     client = await get_client()
     handle = await client.start_workflow(
-        "PeopleCollectorStateWorkflow",
+        PEOPLE_COLLECTOR_STATE_WORKFLOW,
         args=[
             state,
             num_jurisdictions,
@@ -120,7 +122,7 @@ async def enqueue_write_sheet_roster(state: str) -> None:
     """
     client = await get_client()
     await client.start_workflow(
-        WriteSheetRosterWorkflow.run,
+        WRITE_SHEET_ROSTER_WORKFLOW,
         state,
         id=f"sink:sheet:roster:{state}",
         task_queue=SINKS_TASK_QUEUE,
@@ -133,7 +135,7 @@ async def enqueue_write_sheet_jurisdictions() -> None:
     covers every state, so a second request while one runs is genuinely the same work."""
     client = await get_client()
     await client.start_workflow(
-        WriteSheetJurisdictionsWorkflow.run,
+        WRITE_SHEET_JURISDICTIONS_WORKFLOW,
         id="sink:sheet:jurisdictions",
         task_queue=SINKS_TASK_QUEUE,
         id_conflict_policy=WorkflowIDConflictPolicy.USE_EXISTING,
@@ -154,7 +156,7 @@ async def enqueue_write_open_data_batch(request: OpenDataBatchCommitRequest) -> 
     )
     digest = hashlib.sha256(selection.encode()).hexdigest()[:12]
     await client.start_workflow(
-        WriteOpenDataBatchWorkflow.run,
+        WRITE_OPEN_DATA_BATCH_WORKFLOW,
         request,
         id=f"sink:open-data:batch:{request.batch_id}:{digest}",
         task_queue=SINKS_TASK_QUEUE,
@@ -166,7 +168,7 @@ async def start_generate_maps_workflow(state: str) -> str:
     # Named by string: importing the workflow class pulls the map-building activities into the API.
     client = await get_client()
     handle = await client.start_workflow(
-        "GenerateMapsWorkflow",
+        GENERATE_MAPS_WORKFLOW,
         state,
         id=f"generate-maps-{state}",
         task_queue=MAPS_TASK_QUEUE,
@@ -225,7 +227,7 @@ async def start_collector_workflow(
 ) -> str:
     client = await get_client()
     handle = await client.start_workflow(
-        "CollectorWorkflow",
+        COLLECTOR_WORKFLOW,
         args=[kind, jurisdiction_ocdid, pipeline_run_id, dispatch_mode],
         id=collector_workflow_id(kind, jurisdiction_ocdid),
         task_queue=PIPELINE_RUNS_TASK_QUEUE,
@@ -241,7 +243,7 @@ async def start_collector_state_workflow(
     """Keyed on the kind and state alone, like the scrape's: a second start is an error, not a duplicate."""
     client = await get_client()
     handle = await client.start_workflow(
-        "CollectorStateWorkflow",
+        COLLECTOR_STATE_WORKFLOW,
         args=[kind, state, num_jurisdictions, created_by_user_id, _pipeline_run_concurrency(), dispatch_mode],
         id=collector_state_workflow_id(kind, state),
         task_queue=PIPELINE_RUNS_TASK_QUEUE,

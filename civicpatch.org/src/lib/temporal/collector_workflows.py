@@ -24,14 +24,20 @@ with workflow.unsafe.imports_passed_through():
     )
     from shared.utils.statuses import PipelineRunStatus
 
-    from lib.temporal.types import COLLECTOR_EXECUTION_TIMEOUT, RunConclusion, collector_workflow_id
+    from lib.temporal.types import (
+        COLLECTOR_EXECUTION_TIMEOUT,
+        COLLECTOR_STATE_WORKFLOW,
+        COLLECTOR_WORKFLOW,
+        RunConclusion,
+        collector_workflow_id,
+    )
 
 _DISPATCH_MODE_LOCAL = "local"
 _SETTLE_MARGIN = timedelta(minutes=5)
 _QUICK = timedelta(seconds=30)
 
 
-@workflow.defn
+@workflow.defn(name=COLLECTOR_WORKFLOW)
 class CollectorWorkflow:
     @workflow.run
     async def run(self, kind: str, jurisdiction_ocdid: str, pipeline_run_id: str, dispatch_mode: str = "remote") -> str:
@@ -75,7 +81,7 @@ class CollectorWorkflow:
         return conclusion
 
 
-@workflow.defn
+@workflow.defn(name=COLLECTOR_STATE_WORKFLOW)
 class CollectorStateWorkflow:
     """A state's collection, a slice at a time, as the scrape's state workflow claims its work:
     stopping at the collector's monthly cap, when the state runs out, or at the count asked for."""

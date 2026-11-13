@@ -25,7 +25,12 @@ with workflow.unsafe.imports_passed_through():
     )
     from shared.utils.statuses import PipelineRunStatus
 
-    from lib.temporal.types import PEOPLE_COLLECTOR_EXECUTION_TIMEOUT, RunConclusion
+    from lib.temporal.types import (
+        PEOPLE_COLLECTOR_EXECUTION_TIMEOUT,
+        PEOPLE_COLLECTOR_STATE_WORKFLOW,
+        PEOPLE_COLLECTOR_WORKFLOW,
+        RunConclusion,
+    )
 
 _DISPATCH_MODE_LOCAL = "local"
 # Room after the watch gives up for the workflow to cancel the scrape and settle the run.
@@ -37,7 +42,7 @@ def _workflow_id(jurisdiction_ocdid: str) -> str:
     return f"people-collector-{safe}"
 
 
-@workflow.defn
+@workflow.defn(name=PEOPLE_COLLECTOR_WORKFLOW)
 class PeopleCollectorWorkflow:
     @workflow.run
     async def run(
@@ -144,7 +149,7 @@ class PeopleCollectorWorkflow:
 DEFAULT_PIPELINE_RUN_CONCURRENCY = 25
 
 
-@workflow.defn
+@workflow.defn(name=PEOPLE_COLLECTOR_STATE_WORKFLOW)
 class PeopleCollectorStateWorkflow:
     """A state's scrape, start to finish, as one durable thing.
 
