@@ -10,10 +10,7 @@ dependencies = [
     "bs4 (>=0.0.2,<0.0.3)",
     "markdownify (>=1.1.0,<2.0.0)",
     "trafilatura (>=2.0.0,<3.0.0)",
-    "pytest (>=9.0.2,<10.0.0)",
     "spacy (>=3.8.7,<4.0.0)",
-    "pytest-playwright (>=0.7.0,<0.8.0)",
-    "pytest-rerunfailures (>=15.1,<16.0)",
     "pyyaml (>=6.0.2,<7.0.0)",
     "requests (>=2.32.4,<3.0.0)",
     "openai (>=1.99.6,<2.0.0)",
@@ -27,23 +24,28 @@ dependencies = [
     "fastapi[standard] (>=0.116.1,<0.117.0)",
     "boto3 (>=1.40.35,<2.0.0)",
     "phonenumbers (>=9.0.14,<10.0.0)",
-    "pytest-asyncio (>=1.2.0,<2.0.0)",
     "loguru (>=0.7.3,<0.8.0)",
-    "google-api-python-client (>=2.184.0,<3.0.0)",
     "pydantic (>=2.12.3,<3.0.0)",
     "asyncio (>=4.0.0,<5.0.0)",
-    "pyright (>=1.1.406,<2.0.0)",
-    "arel (>=0.4.0,<0.5.0)",
-    "pytest-watcher (>=0.4.3,<0.5.0)",
-    "pylint (>=4.0.4,<5.0.0)",
     "psutil (>=7.2.2,<8.0.0)",
     "patchright (>=1.58.0,<2.0.0)",
-    "pytest-httpx (>=0.36.0,<0.37.0)",
     "aiofiles>=25.1.0,<26.0.0",
     "pip>=26.0.1",
     "shared",
     "semantic-text-splitter>=0.20.0,<1.0.0",
     "pypdfium2 (>=5.14.0,<6.0.0)",
+]
+
+[dependency-groups]
+dev = [
+    "pytest (>=9.0.2,<10.0.0)",
+    "pytest-playwright (>=0.7.0,<0.8.0)",
+    "pytest-rerunfailures (>=15.1,<16.0)",
+    "pytest-asyncio (>=1.2.0,<2.0.0)",
+    "pyright (>=1.1.406,<2.0.0)",
+    "pytest-watcher (>=0.4.3,<0.5.0)",
+    "pylint (>=4.0.4,<5.0.0)",
+    "pytest-httpx (>=0.36.0,<0.37.0)",
 ]
 
 [tool.pytest.ini_options]
