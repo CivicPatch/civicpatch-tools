@@ -88,9 +88,11 @@ CMD ["fastapi", "dev", "src/main.py", "--port", "8000", "--host", "0.0.0.0"]
 # PRODUCTION IMAGE
 FROM image-base AS production
 
-ENV APP_ENVIRONMENT=production
+ENV APP_ENVIRONMENT=production \
+    WEB_CONCURRENCY=4
 
 WORKDIR /app
 USER civicpatch_user
 EXPOSE 80
-CMD ["fastapi", "run", "src/main.py", "--port", "80", "--host", "0.0.0.0", "--workers", "4"]
+# uvicorn, not `fastapi run`: that CLI imports the whole app in its parent process just to find it.
+CMD ["uvicorn", "main:app", "--port", "80", "--host", "0.0.0.0"]
