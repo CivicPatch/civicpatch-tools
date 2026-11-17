@@ -1,8 +1,9 @@
 import time
-from contextlib import asynccontextmanager
-from typing import Literal, TypedDict
+from contextlib import asynccontextmanager, suppress
+from typing import Literal, Tuple, TypedDict
 
-from patchright.async_api import async_playwright
+from patchright.async_api import BrowserContext, Page, Playwright, Response, async_playwright
+from patchright.async_api import Error as PlaywrightError
 from runners.pipeline03_people_collector.constants import (
     PAGE_DEFAULT_TIMEOUT_MS,
     PAGE_NAVIGATION_TIMEOUT_MS,
@@ -52,29 +53,9 @@ async def scrape(logger, website_url, options=None):
     timeout = options.get("timeout", PAGE_DEFAULT_TIMEOUT_MS)
 
     async with async_playwright() as playwright:
-        browser = await playwright.chromium.launch_persistent_context(
-            user_data_dir="",
-            channel="chrome",
-            headless=False,
-            no_viewport=True,
-        )
+        browser, page, response = await _open(playwright, logger, website_url, timeout, launch_args=[])
 
         try:
-            page = await browser.new_page()
-            page.set_default_timeout(timeout)
-
-            try:
-                response = await _goto(page, logger, website_url)
-            except NavigationError as e:
-                if e.reason == NavigationFailureReason.NET_DNS_FAILURE:
-                    raise
-                flipped_url = other_scheme(website_url)
-                logger.info(f"Retrying {website_url} as {flipped_url}")
-                try:
-                    response = await _goto(page, logger, flipped_url)
-                except NavigationError:
-                    raise e
-
             scraped_urls = options.get("scraped_urls")
             if scraped_urls and page.url in scraped_urls:
                 logger.info(
@@ -108,6 +89,38 @@ async def scrape(logger, website_url, options=None):
                 await browser.close()
             except Exception:
                 pass
+
+
+async def _open(
+    playwright: Playwright, logger, website_url: str, timeout: int, launch_args: list[str]
+) -> Tuple[BrowserContext, Page, Response]:
+    browser = await playwright.chromium.launch_persistent_context(
+        user_data_dir="",
+        channel="chrome",
+        headless=False,
+        no_viewport=True,
+        args=launch_args,
+    )
+    try:
+        page = await browser.new_page()
+        page.set_default_timeout(timeout)
+
+        try:
+            response = await _goto(page, logger, website_url)
+        except NavigationError as e:
+            if e.reason == NavigationFailureReason.NET_DNS_FAILURE:
+                raise
+            flipped_url = other_scheme(website_url)
+            logger.info(f"Retrying {website_url} as {flipped_url}")
+            try:
+                response = await _goto(page, logger, flipped_url)
+            except NavigationError:
+                raise e
+        return browser, page, response
+    except BaseException:
+        with suppress(PlaywrightError):
+            await browser.close()
+        raise
 
 
 async def _goto(page, logger, url):
