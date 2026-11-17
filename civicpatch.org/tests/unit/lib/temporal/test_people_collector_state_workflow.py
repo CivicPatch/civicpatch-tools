@@ -205,8 +205,10 @@ def _activities_that_stop_watching(reported: list[tuple[str, str]]):
         raise RuntimeError("stopped watching")
 
     @activity.defn(name="update_pipeline_run_status")
-    async def update_pipeline_run_status(pipeline_run_id, status, progress=None):
-        reported.append((pipeline_run_id, status))
+    async def update_pipeline_run_status(
+        pipeline_run_id, status, progress=None, error_type=None, error_detail=None
+    ):
+        reported.append((pipeline_run_id, status, error_type))
 
     @activity.defn(name="cancel_local_pipeline_run")
     async def cancel_local_pipeline_run(pipeline_run_id: str):
@@ -225,7 +227,7 @@ def _activities_that_stop_watching(reported: list[tuple[str, str]]):
 async def test_a_run_whose_watcher_gives_up_is_settled_rather_than_left_running():
     """Otherwise only `expire_stale_pipeline_runs` closes it — six hours later, with the
     jurisdiction blocked from re-scraping the whole time."""
-    reported: list[tuple[str, str]] = []
+    reported: list[tuple[str, str, str | None]] = []
     run_id = str(uuid.uuid4())
 
     async with await WorkflowEnvironment.start_time_skipping() as env:
@@ -244,6 +246,6 @@ async def test_a_run_whose_watcher_gives_up_is_settled_rather_than_left_running(
                     task_queue=queue,
                 )
 
-    assert (run_id, PipelineRunStatus.ERROR) in reported, (
-        f"the run was left unsettled; reports were {reported}"
+    assert (run_id, PipelineRunStatus.ERROR, "pipeline_error") in reported, (
+        f"the run was left unsettled, or settled without an issue to read; reports were {reported}"
     )

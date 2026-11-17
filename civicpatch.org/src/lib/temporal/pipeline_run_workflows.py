@@ -23,7 +23,7 @@ with workflow.unsafe.imports_passed_through():
         trigger_people_collector_local,
         update_pipeline_run_status,
     )
-    from shared.utils.statuses import PipelineRunStatus
+    from shared.utils.statuses import PipelineIssueType, PipelineRunStatus
 
     from lib.temporal.types import (
         PEOPLE_COLLECTOR_EXECUTION_TIMEOUT,
@@ -75,7 +75,7 @@ class PeopleCollectorWorkflow:
                     )
                 )
             raise
-        except Exception:
+        except Exception as exc:
             # Stop the scrape too: left running, it reports into a run already settled.
             if dispatch_mode == _DISPATCH_MODE_LOCAL:
                 await workflow.execute_activity(
@@ -83,9 +83,17 @@ class PeopleCollectorWorkflow:
                     args=[pipeline_run_id],
                     start_to_close_timeout=timedelta(seconds=30),
                 )
+            # The failure is filed here because nothing else will: a run that dies mid-scrape
+            # uploads no report, so the issue the pipeline would have filed never arrives.
             await workflow.execute_activity(
                 update_pipeline_run_status,
-                args=[pipeline_run_id, PipelineRunStatus.ERROR],
+                args=[
+                    pipeline_run_id,
+                    PipelineRunStatus.ERROR,
+                    None,
+                    PipelineIssueType.PIPELINE_ERROR.value,
+                    {"error": str(exc)},
+                ],
                 start_to_close_timeout=timedelta(seconds=30),
                 retry_policy=RetryPolicy(maximum_attempts=3),
             )

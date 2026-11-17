@@ -1,3 +1,4 @@
+import time
 import traceback
 
 import httpx
@@ -254,12 +255,14 @@ async def process_page_content_transition(
         next_context.data.frontier, [LinkStatus.PROCESSED_IRRELEVANT, LinkStatus.DONE]
     )
     current_cost = cost_utils.total_cost(context.pipeline_run_id)
+    elapsed_seconds = time.time() - context.created_at
     logger.info(
         describe_progress(
             processed_count=len(links_processed),
             current_cost=current_cost,
             limits=limits,
             progress=result.progress,
+            elapsed_seconds=elapsed_seconds,
         )
     )
     next_state, stop_reason = next_process_content_state(
@@ -267,6 +270,7 @@ async def process_page_content_transition(
         current_cost=current_cost,
         limits=limits,
         progress=result.progress,
+        elapsed_seconds=elapsed_seconds,
     )
     # Carried on the context, not just logged: `review_output_transition` turns a cost-cap
     # stop into an issue the reviewer sees. A log line reached nobody outside the container.

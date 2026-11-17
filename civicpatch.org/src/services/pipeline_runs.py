@@ -11,10 +11,10 @@ from typing import Optional
 import lib.pubsub as pubsub_service
 from core.pipeline_runs import dismissal_for, is_final
 from database.activity import create_activity_row
-from database.issues import supersede_prior_jurisdiction_issues
+from database.issues import supersede_prior_jurisdiction_issues, upsert_issue
 from database.pipeline_runs import get_pipeline_run, update_pipeline_run_status
 from database.publications import dismiss_changeset
-from shared.utils.statuses import ActivityType
+from shared.utils.statuses import RUN_LEVEL_ISSUE_TYPES, ActivityType, PipelineIssueType
 
 logger = logging.getLogger(__name__)
 
@@ -51,6 +51,11 @@ async def apply_pipeline_run_status(
 
     Not "publish", which everywhere else means a roster going live.
     """
+    # A run killed without reporting files its failure here, and how far it got is what explains
+    # it — the update below writes over that.
+    last_seen = (
+        await get_pipeline_run(pipeline_run_id) if error_type and is_final(status) else None
+    )
     applied = await update_pipeline_run_status(
         run_id=pipeline_run_id, status=status, progress=progress
     )
@@ -78,6 +83,8 @@ async def apply_pipeline_run_status(
     if final:
         changeset_id = pipeline_run.get("changeset_id") if pipeline_run else None
         await finalize_pipeline_run(changeset_id, status, jurisdiction_ocdid)
+        if error_type:
+            await _file_run_failure(pipeline_run_id, error_type, error_detail, last_seen)
         # Best-effort, its own connection: this settles beside a report that already committed
         # above, not inside it. `changeset_id` is set only when the run reached ingest — a
         # failed or cancelled run mints none. Caught rather than left to propagate: the report
@@ -114,3 +121,27 @@ async def apply_pipeline_run_status(
                 f"[{pipeline_run_id}] Failed to announce "
                 f"{pubsub_service.pipeline_run_status_channel(jurisdiction_ocdid)}"
             )
+
+
+async def _file_run_failure(
+    pipeline_run_id: str,
+    error_type: str,
+    error_detail: Optional[dict],
+    last_seen: Optional[dict],
+) -> None:
+    """The run that reached no report and so filed nothing: the workflow settled it, so the issue
+    has to be made here. The type is checked for the reason `_record_pipeline_error` checks it —
+    a raw exception string once became an issue type — and filing is best-effort, because the
+    status update beside it has already committed.
+    """
+    issue_type = (
+        error_type if error_type in RUN_LEVEL_ISSUE_TYPES else PipelineIssueType.PIPELINE_ERROR
+    )
+    detail = dict(error_detail or {})
+    if last_seen is not None:
+        detail.setdefault("last_status", last_seen["status"])
+        detail.setdefault("last_progress", last_seen["progress"])
+    try:
+        await upsert_issue(pipeline_run_id, issue_type, [detail])
+    except Exception:
+        logger.exception(f"[{pipeline_run_id}] Failed to file {issue_type}")

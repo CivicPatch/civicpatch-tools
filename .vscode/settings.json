@@ -7,18 +7,13 @@
       "source.fixAll.ruff": "explicit"
     }
   },
-  "[javascript][javascriptreact][typescript][typescriptreact][json][jsonc][css][html][markdown]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
   "python.defaultInterpreterPath": "${workspaceFolder}/.venv/bin/python",
   "python.languageServer": "None",
   "terminal.integrated.gpuAcceleration": "off",
-  "python.analysis.typeCheckingMode": "off",
-  "python.analysis.autoImportCompletions": true,
-  "python.analysis.completeFunctionParens": true,
-  "python.analysis.inlayHints.variableTypes": true,
-  "python.analysis.inlayHints.functionReturnTypes": true,
-  "python.analysis.inlayHints.callArgumentNames": "all",
+  "basedpyright.analysis.autoImportCompletions": true,
+  "basedpyright.analysis.inlayHints.variableTypes": true,
+  "basedpyright.analysis.inlayHints.functionReturnTypes": true,
+  "basedpyright.analysis.inlayHints.callArgumentNames": true,
   "editor.parameterHints.enabled": true,
   "editor.hover.delay": 200,
   "python.testing.pytestEnabled": true,
