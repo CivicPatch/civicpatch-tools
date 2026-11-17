@@ -1,6 +1,7 @@
 import time
 from contextlib import asynccontextmanager, suppress
 from typing import Literal, Tuple, TypedDict
+from urllib.parse import urlparse
 
 from patchright.async_api import BrowserContext, Page, Playwright, Response, async_playwright
 from patchright.async_api import Error as PlaywrightError
@@ -25,6 +26,13 @@ from runners.pipeline03_people_collector.steps.step_02_scrape_page.scrape_wait i
     auto_detect_and_wait,
 )
 from shared.utils.url_utils import other_scheme
+
+
+# Chrome upgrades http to https and blocks the page when the https certificate is bad (Bonanza, Sodaville).
+NO_HTTPS_UPGRADE = (
+    "--disable-features=HttpsUpgrades,HttpsFirstBalancedModeAutoEnable,HttpsFirstModeV2ForTypicallySecureUsers"
+)
+HTTP_SCHEME = "http"
 
 
 @asynccontextmanager
@@ -53,7 +61,15 @@ async def scrape(logger, website_url, options=None):
     timeout = options.get("timeout", PAGE_DEFAULT_TIMEOUT_MS)
 
     async with async_playwright() as playwright:
-        browser, page, response = await _open(playwright, logger, website_url, timeout, launch_args=[])
+        try:
+            browser, page, response = await _open(playwright, logger, website_url, timeout, launch_args=[])
+        except NavigationError as error:
+            if not _blocked_by_https_upgrade(error, website_url):
+                raise
+            logger.info(f"Retrying {website_url} without Chrome's https upgrade")
+            browser, page, response = await _open(
+                playwright, logger, website_url, timeout, launch_args=[NO_HTTPS_UPGRADE]
+            )
 
         try:
             scraped_urls = options.get("scraped_urls")
@@ -89,6 +105,11 @@ async def scrape(logger, website_url, options=None):
                 await browser.close()
             except Exception:
                 pass
+
+
+# Only a url given as http: never downgrade one the config or page gave as https.
+def _blocked_by_https_upgrade(error: NavigationError, website_url: str) -> bool:
+    return error.reason == NavigationFailureReason.NET_BLOCKED_BY_CLIENT and urlparse(website_url).scheme == HTTP_SCHEME
 
 
 async def _open(
@@ -173,6 +194,8 @@ async def _goto(page, logger, url):
                 reason = NavigationFailureReason.NET_DNS_FAILURE
             elif "ERR_CONNECTION_REFUSED" in detailed_reason:
                 reason = NavigationFailureReason.NET_CONNECTION_REFUSED
+            elif "ERR_BLOCKED_BY_CLIENT" in detailed_reason:
+                reason = NavigationFailureReason.NET_BLOCKED_BY_CLIENT
             elif "ERR_ABORTED" in detailed_reason:
                 reason = NavigationFailureReason.NET_ABORTED
             elif "TIMEOUT" in detailed_reason:

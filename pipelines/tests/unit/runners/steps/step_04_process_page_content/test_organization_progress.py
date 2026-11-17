@@ -8,7 +8,8 @@ from runners.pipeline03_people_collector.steps.step_04_process_page_content.orga
     is_done,
     required_to_be_done,
 )
-from runners.pipeline03_people_collector.schemas import ExpectedMembership
+from runners.pipeline03_people_collector.schemas import ExpectedMembership, Link, LinkStatus
+from runners.pipeline03_people_collector.utils.link_discovery import _pending_sort_key
 from shared.schemas import KnownOrganization, Role, RoleConfig
 from shared.utils.taxonomy import build_taxonomy
 
@@ -123,7 +124,7 @@ def test_a_single_organization_still_steers_by_its_missing_members():
     )
 
     assert need.shortfall == pytest.approx(1 / 3)
-    assert need.missing_terms == ["mayor"]
+    assert need.missing_terms == ["mayor", "council"]
 
 
 def test_the_organization_furthest_from_done_needs_most():
@@ -189,3 +190,31 @@ def test_a_missing_roles_designations_steer_the_crawl_too():
     )
 
     assert need.missing_terms == ["council", "member", "seat"]
+
+
+_COUNTY_TAXONOMY = build_taxonomy(
+    RoleConfig(roles=[Role(id="commissioner", label="Commissioner"), Role(id="sheriff", label="Sheriff")])
+)
+
+
+@pytest.mark.parametrize("commissioners", [0, 5])
+def test_a_short_organizations_own_page_comes_before_another_offices_sub_pages(commissioners):
+    """Washington County OR: every page after the homepage was /sheriff/..., and /bcc never came up."""
+    board = KnownOrganization(id="board", name="Board of County Commissioners", posts=[])
+    sheriff = KnownOrganization(id="sheriff", name="Sheriff", posts=[])
+    memberships = [_member("board", "Commissioner") for _ in range(commissioners)] + [_member("sheriff", "Sheriff")]
+    needs = organization_needs([board, sheriff], memberships, {}, _COUNTY_TAXONOMY)
+    links = [
+        Link(url="https://www.washingtoncountyor.gov/sheriff", text="Sheriff", status=LinkStatus.PENDING.value),
+        Link(url="https://www.washingtoncountyor.gov/sheriff/patrol", text="Patrol", status=LinkStatus.PENDING.value),
+        Link(
+            url="https://www.washingtoncountyor.gov/bcc",
+            text="Board of County Commissioners",
+            status=LinkStatus.PENDING.value,
+            num_references=2,
+        ),
+    ]
+
+    first = min(links, key=lambda link: _pending_sort_key(link, needs, [], []))
+
+    assert first.url == "https://www.washingtoncountyor.gov/bcc"
