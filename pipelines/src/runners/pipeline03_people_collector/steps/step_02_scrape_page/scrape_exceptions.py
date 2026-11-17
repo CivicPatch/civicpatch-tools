@@ -7,6 +7,7 @@ class NavigationFailureReason(StrEnum):
     NET_DNS_FAILURE = "navigation_failure_net_dns_failure"
     NET_CONNECTION_REFUSED = "navigation_failure_net_connection_refused"
     NET_ABORTED = "navigation_failure_net_aborted"
+    NET_BLOCKED_BY_CLIENT = "navigation_failure_net_blocked_by_client"
     
     # HTTP Layer (Server-level responses)
     HTTP_403 = "navigation_failure_http_403"

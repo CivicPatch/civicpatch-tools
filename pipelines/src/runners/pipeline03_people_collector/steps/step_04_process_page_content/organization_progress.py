@@ -89,15 +89,19 @@ def _organization_need(
 ) -> OrganizationNeed:
     held = _held_in(organization, memberships)
     target = required_to_be_done(len(held))
+    shortfall = max(0, target - len(found)) / target
+    missing = _missing_phrases(held, found, taxonomy)
+    if shortfall:
+        missing = missing + organization_phrases([organization])
     return OrganizationNeed(
         organization_id=organization.id,
-        shortfall=max(0, target - len(found)) / target,
+        shortfall=shortfall,
         # A cold start has no posts and a generic name, so what it expects is its only wording.
         terms=as_tokens(
             organization_phrases([organization])
             + [phrase for membership in held for phrase in _membership_phrases(membership)]
         ),
-        missing_terms=as_tokens(_missing_phrases(held, found, taxonomy)),
+        missing_terms=as_tokens(missing),
     )
 
 
