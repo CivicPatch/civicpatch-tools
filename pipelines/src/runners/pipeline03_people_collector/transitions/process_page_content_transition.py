@@ -9,7 +9,10 @@ from ..schemas import (
   PeopleCollectorStep,
 )
 from ..steps.step_04_process_page_content.organization_progress import is_done
-from runners.pipeline03_people_collector.constants import DATA_REQUIREMENT_TOLERANCE
+from runners.pipeline03_people_collector.constants import (
+    CRAWL_TIME_BUDGET_S,
+    DATA_REQUIREMENT_TOLERANCE,
+)
 from shared.schemas import PipelineRunLimits
 from shared.utils import url_utils
 from shared.utils.statuses import PipelineIssueType
@@ -22,10 +25,12 @@ from shared.utils.statuses import PipelineIssueType
 # issue and not only the run log; comparing log strings to decide that would be worse.
 STOP_COST_CAP = PipelineIssueType.COST_CAP_REACHED
 STOP_MAX_PAGES = "max_pages_reached"
+STOP_TIME_BUDGET = "time_budget_reached"
 
 STOP_MESSAGES = {
     STOP_COST_CAP: "Cost limit reached before data requirements were met",
     STOP_MAX_PAGES: "Max pages reached before data requirements were met",
+    STOP_TIME_BUDGET: "Time budget spent before data requirements were met",
 }
 
 def next_process_content_state(
@@ -33,12 +38,16 @@ def next_process_content_state(
     current_cost: Decimal,
     limits: PipelineRunLimits,
     progress: ProgressState,
+    elapsed_seconds: float,
 ) -> tuple[PeopleCollectorState, str | None]:
     if should_stop_for_data_requirement(progress):
         return PeopleCollectorStep.CLEANUP, None
 
     if should_stop_for_cap(current_cost, limits):
         return PeopleCollectorStep.CLEANUP, STOP_COST_CAP
+
+    if should_stop_for_time_budget(elapsed_seconds):
+        return PeopleCollectorStep.CLEANUP, STOP_TIME_BUDGET
 
     if should_stop_for_max_pages(processed_count, limits, progress):
         return PeopleCollectorStep.CLEANUP, STOP_MAX_PAGES
@@ -49,6 +58,12 @@ def next_process_content_state(
 
 def should_stop_for_cap(current_cost: Decimal, limits: PipelineRunLimits) -> bool:
     return current_cost >= limits.pipeline_run_cap_usd
+
+
+def should_stop_for_time_budget(
+    elapsed_seconds: float, budget_seconds: float = CRAWL_TIME_BUDGET_S
+) -> bool:
+    return elapsed_seconds >= budget_seconds
 
 
 
@@ -76,7 +91,11 @@ def max_pages_allowed(limits: PipelineRunLimits, progress: ProgressState) -> int
 
 
 def describe_progress(
-    processed_count: int, current_cost: Decimal, limits: PipelineRunLimits, progress: ProgressState
+    processed_count: int,
+    current_cost: Decimal,
+    limits: PipelineRunLimits,
+    progress: ProgressState,
+    elapsed_seconds: float,
 ) -> str:
     """One line per processed page, for the run log. Every stop condition is in it, so a run
     that keeps going says which requirement is still unmet — the question that took a container
@@ -87,5 +106,6 @@ def describe_progress(
         f"roles={'y' if progress.has_target_roles else 'n'} "
         f"divisions={'y' if progress.has_target_divisions else 'n'} · "
         f"pages {processed_count}/{max_pages_allowed(limits, progress)} · "
-        f"cost ${current_cost:.4f}/${limits.pipeline_run_cap_usd}"
+        f"cost ${current_cost:.4f}/${limits.pipeline_run_cap_usd} · "
+        f"time {elapsed_seconds / 60:.0f}/{CRAWL_TIME_BUDGET_S / 60:.0f} min"
     )

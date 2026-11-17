@@ -18,6 +18,10 @@ IMAGE_DOWNLOAD_TIMEOUT_S = 5
 # One page's images share this: Marion OR's embedded map spent 409 per-image timeouts (34 min).
 IMAGE_PAGE_BUDGET_S = 30
 
+# A crawl's own clock, inside the job that runs it: the job's limit is fixed, and the run still has to
+# preprocess, send and clean up after the last page. Evidence: plans/2026-11-17-pipeline-3-run-budget.md.
+CRAWL_TIME_BUDGET_S = 30 * 60
+
 # Playwright waits 30s for a hidden button to become clickable; a real accordion responds at once.
 ACCORDION_CLICK_TIMEOUT_MS = 2000
 

@@ -145,11 +145,23 @@ async def cancel_local_pipeline_run(pipeline_run_id: str) -> None:
 
 
 @activity.defn
-async def update_pipeline_run_status(pipeline_run_id: str, status: str, progress: Optional[int] = None) -> None:
+async def update_pipeline_run_status(
+    pipeline_run_id: str,
+    status: str,
+    progress: Optional[int] = None,
+    error_type: Optional[str] = None,
+    error_detail: Optional[dict] = None,
+) -> None:
+    """`error_type` is only sent by a failure the workflow decides itself: the pipeline reports its
+    own failures with the report it uploads, and a run killed mid-scrape uploads nothing."""
+    payload = {"status": status, "progress": progress}
+    if error_type:
+        payload["error_type"] = error_type
+        payload["error_detail"] = error_detail or {}
     async with httpx.AsyncClient(headers=_API_HEADERS, timeout=15) as client:
         resp = await client.patch(
             f"{API_URL}/api/v1/pipeline_runs/{pipeline_run_id}/status",
-            json={"status": status, "progress": progress},
+            json=payload,
         )
         resp.raise_for_status()
 

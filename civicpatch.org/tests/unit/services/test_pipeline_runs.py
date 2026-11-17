@@ -150,3 +150,70 @@ async def test_a_run_that_minted_nothing_settles_nothing(status):
 
     dismiss.assert_not_awaited()
     supersede.assert_not_awaited()
+
+
+@pytest.mark.unit
+@pytest.mark.asyncio
+async def test_a_run_killed_before_reporting_files_its_own_issue():
+    """Four Oregon runs stalled, the watch failed them, and their rows said nothing: the pipeline
+    uploads a report at its end, and a run killed mid-scrape uploads none, so no issue was ever
+    filed. The workflow decides the failure and sends the type, and how far the run got is what a
+    person needs — that is the status the update is about to overwrite."""
+    with (
+        patch(
+            "services.pipeline_runs.get_pipeline_run",
+            new_callable=AsyncMock,
+            return_value={"changeset_id": None, "status": "SCRAPE_PAGE", "progress": 90},
+        ),
+        patch(
+            "services.pipeline_runs.update_pipeline_run_status",
+            new_callable=AsyncMock,
+            return_value=True,
+        ),
+        patch("services.pipeline_runs.create_activity_row", new_callable=AsyncMock),
+        patch("services.pipeline_runs.pubsub_service.publish", new_callable=AsyncMock),
+        patch("services.pipeline_runs.upsert_issue", new_callable=AsyncMock) as mock_issue,
+    ):
+        await run_lifecycle.apply_pipeline_run_status(
+            TEST_CHANGESET_ID,
+            "ERROR",
+            None,
+            TEST_OCDID,
+            "pipeline_error",
+            {"error": "Pipeline run reported nothing new for 0:30:00"},
+        )
+
+    mock_issue.assert_awaited_once()
+    assert mock_issue.await_args.args[:2] == (TEST_CHANGESET_ID, "pipeline_error")
+    assert mock_issue.await_args.args[2] == [
+        {
+            "error": "Pipeline run reported nothing new for 0:30:00",
+            "last_status": "SCRAPE_PAGE",
+            "last_progress": 90,
+        }
+    ]
+
+
+@pytest.mark.unit
+@pytest.mark.asyncio
+async def test_a_status_reported_without_a_failure_files_no_issue():
+    """The pipeline reports every step of its own progress, and its report is what files issues.
+    A status with no `error_type` must not add one, or every run would end up with two."""
+    with (
+        patch(
+            "services.pipeline_runs.get_pipeline_run",
+            new_callable=AsyncMock,
+            return_value={"changeset_id": None, "status": "PROCESS_PAGE_CONTENT", "progress": 75},
+        ),
+        patch(
+            "services.pipeline_runs.update_pipeline_run_status",
+            new_callable=AsyncMock,
+            return_value=True,
+        ),
+        patch("services.pipeline_runs.create_activity_row", new_callable=AsyncMock),
+        patch("services.pipeline_runs.pubsub_service.publish", new_callable=AsyncMock),
+        patch("services.pipeline_runs.upsert_issue", new_callable=AsyncMock) as mock_issue,
+    ):
+        await run_lifecycle.apply_pipeline_run_status(TEST_CHANGESET_ID, "ERROR", None, TEST_OCDID)
+
+    mock_issue.assert_not_awaited()
