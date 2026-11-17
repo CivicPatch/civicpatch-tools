@@ -9,6 +9,7 @@ from runners.pipeline03_people_collector.transitions.process_page_content_transi
     STOP_MESSAGES,
     STOP_TIME_BUDGET,
     next_process_content_state,
+    should_stop_crawling,
     should_stop_for_time_budget,
 )
 from runners.pipeline03_people_collector.transitions.main import _collect_pipeline_heuristics
@@ -327,3 +328,17 @@ def test_stopping_on_the_clock_is_not_an_issue():
     _error, issues = _collect_pipeline_heuristics([{"name": "A"}], STOP_TIME_BUDGET)
 
     assert issues == []
+
+
+def test_a_crawl_whose_pages_fail_still_stops_on_the_clock():
+    """The clock was read only where a page is processed. A crawl that keeps failing requeues out of
+    `scrape_page_transition` and never returns there, so Estacada OR ran 52 minutes on it."""
+    assert should_stop_crawling(PeopleCollectorStep.SCRAPE_PAGE, TIME_BUDGET_SECONDS)
+
+
+def test_a_fetched_page_is_still_processed_before_the_clock_ends_the_crawl():
+    assert not should_stop_crawling(PeopleCollectorStep.PREPROCESS_PAGE_CONTENT, TIME_BUDGET_SECONDS)
+
+
+def test_a_failing_crawl_with_time_left_carries_on():
+    assert not should_stop_crawling(PeopleCollectorStep.SCRAPE_PAGE, 60)

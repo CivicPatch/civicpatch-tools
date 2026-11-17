@@ -66,6 +66,13 @@ def should_stop_for_time_budget(
     return elapsed_seconds >= budget_seconds
 
 
+def should_stop_crawling(next_step: PeopleCollectorStep, elapsed_seconds: float) -> bool:
+    """Read on every loop that can crawl again, not only the one that processed a page: a crawl
+    whose pages all fail requeues out of `scrape_page_transition` and never comes back here. A page
+    that was fetched is still processed — only crawling on is what the clock forbids."""
+    return next_step == PeopleCollectorStep.SCRAPE_PAGE and should_stop_for_time_budget(elapsed_seconds)
+
+
 
 def should_stop_for_data_requirement(progress: ProgressState) -> bool:
     """With several organizations, each must be done on its own count — a flat total cannot tell
