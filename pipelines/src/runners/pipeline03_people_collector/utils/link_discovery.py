@@ -14,6 +14,7 @@ from shared.utils import config_utils, name_utils, url_utils
 from shared.utils.label_parser import parse_label
 from shared.utils.taxonomy import Taxonomy
 from shared.utils.url_utils import canonical_url
+from utils.page_links import PageLink
 
 # URL patterns that are deterministic dead ends. Matched against the full URL
 # before adding to the crawl frontier, so the LLM never wastes a scrape on them.
@@ -99,18 +100,13 @@ def _keyword_match(text: str, keywords: Optional[List[str]] = None) -> Optional[
     return None
 
 
-def _extract_links_from_markdown(content: str) -> List[Tuple[str, str]]:
-    """Returns (text, url) pairs for all markdown links with http(s) URLs."""
-    return re.findall(r"\[([^\]]*)\]\((https?://[^)]+)\)", content)
-
-
-def anchor_texts(content: str) -> Dict[str, str]:
+def anchor_texts(links: List[PageLink]) -> Dict[str, str]:
     """Each linked url's text on this page, by canonical url; the first non-empty one wins."""
     texts: Dict[str, str] = {}
-    for text, url in _extract_links_from_markdown(content):
-        key = canonical_url(url)
-        if text.strip() and key not in texts:
-            texts[key] = text.strip()
+    for link in links:
+        key = canonical_url(link.url)
+        if link.text and key not in texts:
+            texts[key] = link.text
     return texts
 
 
@@ -120,17 +116,17 @@ def jurisdiction_name_suffix(name: Optional[str]) -> List[str]:
 
 
 def find_heuristic_urls(
-    content: str, designations: List[str], roles: Optional[List[str]] = None
+    links: List[PageLink], designations: List[str], roles: Optional[List[str]] = None
 ) -> Dict[str, Tuple[str, str]]:
     """Returns url → (comment, link text) for links that pass heuristic signals."""
     result = {}
-    for text, url in _extract_links_from_markdown(content):
-        if _blacklist_match(url):
+    for link in links:
+        if _blacklist_match(link.url):
             continue
-        signals = _compute_link_signals(url, text, designations, roles=roles)
+        signals = _compute_link_signals(link.url, link.text, designations, roles=roles)
         comment = _signals_to_comment(signals)
         if comment:
-            result[url] = (comment, text)
+            result[link.url] = (comment, link.text)
     return result
 
 

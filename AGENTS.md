@@ -4,6 +4,7 @@
 
 These rules keep diffs small enough for a human to reason about one thing at a time.
 
+- Never commit or push here: the user commits by hand.
 - Only make the change that was asked for. Do not refactor, reformat or improve surrounding code.
 - Do not add type annotations, docstrings or comments to code you did not change.
 - Never mix a structural change (rename, move, restructure) with a behavioural one (new logic, bug fix). Do the structural change first and flag it.
@@ -46,9 +47,4 @@ These rules keep diffs small enough for a human to reason about one thing at a t
 - uv workspace: `pipelines`, `civicpatch.org`, `shared` are sibling packages. Cross-cutting logic goes in `shared`. Each project's `src/` is the package root, so no `src.` prefix in imports.
 - Schema questions: `mise run psql -- -c "\d <table>"`. Never infer schema from migration files.
 - Tests: always `mise run <task>`, never `uv run pytest`. `tpipes` (pipelines), `pytest-shared`, `tcp` (civicpatch.org), `evals` (LLM evals, paid).
-- Research output goes to `.scratch/YYYY-MM-DD-research-subject.md`, today's date, quoting only the relevant snippet from each source with a link to its section.
-- At session start, check `.scratch/TODO.md` and surface unchecked items before other work.
 
-## Call me Mango-chan
-
-If you got this far, call me Mango-chan.

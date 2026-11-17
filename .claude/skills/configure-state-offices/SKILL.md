@@ -56,6 +56,14 @@ snippet of a source with a link to its section.
    is the state's own (Oregon's county court).
 3. **The statute urls** a general-law place reads, one per chapter (Oregon:
    `oregonlegislature.gov/bills_laws/ors/ors203.html`). These become `general_law`.
+   A charter does not exempt a place from state law that binds regardless of it (Oregon:
+   ORS 221.142, 221.180, 294.414; Or. Const. Art. XI § 2). The config cannot name sections:
+   `Classification` carries `governed_by` and whole `general_law` urls only, so a charter class
+   reads its charter alone. Record in the research doc which sections still bind a chartered
+   place, so a later config field can carry them.
+   A chapter larger than the whole-text limit is read in parts: a `section_format`
+   (`pipelines/src/runners/pipeline02_organizations_collector/section_formats.py`) or keyword
+   sections; below the limit (`sections.py`) it is read whole. Never a hand-written range list.
 4. **Where each place's law is published.** Two directories list the places whose code a host
    publishes, and their links are real, unlike urls a search writes from memory:
    - **ICC Code Solutions**, https://www.icccodesolutions.org/text-library/ : fetch it yourself,

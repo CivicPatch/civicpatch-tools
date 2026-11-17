@@ -38,6 +38,7 @@ from shared.schemas import KnownOrganization, Post, RoleConfig, Role
 from tests.factories.pipeline_run_context import pipeline_run_context_factory
 from shared.utils.taxonomy import Taxonomy, build_taxonomy
 from shared.utils.url_utils import canonical_url
+from utils.page_links import page_links
 
 _ROLE_TAXONOMY = build_taxonomy(
     RoleConfig(roles=[Role(id="mayor", label="mayor"), Role(id="council", label="council")])
@@ -931,7 +932,7 @@ async def test_check_page_relevance_filters_cross_domain_relevant_urls():
         new=AsyncMock(return_value=llm_response.model_dump()),
     ):
         result_frontier, _ = await check_page_relevance(
-            context, page, "some page content", [], [], []
+            context, page, "some page content", [], [], [], []
         )
 
     result_pending_urls = pending_urls(result_frontier)
@@ -955,7 +956,7 @@ async def test_a_page_too_large_for_one_relevance_call_is_asked_in_pieces():
     with patch("services.open_router.llm.max_content_chars", return_value=4_000), patch(
         f"{_LLM}.open_router_llm.run_prompt", new=run_prompt
     ):
-        result_frontier, is_relevant = await check_page_relevance(context, page, content, [], [], [])
+        result_frontier, is_relevant = await check_page_relevance(context, page, content, [], [], [], [])
 
     assert run_prompt.await_count > 1
     assert all(len(call.kwargs["content"]) <= 4_000 + 500 for call in run_prompt.await_args_list)
@@ -985,7 +986,7 @@ async def test_a_page_whose_relevance_answer_failed_is_not_relevant_and_the_run_
     run_prompt = AsyncMock(side_effect=_ran_out_of_output())
 
     with patch(f"{_LLM}.open_router_llm.run_prompt", new=run_prompt):
-        frontier, is_relevant = await check_page_relevance(_context_with_page(page), page, "text", [], [], [])
+        frontier, is_relevant = await check_page_relevance(_context_with_page(page), page, "text", [], [], [], [])
 
     assert is_relevant is False
     assert frontier.get(page.url).is_relevant is False
@@ -1002,7 +1003,7 @@ async def test_one_failed_piece_of_a_page_keeps_the_answers_of_the_others():
     with patch("services.open_router.llm.max_content_chars", return_value=4_000), patch(
         f"{_LLM}.open_router_llm.run_prompt", new=run_prompt
     ):
-        _, is_relevant = await check_page_relevance(_context_with_page(page), page, content, [], [], [])
+        _, is_relevant = await check_page_relevance(_context_with_page(page), page, content, [], [], [], [])
 
     assert run_prompt.await_count > 1
     assert is_relevant is True
@@ -1020,7 +1021,7 @@ async def test_a_failed_call_that_is_not_a_bad_answer_still_ends_the_run():
     run_prompt = AsyncMock(side_effect=ValueError("OPEN_ROUTER_TOKEN is not set"))
 
     with patch(f"{_LLM}.open_router_llm.run_prompt", new=run_prompt), pytest.raises(ValueError):
-        await check_page_relevance(_context_with_page(page), page, "text", [], [], [])
+        await check_page_relevance(_context_with_page(page), page, "text", [], [], [], [])
 
 
 @pytest.mark.asyncio
@@ -1031,7 +1032,7 @@ async def test_the_relevance_verdict_is_kept_on_the_link_with_every_url_the_llm_
     llm_response = RelevantPageResponseSchema(is_relevant=True, relevant_urls=proposed)
 
     with patch(f"{_LLM}.open_router_llm.run_prompt", new=AsyncMock(return_value=llm_response.model_dump())):
-        frontier, _ = await check_page_relevance(_context_with_page(page), page, "text", [], [], [])
+        frontier, _ = await check_page_relevance(_context_with_page(page), page, "text", [], [], [], [])
 
     link = frontier.get(page.url)
     assert (link.is_relevant, link.relevant_urls) == (True, proposed)
@@ -1045,6 +1046,7 @@ async def test_an_irrelevant_page_still_gets_both_hashes(tmp_path):
     )
     (tmp_path / "parks").mkdir()
     (tmp_path / "parks" / "preprocessed.md").write_text("# Parks", encoding="utf-8")
+    (tmp_path / "parks" / "preprocessed.html").write_text("<h1>Parks</h1>", encoding="utf-8")
     llm_response = RelevantPageResponseSchema(is_relevant=False, relevant_urls=[])
 
     with (
@@ -1158,11 +1160,12 @@ async def test_process_with_llm_keeps_only_downloaded_images():
 
 def test_a_link_the_llm_picked_carries_its_text_from_the_page():
     url = "https://cityofbaycity.org/296/Office-of-the-Mayor"
-    content = f"Read about the [Office of the Mayor]({url}) and the [council](https://cityofbaycity.org/council)."
+    html = f'Read about the <a href="{url}">Office of the Mayor</a> and the <a href="/council">council</a>.'
+    links = page_links(html.encode(), "https://cityofbaycity.org/")
     response = RelevantPageResponseSchema(is_relevant=True, relevant_urls=[url])
 
     urls, comments = _resolve_candidate_urls(
-        response, "https://cityofbaycity.org/", content, [], None, [], dummy_logger()
+        response, "https://cityofbaycity.org/", links, [], None, [], dummy_logger()
     )
 
     assert urls == [url]
@@ -1173,16 +1176,25 @@ def test_a_link_the_llm_shortened_to_its_path_is_resolved_against_the_page():
     """Rowley's homepage: every link the model picked came back as a path and was dropped."""
     page_url = "https://www.townofrowley.net/"
     full = "https://www.townofrowley.net/board-selectmen"
-    content = f"See the [Board of Selectmen]({full})."
+    links = page_links(b'See the <a href="/board-selectmen">Board of Selectmen</a>.', page_url)
     response = RelevantPageResponseSchema(is_relevant=False, relevant_urls=["/board-selectmen"])
 
-    urls, comments = _resolve_candidate_urls(response, page_url, content, [], None, [], dummy_logger())
+    urls, comments = _resolve_candidate_urls(response, page_url, links, [], None, [], dummy_logger())
 
     assert urls == [full]
     assert comments == {full: (None, "Board of Selectmen")}
 
 
 def test_anchor_texts_skip_empty_link_text():
-    content = "[](https://a.gov/x) [Council](https://a.gov/x) [ ](https://a.gov/y)"
+    html = b'<a href="https://a.gov/x"></a> <a href="https://a.gov/y"> </a>'
 
-    assert anchor_texts(content) == {canonical_url("https://a.gov/x"): "Council"}
+    assert anchor_texts(page_links(html, "https://a.gov/")) == {}
+
+
+def test_a_link_title_is_not_part_of_the_url():
+    """Elgin: the markdown form of a titled link kept the title in the url."""
+    html = b'<a href="https://cityofelginor.org/" title="City of Elgin">Home</a>'
+
+    assert anchor_texts(page_links(html, "https://cityofelginor.org/")) == {
+        canonical_url("https://cityofelginor.org/"): "Home"
+    }

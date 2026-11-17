@@ -31,8 +31,6 @@ tmp/
 
 todo.md
 
-.scratch/*
-
 *.egg-info/
 
 open-data

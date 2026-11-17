@@ -62,6 +62,7 @@ from shared.utils import (
 )
 from shared.utils import merge_utils
 from utils import log_utils
+from utils.page_links import PageLink, page_links
 from runners.pipeline03_people_collector.steps.step_04_process_page_content.page_prompts import (
     page_extraction_prompt,
     prompt_hash,
@@ -191,6 +192,7 @@ async def process_page_content(
     content = read_preprocessed_content(
         context.data.jurisdiction_ocdid, page_to_process
     )
+    links = read_preprocessed_links(context.data.jurisdiction_ocdid, page_to_process)
 
     page_hash = page_content_hash(content)
     page_prompt_hash = prompt_hash(
@@ -214,7 +216,7 @@ async def process_page_content(
         frontier, is_relevant = apply_relevance(
             context,
             page_to_process,
-            content,
+            links,
             source_page_relevance(published),
             known_roles,
             research.known_organizations,
@@ -225,6 +227,7 @@ async def process_page_content(
             context,
             page_to_process,
             content,
+            links,
             known_roles,
             research.known_organizations,
             research.expected_memberships,
@@ -315,7 +318,7 @@ def create_process_page_content_step(required_data: int) -> ProcessPageContentSt
 def _resolve_candidate_urls(
     response: RelevantPageResponseSchema,
     page_url: str,
-    content: str,
+    links: List[PageLink],
     known_roles: list[str],
     config_name: Optional[str],
     designations: list[str],
@@ -324,11 +327,11 @@ def _resolve_candidate_urls(
     if response.relevant_urls:
         # The model sometimes shortens a link to its path, which has no host to keep it on the site.
         urls = [urljoin(page_url, url) for url in response.relevant_urls]
-        texts = anchor_texts(content)
+        texts = anchor_texts(links)
         return urls, {url: (None, texts.get(url_utils.canonical_url(url))) for url in urls}
     combined_designations = designations + known_roles  # token-exact matching
     roles = known_roles + jurisdiction_name_suffix(config_name)  # substring matching
-    heuristic_urls = find_heuristic_urls(content, combined_designations, roles=roles)
+    heuristic_urls = find_heuristic_urls(links, combined_designations, roles=roles)
     if heuristic_urls:
         logger.info(
             f"LLM returned 0 relevant URLs — falling back to {len(heuristic_urls)} heuristic URL(s)"
@@ -341,6 +344,7 @@ async def check_page_relevance(
     context: PeopleCollectorContext,
     page_to_process: Link,
     content: str,
+    links: List[PageLink],
     known_roles: list[str],
     known_organizations: List[KnownOrganization],
     expected_memberships: List[ExpectedMembership],
@@ -374,7 +378,7 @@ async def check_page_relevance(
     return apply_relevance(
         context,
         page_to_process,
-        content,
+        links,
         merged_relevance(answers),
         known_roles,
         known_organizations,
@@ -385,7 +389,7 @@ async def check_page_relevance(
 def apply_relevance(
     context: PeopleCollectorContext,
     page_to_process: Link,
-    content: str,
+    links: List[PageLink],
     response: RelevantPageResponseSchema,
     known_roles: list[str],
     known_organizations: List[KnownOrganization],
@@ -407,7 +411,7 @@ def apply_relevance(
     logger = log_utils.get_pipeline_run_logger(context.data.jurisdiction_ocdid)
 
     candidate_urls, url_comments = _resolve_candidate_urls(
-        response, page_to_process.url, content, known_roles, context.data.config.name, designations, logger
+        response, page_to_process.url, links, known_roles, context.data.config.name, designations, logger
     )
     if candidate_urls:
         frontier = add_relevant_urls(
@@ -687,3 +691,10 @@ def read_preprocessed_content(jurisdiction_ocdid: str, page_to_process: Link) ->
     )
     with open(content_file_path, "r", encoding="utf-8") as f:
         return f.read()
+
+
+def read_preprocessed_links(jurisdiction_ocdid: str, page_to_process: Link) -> List[PageLink]:
+    cache_path = data_path_utils.get_cache_path(jurisdiction_ocdid)
+    html_file_path = os.path.join(cache_path, page_to_process.folder_name, "preprocessed.html")
+    with open(html_file_path, "rb") as f:
+        return page_links(f.read(), page_to_process.url)
