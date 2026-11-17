@@ -81,6 +81,7 @@ def test_the_same_page_spelled_differently_still_finds_its_reading():
 def _context(tmp_path, published_source_pages: list[PublishedSourcePage]):
     (tmp_path / "council").mkdir(exist_ok=True)
     (tmp_path / "council" / "preprocessed.md").write_text("# Council", encoding="utf-8")
+    (tmp_path / "council" / "preprocessed.html").write_text("<h1>Council</h1>", encoding="utf-8")
     page = Link(url=_URL, status=LinkStatus.PREPROCESSED.value, folder_name="council")
     context = pipeline_run_context_factory(steps={})
     data = context.data.model_copy(
