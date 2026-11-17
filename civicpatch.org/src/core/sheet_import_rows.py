@@ -2,7 +2,7 @@
 
 What goes back out — each row's status, error and note — is `sheet_import_columns`. Pure: the
 Sheets calls are the caller's. Which sheet and which tabs is `services.entry_sheet`. Spec:
-`.scratch/2026-08-25-sheet-import-shape.md`.
+`plans/research/2026-08-25-sheet-import-shape.md`.
 
 The sheet carries no ids — matching is ingest's job, so there is nowhere to paste a uuid wrong.
 One row is one source record; `roster_from_rows` groups by name, so two rows for one person would

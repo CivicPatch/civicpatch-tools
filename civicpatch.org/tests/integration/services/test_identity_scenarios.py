@@ -1,6 +1,6 @@
 """Merges, splits and the matcher, through the real loader and rollback (plan step 6).
 
-Integration twins of `.scratch/2026-09-19-rollback-simulator.html` scenarios 6, 12, 24, 25 and
+Integration twins of `plans/scripts/2026-09-19-rollback-simulator.html` scenarios 6, 12, 24, 25 and
 26. The simulator holds several posts per organization; the fold keeps one membership per
 organization, so these assert on organizations held rather than posts.
 

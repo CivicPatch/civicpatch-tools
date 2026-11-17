@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Guard the CSS core/shell split described in .scratch/2026-09-07-plan-css-core-and-shell.md.
+"""Guard the CSS core/shell split described in plans/archive/2026-09-07-plan-css-core-and-shell.md.
 
 The rules below are all stated in tokens.css's own header. They grew a fourth,
 redundant token tier once already because nothing checked them.

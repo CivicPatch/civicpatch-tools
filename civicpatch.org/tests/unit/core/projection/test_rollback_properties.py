@@ -8,7 +8,7 @@ withdraw per live fact of X, and everything after that is derivation. Testing th
 database and no mocks, and a failure points at the rule rather than at the plumbing.
 
 Randomised over a fixed set of seeds rather than with Hypothesis, which is not a dependency of
-this workspace. `.scratch/2026-09-19-rollback-simulator.html` does the same thing in JavaScript
+this workspace. `plans/scripts/2026-09-19-rollback-simulator.html` does the same thing in JavaScript
 with its own seeded generator, and §0 runs it over seeds 1 to 5; this is its Python twin. If
 Hypothesis is ever added, these two properties are what it should shrink.
 """

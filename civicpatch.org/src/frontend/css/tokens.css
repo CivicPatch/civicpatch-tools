@@ -143,7 +143,7 @@
      but declared for symmetry with the dark palettes below, where it is not harmless. */
   color-scheme: light;
   /* ── Editorial palette tokens (one light) ──────────────────────────────
-     Replaces civic — see .scratch/2026-09-10-plan-civic-solaris-dark-themes.md for that
+     Replaces civic — see plans/archive/2026-09-10-plan-civic-solaris-dark-themes.md for that
      lineage. One Light's own editor colors, each nudged for contrast where the raw
      syntax-highlighting value didn't clear 4.5:1 against this app's --bg (which One Light,
      tuned for a code editor, was never designed against). */

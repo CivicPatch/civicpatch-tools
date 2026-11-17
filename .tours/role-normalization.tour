@@ -1,6 +1,6 @@
 {
   "title": "Role normalization",
-  "description": "How the role-config taxonomy works end-to-end: the unified `role_terms` schema (one table for both canonical roles and exclusions), the surgical exclude/include/delete endpoints, why the change_log vocabulary collapsed to 5 types with kind in the payload, the activity-feed render path, and how to seed the taxonomy in dev vs prod. Read this before adding a new role-config feature, a new change_log type, or a new scope tier. The design rationale lives in .scratch/role-normalization-plan.md; this tour is the code map.",
+  "description": "How the role-config taxonomy works end-to-end: the unified `role_terms` schema (one table for both canonical roles and exclusions), the surgical exclude/include/delete endpoints, why the change_log vocabulary collapsed to 5 types with kind in the payload, the activity-feed render path, and how to seed the taxonomy in dev vs prod. Read this before adding a new role-config feature, a new change_log type, or a new scope tier. The design rationale lives in plans/archive/2026-05-28-role-normalization-plan.md; this tour is the code map.",
   "steps": [
     {
       "title": "1. The unified schema",

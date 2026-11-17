@@ -6,7 +6,7 @@ Tabs are replaced whole rather than patched, which is what makes a retry safe. `
 owns the ordering: size the grid before writing (`values.update` refuses a range past it), trim
 after the last chunk (clearing first would empty the tab if a later chunk failed).
 
-Spec: `.scratch/2026-09-03-plan-*.md`.
+Spec: `plans/archive/2026-09-03-plan-sheet-sync-prod-env.md`.
 """
 
 import asyncio
