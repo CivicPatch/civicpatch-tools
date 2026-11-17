@@ -35,10 +35,12 @@ from ..steps.step_07_send_success.send_success import (
 )
 from ..transitions.process_page_content_transition import (
     STOP_COST_CAP,
+    STOP_TIME_BUDGET,
     is_short_of_expected,
     STOP_MESSAGES,
     describe_progress,
     next_process_content_state,
+    should_stop_crawling,
 )
 from ..utils.links import (
     get_link_status_by_url,
@@ -121,6 +123,22 @@ def _navigation_error_detail(frontier: LinkFrontier) -> dict:
     }
 
 
+def _no_usable_pages_outcome(
+    context: PeopleCollectorContext,
+) -> tuple[PeopleCollectorContext, PeopleCollectorState]:
+    if context.data.find_jurisdiction_url_step is None:
+        return context, PeopleCollectorStep.FIND_JURISDICTION_URL
+    error_type = _classify_all_failed_error(context.data.frontier)
+    detail = (
+        _navigation_error_detail(context.data.frontier)
+        if error_type == PipelineRunErrorType.DOMAIN_NAVIGATION_ERROR
+        else None
+    )
+    return _next_context(
+        context, error_step=error_type, error_detail=detail
+    ), PipelineRunStatus.SEND_ERROR
+
+
 async def scrape_page_transition(
     _: PipelineRunLimits,
     logger: PipelineRunLogger,
@@ -141,17 +159,7 @@ async def scrape_page_transition(
             context.data.frontier
         )
         if all_failed:
-            if context.data.find_jurisdiction_url_step is None:
-                return context, PeopleCollectorStep.FIND_JURISDICTION_URL
-            error_type = _classify_all_failed_error(context.data.frontier)
-            detail = (
-                _navigation_error_detail(context.data.frontier)
-                if error_type == PipelineRunErrorType.DOMAIN_NAVIGATION_ERROR
-                else None
-            )
-            return _next_context(
-                context, error_step=error_type, error_detail=detail
-            ), PipelineRunStatus.SEND_ERROR
+            return _no_usable_pages_outcome(context)
         return context, PeopleCollectorStep.CLEANUP
 
     frontier, final_url = await scrape_page(context, page_to_scrape)
@@ -170,6 +178,8 @@ async def scrape_page_transition(
         if link_status == LinkStatus.SCRAPED
         else PeopleCollectorStep.SCRAPE_PAGE
     )
+    if should_stop_crawling(next_state, time.time() - context.created_at):
+        return _next_context(next_context, stop_reason=STOP_TIME_BUDGET), PeopleCollectorStep.CLEANUP
     return next_context, next_state
 
 
@@ -189,17 +199,7 @@ async def preprocess_page_content_transition(
             context.data.frontier, [LinkStatus.PREPROCESSED]
         )
         if not preprocessed_links:
-            if context.data.find_jurisdiction_url_step is None:
-                return context, PeopleCollectorStep.FIND_JURISDICTION_URL
-            error_type = _classify_all_failed_error(context.data.frontier)
-            detail = (
-                _navigation_error_detail(context.data.frontier)
-                if error_type == PipelineRunErrorType.DOMAIN_NAVIGATION_ERROR
-                else None
-            )
-            return _next_context(
-                context, error_step=error_type, error_detail=detail
-            ), PipelineRunStatus.SEND_ERROR
+            return _no_usable_pages_outcome(context)
         return context, PeopleCollectorStep.PROCESS_PAGE_CONTENT
 
     frontier, result = preprocess_page_content(context, page_to_preprocess)
