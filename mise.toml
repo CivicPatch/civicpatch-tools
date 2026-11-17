@@ -6,7 +6,7 @@ config_roots = ["civicpatch.org", "pipelines"]
 
 [tools]
 pre-commit = "latest"
-python = "3.12"
+python = "3.13"
 uv = "0.11.21"  # the same as civicpatch.org/Dockerfile, so uv.lock reads the same in both
 node = "25.8"
 gh = "latest"
