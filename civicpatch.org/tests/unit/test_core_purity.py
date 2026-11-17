@@ -43,7 +43,7 @@ FORBIDDEN_ATTRIBUTES = ("os.environ",)
 
 # The one live violation, with the step that deletes it. `people_derivation` stamps
 # `updated_at` on the person it builds; `people.updated_at` is dropped by step 19 of
-# `.scratch/2026-09-17-plan-projector-refactor.md`, and this entry goes with it.
+# `plans/2026-09-17-plan-projector-refactor.md`, and this entry goes with it.
 ALLOWED = {("people_derivation.py", "datetime.now")}
 
 

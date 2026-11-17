@@ -1,5 +1,5 @@
 """Whether a page is the law a search wants: a free filter, then Jev names the document. Measured
-against blind labels (`.scratch/logs/jev-accuracy/score.txt`), it rejects the drafts, model charters
+against blind labels (`plans/scripts/logs/jev-accuracy/score.txt`), it rejects the drafts, model charters
 and cable franchises a count of section markers let through."""
 
 import re

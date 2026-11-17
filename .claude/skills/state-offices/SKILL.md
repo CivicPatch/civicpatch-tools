@@ -1,12 +1,17 @@
 ---
-name: configure-state-offices
-description: After a state's jurisdictions exist in open-data (its add-new-state skill), research the state's law and write the offices config that pipelines collect from, then bring the state online on civicpatch.org. Use when the user asks to configure a state's offices, research a state's local government law, or finish bringing a new state online.
+name: state-offices
+description: Research a state's local government law and write the offices config pipelines collect from. Use in two cases: a new state, right after open-data's `add-new-state` skill, which runs steps 1 to 3 and brings it online; or a state already online whose offices are wrong, missing or changed by new law, which stops after the config PR (steps 1 and 2).
 tools: Read, Edit, Write, Bash, Glob, Grep
 ---
 
-# Configure a State's Offices
+# A State's Offices
 
-Run open-data's `add-new-state` skill first: this one starts once the state's `jurisdictions.yml` files exist.
+Two ways in, and which one you are on decides where the steps stop:
+
+- **A new state**: run open-data's `add-new-state` skill first. This one starts once the state's `jurisdictions.yml`
+  files exist, and runs steps 1 to 3: research, config, bring it online.
+- **A state already online**: something in its config is wrong, missing, or the law changed (Vermont's constable,
+  Oregon's surveyor). Run steps 1 and 2 only, then the read-only prod check that the new organizations appear. No maps, no bring-up.
 
 ## What to collect
 
@@ -124,7 +129,11 @@ towns:
 current or not certain says `# not confirmed:` and why. Many city sites refuse plain reads
 (403): use their reports, agendas and search results. A place with no website url in
 `jurisdictions.yml` gets no own-site crawl in pipeline 1 (Oregon: 42 of 240 cities), so the
-directory lookup in item 4 is often its only lead. The scrape is scored against this file.
+directory lookup in item 4 is often its only lead.
+
+Score the scrape by hand: compare the run's people and their labels against this file, and read the
+cost per place off the run. The scripted scorer (`2026-10-24-score-vt-six-towns.py`) was retired on
+2026-11-16, so nothing automated does this until one is rebuilt.
 
 ## Step 2: Write the config
 
@@ -138,8 +147,11 @@ Oregon's two and `shared/src/shared/utils/layered_config.py` (the models) before
 2. **`government_forms`**, keyed by `GovernmentForm` (`shared/src/shared/schemas.py`). Each lists
    its organizations with the role labels in them; `{lsad}` in a name takes the place's suffix
    ("{lsad} Council" is "Town Council" for a town).
-   - `suffixes` offers the form to every place whose name ends in one; when several forms share a
-     suffix, pipeline 2's law read decides per place (Oregon's two county forms).
+   - `suffixes` offers the form to every place whose name ends in one, and that only decides where
+     the research found one form per statutory class (Oregon's cities: `city`, `town`). Two forms on
+     one suffix resolve to neither, and the place keeps only its default organization (Oregon's 36
+     counties held County Officers alone until a form was saved: 29 `commission`, 7 `county_court`).
+     Where the class doesn't decide, a run's form pick saves one, or a person does.
    - A form with no `suffixes` applies only where it is saved on the jurisdiction in cp.org
      (Portland's `mayor_council`): set `extras_government_form` there, never by a PR.
    - Every suffix from `add-new-state`'s dry-run needs a form (`test_every_suffix_has_a_form_of_the_states_own`).

@@ -1,6 +1,6 @@
 """What `live_facts` must answer.
 
-The cases are scenarios 1, 7 and 9 of `.scratch/2026-09-19-rollback-simulator.html`, which is
+The cases are scenarios 1, 7 and 9 of `plans/scripts/2026-09-19-rollback-simulator.html`, which is
 where this model's behaviour is specified and run.
 """
 

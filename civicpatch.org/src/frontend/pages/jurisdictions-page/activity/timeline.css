@@ -1,6 +1,6 @@
 @layer components {
 /* One jurisdiction's timeline: an entry per changeset, its outcome, and what it did to the
-   roster. Lifted from .scratch/2026-09-01-mockup-jurisdiction-history.html. */
+   roster. Lifted from plans/scripts/2026-09-01-mockup-jurisdiction-history.html. */
 
 /* On the jurisdiction page this heading sits inside a flex `__head` row, so the shared rule
    gives it no margin. Here it is a bare heading directly above its section's content, so it

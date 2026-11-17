@@ -1,6 +1,6 @@
 """A snapshot of everything publishing derives, as it behaves today.
 
-Step 0 of `.scratch/2026-09-17-plan-projector-refactor.md`: the net under steps 1 and 2, which
+Step 0 of `plans/2026-09-17-plan-projector-refactor.md`: the net under steps 1 and 2, which
 extract the fold and make the write replace rather than patch. Neither may change what lands in
 the projection, and this is what proves it. It is deliberately broad and deliberately literal:
 a characterization test earns its keep by failing when anything moves, so update the expectation

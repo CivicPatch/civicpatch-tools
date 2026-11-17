@@ -1,6 +1,6 @@
 """What `canonical_ids` must answer.
 
-The cases are scenarios 6, 24 and 25 of `.scratch/2026-09-19-rollback-simulator.html`: a merge,
+The cases are scenarios 6, 24 and 25 of `plans/scripts/2026-09-19-rollback-simulator.html`: a merge,
 a chain with its middle unmerged, and the rule that decides which id a cluster shows under.
 
 Every read is `.get(person_id, person_id)` because that is how the fold reads it: an id nobody

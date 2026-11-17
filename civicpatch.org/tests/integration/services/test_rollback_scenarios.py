@@ -1,6 +1,6 @@
 """Rollback through the real loader, edit route and rollback service (projector plan step 8).
 
-Integration twins of `.scratch/2026-09-19-rollback-simulator.html` scenarios 1, 2, 9, 14, 15, 17
+Integration twins of `plans/scripts/2026-09-19-rollback-simulator.html` scenarios 1, 2, 9, 14, 15, 17
 and 18. Where the model differs from the simulator: phones are a set here, so the one-value
 scenarios edit `name` and `image`; a person holds one membership per organization, so 9 adds a
 post in a second one; 14 files one rollback changeset per changeset rolled back, and its third act of vandalism is

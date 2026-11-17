@@ -3,7 +3,7 @@
 The same ingest a scrape gets, minus the zip and the images. It stops at ingest: the changesets
 are published or dismissed on the import's batch page, never from the review pool.
 
-Spec: `.scratch/2026-08-25-sheet-import-shape.md`.
+Spec: `plans/research/2026-08-25-sheet-import-shape.md`.
 """
 
 import asyncio

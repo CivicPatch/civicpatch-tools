@@ -44,7 +44,7 @@
   outline-offset: 2px;
 }
 
-/* One step below the wire-demo blog widget (.scratch/wire-demo, .bl-item-*). */
+/* One step below the wire-demo blog widget (plans/scripts/wire-demo, .bl-item-*). */
 .blog-updates__title {
   /* Flex items stretch to fill the cross axis by default — without this, the anchor's
      hit box covers the row's full width, not just the visible title text. */

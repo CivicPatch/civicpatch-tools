@@ -1,6 +1,6 @@
 """Builds and uploads one state's map tiles: TIGER geometry, enrichment against
 civicpatch's own jurisdiction records, the county-overlay parent_ocdids write-back,
-tippecanoe, and the R2 upload. See .scratch/2026-09-11-plan-map-pipeline-migration.md.
+tippecanoe, and the R2 upload. See plans/archive/2026-09-11-plan-map-pipeline-migration.md.
 """
 
 import asyncio
