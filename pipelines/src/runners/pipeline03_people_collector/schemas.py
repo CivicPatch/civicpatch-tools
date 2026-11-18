@@ -310,7 +310,7 @@ class PreprocessPageContentStep(BaseModel):
 
 class ProcessPageContentStep(BaseModel):
     # Grouped by the name the page gave, because extraction fills it one page at a time.
-    records: PeopleByName
+    records: PeopleByName = {}
 
     def all_records(self) -> List[PersonSourceRecord]:
         return [record for group in self.records.values() for record in group]
