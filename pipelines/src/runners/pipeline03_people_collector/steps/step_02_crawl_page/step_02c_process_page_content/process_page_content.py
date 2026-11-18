@@ -25,6 +25,7 @@ from runners.pipeline03_people_collector.schemas import (
     ProcessPageContentStep,
     ProgressState,
     RelevantPageResponseSchema,
+    ResearchMunicipalityStep,
 )
 from runners.pipeline03_people_collector.steps.step_02_crawl_page.step_02c_process_page_content.content_chunks import (
     content_chunks,
@@ -173,9 +174,7 @@ async def process_page_content(
     page_to_process: Link,
 ) -> Tuple[LinkFrontier, ProcessPageContentStep]:
     logger = log_utils.get_pipeline_run_logger(context.data.jurisdiction_ocdid)
-    logger.info(
-        f"Step 2c: process_page_content: {page_to_process.url}"
-    )
+    logger.info(f"Step 2c: process_page_content: {page_to_process.url}")
 
     assert context.data.research_municipality_step is not None, (
         "should never happen — research_municipality_step is required before process_page_content"
@@ -192,7 +191,10 @@ async def process_page_content(
         known_organizations=research.known_organizations,
         expected_memberships=research.expected_memberships,
     )
-    current_step = get_or_create_step(context)
+    current_step = context.data.process_page_content_step
+    assert current_step is not None, (
+        "should never happen: research_municipality_transition sets process_page_content_step"
+    )
     identities = research.identities
     content = read_preprocessed_content(
         context.data.jurisdiction_ocdid, page_to_process
@@ -301,23 +303,6 @@ async def process_page_content(
     return frontier, ProcessPageContentStep(
         progress=updated_progress,
         records=updated_records,
-    )
-
-
-def get_or_create_step(context: PeopleCollectorContext) -> ProcessPageContentStep:
-    assert context.data.research_municipality_step is not None, (
-        "should never happen — research_municipality_step is required before get_or_create_step"
-    )
-
-    expected = context.data.research_municipality_step.expected_memberships
-    return context.data.process_page_content_step or ProcessPageContentStep(
-        records={},
-        progress=ProgressState(
-            required_data=max(MINIMUM_NUM_PEOPLE, len(expected)),
-            current_data=0,
-            has_target_roles=False,
-            has_target_divisions=False,
-        ),
     )
 
 

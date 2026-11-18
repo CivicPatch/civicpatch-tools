@@ -8,6 +8,7 @@ from runners.pipeline03_people_collector.schemas import (
     PeopleCollectorState,
     PeopleCollectorStep,
     PipelineRunConfig,
+    ProcessPageContentStep,
     ResearchMunicipalityStep,
 )
 
@@ -21,6 +22,14 @@ def pipeline_run_context_factory(
     default_steps.update(steps)
 
     _research = default_steps.get(PeopleCollectorStep.RESEARCH_MUNICIPALITY)
+    research = (
+        research_municipality_step
+        or (_research if isinstance(_research, ResearchMunicipalityStep) else None)
+        or ResearchMunicipalityStep(
+            identities={},
+            source_urls=[],
+        )
+    )
 
     return PeopleCollectorContext(
         pipeline_run_id="random-request-id",
@@ -32,12 +41,8 @@ def pipeline_run_context_factory(
             ),
             frontier=LinkFrontier(),
             jurisdiction_ocdid="ocd-jurisdiction/country:us/state:wa/place:seattle/government",
-            research_municipality_step=research_municipality_step
-            or (_research if isinstance(_research, ResearchMunicipalityStep) else None)
-            or ResearchMunicipalityStep(
-                identities={},
-                source_urls=[],
-            ),
+            research_municipality_step=research,
+            # As after research in a real run: the crawl always starts with an empty process step.
+            process_page_content_step=ProcessPageContentStep(records={}),
         ),
     )
-
