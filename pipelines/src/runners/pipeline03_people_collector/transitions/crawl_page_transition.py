@@ -1,14 +1,6 @@
 from decimal import Decimal
 from typing import List
 
-from ..schemas import (
-  PeopleCollectorState,
-  ProgressState,
-  Link,
-  LinkStatus,
-  PeopleCollectorStep,
-)
-from ..steps.step_02_crawl_page.step_02c_process_page_content.organization_progress import is_done
 from runners.pipeline03_people_collector.constants import (
     CRAWL_TIME_BUDGET_S,
     DATA_REQUIREMENT_TOLERANCE,
@@ -17,6 +9,16 @@ from shared.schemas import PipelineRunLimits
 from shared.utils import url_utils
 from shared.utils.statuses import PipelineIssueType
 
+from ..schemas import (
+    Link,
+    LinkStatus,
+    PeopleCollectorState,
+    PeopleCollectorStep,
+    ProgressState,
+)
+from ..steps.step_02_crawl_page.step_02c_process_page_content.organization_progress import (
+    is_done,
+)
 
 # Why the crawl stopped, when it stopped early. `None` is "it did not" and the fourth case —
 # having found what it came for — is a *good* stop and needs no reason.
@@ -33,7 +35,8 @@ STOP_MESSAGES = {
     STOP_TIME_BUDGET: "Time budget spent before data requirements were met",
 }
 
-def next_process_content_state(
+
+def next_crawl_state(
     processed_count: int,
     current_cost: Decimal,
     limits: PipelineRunLimits,
@@ -52,8 +55,7 @@ def next_process_content_state(
     if should_stop_for_max_pages(processed_count, limits, progress):
         return PeopleCollectorStep.CLEANUP, STOP_MAX_PAGES
 
-    return PeopleCollectorStep.SCRAPE_PAGE, None
-
+    return PeopleCollectorStep.CRAWL_PAGE, None
 
 
 def should_stop_for_cap(current_cost: Decimal, limits: PipelineRunLimits) -> bool:
@@ -66,21 +68,16 @@ def should_stop_for_time_budget(
     return elapsed_seconds >= budget_seconds
 
 
-def should_stop_crawling(next_step: PeopleCollectorStep, elapsed_seconds: float) -> bool:
-    """Read on every loop that can crawl again, not only the one that processed a page: a crawl
-    whose pages all fail requeues out of `scrape_page_transition` and never comes back here. A page
-    that was fetched is still processed — only crawling on is what the clock forbids."""
-    return next_step == PeopleCollectorStep.SCRAPE_PAGE and should_stop_for_time_budget(elapsed_seconds)
-
-
-
 def should_stop_for_data_requirement(progress: ProgressState) -> bool:
     """With several organizations, each must be done on its own count — a flat total cannot tell
     "Council complete, Mayor missing" from done, which is how that Seattle run spent its page cap."""
     if progress.organizations:
         return all(is_done(organization) for organization in progress.organizations)
-    found_enough = progress.current_data >= progress.required_data - DATA_REQUIREMENT_TOLERANCE
+    found_enough = (
+        progress.current_data >= progress.required_data - DATA_REQUIREMENT_TOLERANCE
+    )
     return found_enough and progress.has_target_roles and progress.has_target_divisions
+
 
 def is_short_of_expected(progress: ProgressState) -> bool:
     """Short by more than the tolerance above — the same slack `should_stop_for_data_requirement`
@@ -89,7 +86,9 @@ def is_short_of_expected(progress: ProgressState) -> bool:
     return progress.current_data < progress.required_data - DATA_REQUIREMENT_TOLERANCE
 
 
-def should_stop_for_max_pages(processed_count: int, limits: PipelineRunLimits, progress: ProgressState) -> bool:
+def should_stop_for_max_pages(
+    processed_count: int, limits: PipelineRunLimits, progress: ProgressState
+) -> bool:
     return processed_count >= max_pages_allowed(limits, progress)
 
 

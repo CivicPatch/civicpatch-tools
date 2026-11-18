@@ -8,8 +8,6 @@ from runners.pipeline03_people_collector.schemas import (
     PeopleCollectorState,
     PeopleCollectorStep,
     PipelineRunConfig,
-    PreprocessPageContentStep,
-    ProcessPageContentStep,
     ResearchMunicipalityStep,
 )
 
@@ -23,8 +21,6 @@ def pipeline_run_context_factory(
     default_steps.update(steps)
 
     _research = default_steps.get(PeopleCollectorStep.RESEARCH_MUNICIPALITY)
-    _preprocess = default_steps.get(PeopleCollectorStep.PREPROCESS_PAGE_CONTENT)
-    _process = default_steps.get(PeopleCollectorStep.PROCESS_PAGE_CONTENT)
 
     return PeopleCollectorContext(
         pipeline_run_id="random-request-id",
@@ -41,12 +37,6 @@ def pipeline_run_context_factory(
             or ResearchMunicipalityStep(
                 identities={},
                 source_urls=[],
-            ),
-            preprocess_page_content_step=(
-                _preprocess if isinstance(_preprocess, PreprocessPageContentStep) else None
-            ),
-            process_page_content_step=(
-                _process if isinstance(_process, ProcessPageContentStep) else None
             ),
         ),
     )

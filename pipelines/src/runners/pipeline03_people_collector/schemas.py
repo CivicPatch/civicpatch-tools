@@ -3,12 +3,6 @@ from typing import Dict, List, Optional, TypeAlias
 
 from domain.pipeline_run_context import PipelineRunContext
 from pydantic import BaseModel, ConfigDict, Field
-from .steps.step_02_crawl_page.step_02a_scrape_page.scrape_exceptions import (
-    NavigationFailureReason,
-)
-from .steps.step_02_crawl_page.step_02c_process_page_content.heuristics_failure import (
-    HeuristicsFailure,
-)
 from shared.schemas import (
     ExtractedPersonRecord,
     KnownOrganization,
@@ -18,15 +12,19 @@ from shared.schemas import (
 )
 from shared.utils.statuses import PipelineRunStatus
 
+from .steps.step_02_crawl_page.step_02a_scrape_page.scrape_exceptions import (
+    NavigationFailureReason,
+)
+from .steps.step_02_crawl_page.step_02c_process_page_content.heuristics_failure import (
+    HeuristicsFailure,
+)
 
 
 class PeopleCollectorStep(StrEnum):
     """The people collector's own steps; the lifecycle every pipeline shares is `PipelineRunStatus`."""
 
     RESEARCH_MUNICIPALITY = "RESEARCH_MUNICIPALITY"
-    SCRAPE_PAGE = "SCRAPE_PAGE"
-    PREPROCESS_PAGE_CONTENT = "PREPROCESS_PAGE_CONTENT"
-    PROCESS_PAGE_CONTENT = "PROCESS_PAGE_CONTENT"
+    CRAWL_PAGE = "CRAWL_PAGE"
     CLEANUP = "CLEANUP"
     REVIEW_OUTPUT = "REVIEW_OUTPUT"
     SAVE_OUTPUT = "SAVE_OUTPUT"
@@ -35,6 +33,7 @@ class PeopleCollectorStep(StrEnum):
 
 
 PeopleCollectorState = PipelineRunStatus | PeopleCollectorStep
+
 
 class OrganizationProgress(BaseModel):
     """How far one organization's roster is along, when a jurisdiction has several."""
@@ -55,8 +54,8 @@ class OrganizationNeed(BaseModel):
 
 
 class ProgressState(BaseModel):
-    required_data: int
-    current_data: int
+    required_data: int = 0
+    current_data: int = 0
     has_target_roles: bool = False
     has_target_divisions: bool = False
     # One entry per organization when there are several; empty means the flat fields above decide.
@@ -258,7 +257,6 @@ OtherNamesByCanonicalName: TypeAlias = Dict[
 PeopleByName: TypeAlias = Dict[str, List[PersonSourceRecord]]
 
 
-
 class ResearchedPerson(BaseModel):
     """A name research turned up, and the office it named them under.
 
@@ -325,6 +323,14 @@ class ProcessPageContentStep(BaseModel):
     )
 
 
+class CrawlPageResult(BaseModel):
+    frontier: LinkFrontier
+    final_url: str
+    # The steps after this page; a step the page stopped before is carried over from the context.
+    preprocess_page_content_step: Optional[PreprocessPageContentStep]
+    process_page_content_step: ProcessPageContentStep
+
+
 class FindJurisdictionUrlStep(BaseModel):
     discovered_url: Optional[str] = None
 
@@ -364,5 +370,7 @@ class PeopleCollectorData(BaseModel):
     stop_reason: Optional[str] = None
 
 
-class PeopleCollectorContext(PipelineRunContext[PeopleCollectorData, PeopleCollectorState]):
+class PeopleCollectorContext(
+    PipelineRunContext[PeopleCollectorData, PeopleCollectorState]
+):
     pass

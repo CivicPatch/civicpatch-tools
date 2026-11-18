@@ -54,15 +54,15 @@ def _patched_api(reported_status=PipelineRunStatus.RUNNING):
 @pytest.mark.asyncio
 async def test_a_cancelled_run_reports_cancelled_not_the_step_it_was_on():
     """Cancelling used to leave via `return`, which still ran the `finally` reporting
-    `current_state` — so a cancelled run's last word was `SCRAPE_PAGE`."""
+    `current_state` — so a cancelled run's last word was the step it was on."""
     should_not_run = AsyncMock()
     api, mock = _patched_api(PipelineRunStatus.CANCELLED)
     try:
         with patch("runners.engine.log_system_usage"):
             result = await run_pipeline(
-                _at(PeopleCollectorStep.SCRAPE_PAGE),
+                _at(PeopleCollectorStep.CRAWL_PAGE),
                 MagicMock(),
-                _machine({PeopleCollectorStep.SCRAPE_PAGE: should_not_run}),
+                _machine({PeopleCollectorStep.CRAWL_PAGE: should_not_run}),
                 AsyncMock(),
             )
     finally:
@@ -274,10 +274,10 @@ async def test_a_step_that_raises_records_its_state_and_error_for_the_issue():
     api, _ = _patched_api()
     try:
         with patch("runners.engine.log_system_usage"), pytest.raises(PipelineRunError) as failed:
-            await run_pipeline(_at(PeopleCollectorStep.SCRAPE_PAGE), MagicMock(), _machine({PeopleCollectorStep.SCRAPE_PAGE: raises, PipelineRunStatus.SEND_ERROR: _returning(PipelineRunStatus.ERROR)}), AsyncMock())
+            await run_pipeline(_at(PeopleCollectorStep.CRAWL_PAGE), MagicMock(), _machine({PeopleCollectorStep.CRAWL_PAGE: raises, PipelineRunStatus.SEND_ERROR: _returning(PipelineRunStatus.ERROR)}), AsyncMock())
     finally:
         api.stop()
 
     failure = failed.value.context.failure
     assert failure is not None
-    assert (failure.failed_state, failure.error) == (str(PeopleCollectorStep.SCRAPE_PAGE), "TimeoutError: the crawl ran out of time")
+    assert (failure.failed_state, failure.error) == (str(PeopleCollectorStep.CRAWL_PAGE), "TimeoutError: the crawl ran out of time")

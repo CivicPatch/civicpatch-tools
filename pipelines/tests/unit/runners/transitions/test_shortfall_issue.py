@@ -10,7 +10,7 @@ import pytest
 
 from runners.pipeline03_people_collector.schemas import ProgressState
 from runners.pipeline03_people_collector.transitions.main import _collect_pipeline_heuristics
-from runners.pipeline03_people_collector.transitions.process_page_content_transition import (
+from runners.pipeline03_people_collector.transitions.crawl_page_transition import (
     STOP_COST_CAP,
 )
 from shared.utils.statuses import PipelineIssueType

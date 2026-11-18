@@ -6,7 +6,12 @@ from urllib.parse import urljoin
 
 import services.open_router.llm as open_router_llm
 import shared.utils.name_utils as name_utils
-from runners.pipeline03_people_collector.constants import DIVISION_REQUIREMENT_TOLERANCE, MINIMUM_NUM_PEOPLE, RELEVANCE_MAX_OUTPUT_TOKENS
+from pydantic import BaseModel, ValidationError
+from runners.pipeline03_people_collector.constants import (
+    DIVISION_REQUIREMENT_TOLERANCE,
+    MINIMUM_NUM_PEOPLE,
+    RELEVANCE_MAX_OUTPUT_TOKENS,
+)
 from runners.pipeline03_people_collector.schemas import (
     ExpectedMembership,
     Link,
@@ -16,7 +21,6 @@ from runners.pipeline03_people_collector.schemas import (
     PeopleByName,
     PeopleCollectorContext,
     PeopleCollectorState,
-    PeopleCollectorStep,
     PersonSourceRecord,
     ProcessPageContentStep,
     ProgressState,
@@ -26,10 +30,6 @@ from runners.pipeline03_people_collector.steps.step_02_crawl_page.step_02c_proce
     content_chunks,
     merged_relevance,
 )
-from runners.pipeline03_people_collector.steps.step_02_crawl_page.step_02c_process_page_content.organization_progress import (
-    organization_needs,
-    organizations_progress,
-)
 from runners.pipeline03_people_collector.steps.step_02_crawl_page.step_02c_process_page_content.heuristics import (
     check_page_heuristics,
     without_unnormalizable_phones,
@@ -38,12 +38,25 @@ from runners.pipeline03_people_collector.steps.step_02_crawl_page.step_02c_proce
 from runners.pipeline03_people_collector.steps.step_02_crawl_page.step_02c_process_page_content.heuristics_failure import (
     HeuristicsFailure,
 )
-from shared.schemas import LOCAL_IMAGE_PREFIX, ExtractedPersonRecord, KnownOrganization
-from runners.pipeline03_people_collector.utils.organization_terms import (
-    as_tokens,
-    expected_roles,
-    roles_to_look_for,
-    search_phrases,
+from runners.pipeline03_people_collector.steps.step_02_crawl_page.step_02c_process_page_content.organization_match import (
+    matched_organization_ids,
+    organization_id_by_name,
+    placed_names,
+)
+from runners.pipeline03_people_collector.steps.step_02_crawl_page.step_02c_process_page_content.organization_progress import (
+    organization_needs,
+    organizations_progress,
+)
+from runners.pipeline03_people_collector.steps.step_02_crawl_page.step_02c_process_page_content.page_prompts import (
+    page_extraction_prompt,
+    prompt_hash,
+    relevance_prompt,
+)
+from runners.pipeline03_people_collector.steps.step_02_crawl_page.step_02c_process_page_content.unchanged_pages import (
+    is_unchanged,
+    page_content_hash,
+    published_source_page,
+    source_page_relevance,
 )
 from runners.pipeline03_people_collector.utils.link_discovery import (
     add_relevant_urls,
@@ -54,34 +67,28 @@ from runners.pipeline03_people_collector.utils.link_discovery import (
     jurisdiction_name_suffix,
     update_links,
 )
-from pydantic import BaseModel, ValidationError
+from runners.pipeline03_people_collector.utils.organization_terms import (
+    as_tokens,
+    expected_roles,
+    roles_to_look_for,
+    search_phrases,
+)
+from shared.schemas import (
+    LOCAL_IMAGE_PREFIX,
+    ExtractedPersonRecord,
+    KnownOrganization,
+    PublishedSourcePage,
+)
 from shared.utils import (
     config_utils,
     data_path_utils,
+    merge_utils,
     url_utils,
 )
-from shared.utils import merge_utils
-from utils import log_utils
-from utils.page_links import PageLink, page_links
-from runners.pipeline03_people_collector.steps.step_02_crawl_page.step_02c_process_page_content.page_prompts import (
-    page_extraction_prompt,
-    prompt_hash,
-    relevance_prompt,
-)
-from runners.pipeline03_people_collector.steps.step_02_crawl_page.step_02c_process_page_content.organization_match import (
-    matched_organization_ids,
-    organization_id_by_name,
-    placed_names,
-)
-from runners.pipeline03_people_collector.steps.step_02_crawl_page.step_02c_process_page_content.unchanged_pages import (
-    is_unchanged,
-    page_content_hash,
-    published_source_page,
-    source_page_relevance,
-)
-from shared.schemas import PublishedSourcePage
 from shared.utils.label_parser import ParsedLabel, parse_label
 from shared.utils.taxonomy import Taxonomy, build_taxonomy, lookup_key
+from utils import log_utils
+from utils.page_links import PageLink, page_links
 
 
 @dataclass
@@ -89,8 +96,6 @@ class ProcessingSetup:
     roles: List[str]
     known_organizations: List[KnownOrganization]
     expected_memberships: List[ExpectedMembership]
-
-
 
 
 async def _process_with_llm_in_chunks(
@@ -126,8 +131,6 @@ async def _process_with_llm_in_chunks(
         )
         all_found.extend(found)
     return all_found
-
-
 
 
 def required_division_count(num_target_divisions: int) -> int:
@@ -171,7 +174,7 @@ async def process_page_content(
 ) -> Tuple[LinkFrontier, ProcessPageContentStep]:
     logger = log_utils.get_pipeline_run_logger(context.data.jurisdiction_ocdid)
     logger.info(
-        f"Step 4: {PeopleCollectorStep.PROCESS_PAGE_CONTENT.value}: {page_to_process.url}"
+        f"Step 2c: process_page_content: {page_to_process.url}"
     )
 
     assert context.data.research_municipality_step is not None, (
@@ -180,7 +183,9 @@ async def process_page_content(
 
     research = context.data.research_municipality_step
     taxonomy = build_taxonomy(context.data.role_config)
-    known_roles = roles_to_look_for(research.expected_memberships, research.known_organizations)
+    known_roles = roles_to_look_for(
+        research.expected_memberships, research.known_organizations
+    )
     role_names = config_utils.get_role_names(context.data.role_config)
     setup_data = ProcessingSetup(
         roles=role_names,
@@ -206,7 +211,9 @@ async def process_page_content(
     published = published_source_page(
         context.data.config.published_source_pages, page_to_process.url
     )
-    if published is not None and not is_unchanged(published, page_hash, page_prompt_hash):
+    if published is not None and not is_unchanged(
+        published, page_hash, page_prompt_hash
+    ):
         published = None
     if published:
         logger.info(
@@ -236,13 +243,17 @@ async def process_page_content(
         page_to_process.url,
         page_hash=page_hash,
         prompt_hash=page_prompt_hash,
-        unchanged_since_source_page_id=published.read_source_page_id if published else None,
+        unchanged_since_source_page_id=published.read_source_page_id
+        if published
+        else None,
     )
     if not is_relevant:
         return frontier, current_step
 
     if published:
-        known = await rematched_records(published.known_records, context, research.known_organizations)
+        known = await rematched_records(
+            published.known_records, context, research.known_organizations
+        )
         extraction = source_page_extraction(published, known, current_step, identities)
     else:
         extraction = await collect_page_records(
@@ -297,17 +308,12 @@ def get_or_create_step(context: PeopleCollectorContext) -> ProcessPageContentSte
     assert context.data.research_municipality_step is not None, (
         "should never happen — research_municipality_step is required before get_or_create_step"
     )
+
     expected = context.data.research_municipality_step.expected_memberships
-    return context.data.process_page_content_step or create_process_page_content_step(
-        required_data=max(MINIMUM_NUM_PEOPLE, len(expected))
-    )
-
-
-def create_process_page_content_step(required_data: int) -> ProcessPageContentStep:
-    return ProcessPageContentStep(
+    return context.data.process_page_content_step or ProcessPageContentStep(
         records={},
         progress=ProgressState(
-            required_data=required_data,
+            required_data=max(MINIMUM_NUM_PEOPLE, len(expected)),
             current_data=0,
             has_target_roles=False,
             has_target_divisions=False,
@@ -328,7 +334,9 @@ def _resolve_candidate_urls(
         # The model sometimes shortens a link to its path, which has no host to keep it on the site.
         urls = [urljoin(page_url, url) for url in response.relevant_urls]
         texts = anchor_texts(links)
-        return urls, {url: (None, texts.get(url_utils.canonical_url(url))) for url in urls}
+        return urls, {
+            url: (None, texts.get(url_utils.canonical_url(url))) for url in urls
+        }
     combined_designations = designations + known_roles  # token-exact matching
     roles = known_roles + jurisdiction_name_suffix(config_name)  # substring matching
     heuristic_urls = find_heuristic_urls(links, combined_designations, roles=roles)
@@ -372,7 +380,9 @@ async def check_page_relevance(
                 not_retried=(ValidationError,),
             )
         except ValidationError as error:
-            logger.warning(f"Relevance answer failed for {page_to_process.url}, piece {index}: {error}")
+            logger.warning(
+                f"Relevance answer failed for {page_to_process.url}, piece {index}: {error}"
+            )
             continue
         answers.append(RelevantPageResponseSchema.model_validate(raw_response))
     return apply_relevance(
@@ -411,7 +421,13 @@ def apply_relevance(
     logger = log_utils.get_pipeline_run_logger(context.data.jurisdiction_ocdid)
 
     candidate_urls, url_comments = _resolve_candidate_urls(
-        response, page_to_process.url, links, known_roles, context.data.config.name, designations, logger
+        response,
+        page_to_process.url,
+        links,
+        known_roles,
+        context.data.config.name,
+        designations,
+        logger,
     )
     if candidate_urls:
         frontier = add_relevant_urls(
@@ -451,7 +467,9 @@ class PageExtraction(BaseModel):
 
 
 async def rematched_records(
-    records: List[PersonSourceRecord], context: PeopleCollectorContext, organizations: List[KnownOrganization]
+    records: List[PersonSourceRecord],
+    context: PeopleCollectorContext,
+    organizations: List[KnownOrganization],
 ) -> List[PersonSourceRecord]:
     """A replayed page's records placed again by today's matcher, from the organization label each
     kept; a record stored before labels were kept stays where it was placed."""
@@ -469,7 +487,11 @@ async def rematched_records(
         )
     )
     return [
-        record.model_copy(update={"organization_id": organization_id_by_name(next(names), organizations)})
+        record.model_copy(
+            update={
+                "organization_id": organization_id_by_name(next(names), organizations)
+            }
+        )
         if record.organization_label
         else record
         for record in records
@@ -487,10 +509,14 @@ def source_page_extraction(
     say which bodies the page read, as a fresh read's do; unlabelled ones leave the stored list."""
     rematched = any(record.organization_label for record in records)
     return PageExtraction(
-        records=merge_utils.group_people_by_name(identities, current_step.records, list(records)),
+        records=merge_utils.group_people_by_name(
+            identities, current_step.records, list(records)
+        ),
         heuristics_passed=True,
         heuristics_failures=[],
-        organization_ids=matched_organization_ids(records) if rematched else source_page.organization_ids,
+        organization_ids=matched_organization_ids(records)
+        if rematched
+        else source_page.organization_ids,
     )
 
 
@@ -520,7 +546,9 @@ async def collect_page_records(
             organization_ids=[],
         )
     return PageExtraction(
-        records=merge_utils.group_people_by_name(identities, current_step.records, found),
+        records=merge_utils.group_people_by_name(
+            identities, current_step.records, found
+        ),
         heuristics_passed=True,
         heuristics_failures=failures,
         organization_ids=matched_organization_ids(found),
@@ -537,7 +565,9 @@ async def _extract_page(
 ) -> Tuple[Optional[List[PersonSourceRecord]], List[HeuristicsFailure]]:
     """The page's records, each stamped with its matched organization, or None if they failed the
     heuristics twice; and the reason each failed attempt gave."""
-    prompt = page_extraction_prompt(organizations, memberships, context.data.jurisdiction_ocdid)
+    prompt = page_extraction_prompt(
+        organizations, memberships, context.data.jurisdiction_ocdid
+    )
     taxonomy = build_taxonomy(context.data.role_config)
     failures: List[HeuristicsFailure] = []
 
@@ -572,7 +602,9 @@ async def _extract_page(
             return people_found_in_page, failures
         failures.append(failure)
         if attempt == 0:
-            logger.info(f"Heuristics failed for LLM: open_router, retrying: {page_to_process.url}")
+            logger.info(
+                f"Heuristics failed for LLM: open_router, retrying: {page_to_process.url}"
+            )
     return None, failures
 
 
@@ -617,7 +649,9 @@ async def process_with_llm(
     return [record for record in records if record is not None]
 
 
-def _source_record(person: ExtractedPersonRecord, source_url: str, organization_id: str | None) -> PersonSourceRecord | None:
+def _source_record(
+    person: ExtractedPersonRecord, source_url: str, organization_id: str | None
+) -> PersonSourceRecord | None:
     """One extracted person as the record cp.org receives; None for a nameless one. Every field
     the model gave passes through, so a field added later reaches cp.org without a line here."""
     name = name_utils.reorder_name_if_inverted(person.name)
@@ -628,7 +662,9 @@ def _source_record(person: ExtractedPersonRecord, source_url: str, organization_
             **person.model_dump(),
             "name": name,
             # A model sometimes shortens a link it was given in full to its path.
-            "url": url_utils.format_url(urljoin(source_url, person.url)) if person.url else None,
+            "url": url_utils.format_url(urljoin(source_url, person.url))
+            if person.url
+            else None,
             "image": _downloaded_image(person.image),
             "source_url": source_url,
             "organization_id": organization_id,
@@ -664,9 +700,7 @@ def calculate_progress(
         people_with_divisions = [
             p_list
             for p_list in valid_people
-            if any(
-                _names_a_division(parse_label(p.label, taxonomy)) for p in p_list
-            )
+            if any(_names_a_division(parse_label(p.label, taxonomy)) for p in p_list)
         ]
         if len(people_with_divisions) >= required_division_count(num_target_divisions):
             has_target_divisions = True
@@ -679,7 +713,10 @@ def calculate_progress(
         ),
         has_target_divisions=has_target_divisions,
         organizations=organizations_progress(
-            setup_data.known_organizations, setup_data.expected_memberships, records, taxonomy
+            setup_data.known_organizations,
+            setup_data.expected_memberships,
+            records,
+            taxonomy,
         ),
     )
 
@@ -693,8 +730,12 @@ def read_preprocessed_content(jurisdiction_ocdid: str, page_to_process: Link) ->
         return f.read()
 
 
-def read_preprocessed_links(jurisdiction_ocdid: str, page_to_process: Link) -> List[PageLink]:
+def read_preprocessed_links(
+    jurisdiction_ocdid: str, page_to_process: Link
+) -> List[PageLink]:
     cache_path = data_path_utils.get_cache_path(jurisdiction_ocdid)
-    html_file_path = os.path.join(cache_path, page_to_process.folder_name, "preprocessed.html")
+    html_file_path = os.path.join(
+        cache_path, page_to_process.folder_name, "preprocessed.html"
+    )
     with open(html_file_path, "rb") as f:
         return page_links(f.read(), page_to_process.url)

@@ -2,14 +2,14 @@ from decimal import Decimal
 
 import pytest
 
+from runners.pipeline03_people_collector.constants import CRAWL_TIME_BUDGET_S
 from runners.pipeline03_people_collector.schemas import OrganizationProgress, PeopleCollectorState, PeopleCollectorStep, ProgressState
-from runners.pipeline03_people_collector.transitions.process_page_content_transition import (
+from runners.pipeline03_people_collector.transitions.crawl_page_transition import (
     STOP_COST_CAP,
     STOP_MAX_PAGES,
     STOP_MESSAGES,
     STOP_TIME_BUDGET,
-    next_process_content_state,
-    should_stop_crawling,
+    next_crawl_state,
     should_stop_for_time_budget,
 )
 from runners.pipeline03_people_collector.transitions.main import _collect_pipeline_heuristics
@@ -20,7 +20,7 @@ from shared.utils.statuses import PipelineIssueType, PipelineRunErrorType
 def _next(**kwargs):
     """`elapsed_seconds` is required in production and irrelevant to most cases here."""
     kwargs.setdefault("elapsed_seconds", 0)
-    return next_process_content_state(**kwargs)
+    return next_crawl_state(**kwargs)
 
 
 def _limits(max_pages=10, cap="1.00"):
@@ -118,7 +118,7 @@ def test_no_stop_condition_continues_scrape():
         limits=_limits(max_pages=10, cap="1.00"),
         progress=_progress(current_data=2, required_data=5),
     )
-    assert state == PeopleCollectorStep.SCRAPE_PAGE
+    assert state == PeopleCollectorStep.CRAWL_PAGE
     assert error is None
 
 
@@ -174,7 +174,7 @@ def test_three_short_keeps_scraping():
             has_target_divisions=True,
         ),
     )
-    assert state == PeopleCollectorStep.SCRAPE_PAGE
+    assert state == PeopleCollectorStep.CRAWL_PAGE
 
 
 def test_tolerance_does_not_bypass_the_target_flags():
@@ -190,7 +190,7 @@ def test_tolerance_does_not_bypass_the_target_flags():
             has_target_divisions=True,
         ),
     )
-    assert state == PeopleCollectorStep.SCRAPE_PAGE
+    assert state == PeopleCollectorStep.CRAWL_PAGE
 
 
 # ── several organizations: each is done on its own count ──────────────────────
@@ -220,12 +220,12 @@ def test_every_organization_done_stops_the_crawl():
 def test_a_complete_council_does_not_stop_the_crawl_while_the_mayor_is_missing():
     """Seattle, 2026-08-17: a flat count read "Council complete, Mayor missing" as nearly done and
     crawled council pages to the cap looking for someone who was never on one."""
-    assert _organizations_state(council_found=10, mayor_found=0) == PeopleCollectorStep.SCRAPE_PAGE
+    assert _organizations_state(council_found=10, mayor_found=0) == PeopleCollectorStep.CRAWL_PAGE
 
 
 def test_a_large_organization_is_done_short_of_every_member():
     assert _organizations_state(council_found=8, mayor_found=1) == PeopleCollectorStep.CLEANUP
-    assert _organizations_state(council_found=7, mayor_found=1) == PeopleCollectorStep.SCRAPE_PAGE
+    assert _organizations_state(council_found=7, mayor_found=1) == PeopleCollectorStep.CRAWL_PAGE
 
 
 # ── the cap has to be visible outside the container log ───────────────────────
@@ -294,7 +294,7 @@ def test_time_left_keeps_the_crawl_running():
         elapsed_seconds=60,
     )
 
-    assert (state, reason) == (PeopleCollectorStep.SCRAPE_PAGE, None)
+    assert (state, reason) == (PeopleCollectorStep.CRAWL_PAGE, None)
 
 
 def test_finding_what_it_came_for_still_beats_the_clock():
@@ -331,14 +331,11 @@ def test_stopping_on_the_clock_is_not_an_issue():
 
 
 def test_a_crawl_whose_pages_fail_still_stops_on_the_clock():
-    """The clock was read only where a page is processed. A crawl that keeps failing requeues out of
-    `scrape_page_transition` and never returns there, so Estacada OR ran 52 minutes on it."""
-    assert should_stop_crawling(PeopleCollectorStep.SCRAPE_PAGE, TIME_BUDGET_SECONDS)
-
-
-def test_a_fetched_page_is_still_processed_before_the_clock_ends_the_crawl():
-    assert not should_stop_crawling(PeopleCollectorStep.PREPROCESS_PAGE_CONTENT, TIME_BUDGET_SECONDS)
-
-
-def test_a_failing_crawl_with_time_left_carries_on():
-    assert not should_stop_crawling(PeopleCollectorStep.SCRAPE_PAGE, 60)
+    """A crawl whose pages all fail never processes one, so nothing but the clock can end it."""
+    assert next_crawl_state(
+        processed_count=0,
+        current_cost=Decimal("0"),
+        limits=_limits(),
+        progress=_progress(),
+        elapsed_seconds=CRAWL_TIME_BUDGET_S,
+    ) == (PeopleCollectorStep.CLEANUP, STOP_TIME_BUDGET)
