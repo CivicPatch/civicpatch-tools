@@ -17,20 +17,20 @@ from ..steps.step_00_prepare_pipeline.prepare_pipeline import (
 from ..steps.step_01_research_municipality.research_municipality import (
     research_municipality,
 )
-from ..steps.step_02_scrape_page.scrape_page import scrape_page
-from ..steps.step_03_preprocess_page_content.preprocess_page_content import (
+from ..steps.step_02_crawl_page.step_02a_scrape_page.scrape_page import scrape_page
+from ..steps.step_02_crawl_page.step_02b_preprocess_page_content.preprocess_page_content import (
     preprocess_page_content,
 )
-from ..steps.step_04_process_page_content.process_page_content import (
+from ..steps.step_02_crawl_page.step_02c_process_page_content.process_page_content import (
     process_page_content,
 )
-from ..steps.step_04a_find_jurisdiction_url.find_jurisdiction_url import (
+from ..steps.step_03_find_jurisdiction_url.find_jurisdiction_url import (
     find_jurisdiction_url,
 )
-from ..steps.step_05_cleanup.cleanup import cleanup
-from ..steps.step_06_save_output.save_output import save_output
-from ..steps.step_07_send_error.send_error import send_error
-from ..steps.step_07_send_success.send_success import (
+from ..steps.step_04_cleanup.cleanup import cleanup
+from ..steps.step_05_save_output.save_output import save_output
+from ..steps.step_06_send_error.send_error import send_error
+from ..steps.step_06_send_success.send_success import (
     send_success,
 )
 from ..transitions.process_page_content_transition import (

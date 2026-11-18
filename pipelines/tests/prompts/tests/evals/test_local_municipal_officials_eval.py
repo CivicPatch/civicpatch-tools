@@ -17,7 +17,7 @@ from eval_utils import (
     write_comparison_report,
 )
 from runners.pipeline03_people_collector.schemas import PeopleArrayLLMResponseSchema
-from runners.pipeline03_people_collector.steps.step_04_process_page_content.organization_match import (
+from runners.pipeline03_people_collector.steps.step_02_crawl_page.step_02c_process_page_content.organization_match import (
     placed_names,
 )
 from services.open_router.llm import run_prompt as run_together_prompt

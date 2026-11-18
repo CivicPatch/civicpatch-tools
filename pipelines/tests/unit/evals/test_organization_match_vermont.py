@@ -7,7 +7,7 @@ import pytest
 import yaml
 from accuracy import build_eval_taxonomy
 
-from runners.pipeline03_people_collector.steps.step_04_process_page_content.organization_match import (
+from runners.pipeline03_people_collector.steps.step_02_crawl_page.step_02c_process_page_content.organization_match import (
     match_by_words,
     place_words,
     with_role_aliases,

@@ -15,7 +15,7 @@ from typing import Callable, Iterable
 
 from runners.pipeline03_people_collector.schemas import Link, LinkFrontier, LinkStatus, OrganizationNeed
 from shared.utils.url_utils import canonical_url
-from runners.pipeline03_people_collector.steps.step_04_process_page_content.organization_progress import (
+from runners.pipeline03_people_collector.steps.step_02_crawl_page.step_02c_process_page_content.organization_progress import (
     required_to_be_done,
 )
 from runners.pipeline03_people_collector.utils.link_discovery import (

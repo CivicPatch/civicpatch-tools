@@ -8,7 +8,7 @@ from ..schemas import (
   LinkStatus,
   PeopleCollectorStep,
 )
-from ..steps.step_04_process_page_content.organization_progress import is_done
+from ..steps.step_02_crawl_page.step_02c_process_page_content.organization_progress import is_done
 from runners.pipeline03_people_collector.constants import (
     CRAWL_TIME_BUDGET_S,
     DATA_REQUIREMENT_TOLERANCE,
