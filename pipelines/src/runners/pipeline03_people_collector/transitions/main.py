@@ -2,7 +2,19 @@ import time
 import traceback
 
 import httpx
+from shared.schemas import PipelineRunLimits
+from shared.utils.statuses import (
+    PipelineIssueType,
+    PipelineRunErrorType,
+    PipelineRunStatus,
+)
+from shared.utils.url_utils import same_domain
+from utils import cost_utils
+from utils.log_utils import PipelineRunLogger
+
 from ..schemas import (
+    CrawlPageResult,
+    Link,
     LinkFrontier,
     LinkStatus,
     PeopleCollectorContext,
@@ -17,12 +29,9 @@ from ..steps.step_00_prepare_pipeline.prepare_pipeline import (
 from ..steps.step_01_research_municipality.research_municipality import (
     research_municipality,
 )
-from ..steps.step_02_crawl_page.step_02a_scrape_page.scrape_page import scrape_page
-from ..steps.step_02_crawl_page.step_02b_preprocess_page_content.preprocess_page_content import (
-    preprocess_page_content,
-)
+from ..steps.step_02_crawl_page.crawl_page import crawl_page
 from ..steps.step_02_crawl_page.step_02c_process_page_content.process_page_content import (
-    process_page_content,
+    get_or_create_step,
 )
 from ..steps.step_03_find_jurisdiction_url.find_jurisdiction_url import (
     find_jurisdiction_url,
@@ -33,25 +42,17 @@ from ..steps.step_06_send_error.send_error import send_error
 from ..steps.step_06_send_success.send_success import (
     send_success,
 )
-from ..transitions.process_page_content_transition import (
+from ..transitions.crawl_page_transition import (
     STOP_COST_CAP,
-    STOP_TIME_BUDGET,
-    is_short_of_expected,
     STOP_MESSAGES,
     describe_progress,
-    next_process_content_state,
-    should_stop_crawling,
+    is_short_of_expected,
+    next_crawl_state,
 )
 from ..utils.links import (
-    get_link_status_by_url,
     get_links_with_status,
     get_next_link_with_status,
 )
-from shared.schemas import PipelineRunLimits
-from shared.utils.statuses import PipelineIssueType, PipelineRunErrorType, PipelineRunStatus
-from shared.utils.url_utils import same_domain
-from utils import cost_utils
-from utils.log_utils import PipelineRunLogger
 
 
 def _next_context(
@@ -89,6 +90,10 @@ async def research_municipality_transition(
     next_context = _next_context(
         context, progress=progress, research_municipality_step=result
     )
+    # From here on the crawl always has progress to read: 0 found of what research expects.
+    next_context = _next_context(
+        next_context, process_page_content_step=get_or_create_step(next_context)
+    )
 
     assert next_context.data.research_municipality_step is not None, (
         "should never happen — research_municipality_step must be set after research_municipality"
@@ -102,7 +107,7 @@ async def research_municipality_transition(
             next_context, frontier=next_context.data.frontier.add_front(source_urls)
         )
 
-    return next_context, PeopleCollectorStep.SCRAPE_PAGE
+    return next_context, PeopleCollectorStep.CRAWL_PAGE
 
 
 def _classify_all_failed_error(frontier: LinkFrontier) -> PipelineRunErrorType:
@@ -139,144 +144,95 @@ def _no_usable_pages_outcome(
     ), PipelineRunStatus.SEND_ERROR
 
 
-async def scrape_page_transition(
-    _: PipelineRunLimits,
-    logger: PipelineRunLogger,
-    context: PeopleCollectorContext,
-    _api_client: httpx.AsyncClient,
-) -> tuple[PeopleCollectorContext, PeopleCollectorState]:
-    page_to_scrape = get_next_link_with_status(
-        context.data.frontier, LinkStatus.PENDING
-    )
-
-    if not page_to_scrape:
-        logger.info("No pending links left to scrape.")
-        unprocessable_links = get_links_with_status(
-            context.data.frontier,
-            [LinkStatus.ERROR, LinkStatus.PREPROCESSED_NO_CONTENT],
-        )
-        all_failed = bool(context.data.frontier) and len(unprocessable_links) == len(
-            context.data.frontier
-        )
-        if all_failed:
-            return _no_usable_pages_outcome(context)
-        return context, PeopleCollectorStep.CLEANUP
-
-    frontier, final_url = await scrape_page(context, page_to_scrape)
-    progress = calculate_progress_percentage(context.data, 3)
-    next_context = _next_context(context, progress=progress, frontier=frontier)
-
-    is_root_link = page_to_scrape.url == context.data.config.url
-    if is_root_link and not same_domain(final_url, page_to_scrape.url):
-        logger.info(f"Domain redirected: {page_to_scrape.url} -> {final_url}")
-        new_config = context.data.config.model_copy(update={"url": final_url})
-        next_context = _next_context(next_context, config=new_config)
-
-    link_status = get_link_status_by_url(frontier, page_to_scrape.url)
-    next_state = (
-        PeopleCollectorStep.PREPROCESS_PAGE_CONTENT
-        if link_status == LinkStatus.SCRAPED
-        else PeopleCollectorStep.SCRAPE_PAGE
-    )
-    if should_stop_crawling(next_state, time.time() - context.created_at):
-        return _next_context(next_context, stop_reason=STOP_TIME_BUDGET), PeopleCollectorStep.CLEANUP
-    return next_context, next_state
-
-
-async def preprocess_page_content_transition(
-    _: PipelineRunLimits,
-    logger: PipelineRunLogger,
-    context: PeopleCollectorContext,
-    _api_client: httpx.AsyncClient,
-) -> tuple[PeopleCollectorContext, PeopleCollectorState]:
-    page_to_preprocess = get_next_link_with_status(
-        context.data.frontier, LinkStatus.SCRAPED
-    )
-
-    if not page_to_preprocess:
-        logger.info("No scraped links left to preprocess.")
-        preprocessed_links = get_links_with_status(
-            context.data.frontier, [LinkStatus.PREPROCESSED]
-        )
-        if not preprocessed_links:
-            return _no_usable_pages_outcome(context)
-        return context, PeopleCollectorStep.PROCESS_PAGE_CONTENT
-
-    frontier, result = preprocess_page_content(context, page_to_preprocess)
-    progress = calculate_progress_percentage(context.data, 4)
-    next_context = _next_context(
-        context,
-        progress=progress,
-        frontier=frontier,
-        preprocess_page_content_step=result,
-    )
-
-    link_status = get_link_status_by_url(frontier, page_to_preprocess.url)
-    next_state = (
-        PeopleCollectorStep.PROCESS_PAGE_CONTENT
-        if link_status == LinkStatus.PREPROCESSED
-        else PeopleCollectorStep.SCRAPE_PAGE
-    )
-    return next_context, next_state
-
-
-async def process_page_content_transition(
+async def crawl_page_transition(
     limits: PipelineRunLimits,
     logger: PipelineRunLogger,
     context: PeopleCollectorContext,
     _api_client: httpx.AsyncClient,
 ) -> tuple[PeopleCollectorContext, PeopleCollectorState]:
-    preprocessed_links = get_links_with_status(
-        context.data.frontier, [LinkStatus.PREPROCESSED]
-    )
-    if len(preprocessed_links) == 0:
-        return context, PeopleCollectorStep.CLEANUP
+    page = get_next_link_with_status(context.data.frontier, LinkStatus.PENDING)
+    if not page:
+        logger.info("No pending links left to crawl.")
+        return _no_pending_pages_outcome(context)
 
-    page_to_process = preprocessed_links[0]
     try:
-        frontier, result = await process_page_content(context, page_to_process)
+        result = await crawl_page(context, page)
     except Exception as e:
-        logger.error(f"process_page_content failed: {e}")
+        logger.error(f"crawl_page failed: {e}")
         # The message goes in the detail, not the step: `error_step` becomes `issues.issue_type`,
-        # and a raw exception string there mints a new issue kind per distinct message —
-        # `OPEN_ROUTER_TOKEN is not set` was one. None lets the server apply `pipeline_error`.
+        # and a raw exception string there mints a new issue kind per distinct message.
         return _next_context(
             context,
             error_step=None,
             error_detail={"error": f"{type(e).__name__}: {e}"},
         ), PipelineRunStatus.SEND_ERROR
 
-    progress = calculate_progress_percentage(context.data, 5)
-    next_context = _next_context(
-        context, progress=progress, frontier=frontier, process_page_content_step=result
-    )
+    next_context = _with_crawl_result(logger, context, page, result)
+    return _decide_after_page(limits, logger, next_context)
 
-    links_processed = get_links_with_status(
-        next_context.data.frontier, [LinkStatus.PROCESSED_IRRELEVANT, LinkStatus.DONE]
+
+def _no_pending_pages_outcome(
+    context: PeopleCollectorContext,
+) -> tuple[PeopleCollectorContext, PeopleCollectorState]:
+    unprocessable_links = get_links_with_status(
+        context.data.frontier, [LinkStatus.ERROR, LinkStatus.PREPROCESSED_NO_CONTENT]
+    )
+    all_failed = bool(context.data.frontier) and len(unprocessable_links) == len(
+        context.data.frontier
+    )
+    if all_failed:
+        return _no_usable_pages_outcome(context)
+    return context, PeopleCollectorStep.CLEANUP
+
+
+def _with_crawl_result(
+    logger: PipelineRunLogger,
+    context: PeopleCollectorContext,
+    page: Link,
+    result: CrawlPageResult,
+) -> PeopleCollectorContext:
+    next_context = _next_context(
+        context,
+        progress=calculate_progress_percentage(context.data, 3),
+        frontier=result.frontier,
+        preprocess_page_content_step=result.preprocess_page_content_step,
+        process_page_content_step=result.process_page_content_step,
+    )
+    is_root_link = page.url == context.data.config.url
+    if is_root_link and not same_domain(result.final_url, page.url):
+        logger.info(f"Domain redirected: {page.url} -> {result.final_url}")
+        new_config = context.data.config.model_copy(update={"url": result.final_url})
+        next_context = _next_context(next_context, config=new_config)
+    return next_context
+
+
+def _decide_after_page(
+    limits: PipelineRunLimits,
+    logger: PipelineRunLogger,
+    context: PeopleCollectorContext,
+) -> tuple[PeopleCollectorContext, PeopleCollectorState]:
+    assert context.data.process_page_content_step is not None, (
+        "should never happen: research_municipality_transition sets process_page_content_step"
+    )
+    progress = context.data.process_page_content_step.progress
+    processed_count = len(
+        get_links_with_status(
+            context.data.frontier, [LinkStatus.PROCESSED_IRRELEVANT, LinkStatus.DONE]
+        )
     )
     current_cost = cost_utils.total_cost(context.pipeline_run_id)
     elapsed_seconds = time.time() - context.created_at
     logger.info(
-        describe_progress(
-            processed_count=len(links_processed),
-            current_cost=current_cost,
-            limits=limits,
-            progress=result.progress,
-            elapsed_seconds=elapsed_seconds,
-        )
+        describe_progress(processed_count, current_cost, limits, progress, elapsed_seconds)
     )
-    next_state, stop_reason = next_process_content_state(
-        processed_count=len(links_processed),
-        current_cost=current_cost,
-        limits=limits,
-        progress=result.progress,
-        elapsed_seconds=elapsed_seconds,
+    next_state, stop_reason = next_crawl_state(
+        processed_count, current_cost, limits, progress, elapsed_seconds
     )
     # Carried on the context, not just logged: `review_output_transition` turns a cost-cap
-    # stop into an issue the reviewer sees. A log line reached nobody outside the container.
+    # stop into an issue the reviewer sees.
     if stop_reason:
         logger.warning(STOP_MESSAGES[stop_reason])
-    return _next_context(next_context, stop_reason=stop_reason), next_state
+    return _next_context(context, stop_reason=stop_reason), next_state
 
 
 async def cleanup_transition(
@@ -430,7 +386,7 @@ async def find_jurisdiction_url_transition(
         next_context,
         config=new_config,
         frontier=LinkFrontier.from_urls([discovered]),
-    ), PeopleCollectorStep.SCRAPE_PAGE
+    ), PeopleCollectorStep.CRAWL_PAGE
 
 
 # TODO: steps can go backwards, so progress may decrease at certain points
@@ -483,9 +439,7 @@ def _collect_pipeline_heuristics(
 TRANSITION_MAP = {
     PipelineRunStatus.INIT: start_job,
     PeopleCollectorStep.RESEARCH_MUNICIPALITY: research_municipality_transition,
-    PeopleCollectorStep.SCRAPE_PAGE: scrape_page_transition,
-    PeopleCollectorStep.PREPROCESS_PAGE_CONTENT: preprocess_page_content_transition,
-    PeopleCollectorStep.PROCESS_PAGE_CONTENT: process_page_content_transition,
+    PeopleCollectorStep.CRAWL_PAGE: crawl_page_transition,
     PeopleCollectorStep.CLEANUP: cleanup_transition,
     PeopleCollectorStep.REVIEW_OUTPUT: review_output_transition,
     PeopleCollectorStep.SAVE_OUTPUT: save_output_transition,
