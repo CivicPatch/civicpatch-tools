@@ -1,7 +1,7 @@
 import pytest
 from runners.pipeline03_people_collector.schemas import Link, LinkFrontier, LinkStatus
 from runners.pipeline03_people_collector.transitions.main import _classify_all_failed_error
-from runners.pipeline03_people_collector.steps.step_02_scrape_page.scrape_exceptions import NavigationFailureReason
+from runners.pipeline03_people_collector.steps.step_02_crawl_page.step_02a_scrape_page.scrape_exceptions import NavigationFailureReason
 from shared.utils.statuses import PipelineRunErrorType
 
 
