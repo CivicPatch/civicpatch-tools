@@ -7,7 +7,7 @@ from typing import Any, Callable, List, Optional
 from pydantic import BaseModel
 from shared.schemas import FoundBy
 from shared.utils.layered_config import GovernedBy
-from shared.utils.run_reports import GoverningLawReport, OrganizationsRunReport, RunOutcome, TriedUrl
+from shared.utils.run_reports import GoverningLawReport, OrganizationsRunReport, RunFailure, RunOutcome, TriedUrl
 from shared.utils.statuses import PipelineIssueType, PipelineRunKind, PipelineRunStatus
 
 
@@ -76,14 +76,29 @@ def organizations_issue(report: OrganizationsRunReport) -> Optional[Issue]:
     return None
 
 
+def crash_issue(failure: Optional[RunFailure]) -> Optional[Issue]:
+    """A step that raised, as the engine recorded it. People collector reports from SEND_ERROR,
+    before its context says ERROR, so this reads the failure alone; None when nothing raised."""
+    if failure is None:
+        return None
+    detail = FailureDetail(error=failure.error, failed_state=failure.failed_state)
+    return Issue(issue_type=PipelineIssueType.PIPELINE_ERROR, data=detail.model_dump(mode="json"))
+
+
+def unknown_failure_issue() -> Issue:
+    detail = FailureDetail(error=UNKNOWN_FAILURE)
+    return Issue(issue_type=PipelineIssueType.PIPELINE_ERROR, data=detail.model_dump(mode="json"))
+
+
 def failure_issue(outcome: RunOutcome) -> Optional[Issue]:
     """A run that ended in error files `pipeline_error`, whatever its kind; nothing else it reports
     can be trusted then."""
     if outcome.current_state != PipelineRunStatus.ERROR:
         return None
-    failure = outcome.failure
-    detail = FailureDetail(error=failure.error, failed_state=failure.failed_state) if failure else FailureDetail(error=UNKNOWN_FAILURE)
-    return Issue(issue_type=PipelineIssueType.PIPELINE_ERROR, data=detail.model_dump(mode="json"))
+    crash = crash_issue(outcome.failure)
+    if crash is not None:
+        return crash
+    return unknown_failure_issue()
 
 
 def run_issue(kind: PipelineRunKind, context: dict[str, Any]) -> Optional[Issue]:
