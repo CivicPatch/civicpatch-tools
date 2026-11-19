@@ -310,6 +310,11 @@ def test_get_by_request_200_for_open_pr(client):
             new_callable=AsyncMock,
             return_value=None,
         ),
+        patch(
+            "database.source_pages.organizations_read_by_changesets",
+            new_callable=AsyncMock,
+            return_value={},
+        ),
     ):
         response = client.get(f"/pull_requests/by-request/{TEST_CHANGESET_ID}")
 
@@ -321,6 +326,8 @@ def test_get_by_request_200_for_open_pr(client):
     assert data["has_prev"] is False
     # never scraped → baseline mode
     assert data["mode"] == "baseline"
+    # No page row and no record names an organization: nothing on the card is this scrape's.
+    assert data["organizations_read"] == []
 
 
 @pytest.mark.unit
@@ -342,6 +349,11 @@ def test_get_by_request_200_for_merged_pr(client):
             "database.jurisdictions.has_ever_collected",
             new_callable=AsyncMock,
             return_value=datetime.datetime(2026, 1, 1, tzinfo=datetime.timezone.utc),
+        ),
+        patch(
+            "database.source_pages.organizations_read_by_changesets",
+            new_callable=AsyncMock,
+            return_value={},
         ),
     ):
         response = client.get(f"/pull_requests/by-request/{TEST_CHANGESET_ID}")

@@ -185,11 +185,14 @@ def _neediest_served(link: Link, needs: List[OrganizationNeed]) -> Optional[Orga
 def _pending_sort_key(
     link: Link, needs: List[OrganizationNeed], names: List[str], designations: List[str]
 ) -> tuple:
+    if link.is_source_url:
+        return (0,)
     neediest = _neediest_served(link, needs)
     signals = _compute_link_signals(
         link.url, link.text or "", designations, names=names
     )
     return (
+        1,
         -(neediest.shortfall if neediest else 0.0),
         -int(neediest is not None and _serves(link, neediest.missing_terms)),
         -int(signals.keyword is not None),

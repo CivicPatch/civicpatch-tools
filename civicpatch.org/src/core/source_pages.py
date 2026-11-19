@@ -1,5 +1,6 @@
 """A run's frontier as `source_pages` rows: one per page the run tried to fetch."""
 
+from datetime import datetime
 from typing import Optional
 
 from pydantic import BaseModel
@@ -41,6 +42,20 @@ class SourcePageRow(BaseModel):
     relevant_urls: Optional[list[str]]
     heuristics_failures: list[str]
     unchanged_since_source_page_id: Optional[str] = None
+
+
+class CachedPage(BaseModel):
+    """One page as a run cached it: what a card's debug link points into."""
+
+    jurisdiction_ocdid: str
+    source_url: str
+    pipeline_run_id: str
+    cache_path: str
+    # The row's `created_at`: when the pipeline stored this page's cache.
+    cached_at: datetime
+    # A batch passes several cards' runs, so `cached_pages_for` needs to tell an open run's
+    # cached page from one a published changeset stands behind.
+    is_published: bool
 
 
 def frontier_links(workflow_context: dict) -> list[FrontierLink]:

@@ -4,6 +4,8 @@ import {
   byRank,
   foundNobody,
   issueTypesOf,
+  newestCachedAt,
+  organizationMeta,
   runsOf,
   sectionsByOrganization,
   sourceMapFor,
@@ -173,6 +175,14 @@ describe("sourceMapFor — a url keeps its number everywhere", () => {
     ]);
     expect(map.get("shared.gov")?.colorClass).toBe("color-1");
     expect(map.get("other.gov")?.colorClass).toBe("color-2");
+  });
+  it("carries the copy's date, so a section can age its evidence", () => {
+    const map = sourceMapFor(
+      [withSources("a", ["one.gov"]), withSources("b", ["two.gov"])],
+      [{ url: "one.gov", cached_at: new Date(2026, 9, 23, 12).toISOString() } as never],
+    );
+    expect(map.get("one.gov")?.cachedAt).toBe(new Date(2026, 9, 23, 12).toISOString());
+    expect(map.get("two.gov")?.cachedAt).toBeNull();
   });
   it("ignores a person the scrape lost, who has no new-side record", () => {
     const map = sourceMapFor([
@@ -410,5 +420,53 @@ describe("sectionsByOrganization — a section per organization, roles inside it
       "mayors-office",
       "council",
     ]);
+  });
+});
+
+describe("organizationMeta — whether this scrape looked at an organization", () => {
+  const entry = (personId: string, urls: string[]) => ({
+    card: card({ personId, newRecord: { source_urls: urls } as never }),
+    office: null,
+    leaving: false,
+  });
+  // Local noon, so the displayed day does not shift with the machine's timezone.
+  const at = (month: number, day: number) => new Date(2026, month - 1, day, 12).toISOString();
+  const sources = (dates: Record<string, string>) =>
+    sourceMapFor(
+      Object.keys(dates).map((url) => card({ newRecord: { source_urls: [url] } as never })),
+      Object.entries(dates).map(([url, cached_at]) => ({ url, cached_at }) as never),
+    );
+
+  it("says so, and dates the copy, when the page came from an earlier scrape", () => {
+    const map = sources({ "board.gov": at(10, 23) });
+    expect(organizationMeta("org-1", [entry("ana", ["board.gov"])] as never, [], map)).toBe(
+      "no page found this scrape — people from the 10/23/2026 copy",
+    );
+  });
+
+  it("keeps the plain count when this scrape read the organization", () => {
+    const map = sources({ "board.gov": at(10, 23) });
+    expect(
+      organizationMeta("org-1", [entry("ana", ["board.gov"])] as never, ["org-1"], map),
+    ).toBe("1 person");
+  });
+
+  it("keeps the plain count when there is no copy to date at all", () => {
+    const map = sources({});
+    expect(organizationMeta("org-1", [entry("ana", [])] as never, [], map)).toBe("1 person");
+  });
+
+  it("leaves the existing sentence for a body the scrape found nobody in", () => {
+    const map = sources({ "board.gov": at(10, 23) });
+    const gone = { ...entry("ana", ["board.gov"]), leaving: true };
+    expect(organizationMeta("org-1", [gone] as never, [], map)).toBe(
+      "not found in this scrape, nothing here changes",
+    );
+  });
+
+  it("dates the newest of the copies behind a section's people", () => {
+    const map = sources({ "old.gov": at(10, 23), "newer.gov": at(11, 2) });
+    const entries = [entry("ana", ["old.gov"]), entry("bo", ["newer.gov"])];
+    expect(newestCachedAt(entries as never, map)).toBe(at(11, 2));
   });
 });

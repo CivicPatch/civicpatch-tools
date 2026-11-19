@@ -37,6 +37,8 @@ export const ReviewMode = {
 export type ReviewModeValue = typeof ReviewMode[keyof typeof ReviewMode];
 
 // The data for the entry currently displayed in the review card.
+import { type ReviewSource } from "../../schemas/review-card.js";
+
 export type CurrentEntry = {
   changeset_id: string;
   jurisdiction: { ocdid: string | null; name: string | null; path?: string | null; website_url?: string | null };
@@ -45,7 +47,8 @@ export type CurrentEntry = {
   pr_people: { existing: any[]; proposed: any[] };
   overriddenSourceValues?: Record<string, Record<string, unknown>>;
   review_data: any;
-  source_content_urls: any[];
+  source_content_urls: ReviewSource[];
+  organizations_read: string[];
   is_read_only: boolean;
   has_next: boolean;
 };

@@ -2,7 +2,7 @@
 `source_records`."""
 
 from core.source_page_outcomes import ScrapePageRow
-from core.source_pages import SourcePageRow
+from core.source_pages import CachedPage, SourcePageRow
 from database.database import get_pool
 from schemas.claims import EntityType
 from shared.schemas import PublishedSourcePage, PersonSourceRecord
@@ -31,6 +31,23 @@ _PUBLISHED_SOURCE_PAGES = f"""
       AND cardinality(source_pages.heuristics_failures) = 0
       AND {_NOT_WITHDRAWN.format(table="source_pages")}
     ORDER BY source_pages.source_url, source_pages.created_at DESC
+"""
+
+# A cached page a card may link to: its own run stored it, or its changeset published it.
+_CACHED_PAGES = f"""
+    SELECT source_pages.jurisdiction_ocdid, source_pages.source_url,
+           source_pages.pipeline_run_id::text, source_pages.cache_path,
+           source_pages.created_at AS cached_at,
+           changesets.published_at IS NOT NULL AS is_published
+    FROM source_pages
+    LEFT JOIN changesets ON changesets.id = source_pages.changeset_id
+    WHERE source_pages.jurisdiction_ocdid = ANY(%(jurisdiction_ocdids)s)
+      AND source_pages.cache_path IS NOT NULL
+      AND (
+          source_pages.pipeline_run_id::text = ANY(%(pipeline_run_ids)s)
+          OR (changesets.published_at IS NOT NULL
+              AND {_NOT_WITHDRAWN.format(table="source_pages")})
+      )
 """
 
 _PUBLISHED_RECORDS = f"""
@@ -98,6 +115,14 @@ _ORGANIZATIONS_READ = """
     SELECT unnest(organization_ids)::text FROM source_pages WHERE changeset_id = %(changeset_id)s
 """
 
+_ORGANIZATIONS_READ_BY_CHANGESET = """
+    SELECT changeset_id::text, organization_id::text FROM source_records
+    WHERE changeset_id::text = ANY(%(changeset_ids)s) AND organization_id IS NOT NULL
+    UNION
+    SELECT changeset_id::text, unnest(organization_ids)::text FROM source_pages
+    WHERE changeset_id::text = ANY(%(changeset_ids)s)
+"""
+
 
 async def organizations_read_by_changeset(cur, changeset_id: str) -> list[str]:
     """Which bodies this changeset read a page for: any a record names, and any a page row
@@ -107,12 +132,49 @@ async def organizations_read_by_changeset(cur, changeset_id: str) -> list[str]:
     return [row[0] for row in await cur.fetchall()]
 
 
+async def organizations_read_by_changesets(changeset_ids: list[str]) -> dict[str, list[str]]:
+    """The singular read, for a page of cards: which bodies each changeset read a page for."""
+    if not changeset_ids:
+        return {}
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            _ORGANIZATIONS_READ_BY_CHANGESET, {"changeset_ids": changeset_ids}
+        )
+        rows = await cur.fetchall()
+    read: dict[str, list[str]] = {}
+    for changeset_id, organization_id in rows:
+        read.setdefault(changeset_id, []).append(organization_id)
+    return read
+
+
 async def get_scrape_pages(changeset_id: str) -> list[ScrapePageRow]:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(_SCRAPE_PAGES, {"changeset_id": changeset_id})
         columns = [column.name for column in cur.description or []]
         return [ScrapePageRow(**dict(zip(columns, row))) for row in await cur.fetchall()]
+
+
+async def get_cached_pages(
+    jurisdiction_ocdids: list[str], pipeline_run_ids: list[str]
+) -> list[CachedPage]:
+    """Every cached page the cards in these jurisdictions may link to: their own runs', and
+    the ones whose run published the page."""
+    if not jurisdiction_ocdids:
+        return []
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            _CACHED_PAGES,
+            {
+                "jurisdiction_ocdids": jurisdiction_ocdids,
+                "pipeline_run_ids": pipeline_run_ids,
+                "entity_type": EntityType.SOURCE_PAGE.value,
+            },
+        )
+        columns = [column.name for column in cur.description or []]
+        return [CachedPage(**dict(zip(columns, row))) for row in await cur.fetchall()]
 
 
 async def published_source_pages(jurisdiction_ocdid: str) -> list[PublishedSourcePage]:

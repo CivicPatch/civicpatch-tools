@@ -6,13 +6,17 @@ import { MODAL_SIZE_WIDE } from "../basic/modal.js";
 import "../basic/modal.js";
 import "../civ-tab-bar/civ-tab-bar.js";
 import { pageText } from "./page-text.js";
+import { dateStringToFriendly } from "../../utils/date-utils.js";
 
 // `markdown` and `html` are the debug bucket's copies of the page: what the pipeline read, and
-// what it fetched. Admins only; null for everyone else, who never open this modal.
+// what it fetched. Admins only; null for everyone else, who never open this modal. `cached_at`
+// and `is_cached_by_this_scrape` say whether the copy in front of the reviewer is this scrape's.
 export type SourceContentUrl = {
   url: string;
   markdown: string | null;
   html: string | null;
+  cached_at: string | null;
+  is_cached_by_this_scrape: boolean;
 };
 
 type SourceContentDebugModalHost = HTMLElement & {
@@ -84,6 +88,13 @@ function SourceContentDebugModal(host: SourceContentDebugModalHost) {
       target="_blank"
       rel="noopener noreferrer"
     >Live page</a>
+    ${sourceContentUrls[safeTab].cached_at &&
+    !sourceContentUrls[safeTab].is_cached_by_this_scrape
+      ? html`<p class="source-content-debug-modal__stale">
+          not read by this scrape — page as of
+          ${dateStringToFriendly(sourceContentUrls[safeTab].cached_at)}
+        </p>`
+      : null}
     <div class="source-content-debug-modal__columns">
       <section class="source-content-debug-modal__column">
         <h3 class="source-content-debug-modal__heading">

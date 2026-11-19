@@ -66,6 +66,8 @@ function ReviewCardBody(host: ReviewCardBodyHost) {
       .claims=${card.claims}
       .overriddenSourceValues=${card.overridden_source_values}
       .organizations=${card.organizations}
+      .sources=${card.sources}
+      .organizationsRead=${card.organizations_read}
     ></review-overview>
   `;
 }

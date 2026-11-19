@@ -844,7 +844,7 @@ def test_add_relevant_urls_matches_organizations_on_the_path_not_the_domain():
         organization_id="council", shortfall=1.0, terms=["cityofbaycity"], missing_terms=[]
     )
 
-    assert _pending_sort_key(link, [need], [], [])[0] == 0.0
+    assert _pending_sort_key(link, [need], [], [])[1] == 0.0
 
 
 def test_add_relevant_urls_name_match_beats_designation_match():

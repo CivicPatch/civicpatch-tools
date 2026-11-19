@@ -75,7 +75,8 @@ export async function buildEntry(
     // membership — the post does not exist yet — so this is the only thing that can name
     // the post they would land in.
     review_data: review?.data ?? null,
-    source_content_urls: data.sources,
+    source_content_urls: data.sources ?? [],
+    organizations_read: data.organizations_read ?? [],
     is_read_only: isTerminalStatus(data.pr?.status),
     has_next: data.has_next ?? false,
   };

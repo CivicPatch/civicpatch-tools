@@ -13,6 +13,7 @@ import "./report-issue-button.js";
 import { useReviewPeople } from "./use-review-people.js";
 import { updateParams } from "./use-review-session.js";
 import { useLocalStorage } from "../../hooks/use-local-storage.js";
+import { type ReviewSource } from "../../schemas/review-card.js";
 import {
   issueChecksKey,
   toggleCheck,
@@ -69,7 +70,8 @@ type CurrentEntry = {
   claims?: Record<string, PersonClaim[]>;
   overriddenSourceValues?: Record<string, Record<string, unknown>>;
   review_data: any;
-  source_content_urls: any[];
+  source_content_urls: ReviewSource[];
+  organizations_read: string[];
   is_read_only: boolean;
   has_next: boolean;
 };
@@ -148,8 +150,9 @@ function ReviewSession(host: ReviewSessionHost) {
     mergePeople,
   } = useReviewPeople(currentEntry);
   const [debugOpen, setDebugOpen] = useState(false);
+  // Admins only get the copies; a card with none would open a modal that can only fail.
   const hasSourceContent = Boolean(
-    source_content_urls && source_content_urls.length > 0,
+    source_content_urls?.some((source) => source.markdown || source.html),
   );
   const changesetId = currentEntry?.changeset_id ?? null;
   const allIssues = review_data?.issues ?? [];
@@ -403,6 +406,8 @@ function ReviewSession(host: ReviewSessionHost) {
         .claims=${claims ?? {}}
         .overriddenSourceValues=${overriddenSourceValues ?? {}}
         .organizations=${organizations}
+        .sources=${source_content_urls}
+        .organizationsRead=${currentEntry?.organizations_read ?? []}
       ></review-overview>
       <review-sidebar
         .issues=${allIssues}

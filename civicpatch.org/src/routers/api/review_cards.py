@@ -41,7 +41,11 @@ from schemas.common import (
 from services.claims import claims_for_people
 from services.review_summary import review_summary_for_changeset
 import services.review_cards as review_cards_service
-from services.review_sources import build_sources, scrape_page_with_cached_copies, without_debug_links
+from services.review_sources import (
+    scrape_page_with_cached_copies,
+    sources_for_card,
+    without_debug_links,
+)
 from services.roster import card_sides
 
 logger = logging.getLogger(__name__)
@@ -230,16 +234,17 @@ def get_router(api_key_header):
         # Both sides from the same fold (R3): `existing` is what the facts derive today,
         # `proposed` what they derive with this changeset counted as published, so the card
         # cannot show a preview its own publish would disagree with.
-        sides, has_ever_collected = await asyncio.gather(
+        sides, has_ever_collected, organizations_read = await asyncio.gather(
             card_sides(changeset_id, jurisdiction_ocdid),
             jurisdictions_db.has_ever_collected(jurisdiction_ocdid),
+            source_pages_db.organizations_read_by_changesets([changeset_id]),
         )
         existing, proposed, overridden = sides
         unique_source_urls = list(
             {url for person in proposed for url in (person.get("source_urls") or [])}
         )
-        sources = build_sources(
-            result["pipeline_run_id"], jurisdiction_ocdid, unique_source_urls
+        sources = await sources_for_card(
+            jurisdiction_ocdid, result["pipeline_run_id"], unique_source_urls
         )
         if not has_at_least(user.role, UserRole.ADMINS):
             sources = without_debug_links(sources)
@@ -267,6 +272,7 @@ def get_router(api_key_header):
                 # with what the source had said.
                 "overridden_source_values": overridden,
                 "sources": sources,
+                "organizations_read": organizations_read.get(changeset_id, []),
             }
         }
 

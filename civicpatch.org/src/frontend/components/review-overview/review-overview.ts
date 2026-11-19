@@ -21,15 +21,21 @@ import {
 import {
   runsOf,
   foundNobody,
+  organizationMeta,
   sectionsByOrganization,
   sourceMapFor,
   tallyOf,
   type CardInOrganization,
   type SourceMap,
 } from "./overview-model.js";
+import { type ReviewSource } from "../../schemas/review-card.js";
 
 export interface ReviewOverviewProps {
   cards: PersonCard[];
+  // The card's sources and the organizations this scrape read: without them a section cannot
+  // say that its people are older evidence.
+  sources?: ReviewSource[];
+  organizationsRead?: string[];
   isReadOnly: boolean;
   onOpenPerson: (card: PersonCard, fieldKey: string | null) => void;
   onAdd?: () => void;
@@ -212,15 +218,17 @@ function renderOrganization(
   const name =
     props.organizations?.find((organization) => organization.id === organizationId)?.name ??
     "This jurisdiction";
-  const people = new Set(entries.map((entry) => entry.card.personId)).size;
   return html`
     <section class="panel review-overview__organization">
       <div class="panel__cap">
         <b>${name}</b>
         <span class="jurisdiction-section__meta">
-          ${foundNobody(entries)
-            ? "not found in this scrape, nothing here changes"
-            : `${people} ${people === 1 ? "person" : "people"}`}
+          ${organizationMeta(
+            organizationId,
+            entries,
+            props.organizationsRead ?? [],
+            sources,
+          )}
         </span>
       </div>
       <div class="rgroup-list">
@@ -236,7 +244,7 @@ function renderOrganization(
 function ReviewOverview(props: ReviewOverviewProps) {
   const { cards, isReadOnly, onAdd, roles } = props;
   const list = cards ?? [];
-  const sources = sourceMapFor(list);
+  const sources = sourceMapFor(list, props.sources);
   const roleOrder = roles.map((role) => role.id);
   const sections = sectionsByOrganization(
     list,
