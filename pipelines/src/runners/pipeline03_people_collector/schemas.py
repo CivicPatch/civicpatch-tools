@@ -357,7 +357,8 @@ class PeopleCollectorData(BaseModel):
 
     research_municipality_step: Optional[ResearchMunicipalityStep] = None
     preprocess_page_content_step: Optional[PreprocessPageContentStep] = None
-    process_page_content_step: Optional[ProcessPageContentStep] = None
+    # Empty until research sets the expected count; nothing reads it before then.
+    process_page_content_step: ProcessPageContentStep = ProcessPageContentStep()
     find_jurisdiction_url_step: Optional[FindJurisdictionUrlStep] = None
     send_success_step: Optional[MaybeSendToGitHubStep] = None
     send_error_step: Optional[MaybeSendToGitHubStep] = None

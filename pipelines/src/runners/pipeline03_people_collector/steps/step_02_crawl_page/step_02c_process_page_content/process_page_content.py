@@ -192,9 +192,6 @@ async def process_page_content(
         expected_memberships=research.expected_memberships,
     )
     current_step = context.data.process_page_content_step
-    assert current_step is not None, (
-        "should never happen: research_municipality_transition sets process_page_content_step"
-    )
     identities = research.identities
     content = read_preprocessed_content(
         context.data.jurisdiction_ocdid, page_to_process

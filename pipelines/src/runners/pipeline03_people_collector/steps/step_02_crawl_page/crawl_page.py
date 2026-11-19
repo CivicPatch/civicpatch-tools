@@ -8,9 +8,6 @@ from .step_02c_process_page_content.process_page_content import process_page_con
 async def crawl_page(context: PeopleCollectorContext, page: Link) -> CrawlPageResult:
     preprocessed = context.data.preprocess_page_content_step
     processed = context.data.process_page_content_step
-    assert processed is not None, (
-        "should never happen: research_municipality_transition sets process_page_content_step"
-    )
 
     frontier, final_url = await scrape_page(context, page)
     scraped = _link_with_status(frontier, page.url, LinkStatus.SCRAPED)

@@ -19,7 +19,6 @@ async def save_output(context: PeopleCollectorContext):
   )
 
   process_step = context.data.process_page_content_step
-  assert process_step is not None, "should never happen — process_page_content_step is required before save_output"
   save_data_to_file(process_step.all_records(), data_file_path)
 
 

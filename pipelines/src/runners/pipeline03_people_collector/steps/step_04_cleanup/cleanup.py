@@ -18,9 +18,6 @@ def cleanup(context: PeopleCollectorContext):
     logger = log_utils.get_pipeline_run_logger(jurisdiction_ocdid)
     logger.info(f"Step 5: {PeopleCollectorStep.CLEANUP.value}")
 
-    assert context.data.process_page_content_step is not None, (
-        "should never happen — process_page_content_step is required before cleanup"
-    )
     records = context.data.process_page_content_step.all_records()
 
     data_source_dir = get_data_source_path_for_jurisdiction_ocdid(jurisdiction_ocdid)
