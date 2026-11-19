@@ -9,7 +9,7 @@ The form's other organizations come from a state's data migration, never from co
 
 from pydantic import BaseModel
 
-from shared.schemas import GovernmentForm
+from shared.schemas import GoverningLawOrganizations, GovernmentForm
 from shared.utils.government_forms import DerivedOrganization
 from shared.utils.layered_config import (
     MergedConfig,
@@ -17,6 +17,7 @@ from shared.utils.layered_config import (
     derived_organizations,
     resolve_government_form,
 )
+from shared.utils.taxonomy import Taxonomy, lookup_key
 
 
 class ResolvedGovernment(BaseModel):
@@ -55,13 +56,40 @@ def merged_by_name(per_form: list[list[DerivedOrganization]]) -> list[DerivedOrg
     return [DerivedOrganization(name=name, role_labels=labels) for name, labels in labels_by_name.items()]
 
 
+def role_labels_by_organization(
+    answer: GoverningLawOrganizations | None, derived: list[DerivedOrganization], taxonomy: Taxonomy
+) -> dict[str, dict[str, str]]:
+    """Organization name -> role id -> what it calls the role: the place's own law for each
+    organization it quotes a post for, else the config's form."""
+    labels_by_name = {organization.name: _role_ids_to_labels(organization.role_labels, taxonomy) for organization in derived}
+    from_law: dict[str, dict[str, str]] = {}
+    for post in answer.posts if answer else []:
+        from_law.setdefault(post.organization_id, {})[post.role] = post.label
+    return {**labels_by_name, **from_law}
+
+
+def _role_ids_to_labels(role_labels: list[str], taxonomy: Taxonomy) -> dict[str, str]:
+    # Unlike `role_labels_by_role_id`, keeps a role's own label: readers need every role the form gives.
+    labels: dict[str, str] = {}
+    for text in role_labels:
+        canonical = taxonomy.role_aliases.get(lookup_key(text))
+        if canonical is not None:
+            labels.setdefault(taxonomy.role_ids[canonical], text)
+    return labels
+
+
 def with_role_labels(
-    organizations: list[dict], derived: list[DerivedOrganization]
+    organizations: list[dict], derived: list[DerivedOrganization], labels_by_name: dict[str, dict[str, str]]
 ) -> list[dict]:
-    """Each organization with the role labels of the derived organization of the same name, or
+    """Each organization with the labels its place calls its roles, then the config form's for it, or
     none. The pick list before any post exists, and where research files a role."""
-    labels_by_name = {organization.name: organization.role_labels for organization in derived}
+    config_labels = {organization.name: organization.role_labels for organization in derived}
     return [
-        {**organization, "role_labels": labels_by_name.get(organization["name"], [])}
+        {
+            **organization,
+            "role_labels": list(
+                dict.fromkeys([*labels_by_name.get(organization["name"], {}).values(), *config_labels.get(organization["name"], [])])
+            ),
+        }
         for organization in organizations
     ]
