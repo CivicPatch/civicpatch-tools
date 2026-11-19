@@ -1,4 +1,5 @@
 import database.government_forms as government_forms_db
+import database.organization_claims as organization_claims_db
 from core.organization_build import FormOrganizationRow
 from core.organization_derivation import role_labels_by_organization
 from database.database import get_pool
@@ -122,12 +123,26 @@ async def names(cur, organization_ids: list[str]) -> dict[str, str]:
 
 
 async def role_labels(cur, jurisdiction_ocdid: str, taxonomy: Taxonomy) -> dict[str, dict[str, str]]:
-    """Each organization's role id -> label, by its id: its place's law, else its config form."""
+    """Each organization's role id -> label, by its id: see `role_labels_by_name`."""
+    names = await _names_by_id(cur, jurisdiction_ocdid)
+    labels_by_name = await role_labels_by_name(cur, jurisdiction_ocdid, taxonomy)
+    return {organization_id: labels_by_name.get(name, {}) for organization_id, name in names.items()}
+
+
+async def role_labels_by_name(cur, jurisdiction_ocdid: str, taxonomy: Taxonomy) -> dict[str, dict[str, str]]:
+    """Each organization's role id -> label, by its name: its place's law, else its config form,
+    then what people claimed about it."""
     answer = await get_extras_organizations(cur, jurisdiction_ocdid)
     government = await government_forms_db.get_resolved_government(jurisdiction_ocdid)
-    labels_by_name = role_labels_by_organization(answer, government.candidate_organizations, taxonomy)
+    names = await _names_by_id(cur, jurisdiction_ocdid)
+    claimed = await organization_claims_db.claimed_roles(cur, list(names))
+    claimed_by_name = {names[organization_id]: roles for organization_id, roles in claimed.items()}
+    return role_labels_by_organization(answer, government.candidate_organizations, taxonomy, claimed_by_name)
+
+
+async def _names_by_id(cur, jurisdiction_ocdid: str) -> dict[str, str]:
     await cur.execute("SELECT id::text, name FROM organizations WHERE jurisdiction_ocdid = %s", (jurisdiction_ocdid,))
-    return {row[0]: labels_by_name.get(row[1], {}) for row in await cur.fetchall()}
+    return {row[0]: row[1] for row in await cur.fetchall()}
 
 
 async def list_for_jurisdiction(cur, jurisdiction_ocdid: str) -> list[dict]:

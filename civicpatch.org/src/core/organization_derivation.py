@@ -7,6 +7,8 @@ The default organization, `{lsad} Officers`, is born with the jurisdiction (`ens
 The form's other organizations come from a state's data migration, never from code.
 """
 
+from collections.abc import Mapping
+
 from pydantic import BaseModel
 
 from shared.schemas import GoverningLawOrganizations, GovernmentForm
@@ -56,16 +58,45 @@ def merged_by_name(per_form: list[list[DerivedOrganization]]) -> list[DerivedOrg
     return [DerivedOrganization(name=name, role_labels=labels) for name, labels in labels_by_name.items()]
 
 
+# A claim on an organization: a role it holds in this place that the law and config do not say,
+# or one they say that it does not hold (an office created by ordinance, one voted away).
+ROLES_FIELD = "roles"
+
+
+class OrganizationRole(BaseModel):
+    role: str
+    label: str
+
+
+class ClaimedRoles(BaseModel):
+    accepted: list[OrganizationRole] = []
+    rejected: list[OrganizationRole] = []
+
+
+NO_CLAIMED_ROLES = ClaimedRoles()
+
+
 def role_labels_by_organization(
-    answer: GoverningLawOrganizations | None, derived: list[DerivedOrganization], taxonomy: Taxonomy
+    answer: GoverningLawOrganizations | None,
+    derived: list[DerivedOrganization],
+    taxonomy: Taxonomy,
+    claimed: Mapping[str, ClaimedRoles],
 ) -> dict[str, dict[str, str]]:
     """Organization name -> role id -> what it calls the role: the place's own law for each
-    organization it quotes a post for, else the config's form."""
+    organization it quotes a post for, else the config's form, then what people claimed."""
     labels_by_name = {organization.name: _role_ids_to_labels(organization.role_labels, taxonomy) for organization in derived}
     from_law: dict[str, dict[str, str]] = {}
     for post in answer.posts if answer else []:
         from_law.setdefault(post.organization_id, {})[post.role] = post.label
-    return {**labels_by_name, **from_law}
+    merged = {**labels_by_name, **from_law}
+    names = list(dict.fromkeys([*merged, *claimed]))
+    return {name: _with_claimed(merged.get(name, {}), claimed.get(name, NO_CLAIMED_ROLES)) for name in names}
+
+
+def _with_claimed(labels: dict[str, str], claimed: ClaimedRoles) -> dict[str, str]:
+    accepted = {**labels, **{claim.role: claim.label for claim in claimed.accepted}}
+    rejected = {claim.role for claim in claimed.rejected}
+    return {role: label for role, label in accepted.items() if role not in rejected}
 
 
 def _role_ids_to_labels(role_labels: list[str], taxonomy: Taxonomy) -> dict[str, str]:

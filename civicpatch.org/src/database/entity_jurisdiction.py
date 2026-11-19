@@ -13,6 +13,7 @@ _SOURCES: dict[EntityType | str, str] = {
         "SELECT p.jurisdiction_ocdid FROM memberships m "
         "JOIN posts p ON p.id = m.post_id WHERE m.id::text = %s"
     ),
+    EntityType.ORGANIZATION: "SELECT jurisdiction_ocdid FROM organizations WHERE id::text = %s",
 }
 
 # A claim payload stores only ids, unlike person and post payloads which carry their own
@@ -29,6 +30,7 @@ _NAMES: dict[EntityType | str, str] = {
         "SELECT pe.name FROM memberships m JOIN people pe ON pe.id = m.person_id "
         "WHERE m.id::text = %s"
     ),
+    EntityType.ORGANIZATION: "SELECT name FROM organizations WHERE id::text = %s",
 }
 
 

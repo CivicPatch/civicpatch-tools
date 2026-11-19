@@ -7,6 +7,8 @@ from pydantic import BaseModel, field_validator, model_validator
 # them from here.
 from shared.utils.statuses import ClaimKind, EntityType
 
+from core.organization_derivation import ROLES_FIELD, OrganizationRole
+
 
 class Source(BaseModel):
     note: str | None = None
@@ -53,6 +55,12 @@ class ClaimRequest(BaseModel):
         if not sources:
             raise ValueError("a claim needs a source")
         return sources
+
+    @model_validator(mode="after")
+    def _an_organization_role_is_a_role_and_label(self) -> "ClaimRequest":
+        if self.entity_type == EntityType.ORGANIZATION and self.field_path == ROLES_FIELD:
+            OrganizationRole.model_validate(self.value)
+        return self
 
 
 class Claim(ClaimRequest):

@@ -6,14 +6,15 @@ by reading, not by holding one row per field."""
 import json
 from typing import Any
 
+from core.organization_derivation import ROLES_FIELD
 from core.people_edits import LIST_FIELDS, POSTS_FIELD
 from database.database import get_pool
 from schemas.claims import Claim, ClaimKind, DefaultNote, EntityType, Source
 
 # Fields whose accepts are per value rather than one answer for the whole field: the list
-# fields, and the posts somebody holds — two organizations, two claims, neither superseding
-# the other.
-_MULTI_VALUED = LIST_FIELDS | {POSTS_FIELD}
+# fields, the posts somebody holds — two organizations, two claims, neither superseding the
+# other — and the roles an organization holds.
+_MULTI_VALUED = LIST_FIELDS | {POSTS_FIELD, ROLES_FIELD}
 
 
 def _value_keyed(field_path: str, kind: str) -> bool:

@@ -103,6 +103,11 @@ describe("issueTypesOf — what an issue is, in short", () => {
       issueTypesOf(card({ issues: [{ code: "too_few_people", message: "" }] })),
     ).toEqual(["too few people"]);
   });
+  it("shows a post the scrape would create as a new post, which no badge already says", () => {
+    expect(
+      issueTypesOf(card({ issues: [{ code: "new_post", message: "New post: Councilor, City Council", field: "post_id" }] })),
+    ).toEqual(["new post"]);
+  });
   it("drops a code the status badge already says, so it isn't shown twice", () => {
     expect(
       issueTypesOf(card({ issues: [{ code: "moved_person", message: "" }] })),
