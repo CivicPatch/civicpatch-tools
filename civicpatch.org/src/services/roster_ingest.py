@@ -12,7 +12,7 @@ sheet has no analogue.
 
 import logging
 
-import services.government_form as government_form_service
+import database.government_forms as government_forms_db
 from core.display_rows import display_rows
 from core.organization_placement import PlaceableOrganization, placed_records, role_ids_of
 from core.people_roster import (
@@ -63,7 +63,7 @@ async def _placeable_organizations(
     jurisdiction_ocdid: str, current: list[dict], taxonomy: Taxonomy
 ) -> list[PlaceableOrganization]:
     """Each current organization with the roles the resolved form lists under its name."""
-    government = await government_form_service.resolved_government(jurisdiction_ocdid)
+    government = await government_forms_db.get_resolved_government(jurisdiction_ocdid)
     labels_by_name = {organization.name: organization.role_labels for organization in government.candidate_organizations}
     return [
         PlaceableOrganization(id=row["id"], role_ids=role_ids_of(labels_by_name.get(row["name"], []), taxonomy))

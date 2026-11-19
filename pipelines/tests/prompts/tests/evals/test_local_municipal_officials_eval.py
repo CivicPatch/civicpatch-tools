@@ -17,7 +17,8 @@ from eval_utils import (
     write_comparison_report,
 )
 from runners.pipeline03_people_collector.schemas import PeopleArrayLLMResponseSchema
-from runners.pipeline03_people_collector.steps.step_02_crawl_page.step_02c_process_page_content.organization_match import (
+from runners.pipeline03_people_collector.steps.step_02_crawl_page.step_02c_process_page_content.person_placement import (
+    PageHeadings,
     placed_names,
 )
 from services.open_router.llm import run_prompt as run_together_prompt
@@ -158,15 +159,17 @@ async def _run_single_case(model_client, case, ocdid):
         )
         f.write(yaml_output)
 
-    # Placement as in production: the organization label through the matcher, else the person's own label.
+    # Placement as in production. A case keeps only the cleaned markdown, whose first line is the page title.
     organizations = _organizations(case["expected"])
     by_organization_label = await placed_names(
         [(person.organization_label, person.label) for person in actual.people],
         organizations,
         EVAL_TAXONOMY,
+        PageHeadings(title=next((line.strip() for line in case["input"].splitlines() if line.strip()), None)),
         _eval_run_id(name),
         ocdid,
         _place_name(case["expected"]),
+        case.get("case_path", "unknown_case"),
     )
     placed = {
         name_utils.name_grouping_key(person.name): name

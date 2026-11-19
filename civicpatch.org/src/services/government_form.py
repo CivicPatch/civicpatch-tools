@@ -7,12 +7,7 @@ import database.jurisdiction_configs as jurisdiction_configs_db
 import database.jurisdictions as jurisdictions_db
 import database.organizations as organizations_db
 from core.organization_build import GovernmentFormInputs, form_organization_rows
-from core.organization_derivation import (
-    NOTHING_RESOLVED,
-    ResolvedGovernment,
-    resolve_government,
-    with_role_labels,
-)
+from core.organization_derivation import with_role_labels
 from core.post_deletion import with_holder_names
 from database import post_listings as post_listings_db
 from database.activity import record_change
@@ -32,17 +27,6 @@ from shared.utils.layered_config import (
 )
 from shared.utils.id_utils import parse_jurisdiction_ocdid
 from shared.utils.statuses import ActivityType
-
-
-async def resolved_government(jurisdiction_ocdid: str) -> ResolvedGovernment:
-    """The jurisdiction's government form as of now (the saved one, else what the config decides) and
-    its candidates. Nothing for a state, or an unknown or inactive jurisdiction."""
-    jurisdiction = await government_forms_db.get_government_form_inputs(jurisdiction_ocdid)
-    layer = _layer(jurisdiction) if jurisdiction else None
-    if jurisdiction is None or layer is None:
-        return NOTHING_RESOLVED
-    config = jurisdiction_config(await jurisdiction_configs_db.get_jurisdiction_configs(), *layer)
-    return resolve_government(config, jurisdiction.name, jurisdiction.government_form)
 
 
 async def apply_config_organizations(path: str) -> int:
@@ -75,7 +59,7 @@ async def _ensure_organizations(
 
 async def government_form_summary(jurisdiction_ocdid: str) -> GovernmentFormSummary | None:
     """The resolved government form as the jurisdiction page shows it; None when no government form is known."""
-    government_form = (await resolved_government(jurisdiction_ocdid)).government_form
+    government_form = (await government_forms_db.get_resolved_government(jurisdiction_ocdid)).government_form
     if government_form is None:
         return None
     return _summary(government_form)
@@ -105,22 +89,14 @@ async def organizations_with_role_labels(jurisdiction_ocdid: str) -> list[dict]:
     organizations = await post_listings_db.list_by_organization(jurisdiction_ocdid)
     post_ids = [post["id"] for organization in organizations for post in organization["posts"]]
     holder_names = await post_listings_db.get_holder_names(post_ids)
-    government = await resolved_government(jurisdiction_ocdid)
+    government = await government_forms_db.get_resolved_government(jurisdiction_ocdid)
     return with_role_labels(with_holder_names(organizations, holder_names), government.candidate_organizations)
-
-
-def _layer(jurisdiction: GovernmentFormInputs) -> tuple[str, JurisdictionLevel] | None:
-    """The (state, level) whose config files apply; None for a state, which has no government form."""
-    parsed = parse_jurisdiction_ocdid(jurisdiction.jurisdiction_ocdid)
-    if parsed.level == JurisdictionLevel.STATE:
-        return None
-    return parsed.state, parsed.level
 
 
 async def government_form_choices(jurisdiction_ocdid: str) -> list[GovernmentForm]:
     """The government forms a run should ask the model to choose between, or none when the form is
     known or decided by the config."""
-    government = await resolved_government(jurisdiction_ocdid)
+    government = await government_forms_db.get_resolved_government(jurisdiction_ocdid)
     if government.government_form is not None or len(government.candidate_government_forms) < 2:
         return []
     return government.candidate_government_forms
@@ -138,7 +114,7 @@ async def set_government_form(jurisdiction_ocdid: str, government_form: Governme
     """Saved over whatever was there, then the form's organizations built as a config merge builds
     them: created where missing, never renamed or removed. `user_id` is None for the service key."""
     jurisdiction = await _checked(jurisdiction_ocdid, government_form)
-    layer = _layer(jurisdiction)
+    layer = government_forms_db.config_layer(jurisdiction)
     assert layer is not None, "_checked refuses a state, which has no government form"
     configs = await jurisdiction_configs_db.get_jurisdiction_configs()
     saved = jurisdiction.model_copy(update={"government_form": government_form})

@@ -42,6 +42,10 @@ from runners.pipeline03_people_collector.steps.step_02_crawl_page.step_02c_proce
 from runners.pipeline03_people_collector.steps.step_02_crawl_page.step_02c_process_page_content.organization_match import (
     matched_organization_ids,
     organization_id_by_name,
+)
+from runners.pipeline03_people_collector.steps.step_02_crawl_page.step_02c_process_page_content.person_placement import (
+    PageHeadings,
+    page_headings,
     placed_names,
 )
 from runners.pipeline03_people_collector.steps.step_02_crawl_page.step_02c_process_page_content.organization_progress import (
@@ -108,6 +112,7 @@ async def _process_with_llm_in_chunks(
     organizations: List[KnownOrganization],
     place_name: str,
     taxonomy: Taxonomy,
+    headings: PageHeadings,
     seed: Optional[int],
     logger,
 ) -> List[PersonSourceRecord]:
@@ -126,6 +131,7 @@ async def _process_with_llm_in_chunks(
             organizations,
             place_name,
             taxonomy,
+            headings,
             seed=seed,
             chunk_index=index,
             chunk_count=len(chunks),
@@ -197,6 +203,7 @@ async def process_page_content(
         context.data.jurisdiction_ocdid, page_to_process
     )
     links = read_preprocessed_links(context.data.jurisdiction_ocdid, page_to_process)
+    headings = read_page_headings(context.data.jurisdiction_ocdid, page_to_process)
 
     page_hash = page_content_hash(content)
     page_prompt_hash = prompt_hash(
@@ -251,7 +258,7 @@ async def process_page_content(
 
     if published:
         known = await rematched_records(
-            published.known_records, context, research.known_organizations
+            published.known_records, context, research.known_organizations, headings, page_to_process.url
         )
         extraction = source_page_extraction(published, known, current_step, identities)
     else:
@@ -259,6 +266,7 @@ async def process_page_content(
             context,
             page_to_process,
             content,
+            headings,
             research.known_organizations,
             research.expected_memberships,
             current_step,
@@ -452,6 +460,8 @@ async def rematched_records(
     records: List[PersonSourceRecord],
     context: PeopleCollectorContext,
     organizations: List[KnownOrganization],
+    headings: PageHeadings,
+    source_url: str,
 ) -> List[PersonSourceRecord]:
     """A replayed page's records placed again by today's matcher, from the organization label each
     kept; a record stored before labels were kept stays where it was placed."""
@@ -463,9 +473,11 @@ async def rematched_records(
             [(record.organization_label, record.label) for record in labelled],
             organizations,
             build_taxonomy(context.data.role_config),
+            headings,
             context.pipeline_run_id,
             context.data.jurisdiction_ocdid,
             context.data.config.name or "",
+            source_url,
         )
     )
     return [
@@ -506,6 +518,7 @@ async def collect_page_records(
     context: PeopleCollectorContext,
     page_to_process: Link,
     content: str,
+    headings: PageHeadings,
     organizations: List[KnownOrganization],
     memberships: List[ExpectedMembership],
     current_step: ProcessPageContentStep,
@@ -515,7 +528,7 @@ async def collect_page_records(
     """One extraction for the page, each person carrying the organization the model picked.
     Results that fail the heuristics twice add nothing from this page."""
     found, failures = await _extract_page(
-        context, page_to_process, content, organizations, memberships, logger
+        context, page_to_process, content, organizations, memberships, headings, logger
     )
     if found is None:
         logger.warning(
@@ -543,6 +556,7 @@ async def _extract_page(
     content: str,
     organizations: List[KnownOrganization],
     memberships: List[ExpectedMembership],
+    headings: PageHeadings,
     logger,
 ) -> Tuple[Optional[List[PersonSourceRecord]], List[HeuristicsFailure]]:
     """The page's records, each stamped with its matched organization, or None if they failed the
@@ -565,6 +579,7 @@ async def _extract_page(
             organizations,
             context.data.config.name or "",
             taxonomy,
+            headings,
             seed,
             logger,
         )
@@ -599,6 +614,7 @@ async def process_with_llm(
     organizations: List[KnownOrganization],
     place_name: str,
     taxonomy: Taxonomy,
+    headings: PageHeadings,
     seed: Optional[int] = None,
     chunk_index: Optional[int] = None,
     chunk_count: Optional[int] = None,
@@ -620,9 +636,11 @@ async def process_with_llm(
         [(person.organization_label, person.label) for person in people],
         organizations,
         taxonomy,
+        headings,
         pipeline_run_id,
         jurisdiction_ocdid,
         place_name,
+        source_url,
     )
     records = [
         _source_record(person, source_url, organization_id_by_name(name, organizations))
@@ -710,6 +728,15 @@ def read_preprocessed_content(jurisdiction_ocdid: str, page_to_process: Link) ->
     )
     with open(content_file_path, "r", encoding="utf-8") as f:
         return f.read()
+
+
+def read_page_headings(jurisdiction_ocdid: str, page_to_process: Link) -> PageHeadings:
+    cache_path = data_path_utils.get_cache_path(jurisdiction_ocdid)
+    html_file_path = os.path.join(cache_path, page_to_process.folder_name, "original.html")
+    if not os.path.exists(html_file_path):
+        return PageHeadings()
+    with open(html_file_path, "rb") as f:
+        return page_headings(f.read())
 
 
 def read_preprocessed_links(

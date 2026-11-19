@@ -1,0 +1,2408 @@
+# Person records Vermont's prod scrapes placed, cut 2026-11-18 from each place's latest scrape: the page's
+# organization label beside the person's own label, and the organization they belong in. Graded blind by two
+# models, disagreements reviewed by hand. Kept: every case today's words place wrong or miss, every reviewed
+# case, and a fixed sample of the rest. Page title and first heading as fetched 2026-11-18, where the site
+# served them. Roles are Vermont's merged config, frozen so the yardstick holds still.
+# Read by tests/unit/evals/test_organization_match_vermont_people.py.
+roles:
+- id: mayor
+  label: Mayor
+  is_unique: true
+  priority: 0
+- id: deputy-mayor
+  label: Deputy Mayor
+  is_unique: true
+  priority: 1
+  selection_method: appointed
+- id: member
+  label: Member
+  is_unique: false
+  priority: 2
+  aliases:
+  - alder
+  - alderman
+  - aldermen
+  - Alderperson
+  - alderwoman
+  - board of selectmen
+  - board of selectmen member
+  - city alderman
+  - city alderwoman
+  - city commissioner
+  - city council
+  - city council alderman
+  - city council alderwoman
+  - city council member
+  - city councilman
+  - city councilmember
+  - city councilor
+  - city councilwoman
+  - Commissioner
+  - Committee Member
+  - committee person
+  - Committee Woman
+  - committeeman
+  - Committeeperson
+  - committeewoman
+  - Committeewomen
+  - council
+  - council at large
+  - Council Member
+  - council member at-large
+  - council members
+  - council person
+  - council-member
+  - councillor
+  - councilman
+  - councilman-at-large
+  - councilmember
+  - councilmembers
+  - councilmen
+  - councilor
+  - councilperson
+  - councilperson at-large
+  - councilwoman
+  - councilwoman at large
+  - councilwoman-at-large
+  - councilwomen
+  - representative
+  - select board
+  - Select Board Member
+  - select board representative
+  - Select Person
+  - selectboard
+  - selectboard member
+  - selectman
+  - selectmen
+  - Selectperson
+  - selectwoman
+  - town board member
+  - town council
+  - town council member
+  - town council representative
+  - town councilmember
+  - town councilor
+  - township committee member
+  - Township Trustee
+  - Trustee
+  - Trustees
+  - Village Trustee
+- id: vice-mayor
+  label: Vice Mayor
+  is_unique: true
+  priority: 3
+  selection_method: elected_by_members
+  aliases:
+  - vice-mayor
+- id: assistant-mayor
+  label: Assistant Mayor
+  is_unique: true
+  priority: 4
+  selection_method: elected_by_members
+- id: mayor-pro-tempore
+  label: Mayor Pro Tempore
+  is_unique: true
+  priority: 5
+  selection_method: elected_by_members
+  aliases:
+  - mayor pro tem
+  - mayor pro temp
+  - mayor pro-tem
+  - mayor pro-temp
+  - mayor pro-tempore
+  - mayor protem
+  - mayor protemp
+  - mayor-pro tem
+- id: deputy-mayor-pro-tempore
+  label: Deputy Mayor Pro Tempore
+  is_unique: true
+  priority: 6
+  selection_method: elected_by_members
+  aliases:
+  - deputy mayor pro tem
+  - deputy mayor pro tempore
+  - deputy mayor pro-tem
+- id: president
+  label: President
+  is_unique: true
+  priority: 7
+  selection_method: elected_by_members
+  aliases:
+  - city council president
+  - commission president
+  - commissioner president
+  - council member president
+  - council president
+  - president of the council
+  - president of the village
+  - village board president
+  - village president
+- id: vice-president
+  label: Vice President
+  is_unique: true
+  priority: 8
+  selection_method: elected_by_members
+  aliases:
+  - commission vice president
+  - commission vice-president
+  - commissioner vice president
+  - commissioner vice-president
+  - commissioner-vice president
+  - council member vice president
+  - council member vice-president
+  - council vice president
+  - council vice-president
+  - vice president
+  - vice-president
+- id: council-president-pro-tem
+  label: Council President Pro Tem
+  is_unique: true
+  priority: 9
+  selection_method: elected_by_members
+  aliases:
+  - council president pro tempore
+  - council president pro-tem
+- id: deputy-council-president
+  label: Deputy Council President
+  is_unique: true
+  priority: 10
+  selection_method: elected_by_members
+- id: president-pro-tempore
+  label: President Pro Tempore
+  is_unique: true
+  priority: 11
+  selection_method: elected_by_members
+  aliases:
+  - president pro tem
+  - village president pro tem
+- id: town-meeting-member
+  label: Town Meeting Member
+  is_unique: false
+  priority: 12
+- id: chair
+  label: Chair
+  is_unique: true
+  priority: 13
+  selection_method: elected_by_members
+  aliases:
+  - Chairperson
+  - chairman
+  - chairwoman
+  - commissioner director
+  - council chair
+  - council chairman
+  - council chairwoman
+  - town council chair
+- id: vice-chair
+  label: Vice Chair
+  is_unique: true
+  priority: 14
+  selection_method: elected_by_members
+  aliases:
+  - Vice Chairperson
+  - Vice-Chairperson
+  - commissioner deputy director
+  - council vice chair
+  - council vice chairman
+  - council vice chairwoman
+  - council vice-chair
+  - council vice-chairman
+  - council vice-chairwoman
+  - vice chairman
+  - vice chairwoman
+  - vice-chair
+  - vice-chairman
+  - vice-chairwoman
+- id: chair-pro-tem
+  label: Chair Pro Tem
+  is_unique: true
+  priority: 15
+  selection_method: elected_by_members
+- id: supervisor
+  label: Supervisor
+  is_unique: false
+  priority: 16
+  aliases:
+  - Board of Supervisors
+  - Town Supervisor
+  - Township Supervisor
+- id: deputy-supervisor
+  label: Deputy Supervisor
+  is_unique: true
+  priority: 17
+  selection_method: elected_by_members
+- id: council-manager
+  label: Council Manager
+  is_unique: true
+  priority: 18
+  selection_method: appointed
+  aliases:
+  - Township Manager
+- id: clerk
+  label: Clerk
+  is_unique: true
+  priority: 19
+  aliases:
+  - Borough Clerk
+  - City Clerk
+  - Municipal Clerk
+  - Town Clerk
+  - Township Clerk
+  - Village Clerk
+- id: deputy-clerk
+  label: Deputy Clerk
+  is_unique: true
+  priority: 20
+  selection_method: appointed
+  aliases:
+  - Deputy City Clerk
+  - Deputy Town Clerk
+  - Deputy Township Clerk
+- id: treasurer
+  label: Treasurer
+  is_unique: true
+  priority: 21
+  aliases:
+  - City Treasurer
+  - Town Treasurer
+  - Township Treasurer
+  - Village Treasurer
+- id: deputy-treasurer
+  label: Deputy Treasurer
+  is_unique: true
+  priority: 22
+  selection_method: appointed
+  aliases:
+  - Deputy City Treasurer
+  - Deputy Township Treasurer
+- id: moderator
+  label: Moderator
+  is_unique: true
+  priority: 23
+  aliases:
+  - Town Moderator
+- id: secretary
+  label: Secretary
+  is_unique: true
+  priority: 24
+  selection_method: appointed
+  aliases:
+  - Town Secretary
+- id: assessor
+  label: Assessor
+  is_unique: false
+  priority: 25
+  aliases:
+  - City Assessor
+  - Township Assessor
+- id: city-attorney
+  label: City Attorney
+  is_unique: true
+  priority: 26
+  selection_method: appointed
+  aliases:
+  - city solicitor
+  - municipal attorney
+  - town attorney
+  - village attorney
+- id: city-manager
+  label: City Manager
+  is_unique: true
+  priority: 27
+  selection_method: appointed
+  aliases:
+  - city administrator
+  - town manager
+  - village manager
+- id: city-secretary
+  label: City Secretary
+  is_unique: true
+  priority: 28
+  selection_method: appointed
+- id: lister
+  label: Lister
+  is_unique: false
+  priority: 29
+  aliases:
+  - Town Lister
+  - Listers
+  - Board of Listers
+- id: auditor
+  label: Auditor
+  is_unique: false
+  priority: 30
+  aliases:
+  - Town Auditor
+  - Auditors
+  - Town Auditors
+- id: constable
+  label: Constable
+  is_unique: false
+  priority: 31
+  aliases:
+  - Constables
+  - First Constable
+  - Second Constable
+  - Town Constable
+- id: delinquent-tax-collector
+  label: Collector of Delinquent Taxes
+  is_unique: true
+  priority: 32
+  aliases:
+  - Delinquent Tax Collector
+- id: tax-collector
+  label: Collector of Taxes
+  is_unique: true
+  priority: 33
+  aliases:
+  - Tax Collector
+  - Village Tax Collector
+- id: trustee-of-public-funds
+  label: Trustee of Public Funds
+  is_unique: false
+  priority: 34
+  aliases:
+  - Trustees of Public Funds
+- id: trustee-of-public-money
+  label: Trustee of Public Money
+  is_unique: true
+  priority: 35
+- id: cemetery-commissioner
+  label: Cemetery Commissioner
+  is_unique: false
+  priority: 36
+  aliases:
+  - Cemetery Commissioners
+  - Board of Cemetery Commissioners
+- id: patrol-officer
+  label: Patrol Officer
+  is_unique: false
+  priority: 37
+  aliases:
+  - Patrol Officers
+- id: road-commissioner
+  label: Road Commissioner
+  is_unique: false
+  priority: 38
+  selection_method: appointed
+  aliases:
+  - Road Commissioners
+- id: water-commissioner
+  label: Water Commissioner
+  is_unique: false
+  priority: 39
+  aliases:
+  - Water Commissioners
+- id: budget-committee-member
+  label: Advisory Budget Committee Member
+  is_unique: false
+  priority: 40
+  aliases:
+  - Advisory Budget Committee
+  - Budget Committee Member
+- id: library-trustee
+  label: Library Trustee
+  is_unique: false
+  priority: 41
+  aliases:
+  - Library Trustees
+  - Board of Library Trustees
+organization_sets:
+  town:
+  - name: Selectboard
+    role_labels:
+    - Select Board Member
+    - Chair
+    - Vice Chair
+  - name: Town Meeting
+    role_labels:
+    - Moderator
+  - name: Town Officers
+    meta_is_default: true
+    role_labels:
+    - Town Clerk
+    - Town Treasurer
+    - Town Manager
+  village:
+  - name: Board of Trustees
+    role_labels:
+    - Trustee
+    - Village President
+  - name: Village Officers
+    meta_is_default: true
+    role_labels:
+    - Village Clerk
+    - Village Treasurer
+  council_manager_city:
+  - name: Council
+    role_labels:
+    - Alder
+    - Council Member
+    - Mayor
+  - name: City Officers
+    meta_is_default: true
+    role_labels: []
+  mayor_council_city:
+  - name: Council
+    role_labels:
+    - Alder
+    - Council Member
+  - name: Office of the Mayor
+    role_labels:
+    - Mayor
+  - name: City Officers
+    meta_is_default: true
+    role_labels: []
+places:
+  addison:
+    name: addison
+    organizations: town
+  alburgh_town:
+    name: alburgh town
+    organizations: town
+  andover:
+    name: andover
+    organizations: town
+  arlington:
+    name: arlington
+    organizations: town
+  athens:
+    name: athens
+    organizations: town
+  bakersfield:
+    name: bakersfield
+    organizations: town
+  baltimore:
+    name: baltimore
+    organizations: town
+  barnard:
+    name: barnard
+    organizations: town
+  barre_city:
+    name: barre city
+    organizations: council_manager_city
+  barre_town:
+    name: barre town
+    organizations: town
+  barton_village:
+    name: barton village
+    organizations: village
+  bellows_falls:
+    name: bellows falls
+    organizations: village
+  belvidere:
+    name: belvidere
+    organizations: town
+  benson:
+    name: benson
+    organizations: town
+  berkshire:
+    name: berkshire
+    organizations: town
+  berlin:
+    name: berlin
+    organizations: town
+  bolton:
+    name: bolton
+    organizations: town
+  bradford:
+    name: bradford
+    organizations: town
+  brandon:
+    name: brandon
+    organizations: town
+  brookline:
+    name: brookline
+    organizations: town
+  brownington:
+    name: brownington
+    organizations: town
+  burke:
+    name: burke
+    organizations: town
+  burlington:
+    name: burlington
+    organizations: mayor_council_city
+  cabot:
+    name: cabot
+    organizations: town
+  calais:
+    name: calais
+    organizations: town
+  cambridge_town:
+    name: cambridge town
+    organizations: town
+  canaan:
+    name: canaan
+    organizations: town
+  cavendish:
+    name: cavendish
+    organizations: town
+  charlotte:
+    name: charlotte
+    organizations: town
+  chelsea:
+    name: chelsea
+    organizations: town
+  chester:
+    name: chester
+    organizations: town
+  clarendon:
+    name: clarendon
+    organizations: town
+  colchester:
+    name: colchester
+    organizations: town
+  coventry:
+    name: coventry
+    organizations: town
+  craftsbury:
+    name: craftsbury
+    organizations: town
+  derby:
+    name: derby
+    organizations: town
+  dover:
+    name: dover
+    organizations: town
+  elmore:
+    name: elmore
+    organizations: town
+  enosburgh:
+    name: enosburgh
+    organizations: town
+  essex:
+    name: essex
+    organizations: town
+  essex_junction:
+    name: essex junction
+    organizations: council_manager_city
+  fair_haven:
+    name: fair haven
+    organizations: town
+  ferrisburgh:
+    name: ferrisburgh
+    organizations: town
+  georgia:
+    name: georgia
+    organizations: town
+  glover:
+    name: glover
+    organizations: town
+  grafton:
+    name: grafton
+    organizations: town
+  granville:
+    name: granville
+    organizations: town
+  groton:
+    name: groton
+    organizations: town
+  guilford:
+    name: guilford
+    organizations: town
+  halifax:
+    name: halifax
+    organizations: town
+  hancock:
+    name: hancock
+    organizations: town
+  highgate:
+    name: highgate
+    organizations: town
+  hinesburg:
+    name: hinesburg
+    organizations: town
+  isle_la_motte:
+    name: isle la motte
+    organizations: town
+  johnson_town:
+    name: johnson town
+    organizations: town
+  johnson_village:
+    name: johnson village
+    organizations: village
+  kirby:
+    name: kirby
+    organizations: town
+  lincoln:
+    name: lincoln
+    organizations: town
+  maidstone:
+    name: maidstone
+    organizations: town
+  marlboro:
+    name: marlboro
+    organizations: town
+  mendon:
+    name: mendon
+    organizations: town
+  middlebury:
+    name: middlebury
+    organizations: town
+  middlesex:
+    name: middlesex
+    organizations: town
+  middletown_springs:
+    name: middletown springs
+    organizations: town
+  milton:
+    name: milton
+    organizations: town
+  montpelier:
+    name: montpelier
+    organizations: council_manager_city
+  morgan:
+    name: morgan
+    organizations: town
+  morristown:
+    name: morristown
+    organizations: town
+  new_haven:
+    name: new haven
+    organizations: town
+  newbury_town:
+    name: newbury town
+    organizations: town
+  newfane_town:
+    name: newfane town
+    organizations: town
+  newport_town:
+    name: newport town
+    organizations: town
+  north_bennington:
+    name: north bennington
+    organizations: village
+  north_troy:
+    name: north troy
+    organizations: village
+  old_bennington:
+    name: old bennington
+    organizations: village
+  orange:
+    name: orange
+    organizations: town
+  orwell:
+    name: orwell
+    organizations: town
+  panton:
+    name: panton
+    organizations: town
+  pawlet:
+    name: pawlet
+    organizations: town
+  peru:
+    name: peru
+    organizations: town
+  pittsford:
+    name: pittsford
+    organizations: town
+  plainfield:
+    name: plainfield
+    organizations: town
+  pownal:
+    name: pownal
+    organizations: town
+  proctor:
+    name: proctor
+    organizations: town
+  putney:
+    name: putney
+    organizations: town
+  readsboro:
+    name: readsboro
+    organizations: town
+  richford:
+    name: richford
+    organizations: town
+  ripton:
+    name: ripton
+    organizations: town
+  rochester:
+    name: rochester
+    organizations: town
+  roxbury:
+    name: roxbury
+    organizations: town
+  royalton:
+    name: royalton
+    organizations: town
+  rupert:
+    name: rupert
+    organizations: town
+  rutland_city:
+    name: rutland city
+    organizations: mayor_council_city
+  rutland_town:
+    name: rutland town
+    organizations: town
+  ryegate:
+    name: ryegate
+    organizations: town
+  sandgate:
+    name: sandgate
+    organizations: town
+  saxtons_river:
+    name: saxtons river
+    organizations: village
+  sheffield:
+    name: sheffield
+    organizations: town
+  sheldon:
+    name: sheldon
+    organizations: town
+  shoreham:
+    name: shoreham
+    organizations: town
+  shrewsbury:
+    name: shrewsbury
+    organizations: town
+  south_hero:
+    name: south hero
+    organizations: town
+  st_albans_city:
+    name: st albans city
+    organizations: mayor_council_city
+  st_george:
+    name: st george
+    organizations: town
+  starksboro:
+    name: starksboro
+    organizations: town
+  strafford:
+    name: strafford
+    organizations: town
+  stratton:
+    name: stratton
+    organizations: town
+  sunderland:
+    name: sunderland
+    organizations: town
+  swanton_town:
+    name: swanton town
+    organizations: town
+  swanton_village:
+    name: swanton village
+    organizations: village
+  townshend:
+    name: townshend
+    organizations: town
+  tunbridge:
+    name: tunbridge
+    organizations: town
+  vergennes:
+    name: vergennes
+    organizations: council_manager_city
+  vernon:
+    name: vernon
+    organizations: town
+  vershire:
+    name: vershire
+    organizations: town
+  waitsfield:
+    name: waitsfield
+    organizations: town
+  waterbury_town:
+    name: waterbury town
+    organizations: town
+  west_haven:
+    name: west haven
+    organizations: town
+  west_rutland:
+    name: west rutland
+    organizations: town
+  weston:
+    name: weston
+    organizations: town
+  weybridge:
+    name: weybridge
+    organizations: town
+  wheelock:
+    name: wheelock
+    organizations: town
+  whitingham:
+    name: whitingham
+    organizations: town
+  wilmington:
+    name: wilmington
+    organizations: town
+  winhall:
+    name: winhall
+    organizations: town
+  winooski:
+    name: winooski
+    organizations: council_manager_city
+  woodstock_town:
+    name: woodstock town
+    organizations: town
+  woodstock_village:
+    name: woodstock village
+    organizations: village
+  worcester:
+    name: worcester
+    organizations: town
+cases:
+- place: johnson_village
+  organization_label: null
+  label: Clerk
+  page_title: Departments | Village of Johnson
+  page_heading: Departments
+  expected: Village Officers
+  reason: village officer with no body of its own
+- place: johnson_village
+  organization_label: null
+  label: Treasurer
+  page_title: Departments | Village of Johnson
+  page_heading: Departments
+  expected: Village Officers
+  reason: village officer with no body of its own
+- place: bellows_falls
+  organization_label: null
+  label: Trustee Chair
+  page_title: Town of Rockingham/ Village of Bellows Falls Corporation - Staff
+  page_heading: Departments & Committees Departments & Committees</span
+  expected: Board of Trustees
+  reason: village trustee or trustee chair/officer as member
+- place: bellows_falls
+  organization_label: null
+  label: Village President
+  page_title: Town of Rockingham/ Village of Bellows Falls Corporation - Staff
+  page_heading: Departments & Committees Departments & Committees</span
+  expected: Board of Trustees
+  reason: village trustee or trustee chair/officer as member
+- place: swanton_village
+  organization_label: Administration
+  label: Village Clerk / Administrative Assistant
+  page_title: Administration - Swanton, Vermont
+  page_heading: Administration
+  expected: Village Officers
+  reason: village officer with no body of its own
+- place: north_bennington
+  organization_label: Board of Trustees
+  label: Treasurer
+  page_title: Contact Us — The Village of North Bennington
+  page_heading: Who is Who and Contact Us
+  expected: Village Officers
+  reason: village officer listed under the trustees heading
+- place: barton_village
+  organization_label: Board of Trustees
+  label: Treasurer, Delinquent Tax Collector, and Clerk
+  page_title: Village Government | Barton Village
+  page_heading: Village Officers
+  expected: Village Officers
+  reason: village officer listed under the trustees heading
+- place: north_bennington
+  organization_label: Board of Trustees
+  label: Vice Chair
+  page_title: Contact Us — The Village of North Bennington
+  page_heading: Who is Who and Contact Us
+  expected: Board of Trustees
+  reason: bare chair/vice chair under Board of Trustees
+- place: north_bennington
+  organization_label: Board of Trustees
+  label: Village Clerk
+  page_title: Contact Us — The Village of North Bennington
+  page_heading: Who is Who and Contact Us
+  expected: Village Officers
+  reason: village officer listed under the trustees heading
+- place: woodstock_village
+  organization_label: Joint Board
+  label: Trustees Chair
+  page_title: Joint Board | Woodstock, VT
+  page_heading: Joint Board
+  expected: Board of Trustees
+  reason: trustees chair/vice chair at a joint meeting
+- place: saxtons_river
+  organization_label: Saxtons River Village Officers
+  label: Collector of Delinquent Taxes
+  page_title: Town of Rockingham/ Village of Bellows Falls Corporation - Staff
+  page_heading: Departments & Committees Departments & Committees</span
+  expected: Village Officers
+  reason: village officer with no body of its own
+- place: old_bennington
+  organization_label: Trustees and Officers
+  label: Clerk
+  page_title: 404 Not Found
+  page_heading: File not found (404 error)
+  expected: Village Officers
+  reason: village officer with no body of its own
+- place: old_bennington
+  organization_label: Trustees and Officers
+  label: Moderator
+  page_title: 404 Not Found
+  page_heading: File not found (404 error)
+  expected: Village Officers
+  reason: village moderator; no Town Meeting in the set
+- place: old_bennington
+  organization_label: Trustees and Officers
+  label: Treasurer/Tax Collector
+  page_title: 404 Not Found
+  page_heading: File not found (404 error)
+  expected: Village Officers
+  reason: village officer with no body of its own
+- place: old_bennington
+  organization_label: Trustees and Officers
+  label: Trustee and Presiding Officer
+  page_title: 404 Not Found
+  page_heading: File not found (404 error)
+  expected: Board of Trustees
+  reason: village trustee, its chair/vice chair or president
+- place: swanton_village
+  organization_label: Trustees of Public Money
+  label: Trustee of Public Money
+  page_title: Trustees of Public Money - Swanton, Vermont
+  page_heading: Trustees of Public Money
+  expected: Village Officers
+  reason: trustee of public money is an officer, not a village trustee
+- place: north_troy
+  organization_label: Village
+  label: Village of North Troy, Clerk
+  page_title: Contacts - Troy, Vermont
+  page_heading: Contacts
+  expected: Village Officers
+  reason: village officer with no body of its own
+- place: saxtons_river
+  organization_label: Village Officers
+  label: Clerk
+  page_title: Town of Rockingham/ Village of Bellows Falls Corporation - Saxtons River Village Trustees
+  page_heading: Saxtons River Village Trustees Saxtons River Village Trustees</span
+  expected: Village Officers
+  reason: village officer with no body of its own
+- place: saxtons_river
+  organization_label: Village Trustee's
+  label: Chair
+  page_title: Town of Rockingham/ Village of Bellows Falls Corporation - Saxtons River Village Trustees
+  page_heading: Saxtons River Village Trustees Saxtons River Village Trustees</span
+  expected: Board of Trustees
+  reason: village trustee, its chair/vice chair or president
+- place: saxtons_river
+  organization_label: Village Trustee's
+  label: Vice Chair
+  page_title: Town of Rockingham/ Village of Bellows Falls Corporation - Saxtons River Village Trustees
+  page_heading: Saxtons River Village Trustees Saxtons River Village Trustees</span
+  expected: Board of Trustees
+  reason: village trustee, its chair/vice chair or president
+- place: woodstock_village
+  organization_label: Village Trustees
+  label: Trustee, Vice Chair
+  expected: Board of Trustees
+  reason: village trustee, its chair/vice chair or president
+- place: swanton_village
+  organization_label: Village Trustees
+  label: Village President
+  page_title: Village Trustees - Swanton, Vermont
+  page_heading: Village Trustees
+  expected: Board of Trustees
+  reason: village trustee, its chair/vice chair or president
+- place: essex_junction
+  organization_label: null
+  label: Council Member President
+  page_title: Contacts - City of Essex Junction, Vermont
+  page_heading: City Contacts
+  expected: Council
+  reason: council member or council officer as member
+- place: essex_junction
+  organization_label: null
+  label: Council Member, President
+  page_title: City Council - City of Essex Junction, Vermont
+  page_heading: City Council
+  expected: Council
+  reason: council member or council officer as member
+- place: barre_city
+  organization_label: null
+  label: Councilor Ward II
+  expected: Council
+  reason: council member or council officer as member
+- place: barre_city
+  organization_label: null
+  label: Councilor Ward III
+  expected: Council
+  reason: council member or council officer as member
+- place: vergennes
+  organization_label: null
+  label: Senior Alderman
+  page_title: City of Vergennes, VT
+  page_heading: City of Vergennes, VT
+  expected: Council
+  reason: alderman
+- place: montpelier
+  organization_label: City Council
+  label: Council Member District 2
+  expected: Council
+  reason: council member or council officer as member
+- place: montpelier
+  organization_label: Council Members
+  label: Council Member District 2
+  expected: Council
+  reason: council member or council officer as member
+- place: winooski
+  organization_label: Winooski City Council
+  label: Councilor
+  page_title: Winooski City Council | Winooski, VT
+  page_heading: Winooski City Council
+  expected: Council
+  reason: council member or council officer as member
+- place: winooski
+  organization_label: Winooski City Council
+  label: Deputy Mayor
+  page_title: Winooski City Council | Winooski, VT
+  page_heading: Winooski City Council
+  expected: Council
+  reason: Winooski deputy mayor is a council member
+- place: rutland_city
+  organization_label: Board of Aldermen (Elected; 2 Year Term; term expires indicated)
+  label: Alderman
+  page_title: Elected & Appointed Officials – The City of Rutland, Vermont
+  page_heading: Elected & Appointed Officials
+  expected: Council
+  reason: alderman or council member
+- place: rutland_city
+  organization_label: Board of Aldermen (Elected; 2 Year Term; term expires indicated)
+  label: Alderman and Board President
+  page_title: Elected & Appointed Officials – The City of Rutland, Vermont
+  page_heading: Elected & Appointed Officials
+  expected: Council
+  reason: alderman or council member
+- place: burlington
+  organization_label: City Council
+  label: Council Member North District
+  page_title: Public Board Membership List | Burlington, VT
+  page_heading: Public Board Membership List
+  expected: Council
+  reason: alderman or council member
+- place: burlington
+  organization_label: City Council
+  label: Council Member South District
+  page_title: Public Board Membership List | Burlington, VT
+  page_heading: Public Board Membership List
+  expected: Council
+  reason: alderman or council member
+- place: burlington
+  organization_label: City Council
+  label: Council Member Ward 4
+  expected: Council
+  reason: alderman or council member
+- place: rutland_city
+  organization_label: Mayor (Elected; 1 Year Term Expires March 2027)
+  label: Mayor
+  page_title: Elected & Appointed Officials – The City of Rutland, Vermont
+  page_heading: Elected & Appointed Officials
+  expected: Office of the Mayor
+  reason: mayor
+- place: st_albans_city
+  organization_label: Mayor and City Council
+  label: Ward 5 Alderperson
+  page_title: Mayor and City Council - City of Saint Albans
+  page_heading: Mayor and City Council
+  expected: Council
+  reason: ward alderperson
+- place: rutland_city
+  organization_label: Mayor, City Attorney & Human Resources
+  label: Mayor
+  page_title: Employee Directory – The City of Rutland, Vermont
+  page_heading: Employee Directory
+  expected: Office of the Mayor
+  reason: mayor
+- place: burlington
+  organization_label: Office of Mayor Emma Mulvaney-Stanak
+  label: Mayor
+  page_title: Office of Mayor Emma Mulvaney-Stanak | Burlington, VT
+  page_heading: Office of Mayor Emma Mulvaney-Stanak
+  expected: Office of the Mayor
+  reason: mayor
+- place: belvidere
+  organization_label: null
+  label: Chair
+  page_title: Select Board | Town of Belvidere Vermont
+  page_heading: Belvidere Select Board
+  expected: Selectboard
+  reason: the page's title and heading name the Selectboard; reviewed 2026-11-18
+- place: groton
+  organization_label: null
+  label: Chairperson
+  page_title: Selectboard | Town of Groton
+  page_heading: Selectboard
+  expected: Selectboard
+  reason: the page's title and heading name the Selectboard; reviewed 2026-11-18
+- place: brownington
+  organization_label: null
+  label: Justice of the Peace
+  page_title: Town of Brownington - Justice of the Peace
+  page_heading: Justice of the Peace
+  expected: Town Officers
+  reason: town officer or staff
+- place: cambridge_town
+  organization_label: null
+  label: Member
+  page_title: Welcome To Town Of Cambridge, VT
+  page_heading: Selectboard
+  expected: Selectboard
+  reason: the page's title and heading name the Selectboard; reviewed 2026-11-18
+- place: lincoln
+  organization_label: null
+  label: Member, Chair
+  page_title: Town Directory - Lincoln, VT
+  page_heading: Town Directory
+  expected: Selectboard
+  reason: the page's title and heading name the Selectboard; reviewed 2026-11-18
+- place: lincoln
+  organization_label: null
+  label: Member, Vice-Chair
+  page_title: Town Directory - Lincoln, VT
+  page_heading: Town Directory
+  expected: Selectboard
+  reason: the page's title and heading name the Selectboard; reviewed 2026-11-18
+- place: rupert
+  organization_label: null
+  label: Moderator, Delinquent Tax Collector, Town Fire Warden, and Tree Warden
+  page_title: Administration - Rupert, Vermont
+  page_heading: Rupert, Vermont
+  expected: Town Meeting
+  reason: town moderator
+- place: addison
+  organization_label: null
+  label: Road Commissioner
+  page_title: Elected & Appointed Officers - Addison, VT
+  page_heading: Elected & Appointed Officers
+  expected: Town Officers
+  reason: town officer or staff
+- place: guilford
+  organization_label: null
+  label: Road Commissioner and Foreman
+  page_title: Highway Department - Town of Guilford, Vermont
+  page_heading: Highway Department
+  expected: Town Officers
+  reason: town officer or staff
+- place: newbury_town
+  organization_label: null
+  label: Road Commissioner and Selectboard
+  page_title: Staff Directory • Newbury, VT • CivicEngage
+  page_heading: Staff Directory
+  expected: Selectboard
+  reason: selectboard member, also road commissioner
+- place: coventry
+  organization_label: null
+  label: Select Board
+  page_title: Contact Us – Town of Coventry, Vermont
+  page_heading: Contact Us
+  expected: Selectboard
+  reason: selectboard member, chair, vice chair, clerk or secretary
+- place: bakersfield
+  organization_label: null
+  label: Select Board Chair
+  page_title: OFFICIALS | Town Of Bakersfield
+  expected: Selectboard
+  reason: selectboard member, chair, vice chair, clerk or secretary
+- place: bakersfield
+  organization_label: null
+  label: Select Board Member
+  page_title: OFFICIALS | Town Of Bakersfield
+  expected: Selectboard
+  reason: selectboard member, chair, vice chair, clerk or secretary
+- place: dover
+  organization_label: null
+  label: Select Board Member Chair
+  expected: Selectboard
+  reason: selectboard member, chair, vice chair, clerk or secretary
+- place: cavendish
+  organization_label: null
+  label: Select Board Member and Chair
+  page_title: Boards & Committees — Town of Cavendish, Vermont
+  page_heading: Boards & Committees
+  expected: Selectboard
+  reason: selectboard member, chair, vice chair, clerk or secretary
+- place: bakersfield
+  organization_label: null
+  label: Select Board Member and Lister 1st Assistant Chief
+  page_title: OFFICIALS | Town Of Bakersfield
+  expected: Selectboard
+  reason: selectboard member, chair, vice chair, clerk or secretary
+- place: brownington
+  organization_label: null
+  label: Select Board Member, Chairman
+  page_title: Town of Brownington - Select Board
+  page_heading: Select Board
+  expected: Selectboard
+  reason: selectboard member, chair, vice chair, clerk or secretary
+- place: bakersfield
+  organization_label: null
+  label: Select Board Vice-Chair
+  page_title: OFFICIALS | Town Of Bakersfield
+  expected: Selectboard
+  reason: selectboard member, chair, vice chair, clerk or secretary
+- place: elmore
+  organization_label: null
+  label: Select Board and Constable
+  page_title: Town Directory – Town of Elmore, Vermont
+  expected: Selectboard
+  reason: selectboard member, chair, vice chair, clerk or secretary
+- place: addison
+  organization_label: null
+  label: Selectboard
+  page_title: Elected & Appointed Officers - Addison, VT
+  page_heading: Elected & Appointed Officers
+  expected: Selectboard
+  reason: selectboard member, chair, vice chair, clerk or secretary
+- place: colchester
+  organization_label: null
+  label: Selectboard Clerk
+  page_title: Selectboard | Colchester, VT
+  page_heading: Selectboard
+  expected: Selectboard
+  reason: selectboard member, chair, vice chair, clerk or secretary
+- place: baltimore
+  organization_label: null
+  label: Selectboard Member
+  expected: Selectboard
+  reason: selectboard member, chair, vice chair, clerk or secretary
+- place: berlin
+  organization_label: null
+  label: Selectboard Member, Secretary
+  page_title: Selectboard | Learn More — Get Involved Now — Town of Berlin
+  expected: Selectboard
+  reason: selectboard member or its chair/vice chair/secretary
+- place: berkshire
+  organization_label: null
+  label: Selectboard Vice Chair
+  page_title: Town Officers - Town of Berkshire, Vermont
+  expected: Selectboard
+  reason: selectboard member or its chair/vice chair/secretary
+- place: charlotte
+  organization_label: null
+  label: Selectboard Vice-Chair
+  page_title: Selectboard - Charlotte, VT
+  page_heading: Selectboard
+  expected: Selectboard
+  reason: selectboard member or its chair/vice chair/secretary
+- place: cambridge_town
+  organization_label: null
+  label: TOWN CLERK & TREASURER
+  page_title: Welcome To Town Of Cambridge, VT
+  page_heading: Town Clerk's Office
+  expected: Town Officers
+  reason: 'clerk, treasurer, tax collector, administrator or manager: officers organization'
+- place: grafton
+  organization_label: null
+  label: Town Administrator
+  page_title: Directory - Town of Grafton
+  page_heading: Directory
+  expected: Town Officers
+  reason: 'clerk, treasurer, tax collector, administrator or manager: officers organization'
+- place: arlington
+  organization_label: null
+  label: Town Clerk
+  page_title: Town Clerk | Arlington Vermont
+  expected: Town Officers
+  reason: 'clerk, treasurer, tax collector, administrator or manager: officers organization'
+- place: glover
+  organization_label: null
+  label: Town Clerk / Treasurer
+  page_title: Glover Town Clerk /Treasurer – Town of Glover, Vermont
+  page_heading: Glover Town Clerk /Treasurer
+  expected: Town Officers
+  reason: 'clerk, treasurer, tax collector, administrator or manager: officers organization'
+- place: waitsfield
+  organization_label: null
+  label: Town Clerk, Delinquent Tax Collector
+  page_title: Contacts - Town of Waitsfield, Vermont
+  page_heading: Contacts
+  expected: Town Officers
+  reason: 'clerk, treasurer, tax collector, administrator or manager: officers organization'
+- place: berkshire
+  organization_label: null
+  label: Town Clerk/Treasurer
+  page_title: Town Officers - Town of Berkshire, Vermont
+  expected: Town Officers
+  reason: 'clerk, treasurer, tax collector, administrator or manager: officers organization'
+- place: barre_town
+  organization_label: null
+  label: Town Manager
+  page_title: Town of Barre - Vermont
+  page_heading: Staff Directory
+  expected: Town Officers
+  reason: 'clerk, treasurer, tax collector, administrator or manager: officers organization'
+- place: lincoln
+  organization_label: null
+  label: Town Meeting Moderator
+  page_title: Town Directory - Lincoln, VT
+  page_heading: Town Directory
+  expected: Town Meeting
+  reason: town moderator
+- place: elmore
+  organization_label: null
+  label: Town Moderator and Constable
+  page_title: Town Directory – Town of Elmore, Vermont
+  expected: Town Meeting
+  reason: town moderator; constable is a second role
+- place: bakersfield
+  organization_label: null
+  label: Town Treasurer
+  page_title: OFFICIALS | Town Of Bakersfield
+  expected: Town Officers
+  reason: 'treasurer, tax collector, assistant clerk or tree warden: officer'
+- place: ferrisburgh
+  organization_label: null
+  label: Treasurer & Assistant Town Clerk
+  page_title: Town Clerk - Ferrisburgh, VT
+  page_heading: Town Clerk's Office
+  expected: Town Officers
+  reason: 'treasurer, tax collector, assistant clerk or tree warden: officer'
+- place: worcester
+  organization_label: null
+  label: Treasurer & Delinquent Tax Collector
+  page_title: Town of Worcester, Vermont
+  page_heading: Town of Worcester, Vermont
+  expected: Town Officers
+  reason: 'treasurer, tax collector, assistant clerk or tree warden: officer'
+- place: chelsea
+  organization_label: null
+  label: Treasurer & Deliquent Tax Collector
+  page_title: Contacts – Chelsea, Vermont
+  page_heading: Contacts
+  expected: Town Officers
+  reason: 'treasurer, tax collector, assistant clerk or tree warden: officer'
+- place: whitingham
+  organization_label: null
+  label: Treasurer and Collector of Delinquent Taxes
+  page_title: Town Departments | Town of Whitingham, Village of Jacksonville Vermont
+  page_heading: Town Departments
+  expected: Town Officers
+  reason: 'treasurer, tax collector, assistant clerk or tree warden: officer'
+- place: dover
+  organization_label: null
+  label: Treasurer/Delinquent Tax Collector
+  expected: Town Officers
+  reason: 'treasurer, tax collector, assistant clerk or tree warden: officer'
+- place: brandon
+  organization_label: null
+  label: Tree Warden
+  page_title: Staff Directory • Brandon, VT • CivicEngage
+  page_heading: Staff Directory
+  expected: Town Officers
+  reason: 'treasurer, tax collector, assistant clerk or tree warden: officer'
+- place: colchester
+  organization_label: null
+  label: Vice Chair
+  page_title: Selectboard | Colchester, VT
+  page_heading: Selectboard
+  expected: Selectboard
+  reason: the page's title and heading name the Selectboard; reviewed 2026-11-18
+- place: new_haven
+  organization_label: null
+  label: Vice Chair, Selectboard and Emergency Management Co-director
+  page_title: Your Town Officials - Official Website of New Haven, Vermont
+  page_heading: Town Officials
+  expected: Selectboard
+  reason: selectboard vice chair; EM co-director is a second role
+- place: bolton
+  organization_label: null
+  label: Vice-Chair
+  expected: Selectboard
+  reason: the page's title and heading name the Selectboard; reviewed 2026-11-18
+- place: hinesburg
+  organization_label: null
+  label: Vice-Chairperson
+  page_title: Staff Directory • Maggie Gordon
+  expected: Selectboard
+  reason: the page's title and heading name the Selectboard; reviewed 2026-11-18
+- place: hinesburg
+  organization_label: null
+  label: Vice-chairperson
+  page_title: Selectboard | Hinesburg, VT
+  page_heading: Selectboard
+  expected: Selectboard
+  reason: the page's title and heading name the Selectboard; reviewed 2026-11-18
+- place: richford
+  organization_label: null
+  label: Water & Sewer Commissioner
+  page_title: Municipal Directory - Town of Richford
+  expected: Town Officers
+  reason: 'water commissioner / town manager: officer'
+- place: alburgh_town
+  organization_label: Alburgh Board of Civil Authority
+  label: Selectboard and Chair
+  page_title: Alburgh Boards of Civil Authority & Abatement - Town of Alburgh
+  page_heading: Alburgh Boards of Civil Authority & Abatement
+  expected: Selectboard
+  reason: selectboard member listed under the BCA
+- place: panton
+  organization_label: Board of Abatement
+  label: Selectboard Vice-Chair
+  page_title: Board of Abatement - Panton VT
+  page_heading: Board of Abatement
+  expected: Selectboard
+  reason: selectboard member/chair listed under board of abatement
+- place: bradford
+  organization_label: Board of Abatement
+  label: Town Clerk
+  page_title: Board of Abatement
+  page_heading: Board of Abatement
+  expected: Town Officers
+  reason: 'clerk, treasurer, JP or BCA member: officers'
+- place: wilmington
+  organization_label: Board of Civil Authority
+  label: Selectboard and Justice of the Peace
+  page_title: Board of Civil Authority - Town of Wilmington
+  page_heading: Board of Civil Authority
+  expected: Selectboard
+  reason: selectboard member listed under the BCA
+- place: benson
+  organization_label: Board of Civil Authority
+  label: Town Clerk
+  page_title: Municipal Administration - bensonvermont.gov
+  page_heading: Municipal Administration
+  expected: Town Officers
+  reason: 'clerk/treasurer or JP: officer'
+- place: rochester
+  organization_label: Board of Civil Authority and Elected Officials
+  label: Town Clerk and Town Treasurer
+  page_title: Town of Rochester Officials – Rochester, Vermont
+  page_heading: Town of Rochester Officials
+  expected: Town Officers
+  reason: 'clerk/treasurer or JP: officer'
+- place: maidstone
+  organization_label: Board of Listers
+  label: Assistant Town Clerk / Lister
+  page_title: Board of Listers | Town of Maidstone
+  expected: Town Officers
+  reason: 'lister or board of listers member: officers'
+- place: morristown
+  organization_label: Board of Listers
+  label: Board Chair (2027)
+  expected: Town Officers
+  reason: 'lister or board of listers member: officers'
+- place: morristown
+  organization_label: Board of Listers
+  label: Board Member (2028)
+  expected: Town Officers
+  reason: 'lister or board of listers member: officers'
+- place: winhall
+  organization_label: Board of Listers
+  label: Chair
+  page_title: Town of Winhall, VT
+  page_heading: Listers
+  expected: Town Officers
+  reason: 'lister or board of listers member: officers'
+- place: middletown_springs
+  organization_label: Board of Listers
+  label: Lister Chair
+  page_title: Board of Listers | Town Of Middletown Springs
+  page_heading: Board of Listers
+  expected: Town Officers
+  reason: 'lister or board of listers member: officers'
+- place: middletown_springs
+  organization_label: Board of Listers
+  label: Lister Member
+  page_title: Board of Listers | Town Of Middletown Springs
+  page_heading: Board of Listers
+  expected: Town Officers
+  reason: 'lister or board of listers member: officers'
+- place: newbury_town
+  organization_label: Board of Listers
+  label: Lister and Chair
+  page_title: Listers & Tax Maps | Newbury, VT
+  page_heading: Listers & Tax Maps
+  expected: Town Officers
+  reason: 'lister or board of listers member: officers'
+- place: sheffield
+  organization_label: Board of Selectmen
+  label: Select Board Member and Chairman
+  page_title: Offices & Departments - Town of Sheffield VT
+  page_heading: Offices & Departments
+  expected: Selectboard
+  reason: selectboard member
+- place: ryegate
+  organization_label: Board of Selectmen
+  label: Selectwoman
+  expected: Selectboard
+  reason: selectboard member
+- place: craftsbury
+  organization_label: Cemetery Commissioners
+  label: Cemetery Commissioner, Selectboard Co-Chair
+  page_title: Elected and Appointed Officers - Craftsbury, VT
+  page_heading: Elected and Appointed Officers
+  expected: Selectboard
+  reason: selectboard co-chair; cemetery commissioner is a second role
+- place: clarendon
+  organization_label: Clarendon Town Officials
+  label: Select Board Chair, Airport Committee
+  page_title: Clarendon Town Officials - The Town of Clarendon
+  page_heading: Clarendon Town Officials
+  expected: Selectboard
+  reason: selectboard member, chair or clerk as member
+- place: clarendon
+  organization_label: Clarendon Town Officials
+  label: Select Board Clerk, Select Board Parliamentarian, Rutland County Sheriff Department Liaison, Justice of the Peace
+  page_title: Clarendon Town Officials - The Town of Clarendon
+  page_heading: Clarendon Town Officials
+  expected: Selectboard
+  reason: selectboard member, chair or clerk as member
+- place: clarendon
+  organization_label: Clarendon Town Officials
+  label: Select Board, Justice of the Peace
+  page_title: Clarendon Town Officials - The Town of Clarendon
+  page_heading: Clarendon Town Officials
+  expected: Selectboard
+  reason: selectboard member, chair or clerk as member
+- place: essex
+  organization_label: Clerks Office
+  label: Town Clerk / Treasurer
+  page_title: Staff Directory • Essex, VT • CivicEngage
+  page_heading: Staff Directory
+  expected: Town Officers
+  reason: 'clerk, treasurer, tax collector or constable: officer'
+- place: canaan
+  organization_label: Contact Us
+  label: Town Clerk and Treasurer
+  page_title: Town of Canaan, Vermont
+  page_heading: Town of Canaan, Vermont
+  expected: Town Officers
+  reason: 'clerk, treasurer, tax collector or constable: officer'
+- place: wheelock
+  organization_label: Delinquent Tax Collector Elected
+  label: Delinquent Tax Collector Elected
+  page_title: Contacts & Community | Town of Wheelock
+  page_heading: Contacts & Community
+  expected: Town Officers
+  reason: 'clerk, treasurer, tax collector or constable: officer'
+- place: peru
+  organization_label: ELECTED TOWN OFFICERS
+  label: Town Clerk
+  page_title: Government - Cemetery Commission Services - Peru, VT
+  page_heading: Government
+  expected: Town Officers
+  reason: clerk or treasurer
+- place: isle_la_motte
+  organization_label: ELECTED TOWN OFFICERS 2025
+  label: Moderator and Select Board Member and Vice-Chair
+  page_title: Elected & Appointed Town Officers – Town of Isle La Motte, VT
+  page_heading: Elected & Appointed Town Officers
+  expected: Selectboard
+  reason: the page's title and heading name the Selectboard; reviewed 2026-11-18
+- place: isle_la_motte
+  organization_label: ELECTED TOWN OFFICERS 2025
+  label: Town Treasurer, Lister and Chair, and Collector of Delinquent Taxes
+  page_title: Elected & Appointed Town Officers – Town of Isle La Motte, VT
+  page_heading: Elected & Appointed Town Officers
+  expected: Town Officers
+  reason: clerk; treasurer/lister/tax collector
+- place: tunbridge
+  organization_label: Elected Town Officers
+  label: Collector of Delinquent Taxes
+  page_title: Town Officers – Town of Tunbridge, Vermont
+  page_heading: Town Officers
+  expected: Town Officers
+  reason: clerk/treasurer or tax collector
+- place: tunbridge
+  organization_label: Elected Town Officers
+  label: Selectboard
+  page_title: Town Officers – Town of Tunbridge, Vermont
+  page_heading: Town Officers
+  expected: Selectboard
+  reason: selectboard
+- place: vernon
+  organization_label: Finance Office
+  label: Treasurer/Finance director
+  page_title: Finance Office | Town of Vernon
+  page_heading: Finance Office
+  expected: Town Officers
+  reason: clerk, treasurer, road commissioner or committee chair not in the set
+- place: middlebury
+  organization_label: Finance/Treasurer
+  label: Town Treasurer
+  page_title: Welcome To Town of Middlebury, VT
+  page_heading: Finance/Treasurer
+  expected: Town Officers
+  reason: clerk, treasurer, road commissioner or committee chair not in the set
+- place: calais
+  organization_label: Highway Department
+  label: Town Administrator, Treasurer, Road Commissioner
+  page_title: Highway Department – Calais, Vermont
+  page_heading: Highway Department
+  expected: Town Officers
+  reason: clerk, treasurer, road commissioner or committee chair not in the set
+- place: newbury_town
+  organization_label: Highway Department, Selectboard
+  label: Road Commissioner and Selectboard
+  page_title: Staff Directory • Newbury, VT • CivicEngage
+  page_heading: Staff Directory
+  expected: Selectboard
+  reason: sits on selectboard; road commissioner is a second role
+- place: newport_town
+  organization_label: Highway Dept
+  label: Road Commissioner
+  page_title: Highway Dept – Town of Newport Vermont
+  page_heading: Town of Newport Vermont
+  expected: Town Officers
+  reason: road commissioner or committee members not in the set
+- place: morristown
+  organization_label: Housing Committee
+  label: Housing Committee Committee Member, Morristown Planning Commission Chair, Parking Committee Committee Member
+  expected: Town Officers
+  reason: road commissioner or committee members not in the set
+- place: woodstock_town
+  organization_label: Joint Board
+  label: Chair
+  page_title: Joint Board | Woodstock, VT
+  page_heading: Joint Board
+  expected: Selectboard
+  reason: the page's title and heading name the Selectboard; reviewed 2026-11-18
+- place: woodstock_town
+  organization_label: Joint Board
+  label: Vice Chair
+  page_title: Joint Board | Woodstock, VT
+  page_heading: Joint Board
+  expected: Selectboard
+  reason: the page's title and heading name the Selectboard; reviewed 2026-11-18
+- place: shrewsbury
+  organization_label: Justices Of The Peace
+  label: Justice of the Peace
+  page_title: Justices Of The Peace - Town of Shrewsbury, Vermont
+  expected: Town Officers
+  reason: 'justice of the peace, lister or library trustee: officers'
+- place: kirby
+  organization_label: Kirby Selectboard
+  label: Select Board Member
+  page_title: Government | Town of Kirby Vermont
+  page_heading: Our Government
+  expected: Selectboard
+  reason: the page's title and heading name the Selectboard; reviewed 2026-11-18
+- place: kirby
+  organization_label: Kirby Selectboard
+  label: Select Board Member and Chair
+  page_title: Government | Town of Kirby Vermont
+  page_heading: Our Government
+  expected: Selectboard
+  reason: the page's title and heading name the Selectboard; reviewed 2026-11-18
+- place: kirby
+  organization_label: Kirby Selectboard
+  label: Select Board Member and Road Commissioner
+  page_title: Government | Town of Kirby Vermont
+  page_heading: Our Government
+  expected: Selectboard
+  reason: the page's title and heading name the Selectboard; reviewed 2026-11-18
+- place: georgia
+  organization_label: Library Board of Trustees
+  label: Library Trustee Chair
+  expected: Town Officers
+  reason: 'justice of the peace, lister or library trustee: officers'
+- place: georgia
+  organization_label: Library Board of Trustees
+  label: Library Trustee Member
+  expected: Town Officers
+  reason: 'justice of the peace, lister or library trustee: officers'
+- place: georgia
+  organization_label: Library Board of Trustees
+  label: Library Trustee Vice Chair
+  expected: Town Officers
+  reason: 'justice of the peace, lister or library trustee: officers'
+- place: georgia
+  organization_label: Library Board of Trustees
+  label: Member
+  expected: Town Officers
+  reason: 'justice of the peace, lister or library trustee: officers'
+- place: georgia
+  organization_label: Library Trustees & Staff
+  label: Library Trustee Chair
+  expected: Town Officers
+  reason: 'justice of the peace, lister or library trustee: officers'
+- place: georgia
+  organization_label: Library Trustees & Staff
+  label: Library Trustee Member
+  expected: Town Officers
+  reason: 'justice of the peace, lister or library trustee: officers'
+- place: georgia
+  organization_label: Library Trustees & Staff
+  label: Library Trustee Secretary
+  expected: Town Officers
+  reason: 'justice of the peace, lister or library trustee: officers'
+- place: georgia
+  organization_label: Library Trustees & Staff
+  label: Library Trustee Vice Chair
+  expected: Town Officers
+  reason: 'justice of the peace, lister or library trustee: officers'
+- place: orwell
+  organization_label: Listers
+  label: Lister
+  page_title: Listers – Town of Orwell
+  page_heading: Listers
+  expected: Town Officers
+  reason: lister; board of listers not in set
+- place: calais
+  organization_label: Listers
+  label: Lister 8
+  page_title: Listers – Calais, Vermont
+  page_heading: Listers
+  expected: Town Officers
+  reason: lister; board of listers not in set
+- place: townshend
+  organization_label: Listers
+  label: Lister Chair
+  page_title: Listers | Townshend, Vermont
+  page_heading: Listers
+  expected: Town Officers
+  reason: lister; board of listers not in set
+- place: townshend
+  organization_label: Listers
+  label: Lister Vice Chair
+  page_title: Listers | Townshend, Vermont
+  page_heading: Listers
+  expected: Town Officers
+  reason: lister; board of listers not in set
+- place: strafford
+  organization_label: Listers
+  label: Lister, Chair
+  page_title: Listers | town-of-strafford
+  page_heading: Town of
+  expected: Town Officers
+  reason: lister; board of listers not in set
+- place: marlboro
+  organization_label: Marlboro Town Office
+  label: Town Treasurer
+  page_title: 404 - Page not found - Marlboro, VT
+  page_heading: Oops! That page can’t be found.
+  expected: Town Officers
+  reason: clerk/treasurer/tax collector officer
+- place: brookline
+  organization_label: Moderator
+  label: Moderator
+  page_title: Elected Town Officers - Brookline, Vermont
+  page_heading: Elected Town Officers
+  expected: Town Meeting
+  reason: town moderator
+- place: worcester
+  organization_label: Moderator (Town & School)
+  label: Moderator (Town & School)
+  page_title: Directory | Town of Worcester, Vermont
+  page_heading: Directory
+  expected: Town Meeting
+  reason: town moderator
+- place: morristown
+  organization_label: Morristown Development Fund Loan Advisory Committee
+  label: Development Fund Loan Advisory Committee Chair
+  expected: Town Officers
+  reason: member of a committee/commission not in set
+- place: morristown
+  organization_label: Morristown Planning Commission
+  label: Morristown Planning Commission Vice-Chair
+  expected: Town Officers
+  reason: member of a committee/commission not in set
+- place: waterbury_town
+  organization_label: Municipal Manager
+  label: Municipal Manager
+  page_title: Municipal Manager - Waterbury, VT
+  page_heading: Municipal Manager
+  expected: Town Officers
+  reason: town manager or staff
+- place: orwell
+  organization_label: Orwell Select Board
+  label: Select Board Member and Vice Chair
+  expected: Selectboard
+  reason: selectboard member or officer
+- place: pawlet
+  organization_label: Other Town Officers and Appointments
+  label: Treasurer and Tax Collector
+  page_title: Town Government | Pawlet, Vermont
+  page_heading: Pawlet, Vermont
+  expected: Town Officers
+  reason: clerk/treasurer/tax collector officer
+- place: middlebury
+  organization_label: Other Town Officials
+  label: Town Moderator
+  page_title: Welcome To Town of Middlebury, VT
+  page_heading: Other Town Officials
+  expected: Town Meeting
+  reason: town moderator
+- place: middlebury
+  organization_label: Other Town Officials
+  label: Town Treasurer
+  page_title: Welcome To Town of Middlebury, VT
+  page_heading: Other Town Officials
+  expected: Town Officers
+  reason: clerk/treasurer/tax collector officer
+- place: pawlet
+  organization_label: Pawlet Board
+  label: Select Board Member and Chair
+  page_title: Town Government | Pawlet, Vermont
+  page_heading: Pawlet, Vermont
+  expected: Selectboard
+  reason: selectboard member or officer
+- place: pownal
+  organization_label: Pownal Selectboard Members
+  label: Select Board Member
+  page_title: Town of Pownal, Vermont - Official Town Government Website
+  expected: Selectboard
+  reason: selectboard member or officer
+- place: granville
+  organization_label: ROAD COMMISSIONER
+  label: Road Commissioner
+  page_title: OFFICIALS | Granville, Vermont
+  page_heading: OFFICIALS
+  expected: Town Officers
+  reason: road commissioner, own label decides
+- place: roxbury
+  organization_label: ROXBURY TOWN OFFICE
+  label: Town Clerk
+  page_title: Town Personnel – Town of Roxbury VT
+  page_heading: Town Personnel
+  expected: Town Officers
+  reason: clerk/treasurer/tax collector officer
+- place: clarendon
+  organization_label: Road Commissioner
+  label: Road Commissioner and Selectboard Member
+  page_title: Contact Us - The Town of Clarendon
+  page_heading: Contact Us
+  expected: Selectboard
+  reason: also a selectboard member
+- place: rutland_town
+  organization_label: Rutland Town Highway Department
+  label: Road Commissioner
+  page_title: Highway Department – The Town of Rutland, Vermont
+  page_heading: Highway Department
+  expected: Town Officers
+  reason: road commissioner, own label decides
+- place: derby
+  organization_label: SELECT BOARD
+  label: Select Board Member and Chair
+  page_title: Municipal Directory – Derby Vermont 05829
+  page_heading: Derby Vermont 05829
+  expected: Selectboard
+  reason: selectboard member or officer
+- place: grafton
+  organization_label: SELECTBOARD
+  label: Capital Budget Committee, Selectboard
+  page_title: Directory - Town of Grafton
+  page_heading: Directory
+  expected: Selectboard
+  reason: selectboard member or officer
+- place: halifax
+  organization_label: SELECTBOARD
+  label: Select Board Member and Road Commissioner
+  page_title: Town Officials - Halifax, Vermont
+  page_heading: Town Officials
+  expected: Selectboard
+  reason: selectboard member or officer
+- place: grafton
+  organization_label: SELECTBOARD
+  label: Selectboard, Clerk
+  page_title: Directory - Town of Grafton
+  page_heading: Directory
+  expected: Selectboard
+  reason: selectboard member or officer
+- place: winhall
+  organization_label: Select Board
+  label: Chair
+  expected: Selectboard
+  reason: selectboard member or officer
+- place: benson
+  organization_label: Select Board
+  label: Road Commissioner
+  page_title: Contact Us - bensonvermont.gov
+  page_heading: Contact Us
+  expected: Town Officers
+  reason: road commissioner, own label decides
+- place: benson
+  organization_label: Select Board
+  label: Select Board Member and Assistant Chair
+  page_title: Municipal Administration - bensonvermont.gov
+  page_heading: Municipal Administration
+  expected: Selectboard
+  reason: selectboard member or officer
+- place: west_rutland
+  organization_label: Select Board
+  label: Select Board Secretary
+  page_title: Select Board - West Rutland Vermont
+  page_heading: Select Board
+  expected: Town Officers
+  reason: staff or an unnamed clerk, not a board member; reviewed 2026-11-18
+- place: west_rutland
+  organization_label: Select Board
+  label: Selectperson, Vice Chair
+  page_title: Town Officers / Appointments - West Rutland Vermont
+  page_heading: Town Officers / Appointments
+  expected: Selectboard
+  reason: selectboard member or officer
+- place: winhall
+  organization_label: Select Board
+  label: Vice Chair
+  expected: Selectboard
+  reason: selectboard member or officer
+- place: readsboro
+  organization_label: Select Board (SB)
+  label: Select Board Chair
+  page_title: Boards & Commissions | The Town of Readsboro
+  page_heading: Boards & Commissions
+  expected: Selectboard
+  reason: selectboard member or officer
+- place: readsboro
+  organization_label: Select Board (SB)
+  label: Select Board Member
+  page_title: Boards & Commissions | The Town of Readsboro
+  page_heading: Boards & Commissions
+  expected: Selectboard
+  reason: selectboard member or officer
+- place: readsboro
+  organization_label: Select Board (SB)
+  label: Select Board Vice Chair
+  page_title: Boards & Commissions | The Town of Readsboro
+  page_heading: Boards & Commissions
+  expected: Selectboard
+  reason: selectboard member or officer
+- place: west_haven
+  organization_label: Select Board Members
+  label: Select Board Member
+  page_title: Officials and Staff - Town of West Haven
+  expected: Selectboard
+  reason: selectboard member or officer
+- place: west_haven
+  organization_label: Select Board Members
+  label: Select Board Member and Chair
+  page_title: Officials and Staff - Town of West Haven
+  expected: Selectboard
+  reason: selectboard member or officer
+- place: enosburgh
+  organization_label: Selectboard
+  label: Chair
+  expected: Selectboard
+  reason: selectboard member or officer
+- place: fair_haven
+  organization_label: Selectboard
+  label: Clerk
+  page_title: Selectboard - Fair Haven Vermont
+  expected: Town Officers
+  reason: staff or an unnamed clerk, not a board member; reviewed 2026-11-18
+- place: mendon
+  organization_label: Selectboard
+  label: Member
+  expected: Selectboard
+  reason: selectboard member
+- place: shoreham
+  organization_label: Selectboard
+  label: Roads Commissioner
+  expected: Town Officers
+  reason: road commissioner, own label decides
+- place: weston
+  organization_label: Selectboard
+  label: Secretary
+  page_title: Selectboard — westonvt
+  expected: Town Officers
+  reason: staff or an unnamed clerk, not a board member; reviewed 2026-11-18
+- place: south_hero
+  organization_label: Selectboard
+  label: Select Board Member, Vice Chair
+  page_title: Selectboard | Town of Town of South Hero
+  page_heading: Selectboard
+  expected: Selectboard
+  reason: selectboard member or officer
+- place: mendon
+  organization_label: Selectboard
+  label: Select Board Vice Chair
+  expected: Selectboard
+  reason: selectboard member or officer
+- place: sunderland
+  organization_label: Selectboard
+  label: Selectboard Member and Board Clerk
+  page_title: Boards and Committees - Town of Sunderland Vermont
+  page_heading: Menu
+  expected: Selectboard
+  reason: selectboard member or officer
+- place: st_george
+  organization_label: Selectboard
+  label: Selectboard Member and Cemetery Commissioner
+  page_title: ST. GEORGE, VT
+  page_heading: ST. GEORGE, VT
+  expected: Selectboard
+  reason: selectboard member or officer
+- place: andover
+  organization_label: Selectboard
+  label: Selectboard Member and Vice Chair
+  expected: Selectboard
+  reason: selectboard member or officer
+- place: swanton_town
+  organization_label: Selectboard
+  label: Selectboard Member, Recreation Commission Executive Director
+  page_title: Town Contacts - Swanton, Vermont
+  page_heading: Town Contacts
+  expected: Selectboard
+  reason: selectboard member or officer
+- place: hancock
+  organization_label: Selectboard
+  label: Selectboard and Road Commissioner
+  page_title: Boards – Town of Hancock, Vermont 05748
+  page_heading: Boards
+  expected: Selectboard
+  reason: selectboard member or officer
+- place: brookline
+  organization_label: Selectboard
+  label: Selectboard, Chair
+  page_title: Elected Town Officers - Brookline, Vermont
+  page_heading: Elected Town Officers
+  expected: Selectboard
+  reason: selectboard member or officer
+- place: royalton
+  organization_label: Selectboard
+  label: Treasurer
+  page_title: Selectboard
+  page_heading: Selectboard
+  expected: Town Officers
+  reason: treasurer
+- place: townshend
+  organization_label: Selectboard
+  label: Vice Chair of Select Board
+  page_title: Appointed Officers | Townshend, Vermont
+  page_heading: Appointed Officers
+  expected: Selectboard
+  reason: selectboard member or officer
+- place: proctor
+  organization_label: Selectboard & Town Manager
+  label: Vice-Chair and Selectboard Member
+  expected: Selectboard
+  reason: selectboard member or officer
+- place: peru
+  organization_label: Selectboard Members
+  label: Chairman
+  expected: Selectboard
+  reason: selectboard member or officer
+- place: clarendon
+  organization_label: 'Selectboard Members:'
+  label: Selectboard Member
+  page_title: Contact Us - The Town of Clarendon
+  page_heading: Contact Us
+  expected: Selectboard
+  reason: selectboard member or officer
+- place: athens
+  organization_label: Selectboard, Moderator, Cemetery Commission
+  label: Selectboard and Moderator and Cemetery Commissioner
+  page_title: Officials - Athens, Vermont
+  expected: Selectboard
+  reason: selectboard member or officer
+- place: cabot
+  organization_label: Selectpersons
+  label: Selectperson
+  expected: Selectboard
+  reason: selectperson
+- place: cabot
+  organization_label: Selectpersons
+  label: Selectperson Chair
+  expected: Selectboard
+  reason: selectperson chair
+- place: cabot
+  organization_label: Selectpersons
+  label: Selectperson Vice Chair
+  expected: Selectboard
+  reason: selectperson vice chair
+- place: starksboro
+  organization_label: Staff or official
+  label: Treasurer
+  page_title: Directory | Town of Starksboro, VT
+  page_heading: Directory
+  expected: Town Officers
+  reason: 'officer or staff (clerk, treasurer, tax collector, road commissioner) with no body of its own: Treasurer'
+- place: sandgate
+  organization_label: TOWN & SCHOOL MODERATOR
+  label: Town & School Moderator
+  page_title: Elected Officers - SANDGATE, VERMONT
+  page_heading: Elected Officers
+  expected: Town Meeting
+  reason: town and school moderator
+- place: sunderland
+  organization_label: TOWN CLERK
+  label: TOWN CLERK and TREASURER
+  page_title: Town Officers - Town of Sunderland Vermont
+  page_heading: Menu
+  expected: Town Officers
+  reason: 'officer or staff (clerk, treasurer, tax collector, road commissioner) with no body of its own: TOWN CLERK and TREASURER'
+- place: highgate
+  organization_label: TOWN CLERK & PUBLIC MEETINGS CLERK
+  label: Town Clerk & Public Meetings Clerk
+  page_title: TOWN CLERK & PUBLIC MEETINGS CLERK - Highgate, Vermont
+  page_heading: Town Clerk & Public Meetings Clerk
+  expected: Town Officers
+  reason: 'officer or staff (clerk, treasurer, tax collector, road commissioner) with no body of its own: Town Clerk & Public
+    Meetings Clerk'
+- place: sunderland
+  organization_label: TOWN CLERK and TREASURER
+  label: Town Clerk and Treasurer
+  page_title: Town Officers - Town of Sunderland Vermont
+  page_heading: Menu
+  expected: Town Officers
+  reason: 'officer or staff (clerk, treasurer, tax collector, road commissioner) with no body of its own: Town Clerk and Treasurer'
+- place: worcester
+  organization_label: TOWN OFFICIALS
+  label: Town Clerk
+  page_title: Directory | Town of Worcester, Vermont
+  page_heading: Directory
+  expected: Town Officers
+  reason: 'officer or staff (clerk, treasurer, tax collector, road commissioner) with no body of its own: Town Clerk'
+- place: worcester
+  organization_label: TOWN OFFICIALS
+  label: Town Treasurer/Tax Collector/Delinquent Taxes/Billing
+  page_title: Directory | Town of Worcester, Vermont
+  page_heading: Directory
+  expected: Town Officers
+  reason: 'officer or staff (clerk, treasurer, tax collector, road commissioner) with no body of its own: Town Treasurer/Tax
+    Collector/Delinquent Taxes/Billing'
+- place: cabot
+  organization_label: Tax Collector
+  label: Delinquent Tax Collector
+  page_title: Tax Collector – Cabot Vermont
+  expected: Town Officers
+  reason: 'officer or staff (clerk, treasurer, tax collector, road commissioner) with no body of its own: Delinquent Tax Collector'
+- place: middlesex
+  organization_label: Town Administrator
+  label: Town Administrator
+  page_title: Middlesex, VT
+  page_heading: Uh-oh! This Page Has Gone Missing
+  expected: Town Officers
+  reason: town administrator is staff
+- place: arlington
+  organization_label: Town Clerk
+  label: Town Clerk
+  page_title: Arlington Town Information | Arlington Vermont
+  expected: Town Officers
+  reason: 'officer or staff (clerk, treasurer, tax collector, road commissioner) with no body of its own: Town Clerk'
+- place: ripton
+  organization_label: Town Clerk
+  label: Town Clerk & Selectboard Administrator
+  page_title: Town Clerk — Town of Ripton
+  page_heading: Town Clerk
+  expected: Town Officers
+  reason: 'town clerk and selectboard administrator: officer and staff, not a member'
+- place: barnard
+  organization_label: Town Clerk
+  label: Town Clerk & Treasurer
+  page_title: Town Clerk - Town of Barnard, VT
+  page_heading: Town Clerk
+  expected: Town Officers
+  reason: 'officer or staff (clerk, treasurer, tax collector, road commissioner) with no body of its own: Town Clerk & Treasurer'
+- place: craftsbury
+  organization_label: Town Clerk
+  label: Town Clerk & Treasurer, Trustee of Public Funds, Website Committee Chair
+  page_title: Elected and Appointed Officers - Craftsbury, VT
+  page_heading: Elected and Appointed Officers
+  expected: Town Officers
+  reason: clerk/treasurer; trustee and website committee are not in the set
+- place: chester
+  organization_label: Town Clerk
+  label: Treasurer
+  page_title: Town Clerk - WELCOME TO CHESTER
+  expected: Town Officers
+  reason: 'officer or staff (clerk, treasurer, tax collector, road commissioner) with no body of its own: Treasurer'
+- place: isle_la_motte
+  organization_label: Town Clerk & Town Services
+  label: Town Clerk
+  page_title: Town Clerk & Town Services – Town of Isle La Motte, VT
+  page_heading: Town Clerk & Town Services
+  expected: Town Officers
+  reason: 'officer or staff (clerk, treasurer, tax collector, road commissioner) with no body of its own: Town Clerk'
+- place: sheffield
+  organization_label: Town Clerk & Treasurer
+  label: Clerk & Treasurer
+  page_title: Offices & Departments - Town of Sheffield VT
+  page_heading: Offices & Departments
+  expected: Town Officers
+  reason: 'officer or staff (clerk, treasurer, tax collector, road commissioner) with no body of its own: Clerk & Treasurer'
+- place: milton
+  organization_label: Town Clerk & Treasurer
+  label: Town Clerk
+  page_title: Town Clerk & Treasurer | Milton, VT
+  page_heading: Town Clerk & Treasurer
+  expected: Town Officers
+  reason: 'officer or staff (clerk, treasurer, tax collector, road commissioner) with no body of its own: Town Clerk'
+- place: sheldon
+  organization_label: Town Clerk & Treasurer, Delinquent Tax Collector
+  label: Town Clerk & Treasurer and Delinquent Tax Collector
+  page_title: Town Officers - Town of Sheldon, Vermont
+  expected: Town Officers
+  reason: 'officer or staff (clerk, treasurer, tax collector, road commissioner) with no body of its own: Town Clerk & Treasurer
+    and Delinquent Tax Collector'
+- place: athens
+  organization_label: Town Clerk & Treasurer, Listers, Budget Committee
+  label: Town Clerk & Treasurer and Lister and Advisory Budget Committee Member
+  page_title: Officials - Athens, Vermont
+  expected: Town Officers
+  reason: clerk/treasurer and lister; budget committee not in the set
+- place: pittsford
+  organization_label: Town Clerk / Treasurer
+  label: Town Clerk / Treasurer
+  page_title: Town Clerk / Treasurer - Town of Pittsford, Vermont
+  expected: Town Officers
+  reason: 'officer or staff (clerk, treasurer, tax collector, road commissioner) with no body of its own: Town Clerk / Treasurer'
+- place: burke
+  organization_label: Town Clerk's Office
+  label: Town Treasurer
+  page_title: Offices & Departments in Burke, Vermont
+  page_heading: Town of Burke Offices & Departments
+  expected: Town Officers
+  reason: 'officer or staff (clerk, treasurer, tax collector, road commissioner) with no body of its own: Town Treasurer'
+- place: wheelock
+  organization_label: Town Clerk/Treasurer, Disability Officer, Ethics Officer
+  label: Town Clerk/Treasurer, Disability Officer, Ethics Officer
+  page_title: Contacts & Community | Town of Wheelock
+  page_heading: Contacts & Community
+  expected: Town Officers
+  reason: 'officer or staff (clerk, treasurer, tax collector, road commissioner) with no body of its own: Town Clerk/Treasurer,
+    Disability Officer, Ethics Officer'
+- place: grafton
+  organization_label: Town Clerk/Treasurer/Tax Collector
+  label: Town Clerk/Treasurer/Tax Collector
+  page_title: Grafton Public Library - Town of Grafton
+  page_heading: Grafton Public Library
+  expected: Town Officers
+  reason: 'officer or staff (clerk, treasurer, tax collector, road commissioner) with no body of its own: Town Clerk/Treasurer/Tax
+    Collector'
+- place: stratton
+  organization_label: 'Town Clerk:'
+  label: Town Clerk
+  page_title: Town Officers — Town of Stratton, Vermont
+  page_heading: Town Officers
+  expected: Town Officers
+  reason: 'officer or staff (clerk, treasurer, tax collector, road commissioner) with no body of its own: Town Clerk'
+- place: plainfield
+  organization_label: Town Contacts
+  label: Moderator
+  page_title: Town Office - PLAINFIELD, VERMONT
+  expected: Town Meeting
+  reason: moderator
+- place: morgan
+  organization_label: Town Government
+  label: Road Commissioner
+  page_title: Town Government – The Town of Morgan, Vermont
+  page_heading: Town Government
+  expected: Town Officers
+  reason: 'officer or staff (clerk, treasurer, tax collector, road commissioner) with no body of its own: Road Commissioner'
+- place: georgia
+  organization_label: Town Government
+  label: Second Constable
+  expected: Town Officers
+  reason: constable
+- place: west_rutland
+  organization_label: Town Manager
+  label: Road Commissioner
+  page_title: Town Manager - West Rutland Vermont
+  page_heading: Town Manager
+  expected: Town Officers
+  reason: 'officer or staff (clerk, treasurer, tax collector, road commissioner) with no body of its own: Road Commissioner'
+- place: putney
+  organization_label: Town Manager's Office
+  label: Collector of Delinquent Taxes and Road Commissioner
+  page_title: Town Manager's Office
+  page_heading: Town Manager's Office
+  expected: Town Officers
+  reason: 'officer or staff (clerk, treasurer, tax collector, road commissioner) with no body of its own: Collector of Delinquent
+    Taxes and Road Commissioner'
+- place: townshend
+  organization_label: Town Meeting Moderator
+  label: Town Meeting Moderator
+  page_title: Appointed Officers | Townshend, Vermont
+  page_heading: Appointed Officers
+  expected: Town Meeting
+  reason: town meeting moderator
+- place: sunderland
+  organization_label: Town Officers
+  label: Moderator
+  page_title: Town Officers - Town of Sunderland Vermont
+  page_heading: Menu
+  expected: Town Meeting
+  reason: moderator
+- place: weybridge
+  organization_label: Town Officers
+  label: Selectboard (3 years)
+  page_title: Elections & Town Meeting - Weybridge, VT
+  expected: Selectboard
+  reason: selectboard seat (3 years)
+- place: orange
+  organization_label: Town Officers – Appointed
+  label: Treasurer
+  page_title: Town Officers - Town of Orange, Vermont
+  page_heading: Town Officers
+  expected: Town Officers
+  reason: 'officer or staff (clerk, treasurer, tax collector, road commissioner) with no body of its own: Treasurer'
+- place: waterbury_town
+  organization_label: Town Select Board
+  label: Select Board Chair
+  page_title: Town Select Board - Waterbury, VT
+  page_heading: Town of Waterbury Selectboard
+  expected: Selectboard
+  reason: select board chair
+- place: waterbury_town
+  organization_label: Town Select Board
+  label: Select Board Member
+  page_title: Town Select Board - Waterbury, VT
+  page_heading: Town of Waterbury Selectboard
+  expected: Selectboard
+  reason: select board member
+- place: waterbury_town
+  organization_label: Town Select Board
+  label: Select Board Secretary
+  page_title: Town Select Board - Waterbury, VT
+  page_heading: Town of Waterbury Selectboard
+  expected: Town Officers
+  reason: staff or an unnamed clerk, not a board member; reviewed 2026-11-18
+- place: woodstock_town
+  organization_label: Town Selectboard
+  label: Select Board Member
+  expected: Selectboard
+  reason: select board member
+- place: johnson_town
+  organization_label: Town Selectboard
+  label: Selectboard Member
+  expected: Selectboard
+  reason: selectboard member
+- place: johnson_town
+  organization_label: Town Selectboard
+  label: Selectboard Member and Vice Chair
+  expected: Selectboard
+  reason: selectboard member and vice chair
+- place: bradford
+  organization_label: Town Treasurer
+  label: Delinquent Tax Collector
+  page_title: Treasurer & Assistant Treasurer
+  page_heading: Treasurer & Assistant Treasurer
+  expected: Town Officers
+  reason: 'officer or staff (clerk, treasurer, tax collector, road commissioner) with no body of its own: Delinquent Tax Collector'
+- place: middlesex
+  organization_label: Town Treasurer; Collector of Delinquent Taxes
+  label: Town Treasurer and Collector of Delinquent Taxes
+  page_title: Middlesex, VT
+  page_heading: Uh-oh! This Page Has Gone Missing
+  expected: Town Officers
+  reason: 'officer or staff (clerk, treasurer, tax collector, road commissioner) with no body of its own: Town Treasurer and
+    Collector of Delinquent Taxes'
+- place: georgia
+  organization_label: Treasurer
+  label: Delinquent Tax Collector
+  expected: Town Officers
+  reason: 'officer or staff (clerk, treasurer, tax collector, road commissioner) with no body of its own: Delinquent Tax Collector'
+- place: vershire
+  organization_label: Treasurer
+  label: Interim Treasurer and Collector of Delinquent Taxes
+  page_title: Treasurer | Vershire, VT
+  page_heading: Treasurer
+  expected: Town Officers
+  reason: 'officer or staff (clerk, treasurer, tax collector, road commissioner) with no body of its own: Interim Treasurer
+    and Collector of Delinquent Taxes'
+- place: newfane_town
+  organization_label: Treasurer & Delinquent Tax Collector’s Office
+  label: Treasurer & Delinquent Tax Collector
+  expected: Town Officers
+  reason: 'officer or staff (clerk, treasurer, tax collector, road commissioner) with no body of its own: Treasurer & Delinquent
+    Tax Collector'
+- place: ripton
+  organization_label: Treasurer/Tax Collector
+  label: Treasurer/Tax Collector and Delinquent Tax Collector
+  page_title: Treasurer/Tax Collector — Town of Ripton
+  page_heading: Treasurer/Tax Collector
+  expected: Town Officers
+  reason: 'officer or staff (clerk, treasurer, tax collector, road commissioner) with no body of its own: Treasurer/Tax Collector
+    and Delinquent Tax Collector'
+- place: vershire
+  organization_label: Vershire Selectboard
+  label: Selectboard Member
+  expected: Selectboard
+  reason: selectboard member
+- place: weston
+  organization_label: Weston Town Moderator
+  label: Town Moderator
+  expected: Town Meeting
+  reason: town moderator
