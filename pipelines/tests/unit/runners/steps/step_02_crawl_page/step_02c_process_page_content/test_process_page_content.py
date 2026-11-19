@@ -20,6 +20,7 @@ from runners.pipeline03_people_collector.steps.step_02_crawl_page.step_02c_proce
 from runners.pipeline03_people_collector.steps.step_02_crawl_page.step_02c_process_page_content.heuristics_failure import (
     HeuristicsFailure,
 )
+from runners.pipeline03_people_collector.steps.step_02_crawl_page.step_02c_process_page_content.person_placement import PageHeadings
 from runners.pipeline03_people_collector.steps.step_02_crawl_page.step_02c_process_page_content.process_page_content import (
     _resolve_candidate_urls,
     check_page_relevance,
@@ -1089,6 +1090,7 @@ async def test_process_with_llm_reorders_inverted_names():
             [],
             "",
             _NO_TAXONOMY,
+            PageHeadings(),
         )
 
     assert [r.name for r in records] == ["Laurie Kincannon", "Rory Burke"]
@@ -1116,6 +1118,7 @@ async def test_process_with_llm_resolves_a_shortened_url_against_its_page():
             [],
             "",
             _NO_TAXONOMY,
+            PageHeadings(),
         )
 
     assert [r.url for r in records] == [
@@ -1153,6 +1156,7 @@ async def test_process_with_llm_keeps_only_downloaded_images():
             [],
             "",
             _NO_TAXONOMY,
+            PageHeadings(),
         )
 
     assert [r.image for r in records] == ["local://8ac384d14474.png", None, None]

@@ -12,9 +12,9 @@ from database.users import SYSTEM_USER_ID
 from services.government_form import (
     GovernmentFormNotAtLevel,
     government_form_choices,
-    resolved_government,
     set_government_form,
 )
+from database.government_forms import get_resolved_government
 from shared.schemas import GovernmentForm
 from shared.utils.government_forms import DerivedOrganization
 from shared.utils.layered_config import ConfigFile, ConfigRole, GovernmentFormConfig
@@ -87,7 +87,7 @@ async def _logged_fields() -> list[dict]:
 
 
 async def _saved_form() -> GovernmentForm | None:
-    return (await resolved_government(_CITY)).government_form
+    return (await get_resolved_government(_CITY)).government_form
 
 
 @pytest.mark.integration

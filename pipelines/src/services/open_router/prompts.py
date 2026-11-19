@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import List
+from typing import Dict, List
 
 from shared.schemas import GovernmentForm, JurisdictionLevel
 from shared.utils.government_forms import describe_government_form
@@ -465,12 +465,21 @@ _ORGANIZATION_MATCH_EXAMPLES = """Examples: "Assessor Board" with [Board of Asse
     the village of South with [Board of Commissioners] is "{none}": another village."""
 
 
-def organization_match_prompt() -> str:
-    """The system prompt for `organization_match_question`; a system message alone gets an
+PERSON_ORGANIZATION_INSTRUCTIONS = "Which of this government's listed bodies does this person sit on?"
+
+
+def person_organization_prompt() -> str:
+    """The system prompt for `person_organization_question`; a system message alone gets an
     empty answer from the model, so the question goes as content."""
     return f"""
-    You match the heading a local government's web page lists people under to one of that
-    government's own bodies, or to none.
+    You decide which of a local government's own bodies a person listed on its web page sits on, or none.
+
+    A person sits on a body only as its member, or as its chair, vice chair, president or clerk while a
+    member. An officer of the government (clerk, treasurer, constable, lister, auditor, road commissioner,
+    justice of the peace, tax collector) and a member of any body not on the list are "{NO_ORGANIZATION}".
+    "Member", "Chair" and "Vice Chair" alone name no body: the heading, the page title or the page's first
+    heading must name it. When the person holds
+    several offices and one is a seat on a listed body, answer that body.
 
     {_ORGANIZATION_MATCH_RULE.format(none=NO_ORGANIZATION)}
     {_ORGANIZATION_MATCH_EXAMPLES.format(none=NO_ORGANIZATION)}
@@ -479,14 +488,30 @@ def organization_match_prompt() -> str:
     """
 
 
-def organization_match_question(place_name: str, organization_label: str, choices: List[str]) -> str:
-    """Asked once per organization label the words could not settle. The default is never
-    offered; a label naming none leaves the title to decide."""
+def person_organization_question(
+    place_name: str, title: str | None, first_heading: str | None, organization_label: str | None, label: str, choices: List[str]
+) -> str:
+    """Asked once per (organization label, label) the rules leave open. The default is never offered."""
     listed = "\n".join(f'    - "{choice}"' for choice in choices)
     return f"""
-    A page of {place_name} lists people under the heading "{organization_label}". Which of these
-    bodies of {place_name} is that, if any?
+    A page of {place_name} titled "{title or "unknown"}", first heading
+    "{first_heading or "unknown"}", lists a person as "{label}" under the heading
+    "{organization_label or "none"}". Which of these bodies of {place_name} does this person
+    sit on, if any?
 {listed}
 
     Return {{"organization": ...}}: exactly one name from the list, or "{NO_ORGANIZATION}".
     """
+
+
+def person_organization_criteria(choices: List[str]) -> Dict[str, str]:
+    """Jev's choices for the same question: one line each, and "none"."""
+    criteria = {
+        choice: f"The person sits on the {choice} as a member, or its chair, vice chair, president or clerk."
+        for choice in choices
+    }
+    criteria[NO_ORGANIZATION] = (
+        "An officer of the government, a member of a body not listed, or nothing on the page "
+        "names a listed body for this person."
+    )
+    return criteria

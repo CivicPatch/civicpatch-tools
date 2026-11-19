@@ -10,6 +10,7 @@ from runners.pipeline03_people_collector.steps.step_02_crawl_page.step_02c_proce
     page_content_hash,
     published_source_page,
 )
+from runners.pipeline03_people_collector.steps.step_02_crawl_page.step_02c_process_page_content.person_placement import PageHeadings
 from runners.pipeline03_people_collector.steps.step_02_crawl_page.step_02c_process_page_content.process_page_content import (
     process_page_content,
     rematched_records,
@@ -206,7 +207,7 @@ async def test_a_replayed_record_is_placed_again_from_the_label_it_kept():
     """Placed on the Selectboard by an older matcher; today's words say Listers, with no LLM call."""
     context = pipeline_run_context_factory(steps={})
 
-    records = await rematched_records([_record("Carol Bingham", "selectboard", "Listers")], context, [_LISTERS, _SELECTBOARD])
+    records = await rematched_records([_record("Carol Bingham", "selectboard", "Listers")], context, [_LISTERS, _SELECTBOARD], PageHeadings(), _URL)
 
     assert [record.organization_id for record in records] == ["listers"]
 
@@ -215,7 +216,7 @@ async def test_a_replayed_record_is_placed_again_from_the_label_it_kept():
 async def test_a_record_stored_before_labels_were_kept_stays_where_it_was_placed():
     context = pipeline_run_context_factory(steps={})
 
-    records = await rematched_records([_record("Carol Bingham", "selectboard", None)], context, [_LISTERS, _SELECTBOARD])
+    records = await rematched_records([_record("Carol Bingham", "selectboard", None)], context, [_LISTERS, _SELECTBOARD], PageHeadings(), _URL)
 
     assert [record.organization_id for record in records] == ["selectboard"]
 

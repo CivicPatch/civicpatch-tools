@@ -33,6 +33,9 @@ RELEVANCE_MAX_OUTPUT_TOKENS = 8_192
 # Over 639 calls the longest that finished took 16,152 tokens and three ran to 16,384 and failed;
 # capped at 4,096 the 870 prod labels got the same answers.
 MATCH_MAX_OUTPUT_TOKENS = 4_096
+# Jev's answer stands at or above this confidence; below it the model decides. Chosen on the Vermont
+# people dataset (plans/research/organization-placement).
+JEV_CONFIDENCE_FLOOR = 0.5
 
 # Expected divisions come from the division_ocdids on the roster we already hold, so they have
 # the same staleness as required_data: a ward that was renamed, merged or dropped leaves a

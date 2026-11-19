@@ -1,4 +1,4 @@
-"""`resolved_government` against real jurisdiction rows: its government form wins, then
+"""`get_resolved_government` against real jurisdiction rows: its government form wins, then
 the config, and a state or an unknown jurisdiction resolves to nothing.
 
 The config is a small set of `jurisdiction_configs` rows the fixture writes, shaped like
@@ -15,8 +15,8 @@ from database.organizations import ensure_defaults_exist
 from services.government_form import (
     government_form_summary,
     organizations_with_role_labels,
-    resolved_government,
 )
+from database.government_forms import get_resolved_government
 from shared.schemas import GovernmentForm
 from shared.utils.government_forms import DerivedOrganization
 from shared.utils.layered_config import ConfigFile, ConfigRole, GovernmentFormConfig
@@ -142,7 +142,7 @@ async def _cleanup():
 async def test_a_config_rule_decides_a_michigan_township():
     await _seed(_MI_TOWNSHIP, "mi", {"name": "Zyform township"})
 
-    assert (await resolved_government(_MI_TOWNSHIP)).government_form == GovernmentForm.TOWNSHIP_BOARD
+    assert (await get_resolved_government(_MI_TOWNSHIP)).government_form == GovernmentForm.TOWNSHIP_BOARD
 
 
 @pytest.mark.integration
@@ -150,7 +150,7 @@ async def test_a_config_rule_decides_a_michigan_township():
 async def test_the_government_form_beats_the_config_rule():
     await _seed(_MI_TOWNSHIP, "mi", {"name": "Zyform township"}, government_form="mayor_council")
 
-    assert (await resolved_government(_MI_TOWNSHIP)).government_form == GovernmentForm.MAYOR_COUNCIL
+    assert (await get_resolved_government(_MI_TOWNSHIP)).government_form == GovernmentForm.MAYOR_COUNCIL
 
 
 @pytest.mark.integration
@@ -158,19 +158,19 @@ async def test_the_government_form_beats_the_config_rule():
 async def test_a_city_the_config_leaves_open_resolves_to_nothing():
     await _seed(_WA_CITY, "wa", {"name": "Zyform city"})
 
-    assert (await resolved_government(_WA_CITY)).government_form is None
+    assert (await get_resolved_government(_WA_CITY)).government_form is None
 
 
 @pytest.mark.integration
 @pytest.mark.asyncio
 async def test_a_state_resolves_to_nothing():
-    assert (await resolved_government(_WA_STATE)).government_form is None
+    assert (await get_resolved_government(_WA_STATE)).government_form is None
 
 
 @pytest.mark.integration
 @pytest.mark.asyncio
 async def test_an_unknown_jurisdiction_resolves_to_nothing():
-    assert (await resolved_government(_UNKNOWN)).government_form is None
+    assert (await get_resolved_government(_UNKNOWN)).government_form is None
 
 
 @pytest.mark.integration
@@ -178,7 +178,7 @@ async def test_an_unknown_jurisdiction_resolves_to_nothing():
 async def test_a_tennessee_county_resolves_to_its_board_and_mayors_office():
     await _seed(_TN_COUNTY, "tn", {"name": "Zyform County"})
 
-    resolved = await resolved_government(_TN_COUNTY)
+    resolved = await get_resolved_government(_TN_COUNTY)
 
     assert resolved.government_form == GovernmentForm.COUNTY_EXECUTIVE
     assert [o.name for o in resolved.candidate_organizations] == [
@@ -188,7 +188,7 @@ async def test_a_tennessee_county_resolves_to_its_board_and_mayors_office():
 
 
 async def _resolved_form(jurisdiction_ocdid: str) -> str | None:
-    form = (await resolved_government(jurisdiction_ocdid)).government_form
+    form = (await get_resolved_government(jurisdiction_ocdid)).government_form
     return form.value if form is not None else None
 
 
@@ -240,7 +240,7 @@ async def test_while_the_form_is_unknown_an_organization_carries_every_allowed_f
     organizations = await organizations_with_role_labels(_WA_CITY)
 
     assert {o["name"]: o["role_labels"] for o in organizations} == {"Council": ["Council Member", "Mayor"]}
-    assert (await resolved_government(_WA_CITY)).government_form is None
+    assert (await get_resolved_government(_WA_CITY)).government_form is None
 
 
 @pytest.mark.integration
@@ -268,5 +268,5 @@ async def test_the_allowed_forms_are_what_an_undecided_jurisdiction_is_offered()
     await _seed(_WA_CITY, "wa", {"name": "Zyform city"})
     await _seed(_MI_TOWNSHIP, "mi", {"name": "Zyform township"})
 
-    assert len((await resolved_government(_WA_CITY)).candidate_government_forms) == 4
-    assert (await resolved_government(_MI_TOWNSHIP)).candidate_government_forms == [GovernmentForm.TOWNSHIP_BOARD]
+    assert len((await get_resolved_government(_WA_CITY)).candidate_government_forms) == 4
+    assert (await get_resolved_government(_MI_TOWNSHIP)).candidate_government_forms == [GovernmentForm.TOWNSHIP_BOARD]

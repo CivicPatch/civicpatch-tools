@@ -2,19 +2,14 @@
 people. Words first: a label equal to a name, or inside exactly one organization's vocabulary
 (its name and role labels), names that organization; one that several vocabularies cover
 together names them all, and the person's own label picks among them; one sharing no word with
-any names none; anything between is asked of the model, once per distinct label. Measured 2026-10-28: the words settle most, the
-model errs only without the lookalike rule in its prompt."""
+any names none; anything between is left open for `person_placement`."""
 
-import asyncio
 import re
 from collections import Counter
-from typing import Dict, Iterable, List, Literal, Sequence
+from typing import Dict, List, Literal
 
 from pydantic import BaseModel, create_model
 
-import services.open_router.llm as open_router_llm
-import services.open_router.prompts as open_router_prompts
-from runners.pipeline03_people_collector.constants import MATCH_MAX_OUTPUT_TOKENS
 from services.open_router.prompts import NO_ORGANIZATION
 from shared.schemas import KnownOrganization, PersonSourceRecord, SelectionMethod
 from shared.utils.taxonomy import MEMBER_ROLE_ID, Taxonomy, lookup_key
@@ -27,8 +22,6 @@ _BODY_KIND_WORDS = {"board", "committee", "commission", "office"}
 _WORD = re.compile(r"[a-z0-9]+")
 # Words beside an office's name that say nothing about which body: a term, an election, contact.
 _INCIDENTAL_WORDS = {"year", "term", "elected", "school", "information", "info", "contact", "current", "expire", "expires"}
-# A page lists one person under several organizations; the model joins them with commas.
-_LABEL_SEPARATOR = re.compile(r"[,;]")
 
 
 class OrganizationLabelMatch(BaseModel):
@@ -153,6 +146,8 @@ class PlaceWords(BaseModel):
     place: set[str]
     # Words for a position any body can hold ("chair", "vice", "member").
     positions: set[str]
+    # The member role's words, which another role's label may share ("Select Board Member"): alone, no body.
+    member: set[str]
     # Words of a role none of the candidates owns, which may stand beside a body's name ("clerk").
     roles_beside: set[str]
     # Words that say which seat, not which body ("district", "ward").
@@ -170,6 +165,7 @@ def place_words(organizations: List[KnownOrganization], taxonomy: Taxonomy, plac
         shared=shared,
         place=set(_tokens(place_name)).union(*[set(_tokens(known.name)) for known in defaults]),
         positions=position_words(taxonomy, organizations),
+        member=set().union(*[_terms(role) for role, role_id in taxonomy.role_ids.items() if role_id == MEMBER_ROLE_ID]),
         roles_beside=role_words(taxonomy, organizations, shared),
         seats=designation_words(taxonomy, organizations),
     )
@@ -235,8 +231,10 @@ def _a_whole_name_names_it(label: LabelWords, place: PlaceWords) -> Organization
 
 
 def _positions_alone_name_none(label: LabelWords, place: PlaceWords) -> OrganizationLabelMatch | None:
-    """"Vice Chair": every board has one."""
-    return _NONE if not label.written or label.written <= place.positions else None
+    """"Vice Chair": every board has one; so does "Library Trustee Member" once its roles beside go."""
+    if not label.written or label.written <= place.positions:
+        return _NONE
+    return _NONE if label.body and label.body <= place.positions | place.member else None
 
 
 def _one_role_label_names_it(label: LabelWords, place: PlaceWords) -> OrganizationLabelMatch | None:
@@ -311,100 +309,6 @@ def match_response_schema(choices: List[str]) -> type[BaseModel]:
     """An enum of the choices, so the model cannot name an organization we do not have."""
     choice = Literal[tuple([*choices, NO_ORGANIZATION])]  # type: ignore[valid-type]
     return create_model("OrganizationMatch", organization=(choice, ...))
-
-
-async def ask_organization(
-    pipeline_run_id, jurisdiction_ocdid: str, place_name: str, organization: str, organizations: List[KnownOrganization]
-) -> List[str]:
-    choices = [known.name for known in without_default(organizations)]
-    answer = await open_router_llm.run_prompt(
-        pipeline_run_id,
-        jurisdiction_ocdid,
-        open_router_prompts.organization_match_prompt(),
-        prompt_name="organization_match",
-        response_schema=match_response_schema(choices),
-        content=open_router_prompts.organization_match_question(place_name, organization, choices),
-        max_output_tokens=MATCH_MAX_OUTPUT_TOKENS,
-    )
-    picked = getattr(answer, "organization", NO_ORGANIZATION)
-    return [] if picked == NO_ORGANIZATION else [picked]
-
-
-def label_parts(organization_label: str) -> List[str]:
-    return [part.strip() for part in _LABEL_SEPARATOR.split(organization_label) if part.strip()]
-
-
-async def resolve_organizations(
-    organization_labels: Iterable[str | None],
-    pipeline_run_id,
-    jurisdiction_ocdid: str,
-    place_name: str,
-    place: PlaceWords,
-) -> Dict[str, List[str]]:
-    """Each distinct organization label to the organization names it means, empty for none; a
-    comma-joined label means the first of its parts that names any. The model is asked only
-    for the parts the words leave uncertain, once each."""
-    parts = {part for label in organization_labels if label for part in label_parts(label)}
-    by_words = {part: match_by_words(part, place) for part in parts}
-    uncertain = [part for part, match in by_words.items() if match.uncertain]
-    asked = await asyncio.gather(
-        *[ask_organization(pipeline_run_id, jurisdiction_ocdid, place_name, part, place.candidates) for part in uncertain]
-    )
-    per_part = {part: match.names for part, match in by_words.items()}
-    per_part.update(zip(uncertain, asked))
-    resolved: Dict[str, List[str]] = {}
-    for label in organization_labels:
-        if label:
-            resolved[label] = next((per_part[part] for part in label_parts(label) if per_part[part]), [])
-    return resolved
-
-
-async def placed_names(
-    people: Sequence[tuple[str | None, str]],
-    organizations: List[KnownOrganization],
-    taxonomy: Taxonomy,
-    pipeline_run_id,
-    jurisdiction_ocdid: str,
-    place_name: str,
-) -> List[str | None]:
-    """Each person's organization by the (organization label, label) they were listed under:
-    today's taxonomy aliases widen the vocabulary, the words decide, the model is asked once per
-    distinct label they leave open, and the person's own label picks among several bodies."""
-    place = place_words(with_role_aliases(organizations, taxonomy), taxonomy, place_name)
-    resolved = await resolve_organizations(
-        [organization_label for organization_label, _ in people], pipeline_run_id, jurisdiction_ocdid, place_name, place
-    )
-    return [placed_name(organization_label, label, resolved, place, taxonomy) for organization_label, label in people]
-
-
-def organization_by_label(label: str | None, organizations: List[KnownOrganization], taxonomy: Taxonomy) -> str | None:
-    """The one organization whose vocabulary shares the most of the label's words ("Council
-    Member District 1" shares "council"), else None."""
-    common = shared_terms(organizations)
-    written = words(label or "", common) - position_words(taxonomy, organizations)
-    overlap = {known.name: len(written & vocabulary(known, common)) for known in without_default(organizations)}
-    best = max(overlap.values(), default=0)
-    winners = [name for name, count in overlap.items() if count == best]
-    return winners[0] if best and len(winners) == 1 else None
-
-
-def placed_name(
-    organization_label: str | None,
-    label: str | None,
-    resolved: Dict[str, List[str]],
-    place: PlaceWords,
-    taxonomy: Taxonomy,
-) -> str | None:
-    """Where a record goes by its organization label; among several bodies it names, by its own
-    label; and when it names none, by its own label read the same way ("Library Trustee")."""
-    names = resolved.get(organization_label or "", [])
-    if len(names) == 1:
-        return names[0]
-    if len(names) > 1:
-        named = [known for known in place.candidates if known.name in names]
-        return organization_by_label(label, named, taxonomy)
-    by_own_label = match_by_words(label or "", place)
-    return by_own_label.names[0] if len(by_own_label.names) == 1 else None
 
 
 def organization_id_by_name(name: str | None, organizations: List[KnownOrganization]) -> str | None:

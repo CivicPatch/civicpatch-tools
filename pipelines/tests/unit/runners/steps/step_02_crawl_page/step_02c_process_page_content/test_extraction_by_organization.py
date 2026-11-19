@@ -13,9 +13,11 @@ from runners.pipeline03_people_collector.schemas import (
 from runners.pipeline03_people_collector.steps.step_02_crawl_page.step_02c_process_page_content.heuristics_failure import (
     HeuristicsFailure,
 )
+from runners.pipeline03_people_collector.steps.step_02_crawl_page.step_02c_process_page_content.person_placement import PageHeadings
 from runners.pipeline03_people_collector.steps.step_02_crawl_page.step_02c_process_page_content.process_page_content import (
     collect_page_records,
 )
+from services.open_router.decisions import ChoiceAnswer
 from shared.schemas import KnownOrganization, Post
 from tests.factories.pipeline_run_context import pipeline_run_context_factory
 
@@ -24,6 +26,7 @@ pytestmark = pytest.mark.unit
 _OCDID = "ocd-jurisdiction/country:us/state:wa/place:seattle/government"
 _PAGE = Link(url="https://seattle.gov/elected-officials", status=LinkStatus.PREPROCESSED.value)
 _CONTENT = "Elected officials: Mayor Katie Wilson. Council Member District 1: Rob Saka."
+_CHOOSE = "runners.pipeline03_people_collector.steps.step_02_crawl_page.step_02c_process_page_content.person_placement.decisions.choose"
 _RUN_PROMPT = (
     "runners.pipeline03_people_collector.steps.step_02_crawl_page.step_02c_process_page_content.process_page_content"
     ".open_router_llm.run_prompt"
@@ -46,6 +49,13 @@ def _organization(organization_id: str, name: str, labels: list[str]) -> KnownOr
     return KnownOrganization(id=organization_id, name=name, posts=posts)
 
 
+@pytest.fixture(autouse=True)
+def _jev_says_none():
+    """Jev is a paid network call: a person the rules leave open gets a sure "none" here."""
+    with patch(_CHOOSE, new=AsyncMock(return_value=ChoiceAnswer(choice="none", confidence=1.0))):
+        yield
+
+
 _COUNCIL = _organization("council", "City Council", ["Council Member District 1"])
 _MAYOR = _organization("mayor", "Office of the Mayor", ["Mayor"])
 
@@ -61,6 +71,7 @@ async def _collect(organizations: list[KnownOrganization]):
         pipeline_run_context_factory(steps={}),
         _PAGE,
         _CONTENT,
+        PageHeadings(),
         organizations,
         [],
         ProcessPageContentStep(records={}),
@@ -155,7 +166,7 @@ async def test_a_page_is_read_once_whatever_its_organizations():
 
 @pytest.mark.asyncio
 async def test_a_person_picked_into_no_organization_is_left_for_ingest_to_place():
-    run_prompt = AsyncMock(return_value=_picked(("Rob Saka", "Council Member District 1", "none")))
+    run_prompt = AsyncMock(return_value=_picked(("Rob Saka", "Advisor", "none")))
 
     with patch(_RUN_PROMPT, new=run_prompt):
         extraction = await _collect([_COUNCIL, _MAYOR])

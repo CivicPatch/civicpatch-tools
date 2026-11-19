@@ -471,7 +471,7 @@ def test_a_people_run_is_told_the_posts_its_governing_law_establishes(service_cl
     with patch("routers.api.pipeline_runs.get_pipeline_run", new_callable=AsyncMock, return_value={
         "jurisdiction_ocdid": TEST_OCDID, "arguments_json": {}, "pipeline_run_cap_usd": None,
     }), patch(
-        "routers.api.pipeline_runs.government_form_service.resolved_government", new_callable=AsyncMock, return_value=NOTHING_RESOLVED
+        "routers.api.pipeline_runs.government_forms_db.get_resolved_government", new_callable=AsyncMock, return_value=NOTHING_RESOLVED
     ), patch(
         "routers.api.pipeline_runs.government_form_service.government_form_choices", new_callable=AsyncMock, return_value=[]
     ), patch(
@@ -495,7 +495,7 @@ def test_a_people_run_started_without_the_cache_is_given_no_published_pages(serv
     with patch("routers.api.pipeline_runs.get_pipeline_run", new_callable=AsyncMock, return_value={
         "jurisdiction_ocdid": TEST_OCDID, "arguments_json": arguments, "pipeline_run_cap_usd": None,
     }), patch(
-        "routers.api.pipeline_runs.government_form_service.resolved_government", new_callable=AsyncMock, return_value=NOTHING_RESOLVED
+        "routers.api.pipeline_runs.government_forms_db.get_resolved_government", new_callable=AsyncMock, return_value=NOTHING_RESOLVED
     ), patch(
         "routers.api.pipeline_runs.government_form_service.government_form_choices", new_callable=AsyncMock, return_value=[]
     ), patch(

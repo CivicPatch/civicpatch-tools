@@ -11,6 +11,7 @@ import lib.storage as storage_service
 import lib.temporal.client as temporal_service
 import services.extras_organizations as extras_organizations_service
 import services.governing_law as governing_law_service
+import database.government_forms as government_forms_db
 import services.government_form as government_form_service
 import services.jurisdiction_scrape_candidate as candidate_service
 import services.pipeline_runs as pipeline_run_service
@@ -274,7 +275,7 @@ def get_router(api_key_header):
         if not pipeline_run:
             raise HTTPException(status_code=404, detail="Pipeline run not found")
         args = pipeline_run.get("arguments_json") or {}
-        government = await government_form_service.resolved_government(
+        government = await government_forms_db.get_resolved_government(
             pipeline_run["jurisdiction_ocdid"]
         )
         governing_law_organizations = await extras_organizations_service.get_extras_organizations(
