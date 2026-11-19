@@ -2,7 +2,7 @@ import "./jurisdiction-search.css";
 import { component, useState, useEffect } from "haunted";
 import { html } from "lit-html";
 import { searchJurisdictions } from "../../api.js";
-import { jurisdictionOcdidToFriendly } from "../ocdid-utils.js";
+import { jurisdictionOcdidToFriendly, jurisdictionOcdidToState } from "../ocdid-utils.js";
 import "../inputs/auto-complete-select.js";
 
 const PAGE_SIZE = 10;
@@ -114,6 +114,9 @@ function JurisdictionSearch(this: JurisdictionSearchHost) {
           </span>
         </span>
         <span class="jurisdiction-search__meta">
+          <span class="jurisdiction-search__state">
+            ${jurisdictionOcdidToState(result.jurisdiction_ocdid)}
+          </span>
           <span class="jurisdiction-search__level">${levelLabel(result.level)}</span>
           ${result.population === null
             ? ""

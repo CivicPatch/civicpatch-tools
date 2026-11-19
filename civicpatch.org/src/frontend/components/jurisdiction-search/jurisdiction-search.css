@@ -43,7 +43,8 @@
 }
 
 /* Reads `level`, a real column — never the name's last word. */
-.jurisdiction-search__level {
+.jurisdiction-search__level,
+.jurisdiction-search__state {
   padding: 0.1rem 0.5rem;
   border: 1px solid currentColor;
   border-radius: var(--radius-sm);
@@ -51,6 +52,11 @@
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: lowercase;
+}
+
+/* A state code in lowercase reads as a word: "or", "in", "me". */
+.jurisdiction-search__state {
+  text-transform: uppercase;
 }
 
 /* The custom element is inline by default; without this the block inside has nothing
