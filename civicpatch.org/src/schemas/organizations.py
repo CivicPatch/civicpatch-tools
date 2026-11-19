@@ -11,5 +11,3 @@ class CreateOrganizationRequest(BaseModel):
 class UpdateOrganizationRequest(BaseModel):
     name: str
     url: str | None
-    # Role id -> what this organization calls the role; left out, the labels stay as they are.
-    extras_role_labels: dict[str, str] | None = None

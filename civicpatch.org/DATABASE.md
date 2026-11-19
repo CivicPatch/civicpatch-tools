@@ -304,7 +304,6 @@ erDiagram
         text            name                "one body — City Council, Township Board. Every jurisdiction has a default 'Government' one unconditionally (migration 195); named non-default bodies are created explicitly, not yet by any production path"
         text_null       url                 "198: a scrape target of the body's own, distinct from the jurisdiction's site; null for the default org"
         int             sort_order          "default: 0; display order only"
-        jsonb           extras_role_labels  "253: role id -> what this organization calls the role ({member: Select Board Member}); default {}. The fold names a post with it when the page did not (263); filled from the form's config, the charter run, or a maintainer"
         boolean         meta_is_default     "202: default false; idx: unique (jurisdiction_ocdid) WHERE meta_is_default. Unflagged jurisdictions fall back to the first by (sort_order, name)"        timestamptz     created_at          "default: now()"
     }
 
@@ -319,7 +318,7 @@ erDiagram
         text            jurisdiction_ocdid  FK "denormalised for direct queries; 121 dropped the composite FK — a mismatch is visible, not silent"
         uuid            organization_id     FK
         text            role_id             FK "ON UPDATE CASCADE; the POST's own role — other roles the label named are parsed from it, not stored (226)"
-        text_null       role_label          "264: what the post is called, written by the fold on every rebuild: the organization's extras_role_labels, else the role's label. Replaced the post_role_label() function"
+        text_null       role_label          "264: what the post is called, written by the fold on every rebuild: what the place's law calls the role in that organization, else its config form, else the role's label (266 dropped organizations.extras_role_labels). Replaced the post_role_label() function"
         text            division_ocdid      FK "ON UPDATE CASCADE"
         timestamptz     created_at          "default: now(). Headcount and tracked are claims since 243 (defaults 1 / true), so a row is only its key"
     }

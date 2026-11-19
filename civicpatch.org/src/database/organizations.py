@@ -1,5 +1,3 @@
-import json
-
 import database.government_forms as government_forms_db
 from core.organization_build import FormOrganizationRow
 from core.organization_derivation import role_labels_by_organization
@@ -47,27 +45,19 @@ async def ensure_defaults_exist(jurisdiction_ocdids: list[str]) -> None:
 
 
 async def ensure_form_organizations(cur, rows: list[FormOrganizationRow]) -> int:
-    """Create each organization its jurisdiction lacks and label any that has no labels yet, the
-    born default included. Never renames, relabels or deletes, so a person's own stays. Returns
-    how many were created."""
+    """Create each organization its jurisdiction lacks. Never renames or deletes, so a person's own
+    stays. Returns how many were created."""
     created = 0
     for row in rows:
         await cur.execute(
             """
-            INSERT INTO organizations (jurisdiction_ocdid, name, extras_role_labels)
-            VALUES (%s, %s, %s::jsonb)
+            INSERT INTO organizations (jurisdiction_ocdid, name)
+            VALUES (%s, %s)
             ON CONFLICT (jurisdiction_ocdid, name) DO NOTHING
             """,
-            (row.jurisdiction_ocdid, row.name, json.dumps(row.role_labels)),
+            (row.jurisdiction_ocdid, row.name),
         )
         created += cur.rowcount
-        await cur.execute(
-            """
-            UPDATE organizations SET extras_role_labels = %s::jsonb
-            WHERE jurisdiction_ocdid = %s AND name = %s AND extras_role_labels = '{}'::jsonb
-            """,
-            (json.dumps(row.role_labels), row.jurisdiction_ocdid, row.name),
-        )
     return created
 
 
@@ -182,17 +172,11 @@ async def create(jurisdiction_ocdid: str, name: str, url: str | None) -> str | N
         return row[0] if row else None
 
 
-async def update(organization_id: str, name: str, url: str | None, extras_role_labels: dict[str, str] | None) -> bool:
-    """False if no such organization. `extras_role_labels` None keeps the labels as they are."""
+async def update(organization_id: str, name: str, url: str | None) -> bool:
+    """False if no such organization."""
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        await cur.execute(
-            """
-            UPDATE organizations SET name = %s, url = %s, extras_role_labels = COALESCE(%s::jsonb, extras_role_labels)
-            WHERE id = %s
-            """,
-            (name, url, json.dumps(extras_role_labels) if extras_role_labels is not None else None, organization_id),
-        )
+        await cur.execute("UPDATE organizations SET name = %s, url = %s WHERE id = %s", (name, url, organization_id))
         return cur.rowcount > 0
 
 

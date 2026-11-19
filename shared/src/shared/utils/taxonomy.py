@@ -66,18 +66,6 @@ def build_taxonomy(role_config: RoleConfig | None) -> Taxonomy:
     )
 
 
-def role_labels_by_role_id(role_labels: list[str], taxonomy: Taxonomy) -> dict[str, str]:
-    """Role id -> what an organization calls the role, for each of its role labels that is an
-    alias rather than the role's own label: "Select Board Member" is `member`'s label there."""
-    labels: dict[str, str] = {}
-    for text in role_labels:
-        canonical = taxonomy.role_aliases.get(lookup_key(text))
-        if canonical is None or lookup_key(canonical) == lookup_key(text):
-            continue
-        labels[taxonomy.role_ids[canonical]] = text
-    return labels
-
-
 def with_selection_methods(taxonomy: Taxonomy, methods_by_role_id: dict[str, SelectionMethod]) -> Taxonomy:
     """One jurisdiction's methods over the config's: its law says how it fills these roles."""
     label_by_id = {role_id: label for label, role_id in taxonomy.role_ids.items()}

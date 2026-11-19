@@ -1,5 +1,5 @@
 """Which organizations a merged config file gives each jurisdiction it governs. Applied when the
-file merges: created where missing, labelled where unlabelled, never renamed or removed."""
+file merges: created where missing, never renamed or removed."""
 
 from pydantic import BaseModel
 
@@ -7,7 +7,6 @@ from core.organization_derivation import resolve_government
 from shared.schemas import GovernmentForm
 from shared.utils.government_forms import DerivedOrganization
 from shared.utils.layered_config import MergedConfig, derived_organizations
-from shared.utils.taxonomy import build_taxonomy, role_labels_by_role_id
 
 
 class GovernmentFormInputs(BaseModel):
@@ -21,11 +20,9 @@ class GovernmentFormInputs(BaseModel):
 class FormOrganizationRow(BaseModel):
     jurisdiction_ocdid: str
     name: str
-    role_labels: dict[str, str]
 
 
 def form_organization_rows(config: MergedConfig, jurisdictions: list[GovernmentFormInputs]) -> list[FormOrganizationRow]:
-    taxonomy = build_taxonomy(config.roles)
     rows = []
     for jurisdiction in jurisdictions:
         for organization in organizations_to_build(config, jurisdiction):
@@ -33,7 +30,6 @@ def form_organization_rows(config: MergedConfig, jurisdictions: list[GovernmentF
                 FormOrganizationRow(
                     jurisdiction_ocdid=jurisdiction.jurisdiction_ocdid,
                     name=organization.name,
-                    role_labels=role_labels_by_role_id(organization.role_labels, taxonomy),
                 )
             )
     return rows

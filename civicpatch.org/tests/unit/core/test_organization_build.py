@@ -62,35 +62,24 @@ def _config():
 
 def _rows(name: str, government_form: GovernmentForm | None = None):
     inputs = GovernmentFormInputs(jurisdiction_ocdid="ocd-jurisdiction/x", name=name, government_form=government_form)
-    return [(row.name, row.role_labels) for row in form_organization_rows(_config(), [inputs])]
+    return [row.name for row in form_organization_rows(_config(), [inputs])]
 
 
-def test_a_town_with_no_saved_form_gets_what_its_two_forms_share_with_labels_an_alias_gives():
-    assert _rows("Essex town") == [
-        ("Selectboard", {"member": "Select Board Member"}),
-        ("Town Officers", {"clerk": "Town Clerk"}),
-        ("Board of Listers", {}),
-        ("Town Meeting", {}),
-    ]
+def test_a_town_with_no_saved_form_gets_what_its_two_forms_share():
+    assert _rows("Essex town") == ["Selectboard", "Town Officers", "Board of Listers", "Town Meeting"]
 
 
 def test_a_city_with_no_saved_form_gets_only_what_every_candidate_form_has():
-    assert _rows("Barre city") == [("Council", {"member": "Council Member"})]
+    assert _rows("Barre city") == ["Council"]
 
 
 def test_a_saved_form_gives_all_of_its_organizations():
-    assert _rows("Burlington city", GovernmentForm.MAYOR_COUNCIL) == [
-        ("Council", {"member": "Council Member"}),
-        ("Office of the Mayor", {}),
-    ]
+    assert _rows("Burlington city", GovernmentForm.MAYOR_COUNCIL) == ["Council", "Office of the Mayor"]
 
 
 def test_a_village_has_one_form_so_it_needs_no_saved_one():
-    assert _rows("Hyde Park village") == [
-        ("Board of Trustees", {"member": "Trustee", "president": "Village President"}),
-        ("Village Officers", {"clerk": "Village Clerk"}),
-    ]
+    assert _rows("Hyde Park village") == ["Board of Trustees", "Village Officers"]
 
 
 def test_a_name_with_no_legal_status_word_falls_back_to_the_country_forms_and_what_they_share():
-    assert _rows("Somewhere") == [("Council", {"member": "Council Member"})]
+    assert _rows("Somewhere") == ["Council"]
