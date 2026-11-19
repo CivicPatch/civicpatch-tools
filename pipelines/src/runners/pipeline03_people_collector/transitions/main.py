@@ -197,9 +197,6 @@ def _next_state_after_page(
     logger: PipelineRunLogger,
     context: PeopleCollectorContext,
 ) -> tuple[PeopleCollectorContext, PeopleCollectorState]:
-    assert context.data.process_page_content_step is not None, (
-        "should never happen: research_municipality_transition sets process_page_content_step"
-    )
     progress = context.data.process_page_content_step.progress
     processed_count = len(
         get_links_with_status(
@@ -243,7 +240,6 @@ async def review_output_transition(
     context: PeopleCollectorContext,
     _api_client: httpx.AsyncClient,
 ) -> tuple[PeopleCollectorContext, PeopleCollectorState]:
-    assert context.data.process_page_content_step is not None
     records = context.data.process_page_content_step.all_records()
 
     if not records and context.data.find_jurisdiction_url_step is None:
@@ -380,19 +376,13 @@ async def find_jurisdiction_url_transition(
 # TODO: steps can go backwards, so progress may decrease at certain points
 def calculate_progress_percentage(context_data: PeopleCollectorData, current_step: int):
     total_steps = 11
-    if context_data.process_page_content_step is None:
-        data_progress = 0
-    else:
-        # Finding more people than expected is still a complete roster, not more than complete.
-        data_progress = (
-            min(
-                1,
-                context_data.process_page_content_step.progress.current_data
-                / context_data.process_page_content_step.progress.required_data,
-            )
-            if context_data.process_page_content_step.progress.required_data > 0
-            else 0
-        )
+    progress = context_data.process_page_content_step.progress
+    # Finding more people than expected is still a complete roster, not more than complete.
+    data_progress = (
+        min(1, progress.current_data / progress.required_data)
+        if progress.required_data > 0
+        else 0
+    )
     steps_progress = (current_step + 1) / total_steps
     combined_progress = data_progress * 0.7 + steps_progress * 0.3
     return int(combined_progress * 100)

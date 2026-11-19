@@ -8,7 +8,6 @@ from runners.pipeline03_people_collector.schemas import (
     PeopleCollectorState,
     PeopleCollectorStep,
     PipelineRunConfig,
-    ProcessPageContentStep,
     ResearchMunicipalityStep,
 )
 
@@ -42,7 +41,5 @@ def pipeline_run_context_factory(
             frontier=LinkFrontier(),
             jurisdiction_ocdid="ocd-jurisdiction/country:us/state:wa/place:seattle/government",
             research_municipality_step=research,
-            # As after research in a real run: the crawl always starts with an empty process step.
-            process_page_content_step=ProcessPageContentStep(records={}),
         ),
     )
