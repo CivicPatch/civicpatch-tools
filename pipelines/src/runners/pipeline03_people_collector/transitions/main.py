@@ -394,10 +394,12 @@ def calculate_progress_percentage(context_data: PeopleCollectorData, current_ste
     if context_data.process_page_content_step is None:
         data_progress = 0
     else:
+        # Finding more people than expected is still a complete roster, not more than complete.
         data_progress = (
-            (
+            min(
+                1,
                 context_data.process_page_content_step.progress.current_data
-                / context_data.process_page_content_step.progress.required_data
+                / context_data.process_page_content_step.progress.required_data,
             )
             if context_data.process_page_content_step.progress.required_data > 0
             else 0
