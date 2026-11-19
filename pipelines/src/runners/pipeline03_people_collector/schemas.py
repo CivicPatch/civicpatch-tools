@@ -78,6 +78,8 @@ class Link(BaseModel):
     status: str  # LinkStatus value
     folder_name: str = ""
     num_references: int = 0
+    # A page the caller named; the queue keeps these ahead of every discovered link.
+    is_source_url: bool = False
     comment: Optional[str] = None
     text: Optional[str] = None
     failure_reason: Optional[NavigationFailureReason] = None  # set when status=ERROR
@@ -181,7 +183,9 @@ class LinkFrontier(BaseModel):
             key = canonical_url(url)
             if key not in new_links:
                 new_links[key] = Link(
-                    url=format_url(url), status=LinkStatus.PENDING.value
+                    url=format_url(url),
+                    status=LinkStatus.PENDING.value,
+                    is_source_url=True,
                 )
                 added.append(key)
         return self.model_copy(update={"links": new_links, "queue": added + self.queue})

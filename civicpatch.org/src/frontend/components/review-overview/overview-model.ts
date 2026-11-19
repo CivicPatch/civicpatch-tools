@@ -13,6 +13,8 @@ import {
   type RoleGroup,
   type PostRole,
 } from "../people/person-card-grid-model.js";
+import { type ReviewSource } from "../../schemas/review-card.js";
+import { dateStringToFriendly } from "../../utils/date-utils.js";
 
 const FIELD_ORDER = [
   "labels",
@@ -117,9 +119,15 @@ export function visibleFields(card: PersonCard): SurvivingField[] {
     .sort(byRank);
 }
 
-export type SourceMap = Map<string, { number: number; colorClass: string }>;
+export type SourceMap = Map<
+  string,
+  { number: number; colorClass: string; cachedAt: string | null }
+>;
 
-export function sourceMapFor(cards: PersonCard[]): SourceMap {
+export function sourceMapFor(
+  cards: PersonCard[],
+  sources: ReviewSource[] = [],
+): SourceMap {
   const seen: { url: string }[] = [];
   const known = new Set<string>();
   for (const card of cards) {
@@ -130,7 +138,12 @@ export function sourceMapFor(cards: PersonCard[]): SourceMap {
       }
     }
   }
-  return buildSourceUrlMap(seen);
+  const cachedAtByUrl = new Map(sources.map((s) => [s.url, s.cached_at]));
+  const map: SourceMap = new Map();
+  for (const [url, entry] of buildSourceUrlMap(seen)) {
+    map.set(url, { ...entry, cachedAt: cachedAtByUrl.get(url) ?? null });
+  }
+  return map;
 }
 
 export interface Run {
@@ -190,6 +203,43 @@ export interface ReviewOrganizationSections {
  * because closing skips an organization with nobody in it. */
 export function foundNobody(entries: CardInOrganization[]): boolean {
   return entries.length > 0 && entries.every((entry) => entry.leaving);
+}
+
+/** The newest cached copy behind any of these people's source urls: how old the evidence is. */
+export function newestCachedAt(
+  entries: CardInOrganization[],
+  sources: SourceMap,
+): string | null {
+  let newest: number | null = null;
+  let newestIso: string | null = null;
+  for (const entry of entries) {
+    for (const url of entry.card.newRecord?.source_urls ?? []) {
+      const iso = sources.get(url)?.cachedAt ?? null;
+      if (!iso) continue;
+      const at = new Date(iso).getTime();
+      if (newest === null || at > newest) {
+        newest = at;
+        newestIso = iso;
+      }
+    }
+  }
+  return newestIso;
+}
+
+/** What a section's heading says about its people: whether this scrape looked at them. */
+export function organizationMeta(
+  organizationId: string,
+  entries: CardInOrganization[],
+  organizationsRead: string[],
+  sources: SourceMap,
+): string {
+  const people = new Set(entries.map((entry) => entry.card.personId)).size;
+  const count = `${people} ${people === 1 ? "person" : "people"}`;
+  if (foundNobody(entries)) return "not found in this scrape, nothing here changes";
+  if (organizationsRead.includes(organizationId)) return count;
+  const cachedAt = newestCachedAt(entries, sources);
+  if (!cachedAt) return count;
+  return `no page found this scrape — people from the ${dateStringToFriendly(cachedAt)} copy`;
 }
 
 /** What a row proposes in its own body, or what it is losing — which is what the section shows

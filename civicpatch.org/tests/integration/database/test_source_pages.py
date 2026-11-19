@@ -12,7 +12,11 @@ import pytest_asyncio
 
 from core.source_pages import SourcePageRow
 from database.database import get_pool
-from database.source_pages import get_scrape_pages, insert_source_pages
+from database.source_pages import (
+    get_scrape_pages,
+    insert_source_pages,
+    organizations_read_by_changesets,
+)
 
 _SENTINEL_OCDID = "ocd-jurisdiction/country:us/state:zz/place:zz_source_pages/government"
 _ORGANIZATION = "00000000-0000-4000-8000-0000000000c1"
@@ -131,3 +135,20 @@ async def test_a_changesets_pages_are_read_back_for_its_timeline_entry(sentinel_
     assert pages[1].heuristics_failures == ["name_not_in_text"]
     assert pages[1].unchanged_since is None
     assert pages[1].organization_names == []  # the sentinel organization id names no row
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_the_organizations_each_changeset_read_come_back_together(sentinel_run):
+    run_id, changeset_id = sentinel_run
+    await insert_source_pages([_row(run_id, changeset_id)])
+
+    assert await organizations_read_by_changesets([changeset_id, "no-such-changeset"]) == {
+        changeset_id: [_ORGANIZATION]
+    }
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_asking_for_no_changesets_reads_nothing():
+    assert await organizations_read_by_changesets([]) == {}

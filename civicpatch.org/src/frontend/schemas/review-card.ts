@@ -18,6 +18,10 @@ export interface ReviewSummary {
 export interface ReviewSource {
   url: string;
   markdown: string | null;
+  html: string | null;
+  // When the pipeline stored the copy this url opens, whether or not it was this scrape's.
+  cached_at: string | null;
+  is_cached_by_this_scrape: boolean;
 }
 
 // `GET /organizations/{ocdid}`'s shape: each organization with its posts.
@@ -33,6 +37,8 @@ export interface ReviewCard {
   existing: any[];
   proposed: any[];
   sources: ReviewSource[];
+  // Which of the card's organizations this changeset read a page for.
+  organizations_read: string[];
   overridden_source_values: Record<string, Record<string, unknown>>;
   review: ReviewSummary;
   organizations: CardOrganization[];

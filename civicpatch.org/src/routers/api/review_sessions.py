@@ -9,13 +9,14 @@ import database.review_session_entries as review_session_entries_db
 import database.review_session_navigation as review_session_navigation_db
 import database.review_session_stats as review_session_stats_db
 import database.review_sessions as review_sessions_db
+import database.source_pages as source_pages_db
 from fastapi import APIRouter, Depends, HTTPException
 from lib.auth import require_route_access
 from psycopg.errors import UniqueViolation
 from pydantic import BaseModel
 from schemas.common import Identity, ReviewMode, RouteCategory, UserRole, has_at_least
 from services.claims import claims_for_people
-from services.review_sources import build_sources, without_debug_links
+from services.review_sources import sources_for_card, without_debug_links
 from services.roster import card_sides
 logger = logging.getLogger(__name__)
 
@@ -143,10 +144,11 @@ async def _navigate_response(session_id: str, entry_number: int, viewer_role: st
 
     # Both sides from the same fold (R3), as on `by-request`: this is the endpoint a review
     # session navigates through, and the two must not answer differently.
-    pr_meta, sides, has_ever_collected = await asyncio.gather(
+    pr_meta, sides, has_ever_collected, organizations_read = await asyncio.gather(
         review_pool_db.get_changeset_for_review(changeset_id),
         card_sides(changeset_id, jurisdiction_ocdid),
         jurisdictions_db.has_ever_collected(jurisdiction_ocdid),
+        source_pages_db.organizations_read_by_changesets([changeset_id]),
     )
     existing, proposed, overridden = sides
 
@@ -156,8 +158,8 @@ async def _navigate_response(session_id: str, entry_number: int, viewer_role: st
     unique_source_urls = list(
         {url for person in proposed for url in (person.get("source_urls") or [])}
     )
-    sources = build_sources(
-        pr_meta["pipeline_run_id"], jurisdiction_ocdid, unique_source_urls
+    sources = await sources_for_card(
+        jurisdiction_ocdid, pr_meta["pipeline_run_id"], unique_source_urls
     )
     if not has_at_least(viewer_role, UserRole.ADMINS):
         sources = without_debug_links(sources)
@@ -191,5 +193,6 @@ async def _navigate_response(session_id: str, entry_number: int, viewer_role: st
             # agrees with has nothing to disclose.
             "overridden_source_values": overridden,
             "sources": sources,
+            "organizations_read": organizations_read.get(changeset_id, []),
         }
     }

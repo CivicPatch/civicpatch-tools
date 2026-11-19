@@ -7,13 +7,15 @@ import asyncio
 from typing import NamedTuple
 
 from core.review_summary import ReviewSummary
+from core.source_pages import CachedPage
 from database import changesets as changesets_db
 from database import pipeline_runs as pipeline_runs_db
 from database import post_listings as post_listings_db
-from schemas.review_cards import ReviewCard, ReviewSource
+from database import source_pages as source_pages_db
+from schemas.review_cards import ReviewCard
 from services.claims import claims_for_people
 from services.review_summary import summary_of
-from services.review_sources import build_sources
+from services.review_sources import build_sources, cached_pages_for
 from services.roster import ROSTERS_AT_A_TIME, CardSides, card_fold, sides_of
 from shared.utils.batching import gather_in_batches
 
@@ -41,13 +43,21 @@ async def with_card_data(changeset_ids: list[str]) -> list[ReviewCard]:
     everyone = [
         person_id for part in parts for person_id in _person_ids(part.sides.existing)
     ]
+    # A card's own run's cached pages are only known once its run is, so that read comes first.
+    run_ids = await pipeline_runs_db.pipeline_run_ids_for_changesets(known)
     # One read each for the whole page rather than a round trip per card.
-    organizations, claims, run_ids = await asyncio.gather(
+    organizations, claims, cached_pages, organizations_read = await asyncio.gather(
         post_listings_db.list_by_organization_for_jurisdictions(list(set(ocdids.values()))),
         claims_for_people(everyone),
-        pipeline_runs_db.pipeline_run_ids_for_changesets(known),
+        source_pages_db.get_cached_pages(
+            list(set(ocdids.values())), list(run_ids.values())
+        ),
+        source_pages_db.organizations_read_by_changesets(known),
     )
-    return [_card(part, organizations, claims, run_ids) for part in parts]
+    return [
+        _card(part, organizations, claims, run_ids, cached_pages, organizations_read)
+        for part in parts
+    ]
 
 
 async def _parts_of(changeset_id: str, jurisdiction_ocdid: str) -> CardParts:
@@ -67,21 +77,25 @@ def _card(
     organizations: dict[str, list[dict]],
     claims: dict[str, list[dict]],
     run_ids: dict[str, str],
+    cached_pages: list[CachedPage],
+    organizations_read: dict[str, list[str]],
 ) -> ReviewCard:
+    pipeline_run_id = run_ids.get(part.changeset_id)
     sources = build_sources(
-        run_ids.get(part.changeset_id),
-        part.jurisdiction_ocdid,
+        cached_pages_for(cached_pages, part.jurisdiction_ocdid, pipeline_run_id),
         _source_urls(part.sides.proposed),
+        pipeline_run_id,
     )
     return ReviewCard(
         changeset_id=part.changeset_id,
         jurisdiction_ocdid=part.jurisdiction_ocdid,
         existing=part.sides.existing,
         proposed=part.sides.proposed,
-        sources=[ReviewSource(**source) for source in sources],
+        sources=sources,
         overridden_source_values=part.sides.overridden,
         review=part.review,
         organizations=organizations.get(part.jurisdiction_ocdid, []),
+        organizations_read=organizations_read.get(part.changeset_id, []),
         claims={
             person_id: claims[person_id]
             for person_id in _person_ids(part.sides.existing)

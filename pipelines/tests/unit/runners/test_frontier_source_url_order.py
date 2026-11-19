@@ -12,6 +12,7 @@ first. The homepage stays queued behind it — still available for discovering f
 import pytest
 
 from runners.pipeline03_people_collector.schemas import LinkFrontier
+from runners.pipeline03_people_collector.utils.link_discovery import add_relevant_urls
 
 BASE = "https://seattle.gov"
 SOURCE = "https://www.seattle.gov/council"
@@ -55,3 +56,24 @@ def test_add_still_appends():
     frontier = LinkFrontier.from_urls([BASE]).add([discovered])
 
     assert [frontier.links[k].url for k in frontier.queue] == [BASE, discovered]
+
+
+@pytest.mark.unit
+def test_source_urls_stay_first_after_discovery_resorts_the_queue():
+    """A source URL with an opaque path and no link text still outranks keyword-matching links."""
+    first, second = "https://x.gov/index.asp?SEC=1", "https://x.gov/index.asp?SEC=2"
+    discovered = [f"https://x.gov/city-council/member-{n}" for n in range(150)]
+    frontier = LinkFrontier.from_urls([BASE]).add_front([first, second])
+
+    result = add_relevant_urls(discovered, frontier, domain="https://x.gov", needs=[])
+
+    assert [result.links[k].url for k in result.queue[:2]] == [first, second]
+
+
+@pytest.mark.unit
+def test_discovered_links_are_not_source_urls():
+    frontier = LinkFrontier.from_urls([BASE])
+
+    result = add_relevant_urls(["https://seattle.gov/council"], frontier, domain=BASE, needs=[])
+
+    assert not any(link.is_source_url for link in result.links.values())

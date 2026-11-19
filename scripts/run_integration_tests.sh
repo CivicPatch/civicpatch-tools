@@ -7,5 +7,10 @@ changed=$(git diff --name-only @{u}..HEAD 2>/dev/null || git diff --name-only HE
 touches_api=$(echo "$changed" | grep -q "^civicpatch\.org/\|^shared/" && echo 1 || echo 0)
 
 if [ "$touches_api" = "1" ]; then
-    mise run tcp-integration
+    # pre-commit holds hook output until the hook ends; /dev/tty shows progress live.
+    if { : > /dev/tty; } 2>/dev/null; then
+        mise run tcp-integration > /dev/tty 2>&1
+    else
+        mise run tcp-integration
+    fi
 fi

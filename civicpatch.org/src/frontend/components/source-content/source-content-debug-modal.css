@@ -4,6 +4,12 @@
   margin-bottom: 0.75rem;
 }
 
+.source-content-debug-modal__stale {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  margin: 0 0 0.75rem;
+}
+
 /* Columns: the page as fetched beside the markdown the pipeline read */
 .source-content-debug-modal__columns {
   display: grid;

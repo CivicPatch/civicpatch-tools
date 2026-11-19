@@ -201,6 +201,11 @@ def test_navigate_to_open_entry_returns_card(client):
             new_callable=AsyncMock,
             return_value=None,
         ),
+        patch(
+            "database.source_pages.organizations_read_by_changesets",
+            new_callable=AsyncMock,
+            return_value={},
+        ),
     ):
         response = client.post(
             f"/review-sessions/{TEST_SESSION_ID}/navigate",
@@ -213,6 +218,7 @@ def test_navigate_to_open_entry_returns_card(client):
     assert data["total"] == 10
     assert data["has_next"] is True
     assert "goal" not in data
+    assert data["organizations_read"] == []
 
 
 @pytest.mark.unit
