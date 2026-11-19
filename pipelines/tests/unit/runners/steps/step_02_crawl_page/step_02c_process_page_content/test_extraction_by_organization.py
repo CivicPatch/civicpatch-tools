@@ -3,6 +3,8 @@
 from unittest.mock import AsyncMock, MagicMock, patch
 
 import pytest
+
+from shared.utils.statuses import OrganizationPlacedBy
 from runners.pipeline03_people_collector.schemas import (
     ExtractedPersonRecord,
     Link,
@@ -104,6 +106,10 @@ async def test_each_person_is_stamped_with_the_organization_their_organization_l
 
     assert extraction.heuristics_passed is True
     assert _stamps(extraction.records) == {"Rob Saka": "council", "Katie Wilson": "mayor"}
+    assert {name: group[0].organization_placed_by for name, group in extraction.records.items()} == {
+        "Rob Saka": OrganizationPlacedBy.HEADING,
+        "Katie Wilson": OrganizationPlacedBy.ROLE,
+    }
 
 
 @pytest.mark.asyncio

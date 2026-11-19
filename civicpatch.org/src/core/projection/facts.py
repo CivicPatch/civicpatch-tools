@@ -4,7 +4,7 @@ from typing import Any
 
 from pydantic import BaseModel
 
-from shared.utils.statuses import ClaimKind, EntityType
+from shared.utils.statuses import ClaimKind, EntityType, OrganizationPlacedBy
 
 POST_NAMESPACE = uuid.UUID("c8374c67-da4d-4aac-a0d9-4f353c803eca")
 
@@ -51,6 +51,8 @@ class SourceRecord(BaseModel, frozen=True):
     # This source stated only the cells it filled, so a blank here is no information and keeps
     # the last stated value. A scrape reads a whole page, so its blank is a clearing.
     is_partial: bool = False
+    # What placed it in `organization_id`; None for ingest's default and older rows.
+    organization_placed_by: OrganizationPlacedBy | None = None
 
 
 class Claim(BaseModel, frozen=True):

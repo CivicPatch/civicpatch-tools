@@ -23,7 +23,14 @@ from schemas.claims import ClaimKind, EntityType
 from schemas.common import ApiKeyScope, UserRole
 from schemas.roster_comparisons import PersonOutcome
 from shared.schemas import GovernmentForm, JurisdictionLevel, RoleAliasStatus, RoleStatus, SelectionMethod
-from shared.utils.statuses import COLLECTOR_RUN_KINDS, ChangesetKind, DismissalReason, PipelineIssueStatus, PipelineRunKind
+from shared.utils.statuses import (
+    COLLECTOR_RUN_KINDS,
+    ChangesetKind,
+    DismissalReason,
+    OrganizationPlacedBy,
+    PipelineIssueStatus,
+    PipelineRunKind,
+)
 
 # Constraint name → the enum it copies, every member of it.
 EXACT = {
@@ -49,6 +56,7 @@ EXACT = {
     "roster_comparison_runs_level_check": JurisdictionLevel,
     "roster_comparison_drafts_level_check": JurisdictionLevel,
     "api_keys_scope_check": ApiKeyScope,
+    "source_records_organization_placed_by_check": OrganizationPlacedBy,
 }
 
 # No enum behind it: `active`/`inactive` exists only here and in the SQL that reads it.

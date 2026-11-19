@@ -211,6 +211,7 @@ def test_roster_checks_come_first_and_post_checks_after():
         organization_names={},
         existing_post_ids=set(),
         organization_role_labels={},
+        changeset_records=[],
     )
 
     assert all(isinstance(issue, Issue) for issue in summary.issues)

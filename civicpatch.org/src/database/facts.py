@@ -37,7 +37,7 @@ _RECORDS = f"""
            source_records.source_url, source_records.other_names, source_records.url,
            source_records.phone, source_records.email, source_records.image,
            source_records.cdn_image, source_records.start_date, source_records.end_date,
-           changesets.kind
+           changesets.kind, source_records.organization_placed_by
     FROM source_records
     JOIN changesets ON changesets.id = source_records.changeset_id
     WHERE source_records.jurisdiction_ocdid = %(jurisdiction_ocdid)s
@@ -150,6 +150,7 @@ def _record(row: tuple) -> SourceRecord:
         start_date=row[14],
         end_date=row[15],
         is_partial=ChangesetKind(row[16]) in PARTIAL_KINDS,
+        organization_placed_by=row[17],
     )
 
 

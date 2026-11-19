@@ -8,6 +8,7 @@ from pydantic import BaseModel, ConfigDict, Field, field_validator, model_valida
 from shared.utils.email_utils import is_valid_email
 from shared.utils.phone_utils import normalize_phone_number
 from shared.utils.url_utils import is_web_url
+from shared.utils.statuses import OrganizationPlacedBy
 
 
 class PersonBase(BaseModel):
@@ -166,6 +167,8 @@ class PersonSourceRecord(ExtractedPersonRecord):
     # Which body's extraction produced it — known from which prompt ran, not read off the page.
     # None for records that predate bodies: stored `source_records` rows and older artifacts.
     organization_id: str | None = None
+    # What chose `organization_id`; None when nothing did (ingest's default) and on older records.
+    organization_placed_by: OrganizationPlacedBy | None = None
     # Where we serve the photo. cp.org fills it at ingest from a downloaded `local://` file;
     # a record replayed from an unchanged page downloads nothing and arrives with it set.
     cdn_image: Optional[str] = None
@@ -451,6 +454,8 @@ class IssueCode(str, Enum):
     NOBODY_FOUND_IN_ORGANIZATION = "nobody_found_in_organization"
     # A post the scrape names that does not exist yet: approving the scrape creates it.
     NEW_POST = "new_post"
+    # A record the general model placed after Jev was unsure: the organization to check.
+    UNCERTAIN_ORGANIZATION = "uncertain_organization"
     # A field moved on someone who is in both rosters.
     CHANGED_FIELD = "changed_field"
 

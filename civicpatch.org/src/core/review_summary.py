@@ -5,6 +5,7 @@ a projection's output can feed it unchanged.
 """
 
 from collections import defaultdict
+from collections.abc import Sequence
 
 from pydantic import BaseModel
 from shared.schemas import Issue
@@ -23,8 +24,10 @@ from core.post_issues import (
     moved_person_issues_from_roster,
     new_post_issues_from_roster,
     organizations_nobody_was_found_in_from_roster,
+    uncertain_organization_issues_from_records,
 )
 from core.projection.diff import RosterDiff
+from core.projection.facts import SourceRecord
 from core.projection.people import Person as FoldPerson
 from core.projection.roster import Roster
 
@@ -162,6 +165,7 @@ def fold_card_summary(
     organization_names: dict[str, str],
     existing_post_ids: set[str],
     organization_role_labels: dict[str, dict[str, str]],
+    changeset_records: Sequence[SourceRecord],
 ) -> ReviewSummary:
     """`roster_summary` plus the post checks, all over the fold. The proposal layer is not read:
     a move and an empty body are both statements about the two rosters."""
@@ -176,6 +180,7 @@ def fold_card_summary(
             *new_post_issues_from_roster(
                 proposed, existing_post_ids, organization_role_labels, role_labels, organization_names
             ),
+            *uncertain_organization_issues_from_records(proposed, changeset_records, organization_names),
         ],
         people_by_source=roster.people_by_source,
     )
