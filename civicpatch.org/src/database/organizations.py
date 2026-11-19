@@ -1,7 +1,12 @@
 import json
+
+import database.government_forms as government_forms_db
 from core.organization_build import FormOrganizationRow
+from core.organization_derivation import role_labels_by_organization
 from database.database import get_pool
+from database.extras_organizations import get_extras_organizations
 from shared.utils.government_forms import default_organization_name
+from shared.utils.taxonomy import Taxonomy
 
 
 async def ensure_defaults_exist(jurisdiction_ocdids: list[str]) -> None:
@@ -126,13 +131,13 @@ async def names(cur, organization_ids: list[str]) -> dict[str, str]:
     return {row[0]: row[1] for row in await cur.fetchall()}
 
 
-async def role_labels(cur, jurisdiction_ocdid: str) -> dict[str, dict[str, str]]:
-    """Each organization's `extras_role_labels`, by its id."""
-    await cur.execute(
-        "SELECT id::text, extras_role_labels FROM organizations WHERE jurisdiction_ocdid = %s",
-        (jurisdiction_ocdid,),
-    )
-    return {row[0]: row[1] for row in await cur.fetchall()}
+async def role_labels(cur, jurisdiction_ocdid: str, taxonomy: Taxonomy) -> dict[str, dict[str, str]]:
+    """Each organization's role id -> label, by its id: its place's law, else its config form."""
+    answer = await get_extras_organizations(cur, jurisdiction_ocdid)
+    government = await government_forms_db.get_resolved_government(jurisdiction_ocdid)
+    labels_by_name = role_labels_by_organization(answer, government.candidate_organizations, taxonomy)
+    await cur.execute("SELECT id::text, name FROM organizations WHERE jurisdiction_ocdid = %s", (jurisdiction_ocdid,))
+    return {row[0]: labels_by_name.get(row[1], {}) for row in await cur.fetchall()}
 
 
 async def list_for_jurisdiction(cur, jurisdiction_ocdid: str) -> list[dict]:

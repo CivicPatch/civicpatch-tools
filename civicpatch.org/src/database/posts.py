@@ -121,9 +121,8 @@ async def create(
             raise UnknownOrganization(organization_id)
         await divisions.find_or_create(cur, division_ocdid, jurisdiction_ocdid)
         key = PostKey(organization_id=organization_id, role_id=role_id, division_ocdid=division_ocdid)
-        role_label = post_role_label(
-            key, await organizations.role_labels(cur, jurisdiction_ocdid), await get_taxonomy_for(jurisdiction_ocdid)
-        )
+        taxonomy = await get_taxonomy_for(jurisdiction_ocdid)
+        role_label = post_role_label(key, await organizations.role_labels(cur, jurisdiction_ocdid, taxonomy), taxonomy)
         post_id = await create_if_absent(
             cur, jurisdiction_ocdid, organization_id, role_id, division_ocdid, role_label
         )

@@ -12,9 +12,8 @@ sheet has no analogue.
 
 import logging
 
-import database.government_forms as government_forms_db
 from core.display_rows import display_rows
-from core.organization_placement import PlaceableOrganization, placed_records, role_ids_of
+from core.organization_placement import PlaceableOrganization, placed_records
 from core.people_roster import (
     identified,
     in_known_organizations,
@@ -62,13 +61,11 @@ async def _with_organizations(jurisdiction_ocdid: str, rows: list[dict]) -> list
 async def _placeable_organizations(
     jurisdiction_ocdid: str, current: list[dict], taxonomy: Taxonomy
 ) -> list[PlaceableOrganization]:
-    """Each current organization with the roles the resolved form lists under its name."""
-    government = await government_forms_db.get_resolved_government(jurisdiction_ocdid)
-    labels_by_name = {organization.name: organization.role_labels for organization in government.candidate_organizations}
-    return [
-        PlaceableOrganization(id=row["id"], role_ids=role_ids_of(labels_by_name.get(row["name"], []), taxonomy))
-        for row in current
-    ]
+    """Each current organization with the roles its place's law gives it, else its resolved form."""
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        labels_by_id = await organizations.role_labels(cur, jurisdiction_ocdid, taxonomy)
+    return [PlaceableOrganization(id=row["id"], role_ids=list(labels_by_id.get(row["id"], {}))) for row in current]
 
 
 def _held_organizations(everyone: list[Person]) -> dict[str, set[str]]:

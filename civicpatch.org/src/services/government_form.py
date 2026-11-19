@@ -7,7 +7,8 @@ import database.jurisdiction_configs as jurisdiction_configs_db
 import database.jurisdictions as jurisdictions_db
 import database.organizations as organizations_db
 from core.organization_build import GovernmentFormInputs, form_organization_rows
-from core.organization_derivation import with_role_labels
+from core.organization_derivation import role_labels_by_organization, with_role_labels
+from database.roles import get_taxonomy_for
 from core.post_deletion import with_holder_names
 from database import post_listings as post_listings_db
 from database.activity import record_change
@@ -90,7 +91,10 @@ async def organizations_with_role_labels(jurisdiction_ocdid: str) -> list[dict]:
     post_ids = [post["id"] for organization in organizations for post in organization["posts"]]
     holder_names = await post_listings_db.get_holder_names(post_ids)
     government = await government_forms_db.get_resolved_government(jurisdiction_ocdid)
-    return with_role_labels(with_holder_names(organizations, holder_names), government.candidate_organizations)
+    answer = await extras_organizations_service.get_extras_organizations(jurisdiction_ocdid)
+    taxonomy = await get_taxonomy_for(jurisdiction_ocdid)
+    labels_by_name = role_labels_by_organization(answer, government.candidate_organizations, taxonomy)
+    return with_role_labels(with_holder_names(organizations, holder_names), government.candidate_organizations, labels_by_name)
 
 
 async def government_form_choices(jurisdiction_ocdid: str) -> list[GovernmentForm]:

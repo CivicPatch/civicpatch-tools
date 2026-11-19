@@ -8,6 +8,7 @@ Isolation: sentinel state 'zr', cleaned before and after.
 """
 
 import datetime
+import json
 import uuid
 
 import pytest
@@ -313,13 +314,21 @@ async def _post_role_labels() -> dict[str, str]:
 
 @pytest.mark.asyncio
 @pytest.mark.integration
-async def test_a_post_is_named_by_its_organization_not_the_page():
+async def test_a_post_is_named_by_its_place_s_law_not_the_page():
     ids = await _seed()
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute("SELECT name FROM organizations WHERE id = %s", (ids["council"],))
+        (council_name,) = await cur.fetchone()
+        answer = {
+            "posts": [{"role": "member", "label": "Select Board Member", "organization_id": council_name,
+                       "sources": [{"url": "https://example.gov/charter", "note": "three members",
+                                    "extras": {"source_page_id": "p1", "matched_in": "sentence"}}]}],
+            "extras": {"governing_law_collected_at": "2026-11-19T00:00:00Z"},
+        }
         await cur.execute(
-            """UPDATE organizations SET extras_role_labels = '{"member": "Select Board Member"}'::jsonb WHERE id = %s""",
-            (ids["council"],),
+            "UPDATE jurisdictions SET extras_organizations = %s::jsonb WHERE jurisdiction_ocdid = %s",
+            (json.dumps(answer), _OCDID),
         )
         await conn.commit()
     await _scrape(ids, _T0, {"ana": "Alderman", "ben": "Mayor"})
