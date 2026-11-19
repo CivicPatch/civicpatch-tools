@@ -5,6 +5,7 @@ import lib.buckets as buckets
 import lib.pipeline_artifacts as artifacts
 import lib.storage as storage_service
 from core.images import cdn_urls, records_with_images, resolve_images
+from core.pipeline_run_issues import crash_issue, unknown_failure_issue
 from core.pipeline_run_summary import pipeline_run_summary, summary_log_line
 from core.source_pages import frontier_links, source_page_rows
 from database.changesets import register_scrape_changeset
@@ -28,6 +29,7 @@ from shared.utils.statuses import (
     PipelineRunStatus,
 )
 from shared.utils.id_utils import parse_jurisdiction_ocdid
+from shared.utils.run_reports import RunFailure
 from shared.utils.taxonomy import Taxonomy
 from shared.utils.yaml_utils import yaml_dump, yaml_load
 
@@ -254,6 +256,12 @@ async def _apply_scrape_changes(changeset_id: str, jurisdiction_ocdid: str) -> N
 async def _record_pipeline_error(pipeline_run_id: str, workflow_context: dict) -> None:
     """Keyed on the run: this branch is a scrape that never reached ingest, so it minted no
     proposal to hang the issue off."""
+    raw_failure = workflow_context.get("failure")
+    crash = crash_issue(RunFailure.model_validate(raw_failure) if raw_failure else None)
+    if crash is not None:
+        await upsert_issue(pipeline_run_id, crash.issue_type, [crash.data])
+        return
+
     context_data = workflow_context.get("data", {})
     reported = context_data.get("error_step")
     detail = context_data.get("error_detail") or {}
@@ -265,6 +273,11 @@ async def _record_pipeline_error(pipeline_run_id: str, workflow_context: dict) -
         )
         detail = {**detail, "reported_error_step": reported}
         reported = None
+
+    if not reported and not detail:
+        unknown = unknown_failure_issue()
+        await upsert_issue(pipeline_run_id, unknown.issue_type, [unknown.data])
+        return
 
     await upsert_issue(
         pipeline_run_id, reported or PipelineIssueType.PIPELINE_ERROR, [detail]

@@ -3,6 +3,7 @@
 from unittest.mock import AsyncMock, patch
 
 import pytest
+from core.pipeline_run_issues import UNKNOWN_FAILURE
 from services.people_collector import _record_pipeline_error
 from shared.utils.statuses import PipelineIssueType, PipelineRunErrorType
 
@@ -53,3 +54,30 @@ async def test_the_original_detail_is_kept_alongside_the_rejected_type():
     assert detail == [
         {"error": "ValueError: boom", "reported_error_step": "boom"}
     ]
+
+
+@pytest.mark.asyncio
+async def test_a_crash_the_engine_caught_is_filed_with_its_message_and_state():
+    """People collector's own catch used to copy the message into `error_detail`; the engine's
+    `failure` now carries it, and wins over any `error_step` the context also has."""
+    with patch(
+        "services.people_collector.upsert_issue", new_callable=AsyncMock
+    ) as upsert:
+        await _record_pipeline_error(
+            _RUN,
+            {
+                "failure": {"failed_state": "CRAWL_PAGE", "error": "ValueError: boom"},
+                "data": {"error_step": PipelineRunErrorType.NO_ROSTER_FOUND},
+            },
+        )
+    assert upsert.await_args.args == (
+        _RUN,
+        PipelineIssueType.PIPELINE_ERROR,
+        [{"error": "ValueError: boom", "failed_state": "CRAWL_PAGE"}],
+    )
+
+
+@pytest.mark.asyncio
+async def test_a_run_that_says_nothing_reads_like_the_other_pipelines():
+    _, _, detail = await _file()
+    assert detail == [{"error": UNKNOWN_FAILURE, "failed_state": None}]

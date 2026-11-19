@@ -125,18 +125,7 @@ async def crawl_page_transition(
         logger.info("No pending links left to crawl.")
         return _next_state_no_pending_pages(context)
 
-    try:
-        result = await crawl_page(context, page)
-    except Exception as e:
-        logger.error(f"crawl_page failed: {e}")
-        # The message goes in the detail, not the step: `error_step` becomes `issues.issue_type`,
-        # and a raw exception string there mints a new issue kind per distinct message.
-        return _next_context(
-            context,
-            error_step=None,
-            error_detail={"error": f"{type(e).__name__}: {e}"},
-        ), PipelineRunStatus.SEND_ERROR
-
+    result = await crawl_page(context, page)
     next_context = _context_with_crawl_result(logger, context, page, result)
     return _next_state_after_page(limits, logger, next_context)
 

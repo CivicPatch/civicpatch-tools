@@ -4,12 +4,12 @@ and pipeline 2's runs that read nothing or stopped at the cap."""
 import pytest
 from shared.schemas import FoundBy
 from shared.utils.layered_config import GovernedBy
-from shared.utils.run_reports import CostCapDetail, GoverningLawReport, GoverningLawSearch, OrganizationsRunReport, TriedReason, TriedUrl
+from shared.utils.run_reports import CostCapDetail, GoverningLawReport, GoverningLawSearch, OrganizationsRunReport, RunFailure, TriedReason, TriedUrl
 from shared.utils.statuses import PipelineIssueType, PipelineRunKind
 
 from decimal import Decimal
 
-from core.pipeline_run_issues import ISSUE_READERS, Missing, governing_law_issue, organizations_issue, run_issue
+from core.pipeline_run_issues import ISSUE_READERS, Missing, crash_issue, governing_law_issue, organizations_issue, run_issue
 
 pytestmark = pytest.mark.unit
 
@@ -144,3 +144,16 @@ def test_a_run_that_ended_well_files_what_its_kind_reads():
 
     assert issue is not None
     assert issue.issue_type == PipelineIssueType.NO_GOVERNING_LAW
+
+
+def test_a_crash_is_a_pipeline_error_naming_the_state_and_the_message():
+    issue = crash_issue(RunFailure(failed_state="CRAWL_PAGE", error="RuntimeError: OPEN_ROUTER_TOKEN is not set"))
+    assert issue is not None
+    assert (issue.issue_type, issue.data) == (
+        PipelineIssueType.PIPELINE_ERROR,
+        {"error": "RuntimeError: OPEN_ROUTER_TOKEN is not set", "failed_state": "CRAWL_PAGE"},
+    )
+
+
+def test_a_run_that_did_not_crash_has_no_crash_issue():
+    assert crash_issue(None) is None
