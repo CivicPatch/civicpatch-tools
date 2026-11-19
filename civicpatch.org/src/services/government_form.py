@@ -32,7 +32,7 @@ from shared.utils.statuses import ActivityType
 
 async def apply_config_organizations(path: str) -> int:
     """After a config file merges: every jurisdiction it governs gets the organizations its form
-    lists, created where missing and labelled where unlabelled. Nothing a person made is renamed
+    lists, created where missing. Nothing a person made is renamed
     or removed, so a deleted organization comes back only at that state's next config merge.
     Returns how many organizations were created."""
     layer = config_path_layer(path)

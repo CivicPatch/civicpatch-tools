@@ -1,6 +1,5 @@
 """A merged config file gives the jurisdictions it governs their organizations: created where
-missing, labelled where unlabelled, a person's own left alone; a second application changes
-nothing. The config is stored the way the merge Action's sync stores it.
+missing, a person's own left alone; a second application changes nothing. The config is stored the way the merge Action's sync stores it.
 
 Isolation: state 'zz', sentinel roles `zz-test-*`, the config path for 'zz' local, cleaned
 before and after.
@@ -25,7 +24,6 @@ _VILLAGE = "ocd-jurisdiction/country:us/state:zz/place:zyvillage/government"
 _MANAGER_CITY = "ocd-jurisdiction/country:us/state:zz/place:zymanager/government"
 _UNSAVED_CITY = "ocd-jurisdiction/country:us/state:zz/place:zyunsaved/government"
 _ALL = [_TOWN, _VILLAGE, _MANAGER_CITY, _UNSAVED_CITY]
-_HAND_LABELS = {"zz-test-member": "ZZ Test Selectperson"}
 
 
 def _organization(name: str, *labels: str) -> DerivedOrganization:
@@ -119,19 +117,19 @@ async def _seed() -> dict[str, str]:
             assert row is not None
             ids[ocdid] = row[0]
         await cur.execute(
-            "INSERT INTO organizations (jurisdiction_ocdid, name, extras_role_labels) VALUES (%s, 'Selectboard', %s::jsonb)",
-            (_TOWN, json.dumps(_HAND_LABELS)),
+            "INSERT INTO organizations (jurisdiction_ocdid, name) VALUES (%s, 'Selectboard')",
+            (_TOWN,),
         )
         await cur.execute("INSERT INTO organizations (jurisdiction_ocdid, name) VALUES (%s, 'Board of Trustees')", (_VILLAGE,))
         await conn.commit()
     return ids
 
 
-async def _organizations(jurisdiction_ocdid: str) -> list[tuple[str, str, bool, dict]]:
+async def _organizations(jurisdiction_ocdid: str) -> list[tuple[str, str, bool]]:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            "SELECT id::text, name, meta_is_default, extras_role_labels FROM organizations"
+            "SELECT id::text, name, meta_is_default FROM organizations"
             " WHERE jurisdiction_ocdid = %s ORDER BY name",
             (jurisdiction_ocdid,),
         )
@@ -140,31 +138,26 @@ async def _organizations(jurisdiction_ocdid: str) -> list[tuple[str, str, bool, 
 
 @pytest.mark.asyncio
 @pytest.mark.integration
-async def test_a_town_with_no_saved_form_gets_what_its_forms_share_and_its_default_keeps_its_id_and_gains_labels():
+async def test_a_town_with_no_saved_form_gets_what_its_forms_share_and_its_default_keeps_its_id():
     ids = await _seed()
 
     created = await government_form_service.apply_config_organizations(_PATH)
 
     organizations = await _organizations(_TOWN)
-    assert [name for _, name, _, _ in organizations] == ["Board of Listers", "Selectboard", "Town Meeting", "Town Officers"]
-    by_name = {name: (id_, is_default, labels) for id_, name, is_default, labels in organizations}
-    assert by_name["Town Officers"] == (ids[_TOWN], True, {"zz-test-clerk": "ZZ Test Town Clerk"})
-    assert by_name["Selectboard"][2] == _HAND_LABELS
-    assert by_name["Board of Listers"][2] == {}
+    assert [name for _, name, _ in organizations] == ["Board of Listers", "Selectboard", "Town Meeting", "Town Officers"]
+    by_name = {name: (id_, is_default) for id_, name, is_default in organizations}
+    assert by_name["Town Officers"] == (ids[_TOWN], True)
     assert created == 2 + 0 + 1 + 1  # town: listers, meeting; village: none; each city: Council
 
 
 @pytest.mark.asyncio
 @pytest.mark.integration
-async def test_a_village_keeps_its_board_and_both_get_their_labels():
+async def test_a_village_keeps_its_board_and_gets_its_officers():
     await _seed()
 
     await government_form_service.apply_config_organizations(_PATH)
 
-    assert [(name, labels) for _, name, _, labels in await _organizations(_VILLAGE)] == [
-        ("Board of Trustees", {"zz-test-member": "ZZ Test Trustee", "zz-test-president": "ZZ Test Village President"}),
-        ("Village Officers", {"zz-test-clerk": "ZZ Test Village Clerk"}),
-    ]
+    assert [name for _, name, _ in await _organizations(_VILLAGE)] == ["Board of Trustees", "Village Officers"]
 
 
 @pytest.mark.asyncio
@@ -174,11 +167,8 @@ async def test_a_city_gets_its_saved_forms_council_and_one_with_no_form_only_wha
 
     await government_form_service.apply_config_organizations(_PATH)
 
-    assert [(name, labels) for _, name, _, labels in await _organizations(_MANAGER_CITY)] == [
-        ("City Officers", {}),
-        ("Council", {"zz-test-member": "ZZ Test Council Member"}),
-    ]
-    assert [name for _, name, _, _ in await _organizations(_UNSAVED_CITY)] == ["City Officers", "Council"]
+    assert [name for _, name, _ in await _organizations(_MANAGER_CITY)] == ["City Officers", "Council"]
+    assert [name for _, name, _ in await _organizations(_UNSAVED_CITY)] == ["City Officers", "Council"]
 
 
 @pytest.mark.asyncio
@@ -200,4 +190,4 @@ async def test_the_country_roles_file_governs_no_organizations():
     await _seed()
 
     assert await government_form_service.apply_config_organizations("data_source/config.yml") == 0
-    assert [name for _, name, _, _ in await _organizations(_TOWN)] == ["Selectboard", "Town Officers"]
+    assert [name for _, name, _ in await _organizations(_TOWN)] == ["Selectboard", "Town Officers"]

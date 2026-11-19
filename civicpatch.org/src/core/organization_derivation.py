@@ -69,7 +69,7 @@ def role_labels_by_organization(
 
 
 def _role_ids_to_labels(role_labels: list[str], taxonomy: Taxonomy) -> dict[str, str]:
-    # Unlike `role_labels_by_role_id`, keeps a role's own label: readers need every role the form gives.
+    # Keeps a role's own label beside its aliases: readers need every role the form gives.
     labels: dict[str, str] = {}
     for text in role_labels:
         canonical = taxonomy.role_aliases.get(lookup_key(text))
