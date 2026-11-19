@@ -21,6 +21,7 @@ from shared.utils.review_utils import (
 from core.people_edits import SURFACED_FIELDS
 from core.post_issues import (
     moved_person_issues_from_roster,
+    new_post_issues_from_roster,
     organizations_nobody_was_found_in_from_roster,
 )
 from core.projection.diff import RosterDiff
@@ -159,6 +160,8 @@ def fold_card_summary(
     role_labels: dict[str, str],
     unique_role_ids: set[str],
     organization_names: dict[str, str],
+    existing_post_ids: set[str],
+    organization_role_labels: dict[str, dict[str, str]],
 ) -> ReviewSummary:
     """`roster_summary` plus the post checks, all over the fold. The proposal layer is not read:
     a move and an empty body are both statements about the two rosters."""
@@ -169,6 +172,9 @@ def fold_card_summary(
             *moved_person_issues_from_roster(published, proposed, diff, role_labels),
             *organizations_nobody_was_found_in_from_roster(
                 published, proposed, read_organization_ids, organization_names
+            ),
+            *new_post_issues_from_roster(
+                proposed, existing_post_ids, organization_role_labels, role_labels, organization_names
             ),
         ],
         people_by_source=roster.people_by_source,
