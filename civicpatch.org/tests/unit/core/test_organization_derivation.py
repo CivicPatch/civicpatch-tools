@@ -1,6 +1,8 @@
 import pytest
 
 from core.organization_derivation import (
+    ClaimedRoles,
+    OrganizationRole,
     merged_by_name,
     role_labels_by_organization,
     with_role_labels,
@@ -85,7 +87,7 @@ def _answer(*posts: tuple[str, str, str]) -> GoverningLawOrganizations:
 
 @pytest.mark.unit
 def test_with_no_answer_from_the_law_every_role_the_form_gives_keeps_its_config_label():
-    assert role_labels_by_organization(None, OPEN_TOWN_MEETING, _TAXONOMY) == {
+    assert role_labels_by_organization(None, OPEN_TOWN_MEETING, _TAXONOMY, {}) == {
         "Select Board": {"member": "Select Board Member", "chair": "Chair", "vice-chair": "Vice Chair"},
         "Town Meeting": {"moderator": "Moderator"},
     }
@@ -95,7 +97,7 @@ def test_with_no_answer_from_the_law_every_role_the_form_gives_keeps_its_config_
 def test_the_place_s_law_replaces_the_form_for_each_organization_it_quotes_and_only_those():
     answer = _answer(("Select Board", "member", "Selectperson"))
 
-    assert role_labels_by_organization(answer, OPEN_TOWN_MEETING, _TAXONOMY) == {
+    assert role_labels_by_organization(answer, OPEN_TOWN_MEETING, _TAXONOMY, {}) == {
         "Select Board": {"member": "Selectperson"},
         "Town Meeting": {"moderator": "Moderator"},
     }
@@ -105,7 +107,7 @@ def test_the_place_s_law_replaces_the_form_for_each_organization_it_quotes_and_o
 def test_a_charter_giving_the_mayor_an_office_of_their_own_takes_the_mayor_off_the_council():
     answer = _answer(("Council", "member", "Council Member"), ("Office of the Mayor", "mayor", "Mayor"))
 
-    labels = role_labels_by_organization(answer, COUNCIL_MANAGER, _TAXONOMY)
+    labels = role_labels_by_organization(answer, COUNCIL_MANAGER, _TAXONOMY, {})
 
     assert labels["Council"] == {"member": "Council Member"}
     assert labels["Office of the Mayor"] == {"mayor": "Mayor"}
@@ -114,8 +116,30 @@ def test_a_charter_giving_the_mayor_an_office_of_their_own_takes_the_mayor_off_t
 @pytest.mark.unit
 def test_the_pick_list_names_each_role_as_the_law_does_and_as_the_config_does():
     organizations = [{"id": "a", "name": "Select Board", "posts": []}]
-    labels = role_labels_by_organization(_answer(("Select Board", "member", "Selectperson")), OPEN_TOWN_MEETING, _TAXONOMY)
+    labels = role_labels_by_organization(_answer(("Select Board", "member", "Selectperson")), OPEN_TOWN_MEETING, _TAXONOMY, {})
 
     labelled = with_role_labels(organizations, OPEN_TOWN_MEETING, labels)
 
     assert labelled[0]["role_labels"] == ["Selectperson", "Select Board Member", "Chair", "Vice Chair"]
+
+
+@pytest.mark.unit
+def test_a_claimed_role_is_added_to_the_organization_and_a_rejected_one_removed_over_the_law():
+    answer = _answer(("Council", "member", "Councilor"), ("Council", "mayor", "Mayor"))
+    claimed = {
+        "Council": ClaimedRoles(
+            accepted=[OrganizationRole(role="chair", label="Council President")],
+            rejected=[OrganizationRole(role="mayor", label="Mayor")],
+        )
+    }
+
+    labels = role_labels_by_organization(answer, COUNCIL_MANAGER, _TAXONOMY, claimed)
+
+    assert labels["Council"] == {"member": "Councilor", "chair": "Council President"}
+
+
+@pytest.mark.unit
+def test_a_claim_on_an_organization_the_law_and_config_never_name_still_counts():
+    claimed = {"Planning Commission": ClaimedRoles(accepted=[OrganizationRole(role="chair", label="Chair")])}
+
+    assert role_labels_by_organization(None, [], _TAXONOMY, claimed) == {"Planning Commission": {"chair": "Chair"}}

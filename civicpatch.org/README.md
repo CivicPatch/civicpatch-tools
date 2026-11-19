@@ -109,6 +109,10 @@ A page the visitor can't view redirects to `/`.
 - Edit a post's headcount and tracked state; delete a post, or fold it into another.
 - Choose a jurisdiction's default organization. (Creating, editing and deleting organizations is
   off while they come only from the config sync.)
+- Correct the roles an organization holds in its place, as a claim with a source:
+  `POST /api/v1/claims` with entity `organization`, field `roles` and value `{role, label}`.
+  Accept adds a role its law and config miss (an office made by ordinance); reject removes one
+  (an office voted away). A rerun of the organizations collector never undoes it.
 - Store a collected governing-law source page; the service key may too.
 - Scrape a single jurisdiction; read pipeline run details; resume a paused run.
 - Run a curated-sheet import and publish what it produced. Starting one is paused in the UI;
