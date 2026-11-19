@@ -78,6 +78,36 @@ def moved_person_issues_from_roster(
     ]
 
 
+def new_post_issues_from_roster(
+    proposed: Roster,
+    existing_post_ids: set[str],
+    organization_role_labels: Mapping[str, Mapping[str, str]],
+    role_labels: Mapping[str, str],
+    organization_names: Mapping[str, str],
+) -> list[Issue]:
+    """Each post the proposed roster fills that does not exist yet, on each person filling it, and
+    whether the place's law or config gives its organization that role."""
+    issues = []
+    for person in proposed.people:
+        for membership in person.memberships:
+            post = membership.post
+            if post.post_id in existing_post_ids:
+                continue
+            known = organization_role_labels.get(post.organization_id, {})
+            name = _post_name_from_key(post, {**role_labels, **known})
+            organization = organization_names.get(post.organization_id) or "one organization"
+            unknown = "" if post.role_id in known else ", not in this place's law or config"
+            issues.append(
+                Issue(
+                    code=IssueCode.NEW_POST,
+                    message=f"New post{unknown}: {name}, {organization}",
+                    person_ids=[person.id],
+                    field=POST_FIELD,
+                )
+            )
+    return issues
+
+
 def _members_by_organization(roster: Roster) -> dict[str, set[str]]:
     grouped: dict[str, set[str]] = defaultdict(set)
     for person in roster.people:

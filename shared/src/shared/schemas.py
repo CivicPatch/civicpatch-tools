@@ -449,6 +449,8 @@ class IssueCode(str, Enum):
     DIVISION_NUMBERING_GAP = "division_numbering_gap"
     # A scrape that found nobody in one of the jurisdiction's organizations.
     NOBODY_FOUND_IN_ORGANIZATION = "nobody_found_in_organization"
+    # A post the scrape names that does not exist yet: approving the scrape creates it.
+    NEW_POST = "new_post"
     # A field moved on someone who is in both rosters.
     CHANGED_FIELD = "changed_field"
 

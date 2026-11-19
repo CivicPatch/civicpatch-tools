@@ -5,6 +5,7 @@ import pytest
 
 from core.post_issues import (
     moved_person_issues_from_roster,
+    new_post_issues_from_roster,
     organizations_nobody_was_found_in_from_roster,
 )
 from core.projection.diff import roster_diff
@@ -133,3 +134,35 @@ def test_an_organization_the_changeset_did_not_read_is_not_raised():
         )
         == []
     )
+
+
+def _new_post_issues(proposed: Roster, existing: set[str], council_labels: dict[str, str]):
+    return new_post_issues_from_roster(proposed, existing, {"council": council_labels}, _ROLE_LABELS, {"council": "City Council"})
+
+
+@pytest.mark.unit
+def test_a_post_the_scrape_fills_that_does_not_exist_yet_is_marked_new_on_the_person():
+    proposed = _roster(_person("p1"))
+
+    issues = _new_post_issues(proposed, set(), {"council-member": "Councilor"})
+
+    assert [(issue.code, issue.person_ids, issue.field) for issue in issues] == [(IssueCode.NEW_POST, ["p1"], POST_FIELD)]
+    assert issues[0].message.startswith("New post: Councilor")
+    assert issues[0].message.endswith(", City Council")
+
+
+@pytest.mark.unit
+def test_a_new_post_whose_role_the_place_does_not_give_the_organization_says_so():
+    proposed = _roster(_person("p1", role_id="mayor", division=_BASE))
+
+    issues = _new_post_issues(proposed, set(), {"council-member": "Councilor"})
+
+    assert issues[0].message == "New post, not in this place's law or config: Mayor, City Council"
+
+
+@pytest.mark.unit
+def test_a_post_that_already_exists_raises_nothing():
+    proposed = _roster(_person("p1"))
+    existing = {membership.post.post_id for person in proposed.people for membership in person.memberships}
+
+    assert _new_post_issues(proposed, existing, {"council-member": "Councilor"}) == []

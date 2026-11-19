@@ -209,7 +209,9 @@ def test_roster_checks_come_first_and_post_checks_after():
         role_labels={},
         unique_role_ids=set(),
         organization_names={},
+        existing_post_ids=set(),
+        organization_role_labels={},
     )
 
     assert all(isinstance(issue, Issue) for issue in summary.issues)
-    assert [issue.code for issue in summary.issues] == [IssueCode.TOO_FEW_PEOPLE]
+    assert [issue.code for issue in summary.issues] == [IssueCode.TOO_FEW_PEOPLE, IssueCode.NEW_POST]

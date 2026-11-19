@@ -10,6 +10,7 @@ from core.review_summary import ReviewSummary, fold_card_summary
 from database import source_pages
 from database import changesets as changesets_db
 from database import organizations as organizations_db
+from database import post_listings as post_listings_db
 from database.database import get_pool
 from services.roster import CardFold, card_fold
 
@@ -41,17 +42,18 @@ async def summary_of(
         read_organization_ids = set(
             await source_pages.organizations_read_by_changeset(cur, changeset_id)
         )
+        existing_post_ids = {post["id"] for post in await post_listings_db.list_for_jurisdiction(cur, jurisdiction_ocdid)}
+        organization_role_labels = await organizations_db.role_labels(cur, jurisdiction_ocdid, fold.taxonomy)
 
     published, proposed = fold.published, fold.proposed
+    proposed_organization_ids = {
+        membership.post.organization_id for person in proposed.people for membership in person.memberships
+    }
     if not read_organization_ids:
         # A hand edit records evidence only for what it adds; a changeset that read no page is
         # bounded by the organizations its own roster fills, the fallback `publish` uses.
-        read_organization_ids = {
-            membership.post.organization_id
-            for person in proposed.people
-            for membership in person.memberships
-        }
-    names = await _organization_names_for(read_organization_ids)
+        read_organization_ids = proposed_organization_ids
+    names = await _organization_names_for(read_organization_ids | proposed_organization_ids)
     return fold_card_summary(
         published,
         proposed,
@@ -61,6 +63,8 @@ async def summary_of(
         fold.taxonomy.role_labels,
         unique_role_ids,
         names,
+        existing_post_ids,
+        organization_role_labels,
     )
 
 
