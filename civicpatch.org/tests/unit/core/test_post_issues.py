@@ -7,12 +7,14 @@ from core.post_issues import (
     moved_person_issues_from_roster,
     new_post_issues_from_roster,
     organizations_nobody_was_found_in_from_roster,
+    uncertain_organization_issues_from_records,
 )
 from core.projection.diff import roster_diff
-from core.projection.facts import PostKey
+from core.projection.facts import PostKey, SourceRecord
 from core.projection.people import Membership, Person
 from core.projection.roster import Roster
 from shared.schemas import POST_FIELD, IssueCode
+from shared.utils.statuses import OrganizationPlacedBy
 
 _BASE = "ocd-division/country:us/state:wa/place:buckley"
 _T = datetime(2026, 1, 1, tzinfo=timezone.utc)
@@ -166,3 +168,37 @@ def test_a_post_that_already_exists_raises_nothing():
     existing = {membership.post.post_id for person in proposed.people for membership in person.memberships}
 
     assert _new_post_issues(proposed, existing, {"council-member": "Councilor"}) == []
+
+
+def _record(person_id: str, placed_by: OrganizationPlacedBy | None) -> SourceRecord:
+    return SourceRecord(
+        id=f"r-{person_id}",
+        changeset_id="c1",
+        created_at=_T,
+        person_id=person_id,
+        organization_id="council",
+        name=person_id,
+        label="Chair",
+        source_url="https://x.gov/boards",
+        organization_placed_by=placed_by,
+    )
+
+
+@pytest.mark.unit
+def test_a_person_the_model_placed_is_asked_about_once_on_their_post():
+    proposed = _roster(_person("p1"), _person("p2"))
+    records = [_record("p1", OrganizationPlacedBy.LLM), _record("p1", OrganizationPlacedBy.LLM), _record("p2", OrganizationPlacedBy.JEV)]
+
+    issues = uncertain_organization_issues_from_records(proposed, records, {"council": "City Council"})
+
+    assert [(issue.code, issue.person_ids, issue.field, issue.message) for issue in issues] == [
+        (IssueCode.UNCERTAIN_ORGANIZATION, ["p1"], POST_FIELD, "Organization uncertain: picked by the general model after Jev was unsure: City Council")
+    ]
+
+
+@pytest.mark.unit
+def test_a_record_placed_by_rule_or_by_nobody_raises_nothing():
+    proposed = _roster(_person("p1"), _person("p2"))
+    records = [_record("p1", OrganizationPlacedBy.ROLE), _record("p2", None)]
+
+    assert uncertain_organization_issues_from_records(proposed, records, {}) == []

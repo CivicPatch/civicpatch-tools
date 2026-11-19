@@ -231,6 +231,7 @@ erDiagram
         text            name                "verbatim, as the page spelled it"
         text_array      other_names         "210: default '{}'; names the source states outright (a sheet row); empty for a scrape"
         text            label               "idx; verbatim. ONE RECORD PER LABEL is the contract with the pipeline — a person seen under two titles is two rows"
+        text_null       organization_placed_by "267: what placed it in its organization: role, heading, jev or llm (CHECK; mirrors OrganizationPlacedBy); null for ingest's default, sheets, edits and older rows. A card raises uncertain_organization on an llm one"
         text_null       organization_label  "260: verbatim, the organization as the page writes it over the person; organization_id is matched from it, so a placement can be re-matched; null before 260 and for sheets and edits"
         text            source_url          "the page this source record came from"
         text_null       url                 "the person's own link"

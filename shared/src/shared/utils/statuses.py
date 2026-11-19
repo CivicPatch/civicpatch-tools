@@ -253,6 +253,16 @@ class EntityType(StrEnum):
     CLAIM = "claim"
 
 
+class OrganizationPlacedBy(StrEnum):
+    """What placed a scraped record in its organization, in the order pipeline 3 tries them."""
+
+    ROLE = "role"
+    HEADING = "heading"
+    JEV = "jev"
+    # The general model, after Jev was unsure: the one a reviewer is asked to check.
+    LLM = "llm"
+
+
 class ClaimKind(StrEnum):
     # "This value stands." One per scalar field; one per element on a list field.
     ACCEPT = "accept"

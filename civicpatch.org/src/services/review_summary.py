@@ -65,6 +65,7 @@ async def summary_of(
         names,
         existing_post_ids,
         organization_role_labels,
+        [record for record in fold.proposed_facts.records if record.changeset_id == changeset_id],
     )
 
 

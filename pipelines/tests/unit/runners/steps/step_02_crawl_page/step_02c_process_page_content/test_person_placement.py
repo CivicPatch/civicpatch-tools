@@ -13,6 +13,7 @@ from runners.pipeline03_people_collector.steps.step_02_crawl_page.step_02c_proce
 )
 from runners.pipeline03_people_collector.steps.step_02_crawl_page.step_02c_process_page_content.person_placement import (
     PageHeadings,
+    Placement,
     RulePlacement,
     page_headings,
     placed_by_rules,
@@ -20,6 +21,7 @@ from runners.pipeline03_people_collector.steps.step_02_crawl_page.step_02c_proce
 )
 from services.open_router.decisions import ChoiceAnswer
 from shared.schemas import KnownOrganization, Role, RoleConfig, SelectionMethod
+from shared.utils.statuses import OrganizationPlacedBy
 from shared.utils.taxonomy import build_taxonomy
 
 pytestmark = pytest.mark.unit
@@ -67,7 +69,9 @@ def test_a_page_s_title_and_first_heading_are_read_and_missing_ones_are_none():
 
 
 def test_a_member_of_a_board_the_town_does_not_have_goes_to_the_default_not_to_the_selectboard():
-    assert _rules("Library Board of Trustees", "Library Trustee Chair") == RulePlacement(settled=True, name="Town Officers")
+    assert _rules("Library Board of Trustees", "Library Trustee Chair") == RulePlacement(
+        settled=True, name="Town Officers", placed_by=OrganizationPlacedBy.ROLE
+    )
 
 
 def test_a_bare_member_under_a_heading_naming_no_body_is_left_to_the_models():
@@ -77,11 +81,11 @@ def test_a_bare_member_under_a_heading_naming_no_body_is_left_to_the_models():
 def test_an_officer_listed_under_a_board_s_heading_goes_to_the_default():
     village = [_TRUSTEES, _VILLAGE_OFFICERS]
 
-    assert _rules("Board of Trustees", "Treasurer", village, place_name="Barton village") == RulePlacement(settled=True, name="Village Officers")
+    assert _rules("Board of Trustees", "Treasurer", village, place_name="Barton village").name == "Village Officers"
 
 
 def test_a_role_one_listed_body_holds_places_there_whatever_the_heading_says():
-    assert _rules(None, "Town Moderator") == RulePlacement(settled=True, name="Town Meeting")
+    assert _rules(None, "Town Moderator") == RulePlacement(settled=True, name="Town Meeting", placed_by=OrganizationPlacedBy.ROLE)
     assert _rules("Mayor & City Council", "Mayor", [_COUNCIL, _MAYOR], place_name="Greenwood Village city").name == "Office of the Mayor"
     assert _rules("Contact Us", "Lister", [_LISTERS, _TOWN_OFFICERS], place_name="Athens town").name == "Board of Listers"
 
@@ -99,7 +103,7 @@ async def test_what_the_rules_settle_asks_no_model():
     with patch(f"{_MODULE}.decisions.choose", new=AsyncMock()) as choose, patch(f"{_MODULE}.open_router_llm.run_prompt", new=AsyncMock()) as run_prompt:
         names = await placed_names([(None, "Town Moderator")], _TOWN, _TAXONOMY, _NO_HEADINGS, "run", "ocd-jurisdiction/country:us/state:vt/place:georgia/government", "Georgia town", "https://x.gov")
 
-    assert names == ["Town Meeting"]
+    assert names == [Placement(name="Town Meeting", placed_by=OrganizationPlacedBy.ROLE)]
     choose.assert_not_awaited()
     run_prompt.assert_not_awaited()
 
@@ -112,7 +116,7 @@ async def test_a_sure_jev_decides_once_per_distinct_person_and_the_model_is_not_
     with patch(f"{_MODULE}.decisions.choose", new=choose), patch(f"{_MODULE}.open_router_llm.run_prompt", new=AsyncMock()) as run_prompt:
         names = await placed_names(people, _TOWN, _TAXONOMY, _NO_HEADINGS, "run", "ocd-jurisdiction/country:us/state:vt/place:georgia/government", "Georgia town", "https://x.gov")
 
-    assert names == ["Selectboard", "Selectboard"]
+    assert names == [Placement(name="Selectboard", placed_by=OrganizationPlacedBy.JEV)] * 2
     assert choose.await_count == 1
     run_prompt.assert_not_awaited()
 
@@ -125,7 +129,7 @@ async def test_an_unsure_jev_hands_the_person_to_the_capped_model_whose_none_is_
     with patch(f"{_MODULE}.decisions.choose", new=choose), patch(f"{_MODULE}.open_router_llm.run_prompt", new=run_prompt):
         names = await placed_names([("Board", "Member")], _TOWN, _TAXONOMY, _NO_HEADINGS, "run", "ocd-jurisdiction/country:us/state:vt/place:georgia/government", "Georgia town", "https://x.gov")
 
-    assert names == [None]
+    assert names == [Placement(name=None, placed_by=OrganizationPlacedBy.LLM)]
     assert run_prompt.await_args is not None
     assert run_prompt.await_args.kwargs["max_output_tokens"] == MATCH_MAX_OUTPUT_TOKENS
 
@@ -140,3 +144,7 @@ def test_the_question_names_the_place_the_page_both_labels_and_every_choice():
         assert text in question
     assert set(criteria) == {"Selectboard", "Town Meeting", "none"}
     assert "a fund, a library, a building" in open_router_prompts.person_organization_prompt()
+
+
+def test_the_heading_s_words_placing_a_person_say_so():
+    assert _rules("Selectboard", "Chair").placed_by == OrganizationPlacedBy.HEADING

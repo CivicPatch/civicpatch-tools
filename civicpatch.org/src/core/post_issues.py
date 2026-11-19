@@ -9,13 +9,14 @@ dismisses the roster it proposed, and the post it minted stays unanswered.
 """
 
 from collections import defaultdict
-from collections.abc import Mapping
+from collections.abc import Mapping, Sequence
 
 from shared.schemas import POST_FIELD, Issue, IssueCode
+from shared.utils.statuses import OrganizationPlacedBy
 
 from core.membership_label import derive_post_label
 from core.projection.diff import RosterDiff
-from core.projection.facts import PostKey
+from core.projection.facts import PostKey, SourceRecord
 from core.projection.roster import Roster
 
 
@@ -106,6 +107,28 @@ def new_post_issues_from_roster(
                 )
             )
     return issues
+
+
+def uncertain_organization_issues_from_records(
+    proposed: Roster, records: Sequence[SourceRecord], organization_names: Mapping[str, str]
+) -> list[Issue]:
+    """Each person on the proposed roster whose record here the general model placed, once per
+    organization it placed them in."""
+    on_roster = {person.id for person in proposed.people}
+    placed = dict.fromkeys(
+        (record.person_id, record.organization_id)
+        for record in records
+        if record.organization_placed_by == OrganizationPlacedBy.LLM and record.person_id in on_roster
+    )
+    return [
+        Issue(
+            code=IssueCode.UNCERTAIN_ORGANIZATION,
+            message=f"Organization uncertain: picked by the general model after Jev was unsure: {organization_names.get(organization_id) or 'one organization'}",
+            person_ids=[person_id],
+            field=POST_FIELD,
+        )
+        for person_id, organization_id in placed
+    ]
 
 
 def _members_by_organization(roster: Roster) -> dict[str, set[str]]:

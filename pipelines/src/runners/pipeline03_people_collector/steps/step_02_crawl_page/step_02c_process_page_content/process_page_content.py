@@ -45,6 +45,7 @@ from runners.pipeline03_people_collector.steps.step_02_crawl_page.step_02c_proce
 )
 from runners.pipeline03_people_collector.steps.step_02_crawl_page.step_02c_process_page_content.person_placement import (
     PageHeadings,
+    Placement,
     page_headings,
     placed_names,
 )
@@ -468,7 +469,7 @@ async def rematched_records(
     labelled = [record for record in records if record.organization_label]
     if not labelled:
         return list(records)
-    names = iter(
+    placements = iter(
         await placed_names(
             [(record.organization_label, record.label) for record in labelled],
             organizations,
@@ -481,15 +482,20 @@ async def rematched_records(
         )
     )
     return [
-        record.model_copy(
-            update={
-                "organization_id": organization_id_by_name(next(names), organizations)
-            }
-        )
+        _placed(record, next(placements), organizations)
         if record.organization_label
         else record
         for record in records
     ]
+
+
+def _placed(record: PersonSourceRecord, placement: Placement, organizations: List[KnownOrganization]) -> PersonSourceRecord:
+    return record.model_copy(
+        update={
+            "organization_id": organization_id_by_name(placement.name, organizations),
+            "organization_placed_by": placement.placed_by,
+        }
+    )
 
 
 def source_page_extraction(
@@ -632,7 +638,7 @@ async def process_with_llm(
         chunk_count=chunk_count,
     )
     people = cast(PeopleArrayLLMResponseSchema, response).people
-    names = await placed_names(
+    placements = await placed_names(
         [(person.organization_label, person.label) for person in people],
         organizations,
         taxonomy,
@@ -642,15 +648,12 @@ async def process_with_llm(
         place_name,
         source_url,
     )
-    records = [
-        _source_record(person, source_url, organization_id_by_name(name, organizations))
-        for person, name in zip(people, names)
-    ]
+    records = [_source_record(person, source_url, placement, organizations) for person, placement in zip(people, placements)]
     return [record for record in records if record is not None]
 
 
 def _source_record(
-    person: ExtractedPersonRecord, source_url: str, organization_id: str | None
+    person: ExtractedPersonRecord, source_url: str, placement: Placement, organizations: List[KnownOrganization]
 ) -> PersonSourceRecord | None:
     """One extracted person as the record cp.org receives; None for a nameless one. Every field
     the model gave passes through, so a field added later reaches cp.org without a line here."""
@@ -667,7 +670,8 @@ def _source_record(
             else None,
             "image": _downloaded_image(person.image),
             "source_url": source_url,
-            "organization_id": organization_id,
+            "organization_id": organization_id_by_name(placement.name, organizations),
+            "organization_placed_by": placement.placed_by,
         }
     )
 

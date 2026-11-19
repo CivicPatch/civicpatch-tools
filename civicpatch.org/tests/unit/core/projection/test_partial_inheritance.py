@@ -130,6 +130,7 @@ _NOT_INHERITED = {
     "name",
     "source_url",
     "is_partial",
+    "organization_placed_by",
 }
 
 

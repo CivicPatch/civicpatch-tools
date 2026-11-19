@@ -21,6 +21,7 @@ from runners.pipeline03_people_collector.steps.step_02_crawl_page.step_02c_proce
 from services.open_router import decisions
 from services.open_router.prompts import NO_ORGANIZATION
 from shared.schemas import KnownOrganization, SelectionMethod
+from shared.utils.statuses import OrganizationPlacedBy
 from shared.utils.label_parser import parse_label
 from shared.utils.taxonomy import MEMBER_ROLE_ID, Taxonomy, lookup_key
 from utils import log_utils
@@ -38,9 +39,18 @@ class RulePlacement(BaseModel):
     # False when the rules cannot say and a model must; `name` None then, or for "no listed body".
     settled: bool
     name: str | None = None
+    placed_by: OrganizationPlacedBy | None = None
+
+
+class Placement(BaseModel):
+    # None for "no listed body": ingest places the record in the default organization.
+    name: str | None
+    placed_by: OrganizationPlacedBy | None
 
 
 _OPEN = RulePlacement(settled=False)
+# Open with no listed body to ask about: ingest places it.
+_UNPLACED = Placement(name=None, placed_by=None)
 
 
 def page_headings(html: str | bytes) -> PageHeadings:
@@ -74,9 +84,10 @@ def _by_role(label: str, place: PlaceWords, taxonomy: Taxonomy) -> RulePlacement
     if named:
         seats.add(named)
     if len(seats) == 1:
-        return RulePlacement(settled=True, name=seats.pop())
+        return RulePlacement(settled=True, name=seats.pop(), placed_by=OrganizationPlacedBy.ROLE)
     if roles and not seats:
-        return RulePlacement(settled=True, name=place.defaults[0].name if place.defaults else None)
+        default = place.defaults[0].name if place.defaults else None
+        return RulePlacement(settled=True, name=default, placed_by=OrganizationPlacedBy.ROLE)
     return _OPEN
 
 
@@ -87,7 +98,7 @@ def placed_by_rules(organization_label: str | None, label: str, place: PlaceWord
     if organization_label:
         match = match_by_words(organization_label, place)
         if len(match.names) == 1 and not match.uncertain:
-            return RulePlacement(settled=True, name=match.names[0])
+            return RulePlacement(settled=True, name=match.names[0], placed_by=OrganizationPlacedBy.HEADING)
     return _OPEN
 
 
@@ -99,7 +110,7 @@ async def _asked(
     jurisdiction_ocdid: str,
     place_name: str,
     source_url: str,
-) -> str | None:
+) -> Placement:
     organization_label, label = person
     state = {
         "place": place_name,
@@ -118,7 +129,7 @@ async def _asked(
         open_router_prompts.person_organization_criteria(choices),
     )
     if (jev.confidence or 0) >= JEV_CONFIDENCE_FLOOR:
-        return jev.choice if jev.choice in choices else None
+        return Placement(name=jev.choice if jev.choice in choices else None, placed_by=OrganizationPlacedBy.JEV)
     answer = await open_router_llm.run_prompt(
         pipeline_run_id,
         jurisdiction_ocdid,
@@ -135,7 +146,7 @@ async def _asked(
     log_utils.get_pipeline_run_logger(jurisdiction_ocdid).warning(
         f"Organization by the model, Jev unsure ({jev.confidence}): {label!r} under {organization_label!r} -> {picked}"
     )
-    return picked if picked in choices else None
+    return Placement(name=picked if picked in choices else None, placed_by=OrganizationPlacedBy.LLM)
 
 
 async def placed_names(
@@ -147,8 +158,8 @@ async def placed_names(
     jurisdiction_ocdid: str,
     place_name: str,
     source_url: str,
-) -> List[str | None]:
-    """Each (organization label, label)'s organization name, None for none; one ask per distinct open pair."""
+) -> List[Placement]:
+    """Each (organization label, label)'s organization and what decided it; one ask per distinct open pair."""
     place = place_words(with_role_aliases(organizations, taxonomy), taxonomy, place_name)
     by_rules = [placed_by_rules(organization_label, label, place, taxonomy) for organization_label, label in people]
     choices = [known.name for known in place.candidates]
@@ -157,5 +168,8 @@ async def placed_names(
     asked = await asyncio.gather(
         *[_asked(person, choices, headings, pipeline_run_id, jurisdiction_ocdid, place_name, source_url) for person in open_people]
     )
-    answers: Dict[tuple[str | None, str], str | None] = dict(zip(open_people, asked))
-    return [placement.name if placement.settled else answers.get(person) for person, placement in zip(people, by_rules)]
+    answers: Dict[tuple[str | None, str], Placement] = dict(zip(open_people, asked))
+    return [
+        Placement(name=placement.name, placed_by=placement.placed_by) if placement.settled else answers.get(person, _UNPLACED)
+        for person, placement in zip(people, by_rules)
+    ]
