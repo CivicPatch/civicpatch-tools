@@ -84,7 +84,7 @@ every url is read whole: no `section_format` needed. Text sizes measured 2026-11
 | Class | lsad | `governed_by` | Why |
 |---|---|---|---|
 | town | town | `charter_or_general_law` | § 2526, § 2601(1): "unless otherwise provided by charter" |
-| city | city | `charter_or_general_law` | every city has a charter (MMA); § 2001(10)(B) and § 2601(1) fill its silence |
+| city | city | `charter` | every city has a charter (MMA), so none found is a miss; its listed sections, § 2001(10)(B) and § 2601(1), are still read to fill its silence |
 | plantation | plantation | `general_law` | no home rule, so no charter (MMA); town law applies "as far as applicable" (§ 7006) |
 | county | county | `charter_or_general_law` | [§ 1352(1)](https://legislature.maine.gov/statutes/30-A/title30-Asec1352.html): the general laws on commissioners (§§ 61 to 82), treasurer, budget and registers "do not apply if the charter provides for that function" |
 
