@@ -1,0 +1,164 @@
+# New York ground truth for the state-offices skill's scoring step. Only offices New York's config collects, and
+# only holders a source names as that office. A chair, deputy mayor or deputy supervisor is chosen by the members:
+# method A. Read 2026-11-20. Kenmore village (expired certificate), Onondaga County (fetch failed) were tried and
+# replaced by Fairport village and Chemung County.
+
+cities:
+  ocd-jurisdiction/country:us/state:ny/place:syracuse/government:
+    - office: mayor
+      holders: [Sharon F. Owens]
+      method: E
+      source: "https://www.syr.gov/Government/City-Elected-Officials"
+      as_of: "2026-11-20"
+    - office: council-member
+      holders: [Chol Majok, Rasheada Caldwell, Hanah Ehrenreich, Helen Hudson, Marino L. Nave, Donna Moore,
+                Corey J. Williams, Patrona Jones-Rowser, Jimmy Monto]
+      method: E
+      source: "https://www.syr.gov/Government/City-Elected-Officials"
+      as_of: "2026-11-20"
+    # The council president is elected citywide to that office (term 2026 to 2029 on the page), so E, unlike a
+    # chair the members choose. 4 at-large + 5 district + president = 10.
+    - office: council-president
+      holders: [Rita Paniagua]
+      method: E
+      source: "https://www.syr.gov/Departments/Common-Council/Councilors/Common-Council-President"
+      as_of: "2026-11-20"
+    # not confirmed: whether Syracuse has an appointed city administrator; the org chart is a PDF without text.
+
+  ocd-jurisdiction/country:us/state:ny/place:watertown/government:
+    - office: city-manager
+      holders: [Eric Wagenaar]
+      method: A
+      source: "https://www.watertown-ny.gov/directory"
+      as_of: "2026-11-20"
+    # not confirmed: mayor and council members; the site's government menu is script-only and no page read names
+    # them.
+
+towns:
+  ocd-jurisdiction/country:us/state:ny/county:chemung/place:big_flats/government:
+    # not confirmed: method. The page says he became supervisor in 2023, not how.
+    - office: supervisor
+      holders: [Lee E. Giammichele]
+      source: "https://www.bigflatsny.gov/government/town_board.php"
+      as_of: "2026-11-20"
+    - office: council-member
+      holders: [John Hunter, Robert Drake]
+      method: E
+      source: "https://www.bigflatsny.gov/government/town_board.php"
+      as_of: "2026-11-20"
+    # not confirmed: method; the page lists them as board members without saying how they took the seat.
+    - office: council-member
+      holders: [Dean Wenzel, Amanda Lippincott]
+      source: "https://www.bigflatsny.gov/government/town_board.php"
+      as_of: "2026-11-20"
+    - office: deputy-supervisor
+      holders: [Amanda Lippincott]
+      method: A
+      source: "https://www.bigflatsny.gov/government/town_board.php"
+      as_of: "2026-11-20"
+
+villages:
+  ocd-jurisdiction/country:us/state:ny/place:fairport/government:
+    - office: mayor
+      holders: [Julie Domaratz]
+      method: E
+      source: "https://village.fairport.ny.us/village_government/mayor_and_trustees/index.php"
+      as_of: "2026-11-20"
+    - office: trustee
+      holders: [Heidi Woika]
+      method: E
+      source: "https://village.fairport.ny.us/village_government/mayor_and_trustees/index.php"
+      as_of: "2026-11-20"
+    # not confirmed: method. Sarah Nazarian fills Emily Mischler's term to the end of 2026.
+    - office: trustee
+      holders: [Adam Bonosky, Tracy Briggs, Sarah Nazarian]
+      source: "https://village.fairport.ny.us/village_government/mayor_and_trustees/index.php"
+      as_of: "2026-11-20"
+    - office: deputy-mayor
+      holders: [Heidi Woika]
+      method: A
+      source: "https://village.fairport.ny.us/village_government/mayor_and_trustees/index.php"
+      as_of: "2026-11-20"
+    - office: village-manager
+      holders: [Bryan L. White]
+      method: A
+      source: "https://village.fairport.ny.us/village_government/village_manager3.php"
+      as_of: "2026-11-20"
+
+counties:
+  # Elected executive (charter).
+  ocd-jurisdiction/country:us/state:ny/county:chemung/government:
+    - office: county-executive
+      holders: [Chris Moss]
+      method: E
+      source: "https://www.chemungcountyny.gov/301/County-Executive"
+      as_of: "2026-11-20"
+    - office: legislator
+      holders: [Lawana Morse, Michael Saglibene, L. Thomas Sweet, Joseph W. Atkinson III, Mark Margeson,
+                Joseph Donovan, James Palmer, Steve Pickering, John Burin, Martin Chalk, Brent Stermer,
+                William McCarthy, Scott Drake, Michael S. Smith, Rodney J. Strange]
+      method: E
+      source: "https://www.chemungcountyny.gov/307/County-Legislature"
+      as_of: "2026-11-20"
+    - office: chair
+      holders: [Mark Margeson]
+      method: A
+      source: "https://www.chemungcountyny.gov/307/County-Legislature"
+      as_of: "2026-11-20"
+    # Its legislature page links a charter version "Effective 1-1-2027": the structure may change; not read.
+
+  # Appointed manager.
+  ocd-jurisdiction/country:us/state:ny/county:niagara/government:
+    - office: county-manager
+      holders: [Richard E. Updegrove]
+      method: A
+      source: "https://www.niagaracounty.gov/departments/a-f/county_manager/index.php"
+      as_of: "2026-11-20"
+    - office: legislator
+      holders: [Irene M. Myers, Michael Casale, Christopher J. McKimmie, Jeffrey Elder, Christopher A. Robins,
+                Sam Farruggia, Jesse P. Gooch, Richard L. Andres, Randy R. Bradt, David E. Godfrey, Anthony J. Nemi,
+                Carla L. Speranza, Richard E. Abbott, Shawn A. Foti, Michael A. Hill]
+      method: E
+      source: "https://www.niagaracounty.gov/government/legislature/index.php"
+      as_of: "2026-11-20"
+    - office: chair
+      holders: [Michael A. Hill]
+      method: A
+      source: "https://www.niagaracounty.gov/government/legislature/index.php"
+      as_of: "2026-11-20"
+
+  # Appointed administrator (charter).
+  ocd-jurisdiction/country:us/state:ny/county:tompkins/government:
+    # not confirmed: every name here came from a fetch tool's summary of the page, not its verbatim text; the page
+    # also gives two seat counts (16, and a change "from 15 to 14"). Check against the page before scoring.
+    - office: county-administrator
+      holders: [Korsah Akumfi]
+      method: A
+      source: "https://www.tompkinscountyny.gov/All-Departments/County-Administration"
+      as_of: "2026-11-20"
+    - office: legislator
+      holders: [Travis L. Brooks, Veronica Pillar, Iris Packman, Adam Vinson, Judith Hubbard, Shawna Black,
+                Deborah Dawson, Mike Sigler, Lee Shurtleff, Dan Wakeman, Gregory N. Mezey, John Hunt, Irene Weiser,
+                Christy Bianconi, Randy B. Brown, Rachel Ostlund]
+      method: E
+      source: "https://www.tompkinscountyny.gov/Government-Resources/County-Legislature/Tompkins-County-Legislators"
+      as_of: "2026-11-20"
+    - office: chair
+      holders: [Shawna Black]
+      method: A
+      source: "https://www.tompkinscountyny.gov/About/Meet-your-Government"
+      as_of: "2026-11-20"
+
+  # Board of supervisors run by its chair; each member is a town's supervisor.
+  ocd-jurisdiction/country:us/state:ny/county:hamilton/government:
+    - office: county-supervisor
+      holders: [Chris D. Rhodes, Phillip C. Snyder, Steven M. Tomlinson, Brian E. Wells, Herb Schmid,
+                Meggie Parascandola, Clay J. Arsenault, Anthony Fernandez, Beth Hunt]
+      method: E
+      source: "https://www.hamiltoncountyny.gov/government/board-supervisors"
+      as_of: "2026-11-20"
+    - office: chair
+      holders: [Clay J. Arsenault]
+      method: A
+      source: "https://www.hamiltoncountyny.gov/government/board-supervisors"
+      as_of: "2026-11-20"

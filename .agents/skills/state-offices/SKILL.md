@@ -1,7 +1,6 @@
 ---
 name: state-offices
 description: Research a state's local government law and write the offices config pipelines collect from. Use in two cases: a new state, right after open-data's `add-new-state` skill, which runs steps 1 to 3 and brings it online; or a state already online whose offices are wrong, missing or changed by new law, which stops after the config PR (steps 1 and 2).
-tools: Read, Edit, Write, Bash, Glob, Grep
 ---
 
 # A State's Offices
@@ -35,6 +34,8 @@ Only legislative and executive bodies (agreed 2026-10-30):
    elected, but its duties are serving papers and destroying animals (24 V.S.A. § 1936a(b)), a town
    may bar its law enforcement (§ 1936a(a)) and may eliminate it (17 V.S.A. § 2651a(d)): not listed.
    Keep its role in the config so its title still parses; just leave it out of every form.
+   Vermont's town clerk and treasurer and Oregon's sheriff predate this rule; Maine leaves all three
+   out (they record, keep money, run the jail). Don't copy the older states as precedent.
 
 State offices elected locally (district attorney) are not the jurisdiction's and are not listed.
 Where an office is elected in some places and appointed in others, list it; the law read decides
@@ -89,12 +90,10 @@ snippet of a source with a link to its section.
    fits) and the unmatched by name form (Oregon: Dunes City, Lincoln City, Mt. Angel, Monroe).
 
    A listed code is a lead, not a charter: check its front page or table of contents for a charter
-   heading, and record per host what a fetch allowed. Oregon, 2026-11-06:
-   - eCode360: plain fetch works; 49 of 55 codes have a charter heading, the 4 without are
-     statutory counties.
-   - American Legal: browser only; 24 places.
-   - `*.municipal.codes`: refuses plain and browser; 20 places, a person.
-   - Municode: refuses us; 55 places, a person.
+   heading, and record per host what a fetch allowed on this run. Hosts change what they allow
+   (eCode360 let plain fetches through for Oregon and refused them for Maine), so try each and
+   don't work around a refusal. American Legal has been browser only; `*.municipal.codes` and
+   Municode refuse agents, so those are a person's.
 
    Output: a table in the research doc of each place, its host, its code url and whether the
    charter is in the code (yes / no / not checked, and why), with counts per host. These are the
@@ -117,16 +116,15 @@ towns:
       holders: [Charles Maughan]
       method: E
       source: "https://www.corvallisoregon.gov/mc"
-    - office: city-manager
-      holders: [Mark Shepard]
-      method: A
-      basis: charter
-      source: "..."
       as_of: "2026-02-21"
 ```
 
-`method` is E (elected) or A (appointed). Every entry names its source; one that is not
-current or not certain says `# not confirmed:` and why. Many city sites refuse plain reads
+`method` is E (elected) or A (appointed). Each entry is office, holders, method, source and
+as_of, nothing more, so a person can recheck it in one pass. Record only holders a source names
+as that office: no inference (a "First Assessor" is not therefore the chair), and no
+"not confirmed" entries; an office no source states is left out. Cite a page that stays put (the
+council page, the agenda index), not one agenda or PDF, and write no narrative comments (agenda
+numbers, runoff dates, term ends). Many city sites refuse plain reads
 (403): use their reports, agendas and search results. A place with no website url in
 `jurisdictions.yml` gets no own-site crawl in pipeline 1 (Oregon: 42 of 240 cities), so the
 directory lookup in item 4 is often its only lead.
@@ -147,6 +145,10 @@ Oregon's two and `shared/src/shared/utils/layered_config.py` (the models) before
 2. **`government_forms`**, keyed by `GovernmentForm` (`shared/src/shared/schemas.py`). Each lists
    its organizations with the role labels in them; `{lsad}` in a name takes the place's suffix
    ("{lsad} Council" is "Town Council" for a town).
+   - Name an officers organization `"{lsad} Officers"`: that is every place's default organization
+     (`derived_organizations` in `layered_config.py`). A fixed name ("Town Officers") gives each
+     place with another suffix a second, empty organization, and a config merge never removes one
+     (Maine's 28 plantations, deleted by hand).
    - `suffixes` offers the form to every place whose name ends in one, and that only decides where
      the research found one form per statutory class (Oregon's cities: `city`, `town`). Two forms on
      one suffix resolve to neither, and the place keeps only its default organization (Oregon's 36
@@ -186,7 +188,9 @@ yourself.
    without `--dry-run` to accept fixes.
 3. **Merge** the jurisdictions and config to open-data's main. No manual sync: configs sync on
    merge (`.github/workflows/post_merge_config.yml`, level files first) and cp.org reads the
-   jurisdictions within the hour (the `ReadOpenDataJurisdictionsWorkflow` schedule).
+   jurisdictions within the hour (the `ReadOpenDataJurisdictionsWorkflow` schedule). For a state
+   whose jurisdictions were already in open-data (Maine), the config can merge before items 1 and 2;
+   their changes go in a later PR.
 4. **Maps**: `mise run generate-maps -- prod <state>` in civicpatch-tools. Needed once per new
    state: it fills `meta_parent_ocdids`, so until it runs no place has its county.
 5. **Prod check**: count each place's organizations against its form's, after the sync, with a

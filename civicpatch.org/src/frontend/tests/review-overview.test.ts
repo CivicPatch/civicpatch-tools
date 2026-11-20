@@ -417,6 +417,22 @@ describe("sectionsByOrganization — a section per organization, roles inside it
     expect(foundNobody(organizations[0].ranked.flatMap((group) => group.people))).toBe(true);
   });
 
+  it("shows somebody the scrape dropped in the organization they are leaving", () => {
+    const gone = card({
+      personId: "eve",
+      organizationId: "parks",
+      status: PersonStatus.REMOVED,
+      oldRecord: { id: "eve", memberships: [office("parks", "council-member", "Council Member")] } as never,
+      newRecord: null,
+    });
+
+    const { organizations, departing } = sectionsByOrganization([gone], roleOrder);
+
+    expect(departing).toEqual([]);
+    expect(organizations[0].organizationId).toBe("parks");
+    expect(foundNobody(organizations[0].ranked.flatMap((group) => group.people))).toBe(true);
+  });
+
   it("orders sections the way the card lists its organizations", () => {
     const { organizations } = sectionsByOrganization(
       [
