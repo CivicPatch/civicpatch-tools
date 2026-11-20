@@ -127,7 +127,7 @@ function scalePerson(index, overrides = {}) {
   const n = String(index).padStart(2, "0");
   return {
     id: `scale-p${n}`,
-    name: `Councillor ${n} Scale`,
+    name: `Sam ${n} Scale`,
     office: {
       name: "Council Member",
       division_ocdid: `${SCALE_DIVISION_BASE}/ward:${index}`,
@@ -209,10 +209,13 @@ export const TX_CHANGESET_ID = "00000000-0000-0000-eeee-000000000010";
 const NJ_RUN_IN_FLIGHT_ID = "00000000-0000-0000-dddd-000000000001";
 const NJ_RUN_FAILED_ID = "00000000-0000-0000-dddd-000000000002";
 const TX_RUN_FAILED_ID = "00000000-0000-0000-dddd-000000000003";
+// The finished run behind the shapes card's parks board page.
+const SHAPES_PAGES_RUN_ID = "00000000-0000-0000-eeee-000000000019";
 const SEEDED_RUN_IDS = [
   NJ_RUN_IN_FLIGHT_ID,
   NJ_RUN_FAILED_ID,
   TX_RUN_FAILED_ID,
+  SHAPES_PAGES_RUN_ID,
 ];
 
 // Issue-markers fixture — reconcile mode (a prior collection), no existing people so
@@ -248,6 +251,16 @@ export const TWO_BODY_SCHOOL_BOARD = "E2E School Board";
 export const TWO_ORG_JURISDICTION_OCDID =
   "ocd-jurisdiction/country:us/state:de/place:e2e_two_org/government";
 export const TWO_ORG_CHANGESET_ID = "00000000-0000-0000-eeee-000000000016";
+
+// One card for the shapes no other fixture reaches: a person dropped from one of their two
+// organizations, two people in two organizations, an organization the scrape found nobody in,
+// and a role the config does not know. Own state (de) to stay out of NJ's review queue.
+export const SHAPES_JURISDICTION_OCDID =
+  "ocd-jurisdiction/country:us/state:de/place:e2e_shapes/government";
+export const SHAPES_CHANGESET_ID = "00000000-0000-0000-eeee-000000000018";
+export const SHAPES_COUNCIL = "E2E Shapes Council";
+export const SHAPES_SCHOOL_BOARD = "E2E Shapes School Board";
+export const SHAPES_PARKS_BOARD = "E2E Shapes Parks Board";
 
 export const READ_ONLY_JURISDICTION_OCDID =
   "ocd-jurisdiction/country:us/state:ri/place:e2e_read_only/government";
@@ -550,9 +563,12 @@ async function seatIn(client, ocdid, { organizationName, personId, roleId, divis
 async function seedPublishedFacts(client, ocdid, people) {
   await seedPriorCollection(client, ocdid);
   const changesetId = priorCollectionId(ocdid);
-  const organizationId = await organizationFor(client, ocdid);
+  const defaultOrganizationId = await organizationFor(client, ocdid);
   await client.query(`DELETE FROM source_records WHERE changeset_id = $1`, [changesetId]);
   for (const person of people) {
+    const organizationId = person.organization
+      ? await namedOrganization(client, ocdid, person.organization)
+      : defaultOrganizationId;
     await client.query(
       `INSERT INTO source_records (changeset_id, jurisdiction_ocdid, name, label, source_url,
                                    url, phone, email, image, start_date, end_date,
@@ -1068,6 +1084,69 @@ export async function seedE2eFixtures() {
       ],
     });
 
+    await client.query(
+      `INSERT INTO jurisdictions (jurisdiction_ocdid, state, status, data)
+       VALUES ($1, 'de', 'active', '{"name":"E2E Shapes City","geoid":"1000018"}')
+       ON CONFLICT (jurisdiction_ocdid)
+       DO UPDATE SET state = EXCLUDED.state, data = EXCLUDED.data`,
+      [SHAPES_JURISDICTION_OCDID],
+    );
+    await clearRoster(client, SHAPES_JURISDICTION_OCDID);
+    const shapesSource = ["https://e2e-shapes.example.gov/roster"];
+    const shapesPublished = [
+      { id: "shapes-ada", name: "Ada Both", office: { name: "Council Member" }, organization: SHAPES_COUNCIL },
+      { id: "shapes-ada", name: "Ada Both", office: { name: "Trustee" }, organization: SHAPES_SCHOOL_BOARD },
+      { id: "shapes-cy", name: "Cy Council", office: { name: "Council Member" }, organization: SHAPES_COUNCIL },
+      { id: "shapes-di", name: "Di Board", office: { name: "Trustee" }, organization: SHAPES_SCHOOL_BOARD },
+      { id: "shapes-eve", name: "Eve Parks", office: { name: "Commissioner" }, organization: SHAPES_PARKS_BOARD },
+    ].map((person) => ({ ...person, source_urls: shapesSource }));
+    // Seated per organization, so every published seat is a real post a roster edit can name.
+    for (const person of shapesPublished) {
+      await client.query(
+        `INSERT INTO people (id, jurisdiction_ocdid, name, source_urls, updated_at)
+         VALUES ($1, $2, $3, $4, NOW())
+         ON CONFLICT (id) DO NOTHING`,
+        [personUuid(person.id), SHAPES_JURISDICTION_OCDID, person.name, person.source_urls],
+      );
+      await seatIn(client, SHAPES_JURISDICTION_OCDID, {
+        organizationName: person.organization,
+        personId: person.id,
+        roleId: "member",
+        division: divisionOf(SHAPES_JURISDICTION_OCDID),
+      });
+    }
+    await seedPublishedFacts(client, SHAPES_JURISDICTION_OCDID, shapesPublished);
+    await seedReviewCard(client, {
+      changesetId: SHAPES_CHANGESET_ID,
+      ocdid: SHAPES_JURISDICTION_OCDID,
+      people: [
+        // Ada only under the council: dropped from the school board.
+        { person_id: "shapes-ada", name: "Ada Both", label: "Council Member", organization: SHAPES_COUNCIL },
+        { person_id: "shapes-cy", name: "Cy Council", label: "Council Member", organization: SHAPES_COUNCIL },
+        { person_id: "shapes-di", name: "Di Board", label: "Trustee", organization: SHAPES_SCHOOL_BOARD },
+        { person_id: "shapes-finn", name: "Finn Unknown", label: "Dogcatcher", organization: SHAPES_COUNCIL },
+      ],
+    });
+    // A parks board page this scrape read and found nobody on: Eve is its only row, and she is leaving.
+    await client.query(
+      `INSERT INTO pipeline_runs (id, kind, jurisdiction_ocdid, status, progress, finished_at)
+       VALUES ($1, 'people_collector', $2, 'SUCCESS', 100, NOW())
+       ON CONFLICT (id) DO NOTHING`,
+      [SHAPES_PAGES_RUN_ID, SHAPES_JURISDICTION_OCDID],
+    );
+    await client.query(
+      `INSERT INTO source_pages (source_url, jurisdiction_ocdid, pipeline_run_id, changeset_id, organization_ids)
+       VALUES ($1, $2, $3, $4, ARRAY[$5::uuid])
+       ON CONFLICT (pipeline_run_id, source_url) DO NOTHING`,
+      [
+        "https://e2e-shapes.example.gov/parks",
+        SHAPES_JURISDICTION_OCDID,
+        SHAPES_PAGES_RUN_ID,
+        SHAPES_CHANGESET_ID,
+        await namedOrganization(client, SHAPES_JURISDICTION_OCDID, SHAPES_PARKS_BOARD),
+      ],
+    );
+
     // Read-only card — merged PR, so the card renders in its terminal state.
     // `url` on the jurisdiction data is what surfaces as the website link.
     await client.query(
@@ -1290,6 +1369,7 @@ export async function teardownE2eFixtures() {
       READ_ONLY_JURISDICTION_OCDID,
       TWO_BODY_JURISDICTION_OCDID,
       TWO_ORG_JURISDICTION_OCDID,
+      SHAPES_JURISDICTION_OCDID,
     ]) {
       // source_records cascades from changesets; identities cascade from source_records.
       await client.query(`DELETE FROM changesets WHERE jurisdiction_ocdid = $1`, [jOcdid]);

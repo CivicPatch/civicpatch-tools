@@ -9,6 +9,8 @@ import {
   type MergePlan,
 } from "./merge-model.js";
 import { personOf, type PersonCard } from "../people/person-cards.js";
+import { isImage } from "../fields/field-model.js";
+import "../person-image.js";
 
 const CHOICE_ICON: Record<string, string> = {
   [MergeChoice.KEEP]: "fa-solid fa-arrow-left",
@@ -37,12 +39,19 @@ const displayValue = (value: unknown): string => {
   return text || "—";
 };
 
+// The photo is the one field that is not text, so it shows as an image, not its url.
+const renderValue = (entry: MergeFieldPlan, value: unknown) => {
+  const url = isImage(entry.field) ? String(value ?? "").trim() : "";
+  if (!url) return displayValue(Array.isArray(value) ? value.flat() : value);
+  return html`<person-image .person=${{ image: url }} .size=${"2.25rem"}></person-image>`;
+};
+
 function renderFixedRow(entry: MergeFieldPlan) {
   const value = valueFor(entry, entry.choice);
   return html`
     <div class="merge-grid__label">${entry.field.label}</div>
     <div class="merge-grid__fixed-value">
-      ${displayValue(Array.isArray(value) ? value.flat() : value)}
+      ${renderValue(entry, value)}
       <span class="merge-grid__fixed">kept</span>
     </div>
   `;
@@ -66,7 +75,7 @@ function renderFieldRow(
       aria-pressed=${entry.choice === MergeChoice.KEEP}
     >
       <span class="merge-grid__side-value"
-        >${displayValue(entry.survivorValue)}</span
+        >${renderValue(entry, entry.survivorValue)}</span
       >
       <button
         class="merge-grid__pick"
@@ -92,7 +101,7 @@ function renderFieldRow(
         <i class=${CHOICE_ICON[absorbedChoice]} aria-hidden="true"></i>
       </button>
       <span class="merge-grid__side-value"
-        >${displayValue(entry.candidateValue)}</span
+        >${renderValue(entry, entry.candidateValue)}</span
       >
     </div>
     ${combining

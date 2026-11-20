@@ -8,6 +8,7 @@ import {
 } from "../../components/leaderboard/index.js";
 import { formatDateTime } from "../../utils/date-utils.js";
 import { SectionNav, overviewSection } from "../../components/section-nav/index.js";
+import { sessionCountsFor } from "./session-counts.js";
 
 function formatDuration(seconds) {
   if (seconds == null) return "—";
@@ -17,7 +18,6 @@ function formatDuration(seconds) {
   return s > 0 ? `${m}m ${s}s` : `${m}m`;
 }
 
-export const SESSION_COUNTS = [5, 10, 25, 50];
 
 function ReviewLanding({
   stateCode,
@@ -96,7 +96,7 @@ function ReviewLanding({
                         ? html`<p class="review-page__error">${error}</p>`
                         : ""}
                       <div class="review-page__goal-chips">
-                        ${SESSION_COUNTS.map(
+                        ${sessionCountsFor(available).map(
                           (n) => html`
                             <button
                               class="review-page__goal-chip ${n === sessionCount

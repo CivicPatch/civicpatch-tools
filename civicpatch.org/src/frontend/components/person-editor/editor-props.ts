@@ -4,6 +4,7 @@ import {
 } from "./frozen-fields.js";
 import { type Save } from "../fields/field-controls.js";
 import {
+  cardKey,
   postsFor,
   PersonStatus,
   type PersonCard,
@@ -46,7 +47,7 @@ export interface EditorContext {
   onPersonSave: (id: string, updates: Record<string, unknown>) => void;
   onRemovePerson: (id: string) => void;
   onUnremovePerson: (id: string) => void;
-  onRestorePerson: (person: any) => void;
+  onRestorePerson: (person: any, organizationId?: string) => void;
   onResetPerson: (id: string) => void;
   cards: PersonCard[];
   candidatesOpenFor: boolean;
@@ -131,9 +132,10 @@ export function personEditorPropsFor(
     isExpanded: ctx.isExpanded(card.personId),
     onToggleExpand: () => ctx.onToggleExpand(card.personId),
     onSave: save,
-    onRemove: () => ctx.onRemovePerson(card.personId),
-    onUnremove: () => ctx.onUnremovePerson(card.personId),
-    onRestore: () => ctx.onRestorePerson(card.oldRecord),
+    // Keyed by row so removing someone from one organization keeps their other memberships.
+    onRemove: () => ctx.onRemovePerson(cardKey(card)),
+    onUnremove: () => ctx.onUnremovePerson(cardKey(card)),
+    onRestore: () => ctx.onRestorePerson(card.oldRecord, card.organizationId),
     onReset:
       ctx.dirtyIds.has(card.personId) && card.status !== PersonStatus.REMOVED
         ? () => ctx.onResetPerson(card.personId)

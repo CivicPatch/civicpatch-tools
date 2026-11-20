@@ -30,10 +30,13 @@ const chipFor = (page, name) =>
 // `.rperson__open` is pointer-events: none, so a card opens from a click on its content.
 async function openerFor(page, name) {
   const row = rowFor(page, name);
-  if (await row.count()) return row.first().locator(".pc-name");
   const fold = foldFor(page, name);
+  const chip = chipFor(page, name);
+  // The counts below do not wait, so wait for the overview to show this person in some form first.
+  await expect(row.or(fold).or(chip).first()).toBeVisible();
+  if (await row.count()) return row.first().locator(".pc-name");
   if (await fold.count()) return fold.first().locator(".review-fold__open");
-  return chipFor(page, name).first();
+  return chip.first();
 }
 
 /**

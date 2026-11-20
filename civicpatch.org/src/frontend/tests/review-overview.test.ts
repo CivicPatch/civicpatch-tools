@@ -100,10 +100,15 @@ describe("attentionOf — the second axis", () => {
 });
 
 describe("issueTypesOf — what an issue is, in short", () => {
-  it("humanizes the issue code for display", () => {
+  it("names the issue in words a reviewer uses, not the code", () => {
     expect(
       issueTypesOf(card({ issues: [{ code: "too_few_people", message: "" }] })),
-    ).toEqual(["too few people"]);
+    ).toEqual(["fewer people than expected"]);
+  });
+  it("falls back to the de-underscored code when it has no label", () => {
+    expect(
+      issueTypesOf(card({ issues: [{ code: "something_new", message: "" }] })),
+    ).toEqual(["something new"]);
   });
   it("shows a post the scrape would create as a new post, which no badge already says", () => {
     expect(
@@ -179,7 +184,13 @@ describe("sourceMapFor — a url keeps its number everywhere", () => {
   it("carries the copy's date, so a section can age its evidence", () => {
     const map = sourceMapFor(
       [withSources("a", ["one.gov"]), withSources("b", ["two.gov"])],
-      [{ url: "one.gov", cached_at: new Date(2026, 9, 23, 12).toISOString() } as never],
+      [
+        {
+          url: "one.gov",
+          cached_at: new Date(2026, 9, 23, 12).toISOString(),
+          is_cached_by_this_scrape: false,
+        } as never,
+      ],
     );
     expect(map.get("one.gov")?.cachedAt).toBe(new Date(2026, 9, 23, 12).toISOString());
     expect(map.get("two.gov")?.cachedAt).toBeNull();
@@ -434,7 +445,11 @@ describe("organizationMeta — whether this scrape looked at an organization", (
   const sources = (dates: Record<string, string>) =>
     sourceMapFor(
       Object.keys(dates).map((url) => card({ newRecord: { source_urls: [url] } as never })),
-      Object.entries(dates).map(([url, cached_at]) => ({ url, cached_at }) as never),
+      Object.entries(dates).map(([url, cached_at]) => ({
+        url,
+        cached_at,
+        is_cached_by_this_scrape: false,
+      }) as never),
     );
 
   it("says so, and dates the copy, when the page came from an earlier scrape", () => {
@@ -462,6 +477,19 @@ describe("organizationMeta — whether this scrape looked at an organization", (
     expect(organizationMeta("org-1", [gone] as never, [], map)).toBe(
       "not found in this scrape, nothing here changes",
     );
+  });
+
+  it("will not date this scrape's own copy as old evidence", () => {
+    // Ferrisburgh: the section's people also cite a page this scrape read, and its date is the
+    // scrape's own. Saying "no page found this scrape — people from <today>" is a contradiction.
+    const own = new Date(2026, 10, 19, 12).toISOString();
+    const map = sourceMapFor(
+      [card({ newRecord: { source_urls: ["own.gov"] } as never })],
+      [{ url: "own.gov", cached_at: own, is_cached_by_this_scrape: true } as never],
+    );
+    expect(
+      organizationMeta("org-1", [entry("ana", ["own.gov"])] as never, [], map),
+    ).toBe("1 person");
   });
 
   it("dates the newest of the copies behind a section's people", () => {

@@ -58,8 +58,16 @@ export function canMerge(card: PersonCard): boolean {
 }
 
 // Everyone else on the card who is still an open question.
+// One per person: somebody in two organizations is two cards but one candidate.
 export function mergeCandidates(anchor: PersonCard, cards: PersonCard[]): PersonCard[] {
-  return cards.filter((card) => card.personId !== anchor.personId && canMerge(card));
+  const offered: PersonCard[] = [];
+  const seen = new Set<string>();
+  for (const card of cards) {
+    if (card.personId === anchor.personId || !canMerge(card) || seen.has(card.personId)) continue;
+    seen.add(card.personId);
+    offered.push(card);
+  }
+  return offered;
 }
 
 // ── Survivor ─────────────────────────────────────────────────────────────────

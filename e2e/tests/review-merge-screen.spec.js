@@ -3,8 +3,8 @@
  */
 
 import { test, expect } from "../fixtures/index.js";
-import { RECONCILE_CHANGESET_ID } from "../fixtures/db.js";
-import { actionsFor, openEditorFor, editorFor } from "./helpers/review-card.js";
+import { RECONCILE_CHANGESET_ID, SHAPES_CHANGESET_ID } from "../fixtures/db.js";
+import { actionsFor, openEditorFor, editorFor, openOverview, rowFor } from "./helpers/review-card.js";
 
 test("merge is a screen in one modal, not a second dialog", async ({
   authenticatedPage: page,
@@ -42,4 +42,37 @@ test("merge is a screen in one modal, not a second dialog", async ({
     "Tom Treasurer",
   );
   await expect(page.locator(".review-modal__foot")).toContainText("Done");
+});
+
+test("the merge screen shows a photo as an image, not its url", async ({
+  authenticatedPage: page,
+}) => {
+  await page.goto(`/review/session?changeset_id=${RECONCILE_CHANGESET_ID}`);
+  await openEditorFor(page, "Maria González");
+  await actionsFor(page, "Maria González").locator(".person-editor__merge").click();
+  await editorFor(page, "Maria González")
+    .locator(".person-editor__merge-faces .review-face")
+    .first()
+    .click();
+
+  const picker = page.locator("merge-picker");
+  await expect(picker).toBeVisible();
+  await expect(picker.locator("person-image").first()).toBeVisible();
+  await expect(picker).not.toContainText("https://nh.gov/maria.jpg");
+});
+
+test("a person merged away across organizations says who absorbed them, not that they left", async ({
+  authenticatedPage: page,
+}) => {
+  await page.goto(`/review/session?changeset_id=${SHAPES_CHANGESET_ID}`);
+  await openEditorFor(page, "Cy Council");
+  await actionsFor(page, "Cy Council").locator(".person-editor__merge").click();
+  await page.locator(".person-editor__merge-faces .review-face", { hasText: "Di Board" }).click();
+  await page.getByRole("button", { name: /Merge into/ }).click();
+  await openOverview(page);
+
+  await expect(rowFor(page, "Di Board").locator(".review-row__badge")).toHaveText("Merged into Cy Council");
+  await expect(page.locator("review-overview")).not.toContainText("nothing here changes");
+  // Ada's dropped School Board row and Eve depart; Di merged rather than left.
+  await expect(page.locator(".review-overview__tally")).toContainText("2 not in scrape");
 });

@@ -136,11 +136,31 @@ test.describe("Reject", () => {
 
     await openFirstCard(page);
     await page.getByRole("button", { name: "Reject" }).click();
+    await page.getByRole("button", { name: "Reject scrape" }).click();
 
     await expect.poll(() => rejectUrl).not.toBeNull();
     expect(rejectUrl).toContain(`/reviews/${FIRST_CARD_CHANGESET_ID}`);
 
     // Rejecting is a completed review action, so it advances like approving.
     await expect(page.locator(".review-session__progress")).toContainText("2");
+  });
+
+  test("Cancel in the confirm keeps the card and sends nothing", async ({
+    authenticatedPage: page,
+  }) => {
+    let rejectSent = false;
+    await page.route(REJECT_ENDPOINT, async (route) => {
+      if (route.request().method() !== "DELETE") return route.fallback();
+      rejectSent = true;
+      await route.fulfill({ status: 200, contentType: "application/json", body: "{}" });
+    });
+
+    await openFirstCard(page);
+    await page.getByRole("button", { name: "Reject", exact: true }).click();
+    await page.getByRole("button", { name: "Cancel" }).click();
+
+    await expect(page.getByRole("button", { name: "Reject scrape" })).toHaveCount(0);
+    await expect(page.locator(".review-session__progress")).toContainText("1 of");
+    expect(rejectSent).toBe(false);
   });
 });

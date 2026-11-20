@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'haunted';
 import { changedFieldKeys, listChanged, buildPeoplePatch, pruneIds } from './people-state-utils.js';
-import { personIdIn } from '../../people/person-cards.ts';
+import { cardKey, personIdIn } from '../../people/person-cards.ts';
 
 export function usePeopleState({ people }) {
   const [currentPeople, setCurrentPeople] = useState(people || []);
@@ -28,8 +28,11 @@ export function usePeopleState({ people }) {
     const originalById = new Map(originalPeople.map(p => [p.id, p]));
     const changesById = new Map(currentPeople.map(p => [p.id, changedFieldKeys(p, originalById.get(p.id))]));
     const removedPeople = new Set([...removedIds].map(personIdIn));
+    const restoredPeople = new Set([...restoredIds].map(personIdIn));
     const dirtyIds = new Set(
-      currentPeople.filter(p => removedPeople.has(p.id) || changesById.get(p.id).length > 0).map(p => p.id)
+      currentPeople
+        .filter(p => removedPeople.has(p.id) || restoredPeople.has(p.id) || changesById.get(p.id).length > 0)
+        .map(p => p.id)
     );
     return {
       changesById,
@@ -40,7 +43,7 @@ export function usePeopleState({ people }) {
       dirty: dirtyIds.size > 0 || listChanged(currentPeople, originalPeople),
       peoplePatch: buildPeoplePatch(currentPeople, changesById, removedIds, new Set(mergedInto.values())),
     };
-  }, [currentPeople, originalPeople, removedIds, mergedInto]);
+  }, [currentPeople, originalPeople, removedIds, restoredIds, mergedInto]);
 
   function assignPeople(peopleToAssign) {
     setCurrentPeople(peopleToAssign);
@@ -120,7 +123,12 @@ export function usePeopleState({ people }) {
   // the publish patch carries them and the backend stops reading their absence
   // as a removal. Appended rather than slotted: a person the scrape missed has no
   // position in the proposed list to return to.
-  function handleRestore(person) {
+  // Someone still listed who left one organization gets that row back, not a second copy.
+  function handleRestore(person, organizationId) {
+    if (organizationId && currentPeople.some(p => p.id === person.id)) {
+      setRestoredIds(current => new Set([...current, cardKey({ personId: person.id, organizationId })]));
+      return;
+    }
     setCurrentPeople(current =>
       current.some(p => p.id === person.id) ? current : [...current, { ...person }]
     );
@@ -165,6 +173,7 @@ export function usePeopleState({ people }) {
         ...unmerged.map(p => ({ ...p })),
       ]);
       setMergedInto(current => new Map([...current].filter(([, survivorId]) => survivorId !== key)));
+      setRestoredIds(current => new Set([...current].filter(restored => personIdIn(restored) !== key)));
       handleUnremove(key);
       return;
     }

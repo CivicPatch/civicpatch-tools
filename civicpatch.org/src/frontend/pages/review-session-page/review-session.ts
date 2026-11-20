@@ -309,6 +309,7 @@ function ReviewSession(host: ReviewSessionHost) {
           .officeEdits=${officeEdits}
           .removedIds=${[...removedIds]}
           .mergedInto=${mergedInto}
+          .cards=${cards}
         ></review-session-actions>
         <div class="review-session__header-tools">
           ${canViewSourceDebug && hasSourceContent
@@ -325,6 +326,22 @@ function ReviewSession(host: ReviewSessionHost) {
         </div>
       </div>
       ${error ? html`<p class="review-session__error">${error}</p>` : ""}
+      ${!is_read_only && blockers.length
+        ? html`<div class="review-session__blockers">
+            <strong
+              >${blockers.length} to fix before approving</strong
+            >
+            <ul>
+              ${blockers.map(
+                (blocker) =>
+                  html`<li>
+                    ${blocker.name}, ${blocker.fieldLabel}:
+                    ${blocker.message}
+                  </li>`,
+              )}
+            </ul>
+          </div>`
+        : nothing}
       ${savedChangesetId === changesetId && !dirty
         ? html`<p class="review-session__saved" role="status" aria-live="polite">
             ${SAVED_MESSAGE}
@@ -408,6 +425,7 @@ function ReviewSession(host: ReviewSessionHost) {
         .organizations=${organizations}
         .sources=${source_content_urls}
         .organizationsRead=${currentEntry?.organizations_read ?? []}
+        .mergedInto=${mergedInto}
       ></review-overview>
       <review-sidebar
         .issues=${allIssues}

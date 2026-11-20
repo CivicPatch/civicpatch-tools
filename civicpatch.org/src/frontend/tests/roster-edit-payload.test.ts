@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { rosterEditPayload } from "../components/edit-people/roster-edit-payload.js";
+import { heldOfficesByPerson, rosterEditPayload } from "../components/edit-people/roster-edit-payload.js";
 
 const MAYOR = "11111111-1111-5111-8111-111111111111";
 const CLERK = "22222222-2222-5222-8222-222222222222";
@@ -305,5 +305,23 @@ describe("rosterEditPayload", () => {
       fields: { name: "Bo Nguyen" },
       offices: [{ id: MAYOR, membership_label: null, start_date: "2025" }],
     });
+  });
+});
+
+describe("heldOfficesByPerson", () => {
+  const council = { post_id: "council-1", label: null, organization_id: "council" };
+  const board = { post_id: "board-1", label: null, organization_id: "board" };
+
+  it("holds what the scrape proposes, not a seat it dropped", () => {
+    const held = heldOfficesByPerson([
+      { personId: "ada", oldRecord: { memberships: [council, board] }, newRecord: { memberships: [council] } },
+      { personId: "ada", oldRecord: { memberships: [council, board] }, newRecord: null },
+    ]);
+    expect(held.get("ada")?.map((office) => office.id)).toEqual(["council-1"]);
+  });
+
+  it("falls back to the published seats for somebody the scrape dropped entirely", () => {
+    const held = heldOfficesByPerson([{ personId: "eve", oldRecord: { memberships: [board] }, newRecord: null }]);
+    expect(held.get("eve")?.map((office) => office.id)).toEqual(["board-1"]);
   });
 });

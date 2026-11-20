@@ -1,4 +1,4 @@
-import { personIdIn } from "../../people/person-cards.ts";
+import { cardKey, personIdIn } from "../../people/person-cards.ts";
 
 export const PERSON_FIELDS = {
   // `post_id` and `membership_label` are an office pick; for an existing person they travel
@@ -43,16 +43,23 @@ export function pruneIds(ids, livingIds) {
   return kept.length === ids.size ? ids : new Set(kept);
 }
 
+// A bare person id removes the whole person; a person-in-organization key removes only that membership.
+function isFullyRemoved(person, removedIds) {
+  if (removedIds.has(person.id)) return true;
+  const organizationIds = (person.memberships ?? []).map(m => m.organization_id).filter(Boolean);
+  if (organizationIds.length === 0) return false;
+  return organizationIds.every(organizationId => removedIds.has(cardKey({ personId: person.id, organizationId })));
+}
+
 // Build the publish payload: one patch item per person still on the list. Existing rows send
 // only their changed fields; new or re-identified rows (id changed) send the whole entry, and
 // so does a merge survivor, since the server diffs it against the merged person, not its baseline.
 // The backend keys by id — a known id overlays the fields, an unknown id inserts the whole
-// entry. Removal is not absence: `rosterEditPayload` says it as `offices: []`. A row removed
-// by person id drops out here (a review says they are not on the roster at all); a roster row
-// removed in one body does not, because their name correction still stands.
+// entry. Removal is not absence: `rosterEditPayload` says it as `offices: []`. A person drops out
+// only when removed from every organization; removed from one, their other memberships stand.
 export function buildPeoplePatch(currentPeople, changesById, removedIds, survivorIds) {
   return currentPeople
-    .filter(p => !removedIds.has(p.id))
+    .filter(p => !isFullyRemoved(p, removedIds))
     .map(p => survivorIds.has(p.id) ? survivorPatchItem(p) : toPatchItem(p, changesById.get(p.id)));
 }
 

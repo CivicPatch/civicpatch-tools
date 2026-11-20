@@ -8,7 +8,7 @@
 // `organizationOf` is the card's body — one per card today, one per (person, body) at 9b(c).
 
 import { heldOffice } from "../posts-list/posts-model.js";
-import { type PersonCard, personOf } from "../people/person-cards.js";
+import { type PersonCard, PersonStatus, personOf } from "../people/person-cards.js";
 
 export interface OfficeEdit {
   personId: string;
@@ -28,6 +28,7 @@ function officeEditFor(
 ): OfficeEdit | null {
   const record = personOf(card);
   if (!card.oldRecord || !record) return null; // no prior membership to move
+  if (card.status === PersonStatus.RESTORED) return restoredOfficeEdit(card, organizationId);
   const held = heldOffice(record.memberships, organizationId);
   const was = {
     postId: held?.post_id ?? null,
@@ -58,6 +59,20 @@ function officeEditFor(
     edit.endDate = now.endDate;
   }
   return edit;
+}
+
+// A restored row puts back the office they held here, which the scrape's record no longer has.
+function restoredOfficeEdit(card: PersonCard, organizationId: string | null): OfficeEdit | null {
+  const was = heldOffice(card.oldRecord?.memberships, organizationId);
+  if (!was || heldOffice(card.newRecord?.memberships, organizationId)) return null;
+  return {
+    personId: card.personId,
+    postId: was.post_id,
+    membershipLabel: was.label ?? null,
+    startDate: was.start_date ?? null,
+    endDate: was.end_date ?? null,
+    organizationId,
+  };
 }
 
 // Untouched (`undefined`) keeps what they hold; emptied (`""` or `null`) says there is none.

@@ -22,6 +22,18 @@ describe("officeEditsIn", () => {
   it("is empty when nothing was picked", () =>
     expect(officeEditsIn([card()])).toEqual([]));
 
+  it("puts back the office a restored row held in its organization", () => {
+    const board = { post_id: "board-1", post_label: "Trustee", label: null, organization_id: "board", start_date: "2023", end_date: null };
+    const restored = card({
+      status: "restored",
+      oldRecord: { id: "p1", memberships: [{ ...HELD[0], organization_id: "council" }, board] },
+      newRecord: { id: "p1", memberships: [{ ...HELD[0], organization_id: "council" }] },
+    });
+    expect(officeEditsIn([restored], () => "board")).toEqual([
+      { personId: "p1", postId: "board-1", membershipLabel: null, startDate: "2023", endDate: null, organizationId: "board" },
+    ]);
+  });
+
 
   // A label never names the post itself (core/membership_label.py's `render` no longer folds
   // it in), so changing which post someone holds has no bearing on it — it rides along as-is.

@@ -31,6 +31,7 @@ test.describe("Review card — read only", () => {
     // vocabulary moved off the PR when the review stopped being one.
     await expect(banner).toHaveClass(/review-session__status-banner--published/);
     await expect(banner).toContainText("published");
+    await expect(banner).not.toHaveCSS("background-color", "rgba(0, 0, 0, 0)");
 
     // Nothing here can be published, saved or closed again.
     await expect(page.locator(".review-session__approve-btn")).toHaveCount(0);
@@ -53,9 +54,12 @@ test.describe("Review card — read only", () => {
 
     // "View published data", not "View PR": the url is where the change landed, which is a
     // commit or a pull request depending on the path it took.
-    await expect(
-      page.getByRole("link", { name: /View published data/ }),
-    ).toHaveAttribute("href", READ_ONLY_PR_URL);
+    const published = page.getByRole("link", { name: /View published data/ });
+    await expect(published).toHaveAttribute("href", READ_ONLY_PR_URL);
+    // A small button, not a bar drawn across the header.
+    const linkBox = await published.boundingBox();
+    const headerBox = await page.locator(".review-session__pr-meta").boundingBox();
+    expect(linkBox.width).toBeLessThan(headerBox.width / 2);
   });
 });
 

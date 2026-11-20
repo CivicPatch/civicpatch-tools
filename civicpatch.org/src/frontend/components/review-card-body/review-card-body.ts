@@ -21,6 +21,7 @@ type ReviewCardBodyHost = HTMLElement & {
 };
 
 const NOBODY_REMOVED = new Set<string>();
+const NOBODY_MERGED = new Map<string, string>();
 const NOBODY_OPEN = null;
 
 // Nothing opens in place (`openCardKey` is always null), so the editor is never asked for.
@@ -68,6 +69,7 @@ function ReviewCardBody(host: ReviewCardBodyHost) {
       .organizations=${card.organizations}
       .sources=${card.sources}
       .organizationsRead=${card.organizations_read}
+      .mergedInto=${NOBODY_MERGED}
     ></review-overview>
   `;
 }

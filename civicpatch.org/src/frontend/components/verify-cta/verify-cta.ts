@@ -2,7 +2,7 @@ import "./verify-cta.css";
 import { html } from "lit-html";
 import { component, useState } from "haunted";
 import { landingUrl, sessionUrl } from "../../pages/review-routes.js";
-import { SESSION_COUNTS } from "../../pages/review-page/review-landing.js";
+import { sessionCountsFor } from "../../pages/review-page/session-counts.js";
 import { createReviewSession, navigateToEntry } from "../../api.js";
 
 interface VerifyCtaProps {
@@ -47,7 +47,7 @@ function VerifyCta({
   const lengthPicker = !hasActiveSession
     ? html`
         <span class="verify-cta__lengths">
-          ${SESSION_COUNTS.map(
+          ${sessionCountsFor(toReviewCount).map(
             (n) => html`
               <button
                 type="button"

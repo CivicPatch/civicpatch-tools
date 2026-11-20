@@ -91,4 +91,4 @@ jobs:
           DATABASE_HASH_KEY: x
           SERVICE_API_KEY: x
           COOKIE_INSTANCE_URL: x
-        run: uv run pytest -m integration tests
+        run: uv run pytest -m integration -n 4 tests

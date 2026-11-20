@@ -123,6 +123,18 @@ describe("buildPeoplePatch", () => {
     ).toEqual([{ id: "a", fields: { name: "Ann Lee" } }]);
   });
 
+  it("drops somebody removed from every body they hold", () => {
+    const people = [
+      { id: "a", name: "Ann Lee", memberships: [{ organization_id: "council" }, { organization_id: "board" }] },
+    ];
+    expect(
+      buildPeoplePatch(people, changes([["a", []]]), deleted("a:council"), NO_SURVIVORS).map((p: { id: string }) => p.id),
+    ).toEqual(["a"]);
+    expect(
+      buildPeoplePatch(people, changes([["a", []]]), deleted("a:council", "a:board"), NO_SURVIVORS),
+    ).toEqual([]);
+  });
+
   it("sends a merge survivor's whole record, since the server diffs it against the merged person", () => {
     const person = { id: "a", name: "Ada", phones: ["x"], post_id: "p1" };
     expect(buildPeoplePatch([person], changes([["a", []]]), deleted(), new Set(["a"]))).toEqual([

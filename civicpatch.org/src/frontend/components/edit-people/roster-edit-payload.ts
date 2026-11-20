@@ -150,12 +150,24 @@ export function rosterEditPayload({
 /** What each person already holds, so an edit to one body can keep the others. Keyed by person
  * because `offices` is per person on the wire; the body rides along to replace by body. */
 export function heldOfficesByPerson(
-  cards: { personId: string; oldRecord?: { memberships?: any[] } | null }[],
+  cards: {
+    personId: string;
+    oldRecord?: { memberships?: any[] } | null;
+    newRecord?: { memberships?: any[] } | null;
+  }[],
 ): Map<string, { id: string; membership_label: string | null; organizationId: string | null }[]> {
+  // The proposed record, so a seat this scrape dropped is not sent back; the published one only
+  // for somebody the scrape dropped entirely. A person's rows share one record, so one with a
+  // proposed side wins over a departing row's.
+  const held = new Map<string, any[]>();
+  for (const card of cards) {
+    if (card.newRecord) held.set(card.personId, card.newRecord.memberships ?? []);
+    else if (!held.has(card.personId)) held.set(card.personId, card.oldRecord?.memberships ?? []);
+  }
   return new Map(
-    cards.map((card) => [
-      card.personId,
-      (card.oldRecord?.memberships ?? [])
+    [...held].map(([personId, memberships]) => [
+      personId,
+      memberships
         .filter((membership) => !!membership.post_id)
         .map((membership) => ({
           id: membership.post_id,

@@ -11,7 +11,8 @@ import {
   POST_FIELD,
   rowError,
   type DiffRecord,
-  type FieldReason,
+  FieldReason,
+  type FieldReasonKey,
   type FieldSpec,
   type PresentRecord,
   type ScalarDiffState,
@@ -79,9 +80,11 @@ export interface EditorFieldProps {
   oldRecord: DiffRecord;
   newRecord: DiffRecord;
   state: ScalarDiffState;
-  reason: FieldReason;
+  reason: FieldReasonKey;
   error: string | null;
   issueMessages: string[];
+  // A dirty card hides its issue messages, so an issue's state is unknown until it is saved.
+  isDirty: boolean;
   save: Save;
   // Raw, not a precomputed lock: every field's `lock` below is derived from the same two —
   // renderOfficeControl is just the one control that also derives a second lock from them,
@@ -282,7 +285,7 @@ function renderAssertionSummary(
 }
 
 function renderAttention(props: EditorFieldProps) {
-  const { reason, error, issueMessages } = props;
+  const { reason, error, issueMessages, isDirty } = props;
   if (error) {
     return html`<div class="person-editor__error">
       <i class="fa-solid fa-triangle-exclamation"></i><span>${error}</span>
@@ -296,7 +299,7 @@ function renderAttention(props: EditorFieldProps) {
         </div>`,
     );
   }
-  if (reason === "error" || reason === "issue") {
+  if (reason === FieldReason.ERROR || (reason === FieldReason.ISSUE && !isDirty)) {
     return html`<div class="person-editor__issue person-editor__resolved">
       <i class="fa-solid fa-circle-check"></i><span>Resolved</span>
     </div>`;

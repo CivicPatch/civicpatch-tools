@@ -84,6 +84,10 @@ describe("editorSummary", () => {
     );
   });
 
+  it("names a restoration, which no field has to move for", () => {
+    expect(editorSummary(input({ status: PersonStatus.RESTORED }))).toBe("Restored");
+  });
+
   it("adds what needs a decision, counting errors and issues together", () => {
     const result = editorSummary(
       input({

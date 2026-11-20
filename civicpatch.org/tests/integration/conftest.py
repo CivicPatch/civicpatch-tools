@@ -18,19 +18,42 @@ import psycopg
 import pytest
 import pytest_asyncio
 import yaml
+from psycopg import sql
+from psycopg.conninfo import conninfo_to_dict, make_conninfo
 
 from shared.utils.layered_config import level_config_path
 from shared.schemas import JurisdictionLevel
 from shared.utils.statuses import TERMINAL_PIPELINE_RUN_STATUSES
 
-TEST_DB_URL = os.environ.get(
+MIGRATED_DB_URL = os.environ.get(
     "INTEGRATION_TEST_DB_URL",
     "postgres://civicpatch:test_password@127.0.0.1:6001/test_db",
 )
+MIGRATED_DB_NAME = conninfo_to_dict(MIGRATED_DB_URL)["dbname"]
+XDIST_WORKER = os.environ.get("PYTEST_XDIST_WORKER")
+
+# Under xdist each worker gets its own copy of the migrated database, so workers never share rows.
+TEST_DB_URL = (
+    make_conninfo(MIGRATED_DB_URL, dbname=f"{MIGRATED_DB_NAME}_{XDIST_WORKER}")
+    if XDIST_WORKER
+    else MIGRATED_DB_URL
+)
+
+
+@pytest.fixture(scope="session")
+def worker_database():
+    if not XDIST_WORKER:
+        return
+    worker_db = sql.Identifier(conninfo_to_dict(TEST_DB_URL)["dbname"])
+    with psycopg.connect(MIGRATED_DB_URL, dbname="postgres", autocommit=True) as conn:
+        conn.execute(sql.SQL("DROP DATABASE IF EXISTS {}").format(worker_db))
+        conn.execute(
+            sql.SQL("CREATE DATABASE {} TEMPLATE {}").format(worker_db, sql.Identifier(MIGRATED_DB_NAME))
+        )
 
 
 @pytest.fixture(scope="session", autouse=True)
-def no_run_is_terminal_without_finished_at():
+def no_run_is_terminal_without_finished_at(worker_database):
     """A terminal run must carry `finished_at`, because that is what says the run is over.
 
     `expire_stale_pipeline_runs` asks `finished_at IS NULL` rather than matching a list of
@@ -60,7 +83,7 @@ def no_run_is_terminal_without_finished_at():
 
 
 @pytest_asyncio.fixture(autouse=True)
-async def patch_db_url(monkeypatch):
+async def patch_db_url(monkeypatch, worker_database):
     """Point the connection pool at the dev DB for every integration test."""
     import database.database as db_module
     # Close any pool opened by previous tests so the URL change takes effect.

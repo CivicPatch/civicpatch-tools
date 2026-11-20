@@ -29,10 +29,10 @@ test.describe("Review person editor", () => {
   test("a person with nothing to review is one line, not a card", async ({
     authenticatedPage: page,
   }) => {
-    await openEditor(page, SCALE_CHANGESET_ID, "Councillor 03 Scale");
+    await openEditor(page, SCALE_CHANGESET_ID, "Sam 03 Scale");
 
-    // Councillor 03 is one of the 25 the scrape returned identically.
-    const editor = editorFor(page, "Councillor 03 Scale");
+    // Sam 03 is one of the 25 the scrape returned identically.
+    const editor = editorFor(page, "Sam 03 Scale");
     await expect(editor).toHaveClass(/person-editor--strip/);
     await expect(editor.locator(".person-editor__field")).toHaveCount(0);
 
@@ -45,7 +45,7 @@ test.describe("Review person editor", () => {
   test("a changed person shows only what moved, plus its evidence", async ({
     authenticatedPage: page,
   }) => {
-    await openEditor(page, SCALE_CHANGESET_ID, "Councillor 13 Scale");
+    await openEditor(page, SCALE_CHANGESET_ID, "Sam 13 Scale");
 
     // The fixture rotates change shapes by index; 13 is the one that only
     // gained an email. (02 changes its term end AND clears its phone — two
@@ -55,7 +55,7 @@ test.describe("Review person editor", () => {
     // is always visible as the evidence for the change and never itself a
     // reason to review. Everything else still hides.
     // Source urls carries the required marker, same as Name and Office.
-    const editor = editorFor(page, "Councillor 13 Scale");
+    const editor = editorFor(page, "Sam 13 Scale");
     await expect(editor.locator(".person-editor__label")).toHaveText([
       "Email",
       "Source urls *",
@@ -65,12 +65,12 @@ test.describe("Review person editor", () => {
   test("the expander reveals the rest and puts them back", async ({
     authenticatedPage: page,
   }) => {
-    await openEditor(page, SCALE_CHANGESET_ID, "Councillor 02 Scale");
+    await openEditor(page, SCALE_CHANGESET_ID, "Sam 02 Scale");
 
     // 02 changed its term end and cleared its phone, so two rows survive and
     // the other nine hide.
     // Three rows: the two that moved, plus the always-visible Source urls.
-    const editor = editorFor(page, "Councillor 02 Scale");
+    const editor = editorFor(page, "Sam 02 Scale");
     await expect(editor.locator(".person-editor__field")).toHaveCount(3);
     await expect(editor.locator(".person-editor__expander")).toContainText(
       "7 unchanged fields",
@@ -86,9 +86,9 @@ test.describe("Review person editor", () => {
   test("a person the scrape dropped is one decision, not eleven fields", async ({
     authenticatedPage: page,
   }) => {
-    await openEditor(page, SCALE_CHANGESET_ID, "Councillor 36 Scale");
+    await openEditor(page, SCALE_CHANGESET_ID, "Sam 36 Scale");
 
-    const editor = editorFor(page, "Councillor 36 Scale");
+    const editor = editorFor(page, "Sam 36 Scale");
     await expect(editor).toHaveClass(/person-editor--removed/);
     await expect(editor.locator(".person-editor__banner-title")).toContainText(
       "Not found in this scrape",
@@ -96,7 +96,7 @@ test.describe("Review person editor", () => {
     // Their details are available, but not spent by default.
     await expect(editor.locator(".person-editor__field")).toHaveCount(0);
     await expect(
-      actionsFor(page, "Councillor 36 Scale").locator(
+      actionsFor(page, "Sam 36 Scale").locator(
         ".person-editor__restore-person",
       ),
     ).toBeVisible();
@@ -104,8 +104,8 @@ test.describe("Review person editor", () => {
 });
 
 test.describe("Review editor — multi-value provenance (§5.2)", () => {
-  // Councillor 13 gained a second email; nothing else about them moved.
-  // The Email row specifically. Councillor 13's editor also carries the
+  // Sam 13 gained a second email; nothing else about them moved.
+  // The Email row specifically. Sam 13's editor also carries the
   // always-visible Source urls row, which is a multi-value field too — matching
   // every field row would count its inputs as well.
   // Every list renders one more row than it holds — the trailing empty one is how
@@ -128,7 +128,7 @@ test.describe("Review editor — multi-value provenance (§5.2)", () => {
       .locator(".person-editor")
       .filter({
         has: page.locator(".person-editor__name", {
-          hasText: "Councillor 13 Scale",
+          hasText: "Sam 13 Scale",
         }),
       })
       .locator(".person-editor__field")
@@ -137,7 +137,7 @@ test.describe("Review editor — multi-value provenance (§5.2)", () => {
   test("marks the value the scrape added, and leaves the kept one unmarked", async ({
     authenticatedPage: page,
   }) => {
-    await openEditor(page, SCALE_CHANGESET_ID, "Councillor 13 Scale");
+    await openEditor(page, SCALE_CHANGESET_ID, "Sam 13 Scale");
     const field = emailField(page);
 
     // One list, not two columns: both addresses are editable rows.
@@ -152,13 +152,13 @@ test.describe("Review editor — multi-value provenance (§5.2)", () => {
   test("a value the scrape lost reads as dropped and comes back one at a time", async ({
     authenticatedPage: page,
   }) => {
-    await openEditor(page, SCALE_CHANGESET_ID, "Councillor 02 Scale");
-    // Councillor 02 had its phone cleared, so that value is dropped, not gone.
+    await openEditor(page, SCALE_CHANGESET_ID, "Sam 02 Scale");
+    // Sam 02 had its phone cleared, so that value is dropped, not gone.
     const phone = page
       .locator(".person-editor")
       .filter({
         has: page.locator(".person-editor__name", {
-          hasText: "Councillor 02 Scale",
+          hasText: "Sam 02 Scale",
         }),
       })
       .locator(".person-editor__field")
@@ -182,12 +182,12 @@ test.describe("Review editor — multi-value provenance (§5.2)", () => {
   test("provenance is derived, so retyping a dropped value clears its chip", async ({
     authenticatedPage: page,
   }) => {
-    await openEditor(page, SCALE_CHANGESET_ID, "Councillor 02 Scale");
+    await openEditor(page, SCALE_CHANGESET_ID, "Sam 02 Scale");
     const phone = page
       .locator(".person-editor")
       .filter({
         has: page.locator(".person-editor__name", {
-          hasText: "Councillor 02 Scale",
+          hasText: "Sam 02 Scale",
         }),
       })
       .locator(".person-editor__field")

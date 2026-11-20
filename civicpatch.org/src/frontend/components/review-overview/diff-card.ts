@@ -22,6 +22,7 @@ import {
 } from "../people/person-cards.js";
 import {
   diffValue,
+  FieldReason,
   POST_FIELD,
   type SurvivingField,
 } from "../fields/field-model.js";
@@ -36,6 +37,7 @@ import {
   attentionOf,
   issueTypesOf,
   STATUS_BADGE,
+  mergedBadge,
   visibleFields,
   type SourceMap,
 } from "./overview-model.js";
@@ -82,8 +84,10 @@ function renderAttention(card: PersonCard) {
     )}`;
 }
 
-function renderStatusBadge(card: PersonCard, moved: MovedNote | null) {
-  const badge = moved ? "Moved" : STATUS_BADGE[card.status];
+function renderStatusBadge(card: PersonCard, moved: MovedNote | null, props: ReviewOverviewProps) {
+  const badge = moved
+    ? "Moved"
+    : (mergedBadge(card, props.mergedInto, props.cards) ?? STATUS_BADGE[card.status]);
   if (!badge) return nothing;
   return html`<span class="review-row__badge review-row__badge--${card.status}"
     >${badge}</span
@@ -105,10 +109,12 @@ function renderFieldLock(lock: FieldLock | null) {
 // the picker and the card subtitle do. Only the post itself is diffed here — the membership
 // label is a second, independently-changing thing (office-edits.ts) and renders in its own
 // row below, plainly, never compared against an old value.
+const NO_POST_YET = "none yet";
+
 function renderPostFieldValue(card: PersonCard, props: ReviewOverviewProps) {
   const moved = movedNote(card, props.posts);
   if (moved) return html`<del>${moved.from}</del> <ins>${moved.to}</ins>`;
-  return postNameFor(card, props.posts) || nothing;
+  return postNameFor(card, props.posts) || NO_POST_YET;
 }
 
 function renderMembershipLabelRow(card: PersonCard) {
@@ -136,7 +142,7 @@ function renderFieldRow(
   );
   // An issue outranks the field's own diff state: the card already says it has one, and this
   // is what says which field it is about.
-  const anchored = surviving.reason === "issue" ? " pv--issue" : "";
+  const anchored = surviving.reason === FieldReason.ISSUE ? " pv--issue" : "";
   if (field.key === POST_FIELD) {
     return html`<span class="pv pv--post${anchored}">
         <span class="pvk">${field.label.toLowerCase()}</span>
@@ -179,7 +185,7 @@ export function renderDiffCard(
       <span class="pc-ident">
         <span class="pc-open">
           <span class="pc-name">${record?.name || "(unnamed)"}</span>
-          ${renderStatusBadge(card, moved)}
+          ${renderStatusBadge(card, moved, props)}
           ${renderAttention(card)}
         </span>
         <span class="pc-vals">

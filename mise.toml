@@ -341,7 +341,7 @@ run = """
 set -e
 mise run tcp-db-up
 mise run tcp-db-migrate
-mise run tcp -- -m integration
+mise run tcp -- -m integration -n 4
 """
 
 [tasks.tcp-integration-fresh]
