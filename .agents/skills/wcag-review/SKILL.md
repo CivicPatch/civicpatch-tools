@@ -1,7 +1,6 @@
 ---
 name: wcag-review
 description: Audit UI code, HTML, templates, or components for Web Content Accessibility Guidelines (WCAG) 2.2 compliance. Use when the user asks to review accessibility, check WCAG compliance, audit a component for a11y issues, or fix accessibility violations. Covers Levels A and AA across all four POUR principles.
-tools: Read, Glob, Grep, Bash
 ---
 
 # WCAG 2.2 Accessibility Review

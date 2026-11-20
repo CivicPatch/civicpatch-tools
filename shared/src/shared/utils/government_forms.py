@@ -21,6 +21,7 @@ GOVERNMENT_FORM_DESCRIPTIONS: dict[GovernmentForm, str] = {
     GovernmentForm.COUNTY_EXECUTIVE: "a county board plus a separately elected county executive",
     GovernmentForm.VILLAGE_BOARD: "an elected board of trustees with a president who sits and votes on it",
     GovernmentForm.COUNTY_COURT: "a county court: an elected county judge who presides and votes, with elected commissioners",
+    GovernmentForm.PLANTATION: "an annual meeting and an elected board of assessors who serve as its select board",
 }
 
 

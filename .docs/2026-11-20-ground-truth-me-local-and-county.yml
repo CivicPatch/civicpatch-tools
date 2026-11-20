@@ -1,0 +1,83 @@
+# Maine ground truth for the state-offices skill's scoring step. Only offices Maine's config collects, and only
+# holders a source names as that office. A chair or council president is chosen by the members: method A.
+
+cities:
+  ocd-jurisdiction/country:us/state:me/place:lewiston/government:
+    - office: mayor
+      holders: [Carl L. Sheline]
+      method: E
+      source: "https://www.lewistonmaine.gov/1346/Elected-Officials-and-City-Ward-Map"
+      as_of: "2026-11-20"
+    - office: councilor
+      holders: [Joshua L. Nagine, Susan G. Longchamps, Scott A. Harriman, Michael R. Roy, Chrissy Noble,
+                David B. Chittim, Bret Martel]
+      method: E
+      source: "https://www.lewistonmaine.gov/1346/Elected-Officials-and-City-Ward-Map"
+      as_of: "2026-11-20"
+    - office: council-president
+      holders: [David B. Chittim]
+      method: A
+      source: "https://www.lewistonmaine.gov/1346/Elected-Officials-and-City-Ward-Map"
+      as_of: "2026-11-20"
+    - office: city-manager
+      holders: [Bryan Kaenrath]
+      method: A
+      source: "https://www.lewistonmaine.gov/directory.aspx"
+      as_of: "2026-11-20"
+
+towns:
+  ocd-jurisdiction/country:us/state:me/place:brunswick/government:
+    - office: councilor
+      holders: [Richard Ellis, James Ecker, Kimberly Anderson, Corinne Perreault, Jennifer Hicks, Ramona Thieme,
+                Steven Weems, Katherine Wilson, Nathan MacDonald]
+      method: E
+      source: "https://www.brunswickme.gov/331/Town-Council"
+      as_of: "2026-11-20"
+    - office: chair
+      holders: [Nathan MacDonald]
+      method: A
+      source: "https://www.brunswickme.gov/AgendaCenter/Town-Council-13"
+      as_of: "2026-01-05"
+    - office: vice-chair
+      holders: [Jennifer Hicks]
+      method: A
+      source: "https://www.brunswickme.gov/AgendaCenter/Town-Council-13"
+      as_of: "2026-01-05"
+    - office: town-manager
+      holders: [Julia Henze]
+      method: A
+      source: "https://www.brunswickme.gov/327/Town-Manager"
+      as_of: "2026-11-20"
+
+  ocd-jurisdiction/country:us/state:me/place:wayne/government:
+    - office: select-board-member
+      holders: [Lauren Metayer, Tom Moran, Steve Saunders, Henry Steck, Hazel Stevenson]
+      method: E
+      source: "https://towncloud.io/go/wayne-me/agendas"
+      as_of: "2026-11-20"
+    - office: town-manager
+      holders: [Shannon McDonnell]
+      method: A
+      source: "https://towncloud.io/go/wayne-me/agendas"
+      as_of: "2026-11-20"
+
+plantations:
+  ocd-jurisdiction/country:us/state:me/place:monhegan/government:
+    - office: assessor
+      holders: [Jim Buccheri, Andrew Dalrymple, Kyle Murdock]
+      method: E
+      source: "https://monheganplantation.gov/officers-and-contact/"
+      as_of: "2026-11-20"
+
+counties:
+  ocd-jurisdiction/country:us/state:me/county:cumberland/government:
+    - office: commissioner
+      holders: [Jean-Marie Caterina, Tom Tyler, Stephen F. Gorden, Patricia Smith, James F. Cloutier]
+      method: E
+      source: "https://www.cumberlandcountyme.gov/boards___committees/county_commissioners/index.php"
+      as_of: "2026-11-20"
+    - office: county-manager
+      holders: [James H. Gailey]
+      method: A
+      source: "https://www.cumberlandcountyme.gov/departments/executive/index.php"
+      as_of: "2026-11-20"

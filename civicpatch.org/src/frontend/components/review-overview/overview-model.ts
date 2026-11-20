@@ -299,8 +299,11 @@ export function sectionsByOrganization(
   roleOrder: string[],
   organizationOrder: string[] = [],
 ): ReviewOrganizationSections {
-  const departing = cards.filter((card) => DEPARTING.has(card.status));
-  const staying = cards.filter((card) => !DEPARTING.has(card.status));
+  // Somebody leaving an organization is shown in it, struck, so its section can say who went;
+  // only a departure with no organization to show it in goes to the list after the sections.
+  const inAnOrganization = (card: PersonCard) => !!card.organizationId && officeOf(card) !== null;
+  const departing = cards.filter((card) => DEPARTING.has(card.status) && !inAnOrganization(card));
+  const staying = cards.filter((card) => !departing.includes(card));
 
   const byOrganization = new Map<string, CardInOrganization[]>();
   const unplaced: PersonCard[] = [];

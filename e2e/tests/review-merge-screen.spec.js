@@ -3,7 +3,7 @@
  */
 
 import { test, expect } from "../fixtures/index.js";
-import { RECONCILE_CHANGESET_ID, SHAPES_CHANGESET_ID } from "../fixtures/db.js";
+import { RECONCILE_CHANGESET_ID, SHAPES_CHANGESET_ID, SHAPES_SCHOOL_BOARD } from "../fixtures/db.js";
 import { actionsFor, openEditorFor, editorFor, openOverview, rowFor } from "./helpers/review-card.js";
 
 test("merge is a screen in one modal, not a second dialog", async ({
@@ -72,7 +72,9 @@ test("a person merged away across organizations says who absorbed them, not that
   await openOverview(page);
 
   await expect(rowFor(page, "Di Board").locator(".review-row__badge")).toHaveText("Merged into Cy Council");
-  await expect(page.locator("review-overview")).not.toContainText("nothing here changes");
+  // Di merged rather than left, so her school board is not one the scrape found empty.
+  const board = page.locator("review-overview .review-overview__organization", { hasText: SHAPES_SCHOOL_BOARD });
+  await expect(board.locator(".panel__cap")).not.toContainText("nothing here changes");
   // Ada's dropped School Board row and Eve depart; Di merged rather than left.
   await expect(page.locator(".review-overview__tally")).toContainText("2 not in scrape");
 });

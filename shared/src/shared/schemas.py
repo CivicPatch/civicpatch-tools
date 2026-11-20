@@ -379,6 +379,8 @@ class GovernmentForm(StrEnum):
     VILLAGE_BOARD = "village_board"
     # Oregon's county court, a county judge and commissioners (ORS 203.111).
     COUNTY_COURT = "county_court"
+    # Maine's plantations: an annual meeting and 3 elected assessors who are its select board (30-A §§ 7001, 7007).
+    PLANTATION = "plantation"
 
 
 class JurisdictionId(BaseModel):
