@@ -50,13 +50,14 @@ def governing_law_issue(report: GoverningLawReport) -> Optional[Issue]:
 
 
 def _missed_charter(report: GoverningLawReport) -> bool:
-    """A search found no charter where the place may have one. Under `charter_else_general_law`, a
-    clean search that found none is an answer: the general law governs, as in Oregon's counties."""
+    """A search found no charter where the place may have one. Only where every place has one
+    (`charter`) is a clean search that found none a miss; where only some do (Maine's towns, Oregon's
+    counties) it is the answer, and the general law governs."""
     if report.answer is None or report.answer.found_by != FoundBy.SEARCH or report.charter_source_page_ids:
         return False
     if report.governed_by in (None, GovernedBy.GENERAL_LAW):
         return False
-    return report.blocked or report.governed_by != GovernedBy.CHARTER_ELSE_GENERAL_LAW
+    return report.blocked or report.governed_by == GovernedBy.CHARTER
 
 
 def _miss(report: GoverningLawReport, missing: Missing) -> Issue:

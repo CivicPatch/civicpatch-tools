@@ -15,6 +15,7 @@ pytestmark = pytest.mark.unit
 
 _COUNTY = GovernedBy.CHARTER_ELSE_GENERAL_LAW
 _CITY = GovernedBy.CHARTER
+_TOWN = GovernedBy.CHARTER_OR_GENERAL_LAW
 _CRAWLED = [TriedUrl(url="http://www.malheurco.org", reason=TriedReason.SITE_CRAWLED)]
 _REFUSED = [TriedUrl(url="https://library.municode.com/or/carlton/codes/code_of_ordinances", reason=TriedReason.REFUSED)]
 
@@ -32,6 +33,19 @@ def _report(
 
 def test_a_county_with_no_charter_found_by_a_clean_search_reads_the_general_law_with_no_issue():
     assert governing_law_issue(_report(_COUNTY, _CRAWLED)) is None
+
+
+def test_a_town_that_may_have_a_charter_and_a_clean_search_found_none_files_no_issue():
+    # Most of Maine's towns have none; flagging each would hold them all out of the scrape pool.
+    assert governing_law_issue(_report(_TOWN, _CRAWLED)) is None
+
+
+def test_a_town_that_may_have_a_charter_and_whose_search_was_refused_is_source_blocked():
+    issue = governing_law_issue(_report(_TOWN, _REFUSED))
+
+    assert issue is not None
+    assert issue.issue_type == PipelineIssueType.SOURCE_BLOCKED
+    assert issue.data["missing"] == Missing.CHARTER
 
 
 def test_a_county_whose_search_was_refused_is_source_blocked():
