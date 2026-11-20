@@ -7,9 +7,8 @@
  * never about it: §9 drives the button from `blockingErrors`, the same function the roster
  * editor's Publish uses.
  *
- * The blockers banner went with the preview, so the button carries the whole answer: its label
- * counts what is wrong and its title names it. One control, one source — which is what the
- * retired "the banner and the button agree" test was really asserting.
+ * The button's label counts what is wrong; the list under the header names each one, from the
+ * same `blockers` as the button, so the two cannot disagree.
  */
 
 import { test, expect } from "../fixtures/index.js";
@@ -28,13 +27,14 @@ test.describe("Publish gating", () => {
     authenticatedPage: page,
   }) => {
     await page.goto(`/review/session?changeset_id=${SCALE_CHANGESET_ID}`);
-    await clearNameOf(page, "Councillor 02 Scale");
+    await clearNameOf(page, "Sam 02 Scale");
 
     const approve = page.locator(".review-session__approve-btn");
     await expect(approve).toBeDisabled();
     await expect(approve).toContainText("to fix before approving");
-    // Which field, not just how many: the banner used to say this, and the title says it now.
     await expect(approve).toHaveAttribute("title", /Name: Required/);
+    // On screen too, for touch and keyboard users the title never reaches.
+    await expect(page.locator(".review-session__blockers li")).toContainText(["Name: Required"]);
 
     // Save updates is never gated — parking incomplete work is what it is for.
     await expect(page.locator(".review-session__save-btn")).toBeEnabled();
@@ -47,7 +47,7 @@ test.describe("Publish gating", () => {
     // Name, because it is the only required scalar: clearing one row of Source urls leaves an
     // empty string rather than an empty list, and the Post field is a picker that cannot be
     // emptied into an error while the derivation still names a post.
-    await clearNameOf(page, "Councillor 02 Scale");
+    await clearNameOf(page, "Sam 02 Scale");
     await expect(page.locator(".review-session__approve-btn")).toBeDisabled();
 
     // The card is findable by the fallback the editor renders once the name is gone, which is

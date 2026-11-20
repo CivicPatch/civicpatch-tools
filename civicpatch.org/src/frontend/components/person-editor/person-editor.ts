@@ -13,7 +13,8 @@ import {
   diffValue,
   isContextField,
   type DiffRecord,
-  type FieldReason,
+  FieldReason,
+  type FieldReasonKey,
   type Issue,
   type SurvivingField,
 } from "../fields/field-model.js";
@@ -49,7 +50,7 @@ export interface PersonEditorProps {
   oldRecord: DiffRecord;
   newRecord: DiffRecord;
   surviving: SurvivingField[];
-  frozenReasons: Map<string, FieldReason>;
+  frozenReasons: Map<string, FieldReasonKey>;
   issues: Issue[];
   isReadOnly: boolean;
   jurisdictionOcdid: string | null | undefined;
@@ -200,11 +201,12 @@ function renderFields(props: PersonEditorProps, keys: Set<string>) {
       oldRecord,
       newRecord,
       state: current?.state ?? "same",
-      reason: props.frozenReasons.get(field.key) ?? "diff",
+      reason: props.frozenReasons.get(field.key) ?? FieldReason.DIFF,
       error: current?.error ?? null,
       issueMessages: props.isDirty
         ? []
         : issues.filter((issue) => issue.field === field.key).map((issue) => issue.message),
+      isDirty: props.isDirty,
       save: onSave,
       lock: fieldLock(
         props.accepts.get(field.key),
@@ -254,7 +256,7 @@ export function renderPersonEditor(props: PersonEditorProps) {
   const hasReviewableField = FIELD_SCHEMA.some(
     (field) =>
       visibleKeys.has(field.key) &&
-      (!isContextField(field) || frozenReasons.get(field.key) === "error"),
+      (!isContextField(field) || frozenReasons.get(field.key) === FieldReason.ERROR),
   );
   if (!departing && !hasReviewableField && !isExpanded) return renderStrip(props);
   return html`

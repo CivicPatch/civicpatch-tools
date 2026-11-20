@@ -79,5 +79,10 @@ test.describe("Review progress dots", () => {
     await expect(dots.nth(2)).toHaveClass(/review-session__dot--deferred/);
     await expect(dots.nth(1)).toBeEnabled();
     await expect(dots.nth(2)).toBeEnabled();
+
+    await expect(dots.nth(0)).toHaveAccessibleName(/^Entry 1 of \d+: this entry$/);
+    await expect(dots.nth(0)).toHaveAttribute("aria-current", "step");
+    await expect(dots.nth(1)).toHaveAccessibleName(/^Entry 2 of \d+: skipped$/);
+    await expect(dots.nth(1)).not.toHaveAttribute("aria-current");
   });
 });

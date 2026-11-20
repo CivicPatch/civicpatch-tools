@@ -1,6 +1,8 @@
 import { html } from "lit-html";
-import { component } from "haunted";
+import { component, useState } from "haunted";
+import { DANGER_VARIANT } from "../../components/confirm-modal/confirm-modal.js";
 import { type OfficeEdit } from "../../components/person-editor/office-edits.js";
+import { type PersonCard } from "../../components/people/person-cards.js";
 
 // What the reviewer can do with the card in front of them. The card owns the
 // edits, so approving and saving carry the patch out in the event and the page
@@ -37,6 +39,8 @@ type ReviewSessionActionsHost = HTMLElement & {
   // the edit route reads `offices`, and silence about a person leaves them as they are.
   removedIds: string[];
   mergedInto: Map<string, string>;
+  // Read by the page's `heldOfficesByPerson`, so an edit to one organization keeps the others.
+  cards: PersonCard[];
 };
 
 function ReviewSessionActions(host: ReviewSessionActionsHost) {
@@ -51,6 +55,7 @@ function ReviewSessionActions(host: ReviewSessionActionsHost) {
     officeEdits,
     removedIds,
     mergedInto,
+    cards,
   } = host;
 
   const blockerTitle = blockers
@@ -64,7 +69,7 @@ function ReviewSessionActions(host: ReviewSessionActionsHost) {
   const handleApprove = () =>
     host.dispatchEvent(
       new CustomEvent(APPROVE_EVENT, {
-        detail: { people: dirty ? peoplePatch : null, officeEdits, removedIds, mergedInto },
+        detail: { people: dirty ? peoplePatch : null, officeEdits, removedIds, mergedInto, cards },
         bubbles: true,
         composed: true,
       }),
@@ -73,14 +78,19 @@ function ReviewSessionActions(host: ReviewSessionActionsHost) {
   const handleSave = () =>
     host.dispatchEvent(
       new CustomEvent(SAVE_EVENT, {
-        detail: { people: peoplePatch, officeEdits, removedIds, mergedInto },
+        detail: { people: peoplePatch, officeEdits, removedIds, mergedInto, cards },
         bubbles: true,
         composed: true,
       }),
     );
 
-  const handleReject = () =>
+  // Reject sits beside Approve and cannot be undone from here, so it asks first.
+  const [confirmingReject, setConfirmingReject] = useState(false);
+  const handleReject = () => setConfirmingReject(true);
+  const confirmReject = () => {
+    setConfirmingReject(false);
     host.dispatchEvent(new CustomEvent(REJECT_EVENT, { bubbles: true, composed: true }));
+  };
 
   const handleEndSession = () =>
     host.dispatchEvent(new CustomEvent(END_SESSION_EVENT, { bubbles: true, composed: true }));
@@ -111,6 +121,16 @@ function ReviewSessionActions(host: ReviewSessionActionsHost) {
       `}
       <button class="btn-sm review-session__end-btn" @click=${handleEndSession}>${hasSession ? "End session" : "Exit"}</button>
     </div>
+    ${confirmingReject
+      ? html`<civ-confirm-modal
+          .title=${"Reject this scrape?"}
+          .message=${"None of its proposed people will be published. This cannot be undone from here."}
+          .confirmLabel=${"Reject scrape"}
+          .variant=${DANGER_VARIANT}
+          @confirm=${confirmReject}
+          @cancel=${() => setConfirmingReject(false)}
+        ></civ-confirm-modal>`
+      : ""}
   `;
 }
 

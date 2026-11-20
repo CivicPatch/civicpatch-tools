@@ -23,10 +23,10 @@
 // reason a field FIRST appeared is the one that sticks (§2.2), while its badge
 // is derived from current state.
 
-import { type FieldReason, type SurvivingField } from "../../components/fields/field-model.js";
+import { type FieldReasonKey, type SurvivingField } from "../../components/fields/field-model.js";
 
 // person id -> field key -> why that field first became visible
-export type FrozenFields = Map<string, Map<string, FieldReason>>;
+export type FrozenFields = Map<string, Map<string, FieldReasonKey>>;
 
 export interface CardFields {
   personId: string;
@@ -46,7 +46,7 @@ export function foldVisible(
 
   for (const { personId, surviving } of cards) {
     const current = frozen.get(personId);
-    let personNext: Map<string, FieldReason> | null = null;
+    let personNext: Map<string, FieldReasonKey> | null = null;
 
     for (const { field, reason } of surviving) {
       if (current?.has(field.key)) continue;
@@ -122,7 +122,7 @@ export function nextFrozen(
 export function visibleFields(
   frozen: FrozenFields,
   personId: string,
-): Map<string, FieldReason> {
+): Map<string, FieldReasonKey> {
   return frozen.get(personId) ?? new Map();
 }
 

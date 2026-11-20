@@ -350,6 +350,12 @@ describe("merge candidates", () => {
     expect(ids).toEqual(["b", "c"]);
   });
 
+  it("offers somebody in two organizations once", () => {
+    const anchor = existing("a");
+    const ids = mergeCandidates(anchor, [existing("b"), existing("b"), added("c")]).map((c) => c.personId);
+    expect(ids).toEqual(["b", "c"]);
+  });
+
   it("drops decided people from the list", () => {
     const anchor = existing("a");
     const ids = mergeCandidates(anchor, [

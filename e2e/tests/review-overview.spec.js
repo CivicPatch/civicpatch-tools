@@ -40,8 +40,8 @@ test.describe("Review overview", () => {
 
     // An untouched person is still present and still theirs to open — folded, not
     // dropped from the list.
-    await expect(foldFor(page, "Councillor 03 Scale")).toHaveCount(1);
-    await expect(rowFor(page, "Councillor 03 Scale")).toHaveCount(0);
+    await expect(foldFor(page, "Sam 03 Scale")).toHaveCount(1);
+    await expect(rowFor(page, "Sam 03 Scale")).toHaveCount(0);
   });
 
   test("roster rank order is kept, so a fold sits between the cards around it", async ({
@@ -53,27 +53,24 @@ test.describe("Review overview", () => {
       await page.locator("review-overview .pc-name, review-overview .review-fold__name").allTextContents()
     ).map((n) => n.trim());
 
-    // `sort_people` ranks by role before division, so the five the scrape promoted to
-    // Council President head the list — a promotion moves someone, and the review shows
-    // them where the roster will.
-    expect(names.slice(0, 5)).toEqual([
-      "Councillor 09 Scale",
-      "Councillor 18 Scale",
-      "Councillor 21 Scale",
-      "Councillor 30 Scale",
-      "Councillor 33 Scale",
+    // "Council President" is a member role on their ward's Member post, so a promotion keeps its ward slot.
+    const president = names.indexOf("Sam 09 Scale");
+    expect(names.slice(president - 1, president + 2)).toEqual([
+      "Sam 08 Scale",
+      "Sam 09 Scale",
+      "Sam 10 Scale",
     ]);
 
     // Then the council members, in ward order: W1 folds, W2 changed, W3 and W4 fold,
     // W5 changed. Reading that run top to bottom must give it back — this is the whole
     // point of dropping the groups.
-    const start = names.indexOf("Councillor 01 Scale");
+    const start = names.indexOf("Sam 01 Scale");
     expect(names.slice(start, start + 5)).toEqual([
-      "Councillor 01 Scale",
-      "Councillor 02 Scale",
-      "Councillor 03 Scale",
-      "Councillor 04 Scale",
-      "Councillor 05 Scale",
+      "Sam 01 Scale",
+      "Sam 02 Scale",
+      "Sam 03 Scale",
+      "Sam 04 Scale",
+      "Sam 05 Scale",
     ]);
   });
 
@@ -85,7 +82,7 @@ test.describe("Review overview", () => {
     // Ranked: contact details ahead of term dates. Source urls is no longer in
     // this list — it is a context field and renders as a numbered link instead,
     // so a tag would say the same thing twice.
-    const row = rowFor(page, "Councillor 02 Scale");
+    const row = rowFor(page, "Sam 02 Scale");
     // The office line is the card's subtitle now, shown whether or not it moved.
     await expect(row.locator(".pv:not(.pv--post) .pvk")).toHaveText(["phone", "term end"]);
     await expect(row).toHaveClass(/review-row--changed/);
@@ -100,10 +97,10 @@ test.describe("Review overview", () => {
     // `removed` and `deleted` share a hue, so the badge is the only thing that
     // separates them — and nothing else names the status now the groups are gone.
     await expect(
-      rowFor(page, "Councillor 02 Scale").locator(".review-row__badge"),
+      rowFor(page, "Sam 02 Scale").locator(".review-row__badge"),
     ).toHaveText("Changed");
     await expect(
-      rowFor(page, "Councillor 36 Scale").locator(".review-row__badge"),
+      rowFor(page, "Sam 36 Scale").locator(".review-row__badge"),
     ).toHaveText("Not in scrape");
     await expect(
       rowFor(page, "Newcomer 01 Scale").locator(".review-row__badge"),
@@ -115,17 +112,15 @@ test.describe("Review overview", () => {
   }) => {
     await openOverview(page);
 
-    // Councillor 09 carries duplicate_unique_role, anchored to post_id. The
+    // Sam 09 carries duplicate_unique_role, anchored to post_id. The
     // issue colours the field it is anchored to, ahead of that field's own diff
     // state — and the card says so once more in its own chip.
     // The markup moved to `.pv` in the 2026-09 redesign; the claim is unchanged — the field
     // the issue names is marked, not just the card.
-    const row = rowFor(page, "Councillor 09 Scale");
+    const row = rowFor(page, "Sam 09 Scale");
     await expect(row.locator(".pv--post")).toHaveClass(/pv--issue/);
-    // This verified the chip read "Has an issue". It now verifies it names the issue, because
-    // the chip carries the issue's own code — a generic label said nothing the card's colour
-    // had not already said.
-    await expect(row.locator(".review-row__attn")).toContainText("duplicate unique role");
+    // The chip names the issue in a reviewer's words, not its code.
+    await expect(row.locator(".review-row__attn")).toContainText("two people, one seat");
   });
 
   test("a departing person is one decision — struck, and no field list", async ({
@@ -133,7 +128,7 @@ test.describe("Review overview", () => {
   }) => {
     await openOverview(page);
 
-    const row = rowFor(page, "Councillor 36 Scale");
+    const row = rowFor(page, "Sam 36 Scale");
     await expect(row).toHaveClass(/review-row--removed/);
     // With no new-side record every field reads cleared; a list here would say
     // "9 things to review" about a card that is one decision.
@@ -158,8 +153,8 @@ test.describe("Review overview", () => {
   }) => {
     await openOverview(page);
 
-    await rowFor(page, "Councillor 02 Scale").locator(".pc-name").click();
-    await expect(editorFor(page, "Councillor 02 Scale")).toBeVisible();
+    await rowFor(page, "Sam 02 Scale").locator(".pc-name").click();
+    await expect(editorFor(page, "Sam 02 Scale")).toBeVisible();
   });
 
   test("a folded person opens the editor too", async ({
@@ -169,8 +164,8 @@ test.describe("Review overview", () => {
 
     // Folding is a display decision, not a loss of reach: an untouched person is
     // still editable, and the fold is the only way to get to them here.
-    await foldFor(page, "Councillor 03 Scale").locator(".review-fold__open").click();
-    await expect(editorFor(page, "Councillor 03 Scale")).toBeVisible();
+    await foldFor(page, "Sam 03 Scale").locator(".review-fold__open").click();
+    await expect(editorFor(page, "Sam 03 Scale")).toBeVisible();
   });
 
   test("the whole card is one target — nothing in it opens something else", async ({
@@ -186,7 +181,7 @@ test.describe("Review overview", () => {
     //
     // Source numbers are the one deliberate exception, raised above the hit area
     // so a reviewer can check a source without opening the person.
-    const row = rowFor(page, "Councillor 02 Scale");
+    const row = rowFor(page, "Sam 02 Scale");
     await expect(row.locator(".pc-ident button")).toHaveCount(0);
     await expect(
       row.locator(".pc-ident a:not(.review-row__source)"),
@@ -203,7 +198,7 @@ test.describe("Review overview", () => {
       .locator(".pv", { hasText: "term end" })
       .boundingBox();
     await page.mouse.click(tag.x + tag.width / 2, tag.y + tag.height / 2);
-    await expect(editorFor(page, "Councillor 02 Scale")).toBeVisible();
+    await expect(editorFor(page, "Sam 02 Scale")).toBeVisible();
   });
 
   test("adding a person lands them last and opens the editor on them", async ({

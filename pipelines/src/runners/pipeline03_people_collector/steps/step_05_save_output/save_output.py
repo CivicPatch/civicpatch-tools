@@ -30,4 +30,4 @@ def save_data_to_file(records: List[PersonSourceRecord], file_path: str):
     """
     os.makedirs(os.path.dirname(file_path), exist_ok=True)
     with open(file_path, "w") as f:
-        f.write(yaml_dump([record.model_dump() for record in records]))
+        f.write(yaml_dump([record.model_dump(mode="json") for record in records]))

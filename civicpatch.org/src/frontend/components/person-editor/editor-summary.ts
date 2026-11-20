@@ -49,6 +49,8 @@ export function editorSummary(input: EditorSummaryInput): string {
   if (input.status === PersonStatus.ADDED) {
     parts.push("New person");
   } else {
+    // A restored record is the old one, so nothing has to move for it to be a change.
+    if (input.status === PersonStatus.RESTORED) parts.push("Restored");
     const changed = changedFieldCount(input.surviving);
     if (changed) parts.push(`${plural(changed, "field")} changed`);
   }

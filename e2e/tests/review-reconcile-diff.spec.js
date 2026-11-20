@@ -78,8 +78,9 @@ test.describe("Review reconcile diff (populated)", () => {
     // asserted a single option reading "Council Member — new post"; the picker says the role
     // plainly and marks the division "(New)" where no post pairs the two yet, which is the
     // same claim about the same combination.
+    // The label is the role's own, from the place's law else the config, which names it "Member".
     await expect(post.getByLabel("Role", { exact: true }).locator("option:checked")).toHaveText(
-      /Council Member/,
+      "Member",
     );
     // And it says the post does not exist yet. At-large is the division select's first option
     // and its default, and until 2026-09-24 it was the only one carrying no "(New)" — so the
@@ -94,7 +95,7 @@ test.describe("Review reconcile diff (populated)", () => {
     // one — so the issue is what surfaces the row and what says where she came from.
     await expect(post.locator(".person-editor__was")).toHaveCount(0);
     await expect(post.locator(".person-editor__issue")).toContainText(
-      "Moved from Mayor to Council Member",
+      "Moved from Mayor to Member",
     );
 
     // A scalar that did move carries the old value as a trailing annotation rather than a

@@ -1,4 +1,4 @@
-import { html } from "lit-html";
+import { html, nothing } from "lit-html";
 import { component } from "haunted";
 import "../../components/review-sidebar/review-sidebar-trigger.js";
 
@@ -23,6 +23,26 @@ const BACK_EVENT = "back";
 const ADVANCE_EVENT = "advance";
 const NAVIGATE_TO_EVENT = "navigate-to";
 
+const DotStatus = Object.freeze({
+  CURRENT: "current",
+  FAILED: "failed",
+  RESOLVED: "resolved",
+  SAVED: "saved",
+  DEFERRED: "deferred",
+  FUTURE: "future",
+} as const);
+
+type DotStatusKey = (typeof DotStatus)[keyof typeof DotStatus];
+
+const DOT_LABEL: Record<DotStatusKey, string> = {
+  [DotStatus.CURRENT]: "this entry",
+  [DotStatus.FAILED]: "save failed",
+  [DotStatus.RESOLVED]: "done",
+  [DotStatus.SAVED]: "saved, not published",
+  [DotStatus.DEFERRED]: "skipped",
+  [DotStatus.FUTURE]: "not reached yet",
+};
+
 // The checklist trigger rides in here rather than in .review-session__actions
 // because the step-nav is the only part of the header that stays sticky below
 // 768px — the header itself becomes `display: contents` and the action buttons
@@ -42,13 +62,13 @@ function ReviewSessionControls(host: ReviewSessionControlsHost) {
   const { entryNumber, hasPrev, resolvedEntryNumbers, savedEntryNumbers, failedEntryNumbers, frontierEntry, total } = progress ?? {};
   const displayMax = hasSession ? total : entryNumber;
 
-  function getDotStatus(n: number) {
-    if (n === entryNumber) return "current";
-    if (failedEntryNumbers.has(n)) return "failed";
-    if (resolvedEntryNumbers.has(n)) return "resolved";
-    if (savedEntryNumbers.has(n)) return "saved";
-    if (n <= frontierEntry) return "deferred";
-    return "future";
+  function getDotStatus(n: number): DotStatusKey {
+    if (n === entryNumber) return DotStatus.CURRENT;
+    if (failedEntryNumbers.has(n)) return DotStatus.FAILED;
+    if (resolvedEntryNumbers.has(n)) return DotStatus.RESOLVED;
+    if (savedEntryNumbers.has(n)) return DotStatus.SAVED;
+    if (n <= frontierEntry) return DotStatus.DEFERRED;
+    return DotStatus.FUTURE;
   }
 
   const handleBack = () =>
@@ -83,9 +103,13 @@ function ReviewSessionControls(host: ReviewSessionControlsHost) {
       <div class="review-session__dots">
         ${Array.from({ length: total }, (_, i) => i + 1).map((n) => {
           const status = getDotStatus(n);
+          const label = `Entry ${n} of ${total}: ${DOT_LABEL[status]}`;
           return html`<button
             class="review-session__dot review-session__dot--${status}"
-            ?disabled=${status === "future" || status === "current"}
+            aria-label=${label}
+            title=${label}
+            aria-current=${status === DotStatus.CURRENT ? "step" : nothing}
+            ?disabled=${status === DotStatus.FUTURE || status === DotStatus.CURRENT}
             @click=${() => handleNavigateTo(n)}
           ></button>`;
         })}

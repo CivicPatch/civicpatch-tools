@@ -22,6 +22,7 @@ import {
   runsOf,
   foundNobody,
   organizationMeta,
+  withMergesStaying,
   sectionsByOrganization,
   sourceMapFor,
   tallyOf,
@@ -48,6 +49,8 @@ export interface ReviewOverviewProps {
   // Named so a section heading can say whose roster it is. A proposal names its organization by
   // id only, and an id is not a heading.
   organizations?: { id: string; name: string }[];
+  // Absorbed id to survivor id: a merged-away row says who absorbed it, not that it left.
+  mergedInto: Map<string, string>;
 }
 
 const UNMATCHED_SECTION_LABEL = "Unmatched role";
@@ -225,7 +228,7 @@ function renderOrganization(
         <span class="jurisdiction-section__meta">
           ${organizationMeta(
             organizationId,
-            entries,
+            withMergesStaying(entries, props.mergedInto),
             props.organizationsRead ?? [],
             sources,
           )}
@@ -254,7 +257,7 @@ function ReviewOverview(props: ReviewOverviewProps) {
 
   return html`
     <div class="review-overview">
-      ${renderTally(list)}
+      ${renderTally(list.filter((card) => !props.mergedInto.has(card.personId)))}
       ${list.length
         ? html`<div class="rgroup-list">
             ${sections.organizations.map((organization) =>

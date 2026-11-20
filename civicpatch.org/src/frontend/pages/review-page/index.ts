@@ -5,7 +5,8 @@ import { useLocalStorage, PERSIST_FOREVER } from "../../hooks/use-local-storage.
 import { STORAGE_KEYS } from "../../utils/storage-keys.js";
 import { landingUrl, sessionUrl, STATE_PARAM } from "../review-routes.js";
 import { DEFAULT_STATS } from "../review-session-page/review-state.js";
-import { SESSION_COUNTS } from "./review-landing.js";
+import { sessionCountsFor } from "./session-counts.js";
+import "./review-landing.js";
 import "../../components/panel/panel.css";
 import "./review-page.css";
 
@@ -50,7 +51,8 @@ function ReviewPage() {
   // picked one is no longer valid, falls back to the smallest valid option — always
   // a concrete, visible value, since whatever the picker highlights is exactly what
   // gets submitted, never a different number silently substituted underneath it.
-  const validCounts = SESSION_COUNTS.filter((n) => n <= (stats.available_count ?? 0));
+  const available = stats.available_count ?? 0;
+  const validCounts = sessionCountsFor(available).filter((n) => n <= available);
   const sessionCount =
     chosenCount !== undefined && validCounts.includes(chosenCount)
       ? chosenCount

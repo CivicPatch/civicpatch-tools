@@ -24,8 +24,8 @@ import {
   actionsFor,
 } from "./helpers/review-card.js";
 
-const FIRST = "Councillor 02 Scale";
-const SECOND = "Councillor 05 Scale";
+const FIRST = "Sam 02 Scale";
+const SECOND = "Sam 05 Scale";
 
 const open = async (page, name) => {
   await page.goto(`/review/session?changeset_id=${SCALE_CHANGESET_ID}`);

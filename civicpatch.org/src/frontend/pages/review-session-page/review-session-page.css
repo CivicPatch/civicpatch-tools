@@ -177,6 +177,8 @@
   .review-session__pr-meta {
     display: flex;
     flex-direction: column;
+    /* Without it the column stretches the small "View published data" button across the page. */
+    align-items: flex-start;
     gap: 0.4rem;
     flex: 1 1 auto;
     min-width: 0;
@@ -258,13 +260,17 @@
     text-transform: lowercase;
     font-family: var(--font-mono);
   }
-  .review-session__status-banner--merged {
+  .review-session__status-banner--published {
     background: var(--diff-added);
     color: var(--bg);
   }
-  .review-session__status-banner--closed {
+  .review-session__status-banner--dismissed {
     background: var(--diff-removed);
     color: var(--bg);
+  }
+  .review-session__blockers ul {
+    margin: 0.3rem 0 0;
+    padding-left: 1.1rem;
   }
   .review-session__baseline-banner {
     max-width: var(--page-width);
@@ -277,7 +283,8 @@
     border: 1px solid var(--warning);
     border-radius: var(--radius);
   }
-  .review-session__duplicate-banner {
+  .review-session__duplicate-banner,
+  .review-session__blockers {
     max-width: var(--page-width);
     width: 100%;
     margin-inline: auto;

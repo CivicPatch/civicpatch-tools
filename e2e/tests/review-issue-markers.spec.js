@@ -90,4 +90,18 @@ test.describe("Review issue markers", () => {
     await openEditorFor(page, "Carol Extra");
     await expect(carol.locator(".person-editor__issue")).toHaveCount(0);
   });
+
+  test("an edit elsewhere on the card does not call its post issue resolved", async ({
+    authenticatedPage: page,
+  }) => {
+    await page.goto(`/review/session?changeset_id=${MARKERS_CHANGESET_ID}`);
+    await editField(page, "Alice Mayor", "Other names", "Alicia Mayor");
+
+    await openEditorFor(page, "Alice Mayor");
+    const seat = editorFor(page, "Alice Mayor")
+      .locator(".person-editor__field")
+      .filter({ hasText: "Post" });
+    await expect(seat).toHaveCount(1);
+    await expect(seat.locator(".person-editor__resolved")).toHaveCount(0);
+  });
 });

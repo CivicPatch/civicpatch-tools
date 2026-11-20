@@ -19,11 +19,11 @@ import { openEditorFor, editorFor } from "./helpers/review-card.js";
 // The scrape promotes these five to Council President, a unique role the members elect: each keeps
 // a Member post at a ward no post row holds yet, with Council President as a member role.
 const PROMOTED = [
-  "Councillor 09 Scale",
-  "Councillor 18 Scale",
-  "Councillor 21 Scale",
-  "Councillor 30 Scale",
-  "Councillor 33 Scale",
+  "Sam 09 Scale",
+  "Sam 18 Scale",
+  "Sam 21 Scale",
+  "Sam 30 Scale",
+  "Sam 33 Scale",
 ];
 
 test.describe("Review card at scale", () => {
@@ -57,7 +57,7 @@ test.describe("Review card at scale", () => {
     authenticatedPage: page,
   }) => {
     await page.goto(`/review/session?changeset_id=${SCALE_CHANGESET_ID}`);
-    await openEditorFor(page, "Councillor 09 Scale");
+    await openEditorFor(page, "Sam 09 Scale");
 
     // Ingest mints no posts, so a promotion names a post no row holds. The picker has to offer
     // it anyway — otherwise the derivation's answer is simply missing and the field reads as
@@ -66,7 +66,7 @@ test.describe("Review card at scale", () => {
     // division no post holds yet is marked there. (An at-large pairing gets no marker at all —
     // noted in the plan's §20.)
     // The group, not `.field-control__office` — that class is on each of the two selects.
-    const picker = editorFor(page, "Councillor 09 Scale").locator(
+    const picker = editorFor(page, "Sam 09 Scale").locator(
       ".field-control__office-group",
     );
     await expect(picker.getByLabel("Role", { exact: true }).locator("option:checked"))

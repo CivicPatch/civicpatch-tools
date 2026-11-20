@@ -16,6 +16,7 @@ import {
   POST_FIELD,
   recordsDiffer,
   survivingFields,
+  FieldReason,
   type DiffRecord,
   type Issue,
   type SurvivingField,
@@ -24,6 +25,7 @@ import {
   parseDivision,
   DIVISION_AT_LARGE,
 } from "../edit-people/person-edit-utils.js";
+import { UNMATCHED_ROLE_ID } from "../../schemas/role-types.js";
 
 // `deleted` and `restored` are reviewer decisions, not diff verdicts — hence not DiffType values.
 export const PersonStatus = Object.freeze({
@@ -53,6 +55,10 @@ export const DEPARTING = new Set<string>([
   PersonStatus.DELETED,
 ]);
 
+// An unmatched role holds a placeholder post whose label is the role id, so it names no post.
+const namedPosts = <T extends { role_id?: string }>(memberships: T[]): T[] =>
+  memberships.filter((membership) => membership.role_id !== UNMATCHED_ROLE_ID);
+
 // The post's own label alone, no membership label — for a diff that should only ever compare
 // whether the post itself changed, not two independently-changing pieces of text at once (see
 // diff-card.ts's own comment on `renderPostFieldValue`).
@@ -62,8 +68,8 @@ export function postNameFor(card: PersonCard, posts: Post[] = []): string {
   const pickedLabel = pickedPostId ? postLabelFor(pickedPostId, posts) : "";
   if (pickedLabel) return pickedLabel;
 
-  const source = personOf(card)?.memberships ?? [];
-  if (source.length) return source.map(postName).join("; ");
+  const source = inBody(personOf(card)?.memberships, card.organizationId) ?? [];
+  if (source.length) return namedPosts(source).map(postName).join("; ");
   return record?.labels?.join("; ") ?? "";
 }
 
@@ -74,7 +80,7 @@ export function membershipLabelFor(card: PersonCard): string {
   // A reviewer's own explicit pick names a post, not a label — the label input beside the
   // picker is a separate, later action (office-edits.ts), so there is nothing to show yet.
   if (record && getFieldValue(record, POST_FIELD)) return "";
-  return (personOf(card)?.memberships ?? [])
+  return (inBody(personOf(card)?.memberships, card.organizationId) ?? [])
     .map((entry) => entry.label || "")
     .filter(Boolean)
     .join("; ");
@@ -88,8 +94,8 @@ export function postsFor(card: PersonCard, posts: Post[] = []): string {
   const pickedLabel = pickedPostId ? postLabelFor(pickedPostId, posts) : "";
   if (pickedLabel) return pickedLabel;
 
-  const source = personOf(card)?.memberships ?? [];
-  if (source.length) return postsHeld(source);
+  const source = inBody(personOf(card)?.memberships, card.organizationId) ?? [];
+  if (source.length) return postsHeld(namedPosts(source));
   return record?.labels?.join("; ") ?? "";
 }
 
@@ -175,7 +181,7 @@ function officeSurvivingField(
     // Matches every other field's own state on the same card: "added" for a first
     // appearance, "changed" for a move or a recomposed label on a seat that stayed put.
     state: before?.length ? "changed" : "added",
-    reason: "diff",
+    reason: FieldReason.DIFF,
     error: null,
   };
 }
@@ -188,11 +194,11 @@ export interface MovedNote {
 // postMoved already folds a seat change into one CHANGED card; this says which
 // post it left and which it landed in.
 export function movedNote(card: PersonCard, posts: Post[]): MovedNote | null {
-  const oldMemberships = card.oldRecord?.memberships;
-  if (!postMoved(oldMemberships, card.newRecord?.memberships)) return null;
-  const from = oldMemberships?.length
-    ? oldMemberships.map(postName).join("; ")
-    : (card.oldRecord?.labels?.join("; ") ?? "");
+  // Per organization: nothing held here before means a new seat on this row, not a move.
+  const before = inBody(card.oldRecord?.memberships, card.organizationId);
+  const after = inBody(card.newRecord?.memberships, card.organizationId);
+  if (!before?.length || !postMoved(before, after)) return null;
+  const from = before.map(postName).join("; ");
   const to = postNameFor(card, posts);
   return from && from !== to ? { from, to } : null;
 }
@@ -205,7 +211,7 @@ function statusFor(
   restoredIds: Set<string>,
 ): PersonStatusKey {
   // Restoring copies the old record back, so it would otherwise diff as `unchanged`.
-  if (restoredIds.has(personId)) return PersonStatus.RESTORED;
+  if (restoredIds.has(rowKey) || restoredIds.has(personId)) return PersonStatus.RESTORED;
   // Either spelling: a roster removal names one row, a review's names the person whole.
   if (removedIds.has(rowKey) || removedIds.has(personId))
     return PersonStatus.DELETED;
@@ -229,10 +235,10 @@ function bodiesOf(
   return ids.length ? ids : [undefined];
 }
 
-const inBody = (
-  memberships: HeldMembership[] | undefined,
+const inBody = <T extends HeldMembership>(
+  memberships: T[] | undefined,
   organizationId: string | undefined,
-): HeldMembership[] | undefined =>
+): T[] | undefined =>
   organizationId === undefined
     ? memberships
     : memberships?.filter(
@@ -283,8 +289,17 @@ export function buildPersonCards({
           removedIds,
           restoredIds,
         );
-        // A move is a change even when every field matches.
-        if (status === PersonStatus.UNCHANGED && postMoved(held, proposed)) {
+        // Still in the scrape, but no longer in this organization: this row is leaving.
+        const stillListed = status === PersonStatus.UNCHANGED || status === PersonStatus.CHANGED;
+        if (stillListed && organizationId !== undefined && held?.length && !proposed?.length) {
+          status = PersonStatus.REMOVED;
+        }
+        const office = officeSurvivingField(
+          held,
+          status === PersonStatus.REMOVED ? undefined : proposed,
+        );
+        // A move or a recomposed membership label is a change even when every field matches.
+        if (status === PersonStatus.UNCHANGED && office) {
           status = PersonStatus.CHANGED;
         }
         // Only the scrape dropping someone leaves no new-side record.
@@ -295,10 +310,6 @@ export function buildPersonCards({
         const surviving = DEPARTING.has(status)
           ? []
           : survivingFields(entry.from, newRecord, cardIssues);
-        const office = officeSurvivingField(
-          held,
-          status === PersonStatus.REMOVED ? undefined : proposed,
-        );
         return {
           personId,
           organizationId,

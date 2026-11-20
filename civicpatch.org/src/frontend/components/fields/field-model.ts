@@ -168,12 +168,19 @@ export interface Issue {
 
 // Ordered by how much it demands of the reviewer, and that order is the
 // precedence when several apply.
-export type FieldReason = "error" | "issue" | "diff" | "context";
+export const FieldReason = Object.freeze({
+  ERROR: "error",
+  ISSUE: "issue",
+  DIFF: "diff",
+  CONTEXT: "context",
+} as const);
+
+export type FieldReasonKey = (typeof FieldReason)[keyof typeof FieldReason];
 
 export interface SurvivingField {
   field: FieldSpec;
   state: ScalarDiffState;
-  reason: FieldReason;
+  reason: FieldReasonKey;
   error: string | null;
 }
 
@@ -194,14 +201,14 @@ export function survivingFields(
   for (const field of FIELD_SCHEMA) {
     const state = fieldState(field, oldRecord, newRecord);
     const error = fieldError(field, newRecord);
-    const reason: FieldReason | null = error
-      ? "error"
+    const reason: FieldReasonKey | null = error
+      ? FieldReason.ERROR
       : anchoredFields.has(field.key)
-        ? "issue"
+        ? FieldReason.ISSUE
         : state !== "same"
-          ? "diff"
+          ? FieldReason.DIFF
           : isContextField(field)
-            ? "context"
+            ? FieldReason.CONTEXT
             : null;
     if (reason) surviving.push({ field, state, reason, error });
   }

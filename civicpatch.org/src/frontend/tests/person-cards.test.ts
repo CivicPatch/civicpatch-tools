@@ -11,6 +11,7 @@ import {
   publishSet,
   blockingErrors,
   byDivision,
+  movedNote,
   PersonStatus,
 } from "../components/people/person-cards.js";
 import { isContextField, type Issue } from "../components/fields/field-model.js";
@@ -412,6 +413,14 @@ describe("postsFor — what a card calls the person's post", () => {
   it("is empty when nothing is known", () => {
     expect(postsFor(card({}))).toBe("");
   });
+  it("names no post for an unmatched role, whose post label is only the role id", () => {
+    const unmatched = card({
+      labels: ["Dogcatcher"],
+      memberships: [{ role_id: "unmatched", post_label: "unmatched", label: "Dogcatcher" }],
+    });
+    expect(postsFor(unmatched)).toBe("");
+    expect(postNameFor(unmatched)).toBe("");
+  });
   it("prefers the reviewer's own post_id pick over the memberships", () => {
     const posts = [{ id: "post-1", label: "Council President" }] as never;
     expect(
@@ -571,5 +580,68 @@ describe("buildPersonCards — one row per body", () => {
 
     expect(cards).toHaveLength(1);
     expect(cards[0].organizationId).toBeUndefined();
+  });
+  it("names only the row's own organization's post", () => {
+    const memberships = [
+      { ...office("org-1"), post_label: "Council Member" },
+      { ...office("org-2"), post_label: "Board Member" },
+    ];
+    const cards = build({
+      existing: [person("a", { memberships })],
+      currentPeople: [person("a", { memberships })],
+    });
+
+    expect(cards.map((card) => postsFor(card))).toEqual(["Council Member", "Board Member"]);
+    expect(cards.map((card) => postNameFor(card))).toEqual(["Council Member", "Board Member"]);
+  });
+
+  it("shows a move only on the organization where the post moved", () => {
+    const board = { ...office("org-2"), post_label: "Board Member" };
+    const cards = build({
+      existing: [person("a", { memberships: [{ ...office("org-1", "seat-a"), post_label: "Seat A" }, board] })],
+      currentPeople: [person("a", { memberships: [{ ...office("org-1", "seat-c"), post_label: "Seat C" }, board] })],
+    });
+
+    expect(cards.map((card) => movedNote(card, []))).toEqual([{ from: "Seat A", to: "Seat C" }, null]);
+  });
+
+  it("marks the row leaving when the scrape dropped them from that organization only", () => {
+    const cards = build({
+      existing: [person("a", { memberships: [office("org-1"), office("org-2")] })],
+      currentPeople: [person("a", { memberships: [office("org-1")] })],
+    });
+
+    expect(cards.map((card) => [card.organizationId, card.status])).toEqual([
+      ["org-1", PersonStatus.UNCHANGED],
+      ["org-2", PersonStatus.REMOVED],
+    ]);
+  });
+
+  it("restores only the row it was pressed on", () => {
+    const cards = build({
+      existing: [person("a", { memberships: [office("org-1"), office("org-2")] })],
+      currentPeople: [person("a", { memberships: [office("org-1")] })],
+      restoredIds: new Set(["a:org-2"]),
+    });
+
+    expect(cards.map((card) => card.status)).toEqual([PersonStatus.UNCHANGED, PersonStatus.RESTORED]);
+  });
+
+  it("counts a new member role on the same post as a change", () => {
+    const cards = build({
+      existing: [person("a", { memberships: [office("org-1")] })],
+      currentPeople: [person("a", { memberships: [{ ...office("org-1"), label: "President" }] })],
+    });
+
+    expect(statuses(cards)).toEqual([["a", PersonStatus.CHANGED]]);
+  });
+
+  it("shows no move on an organization the person is new to", () => {
+    const cards = build({
+      existing: [person("a", { memberships: [office("org-1")] })],
+      currentPeople: [person("a", { memberships: [office("org-1"), office("org-2")] })],
+    });
+
+    expect(cards.map((card) => movedNote(card, []))).toEqual([null, null]);
   });
 });

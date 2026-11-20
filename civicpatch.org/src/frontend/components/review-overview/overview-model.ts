@@ -6,6 +6,7 @@ import {
   type PersonCard,
 } from "../people/person-cards.js";
 import { UNMATCHED_ROLE_ID } from "../../schemas/role-types.js";
+import { REVIEW_ISSUE_CHIP_LABEL, REVIEW_ISSUE_CODE } from "../../schemas/review-issue-codes.js";
 import { type HeldMembership } from "../posts-list/posts-model.js";
 import { isContextField, type SurvivingField } from "../fields/field-model.js";
 import {
@@ -61,20 +62,19 @@ export function attentionOf(card: PersonCard): "error" | null {
   return card.surviving.some((field) => field.error) ? "error" : null;
 }
 
-// Mirrors shared.schemas.IssueCode: these describe exactly what the status badge (or the
-// "Moved" note on the post field) already says, so repeating them as an issue chip too
-// would just say the same thing twice.
-const REDUNDANT_ISSUE_CODES = new Set([
-  "absent_person",
-  "new_person",
-  "moved_person",
-  "changed_field",
+// These describe exactly what the status badge (or the "Moved" note on the post field) already
+// says, so repeating them as an issue chip too would just say the same thing twice.
+const REDUNDANT_ISSUE_CODES = new Set<string>([
+  REVIEW_ISSUE_CODE.ABSENT_PERSON,
+  REVIEW_ISSUE_CODE.NEW_PERSON,
+  REVIEW_ISSUE_CODE.MOVED_PERSON,
+  REVIEW_ISSUE_CODE.CHANGED_FIELD,
 ]);
 
 export function issueTypesOf(card: PersonCard): string[] {
   return card.issues
     .filter((issue) => !REDUNDANT_ISSUE_CODES.has(issue.code))
-    .map((issue) => issue.code.replace(/_/g, " "));
+    .map((issue) => REVIEW_ISSUE_CHIP_LABEL[issue.code] ?? issue.code.replace(/_/g, " "));
 }
 
 export interface TallyEntry {
@@ -121,7 +121,12 @@ export function visibleFields(card: PersonCard): SurvivingField[] {
 
 export type SourceMap = Map<
   string,
-  { number: number; colorClass: string; cachedAt: string | null }
+  {
+    number: number;
+    colorClass: string;
+    cachedAt: string | null;
+    cachedByThisScrape: boolean;
+  }
 >;
 
 export function sourceMapFor(
@@ -138,10 +143,15 @@ export function sourceMapFor(
       }
     }
   }
-  const cachedAtByUrl = new Map(sources.map((s) => [s.url, s.cached_at]));
+  const byUrl = new Map(sources.map((source) => [source.url, source]));
   const map: SourceMap = new Map();
   for (const [url, entry] of buildSourceUrlMap(seen)) {
-    map.set(url, { ...entry, cachedAt: cachedAtByUrl.get(url) ?? null });
+    const source = byUrl.get(url);
+    map.set(url, {
+      ...entry,
+      cachedAt: source?.cached_at ?? null,
+      cachedByThisScrape: source?.is_cached_by_this_scrape ?? false,
+    });
   }
   return map;
 }
@@ -198,6 +208,27 @@ export interface ReviewOrganizationSections {
   unplaced: PersonCard[];
 }
 
+/** A merged-away person's seat moves to whoever absorbed them, so their row is not a departure. */
+export function withMergesStaying(
+  entries: CardInOrganization[],
+  mergedInto: Map<string, string>,
+): CardInOrganization[] {
+  return entries.map((entry) =>
+    mergedInto.has(entry.card.personId) ? { ...entry, leaving: false } : entry,
+  );
+}
+
+export function mergedBadge(
+  card: PersonCard,
+  mergedInto: Map<string, string>,
+  cards: PersonCard[],
+): string | null {
+  const survivorId = mergedInto.get(card.personId);
+  if (!survivorId) return null;
+  const survivor = cards.find((other) => other.personId === survivorId);
+  return `Merged into ${(survivor && personOf(survivor)?.name) || "another person"}`;
+}
+
 /** Nothing was found in this organization: everyone listed here is leaving it. Publishing
  * changes nothing here, whether the scrape read no page for it or read one and returned nobody,
  * because closing skips an organization with nobody in it. */
@@ -205,7 +236,9 @@ export function foundNobody(entries: CardInOrganization[]): boolean {
   return entries.length > 0 && entries.every((entry) => entry.leaving);
 }
 
-/** The newest cached copy behind any of these people's source urls: how old the evidence is. */
+/** The newest copy behind these people that this scrape did not make: how old the evidence
+ * is. This scrape's own copies are not evidence of age, and dating them would have a section
+ * say "no page found this scrape" about a page it just cached. */
 export function newestCachedAt(
   entries: CardInOrganization[],
   sources: SourceMap,
@@ -214,12 +247,12 @@ export function newestCachedAt(
   let newestIso: string | null = null;
   for (const entry of entries) {
     for (const url of entry.card.newRecord?.source_urls ?? []) {
-      const iso = sources.get(url)?.cachedAt ?? null;
-      if (!iso) continue;
-      const at = new Date(iso).getTime();
+      const source = sources.get(url);
+      if (!source?.cachedAt || source.cachedByThisScrape) continue;
+      const at = new Date(source.cachedAt).getTime();
       if (newest === null || at > newest) {
         newest = at;
-        newestIso = iso;
+        newestIso = source.cachedAt;
       }
     }
   }
