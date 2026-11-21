@@ -222,6 +222,8 @@ async def verify(_limits: PipelineRunLimits, logger: PipelineRunLogger, context:
     )
     asked = {claim.ask.role_id for claim in context.data.claims}
     logger.info(f"{len(outcomes.posts)} of {len(asked)} roles quoted from the law, {len(outcomes.re_ask)} to ask again")
+    for line in verify_rules.role_summaries(context.data.claims, outcomes):
+        logger.info(f"role {line}")
     if outcomes.re_ask and not context.data.stopped_at_cost_cap:
         return _next(context, outcomes=outcomes, pending_asks=outcomes.re_ask), OrganizationsCollectorStep.EXTRACT
     return _next(context, outcomes=outcomes), OrganizationsCollectorStep.WRITE

@@ -45,8 +45,11 @@ them elected."
 ## Charters
 
 Chapter 11 lets a county's voters adopt a charter that "may determine the officers of the county"
-([§ 1301](https://legislature.maine.gov/statutes/30-A/title30-Asec1301.html)). No source found names a county that has
-one. Until one is found, every county reads the general law.
+([§ 1301](https://legislature.maine.gov/statutes/30-A/title30-Asec1301.html)). **Somerset County** has one: adopted by
+its voters in November 2010, it widened the board from 3 to 5
+([Bangor Daily News, 2010-10-27](https://www.bangordailynews.com/2010/10/27/news/somerset-county-voters-to-weigh-larger-board-of-commissioners/);
+text: [Charter-2024.pdf](https://somersetcountyme.gov/wp-content/uploads/Charter-2024.pdf)). Pipeline 1 found it on
+2026-11-20; this research had missed it. Others may exist: the statewide law read is the check.
 
 ## Statute urls for `general_law`
 
