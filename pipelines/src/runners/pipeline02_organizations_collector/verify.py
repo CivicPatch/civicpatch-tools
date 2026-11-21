@@ -13,6 +13,8 @@ from shared.utils.layered_config import GoverningLawConfig
 
 # A role with no quote yet is asked again until this many rounds have been asked.
 MAX_ROUNDS = 3
+# Enough of a quote in the run log to tell which clause an answer pointed at.
+QUOTE_PREVIEW_CHARS = 120
 
 
 def role_outcomes(
@@ -55,6 +57,29 @@ def citation(
                 selection_method=method,
             )
     return None
+
+
+def role_summaries(claims: List[RoleClaim], outcomes: RoleOutcomes) -> List[str]:
+    """One run-log line per role asked: how many answers found the office and how it is filled, what
+    VERIFY made of it, and the first quote. The answers are not kept anywhere else."""
+    posted = {post.role for post in outcomes.posts}
+    re_asked = {ask.role_id for ask in outcomes.re_ask}
+    return [_summary(ask, role_claims, posted, re_asked) for ask, role_claims in _by_role(claims)]
+
+
+def _summary(ask: RoleAsk, claims: List[RoleClaim], posted: set[str], re_asked: set[str]) -> str:
+    found = [claim.answer for claim in claims if claim.answer.established]
+    methods = sorted({answer.filled_by.value for answer in found})
+    quote = next((answer.quote for answer in found if answer.quote), "")
+    if ask.role_id in posted:
+        verdict = "posted"
+    elif ask.role_id in re_asked:
+        verdict = "asked again"
+    else:
+        verdict = "no post"
+    method_text = f" ({', '.join(methods)})" if methods else ""
+    quote_text = f", first quote {quote[:QUOTE_PREVIEW_CHARS]!r}" if quote else ""
+    return f"{ask.organization_name} / {ask.role_label}: {len(found)} of {len(claims)} found it{method_text}, {verdict}{quote_text}"
 
 
 def _by_role(claims: List[RoleClaim]) -> List[tuple[RoleAsk, List[RoleClaim]]]:

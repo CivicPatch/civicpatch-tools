@@ -17,7 +17,7 @@ from runners.pipeline02_organizations_collector.schemas import (
 )
 from runners.pipeline02_organizations_collector.sections import GoverningLawPage
 from runners.pipeline02_organizations_collector.transitions.main import verify
-from runners.pipeline02_organizations_collector.verify import MAX_ROUNDS, role_outcomes
+from runners.pipeline02_organizations_collector.verify import MAX_ROUNDS, role_outcomes, role_summaries
 from shared.schemas import FoundBy, GoverningLaw, GoverningLawKind, QuoteScope, SelectionMethod
 from shared.utils.layered_config import Classification, ConfigFile, GovernedBy, GoverningLawConfig, merged_config
 
@@ -73,6 +73,20 @@ def test_one_quoted_answer_of_two_makes_the_post():
     assert (source.url, source.extras.source_page_id) == (_CHARTER.source_url, "charter")
     assert source.note == "The Selectboard shall consist of five members elected at large."
     assert source.extras.matched_in == QuoteScope.SENTENCE
+
+
+def test_the_log_says_per_role_what_the_answers_found_and_what_verify_made_of_it():
+    claims = [
+        _claim(_MEMBER, _NOT_IN_THE_LAW, FilledBy.ELECTED_BY_VOTERS),
+        _claim(_MEMBER, _FIVE_MEMBERS, FilledBy.ELECTED_BY_VOTERS),
+        _claim(_CLERK, "", FilledBy.NOT_STATED, established=False),
+        _claim(_CLERK, "", FilledBy.NOT_STATED, established=False),
+    ]
+
+    assert role_summaries(claims, _outcomes(claims)) == [
+        f"Select Board / Select Board Member: 2 of 2 found it (elected_by_voters), posted, first quote {_NOT_IN_THE_LAW!r}",
+        "Select Board / Clerk: 0 of 2 found it, no post",
+    ]
 
 
 def test_a_role_both_answers_say_is_not_established_has_no_post_and_is_not_asked_again():
