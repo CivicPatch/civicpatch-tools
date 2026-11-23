@@ -37,7 +37,9 @@ _VICE_CHAIR = RoleAsk(organization_name="Select Board", role_id="vice-chair", ro
 _PRESIDING = {"offices": [{"role_id": "chair", "label": "Chair", "filled_by": "elected_by_members", "maximum_memberships": 1, "quote": "elect a Chair"}]}
 
 
-def _context(pending: list[RoleAsk], claims: list[RoleClaim] | None = None, presiding: list[RoleAsk] | None = None) -> OrganizationsCollectorContext:
+def _context(
+    pending: list[RoleAsk], claims: list[RoleClaim] | None = None, presiding: list[RoleAsk] | None = None, passes: int = 0
+) -> OrganizationsCollectorContext:
     return OrganizationsCollectorContext(
         pipeline_run_id="run-1",
         current_state=OrganizationsCollectorStep.EXTRACT,
@@ -50,6 +52,7 @@ def _context(pending: list[RoleAsk], claims: list[RoleClaim] | None = None, pres
             pending_asks=pending,
             presiding_asks=presiding or [],
             claims=claims or [],
+            extract_passes=passes,
         ),
     )
 
@@ -111,7 +114,7 @@ async def test_the_presiding_candidates_are_one_question_asked_twice_each_answer
 async def test_a_re_ask_does_not_ask_the_presiding_question_again():
     earlier = RoleClaim(ask=_MEMBER, answer=RoleAnswer.model_validate(_ANSWER))
 
-    _, _, model = await _extract(_context([_CHAIR], claims=[earlier], presiding=[_CHAIR, _VICE_CHAIR]))
+    _, _, model = await _extract(_context([_CHAIR], claims=[earlier], presiding=[_CHAIR, _VICE_CHAIR], passes=1))
 
     assert "governing_presiding" not in _prompt_names(model)
     assert _prompt_names(model).count("governing_role") == ASKS_PER_QUESTION
@@ -147,6 +150,41 @@ async def test_a_question_that_fails_leaves_its_role_unanswered_not_the_run_ende
         extracted, next_state = await extract(_limits("1"), MagicMock(), _context([_MEMBER, _CHAIR]), MagicMock())
 
     assert [claim.ask.role_id for claim in extracted.data.claims] == ["member", "member"]
+    assert extracted.data.unanswered_asks == [_CHAIR]
     assert next_state == OrganizationsCollectorStep.VERIFY
+
+
+@pytest.mark.asyncio
+async def test_a_role_with_one_try_answered_is_not_unanswered():
+    tries = iter([ValueError("OpenRouter error 403"), _ANSWER])
+
+    async def answer(*_args, **_kwargs):
+        result = next(tries)
+        if isinstance(result, Exception):
+            raise result
+        return result
+
+    with patch(f"{MAIN}.open_router_llm.run_prompt", new=AsyncMock(side_effect=answer)), patch(
+        f"{MAIN}.cost_utils.total_cost", return_value=Decimal("0")
+    ):
+        extracted, _ = await extract(_limits("1"), MagicMock(), _context([_MEMBER]), MagicMock())
+
+    assert extracted.data.unanswered_asks == []
+
+
+@pytest.mark.asyncio
+async def test_a_failed_presiding_question_leaves_every_candidate_unanswered():
+    async def answer(*_args, prompt_name: str, **_kwargs):
+        if prompt_name == "governing_presiding":
+            raise ValueError("OpenRouter error 403")
+        return _ANSWER
+
+    with patch(f"{MAIN}.open_router_llm.run_prompt", new=AsyncMock(side_effect=answer)), patch(
+        f"{MAIN}.cost_utils.total_cost", return_value=Decimal("0")
+    ):
+        extracted, _ = await extract(_limits("1"), MagicMock(), _context([_MEMBER], presiding=[_CHAIR, _VICE_CHAIR]), MagicMock())
+
+    assert extracted.data.unanswered_asks == [_CHAIR, _VICE_CHAIR]
+    assert extracted.data.extract_passes == 1
 
 

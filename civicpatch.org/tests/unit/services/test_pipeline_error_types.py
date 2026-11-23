@@ -3,7 +3,7 @@
 from unittest.mock import AsyncMock, patch
 
 import pytest
-from core.pipeline_run_issues import UNKNOWN_FAILURE
+from core.pipeline_run_issues.failures import UNKNOWN_FAILURE
 from services.people_collector import _record_pipeline_error
 from shared.utils.statuses import PipelineIssueType, PipelineRunErrorType
 

@@ -115,6 +115,9 @@ class OrganizationsCollectorData(OrganizationsRunReport):
     # Asked together on EXTRACT's first pass; one VERIFY sends back is re-asked on its own.
     presiding_asks: List[RoleAsk] = []
     claims: List[RoleClaim] = []
+    # Asked in EXTRACT's latest pass with every try failed: asked again, and the run fails if any outlast the rounds.
+    unanswered_asks: List[RoleAsk] = []
+    extract_passes: int = 0
     # VERIFY's latest decision on every role asked.
     outcomes: Optional[RoleOutcomes] = None
     organizations: Optional[GoverningLawOrganizations] = None

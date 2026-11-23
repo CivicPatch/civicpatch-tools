@@ -8,7 +8,7 @@ from unittest.mock import AsyncMock, MagicMock, patch
 import pytest
 from pydantic import ValidationError
 
-from runners.engine import Machine, run_pipeline, terminal_states
+from runners.engine import Machine, PipelineRunError, run_pipeline, terminal_states
 from runners.pipeline02_organizations_collector.schemas import (
     OrganizationsCollectorConfig,
     OrganizationsCollectorContext,
@@ -259,3 +259,59 @@ async def test_select_sections_queues_a_question_for_each_role():
     run = await _walk(_context(_governing_law(["page-1"])), {"page-1": _SHORT_CHARTER})
 
     assert [(ask.organization_name, ask.role_id) for ask in run.context.data.pending_asks] == [("Select Board", "member")]
+
+
+_MEMBER_ANSWER = {
+    "established": True, "label": "Selectboard member", "filled_by": "elected_by_voters", "maximum_memberships": 5,
+    "quote": "five members elected at large",
+}
+
+
+async def _walk_asking(model_answers: list[Exception | dict]) -> _Run:
+    """The whole run with EXTRACT asking a fake model, which answers or raises in the order given."""
+    answers = iter(model_answers)
+
+    async def model(*_args, **_kwargs):
+        answer = next(answers)
+        if isinstance(answer, Exception):
+            raise answer
+        return answer
+
+    engine_api = MagicMock()
+    engine_api.fetch_pipeline_run_status = AsyncMock(return_value=PipelineRunStatus.RUNNING)
+    engine_api.update_pipeline_run_status = AsyncMock()
+    api = MagicMock()
+    api.get_governing_law_source_page = AsyncMock(
+        return_value={"id": "page-1", "source_url": f"{_CHAPTERS}/page-1", "text": _SHORT_CHARTER}
+    )
+    api.get_extras_organizations_by_input_hash = AsyncMock(return_value=None)
+    api.patch_jurisdiction_extras = AsyncMock()
+    run_prompt = AsyncMock(side_effect=model)
+    machine = Machine(transitions=ORGANIZATIONS_COLLECTOR_TRANSITIONS, handlers=TRANSITION_MAP, submits_context=False)
+    with patch("runners.engine.civicpatch_api", engine_api), patch("runners.engine.log_system_usage"), patch(
+        f"{MAIN}.civicpatch_api", api
+    ), patch(f"{MAIN}.open_router_llm.run_prompt", new=run_prompt), patch(f"{MAIN}.cost_utils.total_cost", return_value=0):
+        try:
+            walked = await run_pipeline(_context(_governing_law(["page-1"])), MagicMock(), machine, MagicMock())
+        except PipelineRunError as error:
+            walked = error.context
+    states = [call.kwargs["status"] for call in engine_api.update_pipeline_run_status.call_args_list]
+    return _Run(states=states, context=walked, pick=run_prompt, api=api)
+
+
+@pytest.mark.asyncio
+async def test_a_run_whose_every_question_fails_ends_in_error_and_writes_nothing():
+    run = await _walk_asking([ValueError("OpenRouter error 403")] * 2 * 3)
+
+    assert run.states[-1] == "ERROR"
+    assert "WRITE" not in run.states
+    run.api.patch_jurisdiction_extras.assert_not_called()
+
+
+@pytest.mark.asyncio
+async def test_a_question_that_failed_is_asked_again_and_its_answer_written():
+    run = await _walk_asking([ValueError("OpenRouter error 403")] * 2 + [_MEMBER_ANSWER] * 2)
+
+    assert run.states == ["INIT", "SELECT_SECTIONS", "EXTRACT", "VERIFY", "EXTRACT", "VERIFY", "WRITE", "SUCCESS"]
+    [call] = run.api.patch_jurisdiction_extras.await_args_list
+    assert [post.role for post in call.args[2].extras_organizations.posts] == ["member"]

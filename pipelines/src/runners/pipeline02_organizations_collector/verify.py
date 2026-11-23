@@ -9,10 +9,11 @@ from .schemas import Citation, FilledBy, RoleClaim, RoleOutcomes
 from .sections import GoverningLawPage, page_kind
 from shared.schemas import GoverningLaw, GoverningLawKind, GoverningLawPost, GoverningLawPostExtras, SelectionMethod, Source, SourceExtras
 from shared.utils.citation import supporting_quote
-from shared.utils.layered_config import GoverningLawConfig
+from shared.utils.layered_config import GovernedBy, GoverningLawConfig
 
 # A role with no quote yet is asked again until this many rounds have been asked.
 MAX_ROUNDS = 3
+CHARTER_GOVERNS = frozenset({GovernedBy.CHARTER, GovernedBy.CHARTER_ELSE_GENERAL_LAW})
 # Enough of a quote in the run log to tell which clause an answer pointed at.
 QUOTE_PREVIEW_CHARS = 120
 
@@ -35,6 +36,32 @@ def role_outcomes(
         if some_answer_found_the_office and len(role_claims) // asks_per_question < MAX_ROUNDS:
             re_ask.append(ask)
     return RoleOutcomes(posts=posts, re_ask=re_ask)
+
+
+def unanswered_asks(asks: List[RoleAsk], claims: List[RoleClaim]) -> List[RoleAsk]:
+    answered = {claim.ask.role_id for claim in claims}
+    return [ask for ask in asks if ask.role_id not in answered]
+
+
+def unquoted_charter_urls(
+    posts: List[GoverningLawPost], pages: List[GoverningLawPage], governing_law: GoverningLaw, governing_law_config: GoverningLawConfig | None
+) -> List[str]:
+    """Every real charter establishes some office, so one that governs and that no post quotes is not the charter."""
+    if not _charter_governs(governing_law, governing_law_config):
+        return []
+    charter_pages = [page for page in pages if page_kind(page, governing_law, governing_law_config) == GoverningLawKind.CHARTER]
+    charter_page_ids = {page.id for page in charter_pages}
+    if any(source.extras.source_page_id in charter_page_ids for post in posts for source in post.sources):
+        return []
+    return [page.source_url for page in charter_pages]
+
+
+def _charter_governs(governing_law: GoverningLaw, governing_law_config: GoverningLawConfig | None) -> bool:
+    """Not where the general law may hold every office (Vermont's towns): their charters can be partial."""
+    if governing_law.kind != GoverningLawKind.CHARTER or governing_law_config is None or governing_law.classification is None:
+        return False
+    classification = governing_law_config.classifications.get(governing_law.classification)
+    return classification is not None and classification.governed_by in CHARTER_GOVERNS
 
 
 def citation(

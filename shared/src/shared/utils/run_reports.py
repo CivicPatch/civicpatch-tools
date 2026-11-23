@@ -79,6 +79,19 @@ class OrganizationsRunReport(BaseModel):
     # The run's cap was reached before every question was asked; `cost_cap` says what was left.
     stopped_at_cost_cap: bool = False
     cost_cap: Optional[CostCapDetail] = None
+    # Where the charter governs and no post quotes it: the stored charter pages, which are not the charter.
+    unquoted_charter_urls: List[str] = []
+
+
+class Shortfall(BaseModel):
+    found: int
+    expected: int
+
+
+class PeopleRunReport(BaseModel):
+    stopped_at_cost_cap: bool = False
+    # Short of the roster it expected by more than the crawl's own tolerance; None when it was not.
+    shortfall: Optional[Shortfall] = None
 
 
 class RunFailure(BaseModel):

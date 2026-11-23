@@ -7,6 +7,7 @@ from runners.pipeline03_people_collector.constants import (
 )
 from shared.schemas import PipelineRunLimits
 from shared.utils import url_utils
+from shared.utils.run_reports import PeopleRunReport, Shortfall
 from shared.utils.statuses import PipelineIssueType
 
 from ..schemas import (
@@ -84,6 +85,11 @@ def is_short_of_expected(progress: ProgressState) -> bool:
     allows for a single organization. With several, each one's own rule can be met while this total
     is still short, and the reviewer is told."""
     return progress.current_data < progress.required_data - DATA_REQUIREMENT_TOLERANCE
+
+
+def run_report(stop_reason: str | None, progress: ProgressState) -> PeopleRunReport:
+    shortfall = Shortfall(found=progress.current_data, expected=progress.required_data) if is_short_of_expected(progress) else None
+    return PeopleRunReport(stopped_at_cost_cap=stop_reason == STOP_COST_CAP, shortfall=shortfall)
 
 
 def should_stop_for_max_pages(
