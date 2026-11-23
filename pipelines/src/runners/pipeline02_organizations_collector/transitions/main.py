@@ -39,6 +39,11 @@ from utils import cost_utils
 from utils.log_utils import PipelineRunLogger
 
 Step = tuple[OrganizationsCollectorContext, OrganizationsCollectorState]
+
+
+class UnansweredRoles(Exception):
+    """Raised so the run fails without WRITE: an empty answer would replace the last good one."""
+
 # Each question twice, the verified answers' union kept: one ask's answer varied run to run.
 ASKS_PER_QUESTION = 2
 
@@ -141,12 +146,19 @@ async def extract(limits: PipelineRunLimits, logger: PipelineRunLogger, context:
         stopped = _next(context, pending_asks=[], stopped_at_cost_cap=True, cost_cap=cost_cap)
         return stopped, OrganizationsCollectorStep.VERIFY
     asked = [ask for ask in context.data.pending_asks for _ in range(ASKS_PER_QUESTION)]
-    first_pass = not context.data.claims
+    first_pass = context.data.extract_passes == 0
     answers = await asyncio.gather(*[_answer(context, logger, ask) for ask in asked])
     claims = [RoleClaim(ask=ask, answer=answer) for ask, answer in zip(asked, answers) if answer is not None]
     presiding = await _presiding(context, logger) if first_pass else []
-    all_claims = [*context.data.claims, *claims, *presiding]
-    return _next(context, claims=all_claims, pending_asks=[]), OrganizationsCollectorStep.VERIFY
+    questions = [*context.data.pending_asks, *(context.data.presiding_asks if first_pass else [])]
+    extracted = _next(
+        context,
+        claims=[*context.data.claims, *claims, *presiding],
+        pending_asks=[],
+        unanswered_asks=verify_rules.unanswered_asks(questions, [*claims, *presiding]),
+        extract_passes=context.data.extract_passes + 1,
+    )
+    return extracted, OrganizationsCollectorStep.VERIFY
 
 
 async def _answer(context: OrganizationsCollectorContext, logger: PipelineRunLogger, ask: RoleAsk) -> RoleAnswer | None:
@@ -224,9 +236,22 @@ async def verify(_limits: PipelineRunLimits, logger: PipelineRunLogger, context:
     logger.info(f"{len(outcomes.posts)} of {len(asked)} roles quoted from the law, {len(outcomes.re_ask)} to ask again")
     for line in verify_rules.role_summaries(context.data.claims, outcomes):
         logger.info(f"role {line}")
-    if outcomes.re_ask and not context.data.stopped_at_cost_cap:
-        return _next(context, outcomes=outcomes, pending_asks=outcomes.re_ask), OrganizationsCollectorStep.EXTRACT
-    return _next(context, outcomes=outcomes), OrganizationsCollectorStep.WRITE
+    unanswered = context.data.unanswered_asks
+    if unanswered:
+        role_ids = ", ".join(ask.role_id for ask in unanswered)
+        if context.data.stopped_at_cost_cap or context.data.extract_passes >= verify_rules.MAX_ROUNDS:
+            raise UnansweredRoles(f"no answer after {context.data.extract_passes} passes: {role_ids}")
+        logger.warning(f"{len(unanswered)} roles unanswered, asking again: {role_ids}")
+    re_ask = [*outcomes.re_ask, *unanswered]
+    if re_ask and not context.data.stopped_at_cost_cap:
+        return _next(context, outcomes=outcomes, pending_asks=re_ask), OrganizationsCollectorStep.EXTRACT
+    # A capped run left roles unasked, so its unquoted charter proves nothing.
+    unquoted = [] if context.data.stopped_at_cost_cap else verify_rules.unquoted_charter_urls(
+        outcomes.posts, context.data.governing_law_pages, governing_law, context.data.config.jurisdiction_config.governing_law
+    )
+    if unquoted:
+        logger.warning(f"no post quotes the charter, so the stored charter is not it: {', '.join(unquoted)}")
+    return _next(context, outcomes=outcomes, unquoted_charter_urls=unquoted), OrganizationsCollectorStep.WRITE
 
 
 async def write(_limits: PipelineRunLimits, logger: PipelineRunLogger, context: OrganizationsCollectorContext, client: httpx.AsyncClient) -> Step:

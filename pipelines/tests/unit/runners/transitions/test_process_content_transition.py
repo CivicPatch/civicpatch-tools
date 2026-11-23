@@ -10,11 +10,10 @@ from runners.pipeline03_people_collector.transitions.crawl_page_transition impor
     STOP_MESSAGES,
     STOP_TIME_BUDGET,
     next_crawl_state,
+    run_report,
     should_stop_for_time_budget,
 )
-from runners.pipeline03_people_collector.transitions.main import _collect_pipeline_heuristics
 from shared.schemas import PipelineRunLimits
-from shared.utils.statuses import PipelineIssueType, PipelineRunErrorType
 
 
 def _next(**kwargs):
@@ -231,28 +230,15 @@ def test_a_large_organization_is_done_short_of_every_member():
 # ── the cap has to be visible outside the container log ───────────────────────
 
 
-def test_a_capped_run_reports_an_issue_the_reviewer_can_see():
+def test_a_capped_run_reports_the_cap_for_the_reviewer_to_see():
     """The gap this closes: the stop was a `logger.warning` and nothing else, so a run that
     hit its ceiling and one that found an empty page looked identical from outside."""
-    _error, issues = _collect_pipeline_heuristics([{"name": "A"}], STOP_COST_CAP)
-
-    assert [issue["type"] for issue in issues] == [PipelineIssueType.COST_CAP_REACHED]
+    assert run_report(STOP_COST_CAP, ProgressState()).stopped_at_cost_cap
 
 
-def test_stopping_at_the_page_limit_is_not_an_issue():
+def test_stopping_at_the_page_limit_is_not_reported():
     """Pages are a crawl bound, not a spend one — it is normal to reach it."""
-    _error, issues = _collect_pipeline_heuristics([{"name": "A"}], STOP_MAX_PAGES)
-
-    assert issues == []
-
-
-def test_a_run_that_found_nothing_reports_emptiness_and_not_the_cap():
-    """Both can be true at once. Reporting both would put two issues on one run saying the
-    same thing twice, and 'found nothing' is the one that explains the other."""
-    error, issues = _collect_pipeline_heuristics([], STOP_COST_CAP)
-
-    assert error == PipelineRunErrorType.NO_ROSTER_FOUND
-    assert issues == []
+    assert not run_report(STOP_MAX_PAGES, ProgressState()).stopped_at_cost_cap
 
 
 # ── the crawl has to fit the job it runs in ───────────────────────────────────
@@ -323,11 +309,9 @@ def test_a_run_that_spent_its_money_says_that_and_not_the_clock():
     assert (state, reason) == (PeopleCollectorStep.CLEANUP, STOP_COST_CAP)
 
 
-def test_stopping_on_the_clock_is_not_an_issue():
+def test_stopping_on_the_clock_is_not_reported():
     """Like the page bound: a crawl that ran out of time is not a spend problem."""
-    _error, issues = _collect_pipeline_heuristics([{"name": "A"}], STOP_TIME_BUDGET)
-
-    assert issues == []
+    assert not run_report(STOP_TIME_BUDGET, ProgressState()).stopped_at_cost_cap
 
 
 def test_a_crawl_whose_pages_fail_still_stops_on_the_clock():

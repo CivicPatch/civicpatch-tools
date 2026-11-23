@@ -10,6 +10,7 @@ from shared.schemas import (
     PipelineRunConfig,
     RoleConfig,
 )
+from shared.utils.run_reports import PeopleRunReport
 from shared.utils.statuses import PipelineRunStatus
 
 from .steps.step_02_crawl_page.step_02a_scrape_page.scrape_exceptions import (
@@ -349,7 +350,7 @@ class MaybeSendToGitHubStep(BaseModel):
     response_text: Optional[str] = None
 
 
-class PeopleCollectorData(BaseModel):
+class PeopleCollectorData(PeopleRunReport):
     jurisdiction_ocdid: str
 
     # Can be overridden with data source configs
@@ -366,7 +367,6 @@ class PeopleCollectorData(BaseModel):
     find_jurisdiction_url_step: Optional[FindJurisdictionUrlStep] = None
     send_success_step: Optional[MaybeSendToGitHubStep] = None
     send_error_step: Optional[MaybeSendToGitHubStep] = None
-    issues: list[dict] = []
     error_step: Optional[str] = None
     error_detail: Optional[dict] = None
     # Why the crawl stopped early, when it did. Not an error — the run goes on to succeed with

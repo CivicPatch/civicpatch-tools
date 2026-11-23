@@ -5,7 +5,6 @@ import httpx
 from runners.pipeline03_people_collector.constants import MINIMUM_NUM_PEOPLE
 from shared.schemas import PipelineRunLimits
 from shared.utils.statuses import (
-    PipelineIssueType,
     PipelineRunErrorType,
     PipelineRunStatus,
 )
@@ -42,11 +41,10 @@ from ..steps.step_06_send_success.send_success import (
     send_success,
 )
 from ..transitions.crawl_page_transition import (
-    STOP_COST_CAP,
     STOP_MESSAGES,
     describe_progress,
-    is_short_of_expected,
     next_crawl_state,
+    run_report,
 )
 from ..utils.links import (
     get_links_with_status,
@@ -213,8 +211,8 @@ def _next_state_after_page(
     next_state, stop_reason = next_crawl_state(
         processed_count, current_cost, limits, progress, elapsed_seconds
     )
-    # Carried on the context, not just logged: `review_output_transition` turns a cost-cap
-    # stop into an issue the reviewer sees.
+    # Carried on the context, not just logged: `review_output_transition` reports a cost-cap
+    # stop, which cp.org files as an issue the reviewer sees.
     if stop_reason:
         logger.warning(STOP_MESSAGES[stop_reason])
     return _next_context(context, stop_reason=stop_reason), next_state
@@ -245,23 +243,20 @@ async def review_output_transition(
     if not records and context.data.find_jurisdiction_url_step is None:
         return context, PeopleCollectorStep.FIND_JURISDICTION_URL
 
-    error_type, issues = _collect_pipeline_heuristics(
-        records,
-        context.data.stop_reason,
-        context.data.process_page_content_step.progress,
-    )
-
-    if error_type:
+    # Found nothing: an error, and it explains any cap or shortfall, so those are not reported.
+    if not records:
         return _next_context(
             context,
-            error_step=error_type,
+            error_step=PipelineRunErrorType.NO_ROSTER_FOUND,
         ), PipelineRunStatus.SEND_ERROR
 
+    report = run_report(context.data.stop_reason, context.data.process_page_content_step.progress)
     progress = calculate_progress_percentage(context.data, 10)
     return _next_context(
         context,
         progress=progress,
-        issues=issues,
+        stopped_at_cost_cap=report.stopped_at_cost_cap,
+        shortfall=report.shortfall,
     ), PeopleCollectorStep.SAVE_OUTPUT
 
 
@@ -386,34 +381,6 @@ def calculate_progress_percentage(context_data: PeopleCollectorData, current_ste
     steps_progress = (current_step + 1) / total_steps
     combined_progress = data_progress * 0.7 + steps_progress * 0.3
     return int(combined_progress * 100)
-
-
-def _collect_pipeline_heuristics(
-    records, stop_reason: str | None = None, progress: ProgressState | None = None
-) -> tuple[str | None, list[dict]]:
-    """Emptiness, a crawl that stopped at its ceiling, and one that ran out of pages short of
-    the roster it expected. An unrecognized role is not an issue here: the raw label crosses
-    the boundary in the record, so `parse_label` recovers `unmatched` wherever it is needed.
-
-    Ordered, and only one is returned: a run that found nothing has nothing partial to warn
-    about, and a run that stopped at its cost cap has already said why it is short. Reporting
-    two would put one run's single fact on the issues page twice.
-    """
-    if not records:
-        return PipelineRunErrorType.NO_ROSTER_FOUND, []
-    if stop_reason == STOP_COST_CAP:
-        return None, [{"type": PipelineIssueType.COST_CAP_REACHED, "data": {}}]
-    if progress and is_short_of_expected(progress):
-        return None, [
-            {
-                "type": PipelineIssueType.FEWER_THAN_EXPECTED,
-                "data": {
-                    "found": progress.current_data,
-                    "expected": progress.required_data,
-                },
-            }
-        ]
-    return None, []
 
 
 TRANSITION_MAP = {

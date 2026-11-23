@@ -9,12 +9,13 @@ import logging
 from typing import Optional
 
 import lib.pubsub as pubsub_service
+from core.pipeline_run_issues.failures import settled_run_issue
 from core.pipeline_runs import dismissal_for, is_final
 from database.activity import create_activity_row
 from database.issues import supersede_prior_jurisdiction_issues, upsert_issue
 from database.pipeline_runs import get_pipeline_run, update_pipeline_run_status
 from database.publications import dismiss_changeset
-from shared.utils.statuses import RUN_LEVEL_ISSUE_TYPES, ActivityType, PipelineIssueType
+from shared.utils.statuses import ActivityType, PipelineIssueType
 
 logger = logging.getLogger(__name__)
 
@@ -130,18 +131,11 @@ async def _file_run_failure(
     last_seen: Optional[dict],
 ) -> None:
     """The run that reached no report and so filed nothing: the workflow settled it, so the issue
-    has to be made here. The type is checked for the reason `_record_pipeline_error` checks it —
-    a raw exception string once became an issue type — and filing is best-effort, because the
-    status update beside it has already committed.
+    has to be made here. Filing is best-effort, because the status update beside it has already
+    committed.
     """
-    issue_type = (
-        error_type if error_type in RUN_LEVEL_ISSUE_TYPES else PipelineIssueType.PIPELINE_ERROR
-    )
-    detail = dict(error_detail or {})
-    if last_seen is not None:
-        detail.setdefault("last_status", last_seen["status"])
-        detail.setdefault("last_progress", last_seen["progress"])
+    issue = settled_run_issue(error_type, error_detail, last_seen)
     try:
-        await upsert_issue(pipeline_run_id, issue_type, [detail])
+        await upsert_issue(pipeline_run_id, issue.issue_type, [issue.data])
     except Exception:
-        logger.exception(f"[{pipeline_run_id}] Failed to file {issue_type}")
+        logger.exception(f"[{pipeline_run_id}] Failed to file {issue.issue_type}")

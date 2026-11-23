@@ -1,15 +1,20 @@
 """The issue a collector run files, from the report it sends: pipeline 1's misses by kind of place,
-and pipeline 2's runs that read nothing or stopped at the cap."""
+pipeline 2's runs that read nothing, stopped at the cap or quoted no charter, and pipeline 3's
+capped or short rosters."""
 
 import pytest
 from shared.schemas import FoundBy
 from shared.utils.layered_config import GovernedBy
-from shared.utils.run_reports import CostCapDetail, GoverningLawReport, GoverningLawSearch, OrganizationsRunReport, RunFailure, TriedReason, TriedUrl
+from shared.utils.run_reports import CostCapDetail, GoverningLawReport, GoverningLawSearch, OrganizationsRunReport, PeopleRunReport, RunFailure, Shortfall, TriedReason, TriedUrl
 from shared.utils.statuses import PipelineIssueType, PipelineRunKind
 
 from decimal import Decimal
 
-from core.pipeline_run_issues import ISSUE_READERS, Missing, crash_issue, governing_law_issue, organizations_issue, run_issue
+from core.pipeline_run_issues import ISSUE_READERS, run_issue
+from core.pipeline_run_issues.failures import crash_issue
+from core.pipeline_run_issues.governing_law import Missing, governing_law_issue
+from core.pipeline_run_issues.organizations import organizations_issue
+from core.pipeline_run_issues.people import people_issue
 
 pytestmark = pytest.mark.unit
 
@@ -127,6 +132,20 @@ def test_a_pipeline_2_run_that_read_and_asked_everything_files_nothing():
     assert organizations_issue(OrganizationsRunReport(input_hash="7c21")) is None
 
 
+def test_a_pipeline_2_run_whose_charter_no_post_quotes_files_the_charter_as_not_found():
+    report = OrganizationsRunReport(input_hash="7c21", unquoted_charter_urls=["https://www.cityofestacada.org/departments/administration/city-manager/"])
+
+    issue = organizations_issue(report)
+
+    assert issue is not None
+    assert issue.issue_type == PipelineIssueType.GOVERNING_LAW_NOT_FOUND
+    assert issue.data == {
+        "missing": Missing.CHARTER.value,
+        "tried": [{"url": "https://www.cityofestacada.org/departments/administration/city-manager/", "reason": "not_the_target"}],
+        "skipped_urls": [],
+    }
+
+
 def test_a_capped_pipeline_2_run_says_which_roles_went_unasked_and_what_it_spent():
     cost_cap = CostCapDetail(spent_usd=Decimal("0.05"), cap_usd=Decimal("0.05"), unfinished=["clerk", "treasurer"])
     report = OrganizationsRunReport(input_hash="7c21", stopped_at_cost_cap=True, cost_cap=cost_cap)
@@ -171,3 +190,23 @@ def test_a_crash_is_a_pipeline_error_naming_the_state_and_the_message():
 
 def test_a_run_that_did_not_crash_has_no_crash_issue():
     assert crash_issue(None) is None
+
+
+def test_a_capped_people_run_files_the_cap_and_not_its_shortfall():
+    """One run, one fact: a capped run is already short and already says so."""
+    issue = people_issue(PeopleRunReport(stopped_at_cost_cap=True, shortfall=Shortfall(found=1, expected=9)))
+
+    assert issue is not None
+    assert issue.issue_type == PipelineIssueType.COST_CAP_REACHED
+
+
+def test_a_people_run_short_of_expectation_files_fewer_than_expected_with_the_counts():
+    issue = people_issue(PeopleRunReport(shortfall=Shortfall(found=3, expected=6)))
+
+    assert issue is not None
+    assert issue.issue_type == PipelineIssueType.FEWER_THAN_EXPECTED
+    assert issue.data == {"found": 3, "expected": 6}
+
+
+def test_a_people_run_neither_capped_nor_short_files_nothing():
+    assert people_issue(PeopleRunReport()) is None

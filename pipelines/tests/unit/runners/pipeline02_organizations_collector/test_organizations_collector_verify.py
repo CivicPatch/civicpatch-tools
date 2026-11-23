@@ -17,7 +17,7 @@ from runners.pipeline02_organizations_collector.schemas import (
 )
 from runners.pipeline02_organizations_collector.sections import GoverningLawPage
 from runners.pipeline02_organizations_collector.transitions.main import verify
-from runners.pipeline02_organizations_collector.verify import MAX_ROUNDS, role_outcomes, role_summaries
+from runners.pipeline02_organizations_collector.verify import MAX_ROUNDS, role_outcomes, role_summaries, unquoted_charter_urls
 from shared.schemas import FoundBy, GoverningLaw, GoverningLawKind, QuoteScope, SelectionMethod
 from shared.utils.layered_config import Classification, ConfigFile, GovernedBy, GoverningLawConfig, merged_config
 
@@ -27,6 +27,10 @@ _STATUTE_URL = "https://legislature.vermont.gov/statutes/section/24/033/00871"
 _VERMONT = GoverningLawConfig(
     charter_terms=["charter"],
     classifications={"town": Classification(governed_by=GovernedBy.CHARTER_OR_GENERAL_LAW, general_law=[_STATUTE_URL])},
+)
+_CITY = GoverningLawConfig(
+    charter_terms=["charter"],
+    classifications={"town": Classification(governed_by=GovernedBy.CHARTER, general_law=[_STATUTE_URL])},
 )
 _CHARTER = GoverningLawPage(
     id="charter",
@@ -168,7 +172,39 @@ def test_a_law_that_states_no_number_leaves_the_count_empty():
     assert member.maximum_memberships is None
 
 
-def _context(claims: list[RoleClaim], stopped_at_cost_cap: bool = False) -> OrganizationsCollectorContext:
+_STATUTE_CLERK = "The town clerk shall be elected at the annual meeting"
+
+
+def _unquoted(claims: list[RoleClaim], governing_law_config: GoverningLawConfig, governing_law: GoverningLaw = _LAW) -> list[str]:
+    posts = role_outcomes(claims, [_CHARTER, _STATUTE], governing_law, governing_law_config, asks_per_question=2).posts
+    return unquoted_charter_urls(posts, [_CHARTER, _STATUTE], governing_law, governing_law_config)
+
+
+def test_a_governing_charter_no_post_quotes_is_named_as_not_the_charter():
+    assert _unquoted([_claim(_CLERK, _STATUTE_CLERK, FilledBy.ELECTED_BY_VOTERS)] * 2, _CITY) == [_CHARTER.source_url]
+
+
+def test_a_governing_charter_with_no_post_at_all_is_named_as_not_the_charter():
+    assert _unquoted([_claim(_MEMBER, "", FilledBy.NOT_STATED, established=False)] * 2, _CITY) == [_CHARTER.source_url]
+
+
+def test_a_governing_charter_one_post_quotes_is_the_charter():
+    assert _unquoted([_claim(_MEMBER, _FIVE_MEMBERS, FilledBy.ELECTED_BY_VOTERS)] * 2, _CITY) == []
+
+
+def test_a_charter_the_general_law_may_wholly_fill_is_not_checked():
+    assert _unquoted([_claim(_CLERK, _STATUTE_CLERK, FilledBy.ELECTED_BY_VOTERS)] * 2, _VERMONT) == []
+
+
+def test_a_general_law_place_has_no_charter_to_check():
+    general_law = _LAW.model_copy(update={"kind": GoverningLawKind.GENERAL_LAW})
+
+    assert _unquoted([_claim(_CLERK, _STATUTE_CLERK, FilledBy.ELECTED_BY_VOTERS)] * 2, _CITY, general_law) == []
+
+
+def _context(
+    claims: list[RoleClaim], stopped_at_cost_cap: bool = False, governing_law_config: GoverningLawConfig = _VERMONT
+) -> OrganizationsCollectorContext:
     return OrganizationsCollectorContext(
         pipeline_run_id="run-1",
         current_state=OrganizationsCollectorStep.VERIFY,
@@ -177,7 +213,7 @@ def _context(claims: list[RoleClaim], stopped_at_cost_cap: bool = False) -> Orga
             config=OrganizationsCollectorConfig(
                 name="Stowe town",
                 governing_law=_LAW,
-                jurisdiction_config=merged_config(ConfigFile(), ConfigFile(governing_law=_VERMONT)),
+                jurisdiction_config=merged_config(ConfigFile(), ConfigFile(governing_law=governing_law_config)),
                 government_form=None,
             ),
             governing_law_pages=[_CHARTER, _STATUTE],
@@ -210,3 +246,22 @@ async def test_verify_asks_nothing_again_once_the_cap_stopped_extract():
 
     assert next_state == OrganizationsCollectorStep.WRITE
     assert next_context.data.outcomes is not None and next_context.data.outcomes.re_ask == [_MEMBER]
+
+
+@pytest.mark.asyncio
+async def test_verify_reports_a_governing_charter_no_post_quotes():
+    context = _context([_claim(_CLERK, _STATUTE_CLERK, FilledBy.ELECTED_BY_VOTERS)] * 2, governing_law_config=_CITY)
+
+    next_context, next_state = await verify(MagicMock(), MagicMock(), context, MagicMock())
+
+    assert next_state == OrganizationsCollectorStep.WRITE
+    assert next_context.data.unquoted_charter_urls == [_CHARTER.source_url]
+
+
+@pytest.mark.asyncio
+async def test_a_capped_run_does_not_report_its_unquoted_charter():
+    context = _context([_claim(_CLERK, _STATUTE_CLERK, FilledBy.ELECTED_BY_VOTERS)] * 2, stopped_at_cost_cap=True, governing_law_config=_CITY)
+
+    next_context, _ = await verify(MagicMock(), MagicMock(), context, MagicMock())
+
+    assert next_context.data.unquoted_charter_urls == []

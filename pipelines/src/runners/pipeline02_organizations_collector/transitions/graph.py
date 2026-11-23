@@ -15,7 +15,7 @@ ORGANIZATIONS_COLLECTOR_TRANSITIONS: Transitions = {
     OrganizationsCollectorStep.EXTRACT: frozenset({OrganizationsCollectorStep.VERIFY}),
     OrganizationsCollectorStep.VERIFY: frozenset({
         OrganizationsCollectorStep.WRITE,
-        # Claims that failed every rung are asked again, the verified ones kept.
+        # Claims that failed every rung, and asks no answer came back for, are asked again.
         OrganizationsCollectorStep.EXTRACT,
     }),
     OrganizationsCollectorStep.WRITE: frozenset({PipelineRunStatus.SUCCESS}),

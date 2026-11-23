@@ -5,7 +5,8 @@ import lib.buckets as buckets
 import lib.pipeline_artifacts as artifacts
 import lib.storage as storage_service
 from core.images import cdn_urls, records_with_images, resolve_images
-from core.pipeline_run_issues import crash_issue, unknown_failure_issue
+from core.pipeline_run_issues import run_issue
+from core.pipeline_run_issues.failures import reported_failure_issue, run_level_type
 from core.pipeline_run_summary import pipeline_run_summary, summary_log_line
 from core.source_pages import frontier_links, source_page_rows
 from database.changesets import register_scrape_changeset
@@ -24,8 +25,8 @@ from services import pipeline_runs as pipeline_run_service
 from services.jurisdiction_url import record_resolved_url, resolved_url
 from services.review_summary import review_summary_for_changeset
 from shared.utils.statuses import (
-    RUN_LEVEL_ISSUE_TYPES,
     PipelineIssueType,
+    PipelineRunKind,
     PipelineRunStatus,
 )
 from shared.utils.id_utils import parse_jurisdiction_ocdid
@@ -219,10 +220,9 @@ async def _ingest_roster(
     )
     # Before the publish decision, not after: these are what `_publish_if_nothing_to_review`
     # asks about, and filing them afterwards meant they never gated anything.
-    for issue in workflow_context.get("data", {}).get("issues", []):
-        await upsert_issue(
-            request.pipeline_run_id, issue["type"], [issue.get("data") or {}]
-        )
+    issue = run_issue(PipelineRunKind.PEOPLE_COLLECTOR, workflow_context)
+    if issue is not None:
+        await upsert_issue(request.pipeline_run_id, issue.issue_type, [issue.data])
 
     await _apply_scrape_changes(changeset_id, request.jurisdiction_ocdid)
     await _record_resolved_url(
@@ -257,31 +257,16 @@ async def _record_pipeline_error(pipeline_run_id: str, workflow_context: dict) -
     """Keyed on the run: this branch is a scrape that never reached ingest, so it minted no
     proposal to hang the issue off."""
     raw_failure = workflow_context.get("failure")
-    crash = crash_issue(RunFailure.model_validate(raw_failure) if raw_failure else None)
-    if crash is not None:
-        await upsert_issue(pipeline_run_id, crash.issue_type, [crash.data])
-        return
-
+    failure = RunFailure.model_validate(raw_failure) if raw_failure else None
     context_data = workflow_context.get("data", {})
     reported = context_data.get("error_step")
-    detail = context_data.get("error_detail") or {}
-
-    if reported and reported not in RUN_LEVEL_ISSUE_TYPES:
+    if failure is None and reported and run_level_type(reported) is None:
         logger.warning(
             f"[{pipeline_run_id}] Unrecognised error_step {reported!r}; filing as "
             f"{PipelineIssueType.PIPELINE_ERROR}"
         )
-        detail = {**detail, "reported_error_step": reported}
-        reported = None
-
-    if not reported and not detail:
-        unknown = unknown_failure_issue()
-        await upsert_issue(pipeline_run_id, unknown.issue_type, [unknown.data])
-        return
-
-    await upsert_issue(
-        pipeline_run_id, reported or PipelineIssueType.PIPELINE_ERROR, [detail]
-    )
+    issue = reported_failure_issue(failure, reported, context_data.get("error_detail") or {})
+    await upsert_issue(pipeline_run_id, issue.issue_type, [issue.data])
 
 
 async def _log_run_summary(

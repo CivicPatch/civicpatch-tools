@@ -73,6 +73,7 @@ class PipelineIssueType(StrEnum):
     # Pipeline 1 could not store what the classification says governs the place: no charter
     # confirmed where one is possible, or no page at all. The run still succeeds with what it
     # stored; the detail lists every url tried and why, for the human who finds the right one.
+    # Pipeline 2 files it too, for a stored charter no post quotes.
     GOVERNING_LAW_NOT_FOUND = "governing_law_not_found"
     # The same miss, where a host refused us, challenged us or its robots.txt kept us out, so the
     # law may be there. Left for a person: the browser retry did not get through either.
