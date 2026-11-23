@@ -27,7 +27,10 @@ def prompt_hash(
     return hash_texts(
         [
             relevance_prompt(page_url, config, known_roles, organizations),
-            page_extraction_prompt(organizations, memberships, jurisdiction_ocdid),
+            # The date is pinned here and nowhere else: the sent prompt carries today (it asks for
+            # who is *currently* serving), but keying on it made the hash change every day, so no
+            # page was ever replayed. A replay reuses a reading taken on another day by design.
+            page_extraction_prompt(organizations, memberships, jurisdiction_ocdid, current_date=HASHED_DATE),
         ]
     )
 
@@ -47,10 +50,16 @@ def relevance_prompt(
     )
 
 
+# Stands in for the wall-clock date when rendering the prompt for its hash. Any fixed date does;
+# this one says plainly that it is not a real day.
+HASHED_DATE = "1970-01-01"
+
+
 def page_extraction_prompt(
     organizations: List[KnownOrganization],
     memberships: List[ExpectedMembership],
     jurisdiction_ocdid: str,
+    current_date: str | None = None,
 ) -> str:
     """One unscoped read of the page; each person's organization is picked from ours."""
     ocdid_parts = id_utils.parse_jurisdiction_ocdid(jurisdiction_ocdid)
@@ -59,6 +68,7 @@ def page_extraction_prompt(
         level=ocdid_parts.level,
         state=ocdid_parts.state,
         county=ocdid_parts.county,
+        current_date=current_date,
         divisions=expected_divisions(memberships),
         government_form_role_labels=government_form_role_labels(organizations, memberships),
         organization_choices=[organization.name for organization in without_default(organizations)],
