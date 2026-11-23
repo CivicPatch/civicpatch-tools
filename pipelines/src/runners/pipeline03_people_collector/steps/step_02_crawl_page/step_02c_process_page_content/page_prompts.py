@@ -5,7 +5,8 @@ from runners.pipeline03_people_collector.schemas import ExpectedMembership
 from shared.schemas import KnownOrganization, PipelineRunConfig
 from runners.pipeline03_people_collector.steps.step_02_crawl_page.step_02c_process_page_content.organization_match import without_default
 from shared.utils import id_utils
-from shared.utils.content_hash import hash_texts
+from services.open_router.llm import MODELS_BY_TYPE
+from shared.utils.cache_key import CacheKey, cache_key_hash
 from runners.pipeline03_people_collector.utils.organization_terms import (
     expected_divisions,
     expected_roles,
@@ -24,14 +25,20 @@ def prompt_hash(
     """Everything the LLM sees about this page besides its text: every prompt it could be sent,
     rendered by the same builders the calls use, so any input or wording change moves it.
     Hashing a prompt a run never sends is harmless: it can only force a re-read."""
-    return hash_texts(
-        [
-            relevance_prompt(page_url, config, known_roles, organizations),
-            # The date is pinned here and nowhere else: the sent prompt carries today (it asks for
-            # who is *currently* serving), but keying on it made the hash change every day, so no
-            # page was ever replayed. A replay reuses a reading taken on another day by design.
-            page_extraction_prompt(organizations, memberships, jurisdiction_ocdid, current_date=HASHED_DATE),
-        ]
+    # The page's own text is `page_hash`, stored and compared beside this. No rules: cp.org's fold runs
+    # again on every reuse.
+    return cache_key_hash(
+        CacheKey(
+            read=[],
+            prompts=[
+                relevance_prompt(page_url, config, known_roles, organizations),
+                # The date is pinned here and nowhere else: the sent prompt carries today (it asks for
+                # who is *currently* serving), but keying on it made the hash change every day, so no
+                # page was ever replayed. A replay reuses a reading taken on another day by design.
+                page_extraction_prompt(organizations, memberships, jurisdiction_ocdid, current_date=HASHED_DATE),
+            ],
+            model=MODELS_BY_TYPE["STANDARD"]["model"],
+        )
     )
 
 

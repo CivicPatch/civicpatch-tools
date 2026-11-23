@@ -49,6 +49,17 @@ def presiding_asks(config: MergedConfig, name: str, government_form: GovernmentF
     return asks
 
 
+def governing_body_names(config: MergedConfig, name: str, government_form: GovernmentForm | None) -> List[str]:
+    """Each form's first organization, as the forms list them: the body that governs."""
+    forms = [government_form] if government_form is not None else allowed_government_forms(config, name)
+    names: List[str] = []
+    for form in forms:
+        organizations = derived_organizations(config, form, name)
+        if organizations and organizations[0].name not in names:
+            names.append(organizations[0].name)
+    return names
+
+
 def _organizations(config: MergedConfig, name: str, government_form: GovernmentForm | None) -> List[DerivedOrganization]:
     forms = [government_form] if government_form is not None else allowed_government_forms(config, name)
     return [organization for form in forms for organization in derived_organizations(config, form, name)]

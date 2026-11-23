@@ -1,6 +1,6 @@
 """When cp.org hands a run government form choices, ask Gemini to pick one and save the answer to
-cp.org, which keeps it only while no form is set. This run carries on without a government form
-either way."""
+cp.org, which keeps it only while no form is set. The run carries on with every form when no answer
+is saved."""
 
 from typing import List
 
@@ -8,9 +8,11 @@ import httpx
 import services.civicpatch_api as civicpatch_api
 import services.google_gemini.llm as google_gemini_llm
 import services.google_gemini.prompts as google_gemini_prompt
-from ...schemas import PeopleCollectorContext
 from shared.schemas import GovernmentForm, JurisdictionExtras, JurisdictionLevel
 from shared.utils.id_utils import parse_jurisdiction_ocdid
+from utils.log_utils import PipelineRunLogger
+
+PROMPT_NAME = "government_form"
 
 
 def answered_government_form(answer: dict, allowed: List[GovernmentForm]) -> GovernmentForm | None:
@@ -28,26 +30,26 @@ def government_form_prompt(jurisdiction_ocdid: str, name: str, allowed: List[Gov
 
 
 async def request_government_form(
-    context: PeopleCollectorContext, api_client: httpx.AsyncClient, logger
-) -> None:
-    config = context.data.config
-    jurisdiction_ocdid = context.data.jurisdiction_ocdid
+    pipeline_run_id: str,
+    jurisdiction_ocdid: str,
+    name: str,
+    choices: List[GovernmentForm],
+    client: httpx.AsyncClient,
+    logger: PipelineRunLogger,
+) -> GovernmentForm | None:
+    """The form saved, or None when the answer named none it was offered or cp.org refused it."""
     answer = await google_gemini_llm.run_prompt(
-        context.pipeline_run_id,
-        jurisdiction_ocdid,
-        government_form_prompt(jurisdiction_ocdid, config.name or "", config.government_form_choices),
-        prompt_name="government_form",
+        pipeline_run_id, jurisdiction_ocdid, government_form_prompt(jurisdiction_ocdid, name, choices), prompt_name=PROMPT_NAME
     )
-    government_form = answered_government_form(answer or {}, config.government_form_choices)
+    government_form = answered_government_form(answer or {}, choices)
     if government_form is None:
         logger.warning(f"government_form: no allowed government form in the answer {answer!r}; not saving")
-        return
+        return None
     try:
-        await civicpatch_api.patch_jurisdiction_extras(
-            api_client, jurisdiction_ocdid, JurisdictionExtras(extras_government_form=government_form)
-        )
+        await civicpatch_api.patch_jurisdiction_extras(client, jurisdiction_ocdid, JurisdictionExtras(extras_government_form=government_form))
     except httpx.HTTPStatusError as exc:
-        # The next run asks again; a failed save is no reason to fail the scrape.
+        # The next run asks again; a failed save is no reason to fail the run.
         logger.warning(f"government_form: cp.org refused it: {exc}")
-        return
+        return None
     logger.info(f"government_form: saved {government_form.value}")
+    return government_form

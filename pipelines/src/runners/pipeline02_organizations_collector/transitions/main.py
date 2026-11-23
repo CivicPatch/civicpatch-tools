@@ -9,10 +9,12 @@ from pydantic import ValidationError
 import services.civicpatch_api as civicpatch_api
 import services.open_router.llm as open_router_llm
 import services.open_router.prompts as open_router_prompts
-from runners.pipeline02_organizations_collector import sections
+from runners.pipeline02_organizations_collector import government_form, sections
 from runners.pipeline02_organizations_collector import verify as verify_rules
+from shared.utils import citation
+from shared.utils.cache_key import rules_source
 from runners.pipeline02_organizations_collector.input_hash import input_hash
-from ..role_asks import RoleAsk, presiding_asks, role_asks
+from ..role_asks import RoleAsk, governing_body_names, presiding_asks, role_asks
 from ..schemas import (
     FilledBy,
     GoverningSectionsResponse,
@@ -46,10 +48,21 @@ class UnansweredRoles(Exception):
 
 # Each question twice, the verified answers' union kept: one ask's answer varied run to run.
 ASKS_PER_QUESTION = 2
+# Read once: the code that decides an answer from the model's, so a change to it stops copies.
+VERIFY_RULES = rules_source([verify_rules, citation])
 
 
-async def start(_limits: PipelineRunLimits, _logger: PipelineRunLogger, context: OrganizationsCollectorContext, _client: httpx.AsyncClient) -> Step:
-    return context, OrganizationsCollectorStep.SELECT_SECTIONS
+async def start(_limits: PipelineRunLimits, logger: PipelineRunLogger, context: OrganizationsCollectorContext, client: httpx.AsyncClient) -> Step:
+    """With no form set, the questions would mix every form's organizations, so the form is asked first."""
+    config = context.data.config
+    if not config.government_form_choices:
+        return context, OrganizationsCollectorStep.SELECT_SECTIONS
+    chosen = await government_form.request_government_form(
+        context.pipeline_run_id, context.data.jurisdiction_ocdid, config.name, config.government_form_choices, client, logger
+    )
+    if chosen is None:
+        return context, OrganizationsCollectorStep.SELECT_SECTIONS
+    return _next(context, config=config.model_copy(update={"government_form": chosen})), OrganizationsCollectorStep.SELECT_SECTIONS
 
 
 async def select_sections(_limits: PipelineRunLimits, logger: PipelineRunLogger, context: OrganizationsCollectorContext, client: httpx.AsyncClient) -> Step:
@@ -67,7 +80,7 @@ async def select_sections(_limits: PipelineRunLimits, logger: PipelineRunLogger,
     law = sections.pages_by_kind(pages, governing_law, config.jurisdiction_config.governing_law)
     asks = role_asks(config.jurisdiction_config, config.name, config.government_form)
     presiding = presiding_asks(config.jurisdiction_config, config.name, config.government_form)
-    hashed = input_hash(law, asks, presiding, ASKS_PER_QUESTION)
+    hashed = input_hash(law, asks, presiding, ASKS_PER_QUESTION, VERIFY_RULES)
     copied = await civicpatch_api.get_extras_organizations_by_input_hash(client, logger, context.pipeline_run_id, hashed)
     if copied is not None:
         logger.info(f"same law and questions as an answer already read: copying its {len(copied.posts)} posts")
@@ -246,8 +259,10 @@ async def verify(_limits: PipelineRunLimits, logger: PipelineRunLogger, context:
     if re_ask and not context.data.stopped_at_cost_cap:
         return _next(context, outcomes=outcomes, pending_asks=re_ask), OrganizationsCollectorStep.EXTRACT
     # A capped run left roles unasked, so its unquoted charter proves nothing.
+    config = context.data.config
+    governing_bodies = governing_body_names(config.jurisdiction_config, config.name, config.government_form)
     unquoted = [] if context.data.stopped_at_cost_cap else verify_rules.unquoted_charter_urls(
-        outcomes.posts, context.data.governing_law_pages, governing_law, context.data.config.jurisdiction_config.governing_law
+        outcomes.posts, context.data.governing_law_pages, governing_law, config.jurisdiction_config.governing_law, governing_bodies
     )
     if unquoted:
         logger.warning(f"no post quotes the charter, so the stored charter is not it: {', '.join(unquoted)}")

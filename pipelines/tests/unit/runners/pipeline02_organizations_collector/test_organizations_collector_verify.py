@@ -17,7 +17,7 @@ from runners.pipeline02_organizations_collector.schemas import (
 )
 from runners.pipeline02_organizations_collector.sections import GoverningLawPage
 from runners.pipeline02_organizations_collector.transitions.main import verify
-from runners.pipeline02_organizations_collector.verify import MAX_ROUNDS, role_outcomes, role_summaries, unquoted_charter_urls
+from runners.pipeline02_organizations_collector.verify import MAX_ROUNDS, citation, role_outcomes, role_summaries, unquoted_charter_urls
 from shared.schemas import FoundBy, GoverningLaw, GoverningLawKind, QuoteScope, SelectionMethod
 from shared.utils.layered_config import Classification, ConfigFile, GovernedBy, GoverningLawConfig, merged_config
 
@@ -152,6 +152,28 @@ def test_two_methods_both_in_the_general_law_leave_the_method_to_the_default_wit
     assert len(clerk.sources) == 2
 
 
+_MANAGER = RoleAsk(organization_name="Town Officers", role_id="manager", role_label="Town Manager", names=["Town Manager"])
+_CHOOSE = "The select board shall choose the town manager"
+
+
+def _manager_page(page_id: str, text: str) -> GoverningLawPage:
+    return GoverningLawPage(id=page_id, source_url=f"{_STATUTE_URL}/{page_id}", text=f"- **§ 2. Manager**\n{text}\n")
+
+
+def test_a_quote_without_the_words_for_the_method_still_cites_the_office_without_one():
+    found = citation(_claim(_MANAGER, _CHOOSE, FilledBy.APPOINTED), [_manager_page("chooses", f"{_CHOOSE}.")], _LAW, _VERMONT)
+
+    assert found is not None and found.selection_method is None
+
+
+def test_a_page_that_shows_the_method_wins_over_one_that_only_names_the_office():
+    pages = [_manager_page("chooses", f"{_CHOOSE}."), _manager_page("appoints", f"{_CHOOSE}, who is appointed for a term.")]
+
+    found = citation(_claim(_MANAGER, _CHOOSE, FilledBy.APPOINTED), pages, _LAW, _VERMONT)
+
+    assert found is not None and (found.source_page_id, found.selection_method) == ("appoints", SelectionMethod.APPOINTED)
+
+
 def test_the_same_quote_twice_is_cited_once():
     outcomes = _outcomes([_claim(_MEMBER, _FIVE_MEMBERS, FilledBy.ELECTED_BY_VOTERS)] * 2)
 
@@ -177,7 +199,7 @@ _STATUTE_CLERK = "The town clerk shall be elected at the annual meeting"
 
 def _unquoted(claims: list[RoleClaim], governing_law_config: GoverningLawConfig, governing_law: GoverningLaw = _LAW) -> list[str]:
     posts = role_outcomes(claims, [_CHARTER, _STATUTE], governing_law, governing_law_config, asks_per_question=2).posts
-    return unquoted_charter_urls(posts, [_CHARTER, _STATUTE], governing_law, governing_law_config)
+    return unquoted_charter_urls(posts, [_CHARTER, _STATUTE], governing_law, governing_law_config, [_MEMBER.organization_name])
 
 
 def test_a_governing_charter_no_post_quotes_is_named_as_not_the_charter():
@@ -190,6 +212,13 @@ def test_a_governing_charter_with_no_post_at_all_is_named_as_not_the_charter():
 
 def test_a_governing_charter_one_post_quotes_is_the_charter():
     assert _unquoted([_claim(_MEMBER, _FIVE_MEMBERS, FilledBy.ELECTED_BY_VOTERS)] * 2, _CITY) == []
+
+
+def test_a_governing_charter_quoted_only_for_an_officer_is_named_as_not_the_charter():
+    """Estacada: the page kept as its charter quotes the city manager clause, and nothing about the council."""
+    town_clerk = _CLERK.model_copy(update={"organization_name": "Town Officers"})
+
+    assert _unquoted([_claim(town_clerk, "The Selectboard shall appoint a Town Clerk", FilledBy.APPOINTED)] * 2, _CITY) == [_CHARTER.source_url]
 
 
 def test_a_charter_the_general_law_may_wholly_fill_is_not_checked():

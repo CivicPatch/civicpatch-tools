@@ -2,6 +2,7 @@
 the config knows. Plan 2 fills it through the organizations collector."""
 
 import database.extras_organizations as extras_organizations_db
+import services.government_form as government_form_service
 from database.activity import record_change
 from database.database import get_pool
 from database.extras_organizations import ExtrasOrganizationsRow
@@ -29,6 +30,8 @@ class CollectorConfig(BaseModel):
     governing_law: GoverningLaw | None
     jurisdiction_config: MergedConfig
     government_form: GovernmentForm | None
+    # Non-empty only when the run should ask the model for the form; cp.org decides.
+    government_form_choices: list[GovernmentForm] = []
 
 
 class UnknownRole(Exception):
@@ -62,8 +65,8 @@ async def get_extras_organizations_by_input_hash(input_hash: str) -> GoverningLa
 
 
 async def collector_config(jurisdiction_ocdid: str) -> CollectorConfig:
-    """The jurisdiction's name, its extras_governing_law, its merged config, and its
-    government form. The caller adds the run's cap."""
+    """The jurisdiction's name, its extras_governing_law, its merged config, its government form,
+    and the forms to ask the model between. The caller adds the run's cap."""
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
@@ -83,7 +86,13 @@ async def collector_config(jurisdiction_ocdid: str) -> CollectorConfig:
     parsed = parse_jurisdiction_ocdid(jurisdiction_ocdid)
     configs = await get_jurisdiction_configs()
     jury_config = jurisdiction_config(configs, parsed.state, parsed.level)
-    return CollectorConfig(name=name, governing_law=governing_law, jurisdiction_config=jury_config, government_form=government_form)
+    return CollectorConfig(
+        name=name,
+        governing_law=governing_law,
+        jurisdiction_config=jury_config,
+        government_form=government_form,
+        government_form_choices=await government_form_service.government_form_choices(jurisdiction_ocdid),
+    )
 
 
 def _unknown_roles(organizations: GoverningLawOrganizations, role_ids: set[str]) -> list[str]:

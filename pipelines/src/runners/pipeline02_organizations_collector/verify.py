@@ -44,14 +44,20 @@ def unanswered_asks(asks: List[RoleAsk], claims: List[RoleClaim]) -> List[RoleAs
 
 
 def unquoted_charter_urls(
-    posts: List[GoverningLawPost], pages: List[GoverningLawPage], governing_law: GoverningLaw, governing_law_config: GoverningLawConfig | None
+    posts: List[GoverningLawPost],
+    pages: List[GoverningLawPage],
+    governing_law: GoverningLaw,
+    governing_law_config: GoverningLawConfig | None,
+    governing_bodies: List[str],
 ) -> List[str]:
-    """Every real charter establishes some office, so one that governs and that no post quotes is not the charter."""
+    """A real charter sets up the body that governs, so one that governs and is quoted for no governing body's
+    post is not the charter: a page that only quotes a clause of it (Estacada's city manager page) included."""
     if not _charter_governs(governing_law, governing_law_config):
         return []
     charter_pages = [page for page in pages if page_kind(page, governing_law, governing_law_config) == GoverningLawKind.CHARTER]
     charter_page_ids = {page.id for page in charter_pages}
-    if any(source.extras.source_page_id in charter_page_ids for post in posts for source in post.sources):
+    governing_posts = [post for post in posts if post.organization_id in governing_bodies]
+    if any(source.extras.source_page_id in charter_page_ids for post in governing_posts for source in post.sources):
         return []
     return [page.source_url for page in charter_pages]
 
@@ -73,16 +79,19 @@ def citation(
     if not answer.established:
         return None
     method = None if answer.filled_by == FilledBy.NOT_STATED else SelectionMethod(answer.filled_by.value)
-    for page in pages:
-        quote = supporting_quote(page.text, answer.quote, claim.ask.names, method)
-        if quote is not None:
-            return Citation(
-                quote=quote,
-                source_page_id=page.id,
-                source_url=page.source_url,
-                page_kind=page_kind(page, governing_law, governing_law_config),
-                selection_method=method,
-            )
+    # A quote may establish the office without the words for how it is filled ("shall choose"): it is
+    # still cited, without the method, and the role's default applies.
+    for wanted in dict.fromkeys([method, None]):
+        for page in pages:
+            quote = supporting_quote(page.text, answer.quote, claim.ask.names, wanted)
+            if quote is not None:
+                return Citation(
+                    quote=quote,
+                    source_page_id=page.id,
+                    source_url=page.source_url,
+                    page_kind=page_kind(page, governing_law, governing_law_config),
+                    selection_method=wanted,
+                )
     return None
 
 

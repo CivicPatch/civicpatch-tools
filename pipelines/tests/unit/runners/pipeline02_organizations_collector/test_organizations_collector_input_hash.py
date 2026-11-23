@@ -37,8 +37,11 @@ def _law(collected_at: datetime, page_ids: list[str], kind: GoverningLawKind = G
 _BARNARD_LAW = _law(datetime(2026, 10, 21, tzinfo=timezone.utc), ["page-barnard"])
 
 
-def _hash(pages=(_STATUTE,), governing_law=_BARNARD_LAW, asks=(_LISTER,), presiding=(_CHAIR,), asks_per_question=2) -> str:
-    return input_hash(pages_by_kind(list(pages), governing_law, _VERMONT), list(asks), list(presiding), asks_per_question)
+_RULES = ["def citation(): ..."]
+
+
+def _hash(pages=(_STATUTE,), governing_law=_BARNARD_LAW, asks=(_LISTER,), presiding=(_CHAIR,), asks_per_question=2, rules=_RULES) -> str:
+    return input_hash(pages_by_kind(list(pages), governing_law, _VERMONT), list(asks), list(presiding), asks_per_question, rules)
 
 
 def test_two_towns_reading_one_statute_share_a_hash():
@@ -70,3 +73,8 @@ def test_a_page_read_as_another_kind_changes_the_hash():
 )
 def test_a_change_to_what_is_read_or_asked_changes_the_hash(changes):
     assert _hash(**changes) != _hash()
+
+
+def test_a_change_to_verifys_rules_changes_the_hash():
+    """A copied answer skips VERIFY, so one decided by older rules must not be copied."""
+    assert _hash(rules=["def citation(): return None"]) != _hash()

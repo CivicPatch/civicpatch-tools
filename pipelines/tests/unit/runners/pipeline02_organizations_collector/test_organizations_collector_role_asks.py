@@ -2,7 +2,7 @@
 
 import pytest
 
-from runners.pipeline02_organizations_collector.role_asks import presiding_asks, role_asks
+from runners.pipeline02_organizations_collector.role_asks import governing_body_names, presiding_asks, role_asks
 from shared.schemas import GovernmentForm, SelectionMethod
 from shared.utils.government_forms import DerivedOrganization
 from shared.utils.layered_config import ConfigFile, ConfigRole, GovernmentFormConfig, merged_config
@@ -111,3 +111,8 @@ def test_town_officers_are_asked_under_their_own_organization_after_the_boards()
         ("Board of Listers", "lister", "Lister"),
     ]
     assert _asked(presiding_asks(_VT_CONFIG, "Johnson town", GovernmentForm.OPEN_TOWN_MEETING)) == [("Selectboard", "chair", "Chair")]
+
+
+def test_the_governing_body_is_each_forms_first_organization():
+    assert governing_body_names(CONFIG, "Stowe town", GovernmentForm.OPEN_TOWN_MEETING) == ["Select Board"]
+    assert governing_body_names(CONFIG, "Burlington city", None) == ["Council"]
