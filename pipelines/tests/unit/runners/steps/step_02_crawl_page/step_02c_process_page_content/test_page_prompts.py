@@ -1,8 +1,12 @@
 """A page's verdict may be reused only while everything the LLM saw besides the text is the same."""
 
+from datetime import datetime
+
 import pytest
+import services.open_router.prompts as open_router_prompts
 from runners.pipeline03_people_collector.schemas import ExpectedMembership
 from runners.pipeline03_people_collector.steps.step_02_crawl_page.step_02c_process_page_content.page_prompts import (
+    page_extraction_prompt,
     prompt_hash,
 )
 from shared.schemas import GovernmentForm, KnownOrganization, PipelineRunConfig, Post
@@ -79,3 +83,38 @@ def test_a_new_known_role_moves_it():
 def test_each_page_has_its_own():
     """The relevance prompt names the page, so reuse only ever compares a url with itself."""
     assert _hash(url="https://seattle.gov/mayor") != _hash()
+
+
+def _clock(monkeypatch, day: datetime) -> None:
+    """Make the prompt builders think it is `day`."""
+
+    class _Today:
+        @staticmethod
+        def now():
+            return day
+
+    monkeypatch.setattr(open_router_prompts, "datetime", _Today)
+
+
+def test_the_same_inputs_hash_the_same_on_two_days(monkeypatch):
+    """The sent prompt asks who is *currently* serving, so it carries the date; the key must not.
+
+    Keyed on the date, the hash moved every day and no page was ever replayed (0 of 11,925
+    prod pages, measured 2026-11-20).
+    """
+    _clock(monkeypatch, datetime(2026, 8, 1))
+    august = _hash()
+    _clock(monkeypatch, datetime(2026, 9, 1))
+
+    assert _hash() == august
+
+
+def test_the_prompt_it_sends_still_carries_the_day(monkeypatch):
+    """Only the hash pins the date. The model still has to know what day it is."""
+    _clock(monkeypatch, datetime(2026, 8, 1))
+    august = page_extraction_prompt([_COUNCIL, _MAYOR], _MEMBERSHIPS, _OCDID)
+    _clock(monkeypatch, datetime(2026, 9, 1))
+    september = page_extraction_prompt([_COUNCIL, _MAYOR], _MEMBERSHIPS, _OCDID)
+
+    assert "2026-08-01" in august
+    assert august != september
