@@ -74,7 +74,6 @@ async def _run(pipeline_run_id: str, jurisdiction_ocdid: str, url: Optional[str]
             # The run's own ceiling, from the same fetch. Nothing had to carry it here.
             pipeline_run_cap_usd=_cap(config_data),
             government_form=config_data.get("government_form"),
-            government_form_choices=config_data.get("government_form_choices") or [],
             published_source_pages=[
                 PublishedSourcePage.model_validate(page) for page in config_data.get("published_source_pages") or []
             ],

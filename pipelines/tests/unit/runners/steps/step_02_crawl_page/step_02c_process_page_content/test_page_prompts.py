@@ -5,6 +5,7 @@ from datetime import datetime
 import pytest
 import services.open_router.prompts as open_router_prompts
 from runners.pipeline03_people_collector.schemas import ExpectedMembership
+from runners.pipeline03_people_collector.steps.step_02_crawl_page.step_02c_process_page_content import page_prompts
 from runners.pipeline03_people_collector.steps.step_02_crawl_page.step_02c_process_page_content.page_prompts import (
     page_extraction_prompt,
     prompt_hash,
@@ -78,6 +79,14 @@ def test_a_new_expected_division_moves_it():
 
 def test_a_new_known_role_moves_it():
     assert _hash(roles=[*_ROLES, "City Attorney"]) != _hash()
+
+
+def test_a_new_model_moves_it(monkeypatch):
+    """A reading by another model is not this one's to reuse."""
+    before = _hash()
+    monkeypatch.setitem(page_prompts.MODELS_BY_TYPE, "STANDARD", {"model": "another/model", "providers": []})
+
+    assert _hash() != before
 
 
 def test_each_page_has_its_own():

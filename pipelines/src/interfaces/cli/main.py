@@ -66,7 +66,6 @@ async def _run_people_collector_async(args):
         raw_cap = config_data.get("pipeline_run_cap_usd")
         cap = Decimal(str(raw_cap)) if raw_cap is not None else None
         government_form = config_data.get("government_form")
-        government_form_choices = config_data.get("government_form_choices") or []
         published_source_pages = [
             PublishedSourcePage.model_validate(page) for page in config_data.get("published_source_pages") or []
         ]
@@ -84,7 +83,6 @@ async def _run_people_collector_async(args):
             # Nothing carries it here — not the Actions workflow, not the Temporal args.
             pipeline_run_cap_usd=cap,
             government_form=government_form,
-            government_form_choices=government_form_choices,
             published_source_pages=published_source_pages,
             governing_law_posts=governing_law_posts,
         ),

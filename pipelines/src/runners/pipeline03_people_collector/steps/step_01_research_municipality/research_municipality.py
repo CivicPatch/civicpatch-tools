@@ -23,7 +23,6 @@ from ...schemas import (
     ResearchedPerson,
 )
 from shared.schemas import GoverningLawPost, KnownOrganization, Membership, Person, Post, RoleConfig
-from ..step_01_research_municipality import government_form
 from shared.utils import divisions
 from shared.utils.label_parser import parse_label, parse_label_preferring
 from shared.utils.taxonomy import UNMATCHED_ROLE_ID, Taxonomy, build_taxonomy
@@ -47,9 +46,6 @@ async def research_municipality(
     jurisdiction_ocdid = context.data.jurisdiction_ocdid
     existing = await civicpatch_api.get_active_people(api_client, logger, jurisdiction_ocdid)
 
-    if _can_research() and context.data.config.government_form_choices:
-        await government_form.request_government_form(context, api_client, logger)
-    # After the form: a form saved just now has already built its organizations.
     organizations = await civicpatch_api.get_organizations(api_client, logger, jurisdiction_ocdid)
     posts = [post for organization in organizations for post in organization.posts]
     governing_law_posts = context.data.config.governing_law_posts

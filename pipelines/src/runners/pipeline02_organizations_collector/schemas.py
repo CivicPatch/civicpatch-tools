@@ -37,6 +37,8 @@ class OrganizationsCollectorConfig(BaseModel):
     jurisdiction_config: MergedConfig
     # The jurisdiction's `extras_government_form`; None asks about every form its name allows.
     government_form: Optional[GovernmentForm]
+    # The forms INIT asks the model to choose between; empty means do not ask. cp.org decides.
+    government_form_choices: List[GovernmentForm] = []
 
 
 class GoverningSectionsResponse(BaseModel):

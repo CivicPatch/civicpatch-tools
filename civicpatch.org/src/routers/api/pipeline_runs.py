@@ -12,7 +12,6 @@ import lib.temporal.client as temporal_service
 import services.extras_organizations as extras_organizations_service
 import services.governing_law as governing_law_service
 import database.government_forms as government_forms_db
-import services.government_form as government_form_service
 import services.jurisdiction_scrape_candidate as candidate_service
 import services.pipeline_runs as pipeline_run_service
 import services.spend_budget as spend_budget_service
@@ -292,10 +291,6 @@ def get_router(api_key_header):
             # Resolved when asked, like the cap: every trigger gets it without carrying it,
             # and the run sees the saved form and config as of its start.
             "government_form": government.government_form,
-            # Non-empty only when the run should ask the model for the form; cp.org decides.
-            "government_form_choices": await government_form_service.government_form_choices(
-                pipeline_run["jurisdiction_ocdid"]
-            ),
             # Live, like the rest: what the run may reuse is whatever is published when it starts.
             "published_source_pages": [
                 page.model_dump()

@@ -22,7 +22,6 @@ from runners.pipeline03_people_collector.steps.step_01_research_municipality.res
 from runners.pipeline03_people_collector.schemas import ExpectedMembership, ResearchedPerson
 from shared.schemas import (
     GoverningLawPost,
-    GovernmentForm,
     KnownOrganization,
     Membership,
     Post,
@@ -238,38 +237,6 @@ def test_an_organizations_role_wins_an_ambiguous_label_and_other_roles_are_kept(
 
 
 _STEP = "runners.pipeline03_people_collector.steps.step_01_research_municipality.research_municipality"
-
-
-@pytest.mark.asyncio
-async def test_a_form_saved_during_the_run_reaches_that_runs_research_hint():
-    """Organizations are read after the form step: saving a form builds them on cp.org."""
-    context = pipeline_run_context_factory({})
-    context.data.config.government_form_choices = [GovernmentForm.MAYOR_COUNCIL, GovernmentForm.COUNCIL_MANAGER]
-    built = [
-        KnownOrganization(id="council", name="Council", meta_is_default=True, role_labels=["Council Member"]),
-        KnownOrganization(id="mayor", name="Office of the Mayor", role_labels=["Mayor"]),
-    ]
-    organizations_now = [[KnownOrganization(id="government", name="Government", meta_is_default=True)]]
-
-    async def save_form(*_):
-        organizations_now[0] = built
-
-    async def organizations(*_):
-        return organizations_now[0]
-
-    with (
-        patch(f"{_STEP}._can_research", return_value=True),
-        patch(f"{_STEP}.government_form.request_government_form", side_effect=save_form),
-        patch(f"{_STEP}.civicpatch_api.get_active_people", new=AsyncMock(return_value=[])),
-        patch(f"{_STEP}.civicpatch_api.get_organizations", side_effect=organizations),
-        patch(f"{_STEP}.civicpatch_api.get_roster_source_urls", new=AsyncMock(return_value=[])),
-        patch(f"{_STEP}.google_gemini_llm.run_prompt", new=AsyncMock(return_value={"people": []})) as ask,
-    ):
-        async with httpx.AsyncClient(base_url="http://cp-org.invalid") as client:
-            await research_municipality(context, client)
-
-    prompt = ask.call_args.args[2]
-    assert "- Office of the Mayor: usually Mayor" in prompt
 
 
 # --- _expected_from_governing_law_posts: the law's posts the roster lacks ---
