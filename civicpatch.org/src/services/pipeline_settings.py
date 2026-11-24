@@ -23,7 +23,7 @@ from shared.utils.statuses import PipelineRunKind
 async def _candidates_due(state: str, kind: PipelineRunKind) -> int:
     if kind == PipelineRunKind.PEOPLE_COLLECTOR:
         return len(await get_scrape_candidates(state))
-    return len(await CANDIDATES[kind](state, None))
+    return len(await CANDIDATES[kind](state, None, None))
 
 
 async def get_pipeline_panel(state: str, kind: PipelineRunKind) -> PipelinePanel:

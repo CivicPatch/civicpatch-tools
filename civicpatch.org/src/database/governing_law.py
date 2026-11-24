@@ -4,7 +4,6 @@ from pydantic import BaseModel
 
 from database.changeset_predicates import (
     NO_ATTEMPT_IN_FLIGHT,
-    NOT_TRIED_TODAY,
     OLDEST_ATTEMPT_FIRST,
     attempts_join,
     due_after_days,
@@ -60,7 +59,7 @@ class CollectionCandidate(BaseModel):
     name: str
 
 
-async def get_collection_candidates(state: str, limit: int | None) -> list[CollectionCandidate]:
+async def get_collection_candidates(state: str, limit: int | None, state_batch_id: str | None) -> list[CollectionCandidate]:
     """Pipeline 1's: the state's places with no governing law yet, or one older than the cadence."""
     return await _candidates(
         PipelineRunKind.GOVERNING_LAW_COLLECTOR,
@@ -69,11 +68,13 @@ async def get_collection_candidates(state: str, limit: int | None) -> list[Colle
          OR (j.extras_governing_law->>'collected_at')::timestamptz
             < now() - make_interval(days => {due_after_days(PipelineRunKind.GOVERNING_LAW_COLLECTOR)}))
         """,
-        {"state": state, "limit": limit},
+        {"state": state, "limit": limit, "state_batch_id": state_batch_id},
     )
 
 
-async def get_organizations_collection_candidates(state: str, limit: int | None) -> list[CollectionCandidate]:
+async def get_organizations_collection_candidates(
+    state: str, limit: int | None, state_batch_id: str | None
+) -> list[CollectionCandidate]:
     """Pipeline 2's: the state's places with a governing law stored and no answer read from it yet. A
     pending pipeline 1 issue does not hold a place: pipeline 2 reads the law that was stored, and the
     issue waits for a person."""
@@ -85,13 +86,14 @@ async def get_organizations_collection_candidates(state: str, limit: int | None)
              OR (j.extras_organizations->'extras'->>'governing_law_collected_at')::timestamptz
                 < (j.extras_governing_law->>'collected_at')::timestamptz)
         """,
-        {"state": state, "limit": limit},
+        {"state": state, "limit": limit, "state_batch_id": state_batch_id},
     )
 
 
 async def _candidates(kind: PipelineRunKind, due: LiteralString, params: dict[str, object]) -> list[CollectionCandidate]:
     """Every pipeline's candidates read alike: active places below the state, none of this kind in flight
-    or tried today, then the pipeline's own `due` rule; least recently tried first."""
+    or already tried in this batch (`state_batch_id`), then the pipeline's own `due` rule; least recently
+    tried first."""
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
@@ -101,11 +103,16 @@ async def _candidates(kind: PipelineRunKind, due: LiteralString, params: dict[st
             {attempts_join(kind)}
             {settings_join(kind)}
             WHERE j.state = %(state)s AND j.status = 'active' AND j.level <> 'state'
-              AND {NO_ATTEMPT_IN_FLIGHT} AND {NOT_TRIED_TODAY}
+              AND {NO_ATTEMPT_IN_FLIGHT}
+              AND NOT EXISTS (
+                  SELECT 1 FROM pipeline_runs tried
+                  WHERE tried.jurisdiction_ocdid = j.jurisdiction_ocdid AND tried.kind = %(kind)s
+                    AND tried.state_batch_id = %(state_batch_id)s
+              )
               AND {due}
             ORDER BY {OLDEST_ATTEMPT_FIRST}
             LIMIT %(limit)s
             """,
-            params,
+            {**params, "kind": kind},
         )
         return [CollectionCandidate(jurisdiction_ocdid=row[0], name=row[1] or "") for row in await cur.fetchall()]

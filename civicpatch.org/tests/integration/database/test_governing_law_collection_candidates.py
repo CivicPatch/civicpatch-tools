@@ -55,7 +55,7 @@ async def _seeded():
 @pytest.mark.integration
 @pytest.mark.asyncio
 async def test_a_never_collected_and_a_year_old_place_are_due_and_never_a_fresh_one_or_a_state():
-    candidates = [c.jurisdiction_ocdid for c in await get_collection_candidates("zz", None)]
+    candidates = [c.jurisdiction_ocdid for c in await get_collection_candidates("zz", None, None)]
 
     assert candidates == [_NEVER, _STALE]
 
@@ -66,7 +66,7 @@ async def test_a_collection_in_flight_is_not_a_candidate_and_a_scrape_does_not_c
     await factories.start_run(_NEVER, kind=PipelineRunKind.GOVERNING_LAW_COLLECTOR)
     await factories.start_run(_STALE)
 
-    assert [c.jurisdiction_ocdid for c in await get_collection_candidates("zz", None)] == [_STALE]
+    assert [c.jurisdiction_ocdid for c in await get_collection_candidates("zz", None, None)] == [_STALE]
     assert await has_unfinished_run(_NEVER, PipelineRunKind.GOVERNING_LAW_COLLECTOR)
     assert not await has_unfinished_run(_STALE, PipelineRunKind.GOVERNING_LAW_COLLECTOR)
 
@@ -74,17 +74,18 @@ async def test_a_collection_in_flight_is_not_a_candidate_and_a_scrape_does_not_c
 @pytest.mark.integration
 @pytest.mark.asyncio
 async def test_the_limit_is_kept():
-    assert len(await get_collection_candidates("zz", 1)) == 1
+    assert len(await get_collection_candidates("zz", 1, None)) == 1
 
 
 
 @pytest.mark.integration
 @pytest.mark.asyncio
-async def test_a_collection_that_failed_today_is_not_claimed_again():
-    run_id = await factories.start_run(_NEVER, kind=PipelineRunKind.GOVERNING_LAW_COLLECTOR)
+async def test_a_place_this_batch_tried_is_not_claimed_again_by_it_but_a_new_batch_may():
+    run_id = await factories.start_run(_NEVER, kind=PipelineRunKind.GOVERNING_LAW_COLLECTOR, state_batch_id="batch-1")
     await factories.fail_run(run_id)
 
-    assert [c.jurisdiction_ocdid for c in await get_collection_candidates("zz", None)] == [_STALE]
+    assert [c.jurisdiction_ocdid for c in await get_collection_candidates("zz", None, "batch-1")] == [_STALE]
+    assert _NEVER in [c.jurisdiction_ocdid for c in await get_collection_candidates("zz", None, "batch-2")]
 
 
 @pytest.mark.integration
@@ -94,7 +95,7 @@ async def test_the_least_recently_tried_comes_first():
     await factories.fail_run(run_id)
     await factories.backdate_run(run_id, 2)
 
-    assert [c.jurisdiction_ocdid for c in await get_collection_candidates("zz", None)] == [_STALE, _NEVER]
+    assert [c.jurisdiction_ocdid for c in await get_collection_candidates("zz", None, None)] == [_STALE, _NEVER]
 
 
 @pytest.mark.integration
@@ -103,4 +104,4 @@ async def test_the_states_cadence_sets_how_old_a_law_may_get():
     # The 2020 law is due at the default year, and not under a cadence longer than its age.
     await set_cadence("zz", PipelineRunKind.GOVERNING_LAW_COLLECTOR, 5000, None, None)
 
-    assert [c.jurisdiction_ocdid for c in await get_collection_candidates("zz", None)] == [_NEVER]
+    assert [c.jurisdiction_ocdid for c in await get_collection_candidates("zz", None, None)] == [_NEVER]

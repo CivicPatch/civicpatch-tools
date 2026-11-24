@@ -115,7 +115,7 @@ def _collector_activities(rec: Recorder) -> list:
         return _cap(rec)
 
     @activity.defn(name="claim_jurisdictions_for_collector")
-    async def claim_jurisdictions_for_collector(kind, state, num_jurisdictions=None, created_by_user_id=None):
+    async def claim_jurisdictions_for_collector(kind, state, num_jurisdictions, created_by_user_id, state_batch_id):
         return _claim(rec, state, num_jurisdictions)
 
     @activity.defn(name="trigger_collector_remote")

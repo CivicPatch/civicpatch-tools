@@ -59,14 +59,19 @@ async def trigger_collector_remote(kind: str, jurisdiction_ocdid: str, pipeline_
 
 @activity.defn
 async def claim_jurisdictions_for_collector(
-    kind: str, state: str, num_jurisdictions: Optional[int] = None, created_by_user_id: Optional[str] = None
+    kind: str, state: str, num_jurisdictions: int, created_by_user_id: Optional[str], state_batch_id: str
 ) -> list[dict]:
     """The state's next jurisdictions to collect, each with a run registered, from the API (this
     queue's worker opens no database connection)."""
     async with httpx.AsyncClient(headers=_API_HEADERS, timeout=60) as client:
         resp = await client.post(
             f"{API_URL}/api/v1/pipeline_runs/{kind}/claim",
-            json={"state": state, "num_jurisdictions": num_jurisdictions, "created_by_user_id": created_by_user_id},
+            json={
+                "state": state,
+                "num_jurisdictions": num_jurisdictions,
+                "created_by_user_id": created_by_user_id,
+                "state_batch_id": state_batch_id,
+            },
         )
         resp.raise_for_status()
         return resp.json()["data"]["jurisdictions"]
