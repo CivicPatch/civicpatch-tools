@@ -1,0 +1,64 @@
+people:
+- name: Sandra Staples
+  label: Mayor
+  organization_label: City Council
+  phone: null
+  email: null
+  url: null
+  start_date: null
+  end_date: null
+  image: null
+- name: Nikko Ambroselli
+  label: Council Member
+  organization_label: City Council
+  phone: null
+  email: null
+  url: null
+  start_date: null
+  end_date: null
+  image: null
+- name: Susan Bragstad
+  label: Council Member
+  organization_label: City Council
+  phone: null
+  email: null
+  url: null
+  start_date: null
+  end_date: null
+  image: null
+- name: Bruce Sherrill
+  label: Council Member
+  organization_label: City Council
+  phone: null
+  email: null
+  url: null
+  start_date: null
+  end_date: null
+  image: null
+- name: Sandra Staples
+  label: Council Member
+  organization_label: City Council
+  phone: null
+  email: null
+  url: null
+  start_date: null
+  end_date: null
+  image: null
+- name: Stephen Testa
+  label: Council Member
+  organization_label: City Council
+  phone: null
+  email: null
+  url: null
+  start_date: null
+  end_date: null
+  image: null
+- name: Joyce Davidson
+  label: City Clerk
+  organization_label: null
+  phone: null
+  email: null
+  url: null
+  start_date: null
+  end_date: null
+  image: null

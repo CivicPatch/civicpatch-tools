@@ -1,4 +1,5 @@
 jurisdiction_ocdid: ocd-jurisdiction/country:us/state:vt/place:bellows_falls/government
+place_name: Bellows Falls village
 current_date: '2026-10-28'
 organizations:
 - {name: Board of Trustees, role_labels: [Trustee, Village President]}

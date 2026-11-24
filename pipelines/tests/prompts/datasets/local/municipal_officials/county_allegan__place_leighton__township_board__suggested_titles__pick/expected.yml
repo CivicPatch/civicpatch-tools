@@ -1,5 +1,6 @@
 generated: true
 jurisdiction_ocdid: ocd-jurisdiction/country:us/state:mi/county:allegan/place:leighton/government
+place_name: Leighton township
 current_date: '2026-10-02'
 organizations:
 - {name: Board, role_labels: [Supervisor, Clerk, Treasurer, Trustee]}

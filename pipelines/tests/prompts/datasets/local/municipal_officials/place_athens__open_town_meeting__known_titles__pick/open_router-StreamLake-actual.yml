@@ -1,6 +1,9 @@
 people:
 - name: David Bemis
-  label: Selectboard and Moderator and Cemetery Commission
+  label: Selectboard Member and Moderator and Cemetery Commission Member and Justice
+    of the Peace and Housing Rehabilitation Grant Committee Member and Community Center
+    Advisory Committee Member and Emergency Management Director and Southern Windsor
+    Windham Solid Waste Management Representative
   organization_label: Selectboard
   phone: 869-3268
   email: null
@@ -9,7 +12,8 @@ people:
   end_date: null
   image: null
 - name: Denise Randall
-  label: Selectboard
+  label: Selectboard Member and Housing Rehabilitation Grant Committee Member and
+    Southern Windsor Windham Solid Waste Management Representative (alternate)
   organization_label: Selectboard
   phone: null
   email: null
@@ -18,7 +22,8 @@ people:
   end_date: null
   image: null
 - name: Janet Perry
-  label: Selectboard and Budget Committee
+  label: Selectboard Member and Justice of the Peace and Budget Committee Member and
+    Planning Commission Member and Housing Rehabilitation Grant Committee Member
   organization_label: Selectboard
   phone: null
   email: null
@@ -27,7 +32,9 @@ people:
   end_date: null
   image: null
 - name: Krista Gay
-  label: Selectboard
+  label: Selectboard Member and Meetinghouse Committee Member and Housing Rehabilitation
+    Grant Committee Member and Community Center Advisory Committee Member and Campbell
+    Fund Trustee
   organization_label: Selectboard
   phone: null
   email: null
@@ -36,7 +43,7 @@ people:
   end_date: null
   image: null
 - name: Danny Taylor
-  label: Selectboard
+  label: Selectboard Member and Housing Rehabilitation Grant Committee Member
   organization_label: Selectboard
   phone: null
   email: null
@@ -45,25 +52,17 @@ people:
   end_date: null
   image: null
 - name: Amber Stevens
-  label: Town Clerk & Treasurer and Lister and Budget Committee
+  label: Town Clerk & Treasurer and Lister and Budget Committee Member and Housing
+    Rehabilitation Grant Committee Member
   organization_label: Town Clerk & Treasurer
-  phone: (802) 869-3370
+  phone: (802) 869-3370, 802-376-5646
   email: listers@athensvt.gov
   url: https://www.athensvt.com/officials.html
   start_date: null
   end_date: null
   image: null
-- name: Hannah Regier
-  label: Delinquent Tax Collector
-  organization_label: Delinquent Tax Collector
-  phone: null
-  email: null
-  url: https://www.athensvt.com/officials.html
-  start_date: null
-  end_date: null
-  image: null
 - name: Carol Bingham
-  label: Lister and Budget Committee
+  label: Lister and Budget Committee Member and Campbell Fund Trustee
   organization_label: Listers
   phone: null
   email: null
@@ -72,7 +71,7 @@ people:
   end_date: null
   image: null
 - name: Mike Bates
-  label: Auditor and Budget Committee
+  label: Auditor and Budget Committee Member
   organization_label: Auditors
   phone: null
   email: null
@@ -81,7 +80,7 @@ people:
   end_date: null
   image: null
 - name: Jimmy Trimble
-  label: Auditor
+  label: Auditor and Town Grand Juror and Agent
   organization_label: Auditors
   phone: null
   email: null
@@ -99,7 +98,7 @@ people:
   end_date: null
   image: null
 - name: Harold Noyes
-  label: Cemetery Commission
+  label: Cemetery Commission Member
   organization_label: Cemetery Commission
   phone: null
   email: null
@@ -108,7 +107,7 @@ people:
   end_date: null
   image: null
 - name: Steve Oakes
-  label: Cemetery Commission
+  label: Cemetery Commission Member
   organization_label: Cemetery Commission
   phone: null
   email: null
@@ -117,7 +116,8 @@ people:
   end_date: null
   image: null
 - name: Don Capponcelli
-  label: Cemetery Commission
+  label: Cemetery Commission Member and Weather Emergency Committee Member and Community
+    Center Advisory Committee Member and Fence Viewer and Surveyor of wood and coal
   organization_label: Cemetery Commission
   phone: null
   email: null
@@ -126,7 +126,7 @@ people:
   end_date: null
   image: null
 - name: James Neathawk
-  label: Cemetery Commission
+  label: Cemetery Commission Member
   organization_label: Cemetery Commission
   phone: null
   email: null

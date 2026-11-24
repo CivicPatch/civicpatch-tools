@@ -1,4 +1,5 @@
 jurisdiction_ocdid: ocd-jurisdiction/country:us/state:vt/place:burlington/government
+place_name: Burlington city
 current_date: '2026-10-25'
 organizations:
 - {name: Council, role_labels: [Council Member]}

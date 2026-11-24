@@ -1,5 +1,6 @@
 generated: true
 jurisdiction_ocdid: ocd-jurisdiction/country:us/state:nj/county:hunterdon/place:alexandria/government
+place_name: Alexandria township
 current_date: '2026-10-02'
 organizations:
 - {name: Board, role_labels: [Supervisor, Clerk, Treasurer, Trustee]}

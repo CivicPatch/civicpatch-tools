@@ -1,4 +1,5 @@
 jurisdiction_ocdid: ocd-jurisdiction/country:us/state:vt/place:athens/government
+place_name: Athens town
 current_date: '2026-10-28'
 organizations:
 - {name: Advisory Budget Committee, role_labels: [Advisory Budget Committee Member]}

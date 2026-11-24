@@ -1,5 +1,6 @@
 generated: true
 jurisdiction_ocdid: ocd-jurisdiction/country:us/state:id/place:meridian/government
+place_name: Meridian city
 current_date: '2026-10-16'
 organizations:
 - {name: Council, role_labels: [Council Member]}

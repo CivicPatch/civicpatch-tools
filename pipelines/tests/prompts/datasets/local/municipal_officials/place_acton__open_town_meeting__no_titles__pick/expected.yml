@@ -1,5 +1,6 @@
 generated: true
 jurisdiction_ocdid: ocd-jurisdiction/country:us/state:ma/place:acton/government
+place_name: Acton town
 current_date: '2026-10-16'
 organizations:
 - {name: Select Board, role_labels: [Select Board Member, Chair, Vice Chair]}

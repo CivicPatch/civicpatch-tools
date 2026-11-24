@@ -1,5 +1,6 @@
 generated: true
 jurisdiction_ocdid: ocd-jurisdiction/country:us/state:wa/county:king/government
+place_name: King County
 current_date: '2026-09-29'
 organizations:
 - {name: County Council, role_labels: [Council Member, Chair, Vice Chair]}

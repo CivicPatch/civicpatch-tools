@@ -1,6 +1,6 @@
 people:
 - name: Alissa Nicol
-  label: Chair
+  label: Select Board Chair
   organization_label: Select Board
   phone: (978) 929-6611
   email: alissanicol@acton-ma.gov
@@ -9,7 +9,7 @@ people:
   end_date: null
   image: null
 - name: David D. Martin
-  label: Vice Chair
+  label: Select Board Vice Chair
   organization_label: Select Board
   phone: (978) 929-6611
   email: davidmartin@acton-ma.gov
@@ -18,7 +18,7 @@ people:
   end_date: null
   image: null
 - name: Francesca Arsenault
-  label: Clerk
+  label: Select Board Clerk
   organization_label: Select Board
   phone: (978) 929-6611
   email: FranArsenault@acton-ma.gov

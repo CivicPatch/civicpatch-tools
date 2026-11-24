@@ -1,5 +1,6 @@
 generated: true
 jurisdiction_ocdid: ocd-jurisdiction/country:us/state:ca/place:amador_city/government
+place_name: Amador City city
 current_date: '2026-09-11'
 organizations:
 - {name: Council, role_labels: [Council Member, Mayor]}

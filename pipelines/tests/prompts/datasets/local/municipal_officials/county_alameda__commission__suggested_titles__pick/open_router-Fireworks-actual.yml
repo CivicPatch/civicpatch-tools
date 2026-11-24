@@ -1,0 +1,46 @@
+people:
+- name: David Haubert
+  label: Supervisor 1st District
+  organization_label: County Offices
+  phone: null
+  email: null
+  url: https://district1.acgov.org/
+  start_date: '2024'
+  end_date: '2028'
+  image: null
+- name: "Elisa M\xE1rquez"
+  label: Supervisor 2nd District
+  organization_label: County Offices
+  phone: null
+  email: null
+  url: https://district2.acgov.org/
+  start_date: '2024'
+  end_date: '2026'
+  image: null
+- name: Lena Tam
+  label: Supervisor 3rd District
+  organization_label: County Offices
+  phone: null
+  email: null
+  url: https://district3.acgov.org/
+  start_date: '2023'
+  end_date: '2026'
+  image: null
+- name: Nate Miley
+  label: Supervisor 4th District
+  organization_label: County Offices
+  phone: null
+  email: null
+  url: https://district4.acgov.org/
+  start_date: '2024'
+  end_date: '2028'
+  image: null
+- name: Nikki Fortunato Bas
+  label: Supervisor 5th District
+  organization_label: County Offices
+  phone: null
+  email: null
+  url: https://district5.acgov.org/
+  start_date: '2024'
+  end_date: '2028'
+  image: null
