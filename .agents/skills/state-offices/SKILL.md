@@ -201,9 +201,11 @@ yourself.
    their changes go in a later PR.
 4. **Maps**: `mise run generate-maps -- prod <state>` in civicpatch-tools. Needed once per new
    state: it fills `meta_parent_ocdids`, so until it runs no place has its county.
-5. **Prod check**: count each place's organizations against its form's, after the sync, with a
-   read-only query against prod, handed over. **Done when:** every place holds its form's
-   organizations.
+5. **Pipelines 1 and 2, then the prod check**: on the pipelines page, Run now for Governing law, then
+   Organizations once it ends. A place's organizations then come from its law (pipeline 2's answer names
+   them); a place with no answer keeps its form's from config. Count them with a read-only query against
+   prod, handed over. **Done when:** every answered place holds the organizations its law names (plus its
+   default, and any the law dropped that still hold people), and every other place its form's.
 6. **The ground-truth places first**: scrape them, score each against the ground truth, state the
    cost beforehand. **Done when:** every miss is explained and the cost per place recorded.
 7. **The rest of the state.** **Done when:** most places hold their governing organization and
