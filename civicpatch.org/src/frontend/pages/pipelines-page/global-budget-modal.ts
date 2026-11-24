@@ -5,12 +5,12 @@ import { html } from "lit-html";
 import { saveGlobalCap } from "../../api.js";
 import { inputValue } from "../../components/fields/field-controls.js";
 import { hostDispatch } from "../../utils/host-dispatch.js";
-import { describeStateCaps, type GlobalScrapePanel } from "./scrape-settings.js";
+import { describeCaps, type GlobalPanel } from "./pipeline-settings.js";
 
 export const SAVED_EVENT = "settings-saved";
 export const CANCEL_EVENT = "cancel";
 
-type Host = HTMLElement & { panel: GlobalScrapePanel };
+type Host = HTMLElement & { panel: GlobalPanel };
 
 function GlobalBudgetModal(host: Host) {
   const [cap, setCap] = useState(host.panel.monthly_cap_usd ?? "");
@@ -48,10 +48,9 @@ function GlobalBudgetModal(host: Host) {
         </span>
       </label>
       <p class="cs-settings-form__hint">
-        A shared ceiling, not an allocation: states draw from it first-come, and each state's
-        own monthly cap is what stops one state emptying it. ${describeStateCaps(host.panel)}.
-        The state caps may add up past this, which is normal.
-        Scrapes only: the collectors have their own caps, below the states.
+        Every pipeline in every state together. A shared ceiling, not an allocation: each
+        pipeline's own monthly cap in a state is what stops it emptying this one.
+        ${describeCaps(host.panel)}. The caps may add up past this, which is normal.
       </p>
       ${error ? html`<p class="cs-settings-form__error">${error}</p>` : ""}
     </div>

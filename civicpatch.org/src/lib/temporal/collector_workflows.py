@@ -136,13 +136,12 @@ async def _claim_one(kind: str, state: str, created_by_user_id: Optional[str]) -
 
 
 async def _cap_reached(kind: str, state: str) -> Optional[str]:
-    """The scrape's budget is per state; a collector's is its own, across states."""
     if kind == PipelineRunKind.PEOPLE_COLLECTOR:
         return await workflow.execute_activity(
             people_collector_month_cap_reached, args=[state], start_to_close_timeout=_QUICK, retry_policy=_RETRY_THRICE
         )
     return await workflow.execute_activity(
-        collector_month_cap_reached, args=[kind], start_to_close_timeout=_QUICK, retry_policy=_RETRY_THRICE
+        collector_month_cap_reached, args=[kind, state], start_to_close_timeout=_QUICK, retry_policy=_RETRY_THRICE
     )
 
 

@@ -1,4 +1,6 @@
-// The cadence and budget block, and the pure formatting it needs.
+// Each pipeline's cadence and budget per state, and the pure formatting it needs.
+
+import type { PipelineKind } from "../../schemas/pipeline-kinds.js";
 
 // Four places under a dollar: a run costs a fraction of a cent, and $0.00 hides it.
 export function formatUsd(value: string): string {
@@ -6,8 +8,9 @@ export function formatUsd(value: string): string {
   return n >= 1 ? `$${n.toFixed(2)}` : `$${n.toFixed(4)}`;
 }
 
-export interface StateScrapePanel {
+export interface PipelinePanel {
   state: string;
+  kind: PipelineKind;
   cadence_days: number | null;
   cadence_anchor: string | null;
   next_run_at: string | null;
@@ -23,51 +26,16 @@ export interface StateScrapePanel {
   candidates_due: number;
 }
 
-// One charter collector kind's row: its own caps, apart from the scrape's.
-export interface CollectorSettings {
-  kind: string;
-  pipeline_run_cap_usd: string;
-  monthly_cap_usd: string | null;
-}
-
-export interface CollectorPanel {
-  settings: CollectorSettings;
-  spent_this_month_usd: string;
-  cost_per_run_this_month_usd: string | null;
-  runs_this_month: number;
-  cost_cap_hits_this_month: number;
-}
-
-const COLLECTOR_LABELS: Record<string, string> = {
-  governing_law_collector: "governing law",
-  organizations_collector: "organizations",
-};
-
-export function collectorLabel(kind: string): string {
-  return COLLECTOR_LABELS[kind] ?? kind;
-}
-
-export const RUN_CAP_REQUIRED = "A run needs a cap. Set $0 to stop this collector altogether.";
-
-// What the collector modal sends: a run's cap is never "none", a monthly cap may be.
-export function collectorCapsToSave(
-  runCap: string,
-  monthCap: string,
-): { error: string } | { run: string; month: string | null } {
-  if (runCap.trim() === "") return { error: RUN_CAP_REQUIRED };
-  return { run: runCap.trim(), month: monthCap.trim() === "" ? null : monthCap.trim() };
-}
-
 export const MANUAL = "manual";
 
-export function describeCadence(panel: StateScrapePanel): string {
+export function describeCadence(panel: PipelinePanel): string {
   if (panel.cadence_days === null) return MANUAL;
   const days = panel.cadence_days;
   return days === 1 ? "daily" : `every ${days} days`;
 }
 
 // Sep 1 at 30 days gives Sep 1, Oct 1, Nov 1 — and Aug 2 before that. Not a start date.
-export function describeAnchor(panel: StateScrapePanel): string {
+export function describeAnchor(panel: PipelinePanel): string {
   return panel.cadence_anchor ? `landing on ${panel.cadence_anchor}` : "";
 }
 
@@ -118,11 +86,12 @@ export function estimateMonthlyCost(
   };
 }
 
-export interface GlobalScrapePanel {
+export interface GlobalPanel {
   monthly_cap_usd: string | null;
   spent_this_month_usd: string;
-  state_monthly_caps_usd: string;
-  // Month to date, every state. Null means no runs to average.
+  // Every pipeline's monthly cap in every state, summed.
+  monthly_caps_usd: string;
+  // The scrape's, month to date, every state. Null means no runs to average.
   cost_per_run_this_month_usd: string | null;
   seconds_per_run_this_month: number | null;
   pipeline_run_concurrency: number;
@@ -145,11 +114,19 @@ export interface NextPass {
   total: string;
 }
 
+// The averages a pass is priced at: the pipeline's own cost per run, and the scrape's run time
+// (the only one measured). Null where there is nothing to average.
+export interface PassAverages {
+  cost_per_run_usd: string | null;
+  seconds_per_run: number | null;
+  concurrency: number;
+}
+
 // Empty strings when nothing is due or there are no runs to average: never a $0 or 0s estimate.
-export function describeNextPass(candidatesDue: number, fleet: GlobalScrapePanel): NextPass {
-  const cost = fleet.cost_per_run_this_month_usd;
-  const seconds = fleet.seconds_per_run_this_month;
-  const rounds = Math.ceil(candidatesDue / fleet.pipeline_run_concurrency);
+export function describeNextPass(candidatesDue: number, averages: PassAverages): NextPass {
+  const cost = averages.cost_per_run_usd;
+  const seconds = averages.seconds_per_run;
+  const rounds = Math.ceil(candidatesDue / averages.concurrency);
   const due = candidatesDue > 0;
   return {
     cost: due && cost !== null ? formatUsd(String(candidatesDue * Number(cost))) : "",
@@ -158,11 +135,11 @@ export function describeNextPass(candidatesDue: number, fleet: GlobalScrapePanel
   };
 }
 
-// State caps may add up past the global one: they are ceilings, not reservations.
-export function describeStateCaps(panel: GlobalScrapePanel): string {
-  const caps = `${formatUsd(panel.state_monthly_caps_usd)} in state caps`;
+// The caps may add up past the global one: they are ceilings, not reservations.
+export function describeCaps(panel: GlobalPanel): string {
+  const caps = `${formatUsd(panel.monthly_caps_usd)} in caps`;
   if (panel.monthly_cap_usd === null) return caps;
-  return Number(panel.state_monthly_caps_usd) > Number(panel.monthly_cap_usd)
+  return Number(panel.monthly_caps_usd) > Number(panel.monthly_cap_usd)
     ? `${caps}, over the cap`
     : caps;
 }

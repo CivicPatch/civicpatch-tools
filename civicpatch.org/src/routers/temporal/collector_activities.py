@@ -73,9 +73,9 @@ async def claim_jurisdictions_for_collector(
 
 
 @activity.defn
-async def collector_month_cap_reached(kind: str) -> Optional[str]:
-    """Which cap was reached, as `people_collector_month_cap_reached` answers; only ever its month."""
+async def collector_month_cap_reached(kind: str, state: str) -> Optional[str]:
+    """Which cap was reached, as `people_collector_month_cap_reached` answers."""
     async with httpx.AsyncClient(headers=_API_HEADERS, timeout=15) as client:
-        resp = await client.get(f"{API_URL}/api/v1/pipeline_runs/{kind}/budget_cap")
+        resp = await client.get(f"{API_URL}/api/v1/pipeline_runs/{kind}/budget_cap", params={"state": state})
         resp.raise_for_status()
         return resp.json()["data"]["cap"]

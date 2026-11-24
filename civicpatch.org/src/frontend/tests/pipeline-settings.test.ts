@@ -1,10 +1,7 @@
 import { describe, expect, it } from "vitest";
 
 import {
-  RUN_CAP_REQUIRED,
-  collectorCapsToSave,
-  collectorLabel,
-  describeStateCaps,
+  describeCaps,
   describeBudget,
   describeCadence,
   describeNextPass,
@@ -13,9 +10,9 @@ import {
   estimateMonthlyCost,
   formatDuration,
   formatUsd,
-  type GlobalScrapePanel,
-  type StateScrapePanel,
-} from "../pages/pipelines-page/scrape-settings.ts";
+  type GlobalPanel,
+  type PipelinePanel,
+} from "../pages/pipelines-page/pipeline-settings.ts";
 
 describe("describePerRun", () => {
   it("shows what a run cost against its cap", () => {
@@ -54,8 +51,9 @@ describe("formatUsd", () => {
   });
 });
 
-const panel = (over: Partial<StateScrapePanel> = {}): StateScrapePanel => ({
+const panel = (over: Partial<PipelinePanel> = {}): PipelinePanel => ({
   state: "wa",
+  kind: "people_collector",
   cadence_days: null,
   cadence_anchor: null,
   next_run_at: null,
@@ -149,31 +147,31 @@ describe("estimateMonthlyCost", () => {
   });
 });
 
-const fleet = (over: Partial<GlobalScrapePanel> = {}): GlobalScrapePanel => ({
+const fleet = (over: Partial<GlobalPanel> = {}): GlobalPanel => ({
   monthly_cap_usd: null,
   spent_this_month_usd: "0",
-  state_monthly_caps_usd: "0",
+  monthly_caps_usd: "0",
   cost_per_run_this_month_usd: null,
   seconds_per_run_this_month: null,
   pipeline_run_concurrency: 25,
   ...over,
 });
 
-describe("describeStateCaps", () => {
+describe("describeCaps", () => {
   it("does not compare against a cap that is not set", () => {
-    expect(describeStateCaps(fleet({ state_monthly_caps_usd: "120" }))).toBe("$120.00 in state caps");
+    expect(describeCaps(fleet({ monthly_caps_usd: "120" }))).toBe("$120.00 in caps");
   });
 
-  it("says when the state caps exceed the cap without treating it as an error", () => {
+  it("says when the caps exceed the global cap without treating it as an error", () => {
     // Ceilings, not reservations — refusing this would be the allocation model the plan rejected.
-    expect(describeStateCaps(fleet({ state_monthly_caps_usd: "120", monthly_cap_usd: "40" }))).toBe(
-      "$120.00 in state caps, over the cap",
+    expect(describeCaps(fleet({ monthly_caps_usd: "120", monthly_cap_usd: "40" }))).toBe(
+      "$120.00 in caps, over the cap",
     );
   });
 
   it("is quiet when the allocation fits", () => {
-    expect(describeStateCaps(fleet({ state_monthly_caps_usd: "20", monthly_cap_usd: "40" }))).toBe(
-      "$20.00 in state caps",
+    expect(describeCaps(fleet({ monthly_caps_usd: "20", monthly_cap_usd: "40" }))).toBe(
+      "$20.00 in caps",
     );
   });
 });
@@ -188,11 +186,12 @@ describe("formatDuration", () => {
 });
 
 describe("describeNextPass", () => {
-  const averages = { cost_per_run_this_month_usd: "0.12", seconds_per_run_this_month: 300 };
+  const averages = { cost_per_run_usd: "0.12", seconds_per_run: 300, concurrency: 25 };
+  const none = { cost_per_run_usd: null, seconds_per_run: null, concurrency: 25 };
 
   it("gives wall-clock time in batches of the concurrency, and total time run by run", () => {
     // 41 due at 25 at a time is two rounds of 5m; all 41 runs added up is 205m.
-    expect(describeNextPass(41, fleet(averages))).toEqual({
+    expect(describeNextPass(41, averages)).toEqual({
       cost: "$4.92",
       wall_clock: "10m",
       total: "3h 25m",
@@ -200,30 +199,18 @@ describe("describeNextPass", () => {
   });
 
   it("says nothing when nothing is due", () => {
-    expect(describeNextPass(0, fleet(averages))).toEqual({ cost: "", wall_clock: "", total: "" });
+    expect(describeNextPass(0, averages)).toEqual({ cost: "", wall_clock: "", total: "" });
   });
 
   it("says nothing when there are no runs to average, never $0", () => {
-    expect(describeNextPass(41, fleet())).toEqual({ cost: "", wall_clock: "", total: "" });
-  });
-});
-
-
-describe("collectorCapsToSave", () => {
-  it("never sends a run without a cap", () => {
-    expect(collectorCapsToSave("", "20")).toEqual({ error: RUN_CAP_REQUIRED });
-    expect(collectorCapsToSave("  ", "")).toEqual({ error: RUN_CAP_REQUIRED });
+    expect(describeNextPass(41, none)).toEqual({ cost: "", wall_clock: "", total: "" });
   });
 
-  it("sends an empty monthly cap as none, and $0 as a real cap", () => {
-    expect(collectorCapsToSave("0.50", "")).toEqual({ run: "0.50", month: null });
-    expect(collectorCapsToSave("0", "0")).toEqual({ run: "0", month: "0" });
-  });
-});
-
-describe("collectorLabel", () => {
-  it("names a collector kind for the page, and falls back to the kind", () => {
-    expect(collectorLabel("governing_law_collector")).toBe("governing law");
-    expect(collectorLabel("some_new_collector")).toBe("some_new_collector");
+  it("prices a pass without a time when only the cost is known", () => {
+    expect(describeNextPass(41, { ...none, cost_per_run_usd: "0.01" })).toEqual({
+      cost: "$0.4100",
+      wall_clock: "",
+      total: "",
+    });
   });
 });

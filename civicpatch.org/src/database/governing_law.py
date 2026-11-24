@@ -1,8 +1,18 @@
+from typing import LiteralString
+
 from pydantic import BaseModel
 
+from database.changeset_predicates import (
+    NO_ATTEMPT_IN_FLIGHT,
+    NOT_TRIED_TODAY,
+    OLDEST_ATTEMPT_FIRST,
+    attempts_join,
+    due_after_days,
+    settings_join,
+)
 from database.database import get_pool
 from shared.schemas import GoverningLaw
-from shared.utils.statuses import PipelineIssueStatus, PipelineRunKind
+from shared.utils.statuses import PipelineRunKind
 
 
 class GoverningLawRow(BaseModel):
@@ -50,68 +60,52 @@ class CollectionCandidate(BaseModel):
     name: str
 
 
-# A year, then a jurisdiction's governing law is collected again: charters change by act.
-_COLLECT_AGAIN_AFTER = "365 days"
-# A run that failed is not retried within the same day's batch.
-_TRIED_WITHIN = "1 day"
-
-
 async def get_collection_candidates(state: str, limit: int | None) -> list[CollectionCandidate]:
-    """The state's jurisdictions below the state with no governing law yet, or only a year-old
-    one, and no collection in flight or tried in the last day. Never-collected first."""
-    pool = await get_pool()
-    async with pool.connection() as conn, conn.cursor() as cur:
-        await cur.execute(
-            f"""
-            SELECT j.jurisdiction_ocdid, j.data->>'name'
-            FROM jurisdictions j
-            WHERE j.state = %s AND j.status = 'active' AND j.level <> 'state'
-              AND (j.extras_governing_law IS NULL
-                   OR (j.extras_governing_law->>'collected_at')::timestamptz < now() - interval '{_COLLECT_AGAIN_AFTER}')
-                -- Tried in the last day, finished or not: a failing place is not claimed again and again.
-              AND NOT EXISTS (
-                  SELECT 1 FROM pipeline_runs r
-                  WHERE r.jurisdiction_ocdid = j.jurisdiction_ocdid AND r.kind = %s
-                    AND (r.finished_at IS NULL OR r.created_at >= now() - interval '{_TRIED_WITHIN}')
-              )
-            ORDER BY j.extras_governing_law IS NOT NULL, j.jurisdiction_ocdid
-            LIMIT %s
-            """,
-            (state, PipelineRunKind.GOVERNING_LAW_COLLECTOR, limit),
-        )
-        return [CollectionCandidate(jurisdiction_ocdid=row[0], name=row[1] or "") for row in await cur.fetchall()]
+    """Pipeline 1's: the state's places with no governing law yet, or one older than the cadence."""
+    return await _candidates(
+        PipelineRunKind.GOVERNING_LAW_COLLECTOR,
+        f"""
+        (j.extras_governing_law IS NULL
+         OR (j.extras_governing_law->>'collected_at')::timestamptz
+            < now() - make_interval(days => {due_after_days(PipelineRunKind.GOVERNING_LAW_COLLECTOR)}))
+        """,
+        {"state": state, "limit": limit},
+    )
 
 
 async def get_organizations_collection_candidates(state: str, limit: int | None) -> list[CollectionCandidate]:
-    """The state's active jurisdictions whose governing law's organizations haven't been
-    extracted yet, or whose governing law was refreshed since. Never-collected first.
-    No run in flight or tried in the last day, and none while pipeline 1's issue waits: what pipeline 2
-    would read is what that issue says is wrong."""
+    """Pipeline 2's: the state's places with a governing law stored and no answer read from it yet. A
+    pending pipeline 1 issue does not hold a place: pipeline 2 reads the law that was stored, and the
+    issue waits for a person."""
+    return await _candidates(
+        PipelineRunKind.ORGANIZATIONS_COLLECTOR,
+        """
+        j.extras_governing_law->>'kind' IN ('charter', 'general_law')
+        AND (j.extras_organizations IS NULL
+             OR (j.extras_organizations->'extras'->>'governing_law_collected_at')::timestamptz
+                < (j.extras_governing_law->>'collected_at')::timestamptz)
+        """,
+        {"state": state, "limit": limit},
+    )
+
+
+async def _candidates(kind: PipelineRunKind, due: LiteralString, params: dict[str, object]) -> list[CollectionCandidate]:
+    """Every pipeline's candidates read alike: active places below the state, none of this kind in flight
+    or tried today, then the pipeline's own `due` rule; least recently tried first."""
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             f"""
-            SELECT j.jurisdiction_ocdid, j.data->>'name'
+            SELECT j.jurisdiction_ocdid, j.data->>'name' AS name
             FROM jurisdictions j
-            WHERE j.state = %s AND j.status = 'active' AND j.level <> 'state'
-              AND j.extras_governing_law IS NOT NULL
-              AND j.extras_governing_law->>'kind' IN ('charter', 'general_law')
-              AND (j.extras_organizations IS NULL
-                   OR (j.extras_organizations->'extras'->>'governing_law_collected_at')::timestamptz
-                      < (j.extras_governing_law->>'collected_at')::timestamptz)
-              AND NOT EXISTS (
-                  SELECT 1 FROM pipeline_runs r
-                  WHERE r.jurisdiction_ocdid = j.jurisdiction_ocdid AND r.kind = %s
-                    AND (r.finished_at IS NULL OR r.created_at >= now() - interval '{_TRIED_WITHIN}')
-              )
-              AND NOT EXISTS (
-                  SELECT 1 FROM pipeline_run_issues issue
-                  JOIN pipeline_runs law_run ON law_run.id = issue.pipeline_run_id
-                  WHERE law_run.jurisdiction_ocdid = j.jurisdiction_ocdid AND law_run.kind = %s AND issue.status = %s
-              )
-            ORDER BY j.extras_organizations IS NOT NULL, j.jurisdiction_ocdid
-            LIMIT %s
+            {attempts_join(kind)}
+            {settings_join(kind)}
+            WHERE j.state = %(state)s AND j.status = 'active' AND j.level <> 'state'
+              AND {NO_ATTEMPT_IN_FLIGHT} AND {NOT_TRIED_TODAY}
+              AND {due}
+            ORDER BY {OLDEST_ATTEMPT_FIRST}
+            LIMIT %(limit)s
             """,
-            (state, PipelineRunKind.ORGANIZATIONS_COLLECTOR, PipelineRunKind.GOVERNING_LAW_COLLECTOR, PipelineIssueStatus.PENDING, limit),
+            params,
         )
         return [CollectionCandidate(jurisdiction_ocdid=row[0], name=row[1] or "") for row in await cur.fetchall()]

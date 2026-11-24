@@ -87,13 +87,13 @@ def test_an_admin_starts_a_states_collection(client, url, kind):
 def test_only_the_service_key_claims_and_asks_the_budget(client, url, kind):
     client.app.dependency_overrides[get_optional_user] = _service_key
     with patch.object(collector_runs_service, "claim_jurisdictions", new=AsyncMock(return_value=[_CLAIMED])) as claim, patch(
-        "routers.api.collector_runs.spend_budget_service.cap_reached_for_collector", new=AsyncMock(return_value=None)
+        "routers.api.collector_runs.spend_budget_service.cap_reached_for", new=AsyncMock(return_value=None)
     ) as cap:
         assert client.post(f"{url}/claim", json={"state": "vt", "num_jurisdictions": 5}).json()["data"]["jurisdictions"][0]["pipeline_run_id"] == "run-1"
-        assert client.get(f"{url}/budget_cap").json() == {"data": {"cap": None}}
+        assert client.get(f"{url}/budget_cap", params={"state": "vt"}).json() == {"data": {"cap": None}}
     assert claim.await_args is not None
     assert claim.await_args.args[0] == kind
-    cap.assert_awaited_once_with(kind)
+    cap.assert_awaited_once_with("vt", kind)
 
     client.app.dependency_overrides[get_optional_user] = _admin
     assert client.post(f"{url}/claim", json={"state": "vt"}).status_code == 403

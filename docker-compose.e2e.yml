@@ -101,7 +101,8 @@ services:
       HOME: /tmp
     networks:
       - civicpatch_e2e_net
-    command: npx playwright test
+    # E2E_SPEC narrows the run to one spec file (tests/<name>.spec.js); unset runs them all.
+    command: npx playwright test ${E2E_SPEC:-}
 
 networks:
   civicpatch_e2e_net:

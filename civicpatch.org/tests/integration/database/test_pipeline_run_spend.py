@@ -21,6 +21,7 @@ from database.pipeline_run_spend import (
     get_month_to_date_spend,
 )
 from database.database import get_pool
+from shared.utils.statuses import PipelineRunKind
 from database.llm_calls import record_calls
 from tests.integration import factories
 
@@ -127,7 +128,7 @@ async def test_month_to_date_reports_this_state_and_everything_together():
     run = await factories.start_run(_OCDID)
     await record_calls(run, [_call("0.04")])
 
-    state_spent, global_spent = await get_month_to_date_spend(_STATE)
+    state_spent, global_spent = await get_month_to_date_spend(_STATE, PipelineRunKind.PEOPLE_COLLECTOR)
 
     assert state_spent == Decimal("0.04")
     assert global_spent >= state_spent  # other states share the fleet figure
@@ -143,7 +144,7 @@ async def test_a_run_that_minted_no_changeset_still_counts_against_the_cap():
     await record_calls(run, [_call("0.05")])
     await factories.fail_run(run)
 
-    state_spent, _global = await get_month_to_date_spend(_STATE)
+    state_spent, _global = await get_month_to_date_spend(_STATE, PipelineRunKind.PEOPLE_COLLECTOR)
 
     assert state_spent == Decimal("0.05")
 
@@ -158,7 +159,7 @@ async def test_last_month_s_spend_does_not_count_against_this_month():
     await record_calls(old, [_call("5.00")])
     await _backdate(old, 45)
 
-    state_spent, _global = await get_month_to_date_spend(_STATE)
+    state_spent, _global = await get_month_to_date_spend(_STATE, PipelineRunKind.PEOPLE_COLLECTOR)
 
     assert state_spent == Decimal("0")
 
@@ -168,7 +169,7 @@ async def test_last_month_s_spend_does_not_count_against_this_month():
 async def test_a_state_that_spent_nothing_reads_zero_rather_than_null():
     """The one place zero is the honest answer: a budget check needs a number to compare, and
     the caller measures it against a cap rather than displaying it as a cost."""
-    state_spent, _global = await get_month_to_date_spend(_STATE)
+    state_spent, _global = await get_month_to_date_spend(_STATE, PipelineRunKind.PEOPLE_COLLECTOR)
 
     assert state_spent == Decimal("0")
 
@@ -186,7 +187,7 @@ async def test_month_to_date_cost_per_run_averages_over_runs_not_calls():
     run_two = await factories.start_run(_OCDID_TWO)
     await record_calls(run_two, [_call("0.09")])
 
-    assert await get_month_to_date_cost_per_run(_STATE) == Decimal("0.06")
+    assert await get_month_to_date_cost_per_run(_STATE, PipelineRunKind.PEOPLE_COLLECTOR) == Decimal("0.06")
 
 
 @pytest.mark.asyncio
@@ -200,7 +201,7 @@ async def test_month_to_date_cost_per_run_ignores_last_month_s_runs():
     await record_calls(old_run, [_call("0.07")])
     await _backdate(old_run, 45)
 
-    assert await get_month_to_date_cost_per_run(_STATE) == Decimal("0.02")
+    assert await get_month_to_date_cost_per_run(_STATE, PipelineRunKind.PEOPLE_COLLECTOR) == Decimal("0.02")
 
 
 @pytest.mark.asyncio
@@ -209,7 +210,7 @@ async def test_month_to_date_cost_per_run_is_null_when_nothing_ran():
     """Null, not zero: no run this month is not a free run."""
     await _seed_jurisdiction()
 
-    assert await get_month_to_date_cost_per_run(_STATE) is None
+    assert await get_month_to_date_cost_per_run(_STATE, PipelineRunKind.PEOPLE_COLLECTOR) is None
 
 
 # --- Fleet averages, month to date ----------------------------------------------------

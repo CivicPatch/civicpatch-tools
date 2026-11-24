@@ -42,8 +42,8 @@ def get_router(kind: PipelineRunKind) -> APIRouter:
         return {"data": {"jurisdictions": [run.model_dump() for run in claimed]}}
 
     @router.get("/budget_cap", include_in_schema=False)
-    async def budget_cap_endpoint(_: Identity = Depends(_SERVICE)):
-        cap = await spend_budget_service.cap_reached_for_collector(kind)
+    async def budget_cap_endpoint(state: str, _: Identity = Depends(_SERVICE)):
+        cap = await spend_budget_service.cap_reached_for(state, kind)
         return {"data": {"cap": cap.value if cap else None}}
 
     return router

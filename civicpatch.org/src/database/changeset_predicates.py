@@ -9,10 +9,13 @@ runtime error waiting, never a typecheck one. The state predicates derive from
 `ChangesetState` rather than restating it — see `_in_state`.
 """
 
+from typing import LiteralString, cast
+
 from core.changeset_lifecycle import ChangesetState
 from database.review_sessions import (
     ReviewSessionEntryStatus,
 )
+from schemas.pipeline_settings import DEFAULT_CADENCE_DAYS
 from shared.utils.statuses import (
     ChangesetKind,
     PipelineIssueStatus,
@@ -147,15 +150,27 @@ LAST_COLLECTED_JOIN = (
 LAST_COLLECTED_AT = "collected.last_collected_at"
 
 
-# When a jurisdiction was last *tried*, not last published. A dismissed card and an errored run
-# both leave no published changeset, so a pool keyed on publishes re-offers them at once.
-LAST_ATTEMPT_JOIN = (
-    "LEFT JOIN ("
-    "SELECT jurisdiction_ocdid, max(created_at) AS last_attempt_at "
-    f"FROM pipeline_runs WHERE kind = '{PipelineRunKind.PEOPLE_COLLECTOR.value}' GROUP BY jurisdiction_ocdid"
-    ") attempts USING (jurisdiction_ocdid)"
-)
+# When a jurisdiction was last *tried* by one pipeline, not last published, and whether a try is
+# in flight. A dismissed card and an errored run both leave no published changeset, so a pool
+# keyed on publishes re-offers them at once. Every pipeline's candidates read their kind's.
+def attempts_join(kind: PipelineRunKind) -> LiteralString:
+    # A closed enum's value, never input, so it may be spliced.
+    kind_value = cast(LiteralString, kind.value)
+    return (
+        "LEFT JOIN ("
+        "SELECT jurisdiction_ocdid, max(created_at) AS last_attempt_at, bool_or(finished_at IS NULL) AS attempt_in_flight "
+        f"FROM pipeline_runs WHERE kind = '{kind_value}' GROUP BY jurisdiction_ocdid"
+        ") attempts USING (jurisdiction_ocdid)"
+    )
+
+
 LAST_ATTEMPT_AT = "attempts.last_attempt_at"
+NO_ATTEMPT_IN_FLIGHT = "attempts.attempt_in_flight IS NOT TRUE"
+# A failing place is not claimed again in the same day's pass.
+NOT_TRIED_TODAY = f"({LAST_ATTEMPT_AT} IS NULL OR {LAST_ATTEMPT_AT} < now() - interval '1 day')"
+# The ocdid breaks the tie, because nearly every row is tied: without a total order a LIMIT can
+# re-offer the same places on every drain while never reaching others.
+OLDEST_ATTEMPT_FIRST = f"{LAST_ATTEMPT_AT} ASC NULLS FIRST, jurisdiction_ocdid"
 
 # A state's own cadence is the cooldown, counted per jurisdiction from its own last attempt.
 #
@@ -163,7 +178,17 @@ LAST_ATTEMPT_AT = "attempts.last_attempt_at"
 # both "no schedule" and "no cooldown" — so a jurisdiction that scraped cleanly and auto-published
 # was eligible again the moment its run went terminal. A state scrape given no `num_jurisdictions`
 # therefore never got an empty claim and never stopped. NULL now means "no schedule" alone.
-CADENCE_JOIN = "LEFT JOIN state_settings ss ON ss.state = j.state"
+def settings_join(kind: PipelineRunKind) -> LiteralString:
+    # A closed enum's value, never input, so it may be spliced.
+    kind_value = cast(LiteralString, kind.value)
+    return f"LEFT JOIN pipeline_settings ps ON ps.state = j.state AND ps.kind = '{kind_value}'"
+
+
+def due_after_days(kind: PipelineRunKind) -> LiteralString:
+    """The row's cadence, else the pipeline's default: how many days until a place is due again."""
+    default = cast(LiteralString, str(DEFAULT_CADENCE_DAYS[kind]))
+    return f"COALESCE(ps.cadence_days, {default})"
+
 
 # When somebody last settled an issue here. Resolving one is a person saying "dealt with, try
 # again" — so the wait runs from their answer, not from the attempt that raised it. Without
@@ -182,7 +207,7 @@ LAST_RESOLVED_AT = "resolutions.last_resolved_at"
 OFF_COOLDOWN = (
     f"({LAST_ATTEMPT_AT} IS NULL"
     f" OR {LAST_ATTEMPT_AT} < now() - make_interval("
-    "days => COALESCE(ss.cadence_days, 30))"
+    f"days => {due_after_days(PipelineRunKind.PEOPLE_COLLECTOR)})"
     f" OR {LAST_RESOLVED_AT} > {LAST_ATTEMPT_AT})"
 )
 

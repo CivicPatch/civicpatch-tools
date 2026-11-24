@@ -409,7 +409,7 @@ def test_claim_404s_for_an_unknown_state(service_client):
 @pytest.mark.unit
 def test_budget_cap_reports_none_when_nothing_is_reached(service_client):
     with patch(
-        "routers.api.pipeline_runs.spend_budget_service.cap_reached_for_state",
+        "routers.api.pipeline_runs.spend_budget_service.cap_reached_for",
         new_callable=AsyncMock,
         return_value=None,
     ):
@@ -422,7 +422,7 @@ def test_budget_cap_reports_none_when_nothing_is_reached(service_client):
 @pytest.mark.unit
 def test_budget_cap_names_which_cap_was_reached(service_client):
     with patch(
-        "routers.api.pipeline_runs.spend_budget_service.cap_reached_for_state",
+        "routers.api.pipeline_runs.spend_budget_service.cap_reached_for",
         new_callable=AsyncMock,
         return_value=Cap.STATE_MONTH,
     ):

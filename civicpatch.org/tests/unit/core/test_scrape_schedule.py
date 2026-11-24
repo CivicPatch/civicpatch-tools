@@ -3,6 +3,7 @@
 from datetime import date, datetime, timedelta, timezone
 
 import pytest
+from shared.utils.statuses import PipelineRunKind
 
 from core.scrape_schedule import (
     interval_offset,
@@ -17,14 +18,15 @@ pytestmark = pytest.mark.unit
 def test_a_state_schedule_is_recognisable_from_its_id_alone():
     """`_retire_undeclared_schedules` deletes anything it does not recognise, so telling a
     state schedule from the five fixed ones cannot depend on reading the database."""
-    assert is_state_schedule(schedule_id("wa"))
+    assert is_state_schedule(schedule_id(PipelineRunKind.PEOPLE_COLLECTOR, "wa"))
+    assert is_state_schedule(schedule_id(PipelineRunKind.GOVERNING_LAW_COLLECTOR, "wa"))
     assert not is_state_schedule("source-open-data-jurisdictions")
     assert not is_state_schedule("sink-write-recent-changes")
 
 
 def test_the_schedule_id_is_not_the_workflow_instance_id():
     """Temporal lets you name them the same and then confuses the two in its own UI."""
-    assert schedule_id("wa") != "people-collector-state-wa"
+    assert schedule_id(PipelineRunKind.PEOPLE_COLLECTOR, "wa") != "people-collector-state-wa"
 
 
 def test_no_start_date_means_no_offset():
