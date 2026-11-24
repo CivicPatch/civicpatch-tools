@@ -155,7 +155,7 @@ async def _claim(kind: str, state: str, created_by_user_id: Optional[str]) -> li
         )
     return await workflow.execute_activity(
         claim_jurisdictions_for_collector,
-        args=[kind, state, 1, created_by_user_id],
+        args=[kind, state, 1, created_by_user_id, workflow.info().run_id],
         start_to_close_timeout=timedelta(minutes=2),
         retry_policy=_RETRY_THRICE,
     )

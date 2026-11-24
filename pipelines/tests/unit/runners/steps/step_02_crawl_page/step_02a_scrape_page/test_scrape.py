@@ -31,10 +31,12 @@ def _make_playwright_stack(page_url="https://example.com"):
     page.content = AsyncMock(return_value="<html></html>")
     page.set_default_timeout = MagicMock()
     page.on = MagicMock()
+    page.title = AsyncMock(return_value="City Council")
 
     browser = MagicMock()
     browser.new_page = AsyncMock(return_value=page)
     browser.close = AsyncMock()
+    browser.route = AsyncMock()
 
     chromium = MagicMock()
     chromium.launch_persistent_context = AsyncMock(return_value=browser)
@@ -233,3 +235,19 @@ async def test_a_page_robots_txt_disallows_is_never_opened():
 
     assert refused.value.reason == NavigationFailureReason.DISALLOWED_BY_ROBOTS
     playwright.assert_not_called()
+
+
+@pytest.mark.asyncio
+async def test_a_redirect_robots_txt_disallows_is_reported_as_kept_out():
+    """The first url was allowed; the hop it redirected to was not, so the browser's bare abort is named."""
+    hop = "https://elsewhere.example.org/council"
+    playwright_cm, _instance, _browser, page, _response = _make_playwright_stack()
+    page.goto = AsyncMock(side_effect=Exception("net::ERR_FAILED"))
+    with (
+        patch(f"{MODULE}.async_playwright", return_value=playwright_cm),
+        patch(f"{MODULE}.shared_browser.guard_hops", new=AsyncMock(return_value=[browser_module.polite.DisallowedByRobots(hop)])),
+    ):
+        with pytest.raises(NavigationError) as raised:
+            await browser_module.scrape(MagicMock(), "https://example.com/council")
+
+    assert raised.value.reason == NavigationFailureReason.DISALLOWED_BY_ROBOTS

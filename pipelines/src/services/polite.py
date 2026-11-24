@@ -19,6 +19,10 @@ ROBOTS_PATH = "/robots.txt"
 PAUSE_SECONDS = 0.0
 MAX_PAUSE_SECONDS = 15.0
 ROBOTS_MAX_AGE_SECONDS = 86_400
+# Gemini's grounding links. Their robots.txt disallows every bot, read as keeping them out of indexes: following
+# one resolves a link Gemini gave us, and the page it leads to still answers to its own robots.txt.
+GROUNDING_REDIRECT_HOST = "vertexaisearch.cloud.google.com"
+GROUNDING_REDIRECT_PATHS = ("/grounding-api-redirect", "/grounding-redirect")
 _robots_by_origin: dict[str, tuple[float, Optional[RobotFileParser]]] = {}
 _next_request_by_host: dict[str, float] = {}
 
@@ -74,10 +78,17 @@ async def _wait_for_turn(host: str, rules: Optional[RobotFileParser]) -> None:
         await asyncio.sleep(turn - now)
 
 
+def is_grounding_redirect(url: str) -> bool:
+    parsed = urlparse(url)
+    return (parsed.hostname or "").lower() == GROUNDING_REDIRECT_HOST and parsed.path.startswith(GROUNDING_REDIRECT_PATHS)
+
+
 async def obey_host(url: str) -> None:
     """Runs before every request, redirect hops included."""
     if not is_public_web_url(url):
         raise OffLimits(url)
+    if is_grounding_redirect(url):
+        return
     parsed = urlparse(url)
     rules = await robots_of(f"{parsed.scheme}://{parsed.netloc}")
     if parsed.path != ROBOTS_PATH and rules and not rules.can_fetch(USER_AGENT, url):

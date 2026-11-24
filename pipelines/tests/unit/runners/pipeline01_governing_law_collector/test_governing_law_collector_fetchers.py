@@ -11,6 +11,7 @@ from patchright.async_api import Error as BrowserError
 from pytest_httpx import HTTPXMock
 from runners.pipeline01_governing_law_collector import fetchers
 from runners.pipeline01_governing_law_collector.fetchers import browser, plain
+import services.browser as shared_browser
 import services.polite as polite
 from runners.pipeline01_governing_law_collector.schemas import FetchedPage
 
@@ -233,7 +234,7 @@ def _loaded(status: int, first_title: str, last_title: str) -> browser.LoadedPag
     return browser.LoadedPage(url=_PUBLISHER, status=status, first_title=first_title, last_title=last_title)
 
 
-_CHALLENGE = browser.CHALLENGE_TITLE
+_CHALLENGE = shared_browser.CHALLENGE_TITLE
 
 
 @pytest.mark.parametrize(
@@ -307,46 +308,6 @@ def _obeying_except_the_hop(failure: Exception | None) -> AsyncMock:
     return AsyncMock(side_effect=obey_host)
 
 
-@pytest.mark.asyncio
-async def test_a_redirect_robots_txt_disallows_is_aborted_and_recorded():
-    hop, stopped = _route(_HOP), []
-
-    with patch.object(polite, "obey_host", new=_obeying_except_the_hop(polite.DisallowedByRobots(_HOP))):
-        await browser._guard(_PUBLISHER, stopped, hop)
-
-    hop.abort.assert_awaited_once()
-    assert isinstance(stopped[0], polite.DisallowedByRobots)
-
-
-@pytest.mark.asyncio
-async def test_an_allowed_redirect_goes_on_and_records_nothing():
-    hop, stopped = _route(_HOP), []
-
-    with patch.object(polite, "obey_host", new=_obeying_except_the_hop(None)):
-        await browser._guard(_PUBLISHER, stopped, hop)
-
-    hop.continue_.assert_awaited_once()
-    assert stopped == []
-
-
-@pytest.mark.asyncio
-async def test_a_private_address_a_page_asks_for_is_aborted_without_blaming_the_page():
-    private, stopped = _route("http://10.0.0.5/secret", navigation=False), []
-
-    await browser._guard(_PUBLISHER, stopped, private)
-
-    private.abort.assert_awaited_once()
-    assert stopped == []
-
-
-@pytest.mark.asyncio
-async def test_the_first_urls_challenge_reload_takes_no_second_turn():
-    with patch.object(polite, "obey_host", new=AsyncMock()) as obeyed:
-        assert await browser._blocked_hop(_PUBLISHER, _PUBLISHER) is None
-
-    obeyed.assert_not_awaited()
-
-
 def _playwright_whose_navigation_passes(route: MagicMock) -> MagicMock:
     """The first navigation runs this route through the fetch's guard, then the browser gives up."""
     context = MagicMock(route=AsyncMock())
@@ -356,9 +317,9 @@ def _playwright_whose_navigation_passes(route: MagicMock) -> MagicMock:
         raise BrowserError("navigation aborted")
 
     context.new_page = AsyncMock(return_value=MagicMock(goto=goto))
-    opened = MagicMock(new_context=AsyncMock(return_value=context), close=AsyncMock())
+    context.close = AsyncMock()
     playwright = MagicMock()
-    playwright.chromium.launch = AsyncMock(return_value=opened)
+    playwright.chromium.launch_persistent_context = AsyncMock(return_value=context)
     manager = MagicMock()
     manager.__aenter__.return_value = playwright
     manager.__aexit__.return_value = False

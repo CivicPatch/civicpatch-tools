@@ -166,8 +166,6 @@ def attempts_join(kind: PipelineRunKind) -> LiteralString:
 
 LAST_ATTEMPT_AT = "attempts.last_attempt_at"
 NO_ATTEMPT_IN_FLIGHT = "attempts.attempt_in_flight IS NOT TRUE"
-# A failing place is not claimed again in the same day's pass.
-NOT_TRIED_TODAY = f"({LAST_ATTEMPT_AT} IS NULL OR {LAST_ATTEMPT_AT} < now() - interval '1 day')"
 # The ocdid breaks the tie, because nearly every row is tied: without a total order a LIMIT can
 # re-offer the same places on every drain while never reaching others.
 OLDEST_ATTEMPT_FIRST = f"{LAST_ATTEMPT_AT} ASC NULLS FIRST, jurisdiction_ocdid"

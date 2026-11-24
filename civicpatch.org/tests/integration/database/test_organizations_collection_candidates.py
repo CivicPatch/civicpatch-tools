@@ -79,7 +79,7 @@ async def _seeded():
 @pytest.mark.integration
 @pytest.mark.asyncio
 async def test_a_place_with_no_answer_and_one_with_a_stale_answer_are_due():
-    candidates = [c.jurisdiction_ocdid for c in await get_organizations_collection_candidates("zz", None)]
+    candidates = [c.jurisdiction_ocdid for c in await get_organizations_collection_candidates("zz", None, None)]
 
     assert candidates == [_NEVER_ORG, _STALE_ORG]
 
@@ -87,7 +87,7 @@ async def test_a_place_with_no_answer_and_one_with_a_stale_answer_are_due():
 @pytest.mark.integration
 @pytest.mark.asyncio
 async def test_a_jurisdiction_without_governing_law_is_not_a_candidate():
-    candidates = [c.jurisdiction_ocdid for c in await get_organizations_collection_candidates("zz", None)]
+    candidates = [c.jurisdiction_ocdid for c in await get_organizations_collection_candidates("zz", None, None)]
 
     assert _NO_LAW not in candidates
     assert _STATE not in candidates
@@ -98,23 +98,24 @@ async def test_a_jurisdiction_without_governing_law_is_not_a_candidate():
 async def test_an_organizations_collection_in_flight_is_not_a_candidate():
     await factories.start_run(_NEVER_ORG, kind=PipelineRunKind.ORGANIZATIONS_COLLECTOR)
 
-    assert [c.jurisdiction_ocdid for c in await get_organizations_collection_candidates("zz", None)] == [_STALE_ORG]
+    assert [c.jurisdiction_ocdid for c in await get_organizations_collection_candidates("zz", None, None)] == [_STALE_ORG]
     assert await has_unfinished_run(_NEVER_ORG, PipelineRunKind.ORGANIZATIONS_COLLECTOR)
 
 
 @pytest.mark.integration
 @pytest.mark.asyncio
 async def test_the_limit_is_kept():
-    assert len(await get_organizations_collection_candidates("zz", 1)) == 1
+    assert len(await get_organizations_collection_candidates("zz", 1, None)) == 1
 
 
 @pytest.mark.integration
 @pytest.mark.asyncio
-async def test_a_collection_that_failed_today_is_not_claimed_again():
-    run_id = await factories.start_run(_NEVER_ORG, kind=PipelineRunKind.ORGANIZATIONS_COLLECTOR)
+async def test_a_place_this_batch_tried_is_not_claimed_again_by_it_but_a_new_batch_may():
+    run_id = await factories.start_run(_NEVER_ORG, kind=PipelineRunKind.ORGANIZATIONS_COLLECTOR, state_batch_id="batch-1")
     await factories.fail_run(run_id)
 
-    assert [c.jurisdiction_ocdid for c in await get_organizations_collection_candidates("zz", None)] == [_STALE_ORG]
+    assert [c.jurisdiction_ocdid for c in await get_organizations_collection_candidates("zz", None, "batch-1")] == [_STALE_ORG]
+    assert _NEVER_ORG in [c.jurisdiction_ocdid for c in await get_organizations_collection_candidates("zz", None, "batch-2")]
 
 
 @pytest.mark.integration
@@ -122,7 +123,7 @@ async def test_a_collection_that_failed_today_is_not_claimed_again():
 async def test_a_people_collector_run_does_not_block_organizations_collection():
     await factories.start_run(_NEVER_ORG, kind=PipelineRunKind.PEOPLE_COLLECTOR)
 
-    assert [c.jurisdiction_ocdid for c in await get_organizations_collection_candidates("zz", None)] == [_NEVER_ORG, _STALE_ORG]
+    assert [c.jurisdiction_ocdid for c in await get_organizations_collection_candidates("zz", None, None)] == [_NEVER_ORG, _STALE_ORG]
 
 
 @pytest.mark.integration
@@ -133,7 +134,7 @@ async def test_a_place_whose_governing_law_issue_waits_is_still_a_candidate():
     await factories.fail_run(run_id)
     await upsert_issue(run_id, PipelineIssueType.SOURCE_BLOCKED, [{"missing": "charter"}])
 
-    assert [c.jurisdiction_ocdid for c in await get_organizations_collection_candidates("zz", None)] == [_NEVER_ORG, _STALE_ORG]
+    assert [c.jurisdiction_ocdid for c in await get_organizations_collection_candidates("zz", None, None)] == [_NEVER_ORG, _STALE_ORG]
 
 
 @pytest.mark.integration
@@ -143,4 +144,4 @@ async def test_the_least_recently_tried_comes_first():
     await factories.fail_run(run_id)
     await factories.backdate_run(run_id, 2)
 
-    assert [c.jurisdiction_ocdid for c in await get_organizations_collection_candidates("zz", None)] == [_STALE_ORG, _NEVER_ORG]
+    assert [c.jurisdiction_ocdid for c in await get_organizations_collection_candidates("zz", None, None)] == [_STALE_ORG, _NEVER_ORG]

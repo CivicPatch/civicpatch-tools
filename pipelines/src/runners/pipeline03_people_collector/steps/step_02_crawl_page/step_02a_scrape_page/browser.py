@@ -25,6 +25,7 @@ from runners.pipeline03_people_collector.steps.step_02_crawl_page.step_02a_scrap
 from runners.pipeline03_people_collector.steps.step_02_crawl_page.step_02a_scrape_page.scrape_wait import (
     auto_detect_and_wait,
 )
+import services.browser as shared_browser
 import services.polite as polite
 from shared.utils.url_utils import other_scheme
 
@@ -115,10 +116,17 @@ async def _obey(website_url: str) -> None:
     """As pipeline 1 does: the host's robots.txt and its Crawl-delay, before the page is opened."""
     try:
         await polite.obey_host(website_url)
-    except polite.DisallowedByRobots as disallowed:
-        raise NavigationError(website_url, NavigationFailureReason.DISALLOWED_BY_ROBOTS, ROBOTS_SOURCE) from disallowed
     except polite.OffLimits as off_limits:
-        raise NavigationError(website_url, NavigationFailureReason.OFF_LIMITS, ROBOTS_SOURCE) from off_limits
+        raise _kept_out(off_limits) from off_limits
+
+
+def _kept_out(off_limits: polite.OffLimits) -> NavigationError:
+    reason = (
+        NavigationFailureReason.DISALLOWED_BY_ROBOTS
+        if isinstance(off_limits, polite.DisallowedByRobots)
+        else NavigationFailureReason.OFF_LIMITS
+    )
+    return NavigationError(off_limits.url, reason, ROBOTS_SOURCE)
 
 
 # Only a url given as http: never downgrade one the config or page gave as https.
@@ -129,20 +137,17 @@ def _blocked_by_https_upgrade(error: NavigationError, website_url: str) -> bool:
 async def _open(
     playwright: Playwright, logger, website_url: str, timeout: int, launch_args: list[str]
 ) -> Tuple[BrowserContext, Page, Response]:
-    browser = await playwright.chromium.launch_persistent_context(
-        user_data_dir="",
-        channel="chrome",
-        headless=False,
-        no_viewport=True,
-        args=launch_args,
-    )
+    browser = await shared_browser.open_browser(playwright, launch_args)
     try:
+        stopped = await shared_browser.guard_hops(browser, website_url)
         page = await browser.new_page()
         page.set_default_timeout(timeout)
 
         try:
             response = await _goto(page, logger, website_url)
         except NavigationError as e:
+            if stopped:
+                raise _kept_out(stopped[0]) from e
             if e.reason == NavigationFailureReason.NET_DNS_FAILURE:
                 raise
             flipped_url = other_scheme(website_url)
@@ -150,7 +155,11 @@ async def _open(
             try:
                 response = await _goto(page, logger, flipped_url)
             except NavigationError:
+                if stopped:
+                    raise _kept_out(stopped[0]) from e
                 raise e
+        if shared_browser.is_challenge(await page.title()):
+            await shared_browser.wait_out_challenge(page)
         return browser, page, response
     except BaseException:
         with suppress(PlaywrightError):

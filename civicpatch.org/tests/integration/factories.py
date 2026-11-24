@@ -63,11 +63,12 @@ async def start_run(
     progress: int = 0,
     created_by_user_id: str | None = None,
     kind: PipelineRunKind = PipelineRunKind.PEOPLE_COLLECTOR,
+    state_batch_id: str | None = None,
 ) -> str:
     """An attempt in flight: no changeset, no `finished_at`, exactly as production starts one."""
     run_id = str(uuid.uuid4())
     await register_run(
-        run_id, kind, jurisdiction_ocdid, {}, created_by_user_id, status, progress
+        run_id, kind, jurisdiction_ocdid, {}, created_by_user_id, status, progress, state_batch_id=state_batch_id
     )
     return run_id
 

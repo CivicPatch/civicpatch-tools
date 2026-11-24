@@ -80,6 +80,7 @@ erDiagram
         numeric_null    pipeline_run_cap_usd "183: the ceiling this run was dispatched under. 269: from its state's and pipeline's pipeline_settings row, else the pipeline's DEFAULT_RUN_CAP_USD (the scrape's NULL means inherit pipeline.yml). Resolved inside register_run's INSERT, so neither dispatch path can forget the lookup. Recorded rather than only resolved: the llm_calls total cannot say what it was measured against"
         uuid_null       created_by_user_id  FK
         timestamptz_null finished_at        "NULL means in flight; the stale-run sweep reads this"
+        text_null       state_batch_id       "271: the claiming state batch's Temporal run id; NULL when started by hand. Partial idx (NOT NULL). A collector's candidates leave out places this batch already tried"
         timestamptz     created_at
         timestamptz     updated_at
     }

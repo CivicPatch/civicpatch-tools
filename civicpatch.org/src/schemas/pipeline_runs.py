@@ -38,6 +38,8 @@ class BatchPipelineRunRequest(BaseModel):
     # Who asked. Carried through the workflow so the changesets it registers are attributed to
     # the person who pressed the button, not to the system.
     created_by_user_id: Optional[str] = None
+    # The claiming batch's own id, so a collector's candidates leave out what this batch already tried.
+    state_batch_id: Optional[str] = None
 
 
 # ── POST /api/v1/pipeline_runs/<collector kind> ──────────────────────────────

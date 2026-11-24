@@ -1,25 +1,21 @@
 """A real browser, for a script-rendered page or a publisher's 403. It names itself as `plain` does, and
 each main-frame navigation keeps to robots.txt and the host's pace."""
 
-from functools import partial
 from http import HTTPStatus
-from typing import List, Optional
+from typing import Optional
 
 import httpx
-from patchright.async_api import Error as BrowserError, Page, Request, Route, async_playwright
+from patchright.async_api import Error as BrowserError, Page, async_playwright
 from pydantic import BaseModel, ConfigDict
 
 from . import plain
+import services.browser as shared_browser
 import services.polite as polite
 from ..schemas import FetchedPage
 
-CHALLENGE_TITLE = "Just a moment..."
 HTML = "text/html"
-PDF = "pdf"
 NAVIGATION_TIMEOUT_MS = 30_000
 SETTLE_MS = 3_000
-CHALLENGE_POLL_MS = 1_000
-CHALLENGE_POLLS = 15
 
 
 class LoadedPage(BaseModel):
@@ -35,69 +31,34 @@ class LoadedPage(BaseModel):
 
 async def fetch(url: str) -> FetchedPage:
     await polite.obey_host(url)
-    stopped: List[polite.OffLimits] = []
     async with async_playwright() as playwright:
-        browser = await playwright.chromium.launch(channel="chrome", headless=False)
+        context = await shared_browser.open_browser(playwright)
         try:
-            # As pipeline 3 does: Chrome's own user agent. Announcing CivicPatchBot got whole sites refused.
-            # context = await browser.new_context(user_agent=polite.USER_AGENT)
-            context = await browser.new_context()
-            await context.route("**/*", partial(_guard, url, stopped))
+            stopped = await shared_browser.guard_hops(context, url)
             page = await context.new_page()
-            loaded = await _load(page, url)
+            try:
+                loaded = await _load(page, url)
+            except BrowserError as error:
+                if stopped:
+                    raise stopped[0] from error
+                # Callers already treat an httpx failure as "this url failed, move on".
+                raise httpx.TransportError(f"{url}: {error}") from error
             failure = _failure(url, loaded)
             if failure:
                 raise failure
-            if is_pdf(loaded.content_type):
-                # Chrome shows a PDF in its viewer, whose page is an empty shell; the file comes through the
-                # context's own request, which carries the cookies the navigation earned.
-                download = await context.request.get(loaded.url)
-                return FetchedPage(url=loaded.url, content_type=loaded.content_type, body=await download.body(), by_browser=True)
+            if shared_browser.is_pdf(loaded.content_type):
+                body = await shared_browser.read_pdf(context, loaded.url)
+                return FetchedPage(url=loaded.url, content_type=loaded.content_type, body=body, by_browser=True)
             return FetchedPage(url=loaded.url, content_type=HTML, body=(await page.content()).encode(), by_browser=True)
-        except BrowserError as error:
-            if stopped:
-                raise stopped[0] from error
-            # Callers already treat an httpx failure as "this url failed, move on".
-            raise httpx.TransportError(f"{url}: {error}") from error
         finally:
-            await browser.close()
-
-
-async def _guard(first_url: str, stopped: List[polite.OffLimits], route: Route) -> None:
-    """Appends to `stopped` because the browser aborts a blocked hop with a bare error: it is how
-    `fetch` still reports why, such as DisallowedByRobots."""
-    request = route.request
-    if not _is_main_navigation(request):
-        await (route.continue_() if polite.is_public_web_url(request.url) else route.abort())
-        return
-    blocked = await _blocked_hop(request.url, first_url)
-    if blocked is None:
-        await route.continue_()
-        return
-    stopped.append(blocked)
-    await route.abort()
-
-
-def _is_main_navigation(request: Request) -> bool:
-    return request.is_navigation_request() and request.frame.parent_frame is None
-
-
-async def _blocked_hop(url: str, first_url: str) -> Optional[polite.OffLimits]:
-    """`fetch` has already checked the first url; a challenge reloading it needs no second turn."""
-    if url == first_url:
-        return None
-    try:
-        await polite.obey_host(url)
-    except polite.OffLimits as off_limits:
-        return off_limits
-    return None
+            await context.close()
 
 
 async def _load(page: Page, url: str) -> LoadedPage:
     response = await page.goto(url, wait_until="domcontentloaded", timeout=NAVIGATION_TIMEOUT_MS)
     first_title = await page.title()
-    if first_title == CHALLENGE_TITLE:
-        await _wait_out_challenge(page)
+    if shared_browser.is_challenge(first_title):
+        await shared_browser.wait_out_challenge(page)
     await page.wait_for_timeout(SETTLE_MS)
     return LoadedPage(
         url=page.url,
@@ -108,21 +69,10 @@ async def _load(page: Page, url: str) -> LoadedPage:
     )
 
 
-async def _wait_out_challenge(page: Page) -> None:
-    for _ in range(CHALLENGE_POLLS):
-        await page.wait_for_timeout(CHALLENGE_POLL_MS)
-        if await page.title() != CHALLENGE_TITLE:
-            return
-
-
-def is_pdf(content_type: str) -> bool:
-    return PDF in content_type.lower()
-
-
 def _failure(url: str, loaded: LoadedPage) -> Optional[Exception]:
-    if loaded.last_title == CHALLENGE_TITLE:
+    if shared_browser.is_challenge(loaded.last_title):
         return plain.RefusedByHost(loaded.url, loaded.status, challenged=True)
-    if loaded.first_title == CHALLENGE_TITLE:
+    if shared_browser.is_challenge(loaded.first_title):
         return None
     if loaded.status in plain.REFUSALS:
         return plain.RefusedByHost(loaded.url, loaded.status)

@@ -38,7 +38,9 @@ def get_router(kind: PipelineRunKind) -> APIRouter:
 
     @router.post("/claim", include_in_schema=False)
     async def claim_endpoint(body: BatchPipelineRunRequest, _: Identity = Depends(_SERVICE)):
-        claimed = await collector_runs_service.claim_jurisdictions(kind, body.state, body.num_jurisdictions, body.created_by_user_id)
+        claimed = await collector_runs_service.claim_jurisdictions(
+            kind, body.state, body.num_jurisdictions, body.created_by_user_id, body.state_batch_id
+        )
         return {"data": {"jurisdictions": [run.model_dump() for run in claimed]}}
 
     @router.get("/budget_cap", include_in_schema=False)

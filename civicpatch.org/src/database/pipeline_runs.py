@@ -34,6 +34,7 @@ async def register_run(
     status: str = PipelineRunStatus.PENDING,
     progress: int = 0,
     if_not_exists: bool = False,
+    state_batch_id: Optional[str] = None,
 ) -> bool:
     """Start an attempt. No changeset — one is minted at ingest, and only if the run succeeds.
 
@@ -54,9 +55,9 @@ async def register_run(
             sql.SQL(f"""
             INSERT INTO pipeline_runs (
                 id, kind, jurisdiction_ocdid, arguments_json, created_by_user_id, status, progress,
-                pipeline_run_cap_usd
+                state_batch_id, pipeline_run_cap_usd
             )
-            VALUES (%s, %s, %s, %s, %s, %s, %s, COALESCE((
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, COALESCE((
                 SELECT ps.pipeline_run_cap_usd
                 FROM jurisdictions j
                 JOIN pipeline_settings ps ON ps.state = j.state AND ps.kind = %s
@@ -72,6 +73,7 @@ async def register_run(
                 created_by_user_id,
                 status,
                 progress,
+                state_batch_id,
                 kind,
                 jurisdiction_ocdid,
                 DEFAULT_RUN_CAP_USD[PipelineRunKind(kind)],
