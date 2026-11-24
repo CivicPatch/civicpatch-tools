@@ -18,10 +18,7 @@ logger = logging.getLogger(__name__)
 
 from lib.temporal.collector_workflows import CollectorStateWorkflow, CollectorWorkflow
 from lib.temporal.connection import connect_with_retry, run_worker
-from lib.temporal.pipeline_run_workflows import (
-    PeopleCollectorWorkflow,
-    PeopleCollectorStateWorkflow,
-)
+from lib.temporal.pipeline_run_workflows import PeopleCollectorWorkflow
 from lib.temporal.types import PIPELINE_RUNS_TASK_QUEUE
 from routers.temporal.collector_activities import (
     claim_jurisdictions_for_collector,
@@ -44,7 +41,6 @@ TEMPORAL_NAMESPACE = os.environ.get("TEMPORAL_NAMESPACE", "default")
 
 WORKFLOWS = [
     PeopleCollectorWorkflow,
-    PeopleCollectorStateWorkflow,
     CollectorWorkflow,
     CollectorStateWorkflow,
 ]
