@@ -141,7 +141,7 @@ class PeopleCollectorWorkflow:
 
         # A failed run ends here rather than parking on a `human_approval` signal. Nothing ever
         # sent that signal — the approval UI it was written for was never built — so every
-        # failure held its workflow open forever, and because `_dispatch` gathers a slice of
+        # failure held its workflow open forever, and because the state pass waits on its
         # children, one of them stalled a whole state scrape.
         #
         # Nothing is lost by ending: the pipeline has already PATCHed ERROR, the issue is filed
@@ -176,68 +176,50 @@ class PeopleCollectorStateWorkflow:
         concurrency: int = DEFAULT_PIPELINE_RUN_CONCURRENCY,
         dispatch_mode: str = "remote",
     ) -> int:
-        slice_size = max(1, concurrency)
-        dispatched = 0
+        limit = max(1, concurrency)
+        runs: list[workflow.ChildWorkflowHandle] = []
 
-        # A slice at a time, claimed as it is dispatched. Claiming the whole state up front and
-        # stopping partway would leave every undispatched jurisdiction holding a registered run
-        # — and `get_scrape_candidates` excludes non-terminal runs, so those places would drop
-        # out of the pool until something swept them. Claiming per slice means the only claimed
-        # work is the slice in flight, so stopping needs no compensating release.
-        #
-        # Terminates three ways: the budget is reached, the state runs out of candidates (the
-        # claim returns nothing), or the caller's requested count is met. The claim registers a
-        # run for what it hands back, and registered runs are excluded from candidates, so each
-        # call returns fresh jurisdictions and the second case always arrives.
-        while num_jurisdictions is None or dispatched < num_jurisdictions:
-            cap = await workflow.execute_activity(
-                people_collector_month_cap_reached,
-                args=[state],
-                start_to_close_timeout=timedelta(seconds=30),
-                retry_policy=RetryPolicy(maximum_attempts=3),
-            )
-            if cap:
-                workflow.logger.warning(
-                    f"{state}: stopping after {dispatched} jurisdictions, {cap} reached"
-                )
+        # Temporal's sliding-window pattern. One place claimed per run started: claiming ahead
+        # and stopping partway would leave unstarted places holding runs the pool excludes.
+        while num_jurisdictions is None or len(runs) < num_jurisdictions:
+            await workflow.wait_condition(lambda: _running(runs) < limit)
+            claimed = await _claim_one(state, created_by_user_id)
+            if claimed is None:
                 break
+            runs.append(await _start(claimed, dispatch_mode))
 
-            wanted = (
-                slice_size
-                if num_jurisdictions is None
-                else min(slice_size, num_jurisdictions - dispatched)
-            )
-            items = await workflow.execute_activity(
-                claim_jurisdictions_for_people_collector,
-                args=[state, wanted, created_by_user_id],
-                start_to_close_timeout=timedelta(minutes=2),
-                retry_policy=RetryPolicy(maximum_attempts=3),
-            )
-            if not items:
-                break
-
-            await _dispatch(items, slice_size, dispatch_mode)
-            dispatched += len(items)
-
-        return dispatched
+        await workflow.wait_condition(lambda: _running(runs) == 0)
+        return len(runs)
 
 
-async def _dispatch(items: list[dict], concurrency: int, dispatch_mode: str) -> None:
-    """A slice at a time, not all at once: a state scrape takes every jurisdiction due — 1,293
-    for Michigan — and each one dispatches its own pipeline run.
+def _running(runs: list[workflow.ChildWorkflowHandle]) -> int:
+    # A failed run counts as finished: it has already settled itself.
+    return sum(1 for run in runs if not run.done())
 
-    Sliced rather than semaphored because a workflow must be deterministic on replay, and a
-    fixed slice obviously is.
-    """
-    for start in range(0, len(items), concurrency):
-        handles = []
-        for item in items[start : start + concurrency]:
-            handle = await workflow.start_child_workflow(
-                PeopleCollectorWorkflow.run,
-                args=[item["jurisdiction_ocdid"], item["pipeline_run_id"], dispatch_mode],
-                id=_workflow_id(item["jurisdiction_ocdid"]),
-                id_reuse_policy=WorkflowIDReusePolicy.TERMINATE_IF_RUNNING,
-            )
-            handles.append(handle)
-        # A failed child has already settled its own run; it must not end the state's pass.
-        await asyncio.gather(*handles, return_exceptions=True)
+
+async def _claim_one(state: str, created_by_user_id: Optional[str]) -> Optional[dict]:
+    cap = await workflow.execute_activity(
+        people_collector_month_cap_reached,
+        args=[state],
+        start_to_close_timeout=timedelta(seconds=30),
+        retry_policy=RetryPolicy(maximum_attempts=3),
+    )
+    if cap:
+        workflow.logger.warning(f"{state}: no more claims, {cap} reached")
+        return None
+    claimed = await workflow.execute_activity(
+        claim_jurisdictions_for_people_collector,
+        args=[state, 1, created_by_user_id],
+        start_to_close_timeout=timedelta(minutes=2),
+        retry_policy=RetryPolicy(maximum_attempts=3),
+    )
+    return claimed[0] if claimed else None
+
+
+async def _start(item: dict, dispatch_mode: str) -> workflow.ChildWorkflowHandle:
+    return await workflow.start_child_workflow(
+        PeopleCollectorWorkflow.run,
+        args=[item["jurisdiction_ocdid"], item["pipeline_run_id"], dispatch_mode],
+        id=_workflow_id(item["jurisdiction_ocdid"]),
+        id_reuse_policy=WorkflowIDReusePolicy.TERMINATE_IF_RUNNING,
+    )

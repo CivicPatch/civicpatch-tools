@@ -7,6 +7,7 @@ Nothing below is mocked in the usual sense — the workflow really runs, really 
 workflows, and the activities are stub implementations registered under the real names.
 """
 
+import asyncio
 import uuid
 
 import pytest
@@ -35,9 +36,30 @@ class Recorder:
         self.pool = pool  # jurisdictions still unclaimed in the state
         self.cap_after = cap_after  # trip the budget after this many claims
         self.quiet_runs = quiet_runs  # the first this many watches give up
+        self.total = pool
+        self.hold_first_run = False
+        self.others_started_while_held = False
         self.claims: list[int] = []
         self.dispatched: list[str] = []
         self.dispatched_locally: list[str] = []
+
+
+async def _until(condition, attempts: int = 200) -> bool:
+    for _ in range(attempts):
+        if condition():
+            return True
+        await asyncio.sleep(0.01)
+    return False
+
+
+async def _watch(rec: Recorder) -> str:
+    if rec.quiet_runs > 0:
+        rec.quiet_runs -= 1
+        raise ApplicationError("reported nothing new", non_retryable=True)
+    if rec.hold_first_run:
+        rec.hold_first_run = False
+        rec.others_started_while_held = await _until(lambda: len(rec.dispatched) == rec.total)
+    return RunConclusion.SUCCESS
 
 
 def _activities(rec: Recorder):
@@ -73,10 +95,7 @@ def _activities(rec: Recorder):
 
     @activity.defn(name="poll_pipeline_run_status")
     async def poll_pipeline_run_status(pipeline_run_id: str):
-        if rec.quiet_runs > 0:
-            rec.quiet_runs -= 1
-            raise ApplicationError("reported nothing new", non_retryable=True)
-        return RunConclusion.SUCCESS
+        return await _watch(rec)
 
     @activity.defn(name="update_pipeline_run_status")
     async def update_pipeline_run_status(pipeline_run_id, status, progress=None, error_type=None, error_detail=None):
@@ -121,17 +140,14 @@ async def _run_state_scrape(rec: Recorder, **kwargs) -> int:
 
 
 @pytest.mark.asyncio
-async def test_it_claims_a_slice_at_a_time_rather_than_the_whole_state():
-    """The point of the redesign: only the slice in flight is ever claimed, so stopping leaves
-    nothing registered-but-unstarted to freeze a jurisdiction out of the pool."""
+async def test_it_claims_one_place_per_run_it_starts():
+    """Only what is started is ever claimed, so stopping leaves nothing registered-but-unstarted
+    to freeze a jurisdiction out of the pool."""
     rec = Recorder(pool=12)
 
     dispatched = await _run_state_scrape(rec, concurrency=5)
 
-    # Four claims for twelve jurisdictions at a slice of five: 5, 5, 2, then one more that
-    # comes back empty. That last empty claim IS the termination condition — the loop has no
-    # count to compare against, so it learns the state is drained by asking.
-    assert rec.claims == [5, 5, 5, 5]
+    assert set(rec.claims) == {1}
     assert dispatched == 12
 
 
@@ -152,7 +168,7 @@ async def test_it_stops_when_the_state_runs_out_of_candidates():
     dispatched = await _run_state_scrape(rec, concurrency=5)
 
     assert dispatched == 3
-    assert rec.claims == [5, 5]  # got the remainder, then asked again and got nothing
+    assert rec.claims == [1, 1, 1, 1]  # three places, then asked again and got nothing
 
 
 @pytest.mark.asyncio
@@ -164,7 +180,7 @@ async def test_it_stops_at_the_budget_and_reports_what_it_dispatched():
     dispatched = await _run_state_scrape(rec, concurrency=5)
 
     assert len(rec.claims) == 2
-    assert dispatched == 10
+    assert dispatched == sum(rec.claims)
 
 
 @pytest.mark.asyncio
@@ -186,7 +202,7 @@ async def test_it_never_claims_more_than_the_caller_asked_for():
 
     dispatched = await _run_state_scrape(rec, concurrency=5, num_jurisdictions=7)
 
-    assert rec.claims == [5, 2]
+    assert rec.claims == [1] * 7
     assert dispatched == 7
 
 
@@ -196,7 +212,17 @@ async def test_a_run_that_fails_does_not_end_the_state_scrape():
 
     dispatched = await _run_state_scrape(rec, concurrency=5)
 
-    assert rec.claims == [5, 5, 5, 5]
+    assert dispatched == 12
+
+
+@pytest.mark.asyncio
+async def test_a_slow_run_does_not_hold_up_the_rest():
+    rec = Recorder(pool=12)
+    rec.hold_first_run = True
+
+    dispatched = await _run_state_scrape(rec, concurrency=5)
+
+    assert rec.others_started_while_held
     assert dispatched == 12
 
 
