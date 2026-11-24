@@ -1,7 +1,7 @@
 from datetime import datetime
 from typing import Dict, List
 
-from shared.schemas import GovernmentForm, JurisdictionLevel
+from shared.schemas import GovernmentForm, JurisdictionLevel, KnownOrganization
 from shared.utils.government_forms import describe_government_form
 
 
@@ -218,19 +218,25 @@ def _roles_hint(
 _GOVERNING_BODY = """they are a member of the governing body (e.g. Mayor, City Council, Board of Aldermen,
       Board of Commissioners)"""
 _LEFT_OUT = """officials of
-    other governments (another city or county, the state, a precinct or special district), even
-    when listed on the same page."""
+    other governments (another city, town, village or county, the state, a precinct or special
+    district), even when listed on the same page."""
+
+
+_PART_OF_A_LISTED_BODY = """Extract a person only if the page presents them as part of one of the bodies listed under
+    organization below. Judge that from the page (the section they are listed in, its heading, the
+    seat they hold), not from whether their title names the body. Leave out staff, and """
 
 
 def _who_to_extract(roles_listed: bool, organizations_listed: bool) -> str:
-    """Only what we told the model or the page states outright: the governing body and the listed
-    offices. Its own judgement of an unlisted title (elected or staff?) flips read to read, so an
-    unlisted office waits for its state's config to list it."""
+    """With bodies to look for, a seat on one is the only way in and placement decides which; a
+    title list as the gate dropped members titled by portfolio. Without, the governing body and
+    the listed offices."""
+    if organizations_listed:
+        return _PART_OF_A_LISTED_BODY + _LEFT_OUT
     ways = [
         _GOVERNING_BODY,
         'their title is one of the roles listed under label below (a longer form of one counts:\n'
         '      "Treasurer/Tax Collector" is the Treasurer)' if roles_listed else "",
-        "they hold a seat on one of the bodies listed under organization" if organizations_listed else "",
     ]
     listed = ";\n    - ".join(way for way in ways if way)
     return f"""Extract a person only if:
@@ -252,18 +258,24 @@ _TARGET_ADJECTIVE = {
 }
 
 
-def _jurisdiction_line(level: JurisdictionLevel, state: str, county: str | None) -> str:
-    """A county in a town's ocdid locates the town; at county level it is the target itself."""
-    if level == JurisdictionLevel.LOCAL and county:
-        context = f"a municipality in {county} County, {state}"
+def _jurisdiction_line(level: JurisdictionLevel, state: str, county: str | None, place_name: str) -> str:
+    """The place's own name, kind included, tells it from a town or village around it. A county in
+    a town's ocdid locates the town; at county level it is the target itself."""
+    town_in_county = level == JurisdictionLevel.LOCAL and county
+    if place_name:
+        parts = [place_name, f"{county} County" if town_in_county else None, state]
+    elif town_in_county:
+        parts = [f"a municipality in {county} County", state]
     else:
-        context = ", ".join(part for part in [f"{county} County" if county else None, state] if part)
+        parts = [f"{county} County" if county else None, state]
+    context = ", ".join(part for part in parts if part)
     return f"\n    Jurisdiction: {context}" if context else ""
 
 
 def elected_officials_prompt(
     known_roles: List[str],
     level: JurisdictionLevel,
+    place_name: str,
     state: str = "",
     county: str | None = None,
     current_date: str | None = None,
@@ -284,7 +296,7 @@ def elected_officials_prompt(
 
     roles_hint_str = _roles_hint(known_roles, divisions, government_form_role_labels)
 
-    jurisdiction_line = _jurisdiction_line(level, state, county)
+    jurisdiction_line = _jurisdiction_line(level, state, county, place_name)
 
     return f"""
     You are a data extraction assistant. Extract information about the currently
@@ -488,11 +500,22 @@ def person_organization_prompt() -> str:
     """
 
 
+def _seats(organization: KnownOrganization) -> str:
+    """A body's roles beside its name: "Board" alone let a Zoning Board of Appeals member in."""
+    roles = ", ".join(dict.fromkeys(organization.role_labels))
+    return f" ({roles})" if roles else ""
+
+
 def person_organization_question(
-    place_name: str, title: str | None, first_heading: str | None, organization_label: str | None, label: str, choices: List[str]
+    place_name: str,
+    title: str | None,
+    first_heading: str | None,
+    organization_label: str | None,
+    label: str,
+    choices: List[KnownOrganization],
 ) -> str:
     """Asked once per (organization label, label) the rules leave open. The default is never offered."""
-    listed = "\n".join(f'    - "{choice}"' for choice in choices)
+    listed = "\n".join(f'    - "{choice.name}"{_seats(choice)}' for choice in choices)
     return f"""
     A page of {place_name} titled "{title or "unknown"}", first heading
     "{first_heading or "unknown"}", lists a person as "{label}" under the heading
@@ -504,10 +527,11 @@ def person_organization_question(
     """
 
 
-def person_organization_criteria(choices: List[str]) -> Dict[str, str]:
+def person_organization_criteria(choices: List[KnownOrganization]) -> Dict[str, str]:
     """Jev's choices for the same question: one line each, and "none"."""
     criteria = {
-        choice: f"The person sits on the {choice} as a member, or its chair, vice chair, president or clerk."
+        choice.name: f"The person sits on the {choice.name}{_seats(choice)} as a member, or its chair, vice chair, "
+        "president or clerk."
         for choice in choices
     }
     criteria[NO_ORGANIZATION] = (

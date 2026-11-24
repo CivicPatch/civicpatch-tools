@@ -568,7 +568,7 @@ async def _extract_page(
     """The page's records, each stamped with its matched organization, or None if they failed the
     heuristics twice; and the reason each failed attempt gave."""
     prompt = page_extraction_prompt(
-        organizations, memberships, context.data.jurisdiction_ocdid
+        organizations, memberships, context.data.jurisdiction_ocdid, context.data.config.name or ""
     )
     taxonomy = build_taxonomy(context.data.role_config)
     failures: List[HeuristicsFailure] = []

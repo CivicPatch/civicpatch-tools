@@ -55,7 +55,10 @@ def test_archives_once_per_distinct_prompt(tmp_path):
 def test_real_prompts_pass_the_guard(tmp_path):
     """The guard is worthless if it fires on the prompts actually in use."""
 
-    record_run(str(tmp_path), elected_officials_prompt(["<injected per case>"], level=JurisdictionLevel.LOCAL))
+    record_run(
+        str(tmp_path),
+        elected_officials_prompt(["<injected per case>"], level=JurisdictionLevel.LOCAL, place_name="<place>"),
+    )
     record_run(str(tmp_path), relevant_page_prompt("<url>", "<place>", ["<roles>"]))
     record_run(
         str(tmp_path),

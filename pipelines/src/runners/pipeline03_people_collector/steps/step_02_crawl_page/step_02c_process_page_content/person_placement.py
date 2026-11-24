@@ -17,6 +17,7 @@ from runners.pipeline03_people_collector.steps.step_02_crawl_page.step_02c_proce
     match_response_schema,
     place_words,
     with_role_aliases,
+    without_default,
 )
 from services.open_router import decisions
 from services.open_router.prompts import NO_ORGANIZATION
@@ -104,7 +105,7 @@ def placed_by_rules(organization_label: str | None, label: str, place: PlaceWord
 
 async def _asked(
     person: tuple[str | None, str],
-    choices: List[str],
+    candidates: List[KnownOrganization],
     headings: PageHeadings,
     pipeline_run_id,
     jurisdiction_ocdid: str,
@@ -112,6 +113,7 @@ async def _asked(
     source_url: str,
 ) -> Placement:
     organization_label, label = person
+    choices = [known.name for known in candidates]
     state = {
         "place": place_name,
         "page_title": headings.title,
@@ -126,7 +128,7 @@ async def _asked(
         source_url,
         state,
         open_router_prompts.PERSON_ORGANIZATION_INSTRUCTIONS,
-        open_router_prompts.person_organization_criteria(choices),
+        open_router_prompts.person_organization_criteria(candidates),
     )
     if (jev.confidence or 0) >= JEV_CONFIDENCE_FLOOR:
         return Placement(name=jev.choice if jev.choice in choices else None, placed_by=OrganizationPlacedBy.JEV)
@@ -137,7 +139,7 @@ async def _asked(
         prompt_name=PROMPT_NAME,
         response_schema=match_response_schema(choices),
         content=open_router_prompts.person_organization_question(
-            place_name, headings.title, headings.first_heading, organization_label, label, choices
+            place_name, headings.title, headings.first_heading, organization_label, label, candidates
         ),
         max_output_tokens=MATCH_MAX_OUTPUT_TOKENS,
         source_url=source_url,
@@ -162,11 +164,12 @@ async def placed_names(
     """Each (organization label, label)'s organization and what decided it; one ask per distinct open pair."""
     place = place_words(with_role_aliases(organizations, taxonomy), taxonomy, place_name)
     by_rules = [placed_by_rules(organization_label, label, place, taxonomy) for organization_label, label in people]
-    choices = [known.name for known in place.candidates]
+    # As configured: the rules' alias-widened roles would list "trustee" beside "Trustee" in the ask.
+    candidates = without_default(organizations)
     # With no listed body to choose, there is nothing to ask: ingest places every open record.
-    open_people = list(dict.fromkeys(person for person, placement in zip(people, by_rules) if not placement.settled)) if choices else []
+    open_people = list(dict.fromkeys(person for person, placement in zip(people, by_rules) if not placement.settled)) if candidates else []
     asked = await asyncio.gather(
-        *[_asked(person, choices, headings, pipeline_run_id, jurisdiction_ocdid, place_name, source_url) for person in open_people]
+        *[_asked(person, candidates, headings, pipeline_run_id, jurisdiction_ocdid, place_name, source_url) for person in open_people]
     )
     answers: Dict[tuple[str | None, str], Placement] = dict(zip(open_people, asked))
     return [

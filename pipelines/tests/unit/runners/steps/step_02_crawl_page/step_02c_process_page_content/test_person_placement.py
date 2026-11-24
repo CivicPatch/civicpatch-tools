@@ -136,14 +136,26 @@ async def test_an_unsure_jev_hands_the_person_to_the_capped_model_whose_none_is_
 
 def test_the_question_names_the_place_the_page_both_labels_and_every_choice():
     question = open_router_prompts.person_organization_question(
-        "Georgia town", "Library | Georgia", "Library Trustees", "Library Board of Trustees", "Member", ["Selectboard", "Town Meeting"]
+        "Georgia town", "Library | Georgia", "Library Trustees", "Library Board of Trustees", "Member", [_SELECTBOARD, _TOWN_MEETING]
     )
-    criteria = open_router_prompts.person_organization_criteria(["Selectboard", "Town Meeting"])
+    criteria = open_router_prompts.person_organization_criteria([_SELECTBOARD, _TOWN_MEETING])
 
     for text in ["Georgia town", '"Library | Georgia"', '"Library Trustees"', '"Library Board of Trustees"', '"Member"', '"Selectboard"', '"none"']:
         assert text in question
     assert set(criteria) == {"Selectboard", "Town Meeting", "none"}
     assert "a fund, a library, a building" in open_router_prompts.person_organization_prompt()
+
+
+def test_each_body_is_offered_with_its_seats_so_another_board_s_member_is_not_its_member():
+    board = KnownOrganization(id="b", name="Board", role_labels=["Supervisor", "Clerk", "Treasurer", "Trustee"])
+
+    question = open_router_prompts.person_organization_question(
+        "Leighton township", None, None, "Zoning Board of Appeals", "Zoning Board of Appeals Member", [board]
+    )
+    criteria = open_router_prompts.person_organization_criteria([board])
+
+    assert '- "Board" (Supervisor, Clerk, Treasurer, Trustee)' in question
+    assert "the Board (Supervisor, Clerk, Treasurer, Trustee) as a member" in criteria["Board"]
 
 
 def test_the_heading_s_words_placing_a_person_say_so():

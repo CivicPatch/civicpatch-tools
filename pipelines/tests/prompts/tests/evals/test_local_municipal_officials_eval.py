@@ -32,12 +32,16 @@ from scoring import (
     aggregate,
     aggregate_case,
     case_score,
+    counted_actual,
+    counted_gold,
     expected_records,
+    extra_placements,
     failing_people,
     organization_counts,
     person_precision,
     score_cases,
     summed_counts,
+    with_placements,
 )
 from accuracy import (
     GATE_THRESHOLDS as ACCURACY_THRESHOLDS,
@@ -75,8 +79,8 @@ def _jurisdiction_inputs(expected: dict) -> dict:
 
 
 def _place_name(expected: dict) -> str:
-    """What the run's config.name gives the matcher, so a page's own place words drop out;
-    older cases carry no ocdid and give it nothing."""
+    """What the run's config.name gives the matcher and the prompt, so a page's own place words drop
+    out; older cases carry no ocdid and give it nothing."""
     found = re.search(r"(?:place|county):([a-z_]+)", expected.get("jurisdiction_ocdid") or "")
     return expected.get("place_name") or (found.group(1).replace("_", " ").title() if found else "")
 
@@ -91,11 +95,17 @@ def make_together_prompt(expected: dict):
     return elected_officials_prompt(
         expected.get("known_roles", []),
         **_jurisdiction_inputs(expected),
+        place_name=_place_name(expected),
         # The day the page was read, where the case records it: terms are judged as of then.
         current_date=expected.get("current_date", EVAL_CURRENT_DATE),
         divisions=expected.get("divisions", []),
         government_form_role_labels=expected.get("government_form_role_labels", []),
-        organization_choices=[organization["name"] for organization in expected.get("organizations") or []],
+        # As production's `without_default`: the default bucket is never a body to look for.
+        organization_choices=[
+            organization["name"]
+            for organization in expected.get("organizations") or []
+            if not organization.get("meta_is_default")
+        ],
     )
 
 
@@ -148,7 +158,8 @@ async def _run_single_case(model_client, case, ocdid):
 
     _PROGRESS[name][0] += 1
     _progress(name, f"done   {case['id']} in {time.time() - started:.1f}s")
-    expected = expected_records(case["expected"]["people"])
+    gold = counted_gold(case["expected"]["people"])
+    expected = expected_records(gold)
     actual = cast(PeopleArrayLLMResponseSchema, response)
     case_path = case.get("case_path", "unknown_case")
     with open(
@@ -172,23 +183,29 @@ async def _run_single_case(model_client, case, ocdid):
         case.get("case_path", "unknown_case"),
     )
     placed = {
-        name_utils.name_grouping_key(person.name): name
-        for person, name in zip(actual.people, by_organization_label)
+        name_utils.name_grouping_key(person.name): placement.name
+        for person, placement in zip(actual.people, by_organization_label)
     }
-    case_scores = score_cases(actual.people, expected)
+    people = counted_actual(actual.people, case["expected"]["people"])
+    case_scores = score_cases(people, expected)
     case_aggregate = aggregate_case(case_scores)
-    precision = person_precision(actual.people, expected)
+    precision = person_precision(people, expected)
     case_result = {
         "score": case_score(case_aggregate, precision),
         "person_precision": precision,
         "scores": case_aggregate,
         "organization": {
-            **organization_counts(placed, case["expected"]["people"]),
+            **organization_counts(placed, gold),
+            **extra_placements(
+                placed,
+                gold,
+                {organization.name for organization in organizations if organization.meta_is_default},
+            ),
         },
     }
 
-    dispositions = case_dispositions(actual.people, expected, EVAL_TAXONOMY)
-    mismatches = case_mismatches(actual.people, expected, EVAL_TAXONOMY)
+    dispositions = case_dispositions(people, expected, EVAL_TAXONOMY)
+    mismatches = with_placements(case_mismatches(people, expected, EVAL_TAXONOMY), placed)
     return case["id"], case_result, case_scores, dispositions, mismatches
 
 
@@ -318,7 +335,7 @@ async def _run_provider(client, cases):
 async def test_provider_comparison(load_eval_cases):
     """Runs all providers concurrently and writes one report per provider."""
     clients = [
-        make_provider_client(p, make_together_prompt) for p in PROVIDER_COMPARISON
+        make_provider_client(p, make_together_prompt) for p in _active_providers()
     ]
     results = await asyncio.gather(
         *[_run_provider(c, load_eval_cases) for c in clients], return_exceptions=True
@@ -386,7 +403,7 @@ async def test_provider_comparison(load_eval_cases):
                     "run": run,
                     "cost_summary": cost_summary,
                     "accuracy": accuracy_report,
-                    # Report-only (plan P5): picked organization per expected person.
+                    # Report-only (plan P5): picked organization per expected person, and where extras went.
                     "organization": result["organization"],
                     "aggregated_report": result["report"],
                     "per_case_scores": [

@@ -11,6 +11,7 @@ built twice.
 from typing import List
 
 from accuracy import (
+    PERSON_FIELD,
     _districts,
     _first_value,
     _roles,
@@ -32,6 +33,26 @@ def expected_records(people: list[dict]) -> List[ExtractedPersonRecord]:
     """The gold's people as records. Its `organization` is the accepted placement (a name, a
     list of names, or none), read by `organization_counts`, not an organization label."""
     return [ExtractedPersonRecord(**{key: value for key, value in person.items() if key != "organization"}) for person in people]
+
+
+def _gold_extras(expected_people: list[dict]) -> set[str]:
+    """Gold people outside every body (organization "none"): extras in production, so found or not
+    they are never counted (only tier 1 is)."""
+    return {
+        name_utils.name_grouping_key(person["name"])
+        for person in expected_people
+        if person.get("organization") == NO_ORGANIZATION
+    }
+
+
+def counted_gold(expected_people: list[dict]) -> list[dict]:
+    extras = _gold_extras(expected_people)
+    return [person for person in expected_people if name_utils.name_grouping_key(person["name"]) not in extras]
+
+
+def counted_actual(actual: List[ExtractedPersonRecord], expected_people: list[dict]) -> List[ExtractedPersonRecord]:
+    extras = _gold_extras(expected_people)
+    return [person for person in actual if name_utils.name_grouping_key(person.name) not in extras]
 
 
 def _parse(records: List[ExtractedPersonRecord]) -> List[ParsedLabel]:
@@ -232,8 +253,43 @@ def organization_counts(placed: dict[str, str | None], expected_people: list[dic
     return counts
 
 
+EXTRA_IN_A_BODY = "extra_in_a_body"
+EXTRA_IN_THE_BUCKET = "extra_in_the_bucket"
+EXTRA_OUTCOMES = (EXTRA_IN_A_BODY, EXTRA_IN_THE_BUCKET)
+PLACED_IN = "placed_in"
+
+
+def extra_placements(
+    placed: dict[str, str | None], expected_people: list[dict], default_names: set[str]
+) -> dict[str, int]:
+    """Report-only: where each person the gold leaves out was placed. Unplaced counts as the
+    bucket, because cp.org files an unplaced person in the default organization."""
+    expected_keys = {name_utils.name_grouping_key(person["name"]) for person in expected_people}
+    counts = dict.fromkeys(EXTRA_OUTCOMES, 0)
+    for key, organization in placed.items():
+        if key in expected_keys:
+            continue
+        if organization in (None, NO_ORGANIZATION) or organization in default_names:
+            counts[EXTRA_IN_THE_BUCKET] += 1
+        else:
+            counts[EXTRA_IN_A_BODY] += 1
+    return counts
+
+
+def with_placements(rows: list[dict], placed: dict[str, str | None]) -> list[dict]:
+    """A person row for someone the model returned names where they were placed."""
+    annotated = []
+    for row in rows:
+        key = name_utils.name_grouping_key(row.get("subject", ""))
+        if row.get("field") == PERSON_FIELD and key in placed:
+            annotated.append({**row, PLACED_IN: placed[key]})
+        else:
+            annotated.append(row)
+    return annotated
+
+
 def summed_counts(per_case: list[dict[str, int]]) -> dict[str, int]:
-    return {outcome: sum(counts[outcome] for counts in per_case) for outcome in ORGANIZATION_OUTCOMES}
+    return {outcome: sum(counts[outcome] for counts in per_case) for outcome in ORGANIZATION_OUTCOMES + EXTRA_OUTCOMES}
 
 
 def aggregate_case(case_scores) -> dict[str, float]:
