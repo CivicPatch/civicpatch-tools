@@ -1,0 +1,46 @@
+people:
+- name: Wendy M. Levy
+  label: Village President
+  organization_label: Bellow Falls Village Trustees
+  phone: (802) 246-7286
+  email: wendylevy@rockbf.org
+  url: https://www.rockinghamvt.org/staff
+  start_date: null
+  end_date: 2027-05
+  image: null
+- name: Wade Masure
+  label: Trustee
+  organization_label: Bellow Falls Village Trustees
+  phone: (802) 376-4702
+  email: wmasure@rockbf.org
+  url: https://www.rockinghamvt.org/staff
+  start_date: null
+  end_date: 2028-05
+  image: null
+- name: Taylor Pichette
+  label: Trustee
+  organization_label: Bellow Falls Village Trustees
+  phone: null
+  email: tpichette@rockbf.org
+  url: https://www.rockinghamvt.org/staff
+  start_date: null
+  end_date: 2028-05
+  image: null
+- name: Samantha Snow
+  label: Trustee
+  organization_label: Bellow Falls Village Trustees
+  phone: (802) 579-2599
+  email: ssnow@rockbf.org
+  url: https://www.rockinghamvt.org/staff
+  start_date: null
+  end_date: 2027-05
+  image: null
+- name: Jeff Dunbar
+  label: Trustee
+  organization_label: Bellow Falls Village Trustees
+  phone: null
+  email: jeffdunbar@rockbf.org
+  url: https://www.rockinghamvt.org/staff
+  start_date: null
+  end_date: 2027-05
+  image: null

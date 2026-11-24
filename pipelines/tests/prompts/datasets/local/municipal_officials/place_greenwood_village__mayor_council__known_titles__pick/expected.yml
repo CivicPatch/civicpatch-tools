@@ -1,5 +1,6 @@
 generated: true
 jurisdiction_ocdid: ocd-jurisdiction/country:us/state:co/place:greenwood_village/government
+place_name: Greenwood Village city
 current_date: '2026-10-02'
 organizations:
 - {name: Council, role_labels: [Council Member]}

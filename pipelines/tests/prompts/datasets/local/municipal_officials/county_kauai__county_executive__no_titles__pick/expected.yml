@@ -1,5 +1,6 @@
 generated: true
 jurisdiction_ocdid: ocd-jurisdiction/country:us/state:hi/county:kauai/government
+place_name: Kauai County
 current_date: '2026-10-16'
 organizations:
 - {name: County Council, role_labels: [Council Member, Chair, Vice Chair]}

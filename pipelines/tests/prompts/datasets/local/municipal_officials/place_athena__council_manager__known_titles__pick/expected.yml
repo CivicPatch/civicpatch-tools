@@ -1,0 +1,56 @@
+jurisdiction_ocdid: ocd-jurisdiction/country:us/state:or/place:athena/government
+place_name: Athena city
+current_date: '2026-11-20'
+organizations:
+- {name: City Council, role_labels: [Councilor, Mayor]}
+- {name: City Officers, role_labels: [City Manager], meta_is_default: true}
+known_roles:
+- Mayor
+- Councilor
+- City Manager
+people:
+- name: Rebecca Schroeder
+  label: Mayor
+  phone: null
+  email: null
+  url: null
+  start_date: null
+  end_date: null
+  image: null
+  organization: City Council
+- name: Joe Shurtz
+  label: Councilor Position 1
+  phone: null
+  email: null
+  url: null
+  start_date: null
+  end_date: null
+  image: null
+  organization: City Council
+- name: Katie Zmuda
+  label: Councilor Position 3
+  phone: null
+  email: null
+  url: null
+  start_date: null
+  end_date: null
+  image: null
+  organization: City Council
+- name: John Manderscheid
+  label: Councilor Position 4
+  phone: null
+  email: null
+  url: null
+  start_date: null
+  end_date: null
+  image: null
+  organization: City Council
+- name: Sally Thompson
+  label: Councilor Position 5
+  phone: null
+  email: null
+  url: null
+  start_date: null
+  end_date: null
+  image: null
+  organization: City Council

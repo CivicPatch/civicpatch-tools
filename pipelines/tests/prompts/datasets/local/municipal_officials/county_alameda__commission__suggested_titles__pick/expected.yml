@@ -1,5 +1,6 @@
 generated: true
 jurisdiction_ocdid: ocd-jurisdiction/country:us/state:ca/county:alameda/government
+place_name: Alameda County
 current_date: '2026-10-16'
 organizations:
 - {name: Board of Supervisors, role_labels: [Supervisor, Chair, Vice Chair]}

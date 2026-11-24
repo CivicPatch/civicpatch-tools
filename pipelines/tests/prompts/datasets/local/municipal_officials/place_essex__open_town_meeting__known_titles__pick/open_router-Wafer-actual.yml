@@ -1,0 +1,37 @@
+people:
+- name: Tatsiana Bussiere
+  label: Town Clerk / Treasurer
+  organization_label: Clerks Office
+  phone: 802-879-0413
+  email: tbussiere@essex.org
+  url: https://www.essexvt.gov/m/directory/employee?eid=289
+  start_date: null
+  end_date: null
+  image: null
+- name: Jenn Booker
+  label: Deputy Clerk
+  organization_label: Clerks Office
+  phone: 802-879-0413
+  email: jbooker@essex.org
+  url: https://www.essexvt.gov/m/directory/employee?eid=52
+  start_date: null
+  end_date: null
+  image: null
+- name: Karen Dolan
+  label: Assistant Clerk
+  organization_label: Clerks Office
+  phone: 802-872-7690
+  email: KDolan@essex.org
+  url: https://www.essexvt.gov/m/directory/employee?eid=148
+  start_date: null
+  end_date: null
+  image: null
+- name: Ever Moore
+  label: Sexton - Mountain View Cemetery
+  organization_label: Clerks Office
+  phone: 802-878-1341
+  email: manager@essex.org
+  url: https://www.essexvt.gov/m/directory/employee?eid=212
+  start_date: null
+  end_date: null
+  image: null

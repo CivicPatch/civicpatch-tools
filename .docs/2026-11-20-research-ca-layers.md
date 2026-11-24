@@ -117,8 +117,34 @@ The config cannot carry these yet (`Classification` holds whole `general_law` ur
 A charter takes effect when the Secretary of State files it (§ 3(a);
 [Gov. Code § 34459](https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=GOV&sectionNum=34459.)
 for cities, [§ 23713](https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=GOV&sectionNum=23713.)
-for counties), and "shall be published in the official state statutes" (§ 3(a)). A state-published index of those
-filings is step 8's question.
+for counties), and "shall be published in the official state statutes" (§ 3(a)). No published index of those
+filings turned up (searched 2026-11-20), so `charter_link_list` stays empty. The nearest lists don't fit
+`CharterLinkList` (one page, a link per charter, link text naming the place): the 2026 California Roster prints
+"Chartered City Population" on every city, charter or not, and the Department of Industrial Relations'
+[list of charter cities](https://dir.ca.gov/oprl/CompliantCharterCities.pdf) is names without links, limited to cities
+eligible for state construction funding.
+
+## Statute urls for `general_law`
+
+leginfo's chapter view, one url per chapter a general-law place reads. leginfo answers a plain fetch with a
+Cloudflare challenge (403); pipeline 1's browser retry (`fetchers.fetch_plain_first`) got every one of these through
+on 2026-11-20, run in the pipelines container under `xvfb-run`. Each is far below the whole-text limit
+(`WHOLE_TEXT_CHARS`, `sections.py`), so each is read whole. Sizes are of the converted markdown.
+
+| Chapter | Sections | Chars | Url |
+|---|---|---|---|
+| Title 4, Div. 3, Part 1: General | 36501 to 36525 | 22,571 | `https://leginfo.legislature.ca.gov/faces/codes_displayText.xhtml?lawCode=GOV&division=3.&title=4.&part=1.&chapter=&article=` |
+| Title 4, Div. 3, Part 2, Ch. 1: Organization | 36801 to 36815 | 4,326 | `https://leginfo.legislature.ca.gov/faces/codes_displayText.xhtml?lawCode=GOV&division=3.&title=4.&part=2.&chapter=1.&article=` |
+| Title 4, Div. 3, Part 3, Ch. 1: Mayor | 40601 to 40605 | 1,375 | `https://leginfo.legislature.ca.gov/faces/codes_displayText.xhtml?lawCode=GOV&division=3.&title=4.&part=3.&chapter=1.&article=` |
+| Title 4, Div. 2, Part 1, Ch. 4: city manager, council districts, elective mayor | 34851 to 34906 | 18,637 | `https://leginfo.legislature.ca.gov/faces/codes_displayText.xhtml?lawCode=GOV&division=2.&title=4.&part=1.&chapter=4.&article=` |
+| Title 3, Div. 1, Ch. 1: counties, general | 23000 to 23005 | 24,375 | `https://leginfo.legislature.ca.gov/faces/codes_displayText.xhtml?lawCode=GOV&division=1.&title=3.&part=&chapter=1.&article=` |
+| Title 3, Div. 2, Part 1, Ch. 1: county officers | 24000 to 24011 | 14,424 | `https://leginfo.legislature.ca.gov/faces/codes_displayText.xhtml?lawCode=GOV&division=2.&title=3.&part=1.&chapter=1.&article=` |
+| Title 3, Div. 2, Part 2, Ch. 1: board of supervisors | 25000 to 25021 | 37,598 | `https://leginfo.legislature.ca.gov/faces/codes_displayText.xhtml?lawCode=GOV&division=2.&title=3.&part=2.&chapter=1.&article=` |
+
+The converted text keeps every section's words but not its number: leginfo puts each number in a floated `<h6>`
+link to `javascript:submitCodesValues(...)`, which trafilatura drops. Pipeline 2 cites quotes checked against the
+page, not section numbers, so a run still works; a person reading a quote has to search the chapter for it.
+`mise run check-law-urls` fetches plain only, so it reports all seven as refused.
 
 ## Answers for the config
 

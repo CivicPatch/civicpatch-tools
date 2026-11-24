@@ -1,22 +1,82 @@
 providers:
   open_router-StreamLake:
-    elapsed_seconds: 448.58
-    cost_usd: 0.056452802
-    f1_primary_role: 0.9805269186712485
+    elapsed_seconds: 1291.02
+    cost_usd: 0.055711558
+    f1_primary_role: 0.9709821428571429
     f1_district: 1.0
     end_date: 1.0
-    phone: 0.9023844211344212
-    designations_precision: 1.0
+    url: 0.8628257887517147
     start_date: 1.0
-    roles: 0.9530662393162393
-    url: 0.8476495726495726
-    designations: 0.9976495726495727
+    designations: 0.9854595336076818
+    email: 0.9607681755829904
+    name: 0.9854595336076818
+    roles_precision: 0.9639541997354497
+    phone: 0.8683252275844868
+    roles: 0.9525377229080932
+    designations_precision: 1.0
     image: 1.0
-    roles_precision: 0.9880282738095238
-    email: 0.9851495726495727
-    name: 0.9976495726495727
-failures:
-  open_router-AtlasCloud: "1 validation error for PeopleArrayLLMResponseSchema\n \
-    \ Invalid JSON: expected ident at line 1 column 2 [type=json_invalid, input_value='I\u2019\
-    ve got the Acton, MA...ers, or something else?', input_type=str]\n    For further\
-    \ information visit https://errors.pydantic.dev/2.12/v/json_invalid"
+  open_router-Venice:
+    elapsed_seconds: 1334.67
+    cost_usd: 0.12440044
+    f1_primary_role: 0.9700996677740864
+    f1_district: 1.0
+    end_date: 1.0
+    url: 0.8024691358024691
+    start_date: 1.0
+    designations: 0.9986282578875172
+    email: 0.9835390946502057
+    name: 0.9986282578875172
+    roles_precision: 0.962112972761121
+    phone: 0.9016585609178202
+    roles: 0.9637860082304527
+    designations_precision: 1.0
+    image: 1.0
+  open_router-Wafer:
+    elapsed_seconds: 1292.04
+    cost_usd: 0.068736226
+    f1_primary_role: 0.9717514124293786
+    f1_district: 1.0
+    end_date: 1.0
+    url: 0.7640603566529492
+    start_date: 0.8571428571428571
+    designations: 0.9953360768175583
+    email: 0.8458161865569273
+    name: 0.9953360768175583
+    roles_precision: 0.9698633156966491
+    phone: 0.6094774909589724
+    roles: 0.944718792866941
+    designations_precision: 1.0
+    image: 1.0
+  open_router-mancer:
+    elapsed_seconds: 1171.51
+    cost_usd: 0.172928218
+    f1_primary_role: 0.9698324022346368
+    f1_district: 1.0
+    end_date: 1.0
+    url: 0.8148148148148148
+    start_date: 1.0
+    designations: 0.9986282578875172
+    email: 0.9862825788751715
+    name: 0.9986282578875172
+    roles_precision: 0.9764133842837547
+    phone: 0.8934281082429231
+    roles: 0.9529492455418381
+    designations_precision: 1.0
+    image: 1.0
+  open_router-Fireworks:
+    elapsed_seconds: 1344.17
+    cost_usd: 0.061043318
+    f1_primary_role: 0.9775784753363229
+    f1_district: 1.0
+    end_date: 1.0
+    url: 0.813443072702332
+    start_date: 1.0
+    designations: 0.9986282578875172
+    email: 0.9958847736625515
+    name: 0.9986282578875172
+    roles_precision: 0.9605452674897119
+    phone: 0.8341688489836638
+    roles: 0.9582990397805212
+    designations_precision: 1.0
+    image: 0.8333333333333334
+failures: {}

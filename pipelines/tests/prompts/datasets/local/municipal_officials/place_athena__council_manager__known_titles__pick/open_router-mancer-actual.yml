@@ -1,0 +1,46 @@
+people:
+- name: Rebecca Schroeder
+  label: Mayor
+  organization_label: City Council Members
+  phone: null
+  email: null
+  url: null
+  start_date: '2024'
+  end_date: '2028'
+  image: null
+- name: Joe Shurtz
+  label: 'Council Member Position #1 Commissioner of Police'
+  organization_label: City Council Members
+  phone: null
+  email: null
+  url: null
+  start_date: '2025'
+  end_date: '2026'
+  image: null
+- name: Katie Zmuda
+  label: 'Council Member Position #3 Commissioner of Library'
+  organization_label: City Council Members
+  phone: null
+  email: null
+  url: null
+  start_date: '2022'
+  end_date: '2026'
+  image: null
+- name: Sally Thompson
+  label: 'Council Member Position #5 Commissioner of Administration'
+  organization_label: City Council Members
+  phone: null
+  email: null
+  url: null
+  start_date: '2022'
+  end_date: '2026'
+  image: null
+- name: John Manderscheid
+  label: 'Council Member Position #4'
+  organization_label: City Council Members
+  phone: null
+  email: null
+  url: null
+  start_date: '2024'
+  end_date: '2028'
+  image: null

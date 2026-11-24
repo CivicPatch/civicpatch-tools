@@ -1,0 +1,88 @@
+# California ground truth for the state-offices skill's scoring step: only offices California's config collects, and
+# only holders a page names as that office. A mayor, vice mayor, president or chair the members choose: method A.
+
+cities:
+  ocd-jurisdiction/country:us/state:ca/place:san_diego/government:
+    - office: mayor
+      holders: [Todd Gloria]
+      method: E
+      source: "https://www.sandiego.gov/mayor"
+      as_of: "2026-11-20"
+    - office: council-member
+      holders: [Joe LaCava, Jennifer Campbell, Stephen Whitburn, Henry L. Foster III, Marni von Wilpert, Kent Lee,
+                Raul Campillo, Vivian Moreno, Sean Elo-Rivera]
+      method: E
+      source: "https://www.sandiego.gov/citycouncil"
+      as_of: "2026-11-20"
+    - office: council-president
+      holders: [Joe LaCava]
+      method: A
+      source: "https://www.sandiego.gov/citycouncil"
+      as_of: "2026-11-20"
+    - office: council-president-pro-tem
+      holders: [Kent Lee]
+      method: A
+      source: "https://www.sandiego.gov/citycouncil"
+      as_of: "2026-11-20"
+    - office: chief-operating-officer
+      holders: [Bethany Bezak]
+      method: A
+      source: "https://www.sandiego.gov/mayor/staff"
+      as_of: "2026-11-20"
+
+  ocd-jurisdiction/country:us/state:ca/place:los_altos_hills/government:
+    - office: council-member
+      holders: [Rajiv Bhateja, Linda G. Swan, George K. Tyson, Kavita Tankha, Stanley Q. Mok]
+      method: E
+      source: "https://www.losaltoshills.ca.gov/346/Meet-your-Mayor-and-City-Councilmembers"
+      as_of: "2026-11-20"
+    - office: mayor
+      holders: [Rajiv Bhateja]
+      method: A
+      source: "https://www.losaltoshills.ca.gov/346/Meet-your-Mayor-and-City-Councilmembers"
+      as_of: "2026-11-20"
+    - office: vice-mayor
+      holders: [Linda G. Swan]
+      method: A
+      source: "https://www.losaltoshills.ca.gov/346/Meet-your-Mayor-and-City-Councilmembers"
+      as_of: "2026-11-20"
+    - office: city-manager
+      holders: [Cody Einfalt]
+      method: A
+      source: "https://www.losaltoshills.ca.gov/172/City-Manager"
+      as_of: "2026-11-20"
+
+counties:
+  ocd-jurisdiction/country:us/state:ca/county:sacramento/government:
+    - office: supervisor
+      holders: [Phil Serna, Patrick Kennedy, Rich Desmond, Rosario Rodriguez, Pat Hume]
+      method: E
+      source: "https://www.bos.saccounty.gov/"
+      as_of: "2026-11-20"
+    - office: chair
+      holders: [Rosario Rodriguez]
+      method: A
+      source: "https://www.bos.saccounty.gov/"
+      as_of: "2026-11-20"
+    - office: vice-chair
+      holders: [Pat Hume]
+      method: A
+      source: "https://www.bos.saccounty.gov/"
+      as_of: "2026-11-20"
+    - office: county-executive
+      holders: [David Villanueva]
+      method: A
+      source: "https://oce.saccounty.gov/"
+      as_of: "2026-11-20"
+
+  ocd-jurisdiction/country:us/state:ca/county:solano/government:
+    - office: supervisor
+      holders: [Cassandra James, Monica Brown, Wanda Williams, John M. Vasquez, Mitch Mashburn]
+      method: E
+      source: "https://www.solanocounty.gov/government/board-supervisors"
+      as_of: "2026-11-20"
+    - office: county-administrator
+      holders: [Ian Goldberg]
+      method: A
+      source: "https://www.solanocounty.gov/government/county-administrators-office"
+      as_of: "2026-11-20"
