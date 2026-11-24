@@ -2,6 +2,7 @@
 supports it with; asked again; or no post. Pure: answers and cached pages in, outcomes out. A
 quote is checked against the whole cached page it came from, not the sections EXTRACT read."""
 
+from enum import StrEnum
 from typing import List
 
 from .role_asks import RoleAsk
@@ -16,6 +17,12 @@ MAX_ROUNDS = 3
 CHARTER_GOVERNS = frozenset({GovernedBy.CHARTER, GovernedBy.CHARTER_ELSE_GENERAL_LAW})
 # Enough of a quote in the run log to tell which clause an answer pointed at.
 QUOTE_PREVIEW_CHARS = 120
+
+
+class Verdict(StrEnum):
+    POSTED = "posted"
+    ASKED_AGAIN = "asked again"
+    NO_POST = "no post"
 
 
 def role_outcomes(
@@ -97,7 +104,8 @@ def citation(
 
 def role_summaries(claims: List[RoleClaim], outcomes: RoleOutcomes) -> List[str]:
     """One run-log line per role asked: how many answers found the office and how it is filled, what
-    VERIFY made of it, and the first quote. The answers are not kept anywhere else."""
+    VERIFY made of it, and the first quote; for an office found but not posted, every distinct quote in
+    full, to replay against the pages. The answers are not kept anywhere else."""
     posted = {post.role for post in outcomes.posts}
     re_asked = {ask.role_id for ask in outcomes.re_ask}
     return [_summary(ask, role_claims, posted, re_asked) for ask, role_claims in _by_role(claims)]
@@ -106,15 +114,20 @@ def role_summaries(claims: List[RoleClaim], outcomes: RoleOutcomes) -> List[str]
 def _summary(ask: RoleAsk, claims: List[RoleClaim], posted: set[str], re_asked: set[str]) -> str:
     found = [claim.answer for claim in claims if claim.answer.established]
     methods = sorted({answer.filled_by.value for answer in found})
-    quote = next((answer.quote for answer in found if answer.quote), "")
+    quotes = list(dict.fromkeys(answer.quote for answer in found if answer.quote))
     if ask.role_id in posted:
-        verdict = "posted"
+        verdict = Verdict.POSTED
     elif ask.role_id in re_asked:
-        verdict = "asked again"
+        verdict = Verdict.ASKED_AGAIN
     else:
-        verdict = "no post"
+        verdict = Verdict.NO_POST
     method_text = f" ({', '.join(methods)})" if methods else ""
-    quote_text = f", first quote {quote[:QUOTE_PREVIEW_CHARS]!r}" if quote else ""
+    if not quotes:
+        quote_text = ""
+    elif verdict == Verdict.POSTED:
+        quote_text = f", first quote {quotes[0][:QUOTE_PREVIEW_CHARS]!r}"
+    else:
+        quote_text = f", quotes {quotes!r}"
     return f"{ask.organization_name} / {ask.role_label}: {len(found)} of {len(claims)} found it{method_text}, {verdict}{quote_text}"
 
 

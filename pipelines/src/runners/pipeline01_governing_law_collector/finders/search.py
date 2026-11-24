@@ -39,13 +39,16 @@ def is_reported(unread: TriedUrl, named: List[str], site: Optional[str], target:
 
 
 def is_law_link(link: str, named: List[str], site: Optional[str], target: LawTarget) -> bool:
-    """A starting point the model named, the place's home page (refused, it says the whole site is), or a link
-    naming the law on the place's site or a publisher's: not a share button, whose url carries the page's own
-    address and so names it too."""
-    if link in named or (site is not None and link.rstrip("/") == site.rstrip("/")):
+    """The place's home page (refused, it says the whole site is), a link naming the law on the place's site or a
+    publisher's, or a starting point the model named that is either: not a share button, whose url carries the
+    page's own address and so names it too, nor a forum or social page the model cited."""
+    if site is not None and link.rstrip("/") == site.rstrip("/"):
         return True
     on_site_or_publisher = fetchers.is_publisher(link) or (site is not None and crawl.on_site(link, site))
-    return on_site_or_publisher and crawl.url_names_target(link, target)
+    names_the_law = crawl.url_names_target(link, target)
+    if link in named:
+        return on_site_or_publisher or names_the_law
+    return on_site_or_publisher and names_the_law
 
 
 async def _named_by_model(target: LawTarget, name: str, url: Optional[str], pipeline_run_id: str, jurisdiction_ocdid: str, logger: PipelineRunLogger) -> List[str]:

@@ -239,4 +239,5 @@ async def _dispatch(items: list[dict], concurrency: int, dispatch_mode: str) -> 
                 id_reuse_policy=WorkflowIDReusePolicy.TERMINATE_IF_RUNNING,
             )
             handles.append(handle)
-        await asyncio.gather(*handles)
+        # A failed child has already settled its own run; it must not end the state's pass.
+        await asyncio.gather(*handles, return_exceptions=True)

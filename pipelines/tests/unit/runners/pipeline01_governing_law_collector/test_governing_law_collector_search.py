@@ -66,20 +66,22 @@ async def test_a_refused_or_wrong_url_falls_through_to_the_crawl():
     home = _html("https://www.lanecountyor.gov", '<a href="/charter">County Charter</a>')
     charter = _html("https://www.lanecountyor.gov/charter", CHARTER_TEXT)
 
+    refused = "https://www.lanecountyor.gov/files/old-charter.pdf"
+
     async def fetch(url):
-        if url == _REDIRECT:
+        if url == refused:
             raise RefusedByHost(url, 403)
         if url == "https://www.lanecountyor.gov/other":
             return _html(url, "A page that says charter once about Lane County.")
         return {home.url: home, charter.url: charter}.get(url)
 
     with patch(f"{SEARCH}.crawl.crawl", wraps=search.crawl.crawl) as crawled:
-        found = await _run([{"urls": [_REDIRECT, "https://www.lanecountyor.gov/other"]}], AsyncMock(side_effect=fetch))
+        found = await _run([{"urls": [refused, "https://www.lanecountyor.gov/other"]}], AsyncMock(side_effect=fetch))
 
     crawled.assert_awaited_once()
     assert _kept(found) == [(charter.url, LawKind.CHARTER)]
     assert found.tried == [
-        TriedUrl(url=_REDIRECT, reason=TriedReason.REFUSED),
+        TriedUrl(url=refused, reason=TriedReason.REFUSED),
         TriedUrl(url="https://www.lanecountyor.gov/other", reason=TriedReason.NOT_THE_TARGET),
     ]
 
@@ -252,3 +254,17 @@ _SITE = "https://www.lanecountyor.gov"
 )
 def test_a_link_counts_as_the_law_when_it_names_it_on_the_site_or_a_publisher_or_is_the_home_page(link: str, counts: bool):
     assert search.is_law_link(link, [], _SITE, _TARGET) is counts
+
+
+@pytest.mark.parametrize(
+    "link,counts",
+    [
+        (f"{_SITE}/government/ordinances", True),
+        ("https://library.municode.com/or/lane_county/codes", True),
+        ("https://www.otherhost.org/lane-county-charter.pdf", True),
+        ("https://www.reddit.com/r/Eugene/comments/abc/county_government", False),
+        (_REDIRECT, False),
+    ],
+)
+def test_a_url_the_model_named_counts_on_the_site_or_a_publisher_or_when_it_names_the_law(link: str, counts: bool):
+    assert search.is_law_link(link, [link], _SITE, _TARGET) is counts
