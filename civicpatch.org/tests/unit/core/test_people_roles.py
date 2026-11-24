@@ -117,8 +117,8 @@ def test_parts_keep_each_label_with_the_role_it_produced():
 
 @pytest.mark.unit
 def test_residue_stays_with_the_part_that_produced_it():
-    """"Of Public Safety" is not unclassifiable — its label resolved to Commissioner. Flat
-    `unmatched` cannot express that; a part carrying both a role and its own residue can."""
+    """"Commissioner Of Public Safety" is not unclassifiable — its label resolved to Commissioner.
+    Flat `unmatched` cannot express that; a part carrying both a role and its own residue can."""
     parsed = derive_roles(
         _labels("Commissioner Of Public Safety - City Attorney"), JURISDICTION, TAXONOMY
     )
@@ -127,10 +127,10 @@ def test_residue_stays_with_the_part_that_produced_it():
     resolved = by_label["Commissioner Of Public Safety"]
     gap = by_label["City Attorney"]
 
-    assert resolved.role == "Commissioner" and resolved.unmatched == ["Of Public Safety"]
+    assert resolved.role == "Commissioner" and resolved.unmatched == ["Commissioner Of Public Safety"]
     assert gap.role is None and gap.unmatched == ["City Attorney"]
     # Flattened, the two are indistinguishable — which is the bug.
-    assert parsed.unmatched == ["Of Public Safety", "City Attorney"]
+    assert parsed.unmatched == ["Commissioner Of Public Safety", "City Attorney"]
 
 
 @pytest.mark.unit

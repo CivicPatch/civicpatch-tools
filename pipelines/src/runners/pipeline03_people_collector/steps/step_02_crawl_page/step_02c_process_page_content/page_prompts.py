@@ -35,7 +35,9 @@ def prompt_hash(
                 # The date is pinned here and nowhere else: the sent prompt carries today (it asks for
                 # who is *currently* serving), but keying on it made the hash change every day, so no
                 # page was ever replayed. A replay reuses a reading taken on another day by design.
-                page_extraction_prompt(organizations, memberships, jurisdiction_ocdid, current_date=HASHED_DATE),
+                page_extraction_prompt(
+                    organizations, memberships, jurisdiction_ocdid, config.name or "", current_date=HASHED_DATE
+                ),
             ],
             model=MODELS_BY_TYPE["STANDARD"]["model"],
         )
@@ -66,6 +68,7 @@ def page_extraction_prompt(
     organizations: List[KnownOrganization],
     memberships: List[ExpectedMembership],
     jurisdiction_ocdid: str,
+    place_name: str,
     current_date: str | None = None,
 ) -> str:
     """One unscoped read of the page; each person's organization is picked from ours."""
@@ -73,6 +76,7 @@ def page_extraction_prompt(
     return open_router_prompt.elected_officials_prompt(
         expected_roles(memberships),
         level=ocdid_parts.level,
+        place_name=place_name,
         state=ocdid_parts.state,
         county=ocdid_parts.county,
         current_date=current_date,

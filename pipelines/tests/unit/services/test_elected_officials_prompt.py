@@ -15,7 +15,13 @@ _LOCAL = JurisdictionLevel.LOCAL
 
 
 def _prompt(**kwargs) -> str:
-    return elected_officials_prompt([], level=kwargs.pop("level", _LOCAL), current_date="2025-09-01", **kwargs)
+    return elected_officials_prompt(
+        [],
+        level=kwargs.pop("level", _LOCAL),
+        place_name=kwargs.pop("place_name", ""),
+        current_date="2025-09-01",
+        **kwargs,
+    )
 
 
 def test_a_county_is_named_as_the_target_and_in_the_jurisdiction_line():
@@ -37,6 +43,17 @@ def test_a_town_inside_a_county_is_not_read_as_the_county():
 
 def test_a_town_directly_under_its_state_names_only_the_state():
     assert "Jurisdiction: ca\n" in _prompt(state="ca")
+
+
+def test_the_place_is_named_with_its_kind_so_a_town_around_it_is_another_government():
+    village = _prompt(state="vt", place_name="Bellows Falls village")
+    township = _prompt(state="mi", county="allegan", place_name="Leighton township")
+    county = _prompt(level=JurisdictionLevel.COUNTIES, state="ca", county="alameda", place_name="Alameda County")
+
+    assert "Jurisdiction: Bellows Falls village, vt\n" in village
+    assert "Jurisdiction: Leighton township, allegan County, mi\n" in township
+    assert "Jurisdiction: Alameda County, ca\n" in county
+    assert "another city, town, village or county" in village
 
 
 def test_a_term_that_ended_before_the_current_date_is_left_out():
@@ -62,15 +79,15 @@ def test_every_office_a_person_holds_goes_in_one_label():
 
 def test_the_prompt_lists_known_roles_and_divisions_and_the_forms_usual_roles():
     known = elected_officials_prompt(
-        ["Mayor", "Alderperson"], level=_LOCAL, current_date="2025-09-01", divisions=["ward 1", "ward 2"]
+        ["Mayor", "Alderperson"], level=_LOCAL, place_name="", current_date="2025-09-01", divisions=["ward 1", "ward 2"]
     )
     guessed = elected_officials_prompt(
-        [], level=_LOCAL, current_date="2025-09-01", government_form_role_labels=["Council Member", "Mayor"]
+        [], level=_LOCAL, place_name="", current_date="2025-09-01", government_form_role_labels=["Council Member", "Mayor"]
     )
     both = elected_officials_prompt(
-        ["Select Board Member"], level=_LOCAL, current_date="2025-09-01", government_form_role_labels=["Town Clerk"]
+        ["Select Board Member"], level=_LOCAL, place_name="", current_date="2025-09-01", government_form_role_labels=["Town Clerk"]
     )
-    neither = elected_officials_prompt([], level=_LOCAL, current_date="2025-09-01")
+    neither = elected_officials_prompt([], level=_LOCAL, place_name="", current_date="2025-09-01")
 
     assert "- Roles in this municipality: Mayor, Alderperson." in known
     assert "- Divisions in this municipality: ward 1, ward 2." in known
@@ -93,19 +110,26 @@ def test_with_nothing_to_pick_from_the_prompt_asks_for_no_organization():
     assert "organization:" not in _prompt()
 
 
-def test_the_governing_body_and_the_listed_offices_are_the_only_ways_in():
+def test_without_bodies_the_governing_body_and_the_listed_offices_are_the_ways_in():
     roles = _prompt(government_form_role_labels=["Town Clerk"])
-    organizations = _prompt(organization_choices=["Selectboard"])
-    both = _prompt(government_form_role_labels=["Town Clerk"], organization_choices=["Selectboard"])
 
     assert "Extract a person only if:\n    - they are a member of the governing body" in roles
     assert "their title is one of the roles listed under label below" in roles
     assert "listed under organization" not in roles
-    assert "they hold a seat on one of the bodies listed under organization" in organizations
-    assert "roles listed under label" not in organizations
-    assert "roles listed under label" in both and "listed under organization" in both
-    assert "Anyone else stays out, elected or not: a title on no list" in both
-    assert "elected" not in both.split("Anyone else stays out, elected or not")[0].split("not person names.")[1]
+    assert "Anyone else stays out, elected or not: a title on no list" in roles
+    assert "elected" not in roles.split("Anyone else stays out, elected or not")[0].split("not person names.")[1]
+
+
+def test_with_bodies_listed_a_seat_on_one_is_the_only_way_in():
+    organizations = _prompt(organization_choices=["Selectboard"])
+    both = _prompt(government_form_role_labels=["Town Clerk"], organization_choices=["Selectboard"])
+
+    for prompt in (organizations, both):
+        assert "Extract a person only if the page presents them as part of one of the bodies listed under\n    organization below." in prompt
+        assert "member of the governing body" not in prompt
+        assert "roles listed under label below" not in prompt
+        assert "a title on no list" not in prompt
+        assert "officials of\n    other governments" in prompt
 
 
 def test_with_nothing_listed_only_the_governing_body_is_in():

@@ -16,10 +16,14 @@ from scoring import (
     EVAL_TAXONOMY,
     aggregate_case,
     case_score,
+    counted_actual,
+    counted_gold,
+    extra_placements,
     failing_people,
     organization_counts,
     person_precision,
     score_cases,
+    with_placements,
 )
 
 from shared.utils import name_utils
@@ -268,3 +272,43 @@ def test_a_gold_listing_two_organizations_accepts_either():
     expected = [{"name": "Sandra Staples", "organization": ["Council", "Office of the Mayor"]}]
 
     assert organization_counts(_placed(actual), expected)["right"] == 1
+
+
+def test_an_officer_the_gold_files_outside_every_body_is_never_counted():
+    """Only tier 1 is counted: a sheriff the gold lists with organization none is neither missed nor an extra."""
+    gold = [
+        {"name": "Ann Lee", "label": "Supervisor", "organization": "Board of Supervisors"},
+        {"name": "Bo Ray", "label": "Sheriff", "organization": "none"},
+        {"name": "Cy Fox", "label": "Assessor", "organization": "none"},
+    ]
+    actual = [extracted_person_factory("Ann Lee", "Supervisor"), extracted_person_factory("Bo Ray", "Sheriff")]
+
+    assert [person["name"] for person in counted_gold(gold)] == ["Ann Lee"]
+    assert [person.name for person in counted_actual(actual, gold)] == ["Ann Lee"]
+
+
+def test_an_extra_is_in_a_body_or_the_bucket_and_unplaced_is_the_bucket():
+    actual = [
+        ("Ann Lee", "Council"),
+        ("Bo Ray", "Council"),
+        ("Cy Fox", "City Officers"),
+        ("Di Moss", None),
+    ]
+    expected = [{"name": "Ann Lee", "organization": "Council"}]
+
+    counts = extra_placements(_placed(actual), expected, {"City Officers"})
+
+    assert counts == {"extra_in_a_body": 1, "extra_in_the_bucket": 2}
+
+
+def test_an_extras_row_names_where_it_was_placed_and_a_missed_persons_row_is_unchanged():
+    rows = [
+        {"subject": "Bo Ray", "field": "person", "expected": "—", "actual": "present"},
+        {"subject": "Di Moss", "field": "person", "expected": "present", "actual": "—"},
+        {"subject": "Ann Lee", "field": "phone", "expected": "1", "actual": "2"},
+    ]
+
+    annotated = with_placements(rows, _placed([("Bo Ray", "Council"), ("Ann Lee", "Council")]))
+
+    assert annotated[0]["placed_in"] == "Council"
+    assert annotated[1:] == rows[1:]

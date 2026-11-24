@@ -25,6 +25,8 @@ _EDGE_PUNCTUATION = re.compile(r"^\W+|\W+$")
 # Left behind when the offices either side of them are consumed ("Mayor Pro Tem and Council
 # Member"); the pipeline also joins a person's held posts with it.
 _JOINING_WORDS = frozenset({"and"})
+# Tie the text after them to the office before them: "Commissioner of Police" is one portfolio.
+_QUALIFYING_WORDS = frozenset({"of", "for"})
 
 # Wards and districts are named by direction as often as by number, in either word order
 # ("Ward East", "North Ward"). A closed set, so it can be trusted before the key where an
@@ -170,7 +172,18 @@ def _is_value(key: str) -> bool:
     )
 
 
-def _unmatched(label: str, used_tokens: set) -> List[str]:
+def _qualifies_a_role(tokens: List[str], index: int, used_tokens: set, role_spans: Dict[int, List[int]]) -> bool:
+    """"of"/"for" right after a role's words, no comma between, and before more leftover text."""
+    return (
+        _EDGE_PUNCTUATION.sub("", tokens[index]).lower() in _QUALIFYING_WORDS
+        and index - 1 in role_spans
+        and tokens[index - 1][-1].isalnum()
+        and index + 1 < len(tokens)
+        and index + 1 not in used_tokens
+    )
+
+
+def _unmatched(label: str, used_tokens: set, role_spans: Dict[int, List[int]]) -> List[str]:
     """Contiguous runs of unmatched original tokens, in order and in original case.
 
     Runs rather than one joined string: "Foo Ward 3 Bar" leaves two unrelated fragments, and
@@ -184,11 +197,17 @@ def _unmatched(label: str, used_tokens: set) -> List[str]:
 
     A joining word at a run's edge goes the same way; inside a run ("Parks and Recreation") it
     is part of the term.
+
+    A run qualifying the role before it keeps the role's words: "Commissioner of Police", not
+    "of Police". The role is still read as the role.
     """
+    tokens = label.split()
     runs: List[str] = []
     current: List[str] = []
-    for index, token in enumerate(label.split()):
+    for index, token in enumerate(tokens):
         if index not in used_tokens and _EDGE_PUNCTUATION.sub("", token):
+            if not current and _qualifies_a_role(tokens, index, used_tokens, role_spans):
+                current = [tokens[role_token] for role_token in role_spans[index - 1]]
             current.append(token)
             continue
         if current:
@@ -322,12 +341,16 @@ def _parse_segment(label: str, taxonomy: Taxonomy) -> ParsedLabel:
         found = _find_alias(words, designation_aliases, start=max(span) + 1)
 
     roles: List[str] = []
+    # Each role's original tokens, by its last token: what a qualifier after it attaches to.
+    role_spans: Dict[int, List[int]] = {}
     role_match = _find_alias(words, taxonomy.role_aliases)
     while role_match:
         canonical, first, last = role_match
         if canonical not in roles:
             roles.append(canonical)
-        used.update(words[i].token for i in range(first, last + 1))
+        span = sorted({words[i].token for i in range(first, last + 1)})
+        used.update(span)
+        role_spans[span[-1]] = span
         role_match = _find_alias(words, taxonomy.role_aliases, start=last + 1)
 
     return ParsedLabel(
@@ -336,7 +359,7 @@ def _parse_segment(label: str, taxonomy: Taxonomy) -> ParsedLabel:
         division=_primary_division(divisions),
         divisions=divisions,
         other_designations=other_designations,
-        unmatched=_unmatched(label, used),
+        unmatched=_unmatched(label, used, role_spans),
     )
 
 

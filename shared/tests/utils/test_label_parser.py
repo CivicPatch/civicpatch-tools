@@ -224,6 +224,26 @@ def test_parse_label_drops_and_left_between_consumed_offices(label, unmatched):
     assert parse_label(label, _TAXONOMY).unmatched == unmatched
 
 
+@pytest.mark.parametrize(
+    "label, role, unmatched",
+    [
+        ("Position 1 Councilman of Police", "Council Member", ["Councilman of Police"]),
+        ("Mayor Pro-Tem for Finance", "Mayor Pro Tempore", ["Mayor Pro-Tem for Finance"]),
+        # Nothing to qualify, a comma between, or no role: today's leftovers.
+        ("Council Member for Ward 3", "Council Member", ["for"]),
+        ("Councilman, of Police", "Council Member", ["of Police"]),
+        ("Director of Police", None, ["Director of Police"]),
+    ],
+)
+def test_parse_label_keeps_a_role_with_the_portfolio_it_qualifies(label, role, unmatched):
+    """A portfolio is "Commissioner of Police", not "of Police": the role is still read as the
+    role, and the member label keeps the page's phrase."""
+    parsed = parse_label(label, _TAXONOMY)
+
+    assert parsed.role == role
+    assert parsed.unmatched == unmatched
+
+
 def test_parse_label_keeps_an_unknown_office_as_unmatched():
     """`city` was a bare alias of at-large, so "City Attorney" parsed to a seat called
     "At-Large Attorney" and left nothing behind — destroying the one signal that says this

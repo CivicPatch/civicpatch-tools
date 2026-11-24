@@ -121,9 +121,9 @@ def test_the_same_inputs_hash_the_same_on_two_days(monkeypatch):
 def test_the_prompt_it_sends_still_carries_the_day(monkeypatch):
     """Only the hash pins the date. The model still has to know what day it is."""
     _clock(monkeypatch, datetime(2026, 8, 1))
-    august = page_extraction_prompt([_COUNCIL, _MAYOR], _MEMBERSHIPS, _OCDID)
+    august = page_extraction_prompt([_COUNCIL, _MAYOR], _MEMBERSHIPS, _OCDID, "Seattle city")
     _clock(monkeypatch, datetime(2026, 9, 1))
-    september = page_extraction_prompt([_COUNCIL, _MAYOR], _MEMBERSHIPS, _OCDID)
+    september = page_extraction_prompt([_COUNCIL, _MAYOR], _MEMBERSHIPS, _OCDID, "Seattle city")
 
     assert "2026-08-01" in august
     assert august != september
