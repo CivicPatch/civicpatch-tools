@@ -15,6 +15,7 @@ from shared.schemas import GoverningLaw, GovernmentForm, GoverningLawOrganizatio
 from shared.utils.id_utils import parse_jurisdiction_ocdid
 from shared.utils.layered_config import MergedConfig, jurisdiction_config
 from shared.utils.statuses import ActivityType
+from services.law_organizations import apply_law_organizations
 
 FIELD = "extras_organizations"
 
@@ -53,6 +54,7 @@ async def set_extras_organizations(
     async with pool.connection() as conn, conn.cursor() as cur:
         await extras_organizations_db.save_extras_organizations(cur, jurisdiction_ocdid, organizations)
         await _record(cur, row, organizations, user_id)
+    await apply_law_organizations(jurisdiction_ocdid, organizations)
 
 
 async def get_extras_organizations(jurisdiction_ocdid: str) -> GoverningLawOrganizations | None:

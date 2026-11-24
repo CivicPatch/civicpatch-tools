@@ -1,17 +1,25 @@
 import database.jurisdiction_configs as jurisdiction_configs_db
-from core.organization_build import GovernmentFormInputs
+from core.organization_build import GovernmentFormInputs, law_organization_names
 from core.organization_derivation import NOTHING_RESOLVED, ResolvedGovernment, resolve_government
 from database.database import get_pool
-from shared.schemas import GovernmentForm, JurisdictionLevel
+from shared.schemas import GoverningLawOrganizations, GovernmentForm, JurisdictionLevel
 from shared.utils.id_utils import parse_jurisdiction_ocdid
 from shared.utils.layered_config import jurisdiction_config
 
 # cp.org's own column, set by a person or a scrape; the open-data sync never writes it.
-_INPUTS_SELECT = "SELECT jurisdiction_ocdid, data->>'name', extras_government_form FROM jurisdictions"
+_INPUTS_SELECT = (
+    "SELECT jurisdiction_ocdid, data->>'name', extras_government_form, extras_organizations FROM jurisdictions"
+)
 
 
 def _inputs(row) -> GovernmentFormInputs:
-    return GovernmentFormInputs(jurisdiction_ocdid=row[0], name=row[1] or "", government_form=row[2])
+    answer = GoverningLawOrganizations.model_validate(row[3]) if row[3] is not None else None
+    return GovernmentFormInputs(
+        jurisdiction_ocdid=row[0],
+        name=row[1] or "",
+        government_form=row[2],
+        law_organization_names=law_organization_names(answer),
+    )
 
 
 async def get_government_form_inputs(jurisdiction_ocdid: str) -> GovernmentFormInputs | None:

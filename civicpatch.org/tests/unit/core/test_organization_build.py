@@ -1,13 +1,34 @@
-"""Which organizations a merged config gives each jurisdiction when its file merges."""
+"""Which organizations a jurisdiction gets: its law's once answered, else its merged config's."""
+
+from datetime import datetime, timezone
 
 import pytest
 
-from core.organization_build import GovernmentFormInputs, form_organization_rows
-from shared.schemas import GovernmentForm
+from core.organization_build import (
+    GovernmentFormInputs,
+    form_organization_rows,
+    law_organization_names,
+    organizations_not_in_law,
+)
+from shared.schemas import (
+    GoverningLawOrganizations,
+    GoverningLawOrganizationsExtras,
+    GoverningLawPost,
+    GovernmentForm,
+    QuoteScope,
+    Source,
+    SourceExtras,
+)
 from shared.utils.government_forms import DerivedOrganization
 from shared.utils.layered_config import ConfigFile, ConfigRole, GovernmentFormConfig, merged_config
 
 pytestmark = pytest.mark.unit
+
+_SOURCE = Source(
+    url="https://example.gov/charter",
+    note="five members",
+    extras=SourceExtras(source_page_id="charter", matched_in=QuoteScope.SENTENCE),
+)
 
 
 def _organization(name: str, *labels: str) -> DerivedOrganization:
@@ -60,8 +81,10 @@ def _config():
     return merged_config(country.model_copy(update={"roles": roles.roles}), state)
 
 
-def _rows(name: str, government_form: GovernmentForm | None = None):
-    inputs = GovernmentFormInputs(jurisdiction_ocdid="ocd-jurisdiction/x", name=name, government_form=government_form)
+def _rows(name: str, government_form: GovernmentForm | None = None, law_names: list[str] | None = None):
+    inputs = GovernmentFormInputs(
+        jurisdiction_ocdid="ocd-jurisdiction/x", name=name, government_form=government_form, law_organization_names=law_names
+    )
     return [row.name for row in form_organization_rows(_config(), [inputs])]
 
 
@@ -83,3 +106,39 @@ def test_a_village_has_one_form_so_it_needs_no_saved_one():
 
 def test_a_name_with_no_legal_status_word_falls_back_to_the_country_forms_and_what_they_share():
     assert _rows("Somewhere") == ["Council"]
+
+
+def test_a_place_whose_law_was_read_gets_the_organizations_its_law_names_whatever_its_form():
+    assert _rows("Burlington city", GovernmentForm.MAYOR_COUNCIL, law_names=["Council", "Board of Finance"]) == [
+        "Council",
+        "Board of Finance",
+    ]
+
+
+def _post(organization: str, role: str = "member") -> GoverningLawPost:
+    return GoverningLawPost(role=role, label=role, organization_id=organization, sources=[_SOURCE])
+
+
+def _answer(*posts: GoverningLawPost) -> GoverningLawOrganizations:
+    return GoverningLawOrganizations(
+        posts=list(posts),
+        extras=GoverningLawOrganizationsExtras(governing_law_collected_at=datetime(2026, 11, 24, tzinfo=timezone.utc)),
+    )
+
+
+def test_the_laws_organizations_are_the_ones_its_posts_name_once_each_in_order():
+    answer = _answer(_post("Council"), _post("Council", "mayor"), _post("Board of Finance"))
+
+    assert law_organization_names(answer) == ["Council", "Board of Finance"]
+
+
+def test_no_answer_or_one_naming_no_posts_leaves_the_config_to_decide():
+    assert law_organization_names(None) is None
+    assert law_organization_names(_answer()) is None
+
+
+def test_the_organizations_the_law_does_not_name_are_picked_out_by_name():
+    organizations = {"1": "Council", "2": "Town Officers", "3": "Board of Finance"}
+
+    assert organizations_not_in_law(organizations, ["Council", "Board of Finance"]) == ["2"]
+

@@ -218,6 +218,14 @@ async def set_default(organization_id: str) -> bool:
         return True
 
 
+async def ids_with_source_records(cur, organization_ids: list[str]) -> set[str]:
+    await cur.execute(
+        "SELECT DISTINCT organization_id::text FROM source_records WHERE organization_id = ANY(%s::uuid[])",
+        (organization_ids,),
+    )
+    return {row[0] for row in await cur.fetchall()}
+
+
 async def delete(organization_id: str) -> str | None:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:

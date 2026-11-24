@@ -34,6 +34,8 @@ async def _wipe():
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute("DELETE FROM activity WHERE jurisdiction_ocdid = %s", (_TOWN,))
+        # Saving an answer creates the organizations its law names.
+        await cur.execute("DELETE FROM organizations WHERE jurisdiction_ocdid = %s", (_TOWN,))
         await cur.execute("DELETE FROM jurisdictions WHERE jurisdiction_ocdid = %s", (_TOWN,))
         await cur.execute("DELETE FROM jurisdiction_configs WHERE path = %s", (_VT_LOCAL,))
         await conn.commit()
