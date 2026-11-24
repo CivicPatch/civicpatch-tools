@@ -1,6 +1,7 @@
 """One handler per state of GOVERNING_LAW_COLLECTOR_TRANSITIONS. Each takes the context and
 answers it with the next state; the engine checks the answer against the graph."""
 
+import asyncio
 from datetime import datetime, timezone
 from typing import List, Optional
 
@@ -87,7 +88,9 @@ async def _read(url: str, logger: PipelineRunLogger) -> Optional[str]:
 
 async def _read_once(url: str, logger: PipelineRunLogger, *, by_browser: bool) -> Optional[str]:
     try:
-        return converters.to_markdown(await fetchers.fetch(url, by_browser=by_browser))
+        page = await fetchers.fetch(url, by_browser=by_browser)
+        # In a thread, as the crawl does: a scan's OCR would hold the event loop for minutes.
+        return await asyncio.to_thread(converters.to_markdown, page)
     except fetchers.RefusedByHost as refused:
         logger.warning(f"{url}: refused with {refused.status_code}, not retried")
     except fetchers.OffLimits as off_limits:

@@ -11,8 +11,9 @@ import pytest
 import pytest_asyncio
 from database.database import get_pool
 from database.governing_law import get_organizations_collection_candidates
+from database.issues import upsert_issue
 from database.pipeline_runs import has_unfinished_run
-from shared.utils.statuses import PipelineRunKind
+from shared.utils.statuses import PipelineIssueType, PipelineRunKind
 
 from tests.integration import factories
 
@@ -38,6 +39,10 @@ def _organizations(governing_law_collected_at: str) -> str:
 async def _wipe():
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            "DELETE FROM pipeline_run_issues WHERE pipeline_run_id IN (SELECT id FROM pipeline_runs WHERE jurisdiction_ocdid = ANY(%s))",
+            (_ALL,),
+        )
         await cur.execute("DELETE FROM pipeline_runs WHERE jurisdiction_ocdid = ANY(%s)", (_ALL,))
         await cur.execute("DELETE FROM jurisdictions WHERE jurisdiction_ocdid = ANY(%s)", (_ALL,))
         await conn.commit()
@@ -118,3 +123,14 @@ async def test_a_people_collector_run_does_not_block_organizations_collection():
     await factories.start_run(_NEVER_ORG, kind=PipelineRunKind.PEOPLE_COLLECTOR)
 
     assert [c.jurisdiction_ocdid for c in await get_organizations_collection_candidates("zz", None)] == [_NEVER_ORG, _STALE_ORG]
+
+
+@pytest.mark.integration
+@pytest.mark.asyncio
+async def test_a_place_whose_governing_law_issue_waits_is_not_a_candidate():
+    """Pipeline 2 would read the law the issue says is wrong."""
+    run_id = await factories.start_run(_NEVER_ORG, kind=PipelineRunKind.GOVERNING_LAW_COLLECTOR)
+    await factories.fail_run(run_id)
+    await upsert_issue(run_id, PipelineIssueType.SOURCE_BLOCKED, [{"missing": "charter"}])
+
+    assert [c.jurisdiction_ocdid for c in await get_organizations_collection_candidates("zz", None)] == [_STALE_ORG]

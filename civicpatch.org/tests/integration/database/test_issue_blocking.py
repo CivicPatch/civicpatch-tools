@@ -12,7 +12,7 @@ import pytest_asyncio
 import database.issues as issues_db
 from database.database import get_pool
 from database.publications import dismiss_changeset
-from shared.utils.statuses import DismissalReason, PipelineIssueType
+from shared.utils.statuses import DismissalReason, PipelineIssueStatus, PipelineIssueType, PipelineRunKind
 from tests.integration import factories
 
 _OCDID = "ocd-jurisdiction/country:us/state:zz/place:zz_blocking/government"
@@ -93,3 +93,30 @@ async def test_both_readers_agree():
     in_zz = await issues_db.jurisdiction_ocdids_with_pending_issues_in_state("zz")
 
     assert {o for o in everywhere if "state:zz" in o} == in_zz
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_a_scrape_settles_older_scrapes_issues_but_not_a_collectors():
+    """Pipeline 1's blocked charter stays open after a scrape: the scrape did nothing about it, and pipeline 2
+    waits on it."""
+    old_scrape = await factories.start_run(_OCDID)
+    await factories.complete_run(old_scrape)
+    await issues_db.upsert_issue(old_scrape, PipelineIssueType.PIPELINE_ERROR, [{"detail": "boom"}])
+    law_run = await factories.start_run(_OCDID, kind=PipelineRunKind.GOVERNING_LAW_COLLECTOR)
+    await issues_db.upsert_issue(law_run, PipelineIssueType.SOURCE_BLOCKED, [{"missing": "charter"}])
+    new_changeset = await factories.complete_run(await factories.start_run(_OCDID))
+
+    await issues_db.supersede_prior_jurisdiction_issues(_OCDID, new_changeset)
+
+    assert await _status_of(old_scrape) == PipelineIssueStatus.SUPERSEDED
+    assert await _status_of(law_run) == PipelineIssueStatus.PENDING
+
+
+async def _status_of(pipeline_run_id: str) -> str:
+    pool = await get_pool()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute("SELECT status FROM pipeline_run_issues WHERE pipeline_run_id = %s", (pipeline_run_id,))
+        row = await cur.fetchone()
+    assert row is not None
+    return row[0]

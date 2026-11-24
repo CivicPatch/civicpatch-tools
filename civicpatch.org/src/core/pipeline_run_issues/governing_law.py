@@ -30,9 +30,15 @@ def governing_law_issue(report: GoverningLawReport) -> Optional[Issue]:
         return None
     if not report.stored_anything:
         return _miss(report, Missing.EVERYTHING)
-    if _missed_charter(report):
+    if _missed_charter(report) or _charter_blocked(report):
         return _miss(report, Missing.CHARTER)
     return None
+
+
+def _charter_blocked(report: GoverningLawReport) -> bool:
+    """A link naming the charter was kept out, whatever else the search kept: what it kept may only point at
+    the charter (Estacada's city manager page, beside its robots-blocked `CityCharter.pdf`)."""
+    return report.governed_by not in (None, GovernedBy.GENERAL_LAW) and report.blocked
 
 
 def read(data: dict[str, Any]) -> Optional[Issue]:

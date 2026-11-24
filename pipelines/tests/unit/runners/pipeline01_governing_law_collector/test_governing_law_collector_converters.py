@@ -10,6 +10,7 @@ from runners.pipeline01_governing_law_collector.converters import (
     is_nearly_empty,
     to_markdown,
 )
+from runners.pipeline01_governing_law_collector.converters.ocr import reading_order, rejoined_words
 from runners.pipeline01_governing_law_collector.schemas import FetchedPage
 
 pytestmark = pytest.mark.unit
@@ -63,8 +64,23 @@ def test_a_pdf_served_as_octet_stream_is_known_by_its_first_bytes():
     assert "Charter of the Town of Stowe" in markdown
 
 
-def test_a_scanned_pdf_has_no_text_and_is_nearly_empty():
+def test_a_pdf_page_with_nothing_on_it_stays_nearly_empty_after_ocr():
     assert is_nearly_empty(to_markdown(_page("scanned_page.pdf", content_type="application/pdf")))
+
+
+def test_a_scanned_charter_page_is_read_by_ocr():
+    """Gold Beach's charter, page 2: a photocopy with no text layer."""
+    markdown = to_markdown(_page("scanned_charter_page.pdf", content_type="application/pdf"))
+    joined = " ".join(markdown.split())
+
+    assert "composed of five councilors elected from the city at large" in joined
+    assert "Section 9. THE MAYOR." in joined
+
+
+def test_ocr_reads_a_page_top_to_bottom_then_left_to_right():
+    box = lambda x, y: [[x, y], [x + 10, y], [x + 10, y + 10], [x, y + 10]]
+
+    assert reading_order([(box(300, 102), "B"), (box(10, 400), "C"), (box(10, 100), "A")]) == "A\nB\nC"
 
 
 def test_a_file_pdfium_cannot_open_has_no_converter():
@@ -96,3 +112,8 @@ def test_a_tag_trafilatura_leaves_is_dropped_and_its_words_kept():
     assert "Notes" in markdown
     assert not _HTML_TAG.search(markdown)
 
+
+def test_ocr_rejoins_a_word_a_scanned_line_broke():
+    """Pipeline 2 quotes "commences", and checks the quote against this text."""
+    assert rejoined_words("of office com-\nmences on November 15") == "of office commences on November 15"
+    assert rejoined_words("ninety-\n nine and a\n- list") == "ninety-\n nine and a\n- list"

@@ -61,6 +61,23 @@ def test_a_county_whose_search_was_refused_is_source_blocked():
     assert issue.data == {"missing": Missing.CHARTER, "tried": [entry.model_dump(mode="json") for entry in _REFUSED], "skipped_urls": []}
 
 
+def test_a_city_that_kept_a_page_but_was_kept_out_of_its_charter_pdf_is_source_blocked():
+    """Estacada: a city manager page kept, `CityCharter.pdf` disallowed by robots.txt."""
+    blocked = [TriedUrl(url="https://www.cityofestacada.org/wp-content/uploads/CityCharter.pdf", reason=TriedReason.DISALLOWED_BY_ROBOTS)]
+
+    issue = governing_law_issue(_report(_CITY, blocked, charter_ids=("city-manager-page",)))
+
+    assert issue is not None
+    assert issue.issue_type == PipelineIssueType.SOURCE_BLOCKED
+    assert issue.data["tried"] == [entry.model_dump(mode="json") for entry in blocked]
+
+
+def test_a_blocked_charter_link_in_a_general_law_place_files_nothing():
+    unread = [TriedUrl(url="https://www.example.gov/charter.pdf", reason=TriedReason.DISALLOWED_BY_ROBOTS)]
+
+    assert governing_law_issue(_report(GovernedBy.GENERAL_LAW, unread, charter_ids=("page",))) is None
+
+
 def test_a_city_where_every_place_has_a_charter_and_none_was_found_is_not_found():
     issue = governing_law_issue(_report(_CITY, _CRAWLED))
 

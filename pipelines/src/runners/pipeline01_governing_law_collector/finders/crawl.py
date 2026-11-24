@@ -2,13 +2,17 @@
 then every link on the site one hop out, then only links naming it for two hops more. Pure parts take
 bytes; `crawl` takes the fetch and the page test."""
 
+import asyncio
 import re
 from typing import Awaitable, Callable, List, Optional
 from urllib.parse import urljoin, urlparse
 
+import httpx
 from pydantic import BaseModel, ConfigDict
 from utils.page_links import PageLink, page_links
-from ..schemas import FetchedPage, LawTarget, ReadPage
+from ..fetchers import plain
+import services.polite as polite
+from ..schemas import FetchedPage, LawTarget, ReadPage, TriedReason, TriedUrl
 from . import publishers
 from .. import converters, fetchers
 
@@ -26,7 +30,7 @@ _ROBOTS_SITEMAP = re.compile(r"^sitemap:\s*(\S+)", re.IGNORECASE | re.MULTILINE)
 _SITEMAP_LOC = re.compile(r"<loc>\s*([^<\s]+)\s*</loc>")
 _SITEMAP_INDEX = "<sitemapindex"
 
-# None when the url refused, failed or timed out: the crawl moves on.
+# Raises why a url could not be read (`fetchers`' refusals, `httpx.HTTPError`); None when nothing is there.
 Fetch = Callable[[str], Awaitable[Optional[FetchedPage]]]
 # Whether a page's markdown, at this url, is what is searched for.
 PageTest = Callable[[str, str], Awaitable[bool]]
@@ -90,6 +94,10 @@ def _names_target(words: str, target: LawTarget) -> bool:
     return any(term.lower() in words for term in target.terms) and not _has_skip_word(words, target)
 
 
+def url_names_target(url: str, target: LawTarget) -> bool:
+    return _names_target(_url_words(url), target)
+
+
 def link_names_target(link: PageLink, target: LawTarget) -> bool:
     return _names_target(_link_words(link), target)
 
@@ -106,10 +114,11 @@ def markdown_of(page: FetchedPage) -> Optional[str]:
 
 
 class Budget:
-    """Pages fetched so far; the crawl stops at MAX_PAGES."""
+    """Pages fetched so far, and those that could not be read and why; the crawl stops at MAX_PAGES."""
 
     def __init__(self) -> None:
         self.pages = 0
+        self.unread: List[TriedUrl] = []
 
     def spent(self) -> bool:
         return self.pages >= MAX_PAGES
@@ -121,6 +130,8 @@ class Crawled(BaseModel):
     found: List[ReadPage]
     # Starting points that fetched but did not pass the page test.
     missed: List[str]
+    # Every url the crawl could not read, with why.
+    unread: List[TriedUrl] = []
 
 
 class _Visited(BaseModel):
@@ -136,18 +147,39 @@ async def crawl(site: Optional[str], starting_points: List[str], target: LawTarg
     amendments others, so a hit never ends the crawl. With no site, the first starting point that
     fetches off a publisher's host stands for it."""
     budget = Budget()
+    fetch = _noting_refusals(fetch, budget)
     seen: set[str] = set()
     started = await _visit(starting_points, site or "", target, page_test, fetch, budget, seen)
     hit_urls = {hit.url for hit in started.hits}
     missed = [url for url in started.fetched if url not in hit_urls]
     home = site or _home_of(started.fetched)
     if home is None:
-        return Crawled(found=started.hits, missed=missed)
+        return Crawled(found=started.hits, missed=missed, unread=budget.unread)
     mapped = await _visit(await _sitemap_target_urls(home, target, fetch, budget), home, target, page_test, fetch, budget, seen)
     # A starting point may be the home page itself, whose links are still to be walked.
     seen.discard(home)
     walked = await _walk([*started.frontier, *mapped.frontier, (PageLink(url=home), 0)], home, target, page_test, fetch, budget, seen)
-    return Crawled(found=_one_per_url([*started.hits, *mapped.hits, *walked]), missed=missed)
+    return Crawled(found=_one_per_url([*started.hits, *mapped.hits, *walked]), missed=missed, unread=budget.unread)
+
+
+def _noting_refusals(fetch: Fetch, budget: Budget) -> Fetch:
+    """The crawl moves on from a url it could not read, and keeps why: what a search reports when it misses."""
+
+    async def noting(url: str) -> Optional[FetchedPage]:
+        try:
+            return await fetch(url)
+        except polite.DisallowedByRobots:
+            budget.unread.append(TriedUrl(url=url, reason=TriedReason.DISALLOWED_BY_ROBOTS))
+        except polite.OffLimits:
+            budget.unread.append(TriedUrl(url=url, reason=TriedReason.OFF_LIMITS))
+        except plain.RefusedByHost as refused:
+            reason = TriedReason.CHALLENGED if refused.challenged else TriedReason.REFUSED
+            budget.unread.append(TriedUrl(url=url, reason=reason))
+        except httpx.HTTPError:
+            budget.unread.append(TriedUrl(url=url, reason=TriedReason.FAILED))
+        return None
+
+    return noting
 
 
 def _home_of(urls: List[str]) -> Optional[str]:
@@ -163,7 +195,8 @@ def _one_per_url(pages: List[ReadPage]) -> List[ReadPage]:
 
 
 async def _hit(page: FetchedPage, page_test: PageTest) -> Optional[ReadPage]:
-    markdown = markdown_of(page)
+    # In a thread: reading a scan takes minutes, and the event loop serves every other run meanwhile.
+    markdown = await asyncio.to_thread(markdown_of, page)
     if markdown is not None and await page_test(markdown, page.url):
         return ReadPage(url=page.url, markdown=markdown)
     return None

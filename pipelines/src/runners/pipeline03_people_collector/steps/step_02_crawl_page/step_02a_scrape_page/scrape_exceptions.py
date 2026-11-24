@@ -14,6 +14,10 @@ class NavigationFailureReason(StrEnum):
     HTTP_429 = "navigation_failure_http_429"
     HTTP_5XX = "navigation_failure_http_5xx"
     
+    # Ours: the host's robots.txt keeps our bot out, or the url is no public web address.
+    DISALLOWED_BY_ROBOTS = "navigation_failure_disallowed_by_robots"
+    OFF_LIMITS = "navigation_failure_off_limits"
+
     # Fallback
     UNKNOWN = "navigation_failure_unknown"
 

@@ -25,6 +25,7 @@ from runners.pipeline03_people_collector.steps.step_02_crawl_page.step_02a_scrap
 from runners.pipeline03_people_collector.steps.step_02_crawl_page.step_02a_scrape_page.scrape_wait import (
     auto_detect_and_wait,
 )
+import services.polite as polite
 from shared.utils.url_utils import other_scheme
 
 
@@ -33,6 +34,8 @@ NO_HTTPS_UPGRADE = (
     "--disable-features=HttpsUpgrades,HttpsFirstBalancedModeAutoEnable,HttpsFirstModeV2ForTypicallySecureUsers"
 )
 HTTP_SCHEME = "http"
+# What `NavigationError.source` names when we, not the host or the network, kept the page unopened.
+ROBOTS_SOURCE = "polite"
 
 
 @asynccontextmanager
@@ -59,6 +62,7 @@ class ScrapeOptions(TypedDict):
 async def scrape(logger, website_url, options=None):
     options = options or {}
     timeout = options.get("timeout", PAGE_DEFAULT_TIMEOUT_MS)
+    await _obey(website_url)
 
     async with async_playwright() as playwright:
         try:
@@ -105,6 +109,16 @@ async def scrape(logger, website_url, options=None):
                 await browser.close()
             except Exception:
                 pass
+
+
+async def _obey(website_url: str) -> None:
+    """As pipeline 1 does: the host's robots.txt and its Crawl-delay, before the page is opened."""
+    try:
+        await polite.obey_host(website_url)
+    except polite.DisallowedByRobots as disallowed:
+        raise NavigationError(website_url, NavigationFailureReason.DISALLOWED_BY_ROBOTS, ROBOTS_SOURCE) from disallowed
+    except polite.OffLimits as off_limits:
+        raise NavigationError(website_url, NavigationFailureReason.OFF_LIMITS, ROBOTS_SOURCE) from off_limits
 
 
 # Only a url given as http: never downgrade one the config or page gave as https.

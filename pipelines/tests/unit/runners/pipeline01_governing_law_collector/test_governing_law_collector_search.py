@@ -5,6 +5,7 @@ from unittest.mock import AsyncMock, MagicMock, patch
 import httpx
 import pytest
 from runners.pipeline01_governing_law_collector.fetchers import RefusedByHost, plain
+import services.polite as polite
 from runners.pipeline01_governing_law_collector.finders import search
 from runners.pipeline01_governing_law_collector.schemas import FetchedPage, LawKind, LawTarget, LawUrl, TriedReason, TriedUrl
 
@@ -34,7 +35,7 @@ def _kept(found) -> list[tuple[str, LawKind]]:
 
 async def _run(answer, fetch, url: str | None = "https://www.lanecountyor.gov", target=_TARGET, page_test=_is_charter_page):
     # The browser a 403 goes to meets the same answers as the plain fetch.
-    with patch(f"{SEARCH}.gemini.run_prompt", new=AsyncMock(side_effect=answer)), patch(f"{SEARCH}.plain.fetch", new=fetch), patch(
+    with patch(f"{SEARCH}.gemini.run_prompt", new=AsyncMock(side_effect=answer)), patch(f"{FETCHERS}.plain.fetch", new=fetch), patch(
         f"{FETCHERS}.browser.fetch", new=fetch
     ):
         return await search.find(target, page_test, "Lane County", url, "run-1", _OCDID, MagicMock())
@@ -117,7 +118,7 @@ async def test_with_nothing_confirmed_and_no_site_nothing_is_found():
 @pytest.mark.asyncio
 async def test_a_target_with_no_terms_asks_no_model_and_crawls_nothing():
     no_terms = _TARGET.model_copy(update={"terms": []})
-    with patch(f"{SEARCH}.gemini.run_prompt", new=AsyncMock()) as asked, patch(f"{SEARCH}.plain.fetch", new=AsyncMock()) as fetched:
+    with patch(f"{SEARCH}.gemini.run_prompt", new=AsyncMock()) as asked, patch(f"{FETCHERS}.plain.fetch", new=AsyncMock()) as fetched:
         found = await search.find(no_terms, _is_charter_page, "Lane County", "https://www.lanecountyor.gov", "run-1", _OCDID, MagicMock())
 
     asked.assert_not_awaited()
@@ -212,7 +213,7 @@ async def test_the_home_page_named_as_a_starting_point_still_has_its_links_walke
 
 
 @pytest.mark.asyncio
-@pytest.mark.parametrize("failure,reason", [(plain.OffLimits("x"), TriedReason.OFF_LIMITS), (httpx.ConnectError("x"), TriedReason.FAILED)])
+@pytest.mark.parametrize("failure,reason", [(polite.OffLimits("x"), TriedReason.OFF_LIMITS), (httpx.ConnectError("x"), TriedReason.FAILED)])
 async def test_a_named_url_that_cannot_be_read_says_why_but_a_crawled_one_does_not(failure: Exception, reason: TriedReason):
     named = "https://www.lanecountyor.gov/named"
     home = _html("https://www.lanecountyor.gov", '<a href="/charter">County Charter</a>')
@@ -234,3 +235,20 @@ async def test_a_kept_url_carries_the_text_the_page_test_read():
     found = await _run([{"urls": [_REDIRECT]}], fetch)
 
     assert CHARTER_TEXT[:40] in (found.law_urls[0].markdown or "")
+
+
+_SITE = "https://www.lanecountyor.gov"
+
+
+@pytest.mark.parametrize(
+    "link,counts",
+    [
+        (f"{_SITE}/wp-content/uploads/CityCharter.pdf", True),
+        (f"{_SITE}/", True),
+        ("https://library.municode.com/or/lane_county/codes/charter", True),
+        (f"{_SITE}/parks", False),
+        ("https://www.facebook.com/sharer.php?u=https://www.lanecountyor.gov/county-charter/", False),
+    ],
+)
+def test_a_link_counts_as_the_law_when_it_names_it_on_the_site_or_a_publisher_or_is_the_home_page(link: str, counts: bool):
+    assert search.is_law_link(link, [], _SITE, _TARGET) is counts

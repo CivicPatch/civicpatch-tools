@@ -5,7 +5,8 @@ from http import HTTPStatus
 from urllib.parse import urlparse
 
 from . import browser, plain
-from .plain import DisallowedByRobots, OffLimits, RefusedByHost
+from .plain import RefusedByHost
+from services.polite import DisallowedByRobots, OffLimits
 from ..schemas import FetchedPage
 
 __all__ = ["OffLimits", "RefusedByHost", "fetch", "fetch_plain_first"]

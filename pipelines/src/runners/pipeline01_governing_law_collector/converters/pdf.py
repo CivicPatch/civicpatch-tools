@@ -1,5 +1,4 @@
-"""A PDF's own text, page by page. A scan carries none and comes out nearly empty, which the
-collector skips as it skips any empty page: no OCR here."""
+"""A PDF's own text, page by page. A scan carries none and comes out nearly empty; `ocr` reads it then."""
 
 import pypdfium2
 

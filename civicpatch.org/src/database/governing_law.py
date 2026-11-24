@@ -2,7 +2,7 @@ from pydantic import BaseModel
 
 from database.database import get_pool
 from shared.schemas import GoverningLaw
-from shared.utils.statuses import PipelineRunKind
+from shared.utils.statuses import PipelineIssueStatus, PipelineRunKind
 
 
 class GoverningLawRow(BaseModel):
@@ -85,7 +85,8 @@ async def get_collection_candidates(state: str, limit: int | None) -> list[Colle
 async def get_organizations_collection_candidates(state: str, limit: int | None) -> list[CollectionCandidate]:
     """The state's active jurisdictions whose governing law's organizations haven't been
     extracted yet, or whose governing law was refreshed since. Never-collected first.
-    No run in flight or tried in the last day."""
+    No run in flight or tried in the last day, and none while pipeline 1's issue waits: what pipeline 2
+    would read is what that issue says is wrong."""
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
@@ -103,9 +104,14 @@ async def get_organizations_collection_candidates(state: str, limit: int | None)
                   WHERE r.jurisdiction_ocdid = j.jurisdiction_ocdid AND r.kind = %s
                     AND (r.finished_at IS NULL OR r.created_at >= now() - interval '{_TRIED_WITHIN}')
               )
+              AND NOT EXISTS (
+                  SELECT 1 FROM pipeline_run_issues issue
+                  JOIN pipeline_runs law_run ON law_run.id = issue.pipeline_run_id
+                  WHERE law_run.jurisdiction_ocdid = j.jurisdiction_ocdid AND law_run.kind = %s AND issue.status = %s
+              )
             ORDER BY j.extras_organizations IS NOT NULL, j.jurisdiction_ocdid
             LIMIT %s
             """,
-            (state, PipelineRunKind.ORGANIZATIONS_COLLECTOR, limit),
+            (state, PipelineRunKind.ORGANIZATIONS_COLLECTOR, PipelineRunKind.GOVERNING_LAW_COLLECTOR, PipelineIssueStatus.PENDING, limit),
         )
         return [CollectionCandidate(jurisdiction_ocdid=row[0], name=row[1] or "") for row in await cur.fetchall()]
