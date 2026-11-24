@@ -12,6 +12,7 @@ import uuid
 import pytest
 from temporalio import activity, workflow
 from temporalio.client import Client
+from temporalio.exceptions import ApplicationError
 from temporalio.testing import WorkflowEnvironment
 from temporalio.worker import Worker
 
@@ -30,9 +31,10 @@ class Recorder:
     """What the loop asked for, in order. `claims` is the interesting one: its length is how
     many times the loop went round, and its values are the slice sizes it requested."""
 
-    def __init__(self, pool: int, cap_after: int | None = None):
+    def __init__(self, pool: int, cap_after: int | None = None, quiet_runs: int = 0):
         self.pool = pool  # jurisdictions still unclaimed in the state
         self.cap_after = cap_after  # trip the budget after this many claims
+        self.quiet_runs = quiet_runs  # the first this many watches give up
         self.claims: list[int] = []
         self.dispatched: list[str] = []
         self.dispatched_locally: list[str] = []
@@ -71,10 +73,13 @@ def _activities(rec: Recorder):
 
     @activity.defn(name="poll_pipeline_run_status")
     async def poll_pipeline_run_status(pipeline_run_id: str):
+        if rec.quiet_runs > 0:
+            rec.quiet_runs -= 1
+            raise ApplicationError("reported nothing new", non_retryable=True)
         return RunConclusion.SUCCESS
 
     @activity.defn(name="update_pipeline_run_status")
-    async def update_pipeline_run_status(pipeline_run_id, status, progress=None):
+    async def update_pipeline_run_status(pipeline_run_id, status, progress=None, error_type=None, error_detail=None):
         return None
 
     @activity.defn(name="cancel_local_pipeline_run")
@@ -183,6 +188,16 @@ async def test_it_never_claims_more_than_the_caller_asked_for():
 
     assert rec.claims == [5, 2]
     assert dispatched == 7
+
+
+@pytest.mark.asyncio
+async def test_a_run_that_fails_does_not_end_the_state_scrape():
+    rec = Recorder(pool=12, quiet_runs=1)
+
+    dispatched = await _run_state_scrape(rec, concurrency=5)
+
+    assert rec.claims == [5, 5, 5, 5]
+    assert dispatched == 12
 
 
 # --- a run whose watcher gives up -------------------------------------------------------

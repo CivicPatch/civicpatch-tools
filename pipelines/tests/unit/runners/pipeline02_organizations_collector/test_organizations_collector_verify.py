@@ -93,6 +93,15 @@ def test_the_log_says_per_role_what_the_answers_found_and_what_verify_made_of_it
     ]
 
 
+def test_the_log_keeps_every_quote_in_full_for_an_office_found_but_not_posted():
+    long_quote = _NOT_IN_THE_LAW + " for terms of three years, " * 10
+    claims = [_claim(_MEMBER, long_quote, FilledBy.ELECTED_BY_VOTERS), _claim(_MEMBER, long_quote, FilledBy.ELECTED_BY_VOTERS), _claim(_MEMBER, _NOT_IN_THE_LAW, FilledBy.ELECTED_BY_VOTERS)]
+
+    assert role_summaries(claims, _outcomes(claims)) == [
+        f"Select Board / Select Board Member: 3 of 3 found it (elected_by_voters), asked again, quotes {[long_quote, _NOT_IN_THE_LAW]!r}",
+    ]
+
+
 def test_a_role_both_answers_say_is_not_established_has_no_post_and_is_not_asked_again():
     outcomes = _outcomes([_claim(_MEMBER, "", FilledBy.NOT_STATED, established=False)] * 2)
 
