@@ -100,6 +100,10 @@ snippet of a source with a link to its section.
    urls a person uses for `source_blocked` and `governing_law_not_found` issues, and a lead for the
    planned code-directory finder. Where a Municode snapshot is kept for runs is not decided; until
    then it is recorded in the research doc.
+
+   Note too where pipeline 1 cannot read the charter, since each becomes a `governing_law_not_found`
+   issue: a landing page that only links it (Oregon's Gold Beach and Redmond), a scan with no text
+   layer (Maine's Washburn), or a file robots.txt keeps out (Oregon's Estacada, `/wp-content/uploads/`).
 5. **A "Net result" section** at the end: the forms, organizations and roles to configure, each
    with its citation, and what is left out and why (Oregon: elected recorder, judge and auditor,
    not legislative or executive).
@@ -145,6 +149,9 @@ Oregon's two and `shared/src/shared/utils/layered_config.py` (the models) before
 2. **`government_forms`**, keyed by `GovernmentForm` (`shared/src/shared/schemas.py`). Each lists
    its organizations with the role labels in them; `{lsad}` in a name takes the place's suffix
    ("{lsad} Council" is "Town Council" for a town).
+   - List the governing body first. Pipeline 2 reads a form's first organization as the body that
+     governs: it asks that body's presiding question, and flags a charter not quoted for it
+     (`test_every_forms_first_organization_is_its_governing_body` in open-data).
    - Name an officers organization `"{lsad} Officers"`: that is every place's default organization
      (`derived_organizations` in `layered_config.py`). A fixed name ("Town Officers") gives each
      place with another suffix a second, empty organization, and a config merge never removes one
@@ -153,7 +160,8 @@ Oregon's two and `shared/src/shared/utils/layered_config.py` (the models) before
      the research found one form per statutory class (Oregon's cities: `city`, `town`). Two forms on
      one suffix resolve to neither, and the place keeps only its default organization (Oregon's 36
      counties held County Officers alone until a form was saved: 29 `commission`, 7 `county_court`).
-     Where the class doesn't decide, a run's form pick saves one, or a person does.
+     Where the class doesn't decide, pipeline 2 asks for the form before its questions and saves it
+     (`runners/pipeline02_organizations_collector/government_form.py`), or a person does.
    - A form with no `suffixes` applies only where it is saved on the jurisdiction in cp.org
      (Portland's `mayor_council`): set `extras_government_form` there, never by a PR.
    - Every suffix from `add-new-state`'s dry-run needs a form (`test_every_suffix_has_a_form_of_the_states_own`).

@@ -12,6 +12,13 @@ pytestmark = pytest.mark.unit
 MODULE = "runners.pipeline03_people_collector.steps.step_02_crawl_page.step_02a_scrape_page.browser"
 
 
+@pytest.fixture(autouse=True)
+def _robots_allow_everything():
+    """These tests are about what scrape does with a page it may open; the robots check is tested below."""
+    with patch(f"{MODULE}.polite.obey_host", new=AsyncMock()):
+        yield
+
+
 def _make_playwright_stack(page_url="https://example.com"):
     response = MagicMock()
     response.ok = True
@@ -212,3 +219,17 @@ async def test_a_page_still_blocked_without_the_https_upgrade_is_not_tried_a_thi
         await browser_module.scrape(MagicMock(), url)
 
     assert opened.await_count == 2
+
+
+@pytest.mark.asyncio
+async def test_a_page_robots_txt_disallows_is_never_opened():
+    """Pipeline 3 keeps to robots.txt as pipeline 1 does: the refusal is a navigation failure that is not retried."""
+    with (
+        patch(f"{MODULE}.polite.obey_host", new=AsyncMock(side_effect=browser_module.polite.DisallowedByRobots("https://example.com/council"))),
+        patch(f"{MODULE}.async_playwright") as playwright,
+        pytest.raises(NavigationError) as refused,
+    ):
+        await browser_module.scrape(MagicMock(), "https://example.com/council")
+
+    assert refused.value.reason == NavigationFailureReason.DISALLOWED_BY_ROBOTS
+    playwright.assert_not_called()

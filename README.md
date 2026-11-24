@@ -132,6 +132,27 @@ mise run tcp      # civicpatch.org
 mise run evalsm   # LLM evals: paid, needs the LLM keys
 ```
 
+## Rescraping a state after its config adds organizations
+
+A scrape places people against the organizations a place has when it runs, and nothing moves people already
+stored. So when a state's config gains organizations after its places were scraped (California, Michigan,
+Massachusetts, Oregon and Vermont on 2026-11-23), its people stay in each place's default organization until a
+rescrape. A state's cadence is also its scrape schedule, so setting it to 1 day runs a full pass every day until it
+is set back.
+
+1. On the pipelines page, open the state's scrape settings and write down its cadence.
+2. Set the cadence to 1 day and save.
+3. Start the pass now rather than at the schedule's next turn: as an admin on civicpatch.org, in the browser
+   console, `fetch("/api/v1/pipeline_runs/batch", {method: "POST", credentials: "include", headers: {"Content-Type":
+   "application/json", "X-CSRF-Token": decodeURIComponent(document.cookie.split("; ").find((c) =>
+   c.startsWith("csrf_token=")).split("=")[1])}, body: JSON.stringify({state: "ca"})})`. A `200` with a workflow id
+   means it started.
+4. When the pass ends (the pipelines page shows no runs in flight for the state), set the cadence back to the value
+   from step 1. Forgetting this rescrapes the whole state every day.
+
+It worked when the state's default organizations hold almost nobody next to its bodies. The cost is one scrape per
+place, read off the pipelines page's cost per run.
+
 ## License
 
 [MIT](LICENSE.txt)

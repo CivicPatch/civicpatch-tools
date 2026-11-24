@@ -22,7 +22,7 @@ import shared.utils.id_utils
 from database.changeset_predicates import WORK_IN_FLIGHT
 from database.database import get_pool
 from psycopg import sql
-from shared.utils.statuses import PipelineIssueStatus, PipelineIssueType
+from shared.utils.statuses import PipelineIssueStatus, PipelineIssueType, PipelineRunKind
 
 
 # An issue blocks only while the changeset its run produced is still open — otherwise it froze
@@ -152,7 +152,8 @@ async def set_issue_flagged(issue_id: str, is_flagged: bool) -> None:
 async def supersede_prior_jurisdiction_issues(
     jurisdiction_ocdid: str, current_changeset_id: str
 ) -> None:
-    """A newer run for this jurisdiction settles what older ones reported."""
+    """A newer scrape for this jurisdiction settles what older scrapes reported. Only scrapes: only they mint a
+    changeset, and a collector's issue (a charter blocked, the law misread) is about what a scrape cannot see."""
     pool = await get_pool()
     async with pool.connection() as conn:
         await conn.execute(
@@ -163,6 +164,7 @@ async def supersede_prior_jurisdiction_issues(
               AND pipeline_run_id IN (
                 SELECT run.id FROM pipeline_runs run
                 WHERE run.jurisdiction_ocdid = %s
+                  AND run.kind = %s
                   AND (run.changeset_id IS NULL OR run.changeset_id::text <> %s)
               )
             """,
@@ -170,6 +172,7 @@ async def supersede_prior_jurisdiction_issues(
                 PipelineIssueStatus.SUPERSEDED,
                 PipelineIssueStatus.PENDING,
                 jurisdiction_ocdid,
+                PipelineRunKind.PEOPLE_COLLECTOR,
                 current_changeset_id,
             ),
         )

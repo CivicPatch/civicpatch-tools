@@ -5,6 +5,7 @@ import httpx
 from runners.pipeline03_people_collector.constants import MINIMUM_NUM_PEOPLE
 from shared.schemas import PipelineRunLimits
 from shared.utils.statuses import (
+    PipelineIssueType,
     PipelineRunErrorType,
     PipelineRunStatus,
 )
@@ -31,6 +32,7 @@ from ..steps.step_01_research_municipality.research_municipality import (
     research_municipality,
 )
 from ..steps.step_02_crawl_page.crawl_page import crawl_page
+from ..steps.step_02_crawl_page.step_02a_scrape_page.scrape_exceptions import NavigationFailureReason
 from ..steps.step_03_find_jurisdiction_url.find_jurisdiction_url import (
     find_jurisdiction_url,
 )
@@ -151,8 +153,10 @@ def _next_state_no_pending_pages(
     ), PipelineRunStatus.SEND_ERROR
 
 
-def _all_failed_error_type(frontier: LinkFrontier) -> PipelineRunErrorType:
+def _all_failed_error_type(frontier: LinkFrontier) -> PipelineRunErrorType | PipelineIssueType:
     error_links = get_links_with_status(frontier, [LinkStatus.ERROR])
+    if error_links and all(l.failure_reason == NavigationFailureReason.DISALLOWED_BY_ROBOTS for l in error_links):
+        return PipelineIssueType.SOURCE_BLOCKED
     if error_links and all(l.failure_reason is not None for l in error_links):
         return PipelineRunErrorType.DOMAIN_NAVIGATION_ERROR
     return PipelineRunErrorType.DOMAIN_INACTIVE

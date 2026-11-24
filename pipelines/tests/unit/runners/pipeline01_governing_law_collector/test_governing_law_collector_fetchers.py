@@ -11,6 +11,7 @@ from patchright.async_api import Error as BrowserError
 from pytest_httpx import HTTPXMock
 from runners.pipeline01_governing_law_collector import fetchers
 from runners.pipeline01_governing_law_collector.fetchers import browser, plain
+import services.polite as polite
 from runners.pipeline01_governing_law_collector.schemas import FetchedPage
 
 pytestmark = pytest.mark.unit
@@ -21,8 +22,8 @@ _ROBOTS = "https://www.lanecountyor.gov/robots.txt"
 
 @pytest.fixture(autouse=True)
 def _fresh_host_state():
-    plain._robots_by_origin.clear()
-    plain._next_request_by_host.clear()
+    polite._robots_by_origin.clear()
+    polite._next_request_by_host.clear()
 
 
 def _no_robots(httpx_mock: HTTPXMock) -> None:
@@ -30,7 +31,7 @@ def _no_robots(httpx_mock: HTTPXMock) -> None:
 
 
 def _asked(httpx_mock: HTTPXMock) -> list[str]:
-    return [str(request.url) for request in httpx_mock.get_requests() if not str(request.url).endswith(plain.ROBOTS_PATH)]
+    return [str(request.url) for request in httpx_mock.get_requests() if not str(request.url).endswith(polite.ROBOTS_PATH)]
 
 
 @pytest.mark.parametrize(
@@ -47,12 +48,12 @@ def _asked(httpx_mock: HTTPXMock) -> list[str]:
     ],
 )
 def test_only_an_http_url_with_a_dotted_hostname_is_public(url: str, public: bool):
-    assert plain.is_public_web_url(url) == public
+    assert polite.is_public_web_url(url) == public
 
 
 @pytest.mark.asyncio
 async def test_an_off_limits_url_is_refused_before_any_request_is_sent(httpx_mock: HTTPXMock):
-    with pytest.raises(plain.OffLimits):
+    with pytest.raises(polite.OffLimits):
         await plain.fetch("http://10.0.0.5/charter")
 
     assert httpx_mock.get_requests() == []
@@ -63,7 +64,7 @@ async def test_a_redirect_to_an_off_limits_url_is_refused_at_that_hop(httpx_mock
     _no_robots(httpx_mock)
     httpx_mock.add_response(url=_CHARTER, status_code=302, headers={"Location": "http://10.0.0.5/charter"})
 
-    with pytest.raises(plain.OffLimits):
+    with pytest.raises(polite.OffLimits):
         await plain.fetch(_CHARTER)
 
     assert _asked(httpx_mock) == [_CHARTER]
@@ -85,7 +86,7 @@ async def test_a_redirect_to_a_public_url_is_followed_and_the_final_url_kept(htt
 async def test_a_url_robots_txt_disallows_is_never_requested(httpx_mock: HTTPXMock):
     httpx_mock.add_response(url=_ROBOTS, text="User-agent: CivicPatchBot\nDisallow: /charter\n")
 
-    with pytest.raises(plain.DisallowedByRobots):
+    with pytest.raises(polite.DisallowedByRobots):
         await plain.fetch(_CHARTER)
 
     assert _asked(httpx_mock) == []
@@ -96,7 +97,7 @@ async def test_rules_for_other_bots_do_not_apply_and_are_read_once_per_host(http
     httpx_mock.add_response(url=_ROBOTS, text="User-agent: GPTBot\nDisallow: /\n")
     httpx_mock.add_response(url=_CHARTER, text="law", is_reusable=True)
 
-    with patch.object(plain.asyncio, "sleep", new=AsyncMock()):
+    with patch.object(polite.asyncio, "sleep", new=AsyncMock()):
         await plain.fetch(_CHARTER)
         await plain.fetch(_CHARTER)
 
@@ -108,12 +109,36 @@ async def test_a_second_request_to_a_host_waits_its_turn_and_the_crawl_delay_is_
     httpx_mock.add_response(url=_ROBOTS, text="User-agent: *\nCrawl-delay: 5\n")
     httpx_mock.add_response(url=_CHARTER, text="law", is_reusable=True)
 
-    with patch.object(plain.asyncio, "sleep", new=AsyncMock()) as slept:
+    with patch.object(polite.asyncio, "sleep", new=AsyncMock()) as slept:
         await plain.fetch(_CHARTER)
         await plain.fetch(_CHARTER)
 
     slept.assert_awaited_once()
     assert 4 < slept.await_args.args[0] <= 5
+
+
+@pytest.mark.asyncio
+async def test_a_crawl_delay_past_the_cap_waits_the_cap(httpx_mock: HTTPXMock):
+    httpx_mock.add_response(url=_ROBOTS, text="User-agent: *\nCrawl-delay: 600\n")
+    httpx_mock.add_response(url=_CHARTER, text="law", is_reusable=True)
+
+    with patch.object(polite.asyncio, "sleep", new=AsyncMock()) as slept:
+        await plain.fetch(_CHARTER)
+        await plain.fetch(_CHARTER)
+
+    assert polite.MAX_PAUSE_SECONDS - 1 < slept.await_args.args[0] <= polite.MAX_PAUSE_SECONDS
+
+
+@pytest.mark.asyncio
+async def test_a_host_with_no_crawl_delay_is_not_waited_on(httpx_mock: HTTPXMock):
+    _no_robots(httpx_mock)
+    httpx_mock.add_response(url=_CHARTER, text="law", is_reusable=True)
+
+    with patch.object(polite.asyncio, "sleep", new=AsyncMock()) as slept:
+        await plain.fetch(_CHARTER)
+        await plain.fetch(_CHARTER)
+
+    slept.assert_not_awaited()
 
 
 @pytest.mark.asyncio
@@ -184,7 +209,7 @@ async def test_a_429_stays_refused(httpx_mock: HTTPXMock, url: str):
 async def test_a_publisher_url_robots_txt_disallows_never_reaches_the_browser(httpx_mock: HTTPXMock):
     httpx_mock.add_response(url=re.compile(r".*/robots\.txt$"), text="User-agent: *\nDisallow: /\n")
 
-    with patch.object(fetchers.browser, "fetch", new=AsyncMock()) as by_browser, pytest.raises(plain.DisallowedByRobots):
+    with patch.object(fetchers.browser, "fetch", new=AsyncMock()) as by_browser, pytest.raises(polite.DisallowedByRobots):
         await fetchers.fetch_plain_first(_PUBLISHER)
 
     by_browser.assert_not_awaited()
@@ -248,7 +273,7 @@ async def test_loading_waits_out_a_challenge_and_keeps_the_first_answer():
         last["title"] = next(titles, last["title"])
         return last["title"]
 
-    page = MagicMock(url=_PUBLISHER, goto=AsyncMock(return_value=MagicMock(status=403)), title=title, wait_for_timeout=AsyncMock())
+    page = MagicMock(url=_PUBLISHER, goto=AsyncMock(return_value=MagicMock(status=403, headers={"content-type": "text/html"})), title=title, wait_for_timeout=AsyncMock())
 
     loaded = await browser._load(page, _PUBLISHER)
 
@@ -257,8 +282,8 @@ async def test_loading_waits_out_a_challenge_and_keeps_the_first_answer():
 
 @pytest.mark.asyncio
 async def test_a_first_url_robots_txt_disallows_opens_no_browser():
-    with patch.object(plain, "obey_host", new=AsyncMock(side_effect=plain.DisallowedByRobots(_PUBLISHER))), patch.object(browser, "async_playwright") as playwright:
-        with pytest.raises(plain.DisallowedByRobots):
+    with patch.object(polite, "obey_host", new=AsyncMock(side_effect=polite.DisallowedByRobots(_PUBLISHER))), patch.object(browser, "async_playwright") as playwright:
+        with pytest.raises(polite.DisallowedByRobots):
             await browser.fetch(_PUBLISHER)
 
     playwright.assert_not_called()
@@ -286,18 +311,18 @@ def _obeying_except_the_hop(failure: Exception | None) -> AsyncMock:
 async def test_a_redirect_robots_txt_disallows_is_aborted_and_recorded():
     hop, stopped = _route(_HOP), []
 
-    with patch.object(plain, "obey_host", new=_obeying_except_the_hop(plain.DisallowedByRobots(_HOP))):
+    with patch.object(polite, "obey_host", new=_obeying_except_the_hop(polite.DisallowedByRobots(_HOP))):
         await browser._guard(_PUBLISHER, stopped, hop)
 
     hop.abort.assert_awaited_once()
-    assert isinstance(stopped[0], plain.DisallowedByRobots)
+    assert isinstance(stopped[0], polite.DisallowedByRobots)
 
 
 @pytest.mark.asyncio
 async def test_an_allowed_redirect_goes_on_and_records_nothing():
     hop, stopped = _route(_HOP), []
 
-    with patch.object(plain, "obey_host", new=_obeying_except_the_hop(None)):
+    with patch.object(polite, "obey_host", new=_obeying_except_the_hop(None)):
         await browser._guard(_PUBLISHER, stopped, hop)
 
     hop.continue_.assert_awaited_once()
@@ -316,7 +341,7 @@ async def test_a_private_address_a_page_asks_for_is_aborted_without_blaming_the_
 
 @pytest.mark.asyncio
 async def test_the_first_urls_challenge_reload_takes_no_second_turn():
-    with patch.object(plain, "obey_host", new=AsyncMock()) as obeyed:
+    with patch.object(polite, "obey_host", new=AsyncMock()) as obeyed:
         assert await browser._blocked_hop(_PUBLISHER, _PUBLISHER) is None
 
     obeyed.assert_not_awaited()
@@ -343,11 +368,11 @@ def _playwright_whose_navigation_passes(route: MagicMock) -> MagicMock:
 @pytest.mark.asyncio
 @pytest.mark.parametrize(
     "hop_failure,expected",
-    [(plain.DisallowedByRobots(_HOP), plain.DisallowedByRobots), (None, httpx.TransportError)],
+    [(polite.DisallowedByRobots(_HOP), polite.DisallowedByRobots), (None, httpx.TransportError)],
 )
 async def test_a_browser_failure_is_reported_as_the_blocked_hop_or_else_as_a_failed_fetch(hop_failure, expected):
     manager = _playwright_whose_navigation_passes(_route(_HOP))
 
-    with patch.object(browser, "async_playwright", return_value=manager), patch.object(plain, "obey_host", new=_obeying_except_the_hop(hop_failure)):
+    with patch.object(browser, "async_playwright", return_value=manager), patch.object(polite, "obey_host", new=_obeying_except_the_hop(hop_failure)):
         with pytest.raises(expected):
             await browser.fetch(_PUBLISHER)

@@ -2,7 +2,7 @@ import pytest
 from runners.pipeline03_people_collector.schemas import Link, LinkFrontier, LinkStatus
 from runners.pipeline03_people_collector.transitions.main import _all_failed_error_type
 from runners.pipeline03_people_collector.steps.step_02_crawl_page.step_02a_scrape_page.scrape_exceptions import NavigationFailureReason
-from shared.utils.statuses import PipelineRunErrorType
+from shared.utils.statuses import PipelineIssueType, PipelineRunErrorType
 
 
 def _frontier(*links: Link) -> LinkFrontier:
@@ -53,4 +53,22 @@ def test_no_error_links_returns_domain_inactive():
 @pytest.mark.unit
 def test_single_navigation_error_returns_domain_navigation_error():
     frontier = _frontier(_error_link(NavigationFailureReason.NET_TIMEOUT))
+    assert _all_failed_error_type(frontier) == PipelineRunErrorType.DOMAIN_NAVIGATION_ERROR
+
+
+@pytest.mark.unit
+def test_every_page_kept_out_by_robots_txt_is_source_blocked():
+    frontier = _frontier(
+        _error_link(NavigationFailureReason.DISALLOWED_BY_ROBOTS, "https://example.com/a"),
+        _error_link(NavigationFailureReason.DISALLOWED_BY_ROBOTS, "https://example.com/b"),
+    )
+    assert _all_failed_error_type(frontier) == PipelineIssueType.SOURCE_BLOCKED
+
+
+@pytest.mark.unit
+def test_some_pages_kept_out_by_robots_txt_among_other_failures_is_a_navigation_error():
+    frontier = _frontier(
+        _error_link(NavigationFailureReason.DISALLOWED_BY_ROBOTS, "https://example.com/a"),
+        _error_link(NavigationFailureReason.NET_TIMEOUT, "https://example.com/b"),
+    )
     assert _all_failed_error_type(frontier) == PipelineRunErrorType.DOMAIN_NAVIGATION_ERROR
