@@ -43,15 +43,16 @@ test.describe("Issue checklist", () => {
     await openMarkers(page);
     await openDrawer(page);
 
-    // new_person (person), duplicate_unique_role (person + field) and
-    // absent_person — the last has no person_ids, so it appears ONLY here.
-    await expect(items(page)).toHaveCount(3);
+    // new_person (person), new_post (person + post: Carol's post does not exist yet),
+    // duplicate_unique_role (person + field) and absent_person — the last has no person_ids, so
+    // it appears ONLY here.
+    await expect(items(page)).toHaveCount(4);
     // The live wording. An earlier version quoted a fixture object nothing has read since the
     // summary stopped being frozen at ingest, so "Dropped official" never reached a page.
     await expect(page.locator(".review-sidebar")).toContainText(
       "Not found in this scrape",
     );
-    await expect(count(page)).toContainText("0/3");
+    await expect(count(page)).toContainText("0/4");
   });
 
   test("a tick is personal progress, and says so", async ({
@@ -72,12 +73,12 @@ test.describe("Issue checklist", () => {
     const first = items(page).filter({ hasText: "New person found" });
     await first.locator("input").check();
     await expect(first).toHaveClass(/review-sidebar__item--done/);
-    await expect(count(page)).toContainText("1/3");
+    await expect(count(page)).toContainText("1/4");
 
     // The count is on the trigger, so a reload proves persistence without
     // reopening the drawer.
     await page.reload();
-    await expect(count(page)).toContainText("1/3");
+    await expect(count(page)).toContainText("1/4");
   });
 
   test("ticking clears the marker on the card it anchors to", async ({
@@ -142,11 +143,11 @@ test.describe("Issue checklist", () => {
     await openMarkers(page);
     await openDrawer(page);
     await items(page).first().locator("input").check();
-    await expect(count(page)).toContainText("1/3");
+    await expect(count(page)).toContainText("1/4");
 
     await page.goto(`/review/session?changeset_id=${READ_ONLY_CHANGESET_ID}`);
     await page.goto(`/review/session?changeset_id=${MARKERS_CHANGESET_ID}`);
-    await expect(count(page)).toContainText("1/3");
+    await expect(count(page)).toContainText("1/4");
   });
 
   test("stays tickable on a read-only card", async ({
@@ -174,10 +175,10 @@ test.describe("Issue checklist", () => {
     await openMarkers(page);
 
     await expect(trigger(page)).toBeVisible();
-    await expect(count(page)).toContainText("0/3");
+    await expect(count(page)).toContainText("0/4");
 
     await openDrawer(page);
-    await expect(items(page)).toHaveCount(3);
+    await expect(items(page)).toHaveCount(4);
   });
 
   test("closes on Escape and returns focus to the trigger", async ({
@@ -196,7 +197,7 @@ test.describe("Issue checklist", () => {
     await openDrawer(page);
 
     // Both are on screen at once — no switching, nothing hidden.
-    await expect(items(page)).toHaveCount(3);
+    await expect(items(page)).toHaveCount(4);
     await expect(page.locator(".people-by-source")).toBeVisible();
     await expect(page.locator(".review-sidebar__section-title")).toContainText(
       "Since last scrape",

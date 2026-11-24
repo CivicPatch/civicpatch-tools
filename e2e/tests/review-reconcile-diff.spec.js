@@ -94,9 +94,10 @@ test.describe("Review reconcile diff (populated)", () => {
     // diff to show — `post_id` is the reviewer's pick and is null on both sides until they make
     // one — so the issue is what surfaces the row and what says where she came from.
     await expect(post.locator(".person-editor__was")).toHaveCount(0);
-    await expect(post.locator(".person-editor__issue")).toContainText(
-      "Moved from Mayor to Member",
-    );
+    // Beside a New post issue: nobody holds the Member post here yet.
+    await expect(
+      post.locator(".person-editor__issue").filter({ hasText: "Moved from Mayor to Member" }),
+    ).toHaveCount(1);
 
     // A scalar that did move carries the old value as a trailing annotation rather than a
     // second column.

@@ -72,8 +72,9 @@ test.describe("Review issue markers", () => {
     await page.goto(`/review/session?changeset_id=${MARKERS_CHANGESET_ID}`);
     await openEditorFor(page, "Carol Extra");
 
+    // Two: she is new, and so is her post (no Member post exists here yet).
     const carol = editorFor(page, "Carol Extra");
-    await expect(carol.locator(".person-editor__issue")).toHaveCount(1);
+    await expect(carol.locator(".person-editor__issue")).toHaveCount(2);
 
     // Back to the roster before editing: `editField` opens the modal itself, and its click on
     // her Overview row cannot land while the modal it is trying to open is already covering it.
