@@ -445,6 +445,10 @@ async function seedReviewCard(
 // collapses to a strip. Seating needs four rows, because a membership points at a post, a post
 // at an organization and a division, and `posts.role_id` is a real FK.
 const FALLBACK_ROLE_ID = "member";
+// Office names the fold reads through a role's aliases rather than as a role id of their own: since
+// flat roles, "Council Member" is an alias of `member`. Seated under its slug instead, the person's
+// published post differs from the one the scrape derives, and every card shows a New post.
+const ROLE_FOR_OFFICE = { "Council Member": "member" };
 
 const roleSlug = (name) =>
   (name || "")
@@ -488,7 +492,7 @@ async function seatPerson(client, ocdid, person) {
   const organizationId = await organizationFor(client, ocdid);
   // Fall back rather than fail: a fixture office that slugs to no seeded role would otherwise
   // break seeding on a foreign key, which reads as a schema fault rather than a fixture one.
-  const wanted = roleSlug(person.office?.name);
+  const wanted = ROLE_FOR_OFFICE[person.office?.name] ?? roleSlug(person.office?.name);
   const { rows: role } = await client.query(`SELECT id FROM roles WHERE id = $1`, [
     wanted,
   ]);

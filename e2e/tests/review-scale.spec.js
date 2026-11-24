@@ -57,16 +57,16 @@ test.describe("Review card at scale", () => {
     authenticatedPage: page,
   }) => {
     await page.goto(`/review/session?changeset_id=${SCALE_CHANGESET_ID}`);
-    await openEditorFor(page, "Sam 09 Scale");
+    await openEditorFor(page, "Newcomer 01 Scale");
 
-    // Ingest mints no posts, so a promotion names a post no row holds. The picker has to offer
+    // Ingest mints no posts, so a newcomer's ward names a post no row holds. The picker has to offer
     // it anyway — otherwise the derivation's answer is simply missing and the field reads as
     // unanswered — and has to say that accepting it creates the post.
     // It says so on the division: the picker is two selects now, and a role paired with a
     // division no post holds yet is marked there. (An at-large pairing gets no marker at all —
     // noted in the plan's §20.)
     // The group, not `.field-control__office` — that class is on each of the two selects.
-    const picker = editorFor(page, "Sam 09 Scale").locator(
+    const picker = editorFor(page, "Newcomer 01 Scale").locator(
       ".field-control__office-group",
     );
     await expect(picker.getByLabel("Role", { exact: true }).locator("option:checked"))

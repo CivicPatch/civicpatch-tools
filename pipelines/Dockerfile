@@ -79,7 +79,8 @@ RUN apt-get update && apt-get install -y \
 
 # Install dev packages without blowing away spacy (we want to keep the previous spacy model)
 # https://github.com/astral-sh/uv/issues/12481
-RUN uv sync --inexact
+# --package: a bare sync installs the workspace root's dev group, not pipelines' (pytest and the rest).
+RUN uv sync --package pipelines --inexact --frozen --no-install-project
 
 WORKDIR /app
 
