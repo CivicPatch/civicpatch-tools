@@ -321,7 +321,7 @@ def test_batch_starts_a_workflow_and_does_not_pick_candidates(client):
     """The workflow finds its own work. If the route still resolved candidates, a scheduled
     scrape — which can only pass a state — would have no way to reach the same path."""
     with patch(
-        "routers.api.pipeline_runs.temporal_service.start_people_collector_state_workflow",
+        "routers.api.pipeline_runs.temporal_service.start_collector_state_workflow",
         new_callable=AsyncMock,
         return_value="people-collector-state-wa",
     ) as start, patch(
@@ -337,7 +337,7 @@ def test_batch_starts_a_workflow_and_does_not_pick_candidates(client):
     # many that is. The concurrency window is the API's to supply — a workflow cannot read it
     # itself without breaking replay.
     start.assert_awaited_once()
-    assert start.await_args.args[:2] == ("wa", None)
+    assert start.await_args.args[:3] == (PipelineRunKind.PEOPLE_COLLECTOR, "wa", None)
 
 
 def _batch_client():
@@ -367,7 +367,7 @@ def test_batch_is_allowed_for_an_admin():
     client = _batch_client()
     _as(client, UserRole.ADMINS)
     with patch(
-        "routers.api.pipeline_runs.temporal_service.start_people_collector_state_workflow",
+        "routers.api.pipeline_runs.temporal_service.start_collector_state_workflow",
         new_callable=AsyncMock,
         return_value="people-collector-state-wa",
     ):

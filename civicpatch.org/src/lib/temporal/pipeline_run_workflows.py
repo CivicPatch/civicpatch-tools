@@ -1,4 +1,4 @@
-"""The pipeline-run workflows: one jurisdiction's run, and a whole state's worth of them.
+"""One jurisdiction's scrape run. A state's pass, for every pipeline, is `collector_workflows`.
 
 Moved from the standalone `worker` package on 2026-09-05. They run on their own task queue,
 registered by `workers/pipeline_runs.py`, its own process and pod — a different
@@ -11,13 +11,11 @@ from datetime import timedelta
 from typing import Optional
 
 from temporalio import workflow
-from temporalio.common import RetryPolicy, WorkflowIDReusePolicy
+from temporalio.common import RetryPolicy
 
 with workflow.unsafe.imports_passed_through():
     from routers.temporal.pipeline_run_activities import (
-        people_collector_month_cap_reached,
         cancel_local_pipeline_run,
-        claim_jurisdictions_for_people_collector,
         poll_pipeline_run_status,
         trigger_people_collector_remote,
         trigger_people_collector_local,
@@ -27,7 +25,6 @@ with workflow.unsafe.imports_passed_through():
 
     from lib.temporal.types import (
         PEOPLE_COLLECTOR_EXECUTION_TIMEOUT,
-        PEOPLE_COLLECTOR_STATE_WORKFLOW,
         PEOPLE_COLLECTOR_WORKFLOW,
         RunConclusion,
     )
@@ -35,11 +32,6 @@ with workflow.unsafe.imports_passed_through():
 _DISPATCH_MODE_LOCAL = "local"
 # Room after the watch gives up for the workflow to cancel the scrape and settle the run.
 _SETTLE_MARGIN = timedelta(minutes=5)
-
-
-def _workflow_id(jurisdiction_ocdid: str) -> str:
-    safe = jurisdiction_ocdid.replace("/", "-").replace(":", "-")
-    return f"people-collector-{safe}"
 
 
 @workflow.defn(name=PEOPLE_COLLECTOR_WORKFLOW)
@@ -149,77 +141,3 @@ class PeopleCollectorWorkflow:
         # a suspended old one — which is what the restart below did anyway.
         workflow.logger.info(f"Run {pipeline_run_id} failed")
         return conclusion
-
-
-# Fallback only. The real value arrives as a workflow argument, from PIPELINE_RUN_CONCURRENCY
-# on the API side — read there rather than here because Temporal replays a workflow, so a value
-# that changed between runs would diverge.
-DEFAULT_PIPELINE_RUN_CONCURRENCY = 25
-
-
-@workflow.defn(name=PEOPLE_COLLECTOR_STATE_WORKFLOW)
-class PeopleCollectorStateWorkflow:
-    """A state's scrape, start to finish, as one durable thing.
-
-    It asks the API for its own candidates rather than being handed a list. A Temporal Schedule
-    can only pass fixed arguments, so a scheduled scrape can give it a state and nothing else —
-    and resolving candidates before starting left orphaned changesets whenever the caller died
-    between registering them and starting the run.
-    """
-
-    @workflow.run
-    async def run(
-        self,
-        state: str,
-        num_jurisdictions: Optional[int] = None,
-        created_by_user_id: Optional[str] = None,
-        concurrency: int = DEFAULT_PIPELINE_RUN_CONCURRENCY,
-        dispatch_mode: str = "remote",
-    ) -> int:
-        limit = max(1, concurrency)
-        runs: list[workflow.ChildWorkflowHandle] = []
-
-        # Temporal's sliding-window pattern. One place claimed per run started: claiming ahead
-        # and stopping partway would leave unstarted places holding runs the pool excludes.
-        while num_jurisdictions is None or len(runs) < num_jurisdictions:
-            await workflow.wait_condition(lambda: _running(runs) < limit)
-            claimed = await _claim_one(state, created_by_user_id)
-            if claimed is None:
-                break
-            runs.append(await _start(claimed, dispatch_mode))
-
-        await workflow.wait_condition(lambda: _running(runs) == 0)
-        return len(runs)
-
-
-def _running(runs: list[workflow.ChildWorkflowHandle]) -> int:
-    # A failed run counts as finished: it has already settled itself.
-    return sum(1 for run in runs if not run.done())
-
-
-async def _claim_one(state: str, created_by_user_id: Optional[str]) -> Optional[dict]:
-    cap = await workflow.execute_activity(
-        people_collector_month_cap_reached,
-        args=[state],
-        start_to_close_timeout=timedelta(seconds=30),
-        retry_policy=RetryPolicy(maximum_attempts=3),
-    )
-    if cap:
-        workflow.logger.warning(f"{state}: no more claims, {cap} reached")
-        return None
-    claimed = await workflow.execute_activity(
-        claim_jurisdictions_for_people_collector,
-        args=[state, 1, created_by_user_id],
-        start_to_close_timeout=timedelta(minutes=2),
-        retry_policy=RetryPolicy(maximum_attempts=3),
-    )
-    return claimed[0] if claimed else None
-
-
-async def _start(item: dict, dispatch_mode: str) -> workflow.ChildWorkflowHandle:
-    return await workflow.start_child_workflow(
-        PeopleCollectorWorkflow.run,
-        args=[item["jurisdiction_ocdid"], item["pipeline_run_id"], dispatch_mode],
-        id=_workflow_id(item["jurisdiction_ocdid"]),
-        id_reuse_policy=WorkflowIDReusePolicy.TERMINATE_IF_RUNNING,
-    )

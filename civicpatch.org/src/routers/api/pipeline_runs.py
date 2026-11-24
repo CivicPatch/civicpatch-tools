@@ -224,8 +224,8 @@ def get_router(api_key_header):
           the workflow a state and nothing else. The manual path now ends where a scheduled
           one will.
         """
-        workflow_id = await temporal_service.start_people_collector_state_workflow(
-            request.state, request.num_jurisdictions, user.user_id, DISPATCH_MODE
+        workflow_id = await temporal_service.start_collector_state_workflow(
+            PipelineRunKind.PEOPLE_COLLECTOR, request.state, request.num_jurisdictions, user.user_id, DISPATCH_MODE
         )
         return {"data": {"workflow_id": workflow_id, "state": request.state}}
 

@@ -19,7 +19,6 @@ from lib.temporal.types import (
     COLLECTOR_STATE_WORKFLOW,
     COLLECTOR_WORKFLOW,
     GENERATE_MAPS_WORKFLOW,
-    PEOPLE_COLLECTOR_STATE_WORKFLOW,
     PEOPLE_COLLECTOR_WORKFLOW,
     WRITE_OPEN_DATA_BATCH_WORKFLOW,
     WRITE_SHEET_JURISDICTIONS_WORKFLOW,
@@ -79,37 +78,6 @@ def _pipeline_run_concurrency() -> int:
     """How many pipeline runs may be in flight at once. Read here rather than in the workflow,
     which Temporal replays — a value that changed between runs would diverge."""
     return int(get_env_vars()["PIPELINE_RUN_CONCURRENCY"])
-
-
-async def start_people_collector_state_workflow(
-    state: str,
-    num_jurisdictions: int | None = None,
-    created_by_user_id: str | None = None,
-    dispatch_mode: str = "remote",
-) -> str:
-    """One durable workflow per state. It finds its own candidates.
-
-    The id carries no random suffix, which is the point: the previous
-    `batch-people-collector-{state}-{uuid}` was unique on every call, so
-    `TERMINATE_EXISTING` never fired and two clicks ran two overlapping batches over the same
-    candidate pool. Keyed on the state alone, `FAIL` makes a second start an error the caller
-    sees rather than a silent duplicate.
-    """
-    client = await get_client()
-    handle = await client.start_workflow(
-        PEOPLE_COLLECTOR_STATE_WORKFLOW,
-        args=[
-            state,
-            num_jurisdictions,
-            created_by_user_id,
-            _pipeline_run_concurrency(),
-            dispatch_mode,
-        ],
-        id=f"people-collector-state-{state}",
-        task_queue=PIPELINE_RUNS_TASK_QUEUE,
-        id_conflict_policy=WorkflowIDConflictPolicy.FAIL,
-    )
-    return handle.id
 
 
 async def enqueue_write_sheet_roster(state: str) -> None:
@@ -240,7 +208,8 @@ async def start_collector_workflow(
 async def start_collector_state_workflow(
     kind: PipelineRunKind, state: str, num_jurisdictions: int | None, created_by_user_id: str | None, dispatch_mode: str = "remote"
 ) -> str:
-    """Keyed on the kind and state alone, like the scrape's: a second start is an error, not a duplicate."""
+    """One durable workflow per pipeline and state; it finds its own candidates. Keyed on the kind
+    and state alone, so a second start is an error the caller sees rather than an overlapping pass."""
     client = await get_client()
     handle = await client.start_workflow(
         COLLECTOR_STATE_WORKFLOW,
