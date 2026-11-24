@@ -34,7 +34,8 @@ from temporalio.client import (
 from temporalio.service import RPCError, RPCStatusCode
 
 from core.scrape_schedule import interval_offset, schedule_id as state_schedule_id
-from database.state_settings import get_all_state_settings, get_state_settings
+from database.pipeline_settings import get_all_pipeline_settings, get_pipeline_settings
+from schemas.pipeline_settings import PipelineSettings
 from lib.temporal.types import (
     CLEANUP_TASK_QUEUE,
     COLLECTOR_STATE_WORKFLOW,
@@ -122,52 +123,43 @@ async def _ensure_schedule(
     return False
 
 
+def _state_schedule(settings: PipelineSettings, cadence_days: int) -> Schedule:
+    """One pipeline's pass over one state, every `cadence_days`.
+
+    `args` is the kind and state and nothing else: a schedule can only pass fixed arguments, and
+    CollectorStateWorkflow.run defaults the rest so a scheduled pass and a hand-started one take the
+    same path. `SKIP` on overlap: a pass can outlast its interval (Michigan has 1,293 places), and a
+    second on top would claim what the first is still working through."""
+    every = timedelta(days=cadence_days)
+    return Schedule(
+        action=ScheduleActionStartWorkflow(
+            COLLECTOR_STATE_WORKFLOW,
+            args=[settings.kind.value, settings.state],
+            id=collector_state_workflow_id(settings.kind, settings.state),
+            task_queue=PIPELINE_RUNS_TASK_QUEUE,
+        ),
+        spec=ScheduleSpec(
+            intervals=[ScheduleIntervalSpec(every=every, offset=interval_offset(settings.cadence_anchor, every))]
+        ),
+        policy=SchedulePolicy(overlap=ScheduleOverlapPolicy.SKIP),
+    )
+
+
 async def _register_state_schedules(client: Client) -> set[str]:
-    """One schedule per state that has a cadence, declared from `state_settings`.
+    """One schedule per state and pipeline with a cadence, declared from `pipeline_settings`.
 
-    Returns the ids it declared, because they have to join the fixed five in the set passed to
-    `_retire_undeclared_schedules` — omitting them would make every worker start delete every
-    state schedule, which is the trap this plan flagged before it was built.
-
-    **A state with a NULL cadence gets no schedule**, which is what `manual` means. Setting a
-    cadence back to NULL therefore deletes its schedule, by the same omission — the retire pass
-    is the delete path, so there is no second one to keep in step.
-
-    `SKIP` on overlap: a state's pass can outlast its own interval — Michigan is 1,293
-    jurisdictions — and stacking a second pass on top of a running one would claim candidates
-    the first is still working through.
+    Returns the ids it declared, because they have to join the fixed ones in the set passed to
+    `_retire_undeclared_schedules`: omitting them would make every worker start delete every state
+    schedule. A NULL cadence gets no schedule, which is what `manual` means, so setting one back to
+    NULL deletes its schedule by the same omission.
     """
     declared: set[str] = set()
-    for state, settings in (await get_all_state_settings()).items():
+    for settings in await get_all_pipeline_settings():
         if settings.cadence_days is None:
             continue
-        every = timedelta(days=settings.cadence_days)
-        schedule_id = state_schedule_id(state)
+        schedule_id = state_schedule_id(settings.kind, settings.state)
         declared.add(schedule_id)
-        await _ensure_schedule(
-            client,
-            schedule_id,
-            Schedule(
-                # `args` is the kind and state and nothing else: a schedule can only pass fixed
-                # arguments, and CollectorStateWorkflow.run defaults the rest deliberately so a
-                # scheduled scrape and a hand-started one take the same path.
-                action=ScheduleActionStartWorkflow(
-                    COLLECTOR_STATE_WORKFLOW,
-                    args=[PipelineRunKind.PEOPLE_COLLECTOR.value, state],
-                    id=collector_state_workflow_id(PipelineRunKind.PEOPLE_COLLECTOR, state),
-                    task_queue=PIPELINE_RUNS_TASK_QUEUE,
-                ),
-                spec=ScheduleSpec(
-                    intervals=[
-                        ScheduleIntervalSpec(
-                            every=every,
-                            offset=interval_offset(settings.cadence_anchor, every),
-                        )
-                    ]
-                ),
-                policy=SchedulePolicy(overlap=ScheduleOverlapPolicy.SKIP),
-            ),
-        )
+        await _ensure_schedule(client, schedule_id, _state_schedule(settings, settings.cadence_days))
     return declared
 
 
@@ -243,51 +235,25 @@ async def terminate_undeclared_workflows(
         ).terminate(reason="workflow class no longer registered on this worker")
 
 
-async def reconcile_state_schedule(client: Client, state: str) -> None:
-    """Converge one state's schedule, right after its cadence was written.
+async def reconcile_state_schedule(client: Client, state: str, kind: PipelineRunKind) -> None:
+    """Converge one state and pipeline's schedule, right after its cadence was written.
 
-    Targeted on purpose: `register_schedules` ends in a retire pass over the whole namespace,
-    and running that from the API would let a request delete schedules it knows nothing about.
-    This touches one id and nothing else.
-
-    Deleting when the cadence is NULL is explicit here, unlike at worker start where omission
-    from the declared set does it. Two paths, because there is no retire pass to lean on — and
-    a `manual` state that kept firing would be the worst failure this feature has.
+    Targeted on purpose: `register_schedules` ends in a retire pass over the whole namespace, and
+    running that from the API would let a request delete schedules it knows nothing about. Deleting
+    on a NULL cadence is explicit here, since there is no retire pass to lean on: a `manual` state
+    that kept firing would be the worst failure this has.
     """
-    settings = await get_state_settings(state)
-    schedule_id = state_schedule_id(state)
-
+    settings = await get_pipeline_settings(state, kind)
+    schedule_id = state_schedule_id(kind, state)
     if settings.cadence_days is None:
         try:
             await client.get_schedule_handle(schedule_id).delete()
-            logger.info("Deleted schedule for %s: cadence is now manual", state)
+            logger.info("Deleted schedule %s: cadence is now manual", schedule_id)
         except RPCError as e:
             if e.status != RPCStatusCode.NOT_FOUND:
                 raise
         return
-
-    every = timedelta(days=settings.cadence_days)
-    await _ensure_schedule(
-        client,
-        schedule_id,
-        Schedule(
-            action=ScheduleActionStartWorkflow(
-                COLLECTOR_STATE_WORKFLOW,
-                args=[PipelineRunKind.PEOPLE_COLLECTOR.value, state],
-                id=collector_state_workflow_id(PipelineRunKind.PEOPLE_COLLECTOR, state),
-                task_queue=PIPELINE_RUNS_TASK_QUEUE,
-            ),
-            spec=ScheduleSpec(
-                intervals=[
-                    ScheduleIntervalSpec(
-                        every=every,
-                        offset=interval_offset(settings.cadence_anchor, every),
-                    )
-                ]
-            ),
-            policy=SchedulePolicy(overlap=ScheduleOverlapPolicy.SKIP),
-        ),
-    )
+    await _ensure_schedule(client, schedule_id, _state_schedule(settings, settings.cadence_days))
 
 
 async def terminate_workflows_on_undeclared_queues(

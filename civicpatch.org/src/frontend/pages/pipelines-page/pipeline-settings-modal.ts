@@ -6,18 +6,19 @@ import { saveCadence, saveCaps } from "../../api.js";
 import { inputValue } from "../../components/fields/field-controls.js";
 import { stateNameForCode } from "../../components/ocdid-utils.js";
 import { hostDispatch } from "../../utils/host-dispatch.js";
-import { estimateMonthlyCost, formatUsd, type StateScrapePanel } from "./scrape-settings.js";
+import { PIPELINE_LABELS } from "../../schemas/pipeline-kinds.js";
+import { estimateMonthlyCost, formatUsd, type PipelinePanel } from "./pipeline-settings.js";
 
 export const SAVED_EVENT = "settings-saved";
 export const CANCEL_EVENT = "cancel";
 
-type Host = HTMLElement & { panel: StateScrapePanel };
+type Host = HTMLElement & { panel: PipelinePanel };
 
-// Blank means "no cap"; "0" means spend nothing. The two must not collapse into each other.
+// Blank means the default (run cap) or no cap (monthly); "0" means spend nothing. The two must not collapse into each other.
 const toDecimal = (raw: string): string | null => (raw.trim() === "" ? null : raw.trim());
 const toInt = (raw: string): number | null => (raw.trim() === "" ? null : Number(raw));
 
-function ScrapeSettingsModal(host: Host) {
+function PipelineSettingsModal(host: Host) {
   const panel = host.panel;
   const [cadenceDays, setCadenceDays] = useState(String(panel.cadence_days ?? ""));
   const [anchor, setAnchor] = useState(panel.cadence_anchor ?? "");
@@ -32,8 +33,8 @@ function ScrapeSettingsModal(host: Host) {
     setSaving(true);
     setError(null);
     try {
-      await saveCadence(panel.state, toInt(cadenceDays), toDecimal(anchor));
-      await saveCaps(panel.state, toDecimal(runCap), toDecimal(monthlyCap));
+      await saveCadence(panel.state, panel.kind, toInt(cadenceDays), toDecimal(anchor));
+      await saveCaps(panel.state, panel.kind, toDecimal(runCap), toDecimal(monthlyCap));
       hostDispatch(host, SAVED_EVENT);
     } catch (cause) {
       setError(String(cause));
@@ -81,7 +82,7 @@ function ScrapeSettingsModal(host: Host) {
             type="number"
             min="0"
             step="0.01"
-            placeholder="default 0.05"
+            placeholder="default"
             .value=${runCap}
             @input=${(e: Event) => setRunCap(inputValue(e))}
           />
@@ -102,7 +103,8 @@ function ScrapeSettingsModal(host: Host) {
         </span>
       </label>
       <p class="cs-settings-form__hint">
-        Blank means no cap. 0 means spend nothing, which stops the state.
+        A blank per-run cap means the pipeline's default; a blank monthly cap means none. 0 means
+        spend nothing, which stops this pipeline in this state.
       </p>
 
       ${estimate
@@ -112,7 +114,7 @@ function ScrapeSettingsModal(host: Host) {
             ${panel.candidates_due} due, at ${formatUsd(estimate.per_run_usd)} each.
             ${estimate.over_cap
               ? html`<strong>Over the ${formatUsd(panel.monthly_cap_usd ?? "0")} cap,</strong>
-                  so the state will stop partway through a pass.`
+                  so this pipeline will stop partway through a pass.`
               : ""}
           </p>`
         : ""}
@@ -129,7 +131,7 @@ function ScrapeSettingsModal(host: Host) {
 
   return html`
     <civ-modal
-      .title=${`${stateNameForCode(panel.state) || panel.state.toUpperCase()} Settings`}
+      .title=${`${stateNameForCode(panel.state) || panel.state.toUpperCase()}: ${PIPELINE_LABELS[panel.kind]}`}
       .content=${fields}
       .footer=${footer}
       .modalProps=${{ open: true, onClose: handleCancel }}
@@ -138,6 +140,6 @@ function ScrapeSettingsModal(host: Host) {
 }
 
 customElements.define(
-  "civ-scrape-settings-modal",
-  component(ScrapeSettingsModal as any, { useShadowDOM: false }),
+  "civ-pipeline-settings-modal",
+  component(PipelineSettingsModal as any, { useShadowDOM: false }),
 );

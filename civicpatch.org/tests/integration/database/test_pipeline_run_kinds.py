@@ -17,11 +17,10 @@ import pytest_asyncio
 from database import changeset_predicates
 from database.changesets import get_in_flight
 from database.database import get_pool
-from database.collector_settings import get_collector_settings, set_collector_caps
-from database.issue_listings import count_collector_cost_cap_hits_this_month, count_cost_cap_hits_this_month
+from database.pipeline_settings import set_caps as set_pipeline_caps
+from schemas.pipeline_settings import DEFAULT_RUN_CAP_USD
+from database.issue_listings import count_cost_cap_hits_this_month
 from database.pipeline_run_spend import (
-    get_collector_month_to_date_runs,
-    get_collector_month_to_date_spend,
     get_fleet_month_to_date_cost_per_run,
     get_fleet_month_to_date_seconds_per_run,
     get_month_to_date_cost_per_run,
@@ -91,7 +90,7 @@ async def _last_attempt_at():
         query = cast(
             LiteralString,
             f"SELECT {changeset_predicates.LAST_ATTEMPT_AT} FROM jurisdictions j "
-            f"{changeset_predicates.LAST_ATTEMPT_JOIN} WHERE j.jurisdiction_ocdid = %s",
+            f"{changeset_predicates.attempts_join(PipelineRunKind.PEOPLE_COLLECTOR)} WHERE j.jurisdiction_ocdid = %s",
         )
         await cur.execute(query, (_OCDID,))
         row = await cur.fetchone()
@@ -144,7 +143,7 @@ async def test_a_collections_cost_and_time_stay_out_of_the_per_scrape_averages()
     await _spend(run_id, "50")
     await _finish(run_id, 86_400)
 
-    assert await get_month_to_date_cost_per_run("zz") is None
+    assert await get_month_to_date_cost_per_run("zz", PipelineRunKind.PEOPLE_COLLECTOR) is None
     assert await get_fleet_month_to_date_cost_per_run() == fleet_cost_before
     assert await get_fleet_month_to_date_seconds_per_run() == fleet_seconds_before
 
@@ -152,14 +151,16 @@ async def test_a_collections_cost_and_time_stay_out_of_the_per_scrape_averages()
 @pytest.mark.integration
 @pytest.mark.asyncio
 async def test_a_collections_spend_counts_against_its_own_month_not_the_scrapes():
-    """The admin's monthly caps bound scrapes; a collector kind has its own (migration 249)."""
-    before = await get_collector_month_to_date_spend(_COLLECTOR)
+    """Each pipeline's month in a state is its own; the global month counts every pipeline."""
+    collector_before, global_before = await get_month_to_date_spend("zz", _COLLECTOR)
     run_id = await factories.start_run(_OCDID, kind=_COLLECTOR)
     await _spend(run_id, "0.25")
 
-    state_spent, _ = await get_month_to_date_spend("zz")
-    assert state_spent == 0
-    assert await get_collector_month_to_date_spend(_COLLECTOR) - before == pytest.approx(Decimal("0.25"))
+    scrape_spent, _ = await get_month_to_date_spend("zz", PipelineRunKind.PEOPLE_COLLECTOR)
+    collector_spent, global_spent = await get_month_to_date_spend("zz", _COLLECTOR)
+    assert scrape_spent == 0
+    assert collector_spent - collector_before == pytest.approx(Decimal("0.25"))
+    assert global_spent - global_before == pytest.approx(Decimal("0.25"))
 
 
 async def _cap(run_id: str):
@@ -173,26 +174,27 @@ async def _cap(run_id: str):
 
 @pytest.mark.integration
 @pytest.mark.asyncio
-async def test_a_collection_runs_under_its_kinds_cap_and_a_scrape_under_its_states():
-    settings = await get_collector_settings(_COLLECTOR)
-    await set_collector_caps(_COLLECTOR, Decimal("0.75"), settings.monthly_cap_usd, None)
+async def test_a_collection_runs_under_its_states_cap_for_its_pipeline_else_the_pipelines_default():
+    default_collection = await factories.start_run(_OCDID, kind=_COLLECTOR)
+    await set_pipeline_caps("zz", _COLLECTOR, Decimal("0.75"), None, None)
     try:
         collection = await factories.start_run(_OCDID, kind=_COLLECTOR)
         scrape = await factories.start_run(_OCDID)
 
+        assert await _cap(default_collection) == DEFAULT_RUN_CAP_USD[_COLLECTOR]
         assert await _cap(collection) == Decimal("0.75")
-        # 'zz' has no state_settings row: a scrape inherits pipeline.yml's default.
+        # The scrape has no row in 'zz': it inherits pipeline.yml's default.
         assert await _cap(scrape) is None
     finally:
-        await set_collector_caps(_COLLECTOR, settings.pipeline_run_cap_usd, settings.monthly_cap_usd, settings.updated_by_user_id)
-
+        pool = await get_pool()
+        async with pool.connection() as conn, conn.cursor() as cur:
+            await cur.execute("DELETE FROM pipeline_settings WHERE state = 'zz'")
+            await conn.commit()
 
 
 @pytest.mark.integration
 @pytest.mark.asyncio
-async def test_a_collections_runs_and_cap_hits_are_its_kinds_not_the_states():
-    runs_before, _ = await get_collector_month_to_date_runs(_COLLECTOR)
-    hits_before = await count_collector_cost_cap_hits_this_month(_COLLECTOR)
+async def test_a_collections_cap_hits_are_its_pipelines_not_the_scrapes():
     run_id = await factories.start_run(_OCDID, kind=_COLLECTOR)
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
@@ -202,7 +204,5 @@ async def test_a_collections_runs_and_cap_hits_are_its_kinds_not_the_states():
         )
         await conn.commit()
 
-    runs_after, _ = await get_collector_month_to_date_runs(_COLLECTOR)
-    assert runs_after - runs_before == 1
-    assert await count_collector_cost_cap_hits_this_month(_COLLECTOR) - hits_before == 1
-    assert await count_cost_cap_hits_this_month("zz") == 0
+    assert await count_cost_cap_hits_this_month("zz", _COLLECTOR) == 1
+    assert await count_cost_cap_hits_this_month("zz", PipelineRunKind.PEOPLE_COLLECTOR) == 0

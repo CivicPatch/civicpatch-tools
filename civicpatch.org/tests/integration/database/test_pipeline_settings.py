@@ -1,42 +1,36 @@
-"""Integration tests for cadence and budget settings.
+"""Every pipeline's settings per state, on real Postgres: an unconfigured pair reads as the defaults,
+the two write paths cannot clobber each other, and pipelines in one state are kept apart.
 
-Real Postgres: the point of this module is that an *unconfigured* state reads as the defaults
-rather than as an absent row, and that the two write paths cannot clobber each other. Both are
-properties of the SQL — an UPSERT of the whole row would break the second, silently.
-
-Isolation: sentinel state 'zw'. `global_settings` is a single global row, so its test restores
-whatever it found rather than assuming a value.
+Isolation: sentinel state 'zw'.
 """
 
-from decimal import Decimal
 import datetime
 import uuid
+from decimal import Decimal
 
 import pytest
 import pytest_asyncio
 
 from core.spend_limits import Cap
 from database.database import get_pool
+from database.global_settings import get_global_settings, set_global_cap
 from database.pipeline_runs import get_pipeline_run, register_run
-from services.scrape_settings import get_state_panel
-from services.spend_budget import cap_reached_for_state
+from database.pipeline_settings import get_all_pipeline_settings, get_pipeline_settings, set_caps, set_cadence
+from services.pipeline_settings import get_pipeline_panel
+from services.spend_budget import cap_reached_for
 from shared.utils.statuses import PipelineRunKind
-from database.state_settings import (
-    get_all_state_settings,
-    get_global_settings,
-    get_state_settings,
-    set_caps,
-    set_cadence,
-    set_global_cap,
-)
+
+pytestmark = [pytest.mark.integration, pytest.mark.asyncio]
 
 _STATE = "zw"
+_SCRAPE = PipelineRunKind.PEOPLE_COLLECTOR
+_LAW = PipelineRunKind.GOVERNING_LAW_COLLECTOR
 
 
 async def _wipe():
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        await cur.execute("DELETE FROM state_settings WHERE state = %s", (_STATE,))
+        await cur.execute("DELETE FROM pipeline_settings WHERE state = %s", (_STATE,))
         await conn.commit()
 
 
@@ -47,92 +41,56 @@ async def _clean():
     await _wipe()
 
 
-@pytest.mark.asyncio
-@pytest.mark.integration
-async def test_a_state_nobody_configured_reads_as_the_defaults():
-    """No row is not a missing value — it is manual cadence, inherited per-run cap, no monthly
-    cap. If this returned None, fifty rows would have to be seeded to avoid it."""
-    settings = await get_state_settings(_STATE)
+async def test_an_unconfigured_pipeline_reads_as_the_defaults():
+    settings = await get_pipeline_settings(_STATE, _LAW)
 
-    assert settings.state == _STATE
-    assert settings.cadence_days is None
-    assert settings.pipeline_run_cap_usd is None
-    assert settings.monthly_cap_usd is None
+    assert (settings.cadence_days, settings.pipeline_run_cap_usd, settings.monthly_cap_usd) == (None, None, None)
 
 
-@pytest.mark.asyncio
-@pytest.mark.integration
-async def test_setting_caps_does_not_clear_the_cadence():
-    """Admins allocate, maintainers spend — two writers on one row. An UPSERT of the whole row
-    would let whichever saved last erase the other's column."""
-    await set_cadence(_STATE, 30, datetime.date(2026, 9, 1), None)
-    await set_caps(_STATE, Decimal("0.50"), Decimal("12.00"), None)
+async def test_setting_the_cadence_keeps_the_caps_and_the_reverse():
+    await set_caps(_STATE, _LAW, Decimal("0.25"), Decimal("5"), None)
+    await set_cadence(_STATE, _LAW, 365, None, None)
+    await set_caps(_STATE, _LAW, Decimal("0.30"), Decimal("6"), None)
 
-    settings = await get_state_settings(_STATE)
-
-    assert settings.cadence_days == 30
-    assert settings.cadence_anchor == datetime.date(2026, 9, 1)
-    assert settings.pipeline_run_cap_usd == Decimal("0.5000")
-    assert settings.monthly_cap_usd == Decimal("12.0000")
+    settings = await get_pipeline_settings(_STATE, _LAW)
+    assert (settings.cadence_days, settings.pipeline_run_cap_usd, settings.monthly_cap_usd) == (
+        365,
+        Decimal("0.3000"),
+        Decimal("6.0000"),
+    )
 
 
-@pytest.mark.asyncio
-@pytest.mark.integration
-async def test_setting_the_cadence_does_not_clear_the_caps():
-    await set_caps(_STATE, Decimal("0.50"), Decimal("12.00"), None)
-    await set_cadence(_STATE, 14, None, None)
+async def test_pipelines_in_one_state_are_kept_apart():
+    await set_cadence(_STATE, _SCRAPE, 30, None, None)
+    await set_cadence(_STATE, _LAW, 365, None, None)
 
-    settings = await get_state_settings(_STATE)
-
-    assert settings.cadence_days == 14
-    assert settings.pipeline_run_cap_usd == Decimal("0.5000")
+    ours = [(s.kind, s.cadence_days) for s in await get_all_pipeline_settings() if s.state == _STATE]
+    assert ours == [(_LAW, 365), (_SCRAPE, 30)]
 
 
-@pytest.mark.asyncio
-@pytest.mark.integration
-async def test_zero_is_a_setting_and_null_is_not_the_same_as_it():
-    """`$0` means spend nothing on this state, which NULL cannot say — NULL means inherit."""
-    await set_caps(_STATE, Decimal("0"), None, None)
+async def test_zero_is_a_cap_and_none_is_not_the_same_as_it():
+    """`$0` means spend nothing, which None cannot say: None means the default, or no monthly cap."""
+    await set_caps(_STATE, _LAW, Decimal("0"), None, None)
 
-    settings = await get_state_settings(_STATE)
-
-    assert settings.pipeline_run_cap_usd == Decimal("0")
-    assert settings.monthly_cap_usd is None
+    settings = await get_pipeline_settings(_STATE, _LAW)
+    assert (settings.pipeline_run_cap_usd, settings.monthly_cap_usd) == (Decimal("0"), None)
 
 
-@pytest.mark.asyncio
-@pytest.mark.integration
 async def test_a_cadence_of_zero_days_is_refused():
     """It would schedule a pass that starts the instant the last one ended, forever."""
     with pytest.raises(Exception) as excinfo:
-        await set_cadence(_STATE, 0, None, None)
+        await set_cadence(_STATE, _LAW, 0, None, None)
 
-    assert "state_settings_cadence_days_positive" in str(excinfo.value)
+    assert "pipeline_settings_cadence_days_positive" in str(excinfo.value)
 
 
-@pytest.mark.asyncio
-@pytest.mark.integration
 async def test_a_negative_cap_is_refused():
     with pytest.raises(Exception) as excinfo:
-        await set_caps(_STATE, Decimal("-1"), None, None)
+        await set_caps(_STATE, _LAW, Decimal("-1"), None, None)
 
-    assert "state_settings_caps_not_negative" in str(excinfo.value)
-
-
-@pytest.mark.asyncio
-@pytest.mark.integration
-async def test_only_configured_states_are_listed():
-    """The map is joined onto a caller's own list of states, which is what keeps this module
-    from needing to know what the states are."""
-    assert _STATE not in await get_all_state_settings()
-
-    await set_cadence(_STATE, 30, None, None)
-
-    assert (await get_all_state_settings())[_STATE].cadence_days == 30
+    assert "pipeline_settings_caps_not_negative" in str(excinfo.value)
 
 
-@pytest.mark.asyncio
-@pytest.mark.integration
 async def test_the_global_row_exists_without_anyone_creating_it():
     """Seeded by the migration, so every reader is a plain SELECT rather than one that has to
     cope with no row."""
@@ -147,12 +105,10 @@ async def test_the_global_row_exists_without_anyone_creating_it():
         await set_global_cap(before.monthly_cap_usd, before.updated_by_user_id)
 
 
-@pytest.mark.asyncio
-@pytest.mark.integration
 async def test_a_run_records_the_cap_its_state_was_set_to():
     """Resolved in the INSERT, so neither dispatch path can forget to look it up — and recorded,
     so `why did this run stop at $0.05` is answerable from the row rather than from a log."""
-    await set_caps(_STATE, Decimal("0.05"), None, None)
+    await set_caps(_STATE, PipelineRunKind.PEOPLE_COLLECTOR, Decimal("0.05"), None, None)
     ocdid = f"ocd-jurisdiction/country:us/state:{_STATE}/place:zw_one/government"
     run_id = str(uuid.uuid4())
 
@@ -187,8 +143,6 @@ async def test_a_run_records_the_cap_its_state_was_set_to():
             await conn.commit()
 
 
-@pytest.mark.asyncio
-@pytest.mark.integration
 async def test_a_run_in_an_unconfigured_state_inherits_rather_than_failing():
     """No state row, no jurisdiction row, and a state that set no cap all yield NULL, which the
     pipeline reads as `use pipeline.yml`. The subquery matching nothing is the common case."""
@@ -210,24 +164,20 @@ async def test_a_run_in_an_unconfigured_state_inherits_rather_than_failing():
             await conn.commit()
 
 
-@pytest.mark.asyncio
-@pytest.mark.integration
 async def test_the_budget_gate_reads_caps_and_spend_together():
     """The service half: two reads and the pure decision, against real rows. A state with no
     caps set is never over budget, however much it has spent."""
-    assert await cap_reached_for_state(_STATE) is None
+    assert await cap_reached_for(_STATE, PipelineRunKind.PEOPLE_COLLECTOR) is None
 
-    await set_caps(_STATE, None, Decimal("0"), None)
+    await set_caps(_STATE, PipelineRunKind.PEOPLE_COLLECTOR, None, Decimal("0"), None)
     # A monthly cap of $0 is reached before anything is spent — the stop switch.
-    assert await cap_reached_for_state(_STATE) == Cap.STATE_MONTH
+    assert await cap_reached_for(_STATE, PipelineRunKind.PEOPLE_COLLECTOR) == Cap.STATE_MONTH
 
 
-@pytest.mark.asyncio
-@pytest.mark.integration
 async def test_the_settings_panel_answers_from_one_moment():
     """Five reads and one piece of arithmetic, assembled in a service rather than a router.
     A state nobody has configured still answers — every field has a meaning at NULL."""
-    panel = await get_state_panel(_STATE)
+    panel = await get_pipeline_panel(_STATE, PipelineRunKind.PEOPLE_COLLECTOR)
 
     assert panel.state == _STATE
     assert panel.cadence_days is None
@@ -238,12 +188,10 @@ async def test_the_settings_panel_answers_from_one_moment():
     assert panel.cost_cap_hits_this_month == 0
 
 
-@pytest.mark.asyncio
-@pytest.mark.integration
 async def test_a_cadence_gives_the_panel_a_next_run():
-    await set_cadence(_STATE, 30, datetime.date(2026, 9, 1), None)
+    await set_cadence(_STATE, PipelineRunKind.PEOPLE_COLLECTOR, 30, datetime.date(2026, 9, 1), None)
 
-    panel = await get_state_panel(_STATE)
+    panel = await get_pipeline_panel(_STATE, PipelineRunKind.PEOPLE_COLLECTOR)
 
     assert panel.cadence_days == 30
     assert panel.next_run_at is not None

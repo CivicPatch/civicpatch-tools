@@ -1,5 +1,5 @@
 """Who is due for organizations collection: has a governing law, no organizations or
-stale ones. Never-collected first, never without a governing law, never a state.
+stale ones, never without a governing law, never a state; least recently tried first.
 Real Postgres: the jsonb dates and the run join are SQL.
 
 Isolation: sentinel state 'zz', cleaned before and after.
@@ -78,7 +78,7 @@ async def _seeded():
 
 @pytest.mark.integration
 @pytest.mark.asyncio
-async def test_never_collected_orgs_comes_first_then_stale():
+async def test_a_place_with_no_answer_and_one_with_a_stale_answer_are_due():
     candidates = [c.jurisdiction_ocdid for c in await get_organizations_collection_candidates("zz", None)]
 
     assert candidates == [_NEVER_ORG, _STALE_ORG]
@@ -127,10 +127,20 @@ async def test_a_people_collector_run_does_not_block_organizations_collection():
 
 @pytest.mark.integration
 @pytest.mark.asyncio
-async def test_a_place_whose_governing_law_issue_waits_is_not_a_candidate():
-    """Pipeline 2 would read the law the issue says is wrong."""
+async def test_a_place_whose_governing_law_issue_waits_is_still_a_candidate():
+    """Pipeline 2 reads the law pipeline 1 stored; the issue waits for a person."""
     run_id = await factories.start_run(_NEVER_ORG, kind=PipelineRunKind.GOVERNING_LAW_COLLECTOR)
     await factories.fail_run(run_id)
     await upsert_issue(run_id, PipelineIssueType.SOURCE_BLOCKED, [{"missing": "charter"}])
 
-    assert [c.jurisdiction_ocdid for c in await get_organizations_collection_candidates("zz", None)] == [_STALE_ORG]
+    assert [c.jurisdiction_ocdid for c in await get_organizations_collection_candidates("zz", None)] == [_NEVER_ORG, _STALE_ORG]
+
+
+@pytest.mark.integration
+@pytest.mark.asyncio
+async def test_the_least_recently_tried_comes_first():
+    run_id = await factories.start_run(_NEVER_ORG, kind=PipelineRunKind.ORGANIZATIONS_COLLECTOR)
+    await factories.fail_run(run_id)
+    await factories.backdate_run(run_id, 2)
+
+    assert [c.jurisdiction_ocdid for c in await get_organizations_collection_candidates("zz", None)] == [_STALE_ORG, _NEVER_ORG]

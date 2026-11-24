@@ -9,6 +9,7 @@ from database.activity import create_activity_row
 from database.database import get_pool, to_iso
 from psycopg import sql
 from schemas.pipeline_runs import ExpiredRun, JurisdictionPipelineRun
+from schemas.pipeline_settings import DEFAULT_RUN_CAP_USD
 from shared.utils.statuses import (
     RUN_LEVEL_ISSUE_TYPES,
     ActivityType,
@@ -40,8 +41,8 @@ async def register_run(
     runs — one scrape and a state batch — and a lookup each of them has to remember is one that
     will eventually be forgotten. A scalar subquery cannot be skipped.
 
-    It yields NULL for a state with no row, a state that set no cap, and an unknown
-    jurisdiction. All three mean the same thing: inherit `pipeline.yml`'s default.
+    It falls back to the pipeline's `DEFAULT_RUN_CAP_USD` for a state with no row, a state that set
+    no cap, and an unknown jurisdiction; the scrape's NULL means inherit `pipeline.yml`.
 
     Returns whether a new run was actually registered — `False` for an idempotent retry of one
     already running.
@@ -55,14 +56,12 @@ async def register_run(
                 id, kind, jurisdiction_ocdid, arguments_json, created_by_user_id, status, progress,
                 pipeline_run_cap_usd
             )
-            VALUES (%s, %s, %s, %s, %s, %s, %s, CASE WHEN %s = '{PipelineRunKind.PEOPLE_COLLECTOR.value}' THEN (
-                SELECT ss.pipeline_run_cap_usd
+            VALUES (%s, %s, %s, %s, %s, %s, %s, COALESCE((
+                SELECT ps.pipeline_run_cap_usd
                 FROM jurisdictions j
-                JOIN state_settings ss ON ss.state = j.state
+                JOIN pipeline_settings ps ON ps.state = j.state AND ps.kind = %s
                 WHERE j.jurisdiction_ocdid = %s
-            ) ELSE (
-                SELECT cs.pipeline_run_cap_usd FROM collector_settings cs WHERE cs.kind = %s
-            ) END)
+            ), %s::numeric))
             {conflict}
             """),
             (
@@ -75,7 +74,7 @@ async def register_run(
                 progress,
                 kind,
                 jurisdiction_ocdid,
-                kind,
+                DEFAULT_RUN_CAP_USD[PipelineRunKind(kind)],
             ),
         )
         registered = bool(cur.rowcount)

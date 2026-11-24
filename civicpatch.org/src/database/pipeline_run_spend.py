@@ -9,8 +9,7 @@ from decimal import Decimal
 from database.database import get_pool
 from shared.utils.statuses import PipelineRunKind, PipelineRunStatus
 
-# Month to date, for the scrape's two monthly caps: scrapes only, since a collector's spend is
-# bounded by its own `collector_settings`.
+# Month to date, for the two monthly caps: one pipeline in one state, and everything together.
 # The calendar month in UTC, not a rolling 30 days:
 # a budget is something an operator sets against a month they can name, and a rolling window
 # would let spend that was refused on the 30th become affordable again on the 31st.
@@ -18,20 +17,19 @@ from shared.utils.statuses import PipelineRunKind, PipelineRunStatus
 # One statement for both scopes. The state figure and the fleet figure are the same sum over
 # different row sets, and reading them separately is how they come to disagree about which month
 # it is at a boundary.
-MONTH_TO_DATE_SQL = f"""
+MONTH_TO_DATE_SQL = """
 SELECT
-    COALESCE(sum(lc.cost_usd) FILTER (WHERE j.state = %(state)s), 0) AS state_spent,
-    COALESCE(sum(lc.cost_usd), 0)                                    AS global_spent
+    COALESCE(sum(lc.cost_usd) FILTER (WHERE j.state = %(state)s AND pr.kind = %(kind)s), 0) AS state_spent,
+    COALESCE(sum(lc.cost_usd), 0)                                                          AS global_spent
 FROM llm_calls lc
 JOIN pipeline_runs pr ON pr.id = lc.pipeline_run_id
 JOIN jurisdictions j USING (jurisdiction_ocdid)
-WHERE pr.kind = '{PipelineRunKind.PEOPLE_COLLECTOR.value}'
-  AND lc.created_at >= date_trunc('month', now() AT TIME ZONE 'utc')
+WHERE lc.created_at >= date_trunc('month', now() AT TIME ZONE 'utc')
 """
 
 
-async def get_month_to_date_spend(state: str) -> tuple[Decimal, Decimal]:
-    """`(this state's spend, everything's spend)` so far this calendar month.
+async def get_month_to_date_spend(state: str, kind: PipelineRunKind) -> tuple[Decimal, Decimal]:
+    """`(this pipeline's spend in this state, every pipeline's spend)` so far this calendar month.
 
     Zero here, unlike everywhere else in this module, is the honest answer: "nothing spent yet"
     is what a budget check needs, and the caller compares it against a cap rather than
@@ -39,69 +37,28 @@ async def get_month_to_date_spend(state: str) -> tuple[Decimal, Decimal]:
     """
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        await cur.execute(MONTH_TO_DATE_SQL, {"state": state})
+        await cur.execute(MONTH_TO_DATE_SQL, {"state": state, "kind": kind})
         row = await cur.fetchone()
     assert row, "MONTH_TO_DATE_SQL aggregates, so it always returns one row"
     return row[0], row[1]
 
 
-
-COLLECTOR_MONTH_TO_DATE_SQL = """
-SELECT COALESCE(sum(lc.cost_usd), 0)
-FROM llm_calls lc
-JOIN pipeline_runs pr ON pr.id = lc.pipeline_run_id
-WHERE pr.kind = %(kind)s
-  AND lc.created_at >= date_trunc('month', now() AT TIME ZONE 'utc')
-"""
-
-
-async def get_collector_month_to_date_spend(kind: PipelineRunKind) -> Decimal:
-    """What one collector kind has spent this calendar month, across every state."""
-    pool = await get_pool()
-    async with pool.connection() as conn, conn.cursor() as cur:
-        await cur.execute(COLLECTOR_MONTH_TO_DATE_SQL, {"kind": kind})
-        row = await cur.fetchone()
-    assert row, "COLLECTOR_MONTH_TO_DATE_SQL aggregates, so it always returns one row"
-    return row[0]
-
-
-COLLECTOR_MONTH_TO_DATE_RUNS_SQL = """
-SELECT count(*)::int,
-       (SELECT sum(lc.cost_usd) / NULLIF(count(DISTINCT lc.pipeline_run_id) FILTER (WHERE lc.cost_usd IS NOT NULL), 0)
-          FROM llm_calls lc JOIN pipeline_runs pr ON pr.id = lc.pipeline_run_id
-         WHERE pr.kind = %(kind)s AND lc.created_at >= date_trunc('month', now() AT TIME ZONE 'utc'))
-FROM pipeline_runs
-WHERE kind = %(kind)s
-  AND created_at >= date_trunc('month', now() AT TIME ZONE 'utc')
-"""
-
-
-async def get_collector_month_to_date_runs(kind: PipelineRunKind) -> tuple[int, Decimal | None]:
-    """`(runs started this month, cost per run)` for one collector kind. The cost is None when no
-    run has stated a cost to average, never a free run."""
-    pool = await get_pool()
-    async with pool.connection() as conn, conn.cursor() as cur:
-        await cur.execute(COLLECTOR_MONTH_TO_DATE_RUNS_SQL, {"kind": kind})
-        row = await cur.fetchone()
-    assert row, "COLLECTOR_MONTH_TO_DATE_RUNS_SQL aggregates, so it always returns one row"
-    return row[0], row[1]
-
 # Per run, not per call, and null rather than zero when the state has not run this month.
-MONTH_TO_DATE_COST_PER_RUN_SQL = f"""
+MONTH_TO_DATE_COST_PER_RUN_SQL = """
 SELECT sum(lc.cost_usd) / NULLIF(count(DISTINCT lc.pipeline_run_id) FILTER (WHERE lc.cost_usd IS NOT NULL), 0)
 FROM llm_calls lc
 JOIN pipeline_runs pr ON pr.id = lc.pipeline_run_id
 JOIN jurisdictions j USING (jurisdiction_ocdid)
 WHERE j.state = %(state)s
-  AND pr.kind = '{PipelineRunKind.PEOPLE_COLLECTOR.value}'
+  AND pr.kind = %(kind)s
   AND lc.created_at >= date_trunc('month', now() AT TIME ZONE 'utc')
 """
 
 
-async def get_month_to_date_cost_per_run(state: str) -> Decimal | None:
+async def get_month_to_date_cost_per_run(state: str, kind: PipelineRunKind) -> Decimal | None:
     pool = await get_pool()
     async with pool.connection() as conn, conn.cursor() as cur:
-        await cur.execute(MONTH_TO_DATE_COST_PER_RUN_SQL, {"state": state})
+        await cur.execute(MONTH_TO_DATE_COST_PER_RUN_SQL, {"state": state, "kind": kind})
         row = await cur.fetchone()
     assert row, "MONTH_TO_DATE_COST_PER_RUN_SQL aggregates, so it always returns one row"
     return row[0]

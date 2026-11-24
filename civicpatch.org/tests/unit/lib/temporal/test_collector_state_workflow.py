@@ -111,7 +111,7 @@ def _scrape_activities(rec: Recorder) -> list:
 
 def _collector_activities(rec: Recorder) -> list:
     @activity.defn(name="collector_month_cap_reached")
-    async def collector_month_cap_reached(kind):
+    async def collector_month_cap_reached(kind, state):
         return _cap(rec)
 
     @activity.defn(name="claim_jurisdictions_for_collector")

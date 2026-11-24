@@ -12,7 +12,9 @@ Every city is chartered or general law (Gov. Code §§ 34101, 34102); "town" is 
 
 - 360 general-law and 122 charter cities; 468 (97%) council-manager, 5 mayor-council, 9 small cities where
   department heads report to the council or to single councilmembers
-  ([Common Cause, California municipal key findings, 2024](https://commoncause.org/california/wp-content/uploads/2024/09/california-municipal-key-findings.pdf)).
+  ([Common Cause, California Municipal Democracy Index, December 2016](https://commoncause.org/california/wp-content/uploads/2024/09/california-municipal-key-findings.pdf);
+  uploaded 2024, data 2016). It does not name the five mayor-council cities: "these five are among California's
+  largest cities with a combined population of 7.2 million residents."
   The same source: in 311 cities the council picks the mayor, in 170 the voters elect one; 153 elect a treasurer, 118 a
   clerk; "A few charter cities have other elected offices, for example city attorney (10) and city auditor (4)."
 - open-data holds 461 `city`, 21 `town` and 1 `CDP` (below).
@@ -101,7 +103,26 @@ form is told only by the charter. Council-manager is the rule; the mayor-council
   The charter itself (American Legal, browser only) was not read.
 - **Oakland**: "Currently, Oakland has a hybrid form of government" (same Ballotpedia piece), and Measure EE, "a
   strong mayor form of government", passed on 2026-11-03 with 73.7% yes
-  ([KQED results](https://www.kqed.org/elections/results/alameda/measure-ee)). Its effective date is not checked.
+  ([KQED results](https://www.kqed.org/elections/results/alameda/measure-ee)). Its effective date is not checked, and
+  does not matter here: under the current hybrid charter "the mayor appoints the city administrator" (Ballotpedia, as
+  above), as Fresno's does.
+
+**Whether these are all** (checked 2026-11-24). Two sources agree on five, and one names them:
+
+- "California has 482 incorporated cities but just five of them — Los Angeles, San Diego, San Francisco, Oakland and
+  Fresno — have what are called 'strong mayors'"
+  ([CalMatters, Dan Walters, 2020-08-03](https://calmatters.org/commentary/dan-walters/2020/08/california-strong-mayors-sacramento-san-jose/)).
+  Common Cause's 2016 count of five (Classes and counts) does not name them.
+- Since 2020: Sacramento's strong-mayor Measure A failed, 42.66% yes
+  ([Ballotpedia](https://ballotpedia.org/Sacramento,_California,_Measure_A,_Charter_Revision_Measure_(November_2020)));
+  San Jose's mayor dropped his for a charter review commission (CalMatters, as above), and Ballotpedia lists San Jose
+  as council-manager in 2026 (as above). A search for strong-mayor measures passed in 2022, 2024 and 2025 found none;
+  a search is not proof.
+- Not reachable by an agent: Los Angeles's charter (American Legal, browser only;
+  [lacity.gov](https://lacity.gov/government/city-charter-rules-and-codes) refused, 403), Oakland's charter (Municode),
+  and Ballotpedia's
+  [top-100 mayors list](https://ballotpedia.org/List_of_current_mayors_of_the_top_100_cities_in_the_United_States)
+  (empty response), which states each large city's form.
 
 In a mayor-council city the mayor is a post of its own, outside the council, and the manager or administrator answers
 to the mayor. Other elected charter offices (city attorney, auditor, controller) advise, audit or keep accounts and
@@ -141,5 +162,5 @@ titles already; the rest stay `unmatched`: collected, never an expected post.
 
 Not configured: San Francisco's consolidated government, a special case its records leave to the suffix defaults.
 Mountain House needs no `CDP` suffix: open-data's `local.py` now takes a place's name from the Census Gazetteer,
-which calls it "Mountain House city", from its next run. Unread: Los Angeles's charter and Oakland's Measure EE
-effective date; both only affect which places get `mayor_council` saved.
+which calls it "Mountain House city", from its next run. Unread: Los Angeles's and Oakland's charters (browser
+only); they only affect which places get `mayor_council` saved.

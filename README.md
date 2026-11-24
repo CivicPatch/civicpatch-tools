@@ -15,7 +15,7 @@ The data lives in [open-data](https://github.com/CivicPatch/open-data/).
   ┌─────────────────────────────────────────────────────────────────────┐
   │  Temporal (workflow engine)                        UI :8002 (local) │
   │                                                                     │
-  │  Schedules:  one scrape per state with a cadence (state_settings)   │
+  │  Schedules:  one pass per state and pipeline with a cadence         │
   │              open-data-sync (hourly)                                │
   │              sinks: activity feed (1m), recent changes (5m),        │
   │                     everything (daily)                              │
@@ -132,26 +132,18 @@ mise run tcp      # civicpatch.org
 mise run evalsm   # LLM evals: paid, needs the LLM keys
 ```
 
-## Rescraping a state after its config adds organizations
+## Running a pipeline over a state
 
-A scrape places people against the organizations a place has when it runs, and nothing moves people already
-stored. So when a state's config gains organizations after its places were scraped (California, Michigan,
-Massachusetts, Oregon and Vermont on 2026-11-23), its people stay in each place's default organization until a
-rescrape. A state's cadence is also its scrape schedule, so setting it to 1 day runs a full pass every day until it
-is set back.
+On the pipelines page, pick the pipeline (Governing law, Organizations, People). Each state's row has
+**edit** (cadence and caps for that pipeline in that state) and **Run now** (one pass over every place
+that is due).
 
-1. On the pipelines page, open the state's scrape settings and write down its cadence.
-2. Set the cadence to 1 day and save.
-3. Start the pass now rather than at the schedule's next turn: as an admin on civicpatch.org, in the browser
-   console, `fetch("/api/v1/pipeline_runs/batch", {method: "POST", credentials: "include", headers: {"Content-Type":
-   "application/json", "X-CSRF-Token": decodeURIComponent(document.cookie.split("; ").find((c) =>
-   c.startsWith("csrf_token=")).split("=")[1])}, body: JSON.stringify({state: "ca"})})`. A `200` with a workflow id
-   means it started.
-4. When the pass ends (the pipelines page shows no runs in flight for the state), set the cadence back to the value
-   from step 1. Forgetting this rescrapes the whole state every day.
+- A cadence is also a schedule: a pass runs every that many days until the cadence is cleared.
+- A pipeline's monthly cap at `0` stops it in that state: a running pass claims nothing more.
 
-It worked when the state's default organizations hold almost nobody next to its bodies. The cost is one scrape per
-place, read off the pipelines page's cost per run.
+To take a state's places through all three, so their organizations come from their law and people land in
+them: **Run now** for Governing law, then Organizations once it ends, then People. The pipelines page shows
+the runs in flight; a pass has ended when its state has none.
 
 ## License
 

@@ -252,7 +252,7 @@ def get_router(api_key_header):
         """Which monthly cap this state has reached, if any — what the scrape workflow polls
         before dispatching another slice. Over HTTP rather than a shared pool: see
         workers/pipeline_runs.py, this queue's worker never opens its own database connection."""
-        cap = await spend_budget_service.cap_reached_for_state(state)
+        cap = await spend_budget_service.cap_reached_for(state, PipelineRunKind.PEOPLE_COLLECTOR)
         return {"data": {"cap": cap.value if cap else None}}
 
     @router.post("/register", include_in_schema=False)

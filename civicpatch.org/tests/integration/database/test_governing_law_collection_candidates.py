@@ -1,5 +1,5 @@
-"""Who is due for a collection: never collected first, then a year old, never one in flight,
-never a state. Real Postgres: the jsonb date and the run join are SQL.
+"""Who is due for a collection: never collected or a year old, never one in flight, never a state;
+least recently tried first. Real Postgres: the jsonb date and the run join are SQL.
 
 Isolation: sentinel state 'zz', cleaned before and after.
 """
@@ -12,6 +12,7 @@ import pytest_asyncio
 from database.database import get_pool
 from database.governing_law import get_collection_candidates
 from database.pipeline_runs import has_unfinished_run
+from database.pipeline_settings import set_cadence
 from shared.utils.statuses import PipelineRunKind
 from tests.integration import factories
 
@@ -32,6 +33,7 @@ async def _wipe():
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute("DELETE FROM pipeline_runs WHERE jurisdiction_ocdid = ANY(%s)", (_ALL,))
         await cur.execute("DELETE FROM jurisdictions WHERE jurisdiction_ocdid = ANY(%s)", (_ALL,))
+        await cur.execute("DELETE FROM pipeline_settings WHERE state = 'zz'")
         await conn.commit()
 
 
@@ -52,7 +54,7 @@ async def _seeded():
 
 @pytest.mark.integration
 @pytest.mark.asyncio
-async def test_never_collected_comes_first_then_a_year_old_and_never_a_fresh_one_or_a_state():
+async def test_a_never_collected_and_a_year_old_place_are_due_and_never_a_fresh_one_or_a_state():
     candidates = [c.jurisdiction_ocdid for c in await get_collection_candidates("zz", None)]
 
     assert candidates == [_NEVER, _STALE]
@@ -83,3 +85,22 @@ async def test_a_collection_that_failed_today_is_not_claimed_again():
     await factories.fail_run(run_id)
 
     assert [c.jurisdiction_ocdid for c in await get_collection_candidates("zz", None)] == [_STALE]
+
+
+@pytest.mark.integration
+@pytest.mark.asyncio
+async def test_the_least_recently_tried_comes_first():
+    run_id = await factories.start_run(_NEVER, kind=PipelineRunKind.GOVERNING_LAW_COLLECTOR)
+    await factories.fail_run(run_id)
+    await factories.backdate_run(run_id, 2)
+
+    assert [c.jurisdiction_ocdid for c in await get_collection_candidates("zz", None)] == [_STALE, _NEVER]
+
+
+@pytest.mark.integration
+@pytest.mark.asyncio
+async def test_the_states_cadence_sets_how_old_a_law_may_get():
+    # The 2020 law is due at the default year, and not under a cadence longer than its age.
+    await set_cadence("zz", PipelineRunKind.GOVERNING_LAW_COLLECTOR, 5000, None, None)
+
+    assert [c.jurisdiction_ocdid for c in await get_collection_candidates("zz", None)] == [_NEVER]

@@ -1003,10 +1003,10 @@ export const fetchElections = async () => {
   return body.data;
 };
 
-const SCRAPE_SETTINGS_URL = `/api/v1/scrape_settings`;
+const PIPELINE_SETTINGS_URL = `/api/v1/pipeline_settings`;
 
-const scrapeSettingsRequest = async (path, options = {}) => {
-  const res = await fetch(`${SCRAPE_SETTINGS_URL}${path}`, {
+const pipelineSettingsRequest = async (path, options = {}) => {
+  const res = await fetch(`${PIPELINE_SETTINGS_URL}${path}`, {
     credentials: "include",
     headers: {
       "Content-Type": "application/json",
@@ -1019,31 +1019,22 @@ const scrapeSettingsRequest = async (path, options = {}) => {
   return body.data;
 };
 
-export const fetchStateScrapeSettings = async (state) =>
-  scrapeSettingsRequest(`/${encodeURIComponent(state)}`);
+const pipelinePath = (state, kind) =>
+  `/${encodeURIComponent(state)}/${encodeURIComponent(kind)}`;
 
-export const fetchGlobalScrapeSettings = async () =>
-  scrapeSettingsRequest("/global");
+export const fetchPipelinePanel = async (state, kind) =>
+  pipelineSettingsRequest(pipelinePath(state, kind));
+
+export const fetchGlobalPipelineSettings = async () => pipelineSettingsRequest("/global");
 
 export const saveGlobalCap = async (monthlyCapUsd) =>
-  scrapeSettingsRequest("/global", {
+  pipelineSettingsRequest("/global", {
     method: "PUT",
     body: JSON.stringify({ monthly_cap_usd: monthlyCapUsd }),
   });
 
-export const fetchCollectorPanels = async () => scrapeSettingsRequest("/collectors");
-
-export const saveCollectorCaps = async (kind, pipelineRunCapUsd, monthlyCapUsd) =>
-  scrapeSettingsRequest(`/collectors/${encodeURIComponent(kind)}`, {
-    method: "PUT",
-    body: JSON.stringify({
-      pipeline_run_cap_usd: pipelineRunCapUsd,
-      monthly_cap_usd: monthlyCapUsd,
-    }),
-  });
-
-export const saveCadence = async (state, cadenceDays, cadenceAnchor) =>
-  scrapeSettingsRequest(`/${encodeURIComponent(state)}/cadence`, {
+export const saveCadence = async (state, kind, cadenceDays, cadenceAnchor) =>
+  pipelineSettingsRequest(`${pipelinePath(state, kind)}/cadence`, {
     method: "PUT",
     body: JSON.stringify({
       cadence_days: cadenceDays,
@@ -1051,8 +1042,8 @@ export const saveCadence = async (state, cadenceDays, cadenceAnchor) =>
     }),
   });
 
-export const saveCaps = async (state, pipelineRunCapUsd, monthlyCapUsd) =>
-  scrapeSettingsRequest(`/${encodeURIComponent(state)}/caps`, {
+export const saveCaps = async (state, kind, pipelineRunCapUsd, monthlyCapUsd) =>
+  pipelineSettingsRequest(`${pipelinePath(state, kind)}/caps`, {
     method: "PUT",
     body: JSON.stringify({
       pipeline_run_cap_usd: pipelineRunCapUsd,
@@ -1066,8 +1057,16 @@ export const fetchJurisdictionStates = async () => {
   return (await res.json()).data;
 };
 
-export const startStateScrape = async (state, numJurisdictions = null) => {
-  const res = await fetch(`/api/v1/pipeline_runs/batch`, {
+// The scrape's start lives at /pipeline_runs/batch; pipelines 1 and 2 under their kind. Both start
+// the same pass.
+const PEOPLE_COLLECTOR = "people_collector";
+const batchUrl = (kind) =>
+  kind === PEOPLE_COLLECTOR
+    ? `/api/v1/pipeline_runs/batch`
+    : `/api/v1/pipeline_runs/${encodeURIComponent(kind)}/batch`;
+
+export const startStatePass = async (kind, state, numJurisdictions = null) => {
+  const res = await fetch(batchUrl(kind), {
     method: "POST",
     credentials: "include",
     headers: {

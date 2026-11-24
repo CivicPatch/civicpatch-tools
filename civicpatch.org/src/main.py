@@ -32,7 +32,7 @@ import routers.api.review_cards as api_review_cards_router
 import routers.api.review_sessions as api_review_sessions_router
 import routers.api.roles as api_roles_router
 import routers.api.roster_comparisons as api_roster_comparisons_router
-import routers.api.scrape_settings as api_scrape_settings_router
+import routers.api.pipeline_settings as api_pipeline_settings_router
 import routers.api.summary as api_summary_router
 import routers.api.user as api_user_router
 import routers.webhooks.blog_sync as blog_sync_webhook_router
@@ -312,9 +312,9 @@ app.include_router(
 )
 
 app.include_router(
-    api_scrape_settings_router.get_router(),
-    prefix="/api/v1/scrape_settings",
-    tags=["scrape_settings"],
+    api_pipeline_settings_router.get_router(),
+    prefix="/api/v1/pipeline_settings",
+    tags=["pipeline_settings"],
     include_in_schema=False,
 )
 

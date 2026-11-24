@@ -77,18 +77,10 @@ erDiagram
         text_null       status
         int_null        progress
         jsonb           arguments_json      "170: moved off changesets. What the scrape was asked to fetch"
-        numeric_null    pipeline_run_cap_usd "183: the ceiling this run was dispatched under. 249: a collector run's from collector_settings by kind, a scrape's from state_settings. Resolved inside register_run's INSERT, so neither dispatch path can forget the lookup; NULL = the state set none, or is unconfigured, or the jurisdiction is unknown — all meaning inherit pipeline.yml. Recorded rather than only resolved: the llm_calls total cannot say what it was measured against"
+        numeric_null    pipeline_run_cap_usd "183: the ceiling this run was dispatched under. 269: from its state's and pipeline's pipeline_settings row, else the pipeline's DEFAULT_RUN_CAP_USD (the scrape's NULL means inherit pipeline.yml). Resolved inside register_run's INSERT, so neither dispatch path can forget the lookup. Recorded rather than only resolved: the llm_calls total cannot say what it was measured against"
         uuid_null       created_by_user_id  FK
         timestamptz_null finished_at        "NULL means in flight; the stale-run sweep reads this"
         timestamptz     created_at
-        timestamptz     updated_at
-    }
-
-    collector_settings {
-        text            kind                PK  "249: one seeded row per charter collector kind (check: governing_law_collector|organizations_collector, mirrors COLLECTOR_RUN_KINDS). Their spend bounds, apart from the scrape's state_settings and global_settings, which bound people_collector runs only"
-        numeric         pipeline_run_cap_usd "NOT NULL, default 0.50: copied onto each collector run at register_run, as a scrape's comes from state_settings. Never none: a runaway jurisdiction must stop"
-        numeric_null    monthly_cap_usd     "NULL = no monthly cap; 0 = spend nothing. Checked before a collector batch dispatches more"
-        uuid_null       updated_by_user_id  FK
         timestamptz     updated_at
     }
 
@@ -350,19 +342,20 @@ erDiagram
         uuid            changeset_id        FK "188. idx. Which changeset CREATED this claim — write-once, nothing updates it after insert. NOT NULL since 235 (234 attached the old ones); ON DELETE CASCADE, as source_records"
     }
 
-    state_settings {
-        text            state               PK "no FK — `jurisdictions.state` is a column, not a table"
-        int_null        cadence_days        "NULL = manual, the page's own word. CHECK > 0 — a cadence of 0 schedules an infinite loop"
-        date_null       cadence_anchor       "ScheduleIntervalSpec(offset=), so states stagger instead of all firing at once"
-        numeric_null    pipeline_run_cap_usd      "one run's ceiling. NULL = inherit pipeline.yml's pipeline_run_cap_usd"
-        numeric_null    monthly_cap_usd     "this state's month. NULL = no ceiling. Both CHECK >= 0; 0 is legal and means spend nothing, which NULL does not"
+    pipeline_settings {
+        text            state               PK "269: with kind. No FK — `jurisdictions.state` is a column, not a table"
+        text            kind                PK "check mirrors PipelineRunKind: every pipeline's settings, per state. Replaces state_settings and collector_settings"
+        int_null        cadence_days        "NULL = manual: no schedule. CHECK > 0"
+        date_null       cadence_anchor      "ScheduleIntervalSpec(offset=), so states stagger"
+        numeric_null    pipeline_run_cap_usd "one run's ceiling. NULL = the kind's default"
+        numeric_null    monthly_cap_usd     "this state's month for this pipeline. NULL = no ceiling; both CHECK >= 0, 0 means spend nothing"
         uuid_null       updated_by_user_id  FK
         timestamptz     updated_at
     }
 
     global_settings {
         int             id                  PK "CHECK (id = 1) — a single-row table that says so rather than hoping. Seeded by the migration, so every reader is a plain SELECT"
-        numeric_null    monthly_cap_usd     "every state's month, together. NULL = no ceiling. Same name as state_settings.monthly_cap_usd on purpose: one concept at two scopes, told apart by the table. A shared ceiling, NOT an allocation — SUM(state_settings.monthly_cap_usd) may exceed it, and the UI shows that rather than refusing it"
+        numeric_null    monthly_cap_usd     "every pipeline in every state, together. NULL = no ceiling. A shared ceiling, NOT an allocation: SUM(pipeline_settings.monthly_cap_usd) may exceed it, and the UI shows that rather than refusing it"
         uuid_null       updated_by_user_id  FK
         timestamptz     updated_at
     }
@@ -442,9 +435,8 @@ erDiagram
     users ||--o| api_usage_limits : "user_id (ON DELETE CASCADE)"
     activity_types ||--o{ activity : "type"
     users ||--o{ activity : "user_id (ON DELETE SET NULL)"
-    users ||--o{ state_settings : "updated_by_user_id"
+    users ||--o{ pipeline_settings : "updated_by_user_id"
     users ||--o{ global_settings : "updated_by_user_id"
-    users ||--o{ collector_settings : "updated_by_user_id"
     jurisdictions ||--o{ activity : "jurisdiction_ocdid"
     roles ||--o{ activity : "jurisdiction_ocdid"
     review_sessions ||--o{ review_session_entries : "review_session_id"

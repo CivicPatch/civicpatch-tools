@@ -24,7 +24,6 @@ from schemas.common import ApiKeyScope, UserRole
 from schemas.roster_comparisons import PersonOutcome
 from shared.schemas import GovernmentForm, JurisdictionLevel, RoleAliasStatus, RoleStatus, SelectionMethod
 from shared.utils.statuses import (
-    COLLECTOR_RUN_KINDS,
     ChangesetKind,
     DismissalReason,
     OrganizationPlacedBy,
@@ -50,8 +49,7 @@ EXACT = {
     "review_session_entries_status_check": ReviewSessionEntryStatus,
     "jurisdictions_extras_government_form_check": GovernmentForm,
     "pipeline_runs_kind_check": PipelineRunKind,
-    # A subset, not a whole enum: every kind but the scrape.
-    "collector_settings_kind_check": COLLECTOR_RUN_KINDS,
+    "pipeline_settings_kind_check": PipelineRunKind,
     "roster_comparison_people_outcome_check": PersonOutcome,
     "roster_comparison_runs_level_check": JurisdictionLevel,
     "roster_comparison_drafts_level_check": JurisdictionLevel,

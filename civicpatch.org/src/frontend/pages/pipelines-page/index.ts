@@ -1,25 +1,22 @@
-// Cadence, budget, and the trigger to scrape a state right now — the one action this page
-// carries. Moved off the changesets page along with the batch-scrape permission itself: both
-// are admin-only now, so neither belongs on the page any signed-in user reads.
+// Each pipeline's cadence and budget per state, and the trigger to run a state's pass now. Admin
+// only: how often a pipeline runs is what it costs.
 
 import { component, useEffect, useState } from "haunted";
 import { html, nothing, type TemplateResult } from "lit-html";
 import "./pipelines-page.css";
 import {
   fetchActivePipelineRuns,
-  fetchCollectorPanels,
-  fetchGlobalScrapeSettings,
+  fetchGlobalPipelineSettings,
   fetchJurisdictionStates,
-  fetchStateScrapeSettings,
-  startStateScrape,
+  fetchPipelinePanel,
+  startStatePass,
 } from "../../api.js";
 import "../../components/confirm-modal/confirm-modal.ts";
-import "./scrape-settings-modal.ts";
+import "./pipeline-settings-modal.ts";
 import "./global-budget-modal.ts";
-import "./collector-budget-modal.ts";
 import "./active-runs/index.js";
+import { PIPELINE_KINDS, PIPELINE_LABELS, PipelineKind } from "../../schemas/pipeline-kinds.js";
 import {
-  collectorLabel,
   describeAnchor,
   describeBudget,
   describeCadence,
@@ -28,10 +25,10 @@ import {
   describePerRun,
   formatDuration,
   formatUsd,
-  type CollectorPanel,
-  type GlobalScrapePanel,
-  type StateScrapePanel,
-} from "./scrape-settings.js";
+  type GlobalPanel,
+  type PassAverages,
+  type PipelinePanel,
+} from "./pipeline-settings.js";
 import { useAuth } from "../../hooks/useAuth.js";
 import { SectionNav, adminSection } from "../../components/section-nav/index.js";
 
@@ -49,6 +46,17 @@ function setRunsParamsInUrl(page: number, perPage: number): void {
   const params = new URLSearchParams(window.location.search);
   params.set("runs_page", String(page));
   params.set("runs_per_page", String(perPage));
+  window.history.pushState({}, "", `${window.location.pathname}?${params}`);
+}
+
+function getPipelineFromUrl(): PipelineKind {
+  const val = new URLSearchParams(window.location.search).get("pipeline");
+  return PIPELINE_KINDS.find((kind) => kind === val) ?? PipelineKind.PEOPLE;
+}
+
+function setPipelineInUrl(kind: PipelineKind): void {
+  const params = new URLSearchParams(window.location.search);
+  params.set("pipeline", kind);
   window.history.pushState({}, "", `${window.location.pathname}?${params}`);
 }
 
@@ -70,10 +78,36 @@ const COLS = [
 
 // One panel per state, in parallel — admin-only and infrequent, so N small requests cost less
 // than the batched query and its own cache invalidation would.
-async function fetchAllPanels(): Promise<StateScrapePanel[]> {
+async function fetchAllPanels(kind: PipelineKind): Promise<PipelinePanel[]> {
   const states: { code: string }[] = await fetchJurisdictionStates();
-  const panels = await Promise.all(states.map((s) => fetchStateScrapeSettings(s.code)));
-  return panels.sort((a: StateScrapePanel, b: StateScrapePanel) => a.state.localeCompare(b.state));
+  const panels = await Promise.all(states.map((s) => fetchPipelinePanel(s.code, kind)));
+  return panels.sort((a: PipelinePanel, b: PipelinePanel) => a.state.localeCompare(b.state));
+}
+
+// Run time is measured for the scrape only, so the other pipelines show cost and no time.
+function passAverages(panel: PipelinePanel, fleet: GlobalPanel): PassAverages {
+  const scrape = panel.kind === PipelineKind.PEOPLE;
+  return {
+    cost_per_run_usd: scrape ? fleet.cost_per_run_this_month_usd : panel.cost_per_run_this_month_usd,
+    seconds_per_run: scrape ? fleet.seconds_per_run_this_month : null,
+    concurrency: fleet.pipeline_run_concurrency,
+  };
+}
+
+function renderPipelineSwitch(current: PipelineKind, onPick: (kind: PipelineKind) => void) {
+  return html`
+    <div class="pipelines-page__switch" role="group" aria-label="Pipeline">
+      ${PIPELINE_KINDS.map(
+        (kind) => html`<button
+          class="pipelines-page__switch-btn"
+          aria-pressed=${kind === current}
+          @click=${() => onPick(kind)}
+        >
+          ${PIPELINE_LABELS[kind]}
+        </button>`,
+      )}
+    </div>
+  `;
 }
 
 function renderFigure(value: string, label: TemplateResult | string) {
@@ -85,7 +119,7 @@ function renderFigure(value: string, label: TemplateResult | string) {
   `;
 }
 
-function renderLedger(panel: GlobalScrapePanel, canEdit: boolean, onEdit: () => void) {
+function renderLedger(panel: GlobalPanel, canEdit: boolean, onEdit: () => void) {
   const cap = panel.monthly_cap_usd === null ? "no cap" : `of ${formatUsd(panel.monthly_cap_usd)}`;
   const cost = panel.cost_per_run_this_month_usd;
   const seconds = panel.seconds_per_run_this_month;
@@ -124,7 +158,7 @@ function renderEstimateNote(concurrency: number) {
   `;
 }
 
-function renderHead(fleet: GlobalScrapePanel | null) {
+function renderHead(fleet: GlobalPanel | null) {
   return html`
     <div class="pipelines-page__row pipelines-page__row--head">
       <span class="pipelines-page__row-state">state</span>
@@ -143,8 +177,8 @@ function renderHead(fleet: GlobalScrapePanel | null) {
 }
 
 function renderRow(
-  panel: StateScrapePanel,
-  fleet: GlobalScrapePanel | null,
+  panel: PipelinePanel,
+  fleet: GlobalPanel | null,
   onEdit: (state: string) => void,
   onScrapeClick: (state: string) => void,
   starting: string | null,
@@ -152,7 +186,7 @@ function renderRow(
 ) {
   const overBudget = panel.cap_reached !== null;
   const anchor = describeAnchor(panel);
-  const nextPass = fleet ? describeNextPass(panel.candidates_due, fleet) : null;
+  const nextPass = fleet ? describeNextPass(panel.candidates_due, passAverages(panel, fleet)) : null;
   return html`
     <div class="pipelines-page__row">
       <span class="pipelines-page__row-state">${panel.state}</span>
@@ -195,7 +229,7 @@ function renderRow(
           ?disabled=${starting === panel.state}
           @click=${() => onScrapeClick(panel.state)}
         >
-          ${starting === panel.state ? "Starting…" : "Scrape now"}
+          ${starting === panel.state ? "Starting…" : "Run now"}
         </button>
         ${scrapeError ? html`<span class="pipelines-page__scrape-error">${scrapeError}</span>` : nothing}
       </span>
@@ -203,46 +237,12 @@ function renderRow(
   `;
 }
 
-const COLLECTOR_COLS = ["per run", "this month", "runs", "hit the cap"];
-
-function renderCollectors(collectors: CollectorPanel[], canEdit: boolean, onEdit: (kind: string) => void) {
-  return html`
-    <h2 class="pipelines-page__section-title">Collectors</h2>
-    <div class="pipelines-page__list pipelines-page__list--collectors">
-      <div class="pipelines-page__row pipelines-page__row--head">
-        <span class="pipelines-page__row-state">collector</span>
-        ${COLLECTOR_COLS.map((label) => html`<span class="pipelines-page__row-fig">${label}</span>`)}
-        <span></span>
-      </div>
-      ${collectors.map(
-        (panel) => html`
-          <div class="pipelines-page__row">
-            <span class="pipelines-page__row-state">${collectorLabel(panel.settings.kind)}</span>
-            <span class="pipelines-page__row-fig">
-              ${describePerRun(panel.cost_per_run_this_month_usd, panel.settings.pipeline_run_cap_usd)}
-            </span>
-            <span class="pipelines-page__row-fig">
-              ${describeBudget(panel.spent_this_month_usd, panel.settings.monthly_cap_usd)}
-            </span>
-            <span class="pipelines-page__row-fig">${panel.runs_this_month}</span>
-            <span class="pipelines-page__row-fig">${panel.cost_cap_hits_this_month}</span>
-            ${canEdit
-              ? html`<button class="pipelines-page__edit" @click=${() => onEdit(panel.settings.kind)}>edit</button>`
-              : html`<span></span>`}
-          </div>
-        `,
-      )}
-    </div>
-  `;
-}
-
 function PipelinesPage() {
   const { permissions } = useAuth();
-  const [panels, setPanels] = useState<StateScrapePanel[] | null>(null);
-  const [budget, setBudget] = useState<GlobalScrapePanel | null>(null);
+  const [pipeline, setPipeline] = useState<PipelineKind>(getPipelineFromUrl());
+  const [panels, setPanels] = useState<PipelinePanel[] | null>(null);
+  const [budget, setBudget] = useState<GlobalPanel | null>(null);
   const [editingBudget, setEditingBudget] = useState(false);
-  const [collectors, setCollectors] = useState<CollectorPanel[] | null>(null);
-  const [editingCollector, setEditingCollector] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [editingState, setEditingState] = useState<string | null>(null);
   const [confirmingState, setConfirmingState] = useState<string | null>(null);
@@ -260,29 +260,29 @@ function PipelinesPage() {
   const [runsLoaded, setRunsLoaded] = useState(false);
 
   const load = () => {
-    fetchAllPanels()
+    setPanels(null);
+    fetchAllPanels(pipeline)
       .then(setPanels)
       .catch((err: Error) => setError(err.message));
   };
 
   const loadBudget = () => {
-    fetchGlobalScrapeSettings()
+    fetchGlobalPipelineSettings()
       .then(setBudget)
       .catch(() => setBudget(null));
   };
 
-  const loadCollectors = () => {
-    fetchCollectorPanels()
-      .then(setCollectors)
-      .catch(() => setCollectors(null));
+  const pickPipeline = (kind: PipelineKind) => {
+    setPipelineInUrl(kind);
+    setPipeline(kind);
   };
 
-  useEffect(load, []);
+  useEffect(load, [pipeline]);
   useEffect(loadBudget, []);
-  useEffect(loadCollectors, []);
 
   useEffect(() => {
     const onPopState = () => {
+      setPipeline(getPipelineFromUrl());
       setRunsPage(getIntParam("runs_page", 1));
       setRunsPerPage(getIntParam("runs_per_page", 25, RUNS_PER_PAGE_CHOICES));
     };
@@ -322,15 +322,12 @@ function PipelinesPage() {
     setConfirmingState(null);
     setStarting(state);
     setScrapeErrors((prev) => ({ ...prev, [state]: "" }));
-    startStateScrape(state)
+    startStatePass(pipeline, state)
       .catch((err: Error) => setScrapeErrors((prev) => ({ ...prev, [state]: err.message })))
       .finally(() => setStarting(null));
   };
 
-  const editingCollectorPanel = collectors?.find((panel) => panel.settings.kind === editingCollector) ?? null;
-
   if (error) return html`<main class="pipelines-page page-content"><p class="pipelines-page__empty">${error}</p></main>`;
-  if (!panels) return html`<main class="pipelines-page page-content"><p class="pipelines-page__empty">Loading…</p></main>`;
 
   return html`
     <main class="pipelines-page page-content">
@@ -360,14 +357,15 @@ function PipelinesPage() {
           ></civ-global-budget-modal>`
         : nothing}
 
-      <div class="pipelines-page__list">
-        ${renderHead(budget)}
-        ${panels.map((panel) =>
-          renderRow(panel, budget, setEditingState, setConfirmingState, starting, scrapeErrors[panel.state] || null),
-        )}
-      </div>
-
-      ${collectors ? renderCollectors(collectors, !!permissions.can_write_global_config, setEditingCollector) : nothing}
+      ${renderPipelineSwitch(pipeline, pickPipeline)}
+      ${panels
+        ? html`<div class="pipelines-page__list">
+            ${renderHead(budget)}
+            ${panels.map((panel) =>
+              renderRow(panel, budget, setEditingState, setConfirmingState, starting, scrapeErrors[panel.state] || null),
+            )}
+          </div>`
+        : html`<p class="pipelines-page__empty">Loading…</p>`}
 
       ${runsLoaded && runs.length === 0
         ? html`<p class="pipelines-page__empty">No runs in progress.</p>`
@@ -387,32 +385,21 @@ function PipelinesPage() {
           ></pipeline-runs-list>`}
 
       ${editingPanel
-        ? html`<civ-scrape-settings-modal
+        ? html`<civ-pipeline-settings-modal
             .panel=${editingPanel}
             @settings-saved=${() => {
               setEditingState(null);
               load();
             }}
             @cancel=${() => setEditingState(null)}
-          ></civ-scrape-settings-modal>`
-        : nothing}
-
-      ${editingCollectorPanel
-        ? html`<civ-collector-budget-modal
-            .panel=${editingCollectorPanel}
-            @settings-saved=${() => {
-              setEditingCollector(null);
-              loadCollectors();
-            }}
-            @cancel=${() => setEditingCollector(null)}
-          ></civ-collector-budget-modal>`
+          ></civ-pipeline-settings-modal>`
         : nothing}
 
       ${confirmingState
         ? html`<civ-confirm-modal
-            .title=${`Scrape ${confirmingState.toUpperCase()}?`}
-            .message=${`Scrapes every jurisdiction in ${confirmingState.toUpperCase()} that is due, however many that is. They cost money to run and cannot be stopped once started.`}
-            .confirmLabel=${"Start scraping"}
+            .title=${`Run ${PIPELINE_LABELS[pipeline].toLowerCase()} for ${confirmingState.toUpperCase()}?`}
+            .message=${`Runs every jurisdiction in ${confirmingState.toUpperCase()} that is due, however many that is. They cost money to run and cannot be stopped once started.`}
+            .confirmLabel=${"Start"}
             .variant=${"danger"}
             @confirm=${confirmScrape}
             @cancel=${() => setConfirmingState(null)}

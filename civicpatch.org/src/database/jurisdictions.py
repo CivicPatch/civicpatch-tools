@@ -10,14 +10,14 @@ from core.activity import roster_change
 from core.jurisdiction_search import build_search_text
 from core.map_enrichment import GeoidEntry
 from database.changeset_predicates import (
-    CADENCE_JOIN,
-    LAST_ATTEMPT_AT,
-    LAST_ATTEMPT_JOIN,
+    OLDEST_ATTEMPT_FIRST,
     LAST_COLLECTED_AT,
     LAST_COLLECTED_JOIN,
     OFF_COOLDOWN,
     RESOLUTION_JOIN,
     RESOLVED,
+    attempts_join,
+    settings_join,
 )
 from database.database import get_pool, to_iso
 from database.people import PERSON_JSON
@@ -34,7 +34,7 @@ from schemas.jurisdictions import (
     TimelineIssue,
 )
 from shared.schemas import JurisdictionLevel, Person
-from shared.utils.statuses import ActivityType
+from shared.utils.statuses import ActivityType, PipelineRunKind
 
 logger = logging.getLogger(__name__)
 
@@ -1052,17 +1052,14 @@ async def get_stale_jurisdictions(state: str) -> list[Jurisdiction]:
             f"""
             SELECT j.jurisdiction_ocdid, j.data->>'name', j.data->>'url'
             FROM jurisdictions j
-            {LAST_ATTEMPT_JOIN}
-            {CADENCE_JOIN}
+            {attempts_join(PipelineRunKind.PEOPLE_COLLECTOR)}
+            {settings_join(PipelineRunKind.PEOPLE_COLLECTOR)}
             {RESOLUTION_JOIN}
             WHERE j.state = %s
               AND j.status = 'active'
               AND NULLIF(j.data->>'url', '') IS NOT NULL
               AND {OFF_COOLDOWN}
-            -- `jurisdiction_ocdid` breaks the tie, because nearly every row is tied. Without a
-            -- total order a LIMIT can re-offer the same places on every drain while never
-            -- reaching others.
-            ORDER BY {LAST_ATTEMPT_AT} ASC NULLS FIRST, j.jurisdiction_ocdid
+            ORDER BY {OLDEST_ATTEMPT_FIRST}
             """,
             (state,),
         )

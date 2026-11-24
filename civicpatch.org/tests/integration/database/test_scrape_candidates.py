@@ -1,6 +1,6 @@
 """The candidate pool: due = off this state's cadence cooldown, measured from the last attempt.
 
-Real Postgres — the whole thing is a join against `pipeline_runs` and `state_settings`.
+Real Postgres — the whole thing is a join against `pipeline_runs` and `pipeline_settings`.
 
 Isolation: sentinel state 'zv'.
 """
@@ -13,7 +13,8 @@ import pytest_asyncio
 
 from database.database import get_pool
 from database.jurisdictions import get_stale_jurisdictions
-from database.state_settings import set_cadence
+from database.pipeline_settings import set_cadence
+from shared.utils.statuses import PipelineRunKind
 
 _STATE = "zv"
 
@@ -25,7 +26,7 @@ async def _wipe():
             "DELETE FROM pipeline_runs WHERE jurisdiction_ocdid LIKE 'ocd-%state:zv%'"
         )
         await cur.execute("DELETE FROM jurisdictions WHERE state = %s", (_STATE,))
-        await cur.execute("DELETE FROM state_settings WHERE state = %s", (_STATE,))
+        await cur.execute("DELETE FROM pipeline_settings WHERE state = %s", (_STATE,))
         await conn.commit()
 
 
@@ -120,7 +121,7 @@ async def test_a_failed_run_still_counts_as_having_been_tried():
     """The bug this fixes: an errored run publishes nothing, so a pool keyed on publishes
     re-offered it immediately and burned the same budget again."""
     ocdid = await _jurisdiction("errored")
-    await set_cadence(_STATE, 30, None, None)
+    await set_cadence(_STATE, PipelineRunKind.PEOPLE_COLLECTOR, 30, None, None)
     await _attempt(ocdid, days_ago=1, status="ERROR")
 
     assert await _due() == []
@@ -130,7 +131,7 @@ async def test_a_failed_run_still_counts_as_having_been_tried():
 @pytest.mark.integration
 async def test_it_comes_back_once_the_cadence_has_passed():
     ocdid = await _jurisdiction("aged")
-    await set_cadence(_STATE, 30, None, None)
+    await set_cadence(_STATE, PipelineRunKind.PEOPLE_COLLECTOR, 30, None, None)
     await _attempt(ocdid, days_ago=31)
 
     assert await _due() == [ocdid]
@@ -142,7 +143,7 @@ async def test_never_tried_comes_before_longest_since_tried():
     never = await _jurisdiction("never")
     old = await _jurisdiction("old")
     recent = await _jurisdiction("recent")
-    await set_cadence(_STATE, 7, None, None)
+    await set_cadence(_STATE, PipelineRunKind.PEOPLE_COLLECTOR, 7, None, None)
     await _attempt(old, days_ago=40)
     await _attempt(recent, days_ago=8)
 
@@ -156,7 +157,7 @@ async def test_a_place_tried_repeatedly_stops_leading_the_queue():
     head forever, because its publish date never moved."""
     tried = await _jurisdiction("tried")
     untried = await _jurisdiction("untouched")
-    await set_cadence(_STATE, 7, None, None)
+    await set_cadence(_STATE, PipelineRunKind.PEOPLE_COLLECTOR, 7, None, None)
     for days in (60, 40, 20, 8):
         await _attempt(tried, days_ago=days)
 
@@ -170,7 +171,7 @@ async def test_settling_an_issue_puts_a_jurisdiction_back_in_the_pool():
     block and leave the cooldown running, so a jurisdiction stopped at its cost cap stayed
     locked out for the rest of the interval — exactly the wait the reviewer was clearing."""
     ocdid = await _jurisdiction("settled")
-    await set_cadence(_STATE, 30, None, None)
+    await set_cadence(_STATE, PipelineRunKind.PEOPLE_COLLECTOR, 30, None, None)
     await _attempt(ocdid, days_ago=1)
     await _issue(ocdid, resolved_days_ago=0)
 
@@ -183,7 +184,7 @@ async def test_an_issue_settled_before_the_attempt_does_not_reopen_it():
     """Only an answer *newer* than the attempt says anything about it. An older one was about
     a run that has already been superseded by the one now on cooldown."""
     ocdid = await _jurisdiction("stale-answer")
-    await set_cadence(_STATE, 30, None, None)
+    await set_cadence(_STATE, PipelineRunKind.PEOPLE_COLLECTOR, 30, None, None)
     await _issue(ocdid, resolved_days_ago=10)
     await _attempt(ocdid, days_ago=1)
 
